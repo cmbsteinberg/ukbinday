@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "google-auth>=2.40.3",
+    "ipykernel>=6.29.5",
     "mcp>=1.11.0",
     "polars>=1.31.0",
     "pydantic-ai>=0.4.2",
