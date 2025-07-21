@@ -1,0 +1,389 @@
+{
+  "output": {
+    "postcode": "HP10 0AA",
+    "general_waste": {
+      "next_pickup_day": "Tuesday 29 July",
+      "frequency": "Bi-weekly",
+      "bin_colour": "black"
+    },
+    "recycling": {
+      "next_pickup_day": "Tuesday 22 July",
+      "frequency": "Bi-weekly",
+      "bin_colour": "blue"
+    },
+    "food_waste": {
+      "next_pickup_day": "Tuesday 22 July",
+      "frequency": "Weekly",
+      "bin_colour": "brown"
+    },
+    "garden_waste": {
+      "next_pickup_day": "None",
+      "frequency": "None",
+      "bin_colour": "green"
+    },
+    "notes": "Bin colours are assumed based on common practice as they were not explicitly stated on the website. Garden waste collection information was not available for the selected address."
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "You are a helpful web-browsing agent who researches and retrieves bin collection information for a specific council area by accessing their official website and lookup system",
+          "timestamp": "2025-07-21T10:35:38.159841Z",
+          "dynamic_ref": null,
+          "part_kind": "system-prompt"
+        },
+        {
+          "content": "\n### Bin Collection Schedule Lookup Task\n\n## Objective\n\nResearch and retrieve bin collection information for a specific council area by accessing their official website and lookup system.\n\n## Instructions\n\n# Step 1: Navigate to Council Website\nAccess the council website at: https://www.buckinghamshire.gov.uk/waste-and-recycling/household-bins-and-recycling/\n\n# Step 2: Test Postcodes\nSearch for the collection schedules for this postcodes: HP10 0AA\nIf a full address is required, use any house number (e.g., \"1 [Street Name]\") or select any option on a dropdown. The specific address doesn't matter - we only need the collection schedule format\n\n## Output\n\nProvide the following information for each bin type (if exists) + the postcode:\n    next_pickup_day\n    frequency \n    bin_colour\n\nIf it doesn't exist, that is ok. Just answer None for these fields.\n\n## Troubleshooting\nIf you encounter issues:\n\nLook for alternative entry points (e.g., \"Check my bin day\")\nNote any technical difficulties in your response\nIf the provided postcode doesn't work try postcodes from the same council area (use your knowledge of local postcodes).\n",
+          "timestamp": "2025-07-21T10:35:38.159847Z",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "https://www.buckinghamshire.gov.uk/waste-and-recycling/household-bins-and-recycling/"
+          },
+          "tool_call_id": "pyd_ai_ef0dddfec1494d5b9c1b2f1244ede4f0",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1403,
+        "response_tokens": 30,
+        "total_tokens": 1657,
+        "details": {
+          "thoughts_tokens": 224,
+          "text_candidates_tokens": 30,
+          "text_prompt_tokens": 1403
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:35:40.430135Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "-hd-aMjXFvfr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "content": "### Ran Playwright code\n```js\n// Navigate to https://www.buckinghamshire.gov.uk/waste-and-recycling/household-bins-and-recycling/\nawait page.goto('https://www.buckinghamshire.gov.uk/waste-and-recycling/household-bins-and-recycling/');\n```\n\n### New console messages\n- [LOG] SI - 20062025 @ https://v4in1-si.click4assistance.co.uk/SI.js:0\n\n### Page state\n- Page URL: https://www.buckinghamshire.gov.uk/waste-and-recycling/check-what-you-can-put-in-your-bins/\n- Page Title: Check what you can put in your bins | Buckinghamshire Council\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - generic [ref=e3]:\n    - paragraph [ref=e4]:\n      - generic [ref=e5]: We use some essential cookies to make this website work.\n    - paragraph\n    - paragraph [ref=e8]: We’d like to set additional cookies to understand how you use this website, remember your settings and improve this service.\n    - generic [ref=e9]:\n      - button \"Accept all cookies\" [active] [ref=e10] [cursor=pointer]: Accept additional cookies\n      - button \"Reject non-essential\" [ref=e11] [cursor=pointer]: Reject additional cookies\n      - generic [ref=e12]:\n        - button \"Toggle preferences\" [ref=e13] [cursor=pointer]:\n          - generic [ref=e14] [cursor=pointer]: Manage cookies\n          - text: \">\"\n        - link \"Visit the Silktide Consent Manager page\" [ref=e15]:\n          - /url: https://silktide.com/consent-manager\n          - img [ref=e16]\n  - generic [ref=e18]:\n    - banner [ref=e19]:\n      - link \"Skip to main content\" [ref=e20] [cursor=pointer]:\n        - /url: \"#main-content\"\n      - generic [ref=e22]:\n        - link \"Buckinghamshire Council\" [ref=e23] [cursor=pointer]:\n          - /url: /\n          - img [ref=e24] [cursor=pointer]\n        - search [ref=e27]:\n          - generic [ref=e28]: Search this website\n          - textbox \"Search this website\" [ref=e29]\n          - button \"Submit\" [ref=e30] [cursor=pointer]:\n            - img [ref=e31] [cursor=pointer]\n    - main [ref=e33]:\n      - navigation \"breadcrumb\" [ref=e35]:\n        - list [ref=e36]:\n          - listitem [ref=e37]:\n            - link \"Home\" [ref=e38] [cursor=pointer]:\n              - /url: /\n            - text: /\n          - listitem [ref=e39]:\n            - link \"Waste and recycling\" [ref=e40] [cursor=pointer]:\n              - /url: /waste-and-recycling/\n      - generic [ref=e43]:\n        - heading \"Check what you can put in your bins\" [level=1] [ref=e44]\n        - generic [ref=e45]:\n          - generic [ref=e46]:\n            - paragraph [ref=e47]:\n              - text: Use our\n              - link \"Waste Wizard\" [ref=e48] [cursor=pointer]:\n                - /url: https://www.recycleforbuckinghamshire.co.uk/waste-wizard/\n              - text: to find out where you can recycle, reuse or repair household items and what bins to use.\n            - paragraph [ref=e49]: \"To view the Waste Wizard on this page you must accept additional cookies, which enables postcode preferences. If you still can’t see the waste wizard:\"\n            - list [ref=e50]:\n              - listitem [ref=e51]: go to the settings on your browser\n              - listitem [ref=e52]: clear your cookies\n              - listitem [ref=e53]: refresh this page and agree to the cookies\n            - paragraph [ref=e54]:\n              - text: Refer to our\n              - link \"cookie policy\" [ref=e55] [cursor=pointer]:\n                - /url: https://www.buckinghamshire.gov.uk/about/cookies/\n              - text: for more information.\n          - heading \"If bins contain incorrect items\" [level=2] [ref=e56]\n          - generic [ref=e57]:\n            - paragraph [ref=e58]: We won’t empty your recycling bins, bags or boxes if they contain the wrong type of material. For example, when there is plastic in a paper recycling bin. This is because it ‘contaminates’ the load so we can’t take that load to the recycling facility.\n            - paragraph [ref=e59]: Help us recycle more by checking what you can put in each bin.\n            - paragraph [ref=e60]:\n              - text: Find out\n              - link \"what to do if you receive a red tag on your bin\" [ref=e61] [cursor=pointer]:\n                - /url: https://www.buckinghamshire.gov.uk/waste-and-recycling/check-what-you-can-put-in-your-bins/if-you-receive-a-red-tag-on-your-recycling-bin/\n              - text: .\n          - heading \"Check what to put in each bin\" [level=2] [ref=e62]\n          - paragraph [ref=e64]: Select a type of bin, box or bag to find out what you can dispose of in it.\n          - generic [ref=e65]:\n            - generic [ref=e66]:\n              - heading \"General waste\" [level=3] [ref=e67]:\n                - button \"General waste\" [ref=e68] [cursor=pointer]:\n                  - img [ref=e69] [cursor=pointer]\n                  - generic [ref=e71] [cursor=pointer]: General waste\n              - region \"General waste\"\n            - generic [ref=e73]:\n              - heading \"Food waste\" [level=3] [ref=e74]:\n                - button \"Food waste\" [ref=e75] [cursor=pointer]:\n                  - img [ref=e76] [cursor=pointer]\n                  - generic [ref=e78] [cursor=pointer]: Food waste\n              - region \"Food waste\"\n            - generic [ref=e80]:\n              - heading \"Mixed recycling\" [level=3] [ref=e81]:\n                - button \"Mixed recycling\" [ref=e82] [cursor=pointer]:\n                  - img [ref=e83] [cursor=pointer]\n                  - generic [ref=e85] [cursor=pointer]: Mixed recycling\n              - region \"Mixed recycling\"\n            - generic [ref=e87]:\n              - heading \"Paper and cardboard recycling\" [level=3] [ref=e88]:\n                - button \"Paper and cardboard recycling\" [ref=e89] [cursor=pointer]:\n                  - img [ref=e90] [cursor=pointer]\n                  - generic [ref=e92] [cursor=pointer]: Paper and cardboard recycling\n              - region \"Paper and cardboard recycling\"\n            - generic [ref=e94]:\n              - heading \"Garden waste\" [level=3] [ref=e95]:\n                - button \"Garden waste\" [ref=e96] [cursor=pointer]:\n                  - img [ref=e97] [cursor=pointer]\n                  - generic [ref=e99] [cursor=pointer]: Garden waste\n              - region \"Garden waste\"\n          - heading \"How to dispose of other items\" [level=2] [ref=e101]\n          - paragraph [ref=e103]: Find out how to dispose of small household electricals, batteries and textiles.\n          - generic [ref=e104]:\n            - generic [ref=e105]:\n              - heading \"Small household electricals\" [level=3] [ref=e106]:\n                - button \"Small household electricals\" [ref=e107] [cursor=pointer]:\n                  - img [ref=e108] [cursor=pointer]\n                  - generic [ref=e110] [cursor=pointer]: Small household electricals\n              - region \"Small household electricals\"\n            - generic [ref=e112]:\n              - heading \"Batteries\" [level=3] [ref=e113]:\n                - button \"Batteries\" [ref=e114] [cursor=pointer]:\n                  - img [ref=e115] [cursor=pointer]\n                  - generic [ref=e117] [cursor=pointer]: Batteries\n              - region \"Batteries\"\n            - generic [ref=e119]:\n              - heading \"Textiles\" [level=3] [ref=e120]:\n                - button \"Textiles\" [ref=e121] [cursor=pointer]:\n                  - img [ref=e122] [cursor=pointer]\n                  - generic [ref=e124] [cursor=pointer]: Textiles\n              - region \"Textiles\"\n          - heading \"Extra waste and recycling\" [level=2] [ref=e126]\n          - generic [ref=e127]:\n            - paragraph [ref=e128]: We will only collect general waste that fits in your bin with the bin lid closed.\n            - paragraph [ref=e129]: \"We can collect a reasonable amount of extra recycling that doesn’t fit in your box or bin. To help us collect extra recycling:\"\n            - list [ref=e130]:\n              - listitem [ref=e131]: put it in a reusable container, such as a plastic box, so that we can tip it out - we will not collect recyclables in plastic bags\n              - listitem [ref=e132]: leave it neatly beside your usual recycling box, bag or bin\n              - listitem [ref=e133]: cut down and flatten cardboard boxes to a manageable size (less than 1 metre by 1 metre), remove all other packaging (such as polystyrene or plastic inserts) and place next to your bin\n            - paragraph [ref=e134]:\n              - text: Take any extra recycling or waste to your nearest\n              - link \"household recycling centre\" [ref=e135] [cursor=pointer]:\n                - /url: https://www.buckinghamshire.gov.uk/bin-collection-recycling-and-waste/find-your-nearest-household-recycling-centre/\n              - text: .\n          - paragraph [ref=e140]: Images showing how extra recycling should be presented to be collected by waste crews\n          - heading \"Bin collection days\" [level=2] [ref=e141]\n          - paragraph [ref=e143]:\n            - link \"Check your bin collection day\" [ref=e144] [cursor=pointer]:\n              - /url: https://www.buckinghamshire.gov.uk/waste-and-recycling/find-out-when-its-your-bin-collection/\n          - heading \"View our policy\" [level=2] [ref=e145]\n          - paragraph [ref=e147]:\n            - text: For more information about types of bin, our policy for replacements and missed collections, view the\n            - link \"Household Waste Collection Policy for Southern Buckinghamshire\" [ref=e148] [cursor=pointer]:\n              - /url: https://www.buckinghamshire.gov.uk/waste-and-recycling/check-what-you-can-put-in-your-bins/household-waste-collection-policy-for-southern-buckinghamshire/\n            - text: .\n    - contentinfo [ref=e149]:\n      - generic [ref=e153]:\n        - heading \"Is this page useful?\" [level=2] [ref=e154]\n        - generic [ref=e155]:\n          - button \"Feedback - yes this page is useful\" [ref=e157] [cursor=pointer]: \"Yes\"\n          - button \"Feedback - No this page isn't useful\" [ref=e159] [cursor=pointer]: \"No\"\n      - generic [ref=e161]:\n        - generic [ref=e162]:\n          - navigation \"Footer\" [ref=e164]:\n            - list [ref=e165]:\n              - listitem [ref=e166]:\n                - link \"About\" [ref=e167] [cursor=pointer]:\n                  - /url: /about/\n              - listitem [ref=e168]:\n                - link \"Privacy\" [ref=e169] [cursor=pointer]:\n                  - /url: /your-council/privacy/\n              - listitem [ref=e170]:\n                - link \"Accessibility statement\" [ref=e171] [cursor=pointer]:\n                  - /url: /about/accessibility/\n              - listitem [ref=e172]:\n                - link \"Cookies\" [ref=e173] [cursor=pointer]:\n                  - /url: /about/cookies/\n              - listitem [ref=e174]:\n                - link \"Contact us\" [ref=e175] [cursor=pointer]:\n                  - /url: /your-council/contact-us/\n              - listitem [ref=e176]:\n                - link \"Modern slavery statement\" [ref=e177] [cursor=pointer]:\n                  - /url: /community-and-safety/safety-and-crime-in-your-community/modern-slavery/organisations-that-can-help-victims-of-modern-slavery/modern-slavery-statement/\n              - listitem [ref=e178]:\n                - link \"Jobs\" [ref=e179] [cursor=pointer]:\n                  - /url: https://jobs.buckinghamshire.gov.uk/\n              - listitem [ref=e180]:\n                - link \"Newsletter\" [ref=e181] [cursor=pointer]:\n                  - /url: /your-council/press-and-media/sign-up-for-our-e-newsletter/buckinghamshire-council-newsletter/\n          - generic [ref=e182]:\n            - link \"Buckinghamshire Council Facebook - opens in a new tab\" [ref=e183] [cursor=pointer]:\n              - /url: https://www.facebook.com/BucksCouncil\n              - img [ref=e184] [cursor=pointer]\n            - link \"Buckinghamshire Council X (formerly Twitter) - opens in a new tab\" [ref=e186] [cursor=pointer]:\n              - /url: https://twitter.com/BucksCouncil\n              - img [ref=e187] [cursor=pointer]\n            - link \"Buckinghamshire Council Youtube - opens in a new tab\" [ref=e189] [cursor=pointer]:\n              - /url: https://www.youtube.com/buckinghamshirecouncil\n              - img [ref=e190] [cursor=pointer]\n            - link \"Buckinghamshire Council Instagram - opens in a new tab\" [ref=e192] [cursor=pointer]:\n              - /url: https://www.instagram.com/buckscouncil\n              - img [ref=e193] [cursor=pointer]\n            - link \"Buckinghamshire Council Linkedin - opens in a new tab\" [ref=e195] [cursor=pointer]:\n              - /url: https://www.linkedin.com/company/buckinghamshire-council/\n              - img [ref=e196] [cursor=pointer]\n        - img \"Safe Spaces logo\" [ref=e200] [cursor=pointer]\n        - generic [ref=e201]:\n          - img \"Open Government Licence logo\" [ref=e202]\n          - paragraph [ref=e203]:\n            - text: All content is available under the\n            - link \"Open Government Licence v.3 - opens in new tab\" [ref=e204] [cursor=pointer]:\n              - /url: https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/\n              - text: Open Government Licence v.3\n            - text: \", except where otherwise stated\"\n        - paragraph [ref=e206]: © 2025 Buckinghamshire Council\n  - button \"Live Chat Software Click4Assistance\" [ref=e207] [cursor=pointer]:\n    - img \"Live Chat Software Click4Assistance\" [ref=e208] [cursor=pointer]\n```",
+          "tool_call_id": "pyd_ai_ef0dddfec1494d5b9c1b2f1244ede4f0",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:35:41.553682Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "element": "Check your bin collection day",
+            "ref": "e144"
+          },
+          "tool_call_id": "pyd_ai_0181d6c693de4611adbdd7dcbee42246",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 5442,
+        "response_tokens": 14,
+        "total_tokens": 5508,
+        "details": {
+          "thoughts_tokens": 52,
+          "text_candidates_tokens": 14,
+          "text_prompt_tokens": 5442
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:35:42.341817Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "_Rd-aMrKJqbitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Check your bin collection day\nawait page.getByRole('link', { name: 'Check your bin collection day' }).click();\n```\n\n### New console messages\n- [LOG] SI - 20062025 @ https://v4in1-si.click4assistance.co.uk/SI.js:0\n\n### Page state\n- Page URL: https://www.buckinghamshire.gov.uk/waste-and-recycling/find-out-when-its-your-bin-collection/\n- Page Title: Check your bin collection day | Buckinghamshire Council\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - generic [ref=e3]:\n    - paragraph [ref=e4]:\n      - generic [ref=e5]: We use some essential cookies to make this website work.\n    - paragraph\n    - paragraph [ref=e8]: We’d like to set additional cookies to understand how you use this website, remember your settings and improve this service.\n    - generic [ref=e9]:\n      - button \"Accept all cookies\" [active] [ref=e10] [cursor=pointer]: Accept additional cookies\n      - button \"Reject non-essential\" [ref=e11] [cursor=pointer]: Reject additional cookies\n      - generic [ref=e12]:\n        - button \"Toggle preferences\" [ref=e13] [cursor=pointer]:\n          - generic [ref=e14] [cursor=pointer]: Manage cookies\n          - text: \">\"\n        - link \"Visit the Silktide Consent Manager page\" [ref=e15]:\n          - /url: https://silktide.com/consent-manager\n          - img [ref=e16]\n  - generic [ref=e18]:\n    - banner [ref=e19]:\n      - link \"Skip to main content\" [ref=e20] [cursor=pointer]:\n        - /url: \"#main-content\"\n      - generic [ref=e22]:\n        - link \"Buckinghamshire Council\" [ref=e23] [cursor=pointer]:\n          - /url: /\n          - img [ref=e24] [cursor=pointer]\n        - search [ref=e27]:\n          - generic [ref=e28]: Search this website\n          - textbox \"Search this website\" [ref=e29]\n          - button \"Submit\" [ref=e30] [cursor=pointer]:\n            - img [ref=e31] [cursor=pointer]\n    - main [ref=e33]:\n      - navigation \"breadcrumb\" [ref=e35]:\n        - list [ref=e36]:\n          - listitem [ref=e37]:\n            - link \"Home\" [ref=e38] [cursor=pointer]:\n              - /url: /\n            - text: /\n          - listitem [ref=e39]:\n            - link \"Waste and recycling\" [ref=e40] [cursor=pointer]:\n              - /url: /waste-and-recycling/\n      - generic [ref=e42]:\n        - generic [ref=e43]:\n          - heading \"Check your bin collection day\" [level=1] [ref=e44]\n          - generic [ref=e45]:\n            - generic [ref=e46]:\n              - paragraph [ref=e47]: \"Check your next bin collection dates for:\"\n              - list [ref=e48]:\n                - listitem [ref=e49]: food waste\n                - listitem [ref=e50]: general waste\n                - listitem [ref=e51]: recycling\n                - listitem [ref=e52]:\n                  - text: garden waste (if you have a valid\n                  - link \"garden waste subscription\" [ref=e53] [cursor=pointer]:\n                    - /url: https://www.buckinghamshire.gov.uk/waste-and-recycling/garden-waste/pay-for-a-garden-waste-subscription-or-renewal/\n                  - text: )\n            - link \"Check now\" [ref=e54] [cursor=pointer]:\n              - /url: https://iapp.itouchvision.com/iappcollectionday/collection-day/?uuid=FA353FC74600CBE61BE409534D00A8EC09BDA3AC&lang=en\n            - heading \"Download a printable calendar\" [level=2] [ref=e55]\n            - paragraph [ref=e57]:\n              - text: You need to\n              - link \"enter your postcode and find your address first\" [ref=e58] [cursor=pointer]:\n                - /url: https://iapp.itouchvision.com/iappcollectionday/collection-day/?uuid=FA353FC74600CBE61BE409534D00A8EC09BDA3AC&lang=en\n              - text: \", then select 'View and download printable schedule'.\"\n            - heading \"Reporting a missed bin\" [level=2] [ref=e59]\n            - paragraph [ref=e61]:\n              - text: You should only\n              - link \"report a missed bin collection\" [ref=e62] [cursor=pointer]:\n                - /url: https://www.buckinghamshire.gov.uk/waste-and-recycling/report-a-missed-bin-collection/\n              - text: if you put the bin, box or bag out by 6:30am on the right day and place.\n        - region \"Related content\" [ref=e64]:\n          - heading \"Related content\" [level=2] [ref=e65]\n          - list [ref=e66]:\n            - listitem [ref=e67]:\n              - link \"Report a missed bin collection\" [ref=e68] [cursor=pointer]:\n                - /url: /waste-and-recycling/report-a-missed-bin-collection/\n            - listitem [ref=e69]:\n              - link \"Check what you can put in your bins\" [ref=e70] [cursor=pointer]:\n                - /url: /waste-and-recycling/check-what-you-can-put-in-your-bins/\n    - contentinfo [ref=e71]:\n      - generic [ref=e75]:\n        - heading \"Is this page useful?\" [level=2] [ref=e76]\n        - generic [ref=e77]:\n          - button \"Feedback - yes this page is useful\" [ref=e79] [cursor=pointer]: \"Yes\"\n          - button \"Feedback - No this page isn't useful\" [ref=e81] [cursor=pointer]: \"No\"\n      - generic [ref=e83]:\n        - generic [ref=e84]:\n          - navigation \"Footer\" [ref=e86]:\n            - list [ref=e87]:\n              - listitem [ref=e88]:\n                - link \"About\" [ref=e89] [cursor=pointer]:\n                  - /url: /about/\n              - listitem [ref=e90]:\n                - link \"Privacy\" [ref=e91] [cursor=pointer]:\n                  - /url: /your-council/privacy/\n              - listitem [ref=e92]:\n                - link \"Accessibility statement\" [ref=e93] [cursor=pointer]:\n                  - /url: /about/accessibility/\n              - listitem [ref=e94]:\n                - link \"Cookies\" [ref=e95] [cursor=pointer]:\n                  - /url: /about/cookies/\n              - listitem [ref=e96]:\n                - link \"Contact us\" [ref=e97] [cursor=pointer]:\n                  - /url: /your-council/contact-us/\n              - listitem [ref=e98]:\n                - link \"Modern slavery statement\" [ref=e99] [cursor=pointer]:\n                  - /url: /community-and-safety/safety-and-crime-in-your-community/modern-slavery/organisations-that-can-help-victims-of-modern-slavery/modern-slavery-statement/\n              - listitem [ref=e100]:\n                - link \"Jobs\" [ref=e101] [cursor=pointer]:\n                  - /url: https://jobs.buckinghamshire.gov.uk/\n              - listitem [ref=e102]:\n                - link \"Newsletter\" [ref=e103] [cursor=pointer]:\n                  - /url: /your-council/press-and-media/sign-up-for-our-e-newsletter/buckinghamshire-council-newsletter/\n          - generic [ref=e104]:\n            - link \"Buckinghamshire Council Facebook - opens in a new tab\" [ref=e105] [cursor=pointer]:\n              - /url: https://www.facebook.com/BucksCouncil\n              - img [ref=e106] [cursor=pointer]\n            - link \"Buckinghamshire Council X (formerly Twitter) - opens in a new tab\" [ref=e108] [cursor=pointer]:\n              - /url: https://twitter.com/BucksCouncil\n              - img [ref=e109] [cursor=pointer]\n            - link \"Buckinghamshire Council Youtube - opens in a new tab\" [ref=e111] [cursor=pointer]:\n              - /url: https://www.youtube.com/buckinghamshirecouncil\n              - img [ref=e112] [cursor=pointer]\n            - link \"Buckinghamshire Council Instagram - opens in a new tab\" [ref=e114] [cursor=pointer]:\n              - /url: https://www.instagram.com/buckscouncil\n              - img [ref=e115] [cursor=pointer]\n            - link \"Buckinghamshire Council Linkedin - opens in a new tab\" [ref=e117] [cursor=pointer]:\n              - /url: https://www.linkedin.com/company/buckinghamshire-council/\n              - img [ref=e118] [cursor=pointer]\n        - img \"Safe Spaces logo\" [ref=e122] [cursor=pointer]\n        - generic [ref=e123]:\n          - img \"Open Government Licence logo\" [ref=e124]\n          - paragraph [ref=e125]:\n            - text: All content is available under the\n            - link \"Open Government Licence v.3 - opens in new tab\" [ref=e126] [cursor=pointer]:\n              - /url: https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/\n              - text: Open Government Licence v.3\n            - text: \", except where otherwise stated\"\n        - paragraph [ref=e128]: © 2025 Buckinghamshire Council\n  - button \"Live Chat Software Click4Assistance\" [ref=e129] [cursor=pointer]:\n    - img \"Live Chat Software Click4Assistance\" [ref=e130] [cursor=pointer]\n```",
+          "tool_call_id": "pyd_ai_0181d6c693de4611adbdd7dcbee42246",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:35:43.622722Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "element": "Check now",
+            "ref": "e54"
+          },
+          "tool_call_id": "pyd_ai_65e35302eb0142c28c3535d8aca7ff55",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 8106,
+        "response_tokens": 10,
+        "total_tokens": 8155,
+        "details": {
+          "cached_content_tokens": 4999,
+          "thoughts_tokens": 39,
+          "text_cache_tokens": 4999,
+          "text_candidates_tokens": 10,
+          "text_prompt_tokens": 8106
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:35:44.395118Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "_xd-aIvCK4P32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Check now\nawait page.getByRole('link', { name: 'Check now' }).click();\n```\n\n### New console messages\n- [ERROR] Error with Permissions-Policy header: Parse of permissions policy failed because of errors r...\n- [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://iapp.itouchv...\n- [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://iapp.itouchv...\n- [ERROR] Manifest fetch from https://iapp.itouchvision.com/iappcollectionday/collection-day/%PUBLIC_U...\n\n### Page state\n- Page URL: https://iapp.itouchvision.com/iappcollectionday/collection-day/?uuid=FA353FC74600CBE61BE409534D00A8EC09BDA3AC&lang=en\n- Page Title: Waste collection days\n- Page Snapshot:\n```yaml\n- generic [ref=e3]:\n  - img \"navLogo\" [ref=e9]\n  - generic [ref=e14]:\n    - generic [ref=e17]:\n      - heading \"Find out your waste collection day\" [level=1] [ref=e18]:\n        - text: Find out your waste\n        - text: collection day\n      - heading \"Check when your waste will be collected.\" [level=2] [ref=e20]\n    - generic [ref=e21]:\n      - generic [ref=e24]:\n        - heading \"Enter a postcode\" [level=2] [ref=e25]:\n          - generic [ref=e26]: Enter a postcode\n        - generic [ref=e27]: For example SW1A 2AA\n        - textbox \"Enter a postcode\" [ref=e28]\n        - button \"Find\" [ref=e30] [cursor=pointer]\n        - link \"Find a postcode on Royal Mail's postcode finder\" [ref=e32] [cursor=pointer]:\n          - /url: \"\"\n      - generic [ref=e36]:\n        - heading \"Related content\" [level=2] [ref=e38]:\n          - generic [ref=e39]: Related content\n        - generic [ref=e40]:\n          - link \"Add to your calendar\" [ref=e42]:\n            - /url: \"\"\n          - link \"View and download printable schedule\" [ref=e44]:\n            - /url: \"\"\n  - generic [ref=e46]:\n    - generic [ref=e48]:\n      - link \"Help\" [ref=e49] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Cookies\" [ref=e50] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Contact\" [ref=e51] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Accessibility Statement\" [ref=e52] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Privacy Policy\" [ref=e53] [cursor=pointer]:\n        - /url: \"\"\n    - img \"footerLogo\" [ref=e58]\n```",
+          "tool_call_id": "pyd_ai_65e35302eb0142c28c3535d8aca7ff55",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:35:46.068605Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "args": {
+            "element": "Enter a postcode",
+            "text": "HP10 0AA",
+            "ref": "e28"
+          },
+          "tool_call_id": "pyd_ai_2dda82d505044495b04c24c0f6aa695a",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 8893,
+        "response_tokens": 18,
+        "total_tokens": 8955,
+        "details": {
+          "thoughts_tokens": 44,
+          "text_candidates_tokens": 18,
+          "text_prompt_tokens": 8893
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:35:47.461881Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "Ahh-aPbnCPfr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "content": "### Ran Playwright code\n```js\n// Fill \"HP10 0AA\" into \"Enter a postcode\"\nawait page.getByRole('textbox', { name: 'Enter a postcode' }).fill('HP10 0AA');\n```\n\n### Page state\n- Page URL: https://iapp.itouchvision.com/iappcollectionday/collection-day/?uuid=FA353FC74600CBE61BE409534D00A8EC09BDA3AC&lang=en\n- Page Title: Waste collection days\n- Page Snapshot:\n```yaml\n- generic [ref=e3]:\n  - img \"navLogo\" [ref=e9]\n  - generic [ref=e14]:\n    - generic [ref=e17]:\n      - heading \"Find out your waste collection day\" [level=1] [ref=e18]:\n        - text: Find out your waste\n        - text: collection day\n      - heading \"Check when your waste will be collected.\" [level=2] [ref=e20]\n    - generic [ref=e21]:\n      - generic [ref=e24]:\n        - heading \"Enter a postcode\" [level=2] [ref=e25]:\n          - generic [ref=e26]: Enter a postcode\n        - generic [ref=e27]: For example SW1A 2AA\n        - textbox \"Enter a postcode\" [active] [ref=e28]: HP10 0AA\n        - button \"Find\" [ref=e30] [cursor=pointer]\n        - link \"Find a postcode on Royal Mail's postcode finder\" [ref=e32] [cursor=pointer]:\n          - /url: \"\"\n      - generic [ref=e36]:\n        - heading \"Related content\" [level=2] [ref=e38]:\n          - generic [ref=e39]: Related content\n        - generic [ref=e40]:\n          - link \"Add to your calendar\" [ref=e42]:\n            - /url: \"\"\n          - link \"View and download printable schedule\" [ref=e44]:\n            - /url: \"\"\n  - generic [ref=e46]:\n    - generic [ref=e48]:\n      - link \"Help\" [ref=e49] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Cookies\" [ref=e50] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Contact\" [ref=e51] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Accessibility Statement\" [ref=e52] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Privacy Policy\" [ref=e53] [cursor=pointer]:\n        - /url: \"\"\n    - img \"footerLogo\" [ref=e58]\n```",
+          "tool_call_id": "pyd_ai_2dda82d505044495b04c24c0f6aa695a",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:35:48.522040Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "element": "Find",
+            "ref": "e30"
+          },
+          "tool_call_id": "pyd_ai_65e3226c64ab404eb802585e90f014c2",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 9594,
+        "response_tokens": 9,
+        "total_tokens": 9625,
+        "details": {
+          "cached_content_tokens": 7609,
+          "thoughts_tokens": 22,
+          "text_cache_tokens": 7609,
+          "text_candidates_tokens": 9,
+          "text_prompt_tokens": 9594
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:35:49.364810Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "BBh-aKH8I4P32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Find\nawait page.getByRole('button', { name: 'Find' }).click();\n```\n\n### Page state\n- Page URL: https://iapp.itouchvision.com/iappcollectionday/collection-day/?uuid=FA353FC74600CBE61BE409534D00A8EC09BDA3AC&lang=en\n- Page Title: Waste collection days\n- Page Snapshot:\n```yaml\n- generic [ref=e3]:\n  - img \"navLogo\" [ref=e9]\n  - generic [ref=e14]:\n    - generic [ref=e17]:\n      - heading \"Find out your waste collection day\" [level=1] [ref=e18]:\n        - text: Find out your waste\n        - text: collection day\n      - heading \"Check when your waste will be collected.\" [level=2] [ref=e20]\n    - generic [ref=e21]:\n      - generic [ref=e24]:\n        - heading \"Enter a postcode\" [level=2] [ref=e25]:\n          - generic [ref=e26]: Enter a postcode\n        - generic [ref=e27]: For example SW1A 2AA\n        - textbox \"Enter a postcode\" [ref=e28]: HP10 0AA\n        - generic [ref=e31]:\n          - heading \"Select an address\" [level=2] [ref=e59]:\n            - generic [ref=e60]: Select an address\n          - combobox \"Select an address\" [ref=e61]:\n            - option \"Please select address\" [selected]\n            - text: ;\n            - option \"3 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"5 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"7 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"9 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"10 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"11 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"12 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"13 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"14 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"15 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"16 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"17 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"18 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"20 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"22 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"23 Doreen Cottages, Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"25 Doreen Cottages, Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"27 Doreen Cottages, Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"29 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"31 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"33 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"35 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"37 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"39 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"41 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"43 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"45 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"47 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"49 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"51 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"53 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"55 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"Alpha Furnishing Ltd, Ground Floor South, 1 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"Doreen Cottages, Holtspur Lane, Wooburn Green, HP10 0AA\"\n            - option \"Entigy Ltd, First Floor South, 1 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"Shellwin P L C And Arriva Fragrances, 1 Holtspur Lane, Wooburn Green, HP10 0AA\"\n            - option \"Street Record, Walnut Grove, Wooburn Green, HP10 0AA\"\n            - option \"Yellow Interiors Ltd, First Floor North, 1 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n            - option \"Yellow Interiors, Ground Floor North, 1 Holtspur Lane, Wooburn Green, HP10 0AA\"\n          - link \"Clear address and start again\" [ref=e103] [cursor=pointer]:\n            - /url: \"\"\n      - generic [ref=e36]:\n        - heading \"Related content\" [level=2] [ref=e38]:\n          - generic [ref=e39]: Related content\n        - generic [ref=e40]:\n          - link \"Add to your calendar\" [ref=e42]:\n            - /url: \"\"\n          - link \"View and download printable schedule\" [ref=e44]:\n            - /url: \"\"\n  - generic [ref=e46]:\n    - generic [ref=e48]:\n      - link \"Help\" [ref=e49] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Cookies\" [ref=e50] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Contact\" [ref=e51] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Accessibility Statement\" [ref=e52] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Privacy Policy\" [ref=e53] [cursor=pointer]:\n        - /url: \"\"\n    - img \"footerLogo\" [ref=e58]\n```",
+          "tool_call_id": "pyd_ai_65e3226c64ab404eb802585e90f014c2",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:35:50.538184Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "args": {
+            "values": [
+              "3 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA"
+            ],
+            "ref": "e61",
+            "element": "Select an address"
+          },
+          "tool_call_id": "pyd_ai_249eeba63c62483dbeb562bf069c4d83",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 11405,
+        "response_tokens": 34,
+        "total_tokens": 11519,
+        "details": {
+          "thoughts_tokens": 80,
+          "text_candidates_tokens": 34,
+          "text_prompt_tokens": 11405
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:35:52.069069Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "Bhh-aM-AJabitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "content": "### Ran Playwright code\n```js\n// Select options [3 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA] in Select an address\nawait page.getByLabel('Select an address').selectOption(['3 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA']);\n```\n\n### Page state\n- Page URL: https://iapp.itouchvision.com/iappcollectionday/collection-day/?uuid=FA353FC74600CBE61BE409534D00A8EC09BDA3AC&lang=en\n- Page Title: Waste collection days\n- Page Snapshot:\n```yaml\n- generic [ref=e3]:\n  - img \"navLogo\" [ref=e9]\n  - generic [ref=e14]:\n    - generic [ref=e17]:\n      - heading \"Find out your waste collection day\" [level=1] [ref=e18]:\n        - text: Find out your waste\n        - text: collection day\n      - heading \"Check when your waste will be collected.\" [level=2] [ref=e20]\n    - generic [ref=e21]:\n      - generic [ref=e22]:\n        - generic [ref=e24]:\n          - heading \"Enter a postcode\" [level=2] [ref=e25]:\n            - generic [ref=e26]: Enter a postcode\n          - generic [ref=e27]: For example SW1A 2AA\n          - textbox \"Enter a postcode\" [disabled] [ref=e28]: HP10 0AA\n          - generic [ref=e31]:\n            - heading \"Select an address\" [level=2] [ref=e59]:\n              - generic [ref=e60]: Select an address\n            - combobox \"Select an address\" [disabled] [ref=e61]:\n              - option \"Please select address\"\n              - text: ;\n              - option \"3 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\" [selected]\n              - option \"5 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"7 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"9 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"10 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"11 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"12 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"13 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"14 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"15 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"16 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"17 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"18 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"20 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"22 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"23 Doreen Cottages, Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"25 Doreen Cottages, Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"27 Doreen Cottages, Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"29 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"31 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"33 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"35 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"37 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"39 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"41 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"43 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"45 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"47 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"49 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"51 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"53 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"55 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"Alpha Furnishing Ltd, Ground Floor South, 1 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"Doreen Cottages, Holtspur Lane, Wooburn Green, HP10 0AA\"\n              - option \"Entigy Ltd, First Floor South, 1 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"Shellwin P L C And Arriva Fragrances, 1 Holtspur Lane, Wooburn Green, HP10 0AA\"\n              - option \"Street Record, Walnut Grove, Wooburn Green, HP10 0AA\"\n              - option \"Yellow Interiors Ltd, First Floor North, 1 Holtspur Lane, Wooburn Green, High Wycombe, HP10 0AA\"\n              - option \"Yellow Interiors, Ground Floor North, 1 Holtspur Lane, Wooburn Green, HP10 0AA\"\n            - link \"Clear address and start again\" [ref=e103] [cursor=pointer]:\n              - /url: \"\"\n        - generic [ref=e34]:\n          - heading \"Your next collections\" [level=2] [ref=e104]\n          - generic [ref=e105]:\n            - generic [ref=e107]:\n              - generic [ref=e108]:\n                - heading \"Food waste\" [level=3] [ref=e109]\n                - generic [ref=e110]: Tuesday 22 July\n              - generic [ref=e111]: followed by Tuesday 29 July\n            - generic [ref=e114]:\n              - generic [ref=e115]:\n                - heading \"Mixed recycling\" [level=3] [ref=e116]\n                - generic [ref=e117]: Tuesday 22 July\n              - generic [ref=e118]: followed by Tuesday 5 August\n            - generic [ref=e121]:\n              - generic [ref=e122]:\n                - heading \"Paper and cardboard\" [level=3] [ref=e123]\n                - generic [ref=e124]: Tuesday 22 July\n              - generic [ref=e125]: followed by Tuesday 5 August\n            - generic [ref=e128]:\n              - generic [ref=e129]:\n                - heading \"Textiles/Batteries/Electricals\" [level=3] [ref=e130]\n                - generic [ref=e131]: Tuesday 22 July\n              - generic [ref=e132]: followed by Tuesday 5 August\n            - generic [ref=e135]:\n              - generic [ref=e136]:\n                - heading \"General waste\" [level=3] [ref=e137]\n                - generic [ref=e138]: Tuesday 29 July\n              - generic [ref=e139]: followed by Tuesday 12 August\n      - generic [ref=e36]:\n        - heading \"Related content\" [level=2] [ref=e38]:\n          - generic [ref=e39]: Related content\n        - generic [ref=e40]:\n          - link \"Add to your calendar\" [ref=e42] [cursor=pointer]:\n            - /url: \"\"\n          - link \"View and download printable schedule\" [ref=e44] [cursor=pointer]:\n            - /url: \"\"\n  - generic [ref=e46]:\n    - generic [ref=e48]:\n      - link \"Help\" [ref=e49] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Cookies\" [ref=e50] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Contact\" [ref=e51] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Accessibility Statement\" [ref=e52] [cursor=pointer]:\n        - /url: \"\"\n      - link \"Privacy Policy\" [ref=e53] [cursor=pointer]:\n        - /url: \"\"\n    - img \"footerLogo\" [ref=e58]\n```",
+          "tool_call_id": "pyd_ai_249eeba63c62483dbeb562bf069c4d83",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:35:53.551624Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "args": {
+            "postcode": "HP10 0AA",
+            "recycling": {
+              "bin_colour": "blue",
+              "frequency": "Bi-weekly",
+              "next_pickup_day": "Tuesday 22 July"
+            },
+            "notes": "Bin colours are assumed based on common practice as they were not explicitly stated on the website. Garden waste collection information was not available for the selected address.",
+            "garden_waste": {
+              "frequency": "None",
+              "next_pickup_day": "None",
+              "bin_colour": "green"
+            },
+            "general_waste": {
+              "next_pickup_day": "Tuesday 29 July",
+              "bin_colour": "black",
+              "frequency": "Bi-weekly"
+            },
+            "food_waste": {
+              "bin_colour": "brown",
+              "frequency": "Weekly",
+              "next_pickup_day": "Tuesday 22 July"
+            }
+          },
+          "tool_call_id": "pyd_ai_79955cf348954273aaefc14fd78284cf",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 13766,
+        "response_tokens": 115,
+        "total_tokens": 15492,
+        "details": {
+          "cached_content_tokens": 8804,
+          "thoughts_tokens": 1611,
+          "text_cache_tokens": 8804,
+          "text_candidates_tokens": 115,
+          "text_prompt_tokens": 13766
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:36:05.249414Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "CRh-aJnWJffr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "content": "Final result processed.",
+          "tool_call_id": "pyd_ai_79955cf348954273aaefc14fd78284cf",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:36:05.249911Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    }
+  ]
+}

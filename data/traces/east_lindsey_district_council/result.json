@@ -1,0 +1,389 @@
+{
+  "output": {
+    "postcode": "DN36 5AB",
+    "general_waste": {
+      "next_pickup_day": "Monday 28th July 2025",
+      "frequency": "Fortnightly",
+      "bin_colour": "black"
+    },
+    "recycling": {
+      "next_pickup_day": "Monday 4th August 2025",
+      "frequency": "Fortnightly",
+      "bin_colour": "grey"
+    },
+    "food_waste": {
+      "next_pickup_day": null,
+      "frequency": null,
+      "bin_colour": null
+    },
+    "garden_waste": {
+      "next_pickup_day": "Friday 11th April 2025",
+      "frequency": "Fortnightly",
+      "bin_colour": "green"
+    },
+    "notes": "There is also a Paper (Purple-Lidded Bin) collected on Monday 18th August 2025. The green waste collection day is every other Friday, starting on 11/04/2025."
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "You are a helpful web-browsing agent who researches and retrieves bin collection information for a specific council area by accessing their official website and lookup system",
+          "timestamp": "2025-07-21T07:47:42.799313Z",
+          "dynamic_ref": null,
+          "part_kind": "system-prompt"
+        },
+        {
+          "content": "\n### Bin Collection Schedule Lookup Task\n\n## Objective\n\nResearch and retrieve bin collection information for a specific council area by accessing their official website and lookup system.\n\n## Instructions\n\n# Step 1: Navigate to Council Website\nAccess the council website at: https://www.e-lindsey.gov.uk/mywastecollections\n\n# Step 2: Test Postcodes\nSearch for the collection schedules for this postcodes: DN36 5AB\nIf a full address is required, use any house number (e.g., \"1 [Street Name]\") or select any option on a dropdown. The specific address doesn't matter - we only need the collection schedule format\n\n## Output\n\nProvide the following information for each bin type (if exists) + the postcode:\n    next_pickup_day\n    frequency \n    bin_colour\n\nIf it doesn't exist, that is ok. Just answer None for these fields.\n\n## Troubleshooting\nIf you encounter issues:\n\nLook for alternative entry points (e.g., \"Check my bin day\")\nNote any technical difficulties in your response\nIf the provided postcode doesn't work try postcodes from the same council area (use your knowledge of local postcodes).\n",
+          "timestamp": "2025-07-21T07:47:42.799318Z",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "https://www.e-lindsey.gov.uk/mywastecollections"
+          },
+          "tool_call_id": "pyd_ai_038052d852d34661a4f44e3fa9bf4ae1",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1393,
+        "response_tokens": 20,
+        "total_tokens": 1582,
+        "details": {
+          "thoughts_tokens": 169,
+          "text_candidates_tokens": 20,
+          "text_prompt_tokens": 1393
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:47:44.504329Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "n_B9aKrMAYP32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "content": "### Ran Playwright code\n```js\n// Navigate to https://www.e-lindsey.gov.uk/mywastecollections\nawait page.goto('https://www.e-lindsey.gov.uk/mywastecollections');\n```\n\n### New console messages\n- [ERROR] ReciteMe button added @ https://www.e-lindsey.gov.uk/dynamic.js?v=638862788460000000:5807\n\n### Page state\n- Page URL: https://www.e-lindsey.gov.uk/mywastecollections\n- Page Title: Your Waste Collection Days - East Lindsey District Council\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - region \"Cookies\" [ref=e2]:\n    - generic [ref=e4]:\n      - heading \"This website uses cookies\" [level=2] [ref=e5]\n      - paragraph [ref=e7]: Our website uses necessary cookies to assist with your use and navigation of the site. We'd also like to set optional analytics cookies to enable us to analyse use of our products and services using Google Analytics in order to help us improve it. These optional cookies won't be set unless you enable them.\n      - generic [ref=e9]:\n        - button \"Accept all \" [ref=e10]:\n          - generic [ref=e11]: Accept all\n          - text: \n        - button \"Reject all \" [ref=e12]:\n          - generic [ref=e13]: Reject all\n          - text: \n        - link \"Change cookie preferences \" [ref=e14] [cursor=pointer]:\n          - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n  - region \"Accessibility links\":\n    - link \"Skip to main content\" [ref=e16] [cursor=pointer]:\n      - /url: https://www.e-lindsey.gov.uk/mywastecollections#maincontent\n  - banner [ref=e17]:\n    - generic [ref=e19]:\n      - generic \"accessibility tools\" [ref=e21]: Accessibility Tools\n      - link \"East Lindsey District Council\" [ref=e23] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n        - img \"East Lindsey District Council\" [ref=e24] [cursor=pointer]\n      - text:       \n    - button \"Toggle menu\" [ref=e26]:\n      - generic [ref=e32]: Toggle menu\n    - text:  \n  - list [ref=e34]:\n    - listitem [ref=e35]:\n      - link \"East Lindsey District Council\" [ref=e36] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n    - listitem [ref=e37]: /\n    - listitem [ref=e38]:\n      - link \"Resident\" [ref=e39] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/article/4964/Resident\n    - listitem [ref=e40]: /\n    - listitem [ref=e41]:\n      - link \"Refuse and Recycling\" [ref=e42] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/Waste\n    - listitem [ref=e43]: /\n    - listitem [ref=e44]:\n      - generic [ref=e45]: Your Waste Collection Days\n  - main [ref=e46]:\n    - article [ref=e47]:\n      - heading \"Your Waste Collection Days\" [level=1] [ref=e50]\n      - generic [ref=e55]:\n        - group [ref=e56]:\n          - paragraph [ref=e60]: To check what and when your next waste collection is, enter your postcode and tell us where you live.\n          - group \"Address lookup\" [ref=e61]:\n            - generic [ref=e63]: Address lookup\n            - group [ref=e64]:\n              - generic [ref=e65]: Postcode\n              - textbox \"Postcode\" [active] [ref=e66]\n              - button \"Find address\" [ref=e69]\n          - group [ref=e71]:\n            - generic [ref=e72]:\n              - text: Chosen Address\n              - emphasis [ref=e73]: \"*\"\n            - textbox \"Chosen Address*\" [ref=e74]\n        - group \"field\" [ref=e75]:\n          - button \"Search \" [ref=e78]\n  - contentinfo [ref=e80]:\n    - generic [ref=e82]:\n      - list [ref=e85]:\n        - listitem [ref=e86]:\n          - link \"Cookies\" [ref=e87] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - listitem [ref=e88]:\n          - link \"Feedback\" [ref=e89] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6222/Feedback\n        - listitem [ref=e90]:\n          - link \"Privacy Statement\" [ref=e91] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6289/Privacy-Statement\n        - listitem [ref=e92]:\n          - link \"Contacting the Council\" [ref=e93] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6443/Contacting-the-Council\n        - listitem [ref=e94]:\n          - link \"Disclaimer\" [ref=e95] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6444/Disclaimer\n        - listitem [ref=e96]:\n          - link \"Accessibility Statement\" [ref=e97] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/accessibility/statement\n      - generic [ref=e100]:\n        - text: East Lindsey District Council\n        - text: The Hub\n        - text: Mareham Road\n        - text: Horncastle\n        - text: Lincolnshire\n        - text: United Kingdom\n        - text: LN9 6PH\n      - generic [ref=e110]:\n        - generic [ref=e111]: \"Telephone: 01507 601111\"\n        - generic [ref=e112]:\n          - text: \"Email:\"\n          - link \"customerservices@e-lindsey.gov.uk\" [ref=e113] [cursor=pointer]:\n            - /url: mailto:customerservices@e-lindsey.gov.uk\n      - generic [ref=e115]:\n        - generic [ref=e116]:\n          - generic [ref=e117]: \"Follow us:\"\n          - list [ref=e118]:\n            - listitem [ref=e119]:\n              - link \"X\" [ref=e120] [cursor=pointer]:\n                - /url: https://twitter.com/EastLindseyDC\n                - img \"X\" [ref=e121] [cursor=pointer]\n            - listitem [ref=e122]:\n              - link \"Facebook\" [ref=e123] [cursor=pointer]:\n                - /url: https://www.facebook.com/eastlindseydistrictcouncil/\n                - img \"Facebook\" [ref=e124] [cursor=pointer]\n            - listitem [ref=e125]:\n              - link \"YouTube\" [ref=e126] [cursor=pointer]:\n                - /url: https://www.youtube.com/channel/UC8Vp5Ds-RK3Slk95IIMpgXQ\n                - img \"YouTube\" [ref=e127] [cursor=pointer]\n            - listitem [ref=e128]:\n              - link \"Nextdoor\" [ref=e129] [cursor=pointer]:\n                - /url: https://nextdoor.co.uk/pages/eastlindseydc\n                - img \"Nextdoor\" [ref=e130] [cursor=pointer]\n        - generic [ref=e131]: © 2025 East Lindsey District Council\n        - link \"Powered by GOSS iCM (opens new tab)\" [ref=e132] [cursor=pointer]:\n          - /url: https://www.gossinteractive.com\n          - text: Powered by GOSS iCM\n          - generic [ref=e133] [cursor=pointer]: (opens new tab)\n  - paragraph [ref=e134]\n```",
+          "tool_call_id": "pyd_ai_038052d852d34661a4f44e3fa9bf4ae1",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:47:45.816175Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "element": "Accept all",
+            "ref": "e10"
+          },
+          "tool_call_id": "pyd_ai_de26d3b991f4417dbf3a8e3ef4e47336",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 3617,
+        "response_tokens": 10,
+        "total_tokens": 3660,
+        "details": {
+          "thoughts_tokens": 33,
+          "text_candidates_tokens": 10,
+          "text_prompt_tokens": 3617
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:47:46.862101Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "ofB9aLPyNqbitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Accept all\nawait page.getByRole('button', { name: 'Accept all ' }).click();\n```\n\n### Page state\n- Page URL: https://www.e-lindsey.gov.uk/mywastecollections\n- Page Title: Your Waste Collection Days - East Lindsey District Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - region \"Cookies\" [ref=e2]:\n    - text:   \n    - alert [ref=e135]:\n      - generic [ref=e136]:\n        - paragraph [ref=e137]: Your cookie preferences were saved\n        - link \"Change cookie preferences\" [ref=e138] [cursor=pointer]:\n          - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - button \"Hide\" [ref=e139]\n  - region \"Accessibility links\":\n    - link \"Skip to main content\" [ref=e16] [cursor=pointer]:\n      - /url: https://www.e-lindsey.gov.uk/mywastecollections#maincontent\n  - banner [ref=e17]:\n    - generic [ref=e19]:\n      - generic \"accessibility tools\" [ref=e21]: Accessibility Tools\n      - link \"East Lindsey District Council\" [ref=e23] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n        - img \"East Lindsey District Council\" [ref=e24] [cursor=pointer]\n      - text:       \n    - button \"Toggle menu\" [ref=e26]:\n      - generic [ref=e32]: Toggle menu\n    - text:  \n  - list [ref=e34]:\n    - listitem [ref=e35]:\n      - link \"East Lindsey District Council\" [ref=e36] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n    - listitem [ref=e37]: /\n    - listitem [ref=e38]:\n      - link \"Resident\" [ref=e39] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/article/4964/Resident\n    - listitem [ref=e40]: /\n    - listitem [ref=e41]:\n      - link \"Refuse and Recycling\" [ref=e42] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/Waste\n    - listitem [ref=e43]: /\n    - listitem [ref=e44]:\n      - generic [ref=e45]: Your Waste Collection Days\n  - main [ref=e46]:\n    - article [ref=e47]:\n      - heading \"Your Waste Collection Days\" [level=1] [ref=e50]\n      - generic [ref=e55]:\n        - group [ref=e56]:\n          - paragraph [ref=e60]: To check what and when your next waste collection is, enter your postcode and tell us where you live.\n          - group \"Address lookup\" [ref=e61]:\n            - generic [ref=e63]: Address lookup\n            - group [ref=e64]:\n              - generic [ref=e65]: Postcode\n              - textbox \"Postcode\" [ref=e66]\n              - button \"Find address\" [ref=e69]\n          - group [ref=e71]:\n            - generic [ref=e72]:\n              - text: Chosen Address\n              - emphasis [ref=e73]: \"*\"\n            - textbox \"Chosen Address*\" [ref=e74]\n        - group \"field\" [ref=e75]:\n          - button \"Search \" [ref=e78]\n  - contentinfo [ref=e80]:\n    - generic [ref=e82]:\n      - list [ref=e85]:\n        - listitem [ref=e86]:\n          - link \"Cookies\" [ref=e87] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - listitem [ref=e88]:\n          - link \"Feedback\" [ref=e89] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6222/Feedback\n        - listitem [ref=e90]:\n          - link \"Privacy Statement\" [ref=e91] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6289/Privacy-Statement\n        - listitem [ref=e92]:\n          - link \"Contacting the Council\" [ref=e93] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6443/Contacting-the-Council\n        - listitem [ref=e94]:\n          - link \"Disclaimer\" [ref=e95] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6444/Disclaimer\n        - listitem [ref=e96]:\n          - link \"Accessibility Statement\" [ref=e97] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/accessibility/statement\n      - generic [ref=e100]:\n        - text: East Lindsey District Council\n        - text: The Hub\n        - text: Mareham Road\n        - text: Horncastle\n        - text: Lincolnshire\n        - text: United Kingdom\n        - text: LN9 6PH\n      - generic [ref=e110]:\n        - generic [ref=e111]: \"Telephone: 01507 601111\"\n        - generic [ref=e112]:\n          - text: \"Email:\"\n          - link \"customerservices@e-lindsey.gov.uk\" [ref=e113] [cursor=pointer]:\n            - /url: mailto:customerservices@e-lindsey.gov.uk\n      - generic [ref=e115]:\n        - generic [ref=e116]:\n          - generic [ref=e117]: \"Follow us:\"\n          - list [ref=e118]:\n            - listitem [ref=e119]:\n              - link \"X\" [ref=e120] [cursor=pointer]:\n                - /url: https://twitter.com/EastLindseyDC\n                - img \"X\" [ref=e121] [cursor=pointer]\n            - listitem [ref=e122]:\n              - link \"Facebook\" [ref=e123] [cursor=pointer]:\n                - /url: https://www.facebook.com/eastlindseydistrictcouncil/\n                - img \"Facebook\" [ref=e124] [cursor=pointer]\n            - listitem [ref=e125]:\n              - link \"YouTube\" [ref=e126] [cursor=pointer]:\n                - /url: https://www.youtube.com/channel/UC8Vp5Ds-RK3Slk95IIMpgXQ\n                - img \"YouTube\" [ref=e127] [cursor=pointer]\n            - listitem [ref=e128]:\n              - link \"Nextdoor\" [ref=e129] [cursor=pointer]:\n                - /url: https://nextdoor.co.uk/pages/eastlindseydc\n                - img \"Nextdoor\" [ref=e130] [cursor=pointer]\n        - generic [ref=e131]: © 2025 East Lindsey District Council\n        - link \"Powered by GOSS iCM (opens new tab)\" [ref=e132] [cursor=pointer]:\n          - /url: https://www.gossinteractive.com\n          - text: Powered by GOSS iCM\n          - generic [ref=e133] [cursor=pointer]: (opens new tab)\n  - paragraph [ref=e134]\n```",
+          "tool_call_id": "pyd_ai_de26d3b991f4417dbf3a8e3ef4e47336",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:47:48.015364Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "args": {
+            "element": "Postcode",
+            "text": "DN36 5AB",
+            "ref": "e66"
+          },
+          "tool_call_id": "pyd_ai_a2cfd95320694a63819571dff1c1bc1d",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 5636,
+        "response_tokens": 16,
+        "total_tokens": 5694,
+        "details": {
+          "thoughts_tokens": 42,
+          "text_candidates_tokens": 16,
+          "text_prompt_tokens": 5636
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:47:49.030395Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "pPB9aN_UBffr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "content": "### Ran Playwright code\n```js\n// Fill \"DN36 5AB\" into \"Postcode\"\nawait page.getByRole('textbox', { name: 'Postcode' }).fill('DN36 5AB');\n```\n\n### Page state\n- Page URL: https://www.e-lindsey.gov.uk/mywastecollections\n- Page Title: Your Waste Collection Days - East Lindsey District Council\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - region \"Cookies\" [ref=e2]:\n    - text:   \n    - alert [ref=e135]:\n      - generic [ref=e136]:\n        - paragraph [ref=e137]: Your cookie preferences were saved\n        - link \"Change cookie preferences\" [ref=e138] [cursor=pointer]:\n          - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - button \"Hide\" [ref=e139]\n  - region \"Accessibility links\":\n    - link \"Skip to main content\" [ref=e16] [cursor=pointer]:\n      - /url: https://www.e-lindsey.gov.uk/mywastecollections#maincontent\n  - banner [ref=e17]:\n    - generic [ref=e19]:\n      - generic \"accessibility tools\" [ref=e21]: Accessibility Tools\n      - link \"East Lindsey District Council\" [ref=e23] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n        - img \"East Lindsey District Council\" [ref=e24] [cursor=pointer]\n      - text:       \n    - button \"Toggle menu\" [ref=e26]:\n      - generic [ref=e32]: Toggle menu\n    - text:  \n  - list [ref=e34]:\n    - listitem [ref=e35]:\n      - link \"East Lindsey District Council\" [ref=e36] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n    - listitem [ref=e37]: /\n    - listitem [ref=e38]:\n      - link \"Resident\" [ref=e39] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/article/4964/Resident\n    - listitem [ref=e40]: /\n    - listitem [ref=e41]:\n      - link \"Refuse and Recycling\" [ref=e42] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/Waste\n    - listitem [ref=e43]: /\n    - listitem [ref=e44]:\n      - generic [ref=e45]: Your Waste Collection Days\n  - main [ref=e46]:\n    - article [ref=e47]:\n      - heading \"Your Waste Collection Days\" [level=1] [ref=e50]\n      - generic [ref=e55]:\n        - group [ref=e56]:\n          - paragraph [ref=e60]: To check what and when your next waste collection is, enter your postcode and tell us where you live.\n          - group \"Address lookup\" [ref=e61]:\n            - generic [ref=e63]: Address lookup\n            - group [ref=e64]:\n              - generic [ref=e65]: Postcode\n              - textbox \"Postcode\" [active] [ref=e66]: DN36 5AB\n              - button \"Find address\" [ref=e69]\n          - group [ref=e71]:\n            - generic [ref=e72]:\n              - text: Chosen Address\n              - emphasis [ref=e73]: \"*\"\n            - textbox \"Chosen Address*\" [ref=e74]\n        - group \"field\" [ref=e75]:\n          - button \"Search \" [ref=e78]\n  - contentinfo [ref=e80]:\n    - generic [ref=e82]:\n      - list [ref=e85]:\n        - listitem [ref=e86]:\n          - link \"Cookies\" [ref=e87] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - listitem [ref=e88]:\n          - link \"Feedback\" [ref=e89] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6222/Feedback\n        - listitem [ref=e90]:\n          - link \"Privacy Statement\" [ref=e91] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6289/Privacy-Statement\n        - listitem [ref=e92]:\n          - link \"Contacting the Council\" [ref=e93] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6443/Contacting-the-Council\n        - listitem [ref=e94]:\n          - link \"Disclaimer\" [ref=e95] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6444/Disclaimer\n        - listitem [ref=e96]:\n          - link \"Accessibility Statement\" [ref=e97] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/accessibility/statement\n      - generic [ref=e100]:\n        - text: East Lindsey District Council\n        - text: The Hub\n        - text: Mareham Road\n        - text: Horncastle\n        - text: Lincolnshire\n        - text: United Kingdom\n        - text: LN9 6PH\n      - generic [ref=e110]:\n        - generic [ref=e111]: \"Telephone: 01507 601111\"\n        - generic [ref=e112]:\n          - text: \"Email:\"\n          - link \"customerservices@e-lindsey.gov.uk\" [ref=e113] [cursor=pointer]:\n            - /url: mailto:customerservices@e-lindsey.gov.uk\n      - generic [ref=e115]:\n        - generic [ref=e116]:\n          - generic [ref=e117]: \"Follow us:\"\n          - list [ref=e118]:\n            - listitem [ref=e119]:\n              - link \"X\" [ref=e120] [cursor=pointer]:\n                - /url: https://twitter.com/EastLindseyDC\n                - img \"X\" [ref=e121] [cursor=pointer]\n            - listitem [ref=e122]:\n              - link \"Facebook\" [ref=e123] [cursor=pointer]:\n                - /url: https://www.facebook.com/eastlindseydistrictcouncil/\n                - img \"Facebook\" [ref=e124] [cursor=pointer]\n            - listitem [ref=e125]:\n              - link \"YouTube\" [ref=e126] [cursor=pointer]:\n                - /url: https://www.youtube.com/channel/UC8Vp5Ds-RK3Slk95IIMpgXQ\n                - img \"YouTube\" [ref=e127] [cursor=pointer]\n            - listitem [ref=e128]:\n              - link \"Nextdoor\" [ref=e129] [cursor=pointer]:\n                - /url: https://nextdoor.co.uk/pages/eastlindseydc\n                - img \"Nextdoor\" [ref=e130] [cursor=pointer]\n        - generic [ref=e131]: © 2025 East Lindsey District Council\n        - link \"Powered by GOSS iCM (opens new tab)\" [ref=e132] [cursor=pointer]:\n          - /url: https://www.gossinteractive.com\n          - text: Powered by GOSS iCM\n          - generic [ref=e133] [cursor=pointer]: (opens new tab)\n  - paragraph [ref=e134]\n```",
+          "tool_call_id": "pyd_ai_a2cfd95320694a63819571dff1c1bc1d",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:47:50.082562Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e69",
+            "element": "Find address"
+          },
+          "tool_call_id": "pyd_ai_b13da405c19f4117874d348e5a426fff",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 7681,
+        "response_tokens": 10,
+        "total_tokens": 7725,
+        "details": {
+          "cached_content_tokens": 1628,
+          "thoughts_tokens": 34,
+          "text_cache_tokens": 1628,
+          "text_candidates_tokens": 10,
+          "text_prompt_tokens": 7681
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:47:50.766843Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "pvB9aMHgCYP32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Find address\nawait page.getByRole('button', { name: 'Find address' }).click();\n```\n\n### Page state\n- Page URL: https://www.e-lindsey.gov.uk/mywastecollections\n- Page Title: Your Waste Collection Days - East Lindsey District Council\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - region \"Cookies\" [ref=e2]:\n    - text:   \n    - alert [ref=e135]:\n      - generic [ref=e136]:\n        - paragraph [ref=e137]: Your cookie preferences were saved\n        - link \"Change cookie preferences\" [ref=e138] [cursor=pointer]:\n          - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - button \"Hide\" [ref=e139]\n  - region \"Accessibility links\":\n    - link \"Skip to main content\" [ref=e16] [cursor=pointer]:\n      - /url: https://www.e-lindsey.gov.uk/mywastecollections#maincontent\n  - banner [ref=e17]:\n    - generic [ref=e19]:\n      - generic \"accessibility tools\" [ref=e21]: Accessibility Tools\n      - link \"East Lindsey District Council\" [ref=e23] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n        - img \"East Lindsey District Council\" [ref=e24] [cursor=pointer]\n      - text:       \n    - button \"Toggle menu\" [ref=e26]:\n      - generic [ref=e32]: Toggle menu\n    - text:  \n  - list [ref=e34]:\n    - listitem [ref=e35]:\n      - link \"East Lindsey District Council\" [ref=e36] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n    - listitem [ref=e37]: /\n    - listitem [ref=e38]:\n      - link \"Resident\" [ref=e39] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/article/4964/Resident\n    - listitem [ref=e40]: /\n    - listitem [ref=e41]:\n      - link \"Refuse and Recycling\" [ref=e42] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/Waste\n    - listitem [ref=e43]: /\n    - listitem [ref=e44]:\n      - generic [ref=e45]: Your Waste Collection Days\n  - main [ref=e46]:\n    - article [ref=e47]:\n      - heading \"Your Waste Collection Days\" [level=1] [ref=e50]\n      - generic [ref=e55]:\n        - group [ref=e56]:\n          - paragraph [ref=e60]: To check what and when your next waste collection is, enter your postcode and tell us where you live.\n          - group \"Address lookup\" [ref=e61]:\n            - generic [ref=e63]: Address lookup\n            - group [ref=e64]:\n              - generic [ref=e65]: Postcode\n              - textbox \"Postcode\" [ref=e66]: DN36 5AB\n              - button \"Find address\" [ref=e69]\n              - generic [ref=e70]:\n                - generic [ref=e140]: Address\n                - combobox \"Address\" [active] [ref=e141]:\n                  - option \"Select an address..\" [selected]\n                  - option \"70 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"72 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"74 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"76 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"78 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"80 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"82 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"84 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"86 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"88 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"90 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"92 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"94 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"96 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"98 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"100 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"102 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"104 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"106 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"108 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"110 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"112 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"114 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"116 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"118 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"120 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"122 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"124 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"126 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"130 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"132 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"Royal Oak Inn, 68 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"The Bungalow, Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"Managers Accommodation, Royal Oak Inn, 68 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire\"\n                  - option \"Shop Unit At, 108 Louth Road, Holton Le Clay, Lincolnshire\"\n          - group [ref=e71]:\n            - generic [ref=e72]:\n              - text: Chosen Address\n              - emphasis [ref=e73]: \"*\"\n            - textbox \"Chosen Address*\" [ref=e74]\n        - group \"field\" [ref=e75]:\n          - button \"Search \" [ref=e78]\n  - contentinfo [ref=e80]:\n    - generic [ref=e82]:\n      - list [ref=e85]:\n        - listitem [ref=e86]:\n          - link \"Cookies\" [ref=e87] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - listitem [ref=e88]:\n          - link \"Feedback\" [ref=e89] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6222/Feedback\n        - listitem [ref=e90]:\n          - link \"Privacy Statement\" [ref=e91] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6289/Privacy-Statement\n        - listitem [ref=e92]:\n          - link \"Contacting the Council\" [ref=e93] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6443/Contacting-the-Council\n        - listitem [ref=e94]:\n          - link \"Disclaimer\" [ref=e95] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6444/Disclaimer\n        - listitem [ref=e96]:\n          - link \"Accessibility Statement\" [ref=e97] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/accessibility/statement\n      - generic [ref=e100]:\n        - text: East Lindsey District Council\n        - text: The Hub\n        - text: Mareham Road\n        - text: Horncastle\n        - text: Lincolnshire\n        - text: United Kingdom\n        - text: LN9 6PH\n      - generic [ref=e110]:\n        - generic [ref=e111]: \"Telephone: 01507 601111\"\n        - generic [ref=e112]:\n          - text: \"Email:\"\n          - link \"customerservices@e-lindsey.gov.uk\" [ref=e113] [cursor=pointer]:\n            - /url: mailto:customerservices@e-lindsey.gov.uk\n      - generic [ref=e115]:\n        - generic [ref=e116]:\n          - generic [ref=e117]: \"Follow us:\"\n          - list [ref=e118]:\n            - listitem [ref=e119]:\n              - link \"X\" [ref=e120] [cursor=pointer]:\n                - /url: https://twitter.com/EastLindseyDC\n                - img \"X\" [ref=e121] [cursor=pointer]\n            - listitem [ref=e122]:\n              - link \"Facebook\" [ref=e123] [cursor=pointer]:\n                - /url: https://www.facebook.com/eastlindseydistrictcouncil/\n                - img \"Facebook\" [ref=e124] [cursor=pointer]\n            - listitem [ref=e125]:\n              - link \"YouTube\" [ref=e126] [cursor=pointer]:\n                - /url: https://www.youtube.com/channel/UC8Vp5Ds-RK3Slk95IIMpgXQ\n                - img \"YouTube\" [ref=e127] [cursor=pointer]\n            - listitem [ref=e128]:\n              - link \"Nextdoor\" [ref=e129] [cursor=pointer]:\n                - /url: https://nextdoor.co.uk/pages/eastlindseydc\n                - img \"Nextdoor\" [ref=e130] [cursor=pointer]\n        - generic [ref=e131]: © 2025 East Lindsey District Council\n        - link \"Powered by GOSS iCM (opens new tab)\" [ref=e132] [cursor=pointer]:\n          - /url: https://www.gossinteractive.com\n          - text: Powered by GOSS iCM\n          - generic [ref=e133] [cursor=pointer]: (opens new tab)\n  - paragraph [ref=e134]\n```",
+          "tool_call_id": "pyd_ai_b13da405c19f4117874d348e5a426fff",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:47:52.230216Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "args": {
+            "element": "Address",
+            "ref": "e141",
+            "values": [
+              "70 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire"
+            ]
+          },
+          "tool_call_id": "pyd_ai_fd5c51882b4844cbb19ca8dfc9f70fcf",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 10558,
+        "response_tokens": 29,
+        "total_tokens": 10647,
+        "details": {
+          "thoughts_tokens": 60,
+          "text_candidates_tokens": 29,
+          "text_prompt_tokens": 10558
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:47:53.524737Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "qPB9aIDaEvfr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "content": "### Ran Playwright code\n```js\n// Select options [70 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire] in Address\nawait page.getByLabel('Address', { exact: true }).selectOption(['70 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire']);\n```\n\n### Page state\n- Page URL: https://www.e-lindsey.gov.uk/mywastecollections\n- Page Title: Your Waste Collection Days - East Lindsey District Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - region \"Cookies\" [ref=e2]:\n    - text:   \n    - alert [ref=e135]:\n      - generic [ref=e136]:\n        - paragraph [ref=e137]: Your cookie preferences were saved\n        - link \"Change cookie preferences\" [ref=e138] [cursor=pointer]:\n          - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - button \"Hide\" [ref=e139]\n  - region \"Accessibility links\":\n    - link \"Skip to main content\" [ref=e16] [cursor=pointer]:\n      - /url: https://www.e-lindsey.gov.uk/mywastecollections#maincontent\n  - banner [ref=e17]:\n    - generic [ref=e19]:\n      - generic \"accessibility tools\" [ref=e21]: Accessibility Tools\n      - link \"East Lindsey District Council\" [ref=e23] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n        - img \"East Lindsey District Council\" [ref=e24] [cursor=pointer]\n      - text:       \n    - button \"Toggle menu\" [ref=e26]:\n      - generic [ref=e32]: Toggle menu\n    - text:  \n  - list [ref=e34]:\n    - listitem [ref=e35]:\n      - link \"East Lindsey District Council\" [ref=e36] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n    - listitem [ref=e37]: /\n    - listitem [ref=e38]:\n      - link \"Resident\" [ref=e39] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/article/4964/Resident\n    - listitem [ref=e40]: /\n    - listitem [ref=e41]:\n      - link \"Refuse and Recycling\" [ref=e42] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/Waste\n    - listitem [ref=e43]: /\n    - listitem [ref=e44]:\n      - generic [ref=e45]: Your Waste Collection Days\n  - main [ref=e46]:\n    - article [ref=e47]:\n      - heading \"Your Waste Collection Days\" [level=1] [ref=e50]\n      - generic [ref=e55]:\n        - group [ref=e56]:\n          - paragraph [ref=e60]: To check what and when your next waste collection is, enter your postcode and tell us where you live.\n          - group \"Address lookup\" [ref=e61]:\n            - generic [ref=e63]: Address lookup\n            - group [ref=e64]:\n              - generic [ref=e65]: Postcode\n              - textbox \"Postcode\" [ref=e66]: DN36 5AB\n              - button \"Find address\" [ref=e69]\n          - group [ref=e71]:\n            - generic [ref=e72]:\n              - text: Chosen Address\n              - emphasis [ref=e73]: \"*\"\n            - textbox \"Chosen Address*\" [ref=e74]: 70 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire, DN36 5AB\n        - group \"field\" [ref=e75]:\n          - button \"Search \" [ref=e78]\n  - contentinfo [ref=e80]:\n    - generic [ref=e82]:\n      - list [ref=e85]:\n        - listitem [ref=e86]:\n          - link \"Cookies\" [ref=e87] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - listitem [ref=e88]:\n          - link \"Feedback\" [ref=e89] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6222/Feedback\n        - listitem [ref=e90]:\n          - link \"Privacy Statement\" [ref=e91] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6289/Privacy-Statement\n        - listitem [ref=e92]:\n          - link \"Contacting the Council\" [ref=e93] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6443/Contacting-the-Council\n        - listitem [ref=e94]:\n          - link \"Disclaimer\" [ref=e95] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6444/Disclaimer\n        - listitem [ref=e96]:\n          - link \"Accessibility Statement\" [ref=e97] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/accessibility/statement\n      - generic [ref=e100]:\n        - text: East Lindsey District Council\n        - text: The Hub\n        - text: Mareham Road\n        - text: Horncastle\n        - text: Lincolnshire\n        - text: United Kingdom\n        - text: LN9 6PH\n      - generic [ref=e110]:\n        - generic [ref=e111]: \"Telephone: 01507 601111\"\n        - generic [ref=e112]:\n          - text: \"Email:\"\n          - link \"customerservices@e-lindsey.gov.uk\" [ref=e113] [cursor=pointer]:\n            - /url: mailto:customerservices@e-lindsey.gov.uk\n      - generic [ref=e115]:\n        - generic [ref=e116]:\n          - generic [ref=e117]: \"Follow us:\"\n          - list [ref=e118]:\n            - listitem [ref=e119]:\n              - link \"X\" [ref=e120] [cursor=pointer]:\n                - /url: https://twitter.com/EastLindseyDC\n                - img \"X\" [ref=e121] [cursor=pointer]\n            - listitem [ref=e122]:\n              - link \"Facebook\" [ref=e123] [cursor=pointer]:\n                - /url: https://www.facebook.com/eastlindseydistrictcouncil/\n                - img \"Facebook\" [ref=e124] [cursor=pointer]\n            - listitem [ref=e125]:\n              - link \"YouTube\" [ref=e126] [cursor=pointer]:\n                - /url: https://www.youtube.com/channel/UC8Vp5Ds-RK3Slk95IIMpgXQ\n                - img \"YouTube\" [ref=e127] [cursor=pointer]\n            - listitem [ref=e128]:\n              - link \"Nextdoor\" [ref=e129] [cursor=pointer]:\n                - /url: https://nextdoor.co.uk/pages/eastlindseydc\n                - img \"Nextdoor\" [ref=e130] [cursor=pointer]\n        - generic [ref=e131]: © 2025 East Lindsey District Council\n        - link \"Powered by GOSS iCM (opens new tab)\" [ref=e132] [cursor=pointer]:\n          - /url: https://www.gossinteractive.com\n          - text: Powered by GOSS iCM\n          - generic [ref=e133] [cursor=pointer]: (opens new tab)\n  - paragraph [ref=e134]\n```",
+          "tool_call_id": "pyd_ai_fd5c51882b4844cbb19ca8dfc9f70fcf",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:47:54.612343Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "element": "Search",
+            "ref": "e78"
+          },
+          "tool_call_id": "pyd_ai_ab0f7483565b4465ae6d503409609f05",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 12660,
+        "response_tokens": 9,
+        "total_tokens": 12721,
+        "details": {
+          "cached_content_tokens": 1738,
+          "thoughts_tokens": 52,
+          "text_cache_tokens": 1738,
+          "text_candidates_tokens": 9,
+          "text_prompt_tokens": 12660
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:47:55.746523Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "qvB9aK7rKabitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Search\nawait page.getByRole('button', { name: 'Search ' }).click();\n```\n\n### New console messages\n- [ERROR] ReciteMe button added @ https://www.e-lindsey.gov.uk/dynamic.js?v=638862788460000000:5807\n\n### Page state\n- Page URL: https://www.e-lindsey.gov.uk/mywastecollections?pageSessionId=fb4f0043-76a1-4635-8a62-769191b5a3f5&fsn=d8cb3811-637f-4694-b5d3-1811d55665a8\n- Page Title: Your Waste Collection Days - East Lindsey District Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - region \"Cookies\"\n  - region \"Accessibility links\":\n    - link \"Skip to main content\" [ref=e4] [cursor=pointer]:\n      - /url: https://www.e-lindsey.gov.uk/mywastecollections?pageSessionId=fb4f0043-76a1-4635-8a62-769191b5a3f5&fsn=d8cb3811-637f-4694-b5d3-1811d55665a8#maincontent\n  - banner [ref=e5]:\n    - generic [ref=e7]:\n      - generic \"accessibility tools\" [ref=e9]: Accessibility Tools\n      - link \"East Lindsey District Council\" [ref=e11] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n        - img \"East Lindsey District Council\" [ref=e12] [cursor=pointer]\n      - text:       \n    - button \"Toggle menu\" [ref=e14]:\n      - generic [ref=e20]: Toggle menu\n    - text:  \n  - list [ref=e22]:\n    - listitem [ref=e23]:\n      - link \"East Lindsey District Council\" [ref=e24] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/\n    - listitem [ref=e25]: /\n    - listitem [ref=e26]:\n      - link \"Resident\" [ref=e27] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/article/4964/Resident\n    - listitem [ref=e28]: /\n    - listitem [ref=e29]:\n      - link \"Refuse and Recycling\" [ref=e30] [cursor=pointer]:\n        - /url: https://www.e-lindsey.gov.uk/Waste\n    - listitem [ref=e31]: /\n    - listitem [ref=e32]:\n      - generic [ref=e33]: Your Waste Collection Days\n  - main [ref=e34]:\n    - article [ref=e35]:\n      - heading \"Your Waste Collection Days\" [level=1] [ref=e38]\n      - generic [ref=e43]:\n        - group \"Label\" [ref=e44]:\n          - generic [ref=e46]: Label\n          - group \"field\" [ref=e47]:\n            - generic [ref=e48]:\n              - generic [ref=e49]:\n                - heading \"Collection Details\" [level=2] [ref=e50]\n                - paragraph [ref=e51]:\n                  - generic [ref=e52]: \"Your address:\"\n                  - text: 70 Louth Road, Holton Le Clay, GRIMSBY, Lincolnshire, DN36 5AB\n                - paragraph [ref=e53]: Please ensure your bin is present at the edge of your property by 5:30am on the day of collection.\n              - separator [ref=e54]\n              - generic [ref=e55]:\n                - generic [ref=e56]:\n                  - heading \"Domestic Waste (Black Bin)\" [level=3] [ref=e57]\n                  - paragraph [ref=e58]:\n                    - text: Your refuse collection day is\n                    - strong [ref=e59]: Monday\n                    - text: .\n                  - paragraph [ref=e60]:\n                    - text: The date of your next collection is\n                    - strong [ref=e61]: Monday 28th July 2025\n                    - text: .\n                - generic [ref=e62]:\n                  - heading \"Recycling (Grey Bin)\" [level=3] [ref=e63]\n                  - paragraph [ref=e64]:\n                    - text: Your recycling collection day is\n                    - strong [ref=e65]: Monday\n                    - text: .\n                  - paragraph [ref=e66]:\n                    - text: The date of your next collection is\n                    - strong [ref=e67]: Monday 4th August 2025\n                    - text: .\n                - generic [ref=e68]:\n                  - heading \"Paper (Purple-Lidded Bin)\" [level=3] [ref=e69]\n                  - paragraph [ref=e70]:\n                    - text: Your paper collection day is\n                    - strong [ref=e71]: Monday\n                    - text: .\n                  - paragraph [ref=e72]:\n                    - text: The date of your next collection is\n                    - strong [ref=e73]: Monday 18th August 2025\n                    - text: .\n                - generic [ref=e74]:\n                  - heading \"Green Waste (Subscription Required)\" [level=3] [ref=e75]\n                  - paragraph [ref=e76]:\n                    - text: Your green waste collection day is every other\n                    - strong [ref=e77]: Friday\n                    - text: starting on the\n                    - strong [ref=e78]: 11/04/2025\n                    - text: However, collections reduce from November 2025 to March 2026, please refer to the full calendar, linked below.\n              - separator [ref=e79]\n              - generic [ref=e80]:\n                - heading \"Downloads\" [level=3] [ref=e81]\n                - paragraph [ref=e82]:\n                  - link \"2025/26 Refuse, Recycling, and Paper Calendar (PDF)\" [ref=e83] [cursor=pointer]:\n                    - /url: https://www.e-lindsey.gov.uk/media/26804/file/PDF/ELDC202526MonB.pdf\n                - paragraph [ref=e84]:\n                  - link \"2024/25 Refuse, Recycling, and Paper Calendar (PDF)\" [ref=e85] [cursor=pointer]:\n                    - /url: https://www.e-lindsey.gov.uk/media/24503/file/PDF/MondayBD41.pdf\n                - paragraph [ref=e87]:\n                  - link \"2025/26 Green Waste Calendar (PDF)\" [ref=e88] [cursor=pointer]:\n                    - /url: https://www.e-lindsey.gov.uk/media/26986/file/PDF/FridayB.pdf\n                - paragraph [ref=e89]:\n                  - link \"2024/25 Green Waste Calendar (PDF)\" [ref=e90] [cursor=pointer]:\n                    - /url: https://www.e-lindsey.gov.uk/media/24684/file/PDF/FridayB.pdf\n        - group \"field\" [ref=e92]:\n          - button \" Search Again\" [ref=e95]\n  - contentinfo [ref=e97]:\n    - generic [ref=e99]:\n      - list [ref=e102]:\n        - listitem [ref=e103]:\n          - link \"Cookies\" [ref=e104] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6220/Cookies\n        - listitem [ref=e105]:\n          - link \"Feedback\" [ref=e106] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6222/Feedback\n        - listitem [ref=e107]:\n          - link \"Privacy Statement\" [ref=e108] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6289/Privacy-Statement\n        - listitem [ref=e109]:\n          - link \"Contacting the Council\" [ref=e110] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6443/Contacting-the-Council\n        - listitem [ref=e111]:\n          - link \"Disclaimer\" [ref=e112] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/article/6444/Disclaimer\n        - listitem [ref=e113]:\n          - link \"Accessibility Statement\" [ref=e114] [cursor=pointer]:\n            - /url: https://www.e-lindsey.gov.uk/accessibility/statement\n      - generic [ref=e117]:\n        - text: East Lindsey District Council\n        - text: The Hub\n        - text: Mareham Road\n        - text: Horncastle\n        - text: Lincolnshire\n        - text: United Kingdom\n        - text: LN9 6PH\n      - generic [ref=e127]:\n        - generic [ref=e128]: \"Telephone: 01507 601111\"\n        - generic [ref=e129]:\n          - text: \"Email:\"\n          - link \"customerservices@e-lindsey.gov.uk\" [ref=e130] [cursor=pointer]:\n            - /url: mailto:customerservices@e-lindsey.gov.uk\n      - generic [ref=e132]:\n        - generic [ref=e133]:\n          - generic [ref=e134]: \"Follow us:\"\n          - list [ref=e135]:\n            - listitem [ref=e136]:\n              - link \"X\" [ref=e137] [cursor=pointer]:\n                - /url: https://twitter.com/EastLindseyDC\n                - img \"X\" [ref=e138] [cursor=pointer]\n            - listitem [ref=e139]:\n              - link \"Facebook\" [ref=e140] [cursor=pointer]:\n                - /url: https://www.facebook.com/eastlindseydistrictcouncil/\n                - img \"Facebook\" [ref=e141] [cursor=pointer]\n            - listitem [ref=e142]:\n              - link \"YouTube\" [ref=e143] [cursor=pointer]:\n                - /url: https://www.youtube.com/channel/UC8Vp5Ds-RK3Slk95IIMpgXQ\n                - img \"YouTube\" [ref=e144] [cursor=pointer]\n            - listitem [ref=e145]:\n              - link \"Nextdoor\" [ref=e146] [cursor=pointer]:\n                - /url: https://nextdoor.co.uk/pages/eastlindseydc\n                - img \"Nextdoor\" [ref=e147] [cursor=pointer]\n        - generic [ref=e148]: © 2025 East Lindsey District Council\n        - link \"Powered by GOSS iCM (opens new tab)\" [ref=e149] [cursor=pointer]:\n          - /url: https://www.gossinteractive.com\n          - text: Powered by GOSS iCM\n          - generic [ref=e150] [cursor=pointer]: (opens new tab)\n  - paragraph [ref=e151]\n```",
+          "tool_call_id": "pyd_ai_ab0f7483565b4465ae6d503409609f05",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:47:58.350432Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "args": {
+            "garden_waste": {
+              "frequency": "Fortnightly",
+              "next_pickup_day": "Friday 11th April 2025",
+              "bin_colour": "green"
+            },
+            "food_waste": {
+              "frequency": null,
+              "bin_colour": null,
+              "next_pickup_day": null
+            },
+            "postcode": "DN36 5AB",
+            "recycling": {
+              "bin_colour": "grey",
+              "next_pickup_day": "Monday 4th August 2025",
+              "frequency": "Fortnightly"
+            },
+            "notes": "There is also a Paper (Purple-Lidded Bin) collected on Monday 18th August 2025. The green waste collection day is every other Friday, starting on 11/04/2025.",
+            "general_waste": {
+              "next_pickup_day": "Monday 28th July 2025",
+              "bin_colour": "black",
+              "frequency": "Fortnightly"
+            }
+          },
+          "tool_call_id": "pyd_ai_ef8d82bf92ad462eba906d6f1b808f59",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 15659,
+        "response_tokens": 154,
+        "total_tokens": 17670,
+        "details": {
+          "cached_content_tokens": 12394,
+          "thoughts_tokens": 1857,
+          "text_cache_tokens": 12394,
+          "text_candidates_tokens": 154,
+          "text_prompt_tokens": 15659
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:48:12.690834Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "rvB9aP_CGYP32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "content": "Final result processed.",
+          "tool_call_id": "pyd_ai_ef8d82bf92ad462eba906d6f1b808f59",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:48:12.691389Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    }
+  ]
+}

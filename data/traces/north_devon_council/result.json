@@ -1,0 +1,568 @@
+{
+  "output": {
+    "postcode": "EX16 8AA",
+    "general_waste": {
+      "next_pickup_day": "Friday, July 25",
+      "frequency": "Fortnightly",
+      "bin_colour": "black"
+    },
+    "recycling": {
+      "next_pickup_day": "Wednesday, July 30",
+      "frequency": "Weekly",
+      "bin_colour": "blue"
+    },
+    "food_waste": {
+      "next_pickup_day": null,
+      "frequency": null,
+      "bin_colour": null
+    },
+    "garden_waste": {
+      "next_pickup_day": "Not available (permit required)",
+      "frequency": "Not available (permit required)",
+      "bin_colour": "green"
+    },
+    "notes": "The green bin collection dates are not displayed as a valid permit is required for the property."
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "You are a helpful web-browsing agent who researches and retrieves bin collection information for a specific council area by accessing their official website and lookup system",
+          "timestamp": "2025-07-21T08:01:47.448443Z",
+          "dynamic_ref": null,
+          "part_kind": "system-prompt"
+        },
+        {
+          "content": "\n### Bin Collection Schedule Lookup Task\n\n## Objective\n\nResearch and retrieve bin collection information for a specific council area by accessing their official website and lookup system.\n\n## Instructions\n\n# Step 1: Navigate to Council Website\nAccess the council website at: http://www.northdevon.gov.uk/bins-and-recycling/collection-dates/\n\n# Step 2: Test Postcodes\nSearch for the collection schedules for this postcodes: EX16 8AA\nIf a full address is required, use any house number (e.g., \"1 [Street Name]\") or select any option on a dropdown. The specific address doesn't matter - we only need the collection schedule format\n\n## Output\n\nProvide the following information for each bin type (if exists) + the postcode:\n    next_pickup_day\n    frequency \n    bin_colour\n\nIf it doesn't exist, that is ok. Just answer None for these fields.\n\n## Troubleshooting\nIf you encounter issues:\n\nLook for alternative entry points (e.g., \"Check my bin day\")\nNote any technical difficulties in your response\nIf the provided postcode doesn't work try postcodes from the same council area (use your knowledge of local postcodes).\n",
+          "timestamp": "2025-07-21T08:01:47.448448Z",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.northdevon.gov.uk/bins-and-recycling/collection-dates/"
+          },
+          "tool_call_id": "pyd_ai_764d132d9c604a27bfe7143ca49fa3dc",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1399,
+        "response_tokens": 26,
+        "total_tokens": 1528,
+        "details": {
+          "thoughts_tokens": 103,
+          "text_candidates_tokens": 26,
+          "text_prompt_tokens": 1399
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:01:49.120547Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "6_N9aMriKq6tz_IPye_36Ak"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "content": "### Ran Playwright code\n```js\n// Navigate to http://www.northdevon.gov.uk/bins-and-recycling/collection-dates/\nawait page.goto('http://www.northdevon.gov.uk/bins-and-recycling/collection-dates/');\n```\n\n### New console messages\n- [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.northdev...\n\n### Page state\n- Page URL: https://www.northdevon.gov.uk/bins-and-recycling/collection-dates/\n- Page Title: Page not found | North Devon Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - alertdialog \"Cookie compliance banner\" [ref=e2]:\n    - contentinfo \"cookie notice\" [ref=e3]:\n      - generic [ref=e5]:\n        - generic [ref=e6]:\n          - heading \"We use cookies on this site to improve your user experience\" [level=2] [ref=e7]\n          - paragraph [ref=e8]: By selecting the Accept button, you agree for us to collect Cookies. We do not collect unless you accept.\n        - generic [ref=e9]:\n          - link \"Accept\" [ref=e10] [cursor=pointer]:\n            - /url: \"#\"\n          - generic [ref=e11] [cursor=pointer]: Decline all cookies\n          - link \"Cookies info\" [ref=e12] [cursor=pointer]:\n            - /url: /cookies\n  - link \"Skip to main content\" [ref=e13] [cursor=pointer]:\n    - /url: \"#main-content\"\n  - generic [ref=e14]:\n    - banner [ref=e15]:\n      - generic [ref=e19]:\n        - heading \"North Devon Council\" [level=1] [ref=e24]:\n          - link \"North Devon Council\" [ref=e25] [cursor=pointer]:\n            - /url: /\n            - img \"North Devon Council\" [ref=e26] [cursor=pointer]\n        - 'button \"Services: jump to services\" [ref=e28] [cursor=pointer]':\n          - generic [ref=e29] [cursor=pointer]: Services\n        - navigation \"Main navigation\" [ref=e34]:\n          - heading \"Main navigation\" [level=2] [ref=e35]\n          - list [ref=e36]:\n            - listitem [ref=e37]:\n              - link \"Self service account\" [ref=e38] [cursor=pointer]:\n                - /url: https://my.northdevon.gov.uk/\n            - listitem [ref=e39]:\n              - link \"Sign up for Email updates\" [ref=e40] [cursor=pointer]:\n                - /url: https://public.govdelivery.com/accounts/UKNORTHDEVON/subscriber/new\n    - navigation \"Breadcrumbs\" [ref=e45]:\n      - heading \"Breadcrumbs\" [level=2] [ref=e46]\n      - list [ref=e47]:\n        - listitem [ref=e48]:\n          - link \"Home\" [ref=e49] [cursor=pointer]:\n            - /url: /\n        - listitem [ref=e50]:\n          - text: /\n          - link \"Bins and recycling\" [ref=e51] [cursor=pointer]:\n            - /url: /bins-and-recycling\n        - listitem [ref=e52]: / Page not found\n    - main [ref=e56]:\n      - heading \"Page not found\" [level=1] [ref=e62]\n      - generic [ref=e66]:\n        - paragraph [ref=e67]: We couldn't find the page you're looking for. It's possible you entered the address incorrectly or you're looking for a page we've moved or deleted.\n        - paragraph [ref=e68]: If you typed the web address, check it is correct.\n        - paragraph [ref=e69]: If you pasted the web address, check you copied the entire address.\n        - paragraph [ref=e70]: You can browse from the homepage or use the search box above to find the information you need.\n        - generic [ref=e73]: The requested page could not be found.\n    - contentinfo [ref=e74]:\n      - generic [ref=e77]:\n        - list [ref=e84]:\n          - listitem [ref=e85]:\n            - link \"Terms and conditions\" [ref=e86] [cursor=pointer]:\n              - /url: /terms-and-conditions\n          - listitem [ref=e87]:\n            - link \"Privacy notice\" [ref=e88] [cursor=pointer]:\n              - /url: /council/data-protection-and-freedom-information/privacy-and-data-protection\n          - listitem [ref=e89]:\n            - link \"Accessibility\" [ref=e90] [cursor=pointer]:\n              - /url: /accessibility/\n          - listitem [ref=e91]:\n            - link \"Cookies\" [ref=e92] [cursor=pointer]:\n              - /url: /cookies/\n          - listitem [ref=e93]:\n            - link \"Contact us\" [ref=e94] [cursor=pointer]:\n              - /url: /contact-us\n          - listitem [ref=e95]:\n            - link \"Services\" [ref=e96] [cursor=pointer]:\n              - /url: /services\n        - paragraph [ref=e103]\n        - list [ref=e110]:\n          - listitem [ref=e111]:\n            - link \"Feedback, complaints and whistleblowing\" [ref=e112] [cursor=pointer]:\n              - /url: /council/feedback-complaints-and-whistleblowing\n          - listitem [ref=e113]:\n            - link \"North Devon Council Social Media Policy\" [ref=e114] [cursor=pointer]:\n              - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n          - listitem [ref=e115]:\n            - link \" North Devon Council on Facebook\" [ref=e116] [cursor=pointer]:\n              - /url: https://www.facebook.com/northdevoncouncil/\n              - generic [ref=e117] [cursor=pointer]: \n              - text: North Devon Council on Facebook\n          - listitem [ref=e118]:\n            - link \" North Devon Council on LinkedIn\" [ref=e119] [cursor=pointer]:\n              - /url: https://www.linkedin.com/company/north-devon-council\n              - generic [ref=e120] [cursor=pointer]: \n              - text: North Devon Council on LinkedIn\n          - listitem [ref=e121]:\n            - link \" North Devon Council on Instagram\" [ref=e122] [cursor=pointer]:\n              - /url: https://www.instagram.com/northdevoncouncil/\n              - generic [ref=e123] [cursor=pointer]: \n              - text: North Devon Council on Instagram\n          - listitem [ref=e124]:\n            - text: Powered by\n            - link \"LocalGovDrupal\" [ref=e125] [cursor=pointer]:\n              - /url: https://localgovdrupal.org/\n```",
+          "tool_call_id": "pyd_ai_764d132d9c604a27bfe7143ca49fa3dc",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:01:51.117535Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.northdevon.gov.uk/"
+          },
+          "tool_call_id": "pyd_ai_91108a9246b040acbd19eb974324d3b6",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 3252,
+        "response_tokens": 16,
+        "total_tokens": 3347,
+        "details": {
+          "thoughts_tokens": 79,
+          "text_candidates_tokens": 16,
+          "text_prompt_tokens": 3252
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:01:52.699598Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "7_N9aNaVDYSiz_IPj8Wm2AE"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "content": "### Ran Playwright code\n```js\n// Navigate to http://www.northdevon.gov.uk/\nawait page.goto('http://www.northdevon.gov.uk/');\n```\n\n### New console messages\n- [LOG] Init iframe start @ https://us01ccistatic.zoom.us/us01cci/web-sdk/zcc-sdk.js:8\n- [LOG] Init iframe onload @ https://us01ccistatic.zoom.us/us01cci/web-sdk/zcc-sdk.js:8\n\n### Page state\n- Page URL: https://www.northdevon.gov.uk/\n- Page Title: Home | North Devon Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - alertdialog \"Cookie compliance banner\" [ref=e2]:\n    - contentinfo \"cookie notice\" [ref=e3]:\n      - generic [ref=e5]:\n        - generic [ref=e6]:\n          - heading \"We use cookies on this site to improve your user experience\" [level=2] [ref=e7]\n          - paragraph [ref=e8]: By selecting the Accept button, you agree for us to collect Cookies. We do not collect unless you accept.\n        - generic [ref=e9]:\n          - link \"Accept\" [ref=e10] [cursor=pointer]:\n            - /url: \"#\"\n          - generic [ref=e11] [cursor=pointer]: Decline all cookies\n          - link \"Cookies info\" [ref=e12] [cursor=pointer]:\n            - /url: /cookies\n  - link \"Skip to main content\" [ref=e13] [cursor=pointer]:\n    - /url: \"#main-content\"\n  - generic [ref=e14]:\n    - banner [ref=e15]:\n      - generic [ref=e19]:\n        - heading \"North Devon Council\" [level=1] [ref=e24]:\n          - link \"North Devon Council\" [ref=e25] [cursor=pointer]:\n            - /url: /\n            - img \"North Devon Council\" [ref=e26] [cursor=pointer]\n        - generic [ref=e27]:\n          - 'button \"Services: expand and jump to services menu\" [ref=e28] [cursor=pointer]':\n            - generic [ref=e29] [cursor=pointer]: Services\n          - text: \n        - navigation \"Main navigation\" [ref=e34]:\n          - heading \"Main navigation\" [level=2] [ref=e35]\n          - list [ref=e36]:\n            - listitem [ref=e37]:\n              - link \"Self service account\" [ref=e38] [cursor=pointer]:\n                - /url: https://my.northdevon.gov.uk/\n            - listitem [ref=e39]:\n              - link \"Sign up for Email updates\" [ref=e40] [cursor=pointer]:\n                - /url: https://public.govdelivery.com/accounts/UKNORTHDEVON/subscriber/new\n    - generic [ref=e42]:\n      - article [ref=e44]:\n        - generic [ref=e46]:\n          - generic [ref=e47]:\n            - heading \"Local Government Reorganisation\" [level=2] [ref=e48]\n            - generic [ref=e50]:\n              - paragraph [ref=e51]:\n                - generic [ref=e52]: If government plans for local government reorganisation go ahead, the way council services are delivered will change. Help us shape our proposals by completing our survey. Click the link below to learn more.\n              - paragraph [ref=e53]:\n                - link \"Have your say\" [ref=e54] [cursor=pointer]:\n                  - /url: https://letstalk.northdevon.gov.uk/local-government-reorganisation-and-devolution\n                  - generic [ref=e55] [cursor=pointer]: Have your say\n              - paragraph [ref=e56]:\n                - text: More information can be found on our\n                - link \"Local Government Reorganisation webpage\" [ref=e57] [cursor=pointer]:\n                  - /url: https://www.northdevon.gov.uk/council/local-government-reorganisation\n                - text: .\n          - button \"Hide alert\" [ref=e60] [cursor=pointer]: Hide\n      - generic [ref=e63]:\n        - img \"Woolacombe beach\" [ref=e71]\n        - generic [ref=e73]:\n          - textbox \"Search\" [ref=e75]\n          - button \"Search \" [ref=e77] [cursor=pointer]:\n            - generic [ref=e78] [cursor=pointer]: Search\n            - generic [ref=e79] [cursor=pointer]: \n    - main [ref=e83]:\n      - article [ref=e87]:\n        - generic [ref=e90]:\n          - generic [ref=e93]:\n            - link \" Pay it Council tax, business rates, parking penalty charge notices, invoices\" [ref=e96] [cursor=pointer]:\n              - /url: /do-it-online/pay\n              - generic [ref=e97] [cursor=pointer]: \n              - heading \"Pay it\" [level=2] [ref=e98] [cursor=pointer]\n              - generic [ref=e100] [cursor=pointer]: Council tax, business rates, parking penalty charge notices, invoices\n            - link \" Report it Missed bin collections, anti-social behaviour, neighbourhood issues\" [ref=e103] [cursor=pointer]:\n              - /url: /do-it-online/report\n              - generic [ref=e104] [cursor=pointer]: \n              - heading \"Report it\" [level=2] [ref=e105] [cursor=pointer]\n              - generic [ref=e107] [cursor=pointer]: Missed bin collections, anti-social behaviour, neighbourhood issues\n            - link \" Apply for it Council tax discount, council tax reduction, jobs\" [ref=e110] [cursor=pointer]:\n              - /url: /do-it-online/apply\n              - generic [ref=e111] [cursor=pointer]: \n              - heading \"Apply for it\" [level=2] [ref=e112] [cursor=pointer]\n              - generic [ref=e114] [cursor=pointer]: Council tax discount, council tax reduction, jobs\n            - link \" Find it Waste collections, car parks, public toilets, council offices\" [ref=e117] [cursor=pointer]:\n              - /url: /do-it-online/find-it\n              - generic [ref=e118] [cursor=pointer]: \n              - heading \"Find it\" [level=2] [ref=e119] [cursor=pointer]\n              - generic [ref=e121] [cursor=pointer]: Waste collections, car parks, public toilets, council offices\n          - heading \"Latest Council News\" [level=2] [ref=e128]\n          - generic [ref=e131]:\n            - link [ref=e134] [cursor=pointer]:\n              - /url: /news/2025/yeo-valley-woodland-and-bicclescombe-park-awarded-coveted-green-flag-award\n              - article [ref=e135] [cursor=pointer]:\n                - img \"Green Flag award logo\" [ref=e142] [cursor=pointer]\n                - heading \"Yeo Valley Woodland and Bicclescombe Park awarded the coveted Green Flag Award\" [level=3] [ref=e143] [cursor=pointer]:\n                  - generic [ref=e144] [cursor=pointer]: Yeo Valley Woodland and Bicclescombe Park awarded the coveted Green Flag Award\n                - generic [ref=e146] [cursor=pointer]: Today, Tuesday 15 July, North Devon Council is celebrating after receiving a Green Flag Award for Yeo Valley Woodland in Barnstaple and Bicclescombe Park in Ilfracombe.\n            - link [ref=e148] [cursor=pointer]:\n              - /url: /news/2025/discover-hidden-treasures-from-north-devons-past-museum-summer\n              - article [ref=e149] [cursor=pointer]:\n                - img \"Graffiato jug and gold posy ring Photo credit to The Trustees of the British Museum\" [ref=e156] [cursor=pointer]\n                - heading \"Discover hidden treasures from North Devon’s past at the Museum this summer\" [level=3] [ref=e157] [cursor=pointer]:\n                  - generic [ref=e158] [cursor=pointer]: Discover hidden treasures from North Devon’s past at the Museum this summer\n                - generic [ref=e160] [cursor=pointer]: Museums are places that look after precious things and this summer the Museum of Barnstaple and North Devon is bringing together some of the most precious objects from North Devon’s past in its major summer exhibition.\n            - link [ref=e162] [cursor=pointer]:\n              - /url: /news/2025/expressions-of-interest-welcomed-for-exciting-barnstaple-development\n              - article [ref=e163] [cursor=pointer]:\n                - img \"36-7 Boutport Street\" [ref=e170] [cursor=pointer]\n                - heading \"Expressions of interest welcomed for exciting Barnstaple development\" [level=3] [ref=e171] [cursor=pointer]:\n                  - generic [ref=e172] [cursor=pointer]: Expressions of interest welcomed for exciting Barnstaple development\n                - generic [ref=e174] [cursor=pointer]: North Devon Council is inviting expressions of interest from individuals, organisations and businesses working within the creative and cultural sectors who would like to be part of an exciting new Barnstaple development.\n          - paragraph [ref=e182]:\n            - link \"Read more News\" [ref=e183] [cursor=pointer]:\n              - /url: /news\n    - generic [ref=e190]:\n      - heading \"Keep up to date\" [level=2] [ref=e191]:\n        - generic [ref=e192]: Keep up to date\n      - generic [ref=e193]: Sign up for email newsletters for the latest updates and news from North Devon Council\n      - link \"Subscribe now\" [ref=e195] [cursor=pointer]:\n        - /url: https://public.govdelivery.com/accounts/UKNORTHDEVON/subscriber/new\n    - contentinfo [ref=e196]:\n      - generic [ref=e199]:\n        - list [ref=e206]:\n          - listitem [ref=e207]:\n            - link \"Terms and conditions\" [ref=e208] [cursor=pointer]:\n              - /url: /terms-and-conditions\n          - listitem [ref=e209]:\n            - link \"Privacy notice\" [ref=e210] [cursor=pointer]:\n              - /url: /council/data-protection-and-freedom-information/privacy-and-data-protection\n          - listitem [ref=e211]:\n            - link \"Accessibility\" [ref=e212] [cursor=pointer]:\n              - /url: /accessibility/\n          - listitem [ref=e213]:\n            - link \"Cookies\" [ref=e214] [cursor=pointer]:\n              - /url: /cookies/\n          - listitem [ref=e215]:\n            - link \"Contact us\" [ref=e216] [cursor=pointer]:\n              - /url: /contact-us\n          - listitem [ref=e217]:\n            - link \"Services\" [ref=e218] [cursor=pointer]:\n              - /url: /services\n        - paragraph [ref=e225]\n        - list [ref=e232]:\n          - listitem [ref=e233]:\n            - link \"Feedback, complaints and whistleblowing\" [ref=e234] [cursor=pointer]:\n              - /url: /council/feedback-complaints-and-whistleblowing\n          - listitem [ref=e235]:\n            - link \"North Devon Council Social Media Policy\" [ref=e236] [cursor=pointer]:\n              - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n          - listitem [ref=e237]:\n            - link \" North Devon Council on Facebook\" [ref=e238] [cursor=pointer]:\n              - /url: https://www.facebook.com/northdevoncouncil/\n              - generic [ref=e239] [cursor=pointer]: \n              - text: North Devon Council on Facebook\n          - listitem [ref=e240]:\n            - link \" North Devon Council on LinkedIn\" [ref=e241] [cursor=pointer]:\n              - /url: https://www.linkedin.com/company/north-devon-council\n              - generic [ref=e242] [cursor=pointer]: \n              - text: North Devon Council on LinkedIn\n          - listitem [ref=e243]:\n            - link \" North Devon Council on Instagram\" [ref=e244] [cursor=pointer]:\n              - /url: https://www.instagram.com/northdevoncouncil/\n              - generic [ref=e245] [cursor=pointer]: \n              - text: North Devon Council on Instagram\n          - listitem [ref=e246]:\n            - text: Powered by\n            - link \"LocalGovDrupal\" [ref=e247] [cursor=pointer]:\n              - /url: https://localgovdrupal.org/\n```",
+          "tool_call_id": "pyd_ai_91108a9246b040acbd19eb974324d3b6",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:01:53.483539Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e117",
+            "element": "link \" Find it Waste collections, car parks, public toilets, council offices\""
+          },
+          "tool_call_id": "pyd_ai_fc4903ef166f47a1b046f40329c0e877",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 6622,
+        "response_tokens": 28,
+        "total_tokens": 6747,
+        "details": {
+          "thoughts_tokens": 97,
+          "text_candidates_tokens": 28,
+          "text_prompt_tokens": 6622
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:01:54.952745Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "8fN9aLXJIqKhmPUP0sPjuAM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click link \" Find it Waste collections, car parks, public toilets, council offices\"\nawait page.getByRole('link', { name: ' Find it Waste collections,' }).click();\n```\n\n### New console messages\n- [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.northdev...\n- [ERROR] Manifest fetch from https://www.northdevon.gov.uk/themes/custom/localgov_northdevon/assets/i...\n- [LOG] \u001b[31m[ERROR__WebChatSDK/CommonChatCorePlugin]\u001b[39m \u001b[90m2025-07-21 09:01:55.094\u001b[39m - cache b...\n- [LOG] Init iframe start @ https://us01ccistatic.zoom.us/us01cci/web-sdk/zcc-sdk.js:8\n- [LOG] Init iframe onload @ https://us01ccistatic.zoom.us/us01cci/web-sdk/zcc-sdk.js:8\n- [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.northdev...\n- [ERROR] Manifest fetch from https://www.northdevon.gov.uk/themes/custom/localgov_northdevon/assets/i...\n\n### Page state\n- Page URL: https://www.northdevon.gov.uk/do-it-online/find-it\n- Page Title: Find it | North Devon Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - alertdialog \"Cookie compliance banner\" [ref=e2]:\n    - contentinfo \"cookie notice\" [ref=e3]:\n      - generic [ref=e5]:\n        - generic [ref=e6]:\n          - heading \"We use cookies on this site to improve your user experience\" [level=2] [ref=e7]\n          - paragraph [ref=e8]: By selecting the Accept button, you agree for us to collect Cookies. We do not collect unless you accept.\n        - generic [ref=e9]:\n          - link \"Accept\" [ref=e10] [cursor=pointer]:\n            - /url: \"#\"\n          - generic [ref=e11] [cursor=pointer]: Decline all cookies\n          - link \"Cookies info\" [ref=e12] [cursor=pointer]:\n            - /url: /cookies\n  - link \"Skip to main content\" [ref=e13] [cursor=pointer]:\n    - /url: \"#main-content\"\n  - generic [ref=e14]:\n    - banner [ref=e15]:\n      - generic [ref=e19]:\n        - heading \"North Devon Council\" [level=1] [ref=e24]:\n          - link \"North Devon Council\" [ref=e25] [cursor=pointer]:\n            - /url: /\n            - img \"North Devon Council\" [ref=e26] [cursor=pointer]\n        - generic [ref=e27]:\n          - 'button \"Services: expand and jump to services menu\" [ref=e28] [cursor=pointer]':\n            - generic [ref=e29] [cursor=pointer]: Services\n          - text: \n        - navigation \"Main navigation\" [ref=e34]:\n          - heading \"Main navigation\" [level=2] [ref=e35]\n          - list [ref=e36]:\n            - listitem [ref=e37]:\n              - link \"Self service account\" [ref=e38] [cursor=pointer]:\n                - /url: https://my.northdevon.gov.uk/\n            - listitem [ref=e39]:\n              - link \"Sign up for Email updates\" [ref=e40] [cursor=pointer]:\n                - /url: https://public.govdelivery.com/accounts/UKNORTHDEVON/subscriber/new\n    - generic [ref=e45]:\n      - generic [ref=e46]:\n        - generic [ref=e47]: Search\n        - textbox \"Search\" [ref=e48]\n      - button \"Search \" [ref=e50] [cursor=pointer]:\n        - generic [ref=e51] [cursor=pointer]: Search\n        - generic [ref=e52] [cursor=pointer]: \n    - navigation \"Breadcrumbs\" [ref=e57]:\n      - heading \"Breadcrumbs\" [level=2] [ref=e58]\n      - list [ref=e59]:\n        - listitem [ref=e60]:\n          - link \"Home\" [ref=e61] [cursor=pointer]:\n            - /url: /\n        - listitem [ref=e62]:\n          - text: /\n          - link \"Do it online\" [ref=e63] [cursor=pointer]:\n            - /url: /do-it-online\n        - listitem [ref=e64]: / Find it\n    - main [ref=e68]:\n      - generic [ref=e73]:\n        - heading \"Find it\" [level=1] [ref=e74]\n        - paragraph\n      - article [ref=e79]:\n        - generic [ref=e82]:\n          - generic [ref=e85]:\n            - generic [ref=e88]:\n              - heading \"Public facilities and services\" [level=2] [ref=e89]\n              - list [ref=e90]:\n                - listitem [ref=e91]:\n                  - article [ref=e92]:\n                    - heading \"View the North Devon web map\" [level=3] [ref=e93]:\n                      - link \"View the North Devon web map\" [ref=e94] [cursor=pointer]:\n                        - /url: https://northdevon.cloud.cadcorp.com/webmap/en-gb/PublicMap/Webmap#/frontPage\n                - listitem [ref=e95]:\n                  - article [ref=e96]:\n                    - heading \"Find your nearest recycling centre\" [level=3] [ref=e97]:\n                      - link \"Find your nearest recycling centre\" [ref=e98] [cursor=pointer]:\n                        - /url: https://www.devon.gov.uk/wasteandrecycling/centre/\n                - listitem [ref=e99]:\n                  - article [ref=e100]:\n                    - heading \"Find a public toilet\" [level=3] [ref=e101]:\n                      - link \"Find a public toilet\" [ref=e102] [cursor=pointer]:\n                        - /url: /leisure-and-lifestyle/public-toilets\n                - listitem [ref=e103]:\n                  - article [ref=e104]:\n                    - heading \"Guide to council responsibilities\" [level=3] [ref=e105]:\n                      - link \"Guide to council responsibilities\" [ref=e106] [cursor=pointer]:\n                        - /url: /council/how-the-council-works/who-does-what-your-guide-council-responsibilities\n            - generic [ref=e108]:\n              - heading \"My neighbourhood\" [level=2] [ref=e109]\n              - list [ref=e110]:\n                - listitem [ref=e111]:\n                  - article [ref=e112]:\n                    - heading \"Find information about your property and neighbourhood\" [level=3] [ref=e113]:\n                      - link \"Find information about your property and neighbourhood\" [ref=e114] [cursor=pointer]:\n                        - /url: https://my.northdevon.gov.uk/service/my_neighbourhood\n                - listitem [ref=e115]:\n                  - article [ref=e116]:\n                    - heading \"View North Devon planning applications\" [level=3] [ref=e117]:\n                      - link \"View North Devon planning applications\" [ref=e118] [cursor=pointer]:\n                        - /url: https://planning.northdevon.gov.uk/\n            - generic [ref=e120]:\n              - heading \"Council offices and buildings\" [level=2] [ref=e121]\n              - list [ref=e122]:\n                - listitem [ref=e123]:\n                  - article [ref=e124]:\n                    - heading \"Town Centre Hub, Barnstaple\" [level=3] [ref=e125]:\n                      - link \"Town Centre Hub, Barnstaple\" [ref=e126] [cursor=pointer]:\n                        - /url: https://www.northdevon.gov.uk/contact-us#:~:text=Barnstaple%20Town%20Centre,Barnstaple%0AEX31%201UL\n                - listitem [ref=e127]:\n                  - article [ref=e128]:\n                    - heading \"The Ilfracombe Centre, Ilfracombe\" [level=3] [ref=e129]:\n                      - link \"The Ilfracombe Centre, Ilfracombe\" [ref=e130] [cursor=pointer]:\n                        - /url: https://www.northdevon.gov.uk/contact-us#:~:text=The%20Ilfracombe%20Centre,Ilfracombe%0AEX34%209QB\n                - listitem [ref=e131]:\n                  - article [ref=e132]:\n                    - heading \"The Amory Centre, South Molton\" [level=3] [ref=e133]:\n                      - link \"The Amory Centre, South Molton\" [ref=e134] [cursor=pointer]:\n                        - /url: https://www.northdevon.gov.uk/contact-us#:~:text=The%20Amory%20Centre,Molton%0AEX36%203BU\n          - generic [ref=e138]:\n            - generic [ref=e141]:\n              - heading \"Car Parks\" [level=2] [ref=e142]\n              - list [ref=e143]:\n                - listitem [ref=e144]:\n                  - article [ref=e145]:\n                    - heading \"Disabled car parking\" [level=3] [ref=e146]:\n                      - link \"Disabled car parking\" [ref=e147] [cursor=pointer]:\n                        - /url: /parking/car-parks\n                - listitem [ref=e148]:\n                  - article [ref=e149]:\n                    - heading \"Ilfracombe car parks\" [level=3] [ref=e150]:\n                      - link \"Ilfracombe car parks\" [ref=e151] [cursor=pointer]:\n                        - /url: /parking/car-parks\n                - listitem [ref=e152]:\n                  - article [ref=e153]:\n                    - heading \"Barnstaple car parks\" [level=3] [ref=e154]:\n                      - link \"Barnstaple car parks\" [ref=e155] [cursor=pointer]:\n                        - /url: /parking/car-parks\n                - listitem [ref=e156]:\n                  - article [ref=e157]:\n                    - heading \"Lynton and Lynmouth car parks\" [level=3] [ref=e158]:\n                      - link \"Lynton and Lynmouth car parks\" [ref=e159] [cursor=pointer]:\n                        - /url: /parking/car-parks\n            - generic [ref=e161]:\n              - heading \"Voting and Elections\" [level=2] [ref=e162]\n              - list [ref=e163]:\n                - listitem [ref=e164]:\n                  - article [ref=e165]:\n                    - heading \"Find out how to vote\" [level=3] [ref=e166]:\n                      - link \"Find out how to vote\" [ref=e167] [cursor=pointer]:\n                        - /url: https://www.gov.uk/how-to-vote\n                - listitem [ref=e168]:\n                  - article [ref=e169]:\n                    - heading \"Find your nearest polling station\" [level=3] [ref=e170]:\n                      - link \"Find your nearest polling station\" [ref=e171] [cursor=pointer]:\n                        - /url: https://my.northdevon.gov.uk/service/my_neighbourhood\n                - listitem [ref=e172]:\n                  - article [ref=e173]:\n                    - heading \"Councillors by ward online map\" [level=3] [ref=e174]:\n                      - link \"Councillors by ward online map\" [ref=e175] [cursor=pointer]:\n                        - /url: /councillors-by-ward-map\n                - listitem [ref=e176]:\n                  - article [ref=e177]:\n                    - heading \"Find your councillor list\" [level=3] [ref=e178]:\n                      - link \"Find your councillor list\" [ref=e179] [cursor=pointer]:\n                        - /url: https://democracy.northdevon.gov.uk/mgMemberIndex.aspx?bcr=1\n                - listitem [ref=e180]:\n                  - article [ref=e181]:\n                    - heading \"Browse committee meetings\" [level=3] [ref=e182]:\n                      - link \"Browse committee meetings\" [ref=e183] [cursor=pointer]:\n                        - /url: https://democracy.northdevon.gov.uk/ieDocHome.aspx?bcr=1\n            - generic [ref=e185]:\n              - heading \"HR and recruitment\" [level=2] [ref=e186]\n              - list [ref=e187]:\n                - listitem [ref=e188]:\n                  - article [ref=e189]:\n                    - heading \"Search current job vacancies\" [level=3] [ref=e190]:\n                      - link \"Search current job vacancies\" [ref=e191] [cursor=pointer]:\n                        - /url: https://ce0498li.webitrent.com/ce0498li_webrecruitment/wrd/run/ETREC179GF.open?WVID=47164616B5\n                - listitem [ref=e192]:\n                  - article [ref=e193]:\n                    - heading \"Human resources policies\" [level=3] [ref=e194]:\n                      - link \"Human resources policies\" [ref=e195] [cursor=pointer]:\n                        - /url: /council/strategies-plans-and-policies/human-resources-policies\n                - listitem [ref=e196]:\n                  - article [ref=e197]:\n                    - heading \"NDC Open Data\" [level=3] [ref=e198]:\n                      - link \"NDC Open Data\" [ref=e199] [cursor=pointer]:\n                        - /url: https://northdevon-self.achieveservice.com/service/results?DS=4005\n          - generic [ref=e203]:\n            - generic [ref=e206]:\n              - heading \"Council Tax\" [level=2] [ref=e207]\n              - list [ref=e208]:\n                - listitem [ref=e209]:\n                  - article [ref=e210]:\n                    - heading \"Access the Council Tax portal\" [level=3] [ref=e211]:\n                      - link \"Access the Council Tax portal\" [ref=e212] [cursor=pointer]:\n                        - /url: https://revenues.northdevon.gov.uk/scripts/OPENPortal-Live.wsc/common/login.p\n                - listitem [ref=e213]:\n                  - article [ref=e214]:\n                    - heading \"View your Council Tax Account\" [level=3] [ref=e215]:\n                      - link \"View your Council Tax Account\" [ref=e216] [cursor=pointer]:\n                        - /url: https://revenues.northdevon.gov.uk/scripts/OPENPortal-Live.wsc/common/login.p\n            - generic [ref=e218]:\n              - heading \"Business Rates\" [level=2] [ref=e219]\n              - list [ref=e220]:\n                - listitem [ref=e221]:\n                  - article [ref=e222]:\n                    - heading \"Access the Business Rates portal\" [level=3] [ref=e223]:\n                      - link \"Access the Business Rates portal\" [ref=e224] [cursor=pointer]:\n                        - /url: https://revenues.northdevon.gov.uk/scripts/OPENPortal-Live.wsc/common/login.p\n                - listitem [ref=e225]:\n                  - article [ref=e226]:\n                    - heading \"View your Business Rates account\" [level=3] [ref=e227]:\n                      - link \"View your Business Rates account\" [ref=e228] [cursor=pointer]:\n                        - /url: https://revenues.northdevon.gov.uk/scripts/OPENPortal-Live.wsc/common/login.p\n            - generic [ref=e230]:\n              - heading \"Bins and recycling\" [level=2] [ref=e231]\n              - list [ref=e232]:\n                - listitem [ref=e233]:\n                  - article [ref=e234]:\n                    - heading \"Find your bin collection day\" [level=3] [ref=e235]:\n                      - link \"Find your bin collection day\" [ref=e236] [cursor=pointer]:\n                        - /url: https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\n                - listitem [ref=e237]:\n                  - article [ref=e238]:\n                    - heading \"View the bins and recycling calendar\" [level=3] [ref=e239]:\n                      - link \"View the bins and recycling calendar\" [ref=e240] [cursor=pointer]:\n                        - /url: https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\n          - generic [ref=e244]:\n            - generic [ref=e247]:\n              - heading \"Public Register\" [level=2] [ref=e248]\n              - list [ref=e249]:\n                - listitem [ref=e250]:\n                  - article [ref=e251]:\n                    - heading \"Food public register\" [level=3] [ref=e252]:\n                      - link \"Food public register\" [ref=e253] [cursor=pointer]:\n                        - /url: https://environmentalhealth.northdevon.gov.uk/Northgate/ES/Presentation/Public/OnlineFoodBusiness\n                - listitem [ref=e254]:\n                  - article [ref=e255]:\n                    - heading \"Licensing public register\" [level=3] [ref=e256]:\n                      - link \"Licensing public register\" [ref=e257] [cursor=pointer]:\n                        - /url: https://licensing.northdevon.gov.uk/PAforLalpacLIVE/1/WcaHome\n                - listitem [ref=e258]:\n                  - article [ref=e259]:\n                    - heading \"Caravan and campsite public register\" [level=3] [ref=e260]:\n                      - link \"Caravan and campsite public register\" [ref=e261] [cursor=pointer]:\n                        - /url: https://environmentalhealth.northdevon.gov.uk/Northgate/ES/Presentation/Public/OnlineLicence\n                - listitem [ref=e262]:\n                  - article [ref=e263]:\n                    - heading \"Houses in multiple occupation public register\" [level=3] [ref=e264]:\n                      - link \"Houses in multiple occupation public register\" [ref=e265] [cursor=pointer]:\n                        - /url: https://environmentalhealth.northdevon.gov.uk/Northgate/ES/Presentation/Public/OnlineLicence\n                - listitem [ref=e266]:\n                  - article [ref=e267]:\n                    - heading \"Pollution prevention control public register\" [level=3] [ref=e268]:\n                      - link \"Pollution prevention control public register\" [ref=e269] [cursor=pointer]:\n                        - /url: https://www.northdevon.gov.uk/environment/air-quality/ppc-register/\n            - generic [ref=e271]:\n              - heading \"Jobs and Careers\" [level=2] [ref=e272]\n              - list [ref=e273]:\n                - listitem [ref=e274]:\n                  - article [ref=e275]:\n                    - heading \"Jobs and Careers Portal\" [level=3] [ref=e276]:\n                      - link \"Jobs and Careers Portal\" [ref=e277] [cursor=pointer]:\n                        - /url: /jobs-and-careers\n                - listitem [ref=e278]:\n                  - article [ref=e279]:\n                    - heading \"Find all current job vacancies on itrent\" [level=3] [ref=e280]:\n                      - link \"Find all current job vacancies on itrent\" [ref=e281] [cursor=pointer]:\n                        - /url: https://ce0498li.webitrent.com/ce0498li_webrecruitment/wrd/run/ETREC105GF.open?WVID=47164616B5\n    - article [ref=e290]:\n      - generic [ref=e292]:\n        - heading \"Help us improve this site\" [level=2] [ref=e293]\n        - link \"Give feedback\" [ref=e296] [cursor=pointer]:\n          - /url: https://my.northdevon.gov.uk/service/Tell_us_how_we_can_improve_this_page?url=https%3A//www.northdevon.gov.uk/do-it-online/find-it\n    - contentinfo [ref=e297]:\n      - generic [ref=e300]:\n        - list [ref=e307]:\n          - listitem [ref=e308]:\n            - link \"Terms and conditions\" [ref=e309] [cursor=pointer]:\n              - /url: /terms-and-conditions\n          - listitem [ref=e310]:\n            - link \"Privacy notice\" [ref=e311] [cursor=pointer]:\n              - /url: /council/data-protection-and-freedom-information/privacy-and-data-protection\n          - listitem [ref=e312]:\n            - link \"Accessibility\" [ref=e313] [cursor=pointer]:\n              - /url: /accessibility/\n          - listitem [ref=e314]:\n            - link \"Cookies\" [ref=e315] [cursor=pointer]:\n              - /url: /cookies/\n          - listitem [ref=e316]:\n            - link \"Contact us\" [ref=e317] [cursor=pointer]:\n              - /url: /contact-us\n          - listitem [ref=e318]:\n            - link \"Services\" [ref=e319] [cursor=pointer]:\n              - /url: /services\n        - paragraph [ref=e326]\n        - list [ref=e333]:\n          - listitem [ref=e334]:\n            - link \"Feedback, complaints and whistleblowing\" [ref=e335] [cursor=pointer]:\n              - /url: /council/feedback-complaints-and-whistleblowing\n          - listitem [ref=e336]:\n            - link \"North Devon Council Social Media Policy\" [ref=e337] [cursor=pointer]:\n              - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n          - listitem [ref=e338]:\n            - link \" North Devon Council on Facebook\" [ref=e339] [cursor=pointer]:\n              - /url: https://www.facebook.com/northdevoncouncil/\n              - generic [ref=e340] [cursor=pointer]: \n              - text: North Devon Council on Facebook\n          - listitem [ref=e341]:\n            - link \" North Devon Council on LinkedIn\" [ref=e342] [cursor=pointer]:\n              - /url: https://www.linkedin.com/company/north-devon-council\n              - generic [ref=e343] [cursor=pointer]: \n              - text: North Devon Council on LinkedIn\n          - listitem [ref=e344]:\n            - link \" North Devon Council on Instagram\" [ref=e345] [cursor=pointer]:\n              - /url: https://www.instagram.com/northdevoncouncil/\n              - generic [ref=e346] [cursor=pointer]: \n              - text: North Devon Council on Instagram\n          - listitem [ref=e347]:\n            - text: Powered by\n            - link \"LocalGovDrupal\" [ref=e348] [cursor=pointer]:\n              - /url: https://localgovdrupal.org/\n  - button \"Open chat\" [ref=e356] [cursor=pointer]:\n    - img \"Message bubble icon\" [ref=e357] [cursor=pointer]\n    - generic [ref=e360] [cursor=pointer]: Chat with EVA\n```",
+          "tool_call_id": "pyd_ai_fc4903ef166f47a1b046f40329c0e877",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:01:56.250867Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar"
+          },
+          "tool_call_id": "pyd_ai_9bcc4090f2ab460d8336928554cb37dc",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 12964,
+        "response_tokens": 22,
+        "total_tokens": 13102,
+        "details": {
+          "cached_content_tokens": 7035,
+          "thoughts_tokens": 116,
+          "text_cache_tokens": 7035,
+          "text_candidates_tokens": 22,
+          "text_prompt_tokens": 12964
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:01:57.570036Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "9PN9aLSOGIP32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "content": "### Ran Playwright code\n```js\n// Navigate to https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\nawait page.goto('https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar');\n```\n\n### New console messages\n- [WARNING] reCAPTCHA couldn't find user-provided function: onloadCallback @ https://www.gstatic.com/r...\n- [WARNING] Google Maps JavaScript API has been loaded directly without loading=async. This can result...\n\n### Page state\n- Page URL: https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\n- Page Title: WasteRecyclingCalendarForm - Self\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - link \"Skip to content\" [ref=e2] [cursor=pointer]:\n    - /url: \"#self-content\"\n  - alertdialog \"Cookie policy notice\" [ref=e3]:\n    - generic [ref=e4]:\n      - paragraph [ref=e5]: This site is powered by Granicus.\n      - paragraph [ref=e6]: To provide you with the best online experience we use a range of essential site cookies. These essential cookies enable you to remain logged in and for your site preferences to be remembered, in addition to other essential functions. Granicus does not use analytics, advertising or tracking cookies. In addition to these essential cookies, the organisation which owns this site may choose to place supplementary cookies, for example to support analytics. Should they choose to do this, they have an obligation to let you know where this is the case, and what the benefits and costs are, who they share it with, and what options you have.\n      - paragraph [ref=e7]:\n        - text: More information on\n        - link \"Granicus' cookie policy.\" [ref=e8] [cursor=pointer]:\n          - /url: https://support.granicus.com/s/article/govService-Cookie-Statement\n      - button \"Close\" [ref=e9] [cursor=pointer]\n  - generic [ref=e12]:\n    - link \"North Devon Council\" [ref=e14] [cursor=pointer]:\n      - /url: https://www.northdevon.gov.uk/\n      - img \"North Devon Council\" [ref=e15] [cursor=pointer]\n    - list [ref=e16]:\n      - listitem [ref=e17]:\n        - link \"Register\" [ref=e18] [cursor=pointer]:\n          - /url: /ssauth/register?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en\n      - listitem [ref=e19]:\n        - link \"Login\" [ref=e20] [cursor=pointer]:\n          - /url: /login/?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en&appName=Self\n  - banner\n  - navigation [ref=e24]:\n    - generic [ref=e26]:\n      - generic [ref=e27]:\n        - link \"Home\" [ref=e28] [cursor=pointer]:\n          - /url: /en\n        - link \"Services\" [ref=e29] [cursor=pointer]:\n          - /url: /MyServices\n      - text: \n  - iframe [ref=e37]:\n    - progressbar \"progress bar\" [ref=f1e6]:\n      - generic [ref=f1e7]: Loading Form ...\n      - generic [ref=f1e8]: 60%\n  - generic [ref=e40]:\n    - list [ref=e42]:\n      - listitem [ref=e43]:\n        - link \"Terms and conditions\" [ref=e44] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/terms-and-conditions\n      - listitem [ref=e45]:\n        - link \"Accessibility\" [ref=e46] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/accessibility/\n      - listitem [ref=e47]:\n        - link \"Privacy notice\" [ref=e48] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/data-protection-and-freedom-information/privacy-and-data-protection\n      - listitem [ref=e49]:\n        - link \"Contact us\" [ref=e50] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/contact-us\n      - listitem [ref=e51]:\n        - link \"Cookies\" [ref=e52] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/cookies/\n      - listitem [ref=e53]:\n        - link \"Services\" [ref=e54] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/services\n    - list [ref=e56]:\n      - listitem [ref=e57]:\n        - link \" North Devon Council on Facebook\" [ref=e58] [cursor=pointer]:\n          - /url: https://www.facebook.com/northdevoncouncil/\n          - generic [ref=e59] [cursor=pointer]: \n          - text: North Devon Council on Facebook\n      - listitem [ref=e60]:\n        - link \" North Devon Council on LinkedIn\" [ref=e61] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/north-devon-council\n          - generic [ref=e62] [cursor=pointer]: \n          - text: North Devon Council on LinkedIn\n      - listitem [ref=e63]:\n        - link \" North Devon Council on Instagram\" [ref=e64] [cursor=pointer]:\n          - /url: https://www.instagram.com/northdevoncouncil/\n          - generic [ref=e65] [cursor=pointer]: \n          - text: North Devon Council on Instagram\n      - listitem [ref=e66]:\n        - link \"North Devon Council Social Media Policy\" [ref=e67] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n```",
+          "tool_call_id": "pyd_ai_9bcc4090f2ab460d8336928554cb37dc",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:01:59.659370Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_wait_for",
+          "args": {
+            "time": 5
+          },
+          "tool_call_id": "pyd_ai_471962f6c8154427877d4caffbeedebf",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 14542,
+        "response_tokens": 7,
+        "total_tokens": 14657,
+        "details": {
+          "cached_content_tokens": 3548,
+          "thoughts_tokens": 108,
+          "text_cache_tokens": 3548,
+          "text_candidates_tokens": 7,
+          "text_prompt_tokens": 14542
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:02:01.202962Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "9_N9aKD9LISiz_IPj8Wm2AE"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_wait_for",
+          "content": "### Ran Playwright code\n```js\nawait new Promise(f => setTimeout(f, 5 * 1000));\n```\n\n### New console messages\n- [WARNING] [Lookup] No Data to populate: [] @ https://my.northdevon.gov.uk/fillform/scripts/AchieveFo...\n\n### Page state\n- Page URL: https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\n- Page Title: WasteRecyclingYour addressForm - Self\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - link \"Skip to content\" [ref=e2] [cursor=pointer]:\n    - /url: \"#self-content\"\n  - alertdialog \"Cookie policy notice\" [ref=e3]:\n    - generic [ref=e4]:\n      - paragraph [ref=e5]: This site is powered by Granicus.\n      - paragraph [ref=e6]: To provide you with the best online experience we use a range of essential site cookies. These essential cookies enable you to remain logged in and for your site preferences to be remembered, in addition to other essential functions. Granicus does not use analytics, advertising or tracking cookies. In addition to these essential cookies, the organisation which owns this site may choose to place supplementary cookies, for example to support analytics. Should they choose to do this, they have an obligation to let you know where this is the case, and what the benefits and costs are, who they share it with, and what options you have.\n      - paragraph [ref=e7]:\n        - text: More information on\n        - link \"Granicus' cookie policy.\" [ref=e8] [cursor=pointer]:\n          - /url: https://support.granicus.com/s/article/govService-Cookie-Statement\n      - button \"Close\" [ref=e9] [cursor=pointer]\n  - generic [ref=e12]:\n    - link \"North Devon Council\" [ref=e14] [cursor=pointer]:\n      - /url: https://www.northdevon.gov.uk/\n      - img \"North Devon Council\" [ref=e15] [cursor=pointer]\n    - list [ref=e16]:\n      - listitem [ref=e17]:\n        - link \"Register\" [ref=e18] [cursor=pointer]:\n          - /url: /ssauth/register?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en\n      - listitem [ref=e19]:\n        - link \"Login\" [ref=e20] [cursor=pointer]:\n          - /url: /login/?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en&appName=Self\n  - banner\n  - navigation [ref=e24]:\n    - generic [ref=e26]:\n      - generic [ref=e27]:\n        - link \"Home\" [ref=e28] [cursor=pointer]:\n          - /url: /en\n        - link \"Services\" [ref=e29] [cursor=pointer]:\n          - /url: /MyServices\n      - text: \n  - iframe [ref=e37]:\n    - generic [ref=f1e9]:\n      - status [ref=f1e10]: loading completed\n      - generic [ref=f1e12]:\n        - generic [ref=f1e14]:\n          - generic [ref=f1e15]: Your address\n          - button \"Open and close menu\" [ref=f1e16]:\n            - generic [ref=f1e17]: \n        - tabpanel \"Your address\" [ref=f1e19]:\n          - generic [ref=f1e20]: Your address\n          - heading \" Bin collection details\" [level=1] [ref=f1e24]:\n            - generic [ref=f1e25]: \n            - text: Bin collection details\n          - generic [ref=f1e30]:\n            - generic [ref=f1e32] [cursor=pointer]: Postcode\n            - textbox \"Postcode\" [ref=f1e34]\n          - generic [ref=f1e37]:\n            - generic [ref=f1e39] [cursor=pointer]: Choose address\n            - combobox \"Choose address Select...\" [ref=f1e41]:\n              - option \"Select...\" [selected]\n        - navigation [ref=f1e51]:\n          - button \" Cancel\" [ref=f1e53] [cursor=pointer]:\n            - generic [ref=f1e54] [cursor=pointer]: \n            - generic [ref=f1e55] [cursor=pointer]: Cancel\n          - button \"Next \" [ref=f1e57] [cursor=pointer]:\n            - generic [ref=f1e58] [cursor=pointer]: Next\n            - generic [ref=f1e59] [cursor=pointer]: \n  - generic [ref=e40]:\n    - list [ref=e42]:\n      - listitem [ref=e43]:\n        - link \"Terms and conditions\" [ref=e44] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/terms-and-conditions\n      - listitem [ref=e45]:\n        - link \"Accessibility\" [ref=e46] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/accessibility/\n      - listitem [ref=e47]:\n        - link \"Privacy notice\" [ref=e48] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/data-protection-and-freedom-information/privacy-and-data-protection\n      - listitem [ref=e49]:\n        - link \"Contact us\" [ref=e50] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/contact-us\n      - listitem [ref=e51]:\n        - link \"Cookies\" [ref=e52] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/cookies/\n      - listitem [ref=e53]:\n        - link \"Services\" [ref=e54] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/services\n    - list [ref=e56]:\n      - listitem [ref=e57]:\n        - link \" North Devon Council on Facebook\" [ref=e58] [cursor=pointer]:\n          - /url: https://www.facebook.com/northdevoncouncil/\n          - generic [ref=e59] [cursor=pointer]: \n          - text: North Devon Council on Facebook\n      - listitem [ref=e60]:\n        - link \" North Devon Council on LinkedIn\" [ref=e61] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/north-devon-council\n          - generic [ref=e62] [cursor=pointer]: \n          - text: North Devon Council on LinkedIn\n      - listitem [ref=e63]:\n        - link \" North Devon Council on Instagram\" [ref=e64] [cursor=pointer]:\n          - /url: https://www.instagram.com/northdevoncouncil/\n          - generic [ref=e65] [cursor=pointer]: \n          - text: North Devon Council on Instagram\n      - listitem [ref=e66]:\n        - link \"North Devon Council Social Media Policy\" [ref=e67] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n```",
+          "tool_call_id": "pyd_ai_471962f6c8154427877d4caffbeedebf",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:02:06.239923Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "args": {
+            "element": "textbox \"Postcode\"",
+            "text": "EX16 8AA",
+            "ref": "f1e34"
+          },
+          "tool_call_id": "pyd_ai_0a6239b180a24da6a79613835721d37f",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 16446,
+        "response_tokens": 21,
+        "total_tokens": 16540,
+        "details": {
+          "cached_content_tokens": 12524,
+          "thoughts_tokens": 73,
+          "text_cache_tokens": 12524,
+          "text_candidates_tokens": 21,
+          "text_prompt_tokens": 16446
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:02:07.963100Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "_vN9aLOHGK6tz_IPye_36Ak"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "content": "### Ran Playwright code\n```js\n// Fill \"EX16 8AA\" into \"textbox \"Postcode\"\"\nawait page.locator('iframe[title=\"WasteRecyclingCalendarForm\"]').contentFrame().getByRole('textbox', { name: 'Postcode' }).fill('EX16 8AA');\n```\n\n### Page state\n- Page URL: https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\n- Page Title: WasteRecyclingYour addressForm - Self\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - link \"Skip to content\" [ref=e2] [cursor=pointer]:\n    - /url: \"#self-content\"\n  - alertdialog \"Cookie policy notice\" [ref=e3]:\n    - generic [ref=e4]:\n      - paragraph [ref=e5]: This site is powered by Granicus.\n      - paragraph [ref=e6]: To provide you with the best online experience we use a range of essential site cookies. These essential cookies enable you to remain logged in and for your site preferences to be remembered, in addition to other essential functions. Granicus does not use analytics, advertising or tracking cookies. In addition to these essential cookies, the organisation which owns this site may choose to place supplementary cookies, for example to support analytics. Should they choose to do this, they have an obligation to let you know where this is the case, and what the benefits and costs are, who they share it with, and what options you have.\n      - paragraph [ref=e7]:\n        - text: More information on\n        - link \"Granicus' cookie policy.\" [ref=e8] [cursor=pointer]:\n          - /url: https://support.granicus.com/s/article/govService-Cookie-Statement\n      - button \"Close\" [ref=e9] [cursor=pointer]\n  - generic [ref=e12]:\n    - link \"North Devon Council\" [ref=e14] [cursor=pointer]:\n      - /url: https://www.northdevon.gov.uk/\n      - img \"North Devon Council\" [ref=e15] [cursor=pointer]\n    - list [ref=e16]:\n      - listitem [ref=e17]:\n        - link \"Register\" [ref=e18] [cursor=pointer]:\n          - /url: /ssauth/register?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en\n      - listitem [ref=e19]:\n        - link \"Login\" [ref=e20] [cursor=pointer]:\n          - /url: /login/?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en&appName=Self\n  - banner\n  - navigation [ref=e24]:\n    - generic [ref=e26]:\n      - generic [ref=e27]:\n        - link \"Home\" [ref=e28] [cursor=pointer]:\n          - /url: /en\n        - link \"Services\" [ref=e29] [cursor=pointer]:\n          - /url: /MyServices\n      - text: \n  - iframe [active] [ref=e37]:\n    - generic [ref=f1e9]:\n      - status [ref=f1e10]: loading completed\n      - generic [ref=f1e12]:\n        - generic [ref=f1e14]:\n          - generic [ref=f1e15]: Your address\n          - button \"Open and close menu\" [ref=f1e16]:\n            - generic [ref=f1e17]: \n        - tabpanel \"Your address\" [ref=f1e19]:\n          - generic [ref=f1e20]: Your address\n          - heading \" Bin collection details\" [level=1] [ref=f1e24]:\n            - generic [ref=f1e25]: \n            - text: Bin collection details\n          - generic [ref=f1e30]:\n            - generic [ref=f1e32] [cursor=pointer]: Postcode\n            - textbox \"Postcode\" [active] [ref=f1e34]: EX16 8AA\n          - generic [ref=f1e37]:\n            - generic [ref=f1e39] [cursor=pointer]: Choose address\n            - combobox [ref=f1e60]:\n              - option \"Select...\" [selected]\n              - option \"1 West Street, Witheridge\"\n              - option \"10 West Street, Witheridge\"\n              - option \"11 West Street, Witheridge\"\n              - option \"Highfield 12 West Street, Witheridge\"\n              - option \"Wisteria 13 West Street, Witheridge\"\n              - option \"14 West Street, Witheridge\"\n              - option \"15 West Street, Witheridge\"\n              - option \"15a West Street, Witheridge\"\n              - option \"The Old Stable 15b West Street, Witheridge\"\n              - option \"16 West Street, Witheridge\"\n              - option \"Central Stores 17 West Street, Witheridge\"\n              - option \"Flat 17 West Street, Witheridge\"\n              - option \"18 West Street, Witheridge\"\n              - option \"19 West Street, Witheridge\"\n              - option \"Two Moors Way Bed And Breakfast 19 West Street, Witheridge\"\n              - option \"2 West Street, Witheridge\"\n              - option \"Primrose Cottage 20 West Street, Witheridge\"\n              - option \"21 West Street, Witheridge\"\n              - option \"23 West Street, Witheridge\"\n              - option \"Lantern Cottage 24 West Street, Witheridge\"\n              - option \"25 West Street, Witheridge\"\n              - option \"26 West Street, Witheridge\"\n              - option \"27 West Street, Witheridge\"\n              - option \"28 West Street, Witheridge\"\n              - option \"29 West Street, Witheridge\"\n              - option \"The Old Bakehouse 29 West Street, Witheridge\"\n              - option \"2a West Street, Witheridge\"\n              - option \"3 West Street, Witheridge\"\n              - option \"30 West Street, Witheridge\"\n              - option \"31 West Street, Witheridge\"\n              - option \"35 West Street, Witheridge\"\n              - option \"A Little Bit Moore 37 West Street, Witheridge\"\n              - option \"39 West Street, Witheridge\"\n              - option \"The Retreat 39 West Street, Witheridge\"\n              - option \"The Cottage 4 West Street, Witheridge\"\n              - option \"Two Moors Retreat 4 West Street, Witheridge\"\n              - option \"Cannington House 5 West Street, Witheridge\"\n              - option \"8 West Street, Witheridge\"\n              - option \"9 West Street, Witheridge\"\n              - option \"Copplestone West Street, Witheridge\"\n              - option \"Downes View West Street, Witheridge\"\n              - option \"Leigh Cottage West Street, Witheridge\"\n              - option \"Methodist Church West Street, Witheridge\"\n              - option \"Stoneacre West Street, Witheridge\"\n              - option \"The Linney West Street, Witheridge\"\n              - option \"West View Cottage West Street, Witheridge\"\n              - option \"Westcroft West Street, Witheridge\"\n              - option \"Westerly West Street, Witheridge\"\n        - navigation [ref=f1e51]:\n          - button \" Cancel\" [ref=f1e53] [cursor=pointer]:\n            - generic [ref=f1e54] [cursor=pointer]: \n            - generic [ref=f1e55] [cursor=pointer]: Cancel\n          - button \"Next \" [ref=f1e57] [cursor=pointer]:\n            - generic [ref=f1e58] [cursor=pointer]: Next\n            - generic [ref=f1e59] [cursor=pointer]: \n  - generic [ref=e40]:\n    - list [ref=e42]:\n      - listitem [ref=e43]:\n        - link \"Terms and conditions\" [ref=e44] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/terms-and-conditions\n      - listitem [ref=e45]:\n        - link \"Accessibility\" [ref=e46] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/accessibility/\n      - listitem [ref=e47]:\n        - link \"Privacy notice\" [ref=e48] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/data-protection-and-freedom-information/privacy-and-data-protection\n      - listitem [ref=e49]:\n        - link \"Contact us\" [ref=e50] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/contact-us\n      - listitem [ref=e51]:\n        - link \"Cookies\" [ref=e52] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/cookies/\n      - listitem [ref=e53]:\n        - link \"Services\" [ref=e54] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/services\n    - list [ref=e56]:\n      - listitem [ref=e57]:\n        - link \" North Devon Council on Facebook\" [ref=e58] [cursor=pointer]:\n          - /url: https://www.facebook.com/northdevoncouncil/\n          - generic [ref=e59] [cursor=pointer]: \n          - text: North Devon Council on Facebook\n      - listitem [ref=e60]:\n        - link \" North Devon Council on LinkedIn\" [ref=e61] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/north-devon-council\n          - generic [ref=e62] [cursor=pointer]: \n          - text: North Devon Council on LinkedIn\n      - listitem [ref=e63]:\n        - link \" North Devon Council on Instagram\" [ref=e64] [cursor=pointer]:\n          - /url: https://www.instagram.com/northdevoncouncil/\n          - generic [ref=e65] [cursor=pointer]: \n          - text: North Devon Council on Instagram\n      - listitem [ref=e66]:\n        - link \"North Devon Council Social Media Policy\" [ref=e67] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n```",
+          "tool_call_id": "pyd_ai_0a6239b180a24da6a79613835721d37f",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:02:09.044281Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "args": {
+            "ref": "f1e60",
+            "element": "combobox",
+            "values": [
+              "1 West Street, Witheridge"
+            ]
+          },
+          "tool_call_id": "pyd_ai_b88d6470de6c46e890eb78343da67fd1",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 19041,
+        "response_tokens": 20,
+        "total_tokens": 19097,
+        "details": {
+          "thoughts_tokens": 36,
+          "text_candidates_tokens": 20,
+          "text_prompt_tokens": 19041
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:02:10.419919Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "AfR9aOybCISiz_IPj8Wm2AE"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "content": "### Ran Playwright code\n```js\n// Select options [1 West Street, Witheridge] in combobox\nawait page.locator('iframe[title=\"WasteRecyclingCalendarForm\"]').contentFrame().getByLabel('Choose address').selectOption(['1 West Street, Witheridge']);\n```\n\n### Page state\n- Page URL: https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\n- Page Title: WasteRecyclingYour addressForm - Self\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - link \"Skip to content\" [ref=e2] [cursor=pointer]:\n    - /url: \"#self-content\"\n  - alertdialog \"Cookie policy notice\" [ref=e3]:\n    - generic [ref=e4]:\n      - paragraph [ref=e5]: This site is powered by Granicus.\n      - paragraph [ref=e6]: To provide you with the best online experience we use a range of essential site cookies. These essential cookies enable you to remain logged in and for your site preferences to be remembered, in addition to other essential functions. Granicus does not use analytics, advertising or tracking cookies. In addition to these essential cookies, the organisation which owns this site may choose to place supplementary cookies, for example to support analytics. Should they choose to do this, they have an obligation to let you know where this is the case, and what the benefits and costs are, who they share it with, and what options you have.\n      - paragraph [ref=e7]:\n        - text: More information on\n        - link \"Granicus' cookie policy.\" [ref=e8] [cursor=pointer]:\n          - /url: https://support.granicus.com/s/article/govService-Cookie-Statement\n      - button \"Close\" [ref=e9] [cursor=pointer]\n  - generic [ref=e12]:\n    - link \"North Devon Council\" [ref=e14] [cursor=pointer]:\n      - /url: https://www.northdevon.gov.uk/\n      - img \"North Devon Council\" [ref=e15] [cursor=pointer]\n    - list [ref=e16]:\n      - listitem [ref=e17]:\n        - link \"Register\" [ref=e18] [cursor=pointer]:\n          - /url: /ssauth/register?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en\n      - listitem [ref=e19]:\n        - link \"Login\" [ref=e20] [cursor=pointer]:\n          - /url: /login/?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en&appName=Self\n  - banner\n  - navigation [ref=e24]:\n    - generic [ref=e26]:\n      - generic [ref=e27]:\n        - link \"Home\" [ref=e28] [cursor=pointer]:\n          - /url: /en\n        - link \"Services\" [ref=e29] [cursor=pointer]:\n          - /url: /MyServices\n      - text: \n  - iframe [active] [ref=e37]:\n    - generic [ref=f1e9]:\n      - status [ref=f1e10]: loading completed\n      - generic [ref=f1e12]:\n        - generic [ref=f1e14]:\n          - generic [ref=f1e15]: Your address\n          - button \"Open and close menu\" [ref=f1e16]:\n            - generic [ref=f1e17]: \n        - tabpanel \"Your address\" [ref=f1e19]:\n          - generic [ref=f1e20]: Your address\n          - heading \" Bin collection details\" [level=1] [ref=f1e24]:\n            - generic [ref=f1e25]: \n            - text: Bin collection details\n          - generic [ref=f1e30]:\n            - generic [ref=f1e32] [cursor=pointer]: Postcode\n            - textbox \"Postcode\" [active] [ref=f1e34]: EX16 8AA\n          - generic [ref=f1e37]:\n            - generic [ref=f1e39] [cursor=pointer]: Choose address\n            - combobox [ref=f1e60]:\n              - option \"Select...\"\n              - option \"1 West Street, Witheridge\" [selected]\n              - option \"10 West Street, Witheridge\"\n              - option \"11 West Street, Witheridge\"\n              - option \"Highfield 12 West Street, Witheridge\"\n              - option \"Wisteria 13 West Street, Witheridge\"\n              - option \"14 West Street, Witheridge\"\n              - option \"15 West Street, Witheridge\"\n              - option \"15a West Street, Witheridge\"\n              - option \"The Old Stable 15b West Street, Witheridge\"\n              - option \"16 West Street, Witheridge\"\n              - option \"Central Stores 17 West Street, Witheridge\"\n              - option \"Flat 17 West Street, Witheridge\"\n              - option \"18 West Street, Witheridge\"\n              - option \"19 West Street, Witheridge\"\n              - option \"Two Moors Way Bed And Breakfast 19 West Street, Witheridge\"\n              - option \"2 West Street, Witheridge\"\n              - option \"Primrose Cottage 20 West Street, Witheridge\"\n              - option \"21 West Street, Witheridge\"\n              - option \"23 West Street, Witheridge\"\n              - option \"Lantern Cottage 24 West Street, Witheridge\"\n              - option \"25 West Street, Witheridge\"\n              - option \"26 West Street, Witheridge\"\n              - option \"27 West Street, Witheridge\"\n              - option \"28 West Street, Witheridge\"\n              - option \"29 West Street, Witheridge\"\n              - option \"The Old Bakehouse 29 West Street, Witheridge\"\n              - option \"2a West Street, Witheridge\"\n              - option \"3 West Street, Witheridge\"\n              - option \"30 West Street, Witheridge\"\n              - option \"31 West Street, Witheridge\"\n              - option \"35 West Street, Witheridge\"\n              - option \"A Little Bit Moore 37 West Street, Witheridge\"\n              - option \"39 West Street, Witheridge\"\n              - option \"The Retreat 39 West Street, Witheridge\"\n              - option \"The Cottage 4 West Street, Witheridge\"\n              - option \"Two Moors Retreat 4 West Street, Witheridge\"\n              - option \"Cannington House 5 West Street, Witheridge\"\n              - option \"8 West Street, Witheridge\"\n              - option \"9 West Street, Witheridge\"\n              - option \"Copplestone West Street, Witheridge\"\n              - option \"Downes View West Street, Witheridge\"\n              - option \"Leigh Cottage West Street, Witheridge\"\n              - option \"Methodist Church West Street, Witheridge\"\n              - option \"Stoneacre West Street, Witheridge\"\n              - option \"The Linney West Street, Witheridge\"\n              - option \"West View Cottage West Street, Witheridge\"\n              - option \"Westcroft West Street, Witheridge\"\n              - option \"Westerly West Street, Witheridge\"\n            - text: ✔\n          - generic [ref=f1e111]:\n            - heading \"Your address\" [level=2] [ref=f1e112]\n            - text: 1 West Street Witheridge TIVERTON EX16 8AA\n        - navigation [ref=f1e51]:\n          - button \" Cancel\" [ref=f1e53] [cursor=pointer]:\n            - generic [ref=f1e54] [cursor=pointer]: \n            - generic [ref=f1e55] [cursor=pointer]: Cancel\n          - button \"Next \" [ref=f1e57] [cursor=pointer]:\n            - generic [ref=f1e58] [cursor=pointer]: Next\n            - generic [ref=f1e59] [cursor=pointer]: \n  - generic [ref=e40]:\n    - list [ref=e42]:\n      - listitem [ref=e43]:\n        - link \"Terms and conditions\" [ref=e44] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/terms-and-conditions\n      - listitem [ref=e45]:\n        - link \"Accessibility\" [ref=e46] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/accessibility/\n      - listitem [ref=e47]:\n        - link \"Privacy notice\" [ref=e48] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/data-protection-and-freedom-information/privacy-and-data-protection\n      - listitem [ref=e49]:\n        - link \"Contact us\" [ref=e50] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/contact-us\n      - listitem [ref=e51]:\n        - link \"Cookies\" [ref=e52] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/cookies/\n      - listitem [ref=e53]:\n        - link \"Services\" [ref=e54] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/services\n    - list [ref=e56]:\n      - listitem [ref=e57]:\n        - link \" North Devon Council on Facebook\" [ref=e58] [cursor=pointer]:\n          - /url: https://www.facebook.com/northdevoncouncil/\n          - generic [ref=e59] [cursor=pointer]: \n          - text: North Devon Council on Facebook\n      - listitem [ref=e60]:\n        - link \" North Devon Council on LinkedIn\" [ref=e61] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/north-devon-council\n          - generic [ref=e62] [cursor=pointer]: \n          - text: North Devon Council on LinkedIn\n      - listitem [ref=e63]:\n        - link \" North Devon Council on Instagram\" [ref=e64] [cursor=pointer]:\n          - /url: https://www.instagram.com/northdevoncouncil/\n          - generic [ref=e65] [cursor=pointer]: \n          - text: North Devon Council on Instagram\n      - listitem [ref=e66]:\n        - link \"North Devon Council Social Media Policy\" [ref=e67] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n```",
+          "tool_call_id": "pyd_ai_b88d6470de6c46e890eb78343da67fd1",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:02:11.488428Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "f1e57",
+            "element": "button \"Next \""
+          },
+          "tool_call_id": "pyd_ai_0a4c374dac7544a3b5bdd4b163eff82b",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 21693,
+        "response_tokens": 16,
+        "total_tokens": 21782,
+        "details": {
+          "cached_content_tokens": 16338,
+          "thoughts_tokens": 73,
+          "text_cache_tokens": 16338,
+          "text_candidates_tokens": 16,
+          "text_prompt_tokens": 21693
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:02:12.677918Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "A_R9aNarJ_fr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click button \"Next \"\nawait page.locator('iframe[title=\"WasteRecyclingCalendarForm\"]').contentFrame().getByRole('button', { name: 'Next ' }).click();\n```\n\n### Page state\n- Page URL: https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\n- Page Title: WasteRecyclingCalendarForm - Section 1 - Self\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - link \"Skip to content\" [ref=e2] [cursor=pointer]:\n    - /url: \"#self-content\"\n  - alertdialog \"Cookie policy notice\" [ref=e3]:\n    - generic [ref=e4]:\n      - paragraph [ref=e5]: This site is powered by Granicus.\n      - paragraph [ref=e6]: To provide you with the best online experience we use a range of essential site cookies. These essential cookies enable you to remain logged in and for your site preferences to be remembered, in addition to other essential functions. Granicus does not use analytics, advertising or tracking cookies. In addition to these essential cookies, the organisation which owns this site may choose to place supplementary cookies, for example to support analytics. Should they choose to do this, they have an obligation to let you know where this is the case, and what the benefits and costs are, who they share it with, and what options you have.\n      - paragraph [ref=e7]:\n        - text: More information on\n        - link \"Granicus' cookie policy.\" [ref=e8] [cursor=pointer]:\n          - /url: https://support.granicus.com/s/article/govService-Cookie-Statement\n      - button \"Close\" [ref=e9] [cursor=pointer]\n  - generic [ref=e12]:\n    - link \"North Devon Council\" [ref=e14] [cursor=pointer]:\n      - /url: https://www.northdevon.gov.uk/\n      - img \"North Devon Council\" [ref=e15] [cursor=pointer]\n    - list [ref=e16]:\n      - listitem [ref=e17]:\n        - link \"Register\" [ref=e18] [cursor=pointer]:\n          - /url: /ssauth/register?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en\n      - listitem [ref=e19]:\n        - link \"Login\" [ref=e20] [cursor=pointer]:\n          - /url: /login/?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en&appName=Self\n  - banner\n  - navigation [ref=e24]:\n    - generic [ref=e26]:\n      - generic [ref=e27]:\n        - link \"Home\" [ref=e28] [cursor=pointer]:\n          - /url: /en\n        - link \"Services\" [ref=e29] [cursor=pointer]:\n          - /url: /MyServices\n      - text: \n  - iframe [active] [ref=e37]:\n    - generic [ref=f1e114]:\n      - status [ref=f1e115]: loading completed\n      - generic [ref=f1e117]:\n        - generic [ref=f1e118]:\n          - generic [ref=f1e119]:\n            - generic [ref=f1e120]: Calendar\n            - button \"Open and close menu\" [ref=f1e121]:\n              - generic [ref=f1e122]: \n          - text: \n        - tabpanel \"Calendar\" [ref=f1e124]:\n          - generic [active] [ref=f1e125]: Calendar\n          - heading \" Bin collection details\" [level=1] [ref=f1e129]:\n            - generic [ref=f1e130]: \n            - text: Bin collection details\n          - generic [ref=f1e136]:\n            - heading \"Your address\" [level=2] [ref=f1e137]\n            - text: 1 West Street Witheridge TIVERTON EX16 8AA\n          - generic [ref=f1e141]: Loading collection details...\n          - generic [ref=f1e152]:\n            - generic:                                                                                                                                                                                                                                       \n            - text:   \n          - generic [ref=f1e170]:\n            - generic:                     \n            - text:   \n        - navigation [ref=f1e188]:\n          - generic [ref=f1e189]:\n            - button \" Previous\" [ref=f1e190] [cursor=pointer]:\n              - generic [ref=f1e191] [cursor=pointer]: \n              - generic [ref=f1e192] [cursor=pointer]: Previous\n            - text: \n          - button \"Next \" [ref=f1e194] [cursor=pointer]:\n            - generic [ref=f1e195] [cursor=pointer]: Next\n            - generic [ref=f1e196] [cursor=pointer]: \n      - generic \"loading please wait\":\n        - progressbar\n  - generic [ref=e40]:\n    - list [ref=e42]:\n      - listitem [ref=e43]:\n        - link \"Terms and conditions\" [ref=e44] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/terms-and-conditions\n      - listitem [ref=e45]:\n        - link \"Accessibility\" [ref=e46] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/accessibility/\n      - listitem [ref=e47]:\n        - link \"Privacy notice\" [ref=e48] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/data-protection-and-freedom-information/privacy-and-data-protection\n      - listitem [ref=e49]:\n        - link \"Contact us\" [ref=e50] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/contact-us\n      - listitem [ref=e51]:\n        - link \"Cookies\" [ref=e52] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/cookies/\n      - listitem [ref=e53]:\n        - link \"Services\" [ref=e54] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/services\n    - list [ref=e56]:\n      - listitem [ref=e57]:\n        - link \" North Devon Council on Facebook\" [ref=e58] [cursor=pointer]:\n          - /url: https://www.facebook.com/northdevoncouncil/\n          - generic [ref=e59] [cursor=pointer]: \n          - text: North Devon Council on Facebook\n      - listitem [ref=e60]:\n        - link \" North Devon Council on LinkedIn\" [ref=e61] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/north-devon-council\n          - generic [ref=e62] [cursor=pointer]: \n          - text: North Devon Council on LinkedIn\n      - listitem [ref=e63]:\n        - link \" North Devon Council on Instagram\" [ref=e64] [cursor=pointer]:\n          - /url: https://www.instagram.com/northdevoncouncil/\n          - generic [ref=e65] [cursor=pointer]: \n          - text: North Devon Council on Instagram\n      - listitem [ref=e66]:\n        - link \"North Devon Council Social Media Policy\" [ref=e67] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n```",
+          "tool_call_id": "pyd_ai_0a4c374dac7544a3b5bdd4b163eff82b",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:02:23.788713Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_wait_for",
+          "args": {
+            "textGone": "Loading collection details..."
+          },
+          "tool_call_id": "pyd_ai_a348b59444d649df8dae4c6534ae2d1d",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 24192,
+        "response_tokens": 11,
+        "total_tokens": 24271,
+        "details": {
+          "thoughts_tokens": 68,
+          "text_candidates_tokens": 11,
+          "text_prompt_tokens": 24192
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:02:25.063699Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "D_R9aNmsOYSiz_IPj8Wm2AE"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_wait_for",
+          "content": "### Ran Playwright code\n```js\nawait page.getByText(\"Loading collection details...\").first().waitFor({ state: 'hidden' });\n```\n\n### Page state\n- Page URL: https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\n- Page Title: WasteRecyclingCalendarForm - Section 1 - Self\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - link \"Skip to content\" [ref=e2] [cursor=pointer]:\n    - /url: \"#self-content\"\n  - alertdialog \"Cookie policy notice\" [ref=e3]:\n    - generic [ref=e4]:\n      - paragraph [ref=e5]: This site is powered by Granicus.\n      - paragraph [ref=e6]: To provide you with the best online experience we use a range of essential site cookies. These essential cookies enable you to remain logged in and for your site preferences to be remembered, in addition to other essential functions. Granicus does not use analytics, advertising or tracking cookies. In addition to these essential cookies, the organisation which owns this site may choose to place supplementary cookies, for example to support analytics. Should they choose to do this, they have an obligation to let you know where this is the case, and what the benefits and costs are, who they share it with, and what options you have.\n      - paragraph [ref=e7]:\n        - text: More information on\n        - link \"Granicus' cookie policy.\" [ref=e8] [cursor=pointer]:\n          - /url: https://support.granicus.com/s/article/govService-Cookie-Statement\n      - button \"Close\" [ref=e9] [cursor=pointer]\n  - generic [ref=e12]:\n    - link \"North Devon Council\" [ref=e14] [cursor=pointer]:\n      - /url: https://www.northdevon.gov.uk/\n      - img \"North Devon Council\" [ref=e15] [cursor=pointer]\n    - list [ref=e16]:\n      - listitem [ref=e17]:\n        - link \"Register\" [ref=e18] [cursor=pointer]:\n          - /url: /ssauth/register?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en\n      - listitem [ref=e19]:\n        - link \"Login\" [ref=e20] [cursor=pointer]:\n          - /url: /login/?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en&appName=Self\n  - banner\n  - navigation [ref=e24]:\n    - generic [ref=e26]:\n      - generic [ref=e27]:\n        - link \"Home\" [ref=e28] [cursor=pointer]:\n          - /url: /en\n        - link \"Services\" [ref=e29] [cursor=pointer]:\n          - /url: /MyServices\n      - text: \n  - iframe [active] [ref=e37]:\n    - generic [ref=f1e114]:\n      - status [ref=f1e115]: loading completed\n      - generic [ref=f1e117]:\n        - generic [ref=f1e118]:\n          - generic [ref=f1e119]:\n            - generic [ref=f1e120]: Calendar\n            - button \"Open and close menu\" [ref=f1e121]:\n              - generic [ref=f1e122]: \n          - text: \n        - tabpanel \"Calendar\" [ref=f1e124]:\n          - generic [active] [ref=f1e125]: Calendar\n          - heading \" Bin collection details\" [level=1] [ref=f1e129]:\n            - generic [ref=f1e130]: \n            - text: Bin collection details\n          - generic [ref=f1e136]:\n            - heading \"Your address\" [level=2] [ref=f1e137]\n            - text: 1 West Street Witheridge TIVERTON EX16 8AA\n          - generic [ref=f1e141]: Loading collection details...\n          - generic [ref=f1e152]:\n            - generic:                                                                                                                                                                                                                                       \n            - text:   \n          - generic [ref=f1e170]:\n            - generic:                     \n            - text:   \n        - navigation [ref=f1e188]:\n          - generic [ref=f1e189]:\n            - button \" Previous\" [ref=f1e190] [cursor=pointer]:\n              - generic [ref=f1e191] [cursor=pointer]: \n              - generic [ref=f1e192] [cursor=pointer]: Previous\n            - text: \n          - button \"Next \" [ref=f1e194] [cursor=pointer]:\n            - generic [ref=f1e195] [cursor=pointer]: Next\n            - generic [ref=f1e196] [cursor=pointer]: \n  - generic [ref=e40]:\n    - list [ref=e42]:\n      - listitem [ref=e43]:\n        - link \"Terms and conditions\" [ref=e44] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/terms-and-conditions\n      - listitem [ref=e45]:\n        - link \"Accessibility\" [ref=e46] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/accessibility/\n      - listitem [ref=e47]:\n        - link \"Privacy notice\" [ref=e48] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/data-protection-and-freedom-information/privacy-and-data-protection\n      - listitem [ref=e49]:\n        - link \"Contact us\" [ref=e50] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/contact-us\n      - listitem [ref=e51]:\n        - link \"Cookies\" [ref=e52] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/cookies/\n      - listitem [ref=e53]:\n        - link \"Services\" [ref=e54] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/services\n    - list [ref=e56]:\n      - listitem [ref=e57]:\n        - link \" North Devon Council on Facebook\" [ref=e58] [cursor=pointer]:\n          - /url: https://www.facebook.com/northdevoncouncil/\n          - generic [ref=e59] [cursor=pointer]: \n          - text: North Devon Council on Facebook\n      - listitem [ref=e60]:\n        - link \" North Devon Council on LinkedIn\" [ref=e61] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/north-devon-council\n          - generic [ref=e62] [cursor=pointer]: \n          - text: North Devon Council on LinkedIn\n      - listitem [ref=e63]:\n        - link \" North Devon Council on Instagram\" [ref=e64] [cursor=pointer]:\n          - /url: https://www.instagram.com/northdevoncouncil/\n          - generic [ref=e65] [cursor=pointer]: \n          - text: North Devon Council on Instagram\n      - listitem [ref=e66]:\n        - link \"North Devon Council Social Media Policy\" [ref=e67] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n```",
+          "tool_call_id": "pyd_ai_a348b59444d649df8dae4c6534ae2d1d",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:02:25.153424Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_snapshot",
+          "args": {},
+          "tool_call_id": "pyd_ai_c05e30ce3249412dab2542002585c018",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 26653,
+        "response_tokens": 3,
+        "total_tokens": 26714,
+        "details": {
+          "cached_content_tokens": 20762,
+          "thoughts_tokens": 58,
+          "text_cache_tokens": 20762,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 26653
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:02:26.399087Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "EfR9aMPTDqKhmPUP0sPjuAM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_snapshot",
+          "content": "### Ran Playwright code\n```js\n// <internal code to capture accessibility snapshot>\n```\n\n### Page state\n- Page URL: https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar\n- Page Title: WasteRecyclingCalendarForm - Section 1 - Self\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - link \"Skip to content\" [ref=e2] [cursor=pointer]:\n    - /url: \"#self-content\"\n  - alertdialog \"Cookie policy notice\" [ref=e3]:\n    - generic [ref=e4]:\n      - paragraph [ref=e5]: This site is powered by Granicus.\n      - paragraph [ref=e6]: To provide you with the best online experience we use a range of essential site cookies. These essential cookies enable you to remain logged in and for your site preferences to be remembered, in addition to other essential functions. Granicus does not use analytics, advertising or tracking cookies. In addition to these essential cookies, the organisation which owns this site may choose to place supplementary cookies, for example to support analytics. Should they choose to do this, they have an obligation to let you know where this is the case, and what the benefits and costs are, who they share it with, and what options you have.\n      - paragraph [ref=e7]:\n        - text: More information on\n        - link \"Granicus' cookie policy.\" [ref=e8] [cursor=pointer]:\n          - /url: https://support.granicus.com/s/article/govService-Cookie-Statement\n      - button \"Close\" [ref=e9] [cursor=pointer]\n  - generic [ref=e12]:\n    - link \"North Devon Council\" [ref=e14] [cursor=pointer]:\n      - /url: https://www.northdevon.gov.uk/\n      - img \"North Devon Council\" [ref=e15] [cursor=pointer]\n    - list [ref=e16]:\n      - listitem [ref=e17]:\n        - link \"Register\" [ref=e18] [cursor=pointer]:\n          - /url: /ssauth/register?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en\n      - listitem [ref=e19]:\n        - link \"Login\" [ref=e20] [cursor=pointer]:\n          - /url: /login/?return_url=https%3A%2F%2Fmy.northdevon.gov.uk%2Fen&lang=en&appName=Self\n  - banner\n  - navigation [ref=e24]:\n    - generic [ref=e26]:\n      - generic [ref=e27]:\n        - link \"Home\" [ref=e28] [cursor=pointer]:\n          - /url: /en\n        - link \"Services\" [ref=e29] [cursor=pointer]:\n          - /url: /MyServices\n      - text: \n  - iframe [active] [ref=e37]:\n    - generic [ref=f1e114]:\n      - status [ref=f1e115]: loading completed\n      - generic [ref=f1e117]:\n        - generic [ref=f1e118]:\n          - generic [ref=f1e119]:\n            - generic [ref=f1e120]: Calendar\n            - button \"Open and close menu\" [ref=f1e121]:\n              - generic [ref=f1e122]: \n          - text: \n        - tabpanel \"Calendar\" [ref=f1e124]:\n          - generic [active] [ref=f1e125]: Calendar\n          - heading \" Bin collection details\" [level=1] [ref=f1e129]:\n            - generic [ref=f1e130]: \n            - text: Bin collection details\n          - generic [ref=f1e136]:\n            - heading \"Your address\" [level=2] [ref=f1e137]\n            - text: 1 West Street Witheridge TIVERTON EX16 8AA\n          - generic [ref=f1e141]:\n            - heading \"Collections\" [level=3] [ref=f1e221]\n            - list [ref=f1e222]:\n              - listitem [ref=f1e223]:\n                - heading \"Key\" [level=4] [ref=f1e224]\n              - listitem [ref=f1e225]:\n                - generic [ref=f1e228]: Black Bin\n              - listitem [ref=f1e229]:\n                - generic [ref=f1e232]: Recycling\n            - list [ref=f1e233]:\n              - listitem [ref=f1e234]:\n                - heading \"July 2025\" [level=4] [ref=f1e235]\n              - listitem [ref=f1e236]:\n                - generic [ref=f1e237]: Wed\n                - generic [ref=f1e238]: \"02\"\n                - generic [ref=f1e239]: Recycling\n              - listitem [ref=f1e240]:\n                - generic [ref=f1e241]: Wed\n                - generic [ref=f1e242]: \"09\"\n                - generic [ref=f1e243]: Recycling\n              - listitem [ref=f1e244]:\n                - generic [ref=f1e245]: Fri\n                - generic [ref=f1e246]: \"11\"\n                - generic [ref=f1e247]: Black Bin\n              - listitem [ref=f1e248]:\n                - generic [ref=f1e249]: Wed\n                - generic [ref=f1e250]: \"16\"\n                - generic [ref=f1e251]: Recycling\n              - listitem [ref=f1e252]:\n                - generic [ref=f1e253]: Wed\n                - generic [ref=f1e254]: \"23\"\n                - generic [ref=f1e255]: Recycling\n              - listitem [ref=f1e256]:\n                - generic [ref=f1e257]: Fri\n                - generic [ref=f1e258]: \"25\"\n                - generic [ref=f1e259]: Black Bin\n              - listitem [ref=f1e260]:\n                - generic [ref=f1e261]: Wed\n                - generic [ref=f1e262]: \"30\"\n                - generic [ref=f1e263]: Recycling\n              - listitem [ref=f1e264]:\n                - heading \"August 2025\" [level=4] [ref=f1e265]\n              - listitem [ref=f1e266]:\n                - generic [ref=f1e267]: Wed\n                - generic [ref=f1e268]: \"06\"\n                - generic [ref=f1e269]: Recycling\n              - listitem [ref=f1e270]:\n                - generic [ref=f1e271]: Fri\n                - generic [ref=f1e272]: \"08\"\n                - generic [ref=f1e273]: Black Bin\n              - listitem [ref=f1e274]:\n                - generic [ref=f1e275]: Wed\n                - generic [ref=f1e276]: \"13\"\n                - generic [ref=f1e277]: Recycling\n              - listitem [ref=f1e278]:\n                - generic [ref=f1e279]: Wed\n                - generic [ref=f1e280]: \"20\"\n                - generic [ref=f1e281]: Recycling\n              - listitem [ref=f1e282]:\n                - generic [ref=f1e283]: Fri\n                - generic [ref=f1e284]: \"22\"\n                - generic [ref=f1e285]: Black Bin\n              - listitem [ref=f1e286]:\n                - generic [ref=f1e287]: Thu\n                - generic [ref=f1e288]: \"28\"\n                - generic [ref=f1e289]: Recycling\n              - listitem [ref=f1e290]:\n                - heading \"September 2025\" [level=4] [ref=f1e291]\n              - listitem [ref=f1e292]:\n                - generic [ref=f1e293]: Wed\n                - generic [ref=f1e294]: \"03\"\n                - generic [ref=f1e295]: Recycling\n              - listitem [ref=f1e296]:\n                - generic [ref=f1e297]: Fri\n                - generic [ref=f1e298]: \"05\"\n                - generic [ref=f1e299]: Black Bin\n              - listitem [ref=f1e300]:\n                - generic [ref=f1e301]: Wed\n                - generic [ref=f1e302]: \"10\"\n                - generic [ref=f1e303]: Recycling\n              - listitem [ref=f1e304]:\n                - generic [ref=f1e305]: Wed\n                - generic [ref=f1e306]: \"17\"\n                - generic [ref=f1e307]: Recycling\n              - listitem [ref=f1e308]:\n                - generic [ref=f1e309]: Fri\n                - generic [ref=f1e310]: \"19\"\n                - generic [ref=f1e311]: Black Bin\n              - listitem [ref=f1e312]:\n                - generic [ref=f1e313]: Wed\n                - generic [ref=f1e314]: \"24\"\n                - generic [ref=f1e315]: Recycling\n            - heading \"Service Messages\" [level=2] [ref=f1e322]\n            - heading \"Presenting Bins by 6am\" [level=4] [ref=f1e323]:\n              - generic [ref=f1e324]: Presenting Bins by 6am\n            - paragraph [ref=f1e325]:\n              - strong [ref=f1e327]:\n                - generic [ref=f1e328]: Residents will need to put their bins and bags out by 6am on the morning or evening before their collection from now on. The new, earlier display time, of 6am rather than 7am, is to enable the crews to have more flexible working hours if and when needed. We thank you in advance for your understanding and cooperation\n            - heading \"Green Bin Collection\" [level=4] [ref=f1e329]:\n              - generic [ref=f1e330]: Green Bin Collection\n            - paragraph [ref=f1e331]:\n              - generic [ref=f1e332]:\n                - strong [ref=f1e333]:\n                  - generic [ref=f1e334]:\n                    - text: Green bin collection dates will only be displayed while there is a valid in-date permit at the property. If the permit has expired, no future collection dates will be displayed until a new permit is purchased.\n                    - text: To purchase or renew a green bin subscription visit our website\n                - strong [ref=f1e337]:\n                  - link \"Garden waste service\" [ref=f1e338] [cursor=pointer]:\n                    - /url: https://my.northdevon.gov.uk/service/Green_bin_service\n          - generic [ref=f1e152]:\n            - generic:                                                                                                                                                                                                                                       \n            - text:   \n          - generic [ref=f1e170]:\n            - generic:                     \n            - text:   \n        - navigation [ref=f1e188]:\n          - generic [ref=f1e189]:\n            - button \" Previous\" [ref=f1e190] [cursor=pointer]:\n              - generic [ref=f1e191] [cursor=pointer]: \n              - generic [ref=f1e192] [cursor=pointer]: Previous\n            - text: \n          - button \"Next \" [ref=f1e194] [cursor=pointer]:\n            - generic [ref=f1e195] [cursor=pointer]: Next\n            - generic [ref=f1e196] [cursor=pointer]: \n  - generic [ref=e40]:\n    - list [ref=e42]:\n      - listitem [ref=e43]:\n        - link \"Terms and conditions\" [ref=e44] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/terms-and-conditions\n      - listitem [ref=e45]:\n        - link \"Accessibility\" [ref=e46] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/accessibility/\n      - listitem [ref=e47]:\n        - link \"Privacy notice\" [ref=e48] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/data-protection-and-freedom-information/privacy-and-data-protection\n      - listitem [ref=e49]:\n        - link \"Contact us\" [ref=e50] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/contact-us\n      - listitem [ref=e51]:\n        - link \"Cookies\" [ref=e52] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/cookies/\n      - listitem [ref=e53]:\n        - link \"Services\" [ref=e54] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/services\n    - list [ref=e56]:\n      - listitem [ref=e57]:\n        - link \" North Devon Council on Facebook\" [ref=e58] [cursor=pointer]:\n          - /url: https://www.facebook.com/northdevoncouncil/\n          - generic [ref=e59] [cursor=pointer]: \n          - text: North Devon Council on Facebook\n      - listitem [ref=e60]:\n        - link \" North Devon Council on LinkedIn\" [ref=e61] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/north-devon-council\n          - generic [ref=e62] [cursor=pointer]: \n          - text: North Devon Council on LinkedIn\n      - listitem [ref=e63]:\n        - link \" North Devon Council on Instagram\" [ref=e64] [cursor=pointer]:\n          - /url: https://www.instagram.com/northdevoncouncil/\n          - generic [ref=e65] [cursor=pointer]: \n          - text: North Devon Council on Instagram\n      - listitem [ref=e66]:\n        - link \"North Devon Council Social Media Policy\" [ref=e67] [cursor=pointer]:\n          - /url: https://www.northdevon.gov.uk/council/strategies-plans-and-policies/external-social-media-policy\n```",
+          "tool_call_id": "pyd_ai_c05e30ce3249412dab2542002585c018",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:02:26.487849Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "args": {
+            "postcode": "EX16 8AA",
+            "food_waste": {
+              "next_pickup_day": null,
+              "bin_colour": null,
+              "frequency": null
+            },
+            "garden_waste": {
+              "frequency": "Not available (permit required)",
+              "bin_colour": "green",
+              "next_pickup_day": "Not available (permit required)"
+            },
+            "recycling": {
+              "next_pickup_day": "Wednesday, July 30",
+              "frequency": "Weekly",
+              "bin_colour": "blue"
+            },
+            "general_waste": {
+              "next_pickup_day": "Friday, July 25",
+              "bin_colour": "black",
+              "frequency": "Fortnightly"
+            },
+            "notes": "The green bin collection dates are not displayed as a valid permit is required for the property."
+          },
+          "tool_call_id": "pyd_ai_c8f9790f77d6418ba1136162069bc57e",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 30993,
+        "response_tokens": 109,
+        "total_tokens": 31421,
+        "details": {
+          "cached_content_tokens": 26277,
+          "thoughts_tokens": 319,
+          "text_cache_tokens": 26277,
+          "text_candidates_tokens": 109,
+          "text_prompt_tokens": 30993
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T08:02:30.697011Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "EvR9aNHII66tz_IPye_36Ak"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "content": "Final result processed.",
+          "tool_call_id": "pyd_ai_c8f9790f77d6418ba1136162069bc57e",
+          "metadata": null,
+          "timestamp": "2025-07-21T08:02:30.697618Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    }
+  ]
+}

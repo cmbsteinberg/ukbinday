@@ -1,0 +1,342 @@
+{
+  "output": {
+    "postcode": "BA12 0AB",
+    "general_waste": {
+      "next_pickup_day": "Thursday 31 July 2025",
+      "frequency": "Bi-weekly",
+      "bin_colour": "black"
+    },
+    "recycling": {
+      "next_pickup_day": "Thursday 24 July 2025",
+      "frequency": "Bi-weekly",
+      "bin_colour": "blue"
+    },
+    "food_waste": {
+      "next_pickup_day": null,
+      "frequency": null,
+      "bin_colour": null
+    },
+    "garden_waste": {
+      "next_pickup_day": null,
+      "frequency": null,
+      "bin_colour": null
+    },
+    "notes": "The general waste bin color is assumed to be black as it was not explicitly stated on the website. Garden waste information is not available unless subscribed to a paid service."
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "You are a helpful web-browsing agent who researches and retrieves bin collection information for a specific council area by accessing their official website and lookup system",
+          "timestamp": "2025-07-21T10:27:56.923368Z",
+          "dynamic_ref": null,
+          "part_kind": "system-prompt"
+        },
+        {
+          "content": "\n### Bin Collection Schedule Lookup Task\n\n## Objective\n\nResearch and retrieve bin collection information for a specific council area by accessing their official website and lookup system.\n\n## Instructions\n\n# Step 1: Navigate to Council Website\nAccess the council website at: https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index\n\n# Step 2: Test Postcodes\nSearch for the collection schedules for this postcodes: BA12 0AB\nIf a full address is required, use any house number (e.g., \"1 [Street Name]\") or select any option on a dropdown. The specific address doesn't matter - we only need the collection schedule format\n\n## Output\n\nProvide the following information for each bin type (if exists) + the postcode:\n    next_pickup_day\n    frequency \n    bin_colour\n\nIf it doesn't exist, that is ok. Just answer None for these fields.\n\n## Troubleshooting\nIf you encounter issues:\n\nLook for alternative entry points (e.g., \"Check my bin day\")\nNote any technical difficulties in your response\nIf the provided postcode doesn't work try postcodes from the same council area (use your knowledge of local postcodes).\n",
+          "timestamp": "2025-07-21T10:27:56.923375Z",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index"
+          },
+          "tool_call_id": "pyd_ai_18ee944b7b054c42a3996819e38af39a",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1396,
+        "response_tokens": 23,
+        "total_tokens": 1636,
+        "details": {
+          "thoughts_tokens": 217,
+          "text_candidates_tokens": 23,
+          "text_prompt_tokens": 1396
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:27:59.007301Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "LRZ-aJ3dCISiz_IPj8Wm2AE"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "content": "### Ran Playwright code\n```js\n// Navigate to https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index\nawait page.goto('https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index');\n```\n\n### New console messages\n- [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://ila...\n- [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://ila...\n- [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://ila...\n\n### Page state\n- Page URL: https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index\n- Page Title: Waste collection calendar - Wiltshire Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - banner [ref=e2]:\n    - navigation [ref=e4]:\n      - generic [ref=e5]:\n        - link \"Wiltshire Council Logo\" [ref=e7] [cursor=pointer]:\n          - /url: https://www.wiltshire.gov.uk/\n          - img \"Wiltshire Council Logo\" [ref=e8] [cursor=pointer]\n        - list [ref=e11]:\n          - listitem [ref=e12]:\n            - button \"Your account\" [ref=e13] [cursor=pointer]:\n              - generic [ref=e14] [cursor=pointer]: \n              - generic [ref=e15] [cursor=pointer]: \n  - main [ref=e17]:\n    - list [ref=e19]:\n      - listitem [ref=e20]:\n        - link \"Home\" [ref=e21] [cursor=pointer]:\n          - /url: /\n      - listitem [ref=e22]: Waste collection dates\n    - generic [ref=e23]:\n      - generic [ref=e24]:\n        - heading \"Waste collection dates\" [level=1] [ref=e25]\n        - paragraph [ref=e26]: Find your household waste, recycling and garden waste collection days. We update this page often with any changes to your service.\n        - generic [ref=e29]:\n          - generic [ref=e30]: Postcode of your property\n          - textbox \"Postcode of your property\" [ref=e31]\n          - button \"Search and find my address\" [ref=e32] [cursor=pointer]\n      - generic [ref=e37]:\n        - heading \"Find out more\" [level=2] [ref=e38]\n        - list [ref=e39]:\n          - listitem [ref=e40]:\n            - link \"Waste service policy\" [ref=e41] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-waste-service-policy\n          - listitem [ref=e42]:\n            - link \"Report a missed bin collection\" [ref=e43] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-missed-bin-collection\n          - listitem [ref=e44]:\n            - link \"Report incident or request service\" [ref=e45] [cursor=pointer]:\n              - /url: /\n          - listitem [ref=e46]:\n            - link \"Garden waste collections\" [ref=e47] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/gardenwaste\n          - listitem [ref=e48]:\n            - link \"Household recycling\" [ref=e49] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/recycling\n          - listitem [ref=e50]:\n            - link \"Large item reuse and collection\" [ref=e51] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/large-item-collection\n          - listitem [ref=e52]:\n            - link \"Our assisted collections\" [ref=e53] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-assisted-collections\n          - listitem [ref=e54]:\n            - link \"Report, request or replace a bin\" [ref=e55] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-new-replacement-bins\n          - listitem [ref=e56]:\n            - link \"What happens to recycling\" [ref=e57] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/what-happens-to-recycling\n          - listitem [ref=e58]:\n            - link \"Home composting\" [ref=e59] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/reducing-your-waste-and-composting\n          - listitem [ref=e60]:\n            - link \"Reducing your waste as an individual\" [ref=e61] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/climate-change-individual\n  - contentinfo [ref=e62]:\n    - generic [ref=e64]:\n      - generic [ref=e65]:\n        - heading \"Support links\" [level=2] [ref=e66]\n        - list [ref=e67]:\n          - listitem [ref=e68]:\n            - link \"Contact\" [ref=e69] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/contact\n          - listitem [ref=e70]:\n            - link \"View privacy statement\" [ref=e71] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/privacy\n          - listitem [ref=e72]:\n            - link \"Freedom of information\" [ref=e73] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/data-protection-foi\n          - listitem [ref=e74]:\n            - link \"Data protection\" [ref=e75] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/data-protection-foi-data-protection\n          - listitem [ref=e76]:\n            - link \"Accessibility\" [ref=e77] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/accessibility\n      - generic [ref=e79] [cursor=pointer]:\n        - img \"Logo\" [ref=e82] [cursor=pointer]\n        - generic [ref=e85] [cursor=pointer]: © Wiltshire Council\n```",
+          "tool_call_id": "pyd_ai_18ee944b7b054c42a3996819e38af39a",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:28:01.118838Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "args": {
+            "text": "BA12 0AB",
+            "ref": "e31",
+            "element": "textbox \"Postcode of your property\""
+          },
+          "tool_call_id": "pyd_ai_09e79d23946e4d168494aec6dbf3d4e9",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 3101,
+        "response_tokens": 22,
+        "total_tokens": 3170,
+        "details": {
+          "thoughts_tokens": 47,
+          "text_candidates_tokens": 22,
+          "text_prompt_tokens": 3101
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:28:02.171803Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "MRZ-aJS_CqKhmPUP0sPjuAM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "content": "### Ran Playwright code\n```js\n// Fill \"BA12 0AB\" into \"textbox \"Postcode of your property\"\"\nawait page.getByRole('textbox', { name: 'Postcode of your property' }).fill('BA12 0AB');\n```\n\n### Page state\n- Page URL: https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index\n- Page Title: Waste collection calendar - Wiltshire Council\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - banner [ref=e2]:\n    - navigation [ref=e4]:\n      - generic [ref=e5]:\n        - link \"Wiltshire Council Logo\" [ref=e7] [cursor=pointer]:\n          - /url: https://www.wiltshire.gov.uk/\n          - img \"Wiltshire Council Logo\" [ref=e8] [cursor=pointer]\n        - list [ref=e11]:\n          - listitem [ref=e12]:\n            - button \"Your account\" [ref=e13] [cursor=pointer]:\n              - generic [ref=e14] [cursor=pointer]: \n              - generic [ref=e15] [cursor=pointer]: \n  - main [ref=e17]:\n    - list [ref=e19]:\n      - listitem [ref=e20]:\n        - link \"Home\" [ref=e21] [cursor=pointer]:\n          - /url: /\n      - listitem [ref=e22]: Waste collection dates\n    - generic [ref=e23]:\n      - generic [ref=e24]:\n        - heading \"Waste collection dates\" [level=1] [ref=e25]\n        - paragraph [ref=e26]: Find your household waste, recycling and garden waste collection days. We update this page often with any changes to your service.\n        - generic [ref=e29]:\n          - generic [ref=e30]: Postcode of your property\n          - textbox \"Postcode of your property\" [active] [ref=e31]: BA12 0AB\n          - button \"Search and find my address\" [ref=e32] [cursor=pointer]\n      - generic [ref=e37]:\n        - heading \"Find out more\" [level=2] [ref=e38]\n        - list [ref=e39]:\n          - listitem [ref=e40]:\n            - link \"Waste service policy\" [ref=e41] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-waste-service-policy\n          - listitem [ref=e42]:\n            - link \"Report a missed bin collection\" [ref=e43] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-missed-bin-collection\n          - listitem [ref=e44]:\n            - link \"Report incident or request service\" [ref=e45] [cursor=pointer]:\n              - /url: /\n          - listitem [ref=e46]:\n            - link \"Garden waste collections\" [ref=e47] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/gardenwaste\n          - listitem [ref=e48]:\n            - link \"Household recycling\" [ref=e49] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/recycling\n          - listitem [ref=e50]:\n            - link \"Large item reuse and collection\" [ref=e51] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/large-item-collection\n          - listitem [ref=e52]:\n            - link \"Our assisted collections\" [ref=e53] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-assisted-collections\n          - listitem [ref=e54]:\n            - link \"Report, request or replace a bin\" [ref=e55] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-new-replacement-bins\n          - listitem [ref=e56]:\n            - link \"What happens to recycling\" [ref=e57] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/what-happens-to-recycling\n          - listitem [ref=e58]:\n            - link \"Home composting\" [ref=e59] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/reducing-your-waste-and-composting\n          - listitem [ref=e60]:\n            - link \"Reducing your waste as an individual\" [ref=e61] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/climate-change-individual\n  - contentinfo [ref=e62]:\n    - generic [ref=e64]:\n      - generic [ref=e65]:\n        - heading \"Support links\" [level=2] [ref=e66]\n        - list [ref=e67]:\n          - listitem [ref=e68]:\n            - link \"Contact\" [ref=e69] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/contact\n          - listitem [ref=e70]:\n            - link \"View privacy statement\" [ref=e71] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/privacy\n          - listitem [ref=e72]:\n            - link \"Freedom of information\" [ref=e73] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/data-protection-foi\n          - listitem [ref=e74]:\n            - link \"Data protection\" [ref=e75] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/data-protection-foi-data-protection\n          - listitem [ref=e76]:\n            - link \"Accessibility\" [ref=e77] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/accessibility\n      - generic [ref=e79] [cursor=pointer]:\n        - img \"Logo\" [ref=e82] [cursor=pointer]\n        - generic [ref=e85] [cursor=pointer]: © Wiltshire Council\n```",
+          "tool_call_id": "pyd_ai_09e79d23946e4d168494aec6dbf3d4e9",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:28:03.264378Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "element": "button \"Search and find my address\"",
+            "ref": "e32"
+          },
+          "tool_call_id": "pyd_ai_3640ddd02ea041a7a83f93dcaf8c5c15",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 4715,
+        "response_tokens": 16,
+        "total_tokens": 4779,
+        "details": {
+          "thoughts_tokens": 48,
+          "text_candidates_tokens": 16,
+          "text_prompt_tokens": 4715
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:28:04.226196Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "MxZ-aLymFa6tz_IPye_36Ak"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click button \"Search and find my address\"\nawait page.getByRole('button', { name: 'Search and find my address' }).click();\n```\n\n### Page state\n- Page URL: https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index\n- Page Title: Waste collection calendar - Wiltshire Council\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - banner [ref=e2]:\n    - navigation [ref=e4]:\n      - generic [ref=e5]:\n        - link \"Wiltshire Council Logo\" [ref=e7] [cursor=pointer]:\n          - /url: https://www.wiltshire.gov.uk/\n          - img \"Wiltshire Council Logo\" [ref=e8] [cursor=pointer]\n        - list [ref=e11]:\n          - listitem [ref=e12]:\n            - button \"Your account\" [ref=e13] [cursor=pointer]:\n              - generic [ref=e14] [cursor=pointer]: \n              - generic [ref=e15] [cursor=pointer]: \n  - main [ref=e17]:\n    - list [ref=e19]:\n      - listitem [ref=e20]:\n        - link \"Home\" [ref=e21] [cursor=pointer]:\n          - /url: /\n      - listitem [ref=e22]: Waste collection dates\n    - generic [ref=e23]:\n      - generic [ref=e24]:\n        - heading \"Waste collection dates\" [level=1] [ref=e25]\n        - paragraph [ref=e26]: Find your household waste, recycling and garden waste collection days. We update this page often with any changes to your service.\n        - generic [ref=e28]:\n          - generic [ref=e29]:\n            - generic [ref=e30]: Postcode of your property\n            - textbox \"Postcode of your property\" [ref=e31]: BA12 0AB\n            - button \"Search and find my address\" [active] [ref=e32] [cursor=pointer]\n          - generic [ref=e86]:\n            - generic [ref=e87]: We found the following addresses for this postcode\n            - combobox \"We found the following addresses for this postcode\" [ref=e88]:\n              - option \"Select your address\" [selected]\n              - option \"1 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"2 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"3 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"4 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"5 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"6 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"7 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"8 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"9 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"10 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"11 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"12 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"13 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"14 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"15 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"16 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"17 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"18 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"19 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"20 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"21 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"22 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"23 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"24 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"25 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"26 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"27 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"28 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"29 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"30 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"31 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"32 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"33 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"34 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"35 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"36 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"38 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n      - generic [ref=e37]:\n        - heading \"Find out more\" [level=2] [ref=e38]\n        - list [ref=e39]:\n          - listitem [ref=e40]:\n            - link \"Waste service policy\" [ref=e41] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-waste-service-policy\n          - listitem [ref=e42]:\n            - link \"Report a missed bin collection\" [ref=e43] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-missed-bin-collection\n          - listitem [ref=e44]:\n            - link \"Report incident or request service\" [ref=e45] [cursor=pointer]:\n              - /url: /\n          - listitem [ref=e46]:\n            - link \"Garden waste collections\" [ref=e47] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/gardenwaste\n          - listitem [ref=e48]:\n            - link \"Household recycling\" [ref=e49] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/recycling\n          - listitem [ref=e50]:\n            - link \"Large item reuse and collection\" [ref=e51] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/large-item-collection\n          - listitem [ref=e52]:\n            - link \"Our assisted collections\" [ref=e53] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-assisted-collections\n          - listitem [ref=e54]:\n            - link \"Report, request or replace a bin\" [ref=e55] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-new-replacement-bins\n          - listitem [ref=e56]:\n            - link \"What happens to recycling\" [ref=e57] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/what-happens-to-recycling\n          - listitem [ref=e58]:\n            - link \"Home composting\" [ref=e59] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/reducing-your-waste-and-composting\n          - listitem [ref=e60]:\n            - link \"Reducing your waste as an individual\" [ref=e61] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/climate-change-individual\n  - contentinfo [ref=e62]:\n    - generic [ref=e64]:\n      - generic [ref=e65]:\n        - heading \"Support links\" [level=2] [ref=e66]\n        - list [ref=e67]:\n          - listitem [ref=e68]:\n            - link \"Contact\" [ref=e69] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/contact\n          - listitem [ref=e70]:\n            - link \"View privacy statement\" [ref=e71] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/privacy\n          - listitem [ref=e72]:\n            - link \"Freedom of information\" [ref=e73] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/data-protection-foi\n          - listitem [ref=e74]:\n            - link \"Data protection\" [ref=e75] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/data-protection-foi-data-protection\n          - listitem [ref=e76]:\n            - link \"Accessibility\" [ref=e77] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/accessibility\n      - generic [ref=e79] [cursor=pointer]:\n        - img \"Logo\" [ref=e82] [cursor=pointer]\n        - generic [ref=e85] [cursor=pointer]: © Wiltshire Council\n```",
+          "tool_call_id": "pyd_ai_3640ddd02ea041a7a83f93dcaf8c5c15",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:28:05.398163Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "args": {
+            "values": [
+              "1 Beech Grove, Warminster, Wiltshire. BA12 0AB"
+            ],
+            "element": "combobox \"We found the following addresses for this postcode\"",
+            "ref": "e88"
+          },
+          "tool_call_id": "pyd_ai_4555ef299261429cb986e7a34605cacf",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 7188,
+        "response_tokens": 37,
+        "total_tokens": 7289,
+        "details": {
+          "cached_content_tokens": 1616,
+          "thoughts_tokens": 64,
+          "text_cache_tokens": 1616,
+          "text_candidates_tokens": 37,
+          "text_prompt_tokens": 7188
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:28:06.458650Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "NRZ-aMvzG4Siz_IPj8Wm2AE"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "content": "### Ran Playwright code\n```js\n// Select options [1 Beech Grove, Warminster, Wiltshire. BA12 0AB] in combobox \"We found the following addresses for this postcode\"\nawait page.getByLabel('We found the following').selectOption(['1 Beech Grove, Warminster, Wiltshire. BA12 0AB']);\n```\n\n### Page state\n- Page URL: https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index\n- Page Title: Waste collection calendar - Wiltshire Council\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - banner [ref=e2]:\n    - navigation [ref=e4]:\n      - generic [ref=e5]:\n        - link \"Wiltshire Council Logo\" [ref=e7] [cursor=pointer]:\n          - /url: https://www.wiltshire.gov.uk/\n          - img \"Wiltshire Council Logo\" [ref=e8] [cursor=pointer]\n        - list [ref=e11]:\n          - listitem [ref=e12]:\n            - button \"Your account\" [ref=e13] [cursor=pointer]:\n              - generic [ref=e14] [cursor=pointer]: \n              - generic [ref=e15] [cursor=pointer]: \n  - main [ref=e17]:\n    - list [ref=e19]:\n      - listitem [ref=e20]:\n        - link \"Home\" [ref=e21] [cursor=pointer]:\n          - /url: /\n      - listitem [ref=e22]: Waste collection dates\n    - generic [ref=e23]:\n      - generic [ref=e24]:\n        - heading \"Waste collection dates\" [level=1] [ref=e25]\n        - paragraph [ref=e26]: Find your household waste, recycling and garden waste collection days. We update this page often with any changes to your service.\n        - generic [ref=e28]:\n          - generic [ref=e29]:\n            - generic [ref=e30]: Postcode of your property\n            - textbox \"Postcode of your property\" [ref=e31]: BA12 0AB\n            - button \"Search and find my address\" [active] [ref=e32] [cursor=pointer]\n          - generic [ref=e86]:\n            - generic [ref=e87]: We found the following addresses for this postcode\n            - combobox \"We found the following addresses for this postcode\" [ref=e88]:\n              - option \"Select your address\"\n              - option \"1 Beech Grove, Warminster, Wiltshire. BA12 0AB\" [selected]\n              - option \"2 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"3 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"4 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"5 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"6 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"7 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"8 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"9 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"10 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"11 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"12 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"13 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"14 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"15 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"16 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"17 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"18 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"19 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"20 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"21 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"22 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"23 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"24 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"25 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"26 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"27 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"28 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"29 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"30 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"31 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"32 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"33 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"34 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"35 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"36 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"38 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n      - generic [ref=e36]:\n        - heading \"Collection dates\" [level=2] [ref=e128]\n        - paragraph [ref=e129]: Use the links below to switch between viewing modes. Note that the Calendar view is not fully accessible and users with voice readers who use keyboard navigation would be better using the Monthly collections mode.\n        - paragraph [ref=e130]:\n          - text: Garden waste collection dates are only displayed for addresses that have subscribed for this paid service.\n          - link \"Order a chargeable garden waste service\" [ref=e131] [cursor=pointer]:\n            - /url: https://ilforms.wiltshire.gov.uk/PaymentsCGW\n          - text: .\n        - paragraph [ref=e132]:\n          - link \"Download a printable collections calendar\" [ref=e133] [cursor=pointer]:\n            - /url: /wastecollectiondays/printablecalendar/100121097562\n        - list [ref=e134]:\n          - listitem [ref=e135]:\n            - generic [ref=e136]:\n              - text: Upcoming\n              - generic [ref=e137]: collections\n          - listitem [ref=e138]:\n            - link \"Monthly collections\" [ref=e139] [cursor=pointer]:\n              - /url: /wastecollectiondays/wastecollectionlist/wiltshire.il.ambassador.forms.models.wastecollectiondaysmodel\n              - text: Monthly\n              - generic [ref=e140] [cursor=pointer]: collections\n          - listitem [ref=e141]:\n            - link \"Calendar view\" [ref=e142] [cursor=pointer]:\n              - /url: /wastecollectiondays/wastecollectioncalendar/wiltshire.il.ambassador.forms.models.wastecollectiondaysmodel\n              - text: Calendar\n              - generic [ref=e143] [cursor=pointer]: view\n        - generic [ref=e144]:\n          - paragraph [ref=e145]: \"Today's date: Monday 21 July 2025\"\n          - alert [ref=e148]:\n            - generic [ref=e149]: \n            - paragraph [ref=e150]:\n              - text: Your next collection date is\n              - generic [ref=e151]: Thursday 24 July\n              - generic [ref=e152]: In 3 days\n            - paragraph [ref=e153]: \"Put the following out by 7am:\"\n            - list [ref=e154]:\n              - listitem [ref=e155]: Mixed dry recycling (blue lidded bin) and glass (black box or basket)\n          - generic [ref=e157]:\n            - heading \"Upcoming collections\" [level=3] [ref=e158]\n            - paragraph [ref=e159]: These are the next scheduled waste collections for each type at this address. To view more dates, use the Monthly Collections or Calendar View tabs above.\n          - generic [ref=e160]:\n            - generic [ref=e162]:\n              - generic [ref=e163]:\n                - heading \"Thursday 24 July 2025\" [level=4] [ref=e164]:\n                  - generic [ref=e165]: Thursday\n                  - generic [ref=e166]: \"24\"\n                  - generic [ref=e167]: July 2025\n                - paragraph [ref=e168]: In 3 days\n              - list [ref=e170]:\n                - listitem [ref=e171]: Mixed dry recycling (blue lidded bin) and glass (black box or basket)\n            - generic [ref=e173]:\n              - generic [ref=e174]:\n                - heading \"Thursday 31 July 2025\" [level=4] [ref=e175]:\n                  - generic [ref=e176]: Thursday\n                  - generic [ref=e177]: \"31\"\n                  - generic [ref=e178]: July 2025\n                - paragraph [ref=e179]: In 10 days\n              - list [ref=e181]:\n                - listitem [ref=e182]: Household waste\n      - generic [ref=e37]:\n        - heading \"Find out more\" [level=2] [ref=e38]\n        - list [ref=e39]:\n          - listitem [ref=e40]:\n            - link \"Waste service policy\" [ref=e41] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-waste-service-policy\n          - listitem [ref=e42]:\n            - link \"Report a missed bin collection\" [ref=e43] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-missed-bin-collection\n          - listitem [ref=e44]:\n            - link \"Report incident or request service\" [ref=e45] [cursor=pointer]:\n              - /url: /\n          - listitem [ref=e46]:\n            - link \"Garden waste collections\" [ref=e47] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/gardenwaste\n          - listitem [ref=e48]:\n            - link \"Household recycling\" [ref=e49] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/recycling\n          - listitem [ref=e50]:\n            - link \"Large item reuse and collection\" [ref=e51] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/large-item-collection\n          - listitem [ref=e52]:\n            - link \"Our assisted collections\" [ref=e53] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-assisted-collections\n          - listitem [ref=e54]:\n            - link \"Report, request or replace a bin\" [ref=e55] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-new-replacement-bins\n          - listitem [ref=e56]:\n            - link \"What happens to recycling\" [ref=e57] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/what-happens-to-recycling\n          - listitem [ref=e58]:\n            - link \"Home composting\" [ref=e59] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/reducing-your-waste-and-composting\n          - listitem [ref=e60]:\n            - link \"Reducing your waste as an individual\" [ref=e61] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/climate-change-individual\n  - contentinfo [ref=e62]:\n    - generic [ref=e64]:\n      - generic [ref=e65]:\n        - heading \"Support links\" [level=2] [ref=e66]\n        - list [ref=e67]:\n          - listitem [ref=e68]:\n            - link \"Contact\" [ref=e69] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/contact\n          - listitem [ref=e70]:\n            - link \"View privacy statement\" [ref=e71] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/privacy\n          - listitem [ref=e72]:\n            - link \"Freedom of information\" [ref=e73] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/data-protection-foi\n          - listitem [ref=e74]:\n            - link \"Data protection\" [ref=e75] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/data-protection-foi-data-protection\n          - listitem [ref=e76]:\n            - link \"Accessibility\" [ref=e77] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/accessibility\n      - generic [ref=e79] [cursor=pointer]:\n        - img \"Logo\" [ref=e82] [cursor=pointer]\n        - generic [ref=e85] [cursor=pointer]: © Wiltshire Council\n```",
+          "tool_call_id": "pyd_ai_4555ef299261429cb986e7a34605cacf",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:28:07.907898Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e139",
+            "element": "link \"Monthly collections\""
+          },
+          "tool_call_id": "pyd_ai_2fc11acd62b04915b582171a9b94e420",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 10759,
+        "response_tokens": 14,
+        "total_tokens": 11222,
+        "details": {
+          "thoughts_tokens": 449,
+          "text_candidates_tokens": 14,
+          "text_prompt_tokens": 10759
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:28:11.716837Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "NxZ-aO7YOq6tz_IPye_36Ak"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click link \"Monthly collections\"\nawait page.getByRole('link', { name: 'Monthly collections' }).click();\n```\n\n### Page state\n- Page URL: https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index\n- Page Title: Waste collection calendar - Wiltshire Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - banner [ref=e2]:\n    - navigation [ref=e4]:\n      - generic [ref=e5]:\n        - link \"Wiltshire Council Logo\" [ref=e7] [cursor=pointer]:\n          - /url: https://www.wiltshire.gov.uk/\n          - img \"Wiltshire Council Logo\" [ref=e8] [cursor=pointer]\n        - list [ref=e11]:\n          - listitem [ref=e12]:\n            - button \"Your account\" [ref=e13] [cursor=pointer]:\n              - generic [ref=e14] [cursor=pointer]: \n              - generic [ref=e15] [cursor=pointer]: \n  - main [ref=e17]:\n    - list [ref=e19]:\n      - listitem [ref=e20]:\n        - link \"Home\" [ref=e21] [cursor=pointer]:\n          - /url: /\n      - listitem [ref=e22]: Waste collection dates\n    - generic [ref=e23]:\n      - generic [ref=e24]:\n        - heading \"Waste collection dates\" [level=1] [ref=e25]\n        - paragraph [ref=e26]: Find your household waste, recycling and garden waste collection days. We update this page often with any changes to your service.\n        - generic [ref=e28]:\n          - generic [ref=e29]:\n            - generic [ref=e30]: Postcode of your property\n            - textbox \"Postcode of your property\" [ref=e31]: BA12 0AB\n            - button \"Search and find my address\" [ref=e32] [cursor=pointer]\n          - generic [ref=e86]:\n            - generic [ref=e87]: We found the following addresses for this postcode\n            - combobox \"We found the following addresses for this postcode\" [ref=e88]:\n              - option \"Select your address\"\n              - option \"1 Beech Grove, Warminster, Wiltshire. BA12 0AB\" [selected]\n              - option \"2 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"3 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"4 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"5 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"6 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"7 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"8 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"9 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"10 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"11 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"12 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"13 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"14 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"15 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"16 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"17 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"18 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"19 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"20 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"21 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"22 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"23 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"24 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"25 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"26 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"27 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"28 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"29 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"30 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"31 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"32 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"33 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"34 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"35 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"36 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n              - option \"38 Beech Grove, Warminster, Wiltshire. BA12 0AB\"\n      - generic [ref=e36]:\n        - heading \"Collection dates\" [level=2] [ref=e183]\n        - paragraph [ref=e184]: Use the links below to switch between viewing modes. Note that the Calendar view is not fully accessible and users with voice readers who use keyboard navigation would be better using the Monthly collections mode.\n        - paragraph [ref=e185]:\n          - text: Garden waste collection dates are only displayed for addresses that have subscribed for this paid service.\n          - link \"Order a chargeable garden waste service\" [ref=e186] [cursor=pointer]:\n            - /url: https://ilforms.wiltshire.gov.uk/PaymentsCGW\n          - text: .\n        - paragraph [ref=e187]:\n          - link \"Download a printable collections calendar\" [ref=e188] [cursor=pointer]:\n            - /url: /wastecollectiondays/printablecalendar/100121097562\n        - list [ref=e189]:\n          - listitem [ref=e190]:\n            - link \"Upcoming collections\" [ref=e191] [cursor=pointer]:\n              - /url: /wastecollectiondays/wastecollectionupcoming?Postcode=BA12%200AB&HasPostcode=True&PostcodeAddresses=System.Collections.Generic.List%601%5BWiltshire.Integration.Wcf.Gazetteer.AddressModel%5D&HasPostcodeAddresses=True&Uprn=100121097562&HasUprn=True&TodaysDate=Monday%2021%20July%202025&TodaysDateTime=07%2F21%2F2025%2000%3A00%3A00&Year=2025&NextYear=2025&PreviousYear=2025&Month=7&NextMonth=8&PreviousMonth=6&CurrentMonthDescription=July%202025&NextMonthDescription=August%202025&PreviousMonthDescription=June%202025&Address=Wiltshire.Integration.Wcf.Gazetteer.AddressModel&HasAddress=True&MonthCollectionDates=System.Collections.Generic.List%601%5BWiltshire.IL.Ambassador.Forms.Models.WasteCollectionDateModel%5D&HasMonthCollectionDates=True&NextCollectionDates=System.Collections.Generic.List%601%5BWiltshire.IL.Ambassador.Forms.Models.WasteCollectionDateModel%5D&HasNextCollectionDates=True\n              - text: Upcoming\n              - generic [ref=e192] [cursor=pointer]: collections\n          - listitem [ref=e193]:\n            - generic [ref=e194]:\n              - text: Monthly\n              - generic [ref=e195]: collections\n          - listitem [ref=e196]:\n            - link \"Calendar view\" [ref=e197] [cursor=pointer]:\n              - /url: /wastecollectiondays/wastecollectioncalendar?Postcode=BA12%200AB&HasPostcode=True&PostcodeAddresses=System.Collections.Generic.List%601%5BWiltshire.Integration.Wcf.Gazetteer.AddressModel%5D&HasPostcodeAddresses=True&Uprn=100121097562&HasUprn=True&TodaysDate=Monday%2021%20July%202025&TodaysDateTime=07%2F21%2F2025%2000%3A00%3A00&Year=2025&NextYear=2025&PreviousYear=2025&Month=7&NextMonth=8&PreviousMonth=6&CurrentMonthDescription=July%202025&NextMonthDescription=August%202025&PreviousMonthDescription=June%202025&Address=Wiltshire.Integration.Wcf.Gazetteer.AddressModel&HasAddress=True&MonthCollectionDates=System.Collections.Generic.List%601%5BWiltshire.IL.Ambassador.Forms.Models.WasteCollectionDateModel%5D&HasMonthCollectionDates=True&NextCollectionDates=System.Collections.Generic.List%601%5BWiltshire.IL.Ambassador.Forms.Models.WasteCollectionDateModel%5D&HasNextCollectionDates=True\n              - text: Calendar\n              - generic [ref=e198] [cursor=pointer]: view\n        - paragraph [ref=e199]: \"Today's date: Monday 21 July 2025\"\n        - heading \"Collections for July 2025\" [level=3] [ref=e200]\n        - button \"View June 2025 waste collections\" [ref=e202] [cursor=pointer]:\n          - generic [ref=e203] [cursor=pointer]: \n          - text: June 2025\n        - button \"View August 2025 waste collections\" [ref=e205] [cursor=pointer]:\n          - text: August 2025\n          - generic [ref=e206] [cursor=pointer]: \n        - generic [ref=e208]:\n          - generic [ref=e210]:\n            - generic [ref=e211]:\n              - heading \"Thursday 3 July 2025\" [level=4] [ref=e212]:\n                - generic [ref=e213]: Thursday\n                - generic [ref=e214]: \"3\"\n                - generic [ref=e215]: July 2025\n              - paragraph [ref=e216]: Passed\n            - list [ref=e218]:\n              - listitem [ref=e219]: Household waste\n          - generic [ref=e221]:\n            - generic [ref=e222]:\n              - heading \"Thursday 10 July 2025\" [level=4] [ref=e223]:\n                - generic [ref=e224]: Thursday\n                - generic [ref=e225]: \"10\"\n                - generic [ref=e226]: July 2025\n              - paragraph [ref=e227]: 11 days ago\n            - list [ref=e229]:\n              - listitem [ref=e230]: Mixed dry recycling (blue lidded bin) and glass (black box or basket)\n          - generic [ref=e232]:\n            - generic [ref=e233]:\n              - heading \"Thursday 17 July 2025\" [level=4] [ref=e234]:\n                - generic [ref=e235]: Thursday\n                - generic [ref=e236]: \"17\"\n                - generic [ref=e237]: July 2025\n              - paragraph [ref=e238]: 4 days ago\n            - list [ref=e240]:\n              - listitem [ref=e241]: Household waste\n          - generic [ref=e243]:\n            - generic [ref=e244]:\n              - heading \"Thursday 24 July 2025\" [level=4] [ref=e245]:\n                - generic [ref=e246]: Thursday\n                - generic [ref=e247]: \"24\"\n                - generic [ref=e248]: July 2025\n              - paragraph [ref=e249]: In 3 days\n            - list [ref=e251]:\n              - listitem [ref=e252]: Mixed dry recycling (blue lidded bin) and glass (black box or basket)\n          - generic [ref=e254]:\n            - generic [ref=e255]:\n              - heading \"Thursday 31 July 2025\" [level=4] [ref=e256]:\n                - generic [ref=e257]: Thursday\n                - generic [ref=e258]: \"31\"\n                - generic [ref=e259]: July 2025\n              - paragraph [ref=e260]: In 10 days\n            - list [ref=e262]:\n              - listitem [ref=e263]: Household waste\n      - generic [ref=e37]:\n        - heading \"Find out more\" [level=2] [ref=e38]\n        - list [ref=e39]:\n          - listitem [ref=e40]:\n            - link \"Waste service policy\" [ref=e41] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-waste-service-policy\n          - listitem [ref=e42]:\n            - link \"Report a missed bin collection\" [ref=e43] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-missed-bin-collection\n          - listitem [ref=e44]:\n            - link \"Report incident or request service\" [ref=e45] [cursor=pointer]:\n              - /url: /\n          - listitem [ref=e46]:\n            - link \"Garden waste collections\" [ref=e47] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/gardenwaste\n          - listitem [ref=e48]:\n            - link \"Household recycling\" [ref=e49] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/recycling\n          - listitem [ref=e50]:\n            - link \"Large item reuse and collection\" [ref=e51] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/large-item-collection\n          - listitem [ref=e52]:\n            - link \"Our assisted collections\" [ref=e53] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-assisted-collections\n          - listitem [ref=e54]:\n            - link \"Report, request or replace a bin\" [ref=e55] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/rubbish-and-recycling-new-replacement-bins\n          - listitem [ref=e56]:\n            - link \"What happens to recycling\" [ref=e57] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/what-happens-to-recycling\n          - listitem [ref=e58]:\n            - link \"Home composting\" [ref=e59] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/reducing-your-waste-and-composting\n          - listitem [ref=e60]:\n            - link \"Reducing your waste as an individual\" [ref=e61] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/climate-change-individual\n  - contentinfo [ref=e62]:\n    - generic [ref=e64]:\n      - generic [ref=e65]:\n        - heading \"Support links\" [level=2] [ref=e66]\n        - list [ref=e67]:\n          - listitem [ref=e68]:\n            - link \"Contact\" [ref=e69] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/contact\n          - listitem [ref=e70]:\n            - link \"View privacy statement\" [ref=e71] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/privacy\n          - listitem [ref=e72]:\n            - link \"Freedom of information\" [ref=e73] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/data-protection-foi\n          - listitem [ref=e74]:\n            - link \"Data protection\" [ref=e75] [cursor=pointer]:\n              - /url: http://www.wiltshire.gov.uk/data-protection-foi-data-protection\n          - listitem [ref=e76]:\n            - link \"Accessibility\" [ref=e77] [cursor=pointer]:\n              - /url: https://www.wiltshire.gov.uk/accessibility\n      - generic [ref=e79] [cursor=pointer]:\n        - img \"Logo\" [ref=e82] [cursor=pointer]\n        - generic [ref=e85] [cursor=pointer]: © Wiltshire Council\n```",
+          "tool_call_id": "pyd_ai_2fc11acd62b04915b582171a9b94e420",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:28:12.882727Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "args": {
+            "notes": "The general waste bin color is assumed to be black as it was not explicitly stated on the website. Garden waste information is not available unless subscribed to a paid service.",
+            "food_waste": {
+              "next_pickup_day": null,
+              "frequency": null,
+              "bin_colour": null
+            },
+            "garden_waste": {
+              "bin_colour": null,
+              "next_pickup_day": null,
+              "frequency": null
+            },
+            "recycling": {
+              "frequency": "Bi-weekly",
+              "bin_colour": "blue",
+              "next_pickup_day": "Thursday 24 July 2025"
+            },
+            "postcode": "BA12 0AB",
+            "general_waste": {
+              "frequency": "Bi-weekly",
+              "bin_colour": "black",
+              "next_pickup_day": "Thursday 31 July 2025"
+            }
+          },
+          "tool_call_id": "pyd_ai_355b2f738ed64d06804400faa7bc36ab",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 15225,
+        "response_tokens": 124,
+        "total_tokens": 16095,
+        "details": {
+          "cached_content_tokens": 5328,
+          "thoughts_tokens": 746,
+          "text_cache_tokens": 5328,
+          "text_candidates_tokens": 124,
+          "text_prompt_tokens": 15225
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T10:28:19.201153Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "PBZ-aNj7OaKhmPUP0sPjuAM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "content": "Final result processed.",
+          "tool_call_id": "pyd_ai_355b2f738ed64d06804400faa7bc36ab",
+          "metadata": null,
+          "timestamp": "2025-07-21T10:28:19.201738Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    }
+  ]
+}

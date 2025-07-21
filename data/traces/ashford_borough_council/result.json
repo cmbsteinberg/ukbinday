@@ -1,0 +1,569 @@
+{
+  "output": {
+    "postcode": "CT4 8AL",
+    "general_waste": {
+      "next_pickup_day": "Thursday 24/07/2025",
+      "frequency": "fortnightly",
+      "bin_colour": "grey"
+    },
+    "recycling": {
+      "next_pickup_day": "Thursday 31/07/2025",
+      "frequency": "fortnightly",
+      "bin_colour": "green"
+    },
+    "food_waste": {
+      "next_pickup_day": "Thursday 24/07/2025",
+      "frequency": "weekly",
+      "bin_colour": "black"
+    },
+    "garden_waste": {
+      "next_pickup_day": "Wednesday 23/07/2025",
+      "frequency": "fortnightly",
+      "bin_colour": "brown"
+    },
+    "notes": null
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "You are a helpful web-browsing agent who researches and retrieves bin collection information for a specific council area by accessing their official website and lookup system",
+          "timestamp": "2025-07-21T07:44:03.688482Z",
+          "dynamic_ref": null,
+          "part_kind": "system-prompt"
+        },
+        {
+          "content": "\n### Bin Collection Schedule Lookup Task\n\n## Objective\n\nResearch and retrieve bin collection information for a specific council area by accessing their official website and lookup system.\n\n## Instructions\n\n# Step 1: Navigate to Council Website\nAccess the council website at: http://www.ashford.gov.uk/waste\n\n# Step 2: Test Postcodes\nSearch for the collection schedules for this postcodes: CT4 8AL\nIf a full address is required, use any house number (e.g., \"1 [Street Name]\") or select any option on a dropdown. The specific address doesn't matter - we only need the collection schedule format\n\n## Output\n\nProvide the following information for each bin type (if exists) + the postcode:\n    next_pickup_day\n    frequency \n    bin_colour\n\nIf it doesn't exist, that is ok. Just answer None for these fields.\n\n## Troubleshooting\nIf you encounter issues:\n\nLook for alternative entry points (e.g., \"Check my bin day\")\nNote any technical difficulties in your response\nIf the provided postcode doesn't work try postcodes from the same council area (use your knowledge of local postcodes).\n",
+          "timestamp": "2025-07-21T07:44:03.688489Z",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.ashford.gov.uk/waste"
+          },
+          "tool_call_id": "pyd_ai_3f6ca5a01a2a4267a7ebb42bb70fcf8e",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1388,
+        "response_tokens": 16,
+        "total_tokens": 1547,
+        "details": {
+          "thoughts_tokens": 143,
+          "text_candidates_tokens": 16,
+          "text_prompt_tokens": 1388
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:05.588450Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "w-99aLfON4P32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "content": "### Ran Playwright code\n```js\n// Navigate to http://www.ashford.gov.uk/waste\nawait page.goto('http://www.ashford.gov.uk/waste');\n```\n\n### Page state\n- Page URL: https://www.ashford.gov.uk/waste\n- Page Title: Information on the different types of waste and recycling and collection days.\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - region \"Cookie preferences\":\n    - button \"Set cookie preferences\" [ref=e3] [cursor=pointer]:\n      - img [ref=e4] [cursor=pointer]\n    - dialog \"Your choice regarding cookies on this site\" [ref=e10]:\n      - generic [ref=e11]:\n        - heading \"Your choice regarding cookies on this site\" [level=1] [ref=e12]\n        - paragraph [ref=e13]: The cookies placed on this website are not used to track users. They are used to optimise site functionality and to give you the best possible experience.\n      - generic [ref=e14]:\n        - button \"I Accept Cookies\" [active] [ref=e15] [cursor=pointer]:\n          - generic [ref=e16] [cursor=pointer]: I Accept Cookies\n        - button \"I Do Not Accept Cookies\" [ref=e17] [cursor=pointer]:\n          - generic [ref=e18] [cursor=pointer]: I Do Not Accept Cookies\n        - button \"Settings\" [ref=e19] [cursor=pointer]:\n          - generic [ref=e20] [cursor=pointer]: Settings\n  - banner [ref=e21]:\n    - generic [ref=e24]:\n      - link \"Skip to Main Content\" [ref=e26] [cursor=pointer]:\n        - /url: \"#contentbody\"\n      - link \"Click to return to the Ashford Borough Council website home page\" [ref=e29] [cursor=pointer]:\n        - /url: /\n        - img \"Click to return to the Ashford Borough Council website home page\" [ref=e30] [cursor=pointer]\n      - generic [ref=e33]:\n        - link \"Accessibility Icon Website Help\" [ref=e34] [cursor=pointer]:\n          - /url: /website-help\n          - img \"Accessibility Icon\" [ref=e35] [cursor=pointer]\n          - generic [ref=e36] [cursor=pointer]: Website Help\n        - link \"Accessibility Icon Accessibility\" [ref=e37] [cursor=pointer]:\n          - /url: /accessibility-statement\n          - img \"Accessibility Icon\" [ref=e38] [cursor=pointer]\n          - generic [ref=e39] [cursor=pointer]: Accessibility\n        - link \"Sign in Icon Sign in/Register\" [ref=e40] [cursor=pointer]:\n          - /url: https://www.ashford.gov.uk/your-council/my-ashford\n          - img \"Sign in Icon\" [ref=e41] [cursor=pointer]\n          - generic [ref=e42] [cursor=pointer]: Sign in/Register\n  - generic [ref=e44]:\n    - form [ref=e45]:\n      - generic [ref=e49]:\n        - generic [ref=e50]:\n          - textbox \"Search\" [ref=e51]\n          - button \"SEARCH\" [ref=e52] [cursor=pointer]\n        - button [ref=e53] [cursor=pointer]:\n          - generic [ref=e54] [cursor=pointer]: \n    - navigation \"Hidden Input Field\" [ref=e57]\n    - text:                                                                                                                                                                                                                                                                                                                                                      \n    - generic [ref=e58]:\n      - navigation [ref=e59]:\n        - link \"Find My Bin Day\" [ref=e61] [cursor=pointer]:\n          - /url: /recycling-waste-and-bins/find-my-bin-collection-days/\n          - generic [ref=e62] [cursor=pointer]: Find My Bin Day\n        - link \"Report Missed Bin\" [ref=e64] [cursor=pointer]:\n          - /url: /recycling-waste-and-bins/report-a-missed-bin-collection/\n          - generic [ref=e65] [cursor=pointer]: Report Missed Bin\n        - link \"Garden Waste Sign-Up\" [ref=e67] [cursor=pointer]:\n          - /url: /recycling-waste-and-bins/garden-waste/garden-waste-sign-up-form/\n          - generic [ref=e68] [cursor=pointer]: Garden Waste Sign-Up\n      - navigation \"breadcrumb\" [ref=e71]:\n        - list [ref=e72]:\n          - listitem [ref=e73]:\n            - link \"Home\" [ref=e74] [cursor=pointer]:\n              - /url: /\n          - listitem [ref=e75]: / Recycling, Waste and Bins\n      - main [ref=e76]:\n        - heading \"Recycling, Waste and Bins\" [level=1] [ref=e77]\n        - generic [ref=e79]:\n          - generic [ref=e80]:\n            - heading \"Find My Bin Day\" [level=2] [ref=e82]:\n              - link \"Find My Bin Day\" [ref=e83] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/find-my-bin-day/\n            - heading \"Garden Waste\" [level=2] [ref=e85]:\n              - link \"Garden Waste\" [ref=e86] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/garden-waste/\n            - heading \"Request a Bin\" [level=2] [ref=e88]:\n              - link \"Request a Bin\" [ref=e89] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/request-a-bin/\n          - generic [ref=e90]:\n            - heading \"Find My Bin Collection Days Look Up Tool\" [level=3] [ref=e92]:\n              - link \"Find My Bin Collection Days Look Up Tool\" [ref=e93] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/find-my-bin-day/find-my-bin-collection-days-look-up-tool/\n            - generic [ref=e94]:\n              - heading \"Garden Waste Renewal Form\" [level=3] [ref=e95]:\n                - link \"Garden Waste Renewal Form\" [ref=e96] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/garden-waste/garden-waste-renewal-form/\n              - heading \"Garden Waste Sign Up Form\" [level=3] [ref=e97]:\n                - link \"Garden Waste Sign Up Form\" [ref=e98] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/garden-waste/garden-waste-sign-up-form/\n              - heading \"Garden Waste Change Of Circumstances Form\" [level=3] [ref=e99]:\n                - link \"Garden Waste Change Of Circumstances Form\" [ref=e100] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/garden-waste/garden-waste-change-of-circumstances-form/\n            - generic [ref=e101]:\n              - heading \"Replacement Bin Request\" [level=3] [ref=e102]:\n                - link \"Replacement Bin Request\" [ref=e103] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/request-a-bin/replacement-bin-request/\n              - heading \"New Build Property Bin Request (Housing Developments)\" [level=3] [ref=e104]:\n                - link \"New Build Property Bin Request (Housing Developments)\" [ref=e105] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/request-a-bin/new-build-property-bin-request-housing-developments/\n              - heading \"New Build Property Bin Request (Individual Property)\" [level=3] [ref=e106]:\n                - link \"New Build Property Bin Request (Individual Property)\" [ref=e107] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/request-a-bin/new-build-property-bin-request-individual-property/\n          - generic [ref=e108]:\n            - heading \"Large Item Collection\" [level=2] [ref=e110]:\n              - link \"Large Item Collection\" [ref=e111] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/large-item-collection/\n            - heading \"Recycling\" [level=2] [ref=e113]:\n              - link \"Recycling\" [ref=e114] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/recycling/\n            - heading \"Refuse\" [level=2] [ref=e116]:\n              - link \"Refuse\" [ref=e117] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/refuse/\n          - generic [ref=e118]:\n            - generic [ref=e120]:\n              - heading \"A-Z of Waste\" [level=3] [ref=e121]:\n                - link \"A-Z of Waste\" [ref=e122] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/recycling/a-z-of-waste/\n              - heading \"Food waste\" [level=3] [ref=e123]:\n                - link \"Food waste\" [ref=e124] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/recycling/food-waste/\n              - heading \"Alternative Recycling\" [level=3] [ref=e125]:\n                - link \"Alternative Recycling\" [ref=e126] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/recycling/alternative-recycling/\n            - generic [ref=e127]:\n              - heading \"Household Waste Recycling Centre\" [level=3] [ref=e128]:\n                - link \"Household Waste Recycling Centre\" [ref=e129] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/refuse/household-waste-recycling-centre/\n              - heading \"A-Z of Waste\" [level=3] [ref=e130]:\n                - link \"A-Z of Waste\" [ref=e131] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/refuse/a-z-of-waste/\n              - heading \"Communal Property Recycling\" [level=3] [ref=e132]:\n                - link \"Communal Property Recycling\" [ref=e133] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/refuse/communal-property-recycling/\n          - generic [ref=e134]:\n            - heading \"Assisted Collection - Help Moving Your Bins\" [level=2] [ref=e136]:\n              - link \"Assisted Collection - Help Moving Your Bins\" [ref=e137] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/assisted-collection-help-moving-your-bins/\n            - heading \"Commercial and Hazardous Waste\" [level=2] [ref=e139]:\n              - link \"Commercial and Hazardous Waste\" [ref=e140] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/\n          - heading \"Sharps, Syringes and Clinical Waste\" [level=3] [ref=e145]:\n            - link \"Sharps, Syringes and Clinical Waste\" [ref=e146] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/sharps-syringes-and-clinical-waste/\n        - generic [ref=e157]:\n          - heading \"About Recycling, Waste and Bins\" [level=2] [ref=e158]\n          - paragraph [ref=e159]: This is the Recycling, Waste and Bins section of Ashford Borough Council’s website.\n          - paragraph [ref=e160]: Our Environmental Contracts team oversees the collection of refuse and recycling in the borough.\n          - paragraph [ref=e161]:\n            - text: You can use this part of the website to\n            - link \"sign up for our garden waste collection service\" [ref=e162] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/garden-waste/garden-waste-sign-up-form/\n            - text: \",\"\n            - link \"find your bin day\" [ref=e163] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/find-my-bin-collection-days/\n            - text: and\n            - link \"request a new/replacement bin\" [ref=e164] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/request-a-bin/\n            - text: .\n          - paragraph [ref=e165]:\n            - text: Alternatively, you can\n            - link \"the download the household waste guide\" [ref=e166] [cursor=pointer]:\n              - /url: /media/ptbk0ogl/new_waste_and_recycling_service_guide_march_2024.pdf\n            - text: which covers information regarding your waste collections.\n          - paragraph [ref=e167]:\n            - text: We also provide services for\n            - link \"large item collections\" [ref=e168] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/large-item-collection/\n            - text: \",\"\n            - link \"clinical waste collection\" [ref=e169] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/sharps-syringes-and-clinical-waste/\n            - text: and\n            - link \"assisted collections\" [ref=e170] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/assisted-collection-help-moving-your-bins/\n            - text: (help with moving your bins).\n          - paragraph [ref=e171]:\n            - text: Unsure of how to dispose of your waste? Then\n            - link \"check out our guidance on what you can and can’t recycle\" [ref=e172] [cursor=pointer]:\n              - /url: \"#\"\n            - text: .\n          - paragraph [ref=e173]:\n            - text: If you are a business then\n            - link \"view our guidance on commercial and business waste\" [ref=e174] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/\n            - text: .\n  - contentinfo [ref=e177]:\n    - generic [ref=e180]:\n      - generic [ref=e181]:\n        - generic [ref=e182]:\n          - link \"Your Council\" [ref=e184] [cursor=pointer]:\n            - /url: /your-council\n          - link \"Transparency\" [ref=e186] [cursor=pointer]:\n            - /url: /transparency\n          - link \"Contact Us\" [ref=e188] [cursor=pointer]:\n            - /url: /contact-us\n        - generic [ref=e189]:\n          - link \"Working for Us\" [ref=e191] [cursor=pointer]:\n            - /url: /working-for-us\n          - link \"Consultations\" [ref=e193] [cursor=pointer]:\n            - /url: /consultations\n          - link \"Conditions of Use\" [ref=e195] [cursor=pointer]:\n            - /url: /conditions-of-use\n      - generic [ref=e197]:\n        - link \"Click to view the Ashford Borough Council Facebook page\" [ref=e198] [cursor=pointer]:\n          - /url: https://www.facebook.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council Facebook page\" [ref=e199] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council X formally known as Twitter feed\" [ref=e200] [cursor=pointer]:\n          - /url: https://twitter.com/AshfordCouncil\n          - img \"Click to view the Ashford Borough Council X formally known as Twitter feed\" [ref=e201] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Instagram feed\" [ref=e202] [cursor=pointer]:\n          - /url: https://www.instagram.com/ashfordbc/\n          - img \"Click to view the Ashford Borough Council Instagram feed\" [ref=e203] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council YouTube channel\" [ref=e204] [cursor=pointer]:\n          - /url: https://www.youtube.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council YouTube channel\" [ref=e205] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council LinkedIn profile\" [ref=e206] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/ashford-borough-council\n          - img \"Click to view the Ashford Borough Council LinkedIn profile\" [ref=e207] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Nextdoor profile\" [ref=e208] [cursor=pointer]:\n          - /url: https://nextdoor.co.uk/agency/ashford-borough-council\n          - img \"Click to view the Ashford Borough Council Nextdoor profile\" [ref=e209] [cursor=pointer]\n    - generic [ref=e212]:\n      - link \"Click here to go to the Love Ashford website\" [ref=e214] [cursor=pointer]:\n        - /url: https://www.loveashford.com\n        - img \"Click here to go to the Love Ashford website\" [ref=e215] [cursor=pointer]\n      - link \"Click here to go to the Ashford 4 website\" [ref=e217] [cursor=pointer]:\n        - /url: https://www.ashfordfor.com\n        - img \"Click here to go to the Ashford 4 website\" [ref=e218] [cursor=pointer]\n      - link \"Click here to go to the Ashford and Tenterden website\" [ref=e220] [cursor=pointer]:\n        - /url: https://www.visitashfordandtenterden.co.uk\n        - img \"Click here to go to the Ashford and Tenterden website\" [ref=e221] [cursor=pointer]\n      - link \"Click here to go to the Digital Ashford website\" [ref=e223] [cursor=pointer]:\n        - /url: https://digital.ashford.gov.uk\n        - img \"Click here to go to the Digital Ashford website\" [ref=e224] [cursor=pointer]\n      - link \"Click here to go to the Aspire Landscape Management website\" [ref=e226] [cursor=pointer]:\n        - /url: https://www.aspirelm.co.uk\n        - img \"Click here to go to the Aspire Landscape Management website\" [ref=e227] [cursor=pointer]\n      - link \"Click here to go to the Ashford Port Health website\" [ref=e229] [cursor=pointer]:\n        - /url: https://www.ashfordporthealth.gov.uk\n        - img \"Click here to go to the Ashford Port Health website\" [ref=e230] [cursor=pointer]\n    - generic [ref=e235]: Copyright © 2025 Ashford Borough Council\n  - generic [ref=e238] [cursor=pointer]:\n    - button \"happy face feedback icon\" [ref=e240] [cursor=pointer]:\n      - img \"happy face feedback icon\" [ref=e241] [cursor=pointer]\n    - button \"unhappy face feedback icon\" [ref=e243] [cursor=pointer]:\n      - img \"unhappy face feedback icon\" [ref=e244] [cursor=pointer]\n    - img \"feedback close icon\" [ref=e246] [cursor=pointer]\n```",
+          "tool_call_id": "pyd_ai_3f6ca5a01a2a4267a7ebb42bb70fcf8e",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:44:07.697580Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e15",
+            "element": "I Accept Cookies"
+          },
+          "tool_call_id": "pyd_ai_a06400a398944b0cb47357f489f4b5f5",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 7077,
+        "response_tokens": 11,
+        "total_tokens": 7124,
+        "details": {
+          "thoughts_tokens": 36,
+          "text_candidates_tokens": 11,
+          "text_prompt_tokens": 7077
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:08.762592Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "x-99aNCDL6bitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click I Accept Cookies\nawait page.getByRole('button', { name: 'I Accept Cookies' }).click();\n```\n\n### Page state\n- Page URL: https://www.ashford.gov.uk/waste\n- Page Title: Information on the different types of waste and recycling and collection days.\n- Page Snapshot:\n```yaml\n- generic [ref=e1]:\n  - region \"Cookie preferences\":\n    - button \"Set cookie preferences\" [ref=e3] [cursor=pointer]:\n      - img [ref=e4] [cursor=pointer]\n  - banner [ref=e21]:\n    - generic [ref=e24]:\n      - link \"Skip to Main Content\" [ref=e26] [cursor=pointer]:\n        - /url: \"#contentbody\"\n      - link \"Click to return to the Ashford Borough Council website home page\" [ref=e29] [cursor=pointer]:\n        - /url: /\n        - img \"Click to return to the Ashford Borough Council website home page\" [ref=e30] [cursor=pointer]\n      - generic [ref=e32]:\n        - generic [ref=e33]:\n          - link \"Accessibility Icon Website Help\" [ref=e34] [cursor=pointer]:\n            - /url: /website-help\n            - img \"Accessibility Icon\" [ref=e35] [cursor=pointer]\n            - generic [ref=e36] [cursor=pointer]: Website Help\n          - link \"Accessibility Icon Accessibility\" [ref=e37] [cursor=pointer]:\n            - /url: /accessibility-statement\n            - img \"Accessibility Icon\" [ref=e38] [cursor=pointer]\n            - generic [ref=e39] [cursor=pointer]: Accessibility\n          - link \"Sign in Icon Sign in/Register\" [ref=e40] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/your-council/my-ashford\n            - img \"Sign in Icon\" [ref=e41] [cursor=pointer]\n            - generic [ref=e42] [cursor=pointer]: Sign in/Register\n        - link \"Select Language\" [ref=e251] [cursor=pointer]:\n          - /url: \"#\"\n          - generic [ref=e252] [cursor=pointer]: Select Language\n          - generic [ref=e254] [cursor=pointer]: ▼\n  - generic [ref=e44]:\n    - form [ref=e45]:\n      - generic [ref=e49]:\n        - generic [ref=e50]:\n          - textbox \"Search\" [ref=e51]\n          - button \"SEARCH\" [ref=e52] [cursor=pointer]\n        - button [ref=e53] [cursor=pointer]:\n          - generic [ref=e54] [cursor=pointer]: \n    - navigation \"Hidden Input Field\" [ref=e57]\n    - text:                                                                                                                                                                                                                                                                                                                                                      \n    - generic [ref=e58]:\n      - navigation [ref=e59]:\n        - link \"Find My Bin Day\" [ref=e61] [cursor=pointer]:\n          - /url: /recycling-waste-and-bins/find-my-bin-collection-days/\n          - generic [ref=e62] [cursor=pointer]: Find My Bin Day\n        - link \"Report Missed Bin\" [ref=e64] [cursor=pointer]:\n          - /url: /recycling-waste-and-bins/report-a-missed-bin-collection/\n          - generic [ref=e65] [cursor=pointer]: Report Missed Bin\n        - link \"Garden Waste Sign-Up\" [ref=e67] [cursor=pointer]:\n          - /url: /recycling-waste-and-bins/garden-waste/garden-waste-sign-up-form/\n          - generic [ref=e68] [cursor=pointer]: Garden Waste Sign-Up\n      - navigation \"breadcrumb\" [ref=e71]:\n        - list [ref=e72]:\n          - listitem [ref=e73]:\n            - link \"Home\" [ref=e74] [cursor=pointer]:\n              - /url: /\n          - listitem [ref=e75]: / Recycling, Waste and Bins\n      - main [ref=e76]:\n        - heading \"Recycling, Waste and Bins\" [level=1] [ref=e77]\n        - generic [ref=e79]:\n          - generic [ref=e80]:\n            - heading \"Find My Bin Day\" [level=2] [ref=e82]:\n              - link \"Find My Bin Day\" [ref=e83] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/find-my-bin-day/\n            - heading \"Garden Waste\" [level=2] [ref=e85]:\n              - link \"Garden Waste\" [ref=e86] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/garden-waste/\n            - heading \"Request a Bin\" [level=2] [ref=e88]:\n              - link \"Request a Bin\" [ref=e89] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/request-a-bin/\n          - generic [ref=e90]:\n            - heading \"Find My Bin Collection Days Look Up Tool\" [level=3] [ref=e92]:\n              - link \"Find My Bin Collection Days Look Up Tool\" [ref=e93] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/find-my-bin-day/find-my-bin-collection-days-look-up-tool/\n            - generic [ref=e94]:\n              - heading \"Garden Waste Renewal Form\" [level=3] [ref=e95]:\n                - link \"Garden Waste Renewal Form\" [ref=e96] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/garden-waste/garden-waste-renewal-form/\n              - heading \"Garden Waste Sign Up Form\" [level=3] [ref=e97]:\n                - link \"Garden Waste Sign Up Form\" [ref=e98] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/garden-waste/garden-waste-sign-up-form/\n              - heading \"Garden Waste Change Of Circumstances Form\" [level=3] [ref=e99]:\n                - link \"Garden Waste Change Of Circumstances Form\" [ref=e100] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/garden-waste/garden-waste-change-of-circumstances-form/\n            - generic [ref=e101]:\n              - heading \"Replacement Bin Request\" [level=3] [ref=e102]:\n                - link \"Replacement Bin Request\" [ref=e103] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/request-a-bin/replacement-bin-request/\n              - heading \"New Build Property Bin Request (Housing Developments)\" [level=3] [ref=e104]:\n                - link \"New Build Property Bin Request (Housing Developments)\" [ref=e105] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/request-a-bin/new-build-property-bin-request-housing-developments/\n              - heading \"New Build Property Bin Request (Individual Property)\" [level=3] [ref=e106]:\n                - link \"New Build Property Bin Request (Individual Property)\" [ref=e107] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/request-a-bin/new-build-property-bin-request-individual-property/\n          - generic [ref=e108]:\n            - heading \"Large Item Collection\" [level=2] [ref=e110]:\n              - link \"Large Item Collection\" [ref=e111] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/large-item-collection/\n            - heading \"Recycling\" [level=2] [ref=e113]:\n              - link \"Recycling\" [ref=e114] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/recycling/\n            - heading \"Refuse\" [level=2] [ref=e116]:\n              - link \"Refuse\" [ref=e117] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/refuse/\n          - generic [ref=e118]:\n            - generic [ref=e120]:\n              - heading \"A-Z of Waste\" [level=3] [ref=e121]:\n                - link \"A-Z of Waste\" [ref=e122] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/recycling/a-z-of-waste/\n              - heading \"Food waste\" [level=3] [ref=e123]:\n                - link \"Food waste\" [ref=e124] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/recycling/food-waste/\n              - heading \"Alternative Recycling\" [level=3] [ref=e125]:\n                - link \"Alternative Recycling\" [ref=e126] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/recycling/alternative-recycling/\n            - generic [ref=e127]:\n              - heading \"Household Waste Recycling Centre\" [level=3] [ref=e128]:\n                - link \"Household Waste Recycling Centre\" [ref=e129] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/refuse/household-waste-recycling-centre/\n              - heading \"A-Z of Waste\" [level=3] [ref=e130]:\n                - link \"A-Z of Waste\" [ref=e131] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/refuse/a-z-of-waste/\n              - heading \"Communal Property Recycling\" [level=3] [ref=e132]:\n                - link \"Communal Property Recycling\" [ref=e133] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/refuse/communal-property-recycling/\n          - generic [ref=e134]:\n            - heading \"Assisted Collection - Help Moving Your Bins\" [level=2] [ref=e136]:\n              - link \"Assisted Collection - Help Moving Your Bins\" [ref=e137] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/assisted-collection-help-moving-your-bins/\n            - heading \"Commercial and Hazardous Waste\" [level=2] [ref=e139]:\n              - link \"Commercial and Hazardous Waste\" [ref=e140] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/\n          - heading \"Sharps, Syringes and Clinical Waste\" [level=3] [ref=e145]:\n            - link \"Sharps, Syringes and Clinical Waste\" [ref=e146] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/sharps-syringes-and-clinical-waste/\n        - generic [ref=e157]:\n          - heading \"About Recycling, Waste and Bins\" [level=2] [ref=e158]\n          - paragraph [ref=e159]: This is the Recycling, Waste and Bins section of Ashford Borough Council’s website.\n          - paragraph [ref=e160]: Our Environmental Contracts team oversees the collection of refuse and recycling in the borough.\n          - paragraph [ref=e161]:\n            - text: You can use this part of the website to\n            - link \"sign up for our garden waste collection service\" [ref=e162] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/garden-waste/garden-waste-sign-up-form/\n            - text: \",\"\n            - link \"find your bin day\" [ref=e163] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/find-my-bin-collection-days/\n            - text: and\n            - link \"request a new/replacement bin\" [ref=e164] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/request-a-bin/\n            - text: .\n          - paragraph [ref=e165]:\n            - text: Alternatively, you can\n            - link \"the download the household waste guide\" [ref=e166] [cursor=pointer]:\n              - /url: /media/ptbk0ogl/new_waste_and_recycling_service_guide_march_2024.pdf\n            - text: which covers information regarding your waste collections.\n          - paragraph [ref=e167]:\n            - text: We also provide services for\n            - link \"large item collections\" [ref=e168] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/large-item-collection/\n            - text: \",\"\n            - link \"clinical waste collection\" [ref=e169] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/sharps-syringes-and-clinical-waste/\n            - text: and\n            - link \"assisted collections\" [ref=e170] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/assisted-collection-help-moving-your-bins/\n            - text: (help with moving your bins).\n          - paragraph [ref=e171]:\n            - text: Unsure of how to dispose of your waste? Then\n            - link \"check out our guidance on what you can and can’t recycle\" [ref=e172] [cursor=pointer]:\n              - /url: \"#\"\n            - text: .\n          - paragraph [ref=e173]:\n            - text: If you are a business then\n            - link \"view our guidance on commercial and business waste\" [ref=e174] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/\n            - text: .\n  - contentinfo [ref=e177]:\n    - generic [ref=e180]:\n      - generic [ref=e181]:\n        - generic [ref=e182]:\n          - link \"Your Council\" [ref=e184] [cursor=pointer]:\n            - /url: /your-council\n          - link \"Transparency\" [ref=e186] [cursor=pointer]:\n            - /url: /transparency\n          - link \"Contact Us\" [ref=e188] [cursor=pointer]:\n            - /url: /contact-us\n        - generic [ref=e189]:\n          - link \"Working for Us\" [ref=e191] [cursor=pointer]:\n            - /url: /working-for-us\n          - link \"Consultations\" [ref=e193] [cursor=pointer]:\n            - /url: /consultations\n          - link \"Conditions of Use\" [ref=e195] [cursor=pointer]:\n            - /url: /conditions-of-use\n      - generic [ref=e197]:\n        - link \"Click to view the Ashford Borough Council Facebook page\" [ref=e198] [cursor=pointer]:\n          - /url: https://www.facebook.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council Facebook page\" [ref=e199] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council X formally known as Twitter feed\" [ref=e200] [cursor=pointer]:\n          - /url: https://twitter.com/AshfordCouncil\n          - img \"Click to view the Ashford Borough Council X formally known as Twitter feed\" [ref=e201] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Instagram feed\" [ref=e202] [cursor=pointer]:\n          - /url: https://www.instagram.com/ashfordbc/\n          - img \"Click to view the Ashford Borough Council Instagram feed\" [ref=e203] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council YouTube channel\" [ref=e204] [cursor=pointer]:\n          - /url: https://www.youtube.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council YouTube channel\" [ref=e205] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council LinkedIn profile\" [ref=e206] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/ashford-borough-council\n          - img \"Click to view the Ashford Borough Council LinkedIn profile\" [ref=e207] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Nextdoor profile\" [ref=e208] [cursor=pointer]:\n          - /url: https://nextdoor.co.uk/agency/ashford-borough-council\n          - img \"Click to view the Ashford Borough Council Nextdoor profile\" [ref=e209] [cursor=pointer]\n    - generic [ref=e212]:\n      - link \"Click here to go to the Love Ashford website\" [ref=e214] [cursor=pointer]:\n        - /url: https://www.loveashford.com\n        - img \"Click here to go to the Love Ashford website\" [ref=e215] [cursor=pointer]\n      - link \"Click here to go to the Ashford 4 website\" [ref=e217] [cursor=pointer]:\n        - /url: https://www.ashfordfor.com\n        - img \"Click here to go to the Ashford 4 website\" [ref=e218] [cursor=pointer]\n      - link \"Click here to go to the Ashford and Tenterden website\" [ref=e220] [cursor=pointer]:\n        - /url: https://www.visitashfordandtenterden.co.uk\n        - img \"Click here to go to the Ashford and Tenterden website\" [ref=e221] [cursor=pointer]\n      - link \"Click here to go to the Digital Ashford website\" [ref=e223] [cursor=pointer]:\n        - /url: https://digital.ashford.gov.uk\n        - img \"Click here to go to the Digital Ashford website\" [ref=e224] [cursor=pointer]\n      - link \"Click here to go to the Aspire Landscape Management website\" [ref=e226] [cursor=pointer]:\n        - /url: https://www.aspirelm.co.uk\n        - img \"Click here to go to the Aspire Landscape Management website\" [ref=e227] [cursor=pointer]\n      - link \"Click here to go to the Ashford Port Health website\" [ref=e229] [cursor=pointer]:\n        - /url: https://www.ashfordporthealth.gov.uk\n        - img \"Click here to go to the Ashford Port Health website\" [ref=e230] [cursor=pointer]\n    - generic [ref=e235]: Copyright © 2025 Ashford Borough Council\n  - generic [ref=e238] [cursor=pointer]:\n    - button \"happy face feedback icon\" [ref=e240] [cursor=pointer]:\n      - img \"happy face feedback icon\" [ref=e241] [cursor=pointer]\n    - button \"unhappy face feedback icon\" [ref=e243] [cursor=pointer]:\n      - img \"unhappy face feedback icon\" [ref=e244] [cursor=pointer]\n    - img \"feedback close icon\" [ref=e246] [cursor=pointer]\n  - dialog [active] [ref=e255]:\n    - document:\n      - generic [ref=e257]:\n        - generic [ref=e258]:\n          - generic [ref=e259]: Get all the latest council news delivered straight to your inbox\n          - button \"Close\" [ref=e260] [cursor=pointer]:\n            - generic [ref=e261] [cursor=pointer]: ×\n        - link \"Subscribe\" [ref=e263] [cursor=pointer]:\n          - /url: /get-updates-from-the-council\n        - generic [ref=e264]:\n          - button \"No thanks\" [ref=e265] [cursor=pointer]\n          - button \"Remind me later\" [ref=e266] [cursor=pointer]\n  - img [ref=e269]\n```",
+          "tool_call_id": "pyd_ai_a06400a398944b0cb47357f489f4b5f5",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:44:10.056245Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "element": "Find My Bin Day",
+            "ref": "e61"
+          },
+          "tool_call_id": "pyd_ai_3a76bc3d361343df9f9d9f0203295501",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 12806,
+        "response_tokens": 12,
+        "total_tokens": 12880,
+        "details": {
+          "thoughts_tokens": 62,
+          "text_candidates_tokens": 12,
+          "text_prompt_tokens": 12806
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:11.638854Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "yu99aNmjCffr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "content": "TimeoutError: locator.click: Timeout 5000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('aria-ref=e61')\u001b[22m\n\u001b[2m    - locator resolved to <a target=\"\" id=\"ctabutton1\" href=\"/recycling-waste-and-bins/find-my-bin-collection-days/\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"modal-body newsletter-popup-bgimg\">…</div> from <div tabindex=\"-1\" role=\"dialog\" aria-modal=\"true\" id=\"newsletterPopup\" class=\"modal fade show\" aria-labelledby=\"deleteAccountModalLabel\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"modal-body newsletter-popup-bgimg\">…</div> from <div tabindex=\"-1\" role=\"dialog\" aria-modal=\"true\" id=\"newsletterPopup\" class=\"modal fade show\" aria-labelledby=\"deleteAccountModalLabel\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    9 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"modal-body newsletter-popup-bgimg\">…</div> from <div tabindex=\"-1\" role=\"dialog\" aria-modal=\"true\" id=\"newsletterPopup\" class=\"modal fade show\" aria-labelledby=\"deleteAccountModalLabel\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n",
+          "tool_name": "browser_click",
+          "tool_call_id": "pyd_ai_3a76bc3d361343df9f9d9f0203295501",
+          "timestamp": "2025-07-21T07:44:16.777577Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e265",
+            "element": "No thanks"
+          },
+          "tool_call_id": "pyd_ai_3fa43d2ed883485db4f5a4b2e7d41474",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 13486,
+        "response_tokens": 11,
+        "total_tokens": 13561,
+        "details": {
+          "thoughts_tokens": 64,
+          "text_candidates_tokens": 11,
+          "text_prompt_tokens": 13486
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:18.055788Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "0O99aOaENoP32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click No thanks\nawait page.getByRole('button', { name: 'No thanks' }).click();\n```\n\n### Page state\n- Page URL: https://www.ashford.gov.uk/waste\n- Page Title: Information on the different types of waste and recycling and collection days.\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - region \"Cookie preferences\":\n    - button \"Set cookie preferences\" [ref=e3] [cursor=pointer]:\n      - img [ref=e4] [cursor=pointer]\n  - banner [ref=e21]:\n    - generic [ref=e24]:\n      - link \"Skip to Main Content\" [ref=e26] [cursor=pointer]:\n        - /url: \"#contentbody\"\n      - link \"Click to return to the Ashford Borough Council website home page\" [ref=e29] [cursor=pointer]:\n        - /url: /\n        - img \"Click to return to the Ashford Borough Council website home page\" [ref=e30] [cursor=pointer]\n      - generic [ref=e32]:\n        - generic [ref=e33]:\n          - link \"Accessibility Icon Website Help\" [ref=e34] [cursor=pointer]:\n            - /url: /website-help\n            - img \"Accessibility Icon\" [ref=e35] [cursor=pointer]\n            - generic [ref=e36] [cursor=pointer]: Website Help\n          - link \"Accessibility Icon Accessibility\" [ref=e37] [cursor=pointer]:\n            - /url: /accessibility-statement\n            - img \"Accessibility Icon\" [ref=e38] [cursor=pointer]\n            - generic [ref=e39] [cursor=pointer]: Accessibility\n          - link \"Sign in Icon Sign in/Register\" [ref=e40] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/your-council/my-ashford\n            - img \"Sign in Icon\" [ref=e41] [cursor=pointer]\n            - generic [ref=e42] [cursor=pointer]: Sign in/Register\n        - link \"Select Language\" [ref=e251] [cursor=pointer]:\n          - /url: \"#\"\n          - generic [ref=e252] [cursor=pointer]: Select Language\n          - generic [ref=e254] [cursor=pointer]: ▼\n  - generic [ref=e44]:\n    - form [ref=e45]:\n      - generic [ref=e49]:\n        - generic [ref=e50]:\n          - textbox \"Search\" [ref=e51]\n          - button \"SEARCH\" [ref=e52] [cursor=pointer]\n        - button [ref=e53] [cursor=pointer]:\n          - generic [ref=e54] [cursor=pointer]: \n    - navigation \"Hidden Input Field\" [ref=e57]\n    - text:                                                                                                                                                                                                                                                                                                                                                      \n    - generic [ref=e58]:\n      - navigation [ref=e59]:\n        - link \"Find My Bin Day\" [ref=e61] [cursor=pointer]:\n          - /url: /recycling-waste-and-bins/find-my-bin-collection-days/\n          - generic [ref=e62] [cursor=pointer]: Find My Bin Day\n        - link \"Report Missed Bin\" [ref=e64] [cursor=pointer]:\n          - /url: /recycling-waste-and-bins/report-a-missed-bin-collection/\n          - generic [ref=e65] [cursor=pointer]: Report Missed Bin\n        - link \"Garden Waste Sign-Up\" [ref=e67] [cursor=pointer]:\n          - /url: /recycling-waste-and-bins/garden-waste/garden-waste-sign-up-form/\n          - generic [ref=e68] [cursor=pointer]: Garden Waste Sign-Up\n      - navigation \"breadcrumb\" [ref=e71]:\n        - list [ref=e72]:\n          - listitem [ref=e73]:\n            - link \"Home\" [ref=e74] [cursor=pointer]:\n              - /url: /\n          - listitem [ref=e75]: / Recycling, Waste and Bins\n      - main [ref=e76]:\n        - heading \"Recycling, Waste and Bins\" [level=1] [ref=e77]\n        - generic [ref=e79]:\n          - generic [ref=e80]:\n            - heading \"Find My Bin Day\" [level=2] [ref=e82]:\n              - link \"Find My Bin Day\" [ref=e83] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/find-my-bin-day/\n            - heading \"Garden Waste\" [level=2] [ref=e85]:\n              - link \"Garden Waste\" [ref=e86] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/garden-waste/\n            - heading \"Request a Bin\" [level=2] [ref=e88]:\n              - link \"Request a Bin\" [ref=e89] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/request-a-bin/\n          - generic [ref=e90]:\n            - heading \"Find My Bin Collection Days Look Up Tool\" [level=3] [ref=e92]:\n              - link \"Find My Bin Collection Days Look Up Tool\" [ref=e93] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/find-my-bin-day/find-my-bin-collection-days-look-up-tool/\n            - generic [ref=e94]:\n              - heading \"Garden Waste Renewal Form\" [level=3] [ref=e95]:\n                - link \"Garden Waste Renewal Form\" [ref=e96] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/garden-waste/garden-waste-renewal-form/\n              - heading \"Garden Waste Sign Up Form\" [level=3] [ref=e97]:\n                - link \"Garden Waste Sign Up Form\" [ref=e98] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/garden-waste/garden-waste-sign-up-form/\n              - heading \"Garden Waste Change Of Circumstances Form\" [level=3] [ref=e99]:\n                - link \"Garden Waste Change Of Circumstances Form\" [ref=e100] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/garden-waste/garden-waste-change-of-circumstances-form/\n            - generic [ref=e101]:\n              - heading \"Replacement Bin Request\" [level=3] [ref=e102]:\n                - link \"Replacement Bin Request\" [ref=e103] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/request-a-bin/replacement-bin-request/\n              - heading \"New Build Property Bin Request (Housing Developments)\" [level=3] [ref=e104]:\n                - link \"New Build Property Bin Request (Housing Developments)\" [ref=e105] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/request-a-bin/new-build-property-bin-request-housing-developments/\n              - heading \"New Build Property Bin Request (Individual Property)\" [level=3] [ref=e106]:\n                - link \"New Build Property Bin Request (Individual Property)\" [ref=e107] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/request-a-bin/new-build-property-bin-request-individual-property/\n          - generic [ref=e108]:\n            - heading \"Large Item Collection\" [level=2] [ref=e110]:\n              - link \"Large Item Collection\" [ref=e111] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/large-item-collection/\n            - heading \"Recycling\" [level=2] [ref=e113]:\n              - link \"Recycling\" [ref=e114] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/recycling/\n            - heading \"Refuse\" [level=2] [ref=e116]:\n              - link \"Refuse\" [ref=e117] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/refuse/\n          - generic [ref=e118]:\n            - generic [ref=e120]:\n              - heading \"A-Z of Waste\" [level=3] [ref=e121]:\n                - link \"A-Z of Waste\" [ref=e122] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/recycling/a-z-of-waste/\n              - heading \"Food waste\" [level=3] [ref=e123]:\n                - link \"Food waste\" [ref=e124] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/recycling/food-waste/\n              - heading \"Alternative Recycling\" [level=3] [ref=e125]:\n                - link \"Alternative Recycling\" [ref=e126] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/recycling/alternative-recycling/\n            - generic [ref=e127]:\n              - heading \"Household Waste Recycling Centre\" [level=3] [ref=e128]:\n                - link \"Household Waste Recycling Centre\" [ref=e129] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/refuse/household-waste-recycling-centre/\n              - heading \"A-Z of Waste\" [level=3] [ref=e130]:\n                - link \"A-Z of Waste\" [ref=e131] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/refuse/a-z-of-waste/\n              - heading \"Communal Property Recycling\" [level=3] [ref=e132]:\n                - link \"Communal Property Recycling\" [ref=e133] [cursor=pointer]:\n                  - /url: /recycling-waste-and-bins/refuse/communal-property-recycling/\n          - generic [ref=e134]:\n            - heading \"Assisted Collection - Help Moving Your Bins\" [level=2] [ref=e136]:\n              - link \"Assisted Collection - Help Moving Your Bins\" [ref=e137] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/assisted-collection-help-moving-your-bins/\n            - heading \"Commercial and Hazardous Waste\" [level=2] [ref=e139]:\n              - link \"Commercial and Hazardous Waste\" [ref=e140] [cursor=pointer]:\n                - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/\n          - heading \"Sharps, Syringes and Clinical Waste\" [level=3] [ref=e145]:\n            - link \"Sharps, Syringes and Clinical Waste\" [ref=e146] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/sharps-syringes-and-clinical-waste/\n        - generic [ref=e157]:\n          - heading \"About Recycling, Waste and Bins\" [level=2] [ref=e158]\n          - paragraph [ref=e159]: This is the Recycling, Waste and Bins section of Ashford Borough Council’s website.\n          - paragraph [ref=e160]: Our Environmental Contracts team oversees the collection of refuse and recycling in the borough.\n          - paragraph [ref=e161]:\n            - text: You can use this part of the website to\n            - link \"sign up for our garden waste collection service\" [ref=e162] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/garden-waste/garden-waste-sign-up-form/\n            - text: \",\"\n            - link \"find your bin day\" [ref=e163] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/find-my-bin-collection-days/\n            - text: and\n            - link \"request a new/replacement bin\" [ref=e164] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/request-a-bin/\n            - text: .\n          - paragraph [ref=e165]:\n            - text: Alternatively, you can\n            - link \"the download the household waste guide\" [ref=e166] [cursor=pointer]:\n              - /url: /media/ptbk0ogl/new_waste_and_recycling_service_guide_march_2024.pdf\n            - text: which covers information regarding your waste collections.\n          - paragraph [ref=e167]:\n            - text: We also provide services for\n            - link \"large item collections\" [ref=e168] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/large-item-collection/\n            - text: \",\"\n            - link \"clinical waste collection\" [ref=e169] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/sharps-syringes-and-clinical-waste/\n            - text: and\n            - link \"assisted collections\" [ref=e170] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/assisted-collection-help-moving-your-bins/\n            - text: (help with moving your bins).\n          - paragraph [ref=e171]:\n            - text: Unsure of how to dispose of your waste? Then\n            - link \"check out our guidance on what you can and can’t recycle\" [ref=e172] [cursor=pointer]:\n              - /url: \"#\"\n            - text: .\n          - paragraph [ref=e173]:\n            - text: If you are a business then\n            - link \"view our guidance on commercial and business waste\" [ref=e174] [cursor=pointer]:\n              - /url: /recycling-waste-and-bins/commercial-and-hazardous-waste/\n            - text: .\n  - contentinfo [ref=e177]:\n    - generic [ref=e180]:\n      - generic [ref=e181]:\n        - generic [ref=e182]:\n          - link \"Your Council\" [ref=e184] [cursor=pointer]:\n            - /url: /your-council\n          - link \"Transparency\" [ref=e186] [cursor=pointer]:\n            - /url: /transparency\n          - link \"Contact Us\" [ref=e188] [cursor=pointer]:\n            - /url: /contact-us\n        - generic [ref=e189]:\n          - link \"Working for Us\" [ref=e191] [cursor=pointer]:\n            - /url: /working-for-us\n          - link \"Consultations\" [ref=e193] [cursor=pointer]:\n            - /url: /consultations\n          - link \"Conditions of Use\" [ref=e195] [cursor=pointer]:\n            - /url: /conditions-of-use\n      - generic [ref=e197]:\n        - link \"Click to view the Ashford Borough Council Facebook page\" [ref=e198] [cursor=pointer]:\n          - /url: https://www.facebook.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council Facebook page\" [ref=e199] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council X formally known as Twitter feed\" [ref=e200] [cursor=pointer]:\n          - /url: https://twitter.com/AshfordCouncil\n          - img \"Click to view the Ashford Borough Council X formally known as Twitter feed\" [ref=e201] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Instagram feed\" [ref=e202] [cursor=pointer]:\n          - /url: https://www.instagram.com/ashfordbc/\n          - img \"Click to view the Ashford Borough Council Instagram feed\" [ref=e203] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council YouTube channel\" [ref=e204] [cursor=pointer]:\n          - /url: https://www.youtube.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council YouTube channel\" [ref=e205] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council LinkedIn profile\" [ref=e206] [cursor=pointer]:\n          - /url: https://www.linkedin.com/company/ashford-borough-council\n          - img \"Click to view the Ashford Borough Council LinkedIn profile\" [ref=e207] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Nextdoor profile\" [ref=e208] [cursor=pointer]:\n          - /url: https://nextdoor.co.uk/agency/ashford-borough-council\n          - img \"Click to view the Ashford Borough Council Nextdoor profile\" [ref=e209] [cursor=pointer]\n    - generic [ref=e212]:\n      - link \"Click here to go to the Love Ashford website\" [ref=e214] [cursor=pointer]:\n        - /url: https://www.loveashford.com\n        - img \"Click here to go to the Love Ashford website\" [ref=e215] [cursor=pointer]\n      - link \"Click here to go to the Ashford 4 website\" [ref=e217] [cursor=pointer]:\n        - /url: https://www.ashfordfor.com\n        - img \"Click here to go to the Ashford 4 website\" [ref=e218] [cursor=pointer]\n      - link \"Click here to go to the Ashford and Tenterden website\" [ref=e220] [cursor=pointer]:\n        - /url: https://www.visitashfordandtenterden.co.uk\n        - img \"Click here to go to the Ashford and Tenterden website\" [ref=e221] [cursor=pointer]\n      - link \"Click here to go to the Digital Ashford website\" [ref=e223] [cursor=pointer]:\n        - /url: https://digital.ashford.gov.uk\n        - img \"Click here to go to the Digital Ashford website\" [ref=e224] [cursor=pointer]\n      - link \"Click here to go to the Aspire Landscape Management website\" [ref=e226] [cursor=pointer]:\n        - /url: https://www.aspirelm.co.uk\n        - img \"Click here to go to the Aspire Landscape Management website\" [ref=e227] [cursor=pointer]\n      - link \"Click here to go to the Ashford Port Health website\" [ref=e229] [cursor=pointer]:\n        - /url: https://www.ashfordporthealth.gov.uk\n        - img \"Click here to go to the Ashford Port Health website\" [ref=e230] [cursor=pointer]\n    - generic [ref=e235]: Copyright © 2025 Ashford Borough Council\n  - generic [ref=e238] [cursor=pointer]:\n    - button \"happy face feedback icon\" [ref=e240] [cursor=pointer]:\n      - img \"happy face feedback icon\" [ref=e241] [cursor=pointer]\n    - button \"unhappy face feedback icon\" [ref=e243] [cursor=pointer]:\n      - img \"unhappy face feedback icon\" [ref=e244] [cursor=pointer]\n    - img \"feedback close icon\" [ref=e246] [cursor=pointer]\n  - img [ref=e269]\n```",
+          "tool_call_id": "pyd_ai_3fa43d2ed883485db4f5a4b2e7d41474",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:44:19.253237Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "element": "Find My Bin Day",
+            "ref": "e61"
+          },
+          "tool_call_id": "pyd_ai_07d51ff443aa4413a15cdebb0b578ee5",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 19020,
+        "response_tokens": 12,
+        "total_tokens": 19082,
+        "details": {
+          "cached_content_tokens": 13175,
+          "thoughts_tokens": 50,
+          "text_cache_tokens": 13175,
+          "text_candidates_tokens": 12,
+          "text_prompt_tokens": 19020
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:20.809075Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "0-99aO3DE_fr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "content": "Error: page._wrapApiCall: Execution context was destroyed, most likely because of a navigation",
+          "tool_name": "browser_click",
+          "tool_call_id": "pyd_ai_07d51ff443aa4413a15cdebb0b578ee5",
+          "timestamp": "2025-07-21T07:44:22.160688Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_snapshot",
+          "args": {},
+          "tool_call_id": "pyd_ai_359ff636b83242eebdc0bfe5a61f46d4",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 19065,
+        "response_tokens": 3,
+        "total_tokens": 19118,
+        "details": {
+          "cached_content_tokens": 7403,
+          "thoughts_tokens": 50,
+          "text_cache_tokens": 7403,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 19065
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:23.430263Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "1u99aI6rDqbitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_snapshot",
+          "content": "### Ran Playwright code\n```js\n// <internal code to capture accessibility snapshot>\n```\n\n### New console messages\n- [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://sec...\n\n### Page state\n- Page URL: https://secure.ashford.gov.uk/waste/collectiondaylookup/\n- Page Title: Ashford Borough Council - Waste Collection Day Lookup\n- Page Snapshot:\n```yaml\n- generic [ref=e5]:\n  - link \"Click to return to the Ashford Borough Council website home page\" [ref=e12] [cursor=pointer]:\n    - /url: https://www.ashford.gov.uk\n    - img \"Click to return to the Ashford Borough Council website home page\" [ref=e13] [cursor=pointer]\n  - generic [ref=e15]:\n    - generic [ref=e16]:\n      - heading \"Waste Collection Day Lookup\" [level=3] [ref=e17]\n      - paragraph [ref=e18]: To find out the dates for your household refuse, recycling, food waste and garden waste collections please enter your postcode and then select your property from the drop down list.\n    - generic [ref=e19]:\n      - heading \"Address Search\" [level=4] [ref=e20]\n      - paragraph [ref=e21]:\n        - text: To begin, please enter the postcode of the property.\n        - text: If you do not know the postcode of the property, please use\n        - link \"Royal Mail's Postcode Finder\" [ref=e23] [cursor=pointer]:\n          - /url: http://www.royalmail.com/postcode-finder\n        - text: .\n      - generic [ref=e24]:\n        - generic [ref=e25]: \"Postcode:\"\n        - textbox [ref=e26]\n      - button \"Continue >\" [ref=e27] [cursor=pointer]\n  - contentinfo [ref=e28]:\n    - generic [ref=e31]:\n      - generic [ref=e32]:\n        - generic [ref=e33]:\n          - link \"Your Council\" [ref=e35] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/your-council\n          - link \"Transparency\" [ref=e37] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/transparency\n          - link \"Contact Us\" [ref=e39] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/contact-us\n        - generic [ref=e40]:\n          - link \"Working for Us\" [ref=e42] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/working-for-us\n          - link \"Consultations\" [ref=e44] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/consultations\n          - link \"Conditions of Use\" [ref=e46] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/conditions-of-use\n      - generic [ref=e48]:\n        - link \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e49] [cursor=pointer]:\n          - /url: https://en-gb.facebook.com/AshfordBoroughCouncil/\n          - img \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e50] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e51] [cursor=pointer]:\n          - /url: https://twitter.com/AshfordCouncil\n          - img \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e52] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e53] [cursor=pointer]:\n          - /url: https://www.instagram.com/ashfordbc/\n          - img \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e54] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e55] [cursor=pointer]:\n          - /url: https://www.youtube.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e56] [cursor=pointer]\n    - generic [ref=e59]:\n      - link \"Click here to go to the Love Ashford website\" [ref=e63] [cursor=pointer]:\n        - /url: https://www.loveashford.com\n        - img \"Click here to go to the Love Ashford website\" [ref=e64] [cursor=pointer]\n      - link \"Click here to go to the Ashford 4 website\" [ref=e68] [cursor=pointer]:\n        - /url: https://www.ashfordfor.com\n        - img \"Click here to go to the Ashford 4 website\" [ref=e69] [cursor=pointer]\n      - link \"Click here to go to the Ashford and Tenterden website\" [ref=e73] [cursor=pointer]:\n        - /url: https://www.visitashfordandtenterden.co.uk\n        - img \"Click here to go to the Ashford and Tenterden website\" [ref=e74] [cursor=pointer]\n      - link \"Click here to go to the Digital Ashford website\" [ref=e78] [cursor=pointer]:\n        - /url: https://digital.ashford.gov.uk\n        - img \"Click here to go to the Digital Ashford website\" [ref=e79] [cursor=pointer]\n    - generic [ref=e84]: Copyright © 2025 Ashford Borough Council\n```",
+          "tool_call_id": "pyd_ai_359ff636b83242eebdc0bfe5a61f46d4",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:44:23.446384Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "args": {
+            "text": "CT4 8AL",
+            "ref": "e26",
+            "element": "textbox"
+          },
+          "tool_call_id": "pyd_ai_bc1b0bd6d9c04497b6cbb8fa96234e85",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 20460,
+        "response_tokens": 15,
+        "total_tokens": 20552,
+        "details": {
+          "cached_content_tokens": 19108,
+          "thoughts_tokens": 77,
+          "text_cache_tokens": 19108,
+          "text_candidates_tokens": 15,
+          "text_prompt_tokens": 20460
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:24.708637Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "1-99aKq2HoP32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "content": "### Ran Playwright code\n```js\n// Fill \"CT4 8AL\" into \"textbox\"\nawait page.locator('#ContentPlaceHolder1_CollectionDayLookup2_TextBox_PostCode').fill('CT4 8AL');\n```\n\n### Page state\n- Page URL: https://secure.ashford.gov.uk/waste/collectiondaylookup/\n- Page Title: Ashford Borough Council - Waste Collection Day Lookup\n- Page Snapshot:\n```yaml\n- generic [ref=e5]:\n  - link \"Click to return to the Ashford Borough Council website home page\" [ref=e12] [cursor=pointer]:\n    - /url: https://www.ashford.gov.uk\n    - img \"Click to return to the Ashford Borough Council website home page\" [ref=e13] [cursor=pointer]\n  - generic [ref=e15]:\n    - generic [ref=e16]:\n      - heading \"Waste Collection Day Lookup\" [level=3] [ref=e17]\n      - paragraph [ref=e18]: To find out the dates for your household refuse, recycling, food waste and garden waste collections please enter your postcode and then select your property from the drop down list.\n    - generic [ref=e19]:\n      - heading \"Address Search\" [level=4] [ref=e20]\n      - paragraph [ref=e21]:\n        - text: To begin, please enter the postcode of the property.\n        - text: If you do not know the postcode of the property, please use\n        - link \"Royal Mail's Postcode Finder\" [ref=e23] [cursor=pointer]:\n          - /url: http://www.royalmail.com/postcode-finder\n        - text: .\n      - generic [ref=e24]:\n        - generic [ref=e25]: \"Postcode:\"\n        - textbox [active] [ref=e26]: CT4 8AL\n      - button \"Continue >\" [ref=e27] [cursor=pointer]\n  - contentinfo [ref=e28]:\n    - generic [ref=e31]:\n      - generic [ref=e32]:\n        - generic [ref=e33]:\n          - link \"Your Council\" [ref=e35] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/your-council\n          - link \"Transparency\" [ref=e37] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/transparency\n          - link \"Contact Us\" [ref=e39] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/contact-us\n        - generic [ref=e40]:\n          - link \"Working for Us\" [ref=e42] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/working-for-us\n          - link \"Consultations\" [ref=e44] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/consultations\n          - link \"Conditions of Use\" [ref=e46] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/conditions-of-use\n      - generic [ref=e48]:\n        - link \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e49] [cursor=pointer]:\n          - /url: https://en-gb.facebook.com/AshfordBoroughCouncil/\n          - img \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e50] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e51] [cursor=pointer]:\n          - /url: https://twitter.com/AshfordCouncil\n          - img \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e52] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e53] [cursor=pointer]:\n          - /url: https://www.instagram.com/ashfordbc/\n          - img \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e54] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e55] [cursor=pointer]:\n          - /url: https://www.youtube.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e56] [cursor=pointer]\n    - generic [ref=e59]:\n      - link \"Click here to go to the Love Ashford website\" [ref=e63] [cursor=pointer]:\n        - /url: https://www.loveashford.com\n        - img \"Click here to go to the Love Ashford website\" [ref=e64] [cursor=pointer]\n      - link \"Click here to go to the Ashford 4 website\" [ref=e68] [cursor=pointer]:\n        - /url: https://www.ashfordfor.com\n        - img \"Click here to go to the Ashford 4 website\" [ref=e69] [cursor=pointer]\n      - link \"Click here to go to the Ashford and Tenterden website\" [ref=e73] [cursor=pointer]:\n        - /url: https://www.visitashfordandtenterden.co.uk\n        - img \"Click here to go to the Ashford and Tenterden website\" [ref=e74] [cursor=pointer]\n      - link \"Click here to go to the Digital Ashford website\" [ref=e78] [cursor=pointer]:\n        - /url: https://digital.ashford.gov.uk\n        - img \"Click here to go to the Digital Ashford website\" [ref=e79] [cursor=pointer]\n    - generic [ref=e84]: Copyright © 2025 Ashford Borough Council\n```",
+          "tool_call_id": "pyd_ai_bc1b0bd6d9c04497b6cbb8fa96234e85",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:44:25.772592Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "element": "Continue >",
+            "ref": "e27"
+          },
+          "tool_call_id": "pyd_ai_01d5dc02b0804184ba5503466df14419",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 21872,
+        "response_tokens": 10,
+        "total_tokens": 21932,
+        "details": {
+          "cached_content_tokens": 20107,
+          "thoughts_tokens": 50,
+          "text_cache_tokens": 20107,
+          "text_candidates_tokens": 10,
+          "text_prompt_tokens": 21872
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:26.916280Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "2e99aLjAMqbitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Continue >\nawait page.getByRole('button', { name: 'Continue >' }).click();\n```\n\n### Page state\n- Page URL: https://secure.ashford.gov.uk/waste/collectiondaylookup/\n- Page Title: Ashford Borough Council - Waste Collection Day Lookup\n- Page Snapshot:\n```yaml\n- generic [ref=e5]:\n  - link \"Click to return to the Ashford Borough Council website home page\" [ref=e91] [cursor=pointer]:\n    - /url: https://www.ashford.gov.uk\n    - img \"Click to return to the Ashford Borough Council website home page\" [ref=e92] [cursor=pointer]\n  - generic [ref=e94]:\n    - generic [ref=e95]:\n      - heading \"Waste Collection Day Lookup\" [level=3] [ref=e96]\n      - paragraph [ref=e97]: To find out the dates for your household refuse, recycling, food waste and garden waste collections please enter your postcode and then select your property from the drop down list.\n    - generic [ref=e98]:\n      - generic [ref=e99]:\n        - generic [ref=e100]: \"Please select your address from the list below:\"\n        - combobox [ref=e101]:\n          - option \"Select address...\" [selected]\n          - option \"ACORN RISE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"BENDIGO, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"BRIDGE HOUSE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"CHERRY RIGG, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"CHERRY TREES, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"CHERRY VIEW, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"GEVES, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"HOLLYTREE COTTAGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"JAYSER, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"NOVA, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"ST. HEDWIGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"STOWE COTTAGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"SUNRIDGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THE COLT, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THE ELMS, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THE HAVEN, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THE OAKS, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THORPE FARM OAST, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THORPE FARMHOUSE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"TOMINTOUL, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"VICTORIA COTTAGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"VINE COTTAGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"WOODLANDS, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n      - button \"Continue >\" [ref=e126] [cursor=pointer]\n      - generic [ref=e127]:\n        - text: Can't find your address?\n        - paragraph [ref=e128]: The above list should contain all residential addresses, however sometimes an address may not show in this list. You can perform a search of everything that comes under that postcode by clicking the link below.\n        - link \"Perform a full postcode search\" [ref=e129] [cursor=pointer]:\n          - /url: javascript:__doPostBack('ctl00$ContentPlaceHolder1$CollectionDayLookup2$LinkButton_FullPostcodeSearch','')\n      - link \"Wrong postcode? Click here to start this form again\" [ref=e131] [cursor=pointer]:\n        - /url: ./\n  - contentinfo [ref=e132]:\n    - generic [ref=e135]:\n      - generic [ref=e136]:\n        - generic [ref=e137]:\n          - link \"Your Council\" [ref=e139] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/your-council\n          - link \"Transparency\" [ref=e141] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/transparency\n          - link \"Contact Us\" [ref=e143] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/contact-us\n        - generic [ref=e144]:\n          - link \"Working for Us\" [ref=e146] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/working-for-us\n          - link \"Consultations\" [ref=e148] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/consultations\n          - link \"Conditions of Use\" [ref=e150] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/conditions-of-use\n      - generic [ref=e152]:\n        - link \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e153] [cursor=pointer]:\n          - /url: https://en-gb.facebook.com/AshfordBoroughCouncil/\n          - img \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e154] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e155] [cursor=pointer]:\n          - /url: https://twitter.com/AshfordCouncil\n          - img \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e156] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e157] [cursor=pointer]:\n          - /url: https://www.instagram.com/ashfordbc/\n          - img \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e158] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e159] [cursor=pointer]:\n          - /url: https://www.youtube.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e160] [cursor=pointer]\n    - generic [ref=e163]:\n      - link \"Click here to go to the Love Ashford website\" [ref=e167] [cursor=pointer]:\n        - /url: https://www.loveashford.com\n        - img \"Click here to go to the Love Ashford website\" [ref=e168] [cursor=pointer]\n      - link \"Click here to go to the Ashford 4 website\" [ref=e172] [cursor=pointer]:\n        - /url: https://www.ashfordfor.com\n        - img \"Click here to go to the Ashford 4 website\" [ref=e173] [cursor=pointer]\n      - link \"Click here to go to the Ashford and Tenterden website\" [ref=e177] [cursor=pointer]:\n        - /url: https://www.visitashfordandtenterden.co.uk\n        - img \"Click here to go to the Ashford and Tenterden website\" [ref=e178] [cursor=pointer]\n      - link \"Click here to go to the Digital Ashford website\" [ref=e182] [cursor=pointer]:\n        - /url: https://digital.ashford.gov.uk\n        - img \"Click here to go to the Digital Ashford website\" [ref=e183] [cursor=pointer]\n    - generic [ref=e188]: Copyright © 2025 Ashford Borough Council\n```",
+          "tool_call_id": "pyd_ai_01d5dc02b0804184ba5503466df14419",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:44:28.142594Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "args": {
+            "values": [
+              "ACORN RISE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL"
+            ],
+            "element": "combobox",
+            "ref": "e101"
+          },
+          "tool_call_id": "pyd_ai_9835bde176a940eeb82dc55b2d8c4498",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 24036,
+        "response_tokens": 36,
+        "total_tokens": 24136,
+        "details": {
+          "cached_content_tokens": 22041,
+          "thoughts_tokens": 64,
+          "text_cache_tokens": 22041,
+          "text_candidates_tokens": 36,
+          "text_prompt_tokens": 24036
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:29.477687Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "3O99aODPDPfr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_select_option",
+          "content": "### Ran Playwright code\n```js\n// Select options [ACORN RISE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL] in combobox\nawait page.locator('#ContentPlaceHolder1_CollectionDayLookup2_DropDownList_Addresses').selectOption(['ACORN RISE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL']);\n```\n\n### Page state\n- Page URL: https://secure.ashford.gov.uk/waste/collectiondaylookup/\n- Page Title: Ashford Borough Council - Waste Collection Day Lookup\n- Page Snapshot:\n```yaml\n- generic [ref=e5]:\n  - link \"Click to return to the Ashford Borough Council website home page\" [ref=e91] [cursor=pointer]:\n    - /url: https://www.ashford.gov.uk\n    - img \"Click to return to the Ashford Borough Council website home page\" [ref=e92] [cursor=pointer]\n  - generic [ref=e94]:\n    - generic [ref=e95]:\n      - heading \"Waste Collection Day Lookup\" [level=3] [ref=e96]\n      - paragraph [ref=e97]: To find out the dates for your household refuse, recycling, food waste and garden waste collections please enter your postcode and then select your property from the drop down list.\n    - generic [ref=e98]:\n      - generic [ref=e99]:\n        - generic [ref=e100]: \"Please select your address from the list below:\"\n        - combobox [ref=e101]:\n          - option \"Select address...\"\n          - option \"ACORN RISE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\" [selected]\n          - option \"BENDIGO, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"BRIDGE HOUSE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"CHERRY RIGG, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"CHERRY TREES, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"CHERRY VIEW, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"GEVES, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"HOLLYTREE COTTAGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"JAYSER, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"NOVA, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"ST. HEDWIGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"STOWE COTTAGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"SUNRIDGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THE COLT, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THE ELMS, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THE HAVEN, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THE OAKS, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THORPE FARM OAST, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"THORPE FARMHOUSE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"TOMINTOUL, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"VICTORIA COTTAGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"VINE COTTAGE, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n          - option \"WOODLANDS, COBBS HILL, OLD WIVES LEES, CANTERBURY, CT4 8AL\"\n      - button \"Continue >\" [ref=e126] [cursor=pointer]\n      - generic [ref=e127]:\n        - text: Can't find your address?\n        - paragraph [ref=e128]: The above list should contain all residential addresses, however sometimes an address may not show in this list. You can perform a search of everything that comes under that postcode by clicking the link below.\n        - link \"Perform a full postcode search\" [ref=e129] [cursor=pointer]:\n          - /url: javascript:__doPostBack('ctl00$ContentPlaceHolder1$CollectionDayLookup2$LinkButton_FullPostcodeSearch','')\n      - link \"Wrong postcode? Click here to start this form again\" [ref=e131] [cursor=pointer]:\n        - /url: ./\n  - contentinfo [ref=e132]:\n    - generic [ref=e135]:\n      - generic [ref=e136]:\n        - generic [ref=e137]:\n          - link \"Your Council\" [ref=e139] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/your-council\n          - link \"Transparency\" [ref=e141] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/transparency\n          - link \"Contact Us\" [ref=e143] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/contact-us\n        - generic [ref=e144]:\n          - link \"Working for Us\" [ref=e146] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/working-for-us\n          - link \"Consultations\" [ref=e148] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/consultations\n          - link \"Conditions of Use\" [ref=e150] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/conditions-of-use\n      - generic [ref=e152]:\n        - link \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e153] [cursor=pointer]:\n          - /url: https://en-gb.facebook.com/AshfordBoroughCouncil/\n          - img \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e154] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e155] [cursor=pointer]:\n          - /url: https://twitter.com/AshfordCouncil\n          - img \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e156] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e157] [cursor=pointer]:\n          - /url: https://www.instagram.com/ashfordbc/\n          - img \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e158] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e159] [cursor=pointer]:\n          - /url: https://www.youtube.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e160] [cursor=pointer]\n    - generic [ref=e163]:\n      - link \"Click here to go to the Love Ashford website\" [ref=e167] [cursor=pointer]:\n        - /url: https://www.loveashford.com\n        - img \"Click here to go to the Love Ashford website\" [ref=e168] [cursor=pointer]\n      - link \"Click here to go to the Ashford 4 website\" [ref=e172] [cursor=pointer]:\n        - /url: https://www.ashfordfor.com\n        - img \"Click here to go to the Ashford 4 website\" [ref=e173] [cursor=pointer]\n      - link \"Click here to go to the Ashford and Tenterden website\" [ref=e177] [cursor=pointer]:\n        - /url: https://www.visitashfordandtenterden.co.uk\n        - img \"Click here to go to the Ashford and Tenterden website\" [ref=e178] [cursor=pointer]\n      - link \"Click here to go to the Digital Ashford website\" [ref=e182] [cursor=pointer]:\n        - /url: https://digital.ashford.gov.uk\n        - img \"Click here to go to the Digital Ashford website\" [ref=e183] [cursor=pointer]\n    - generic [ref=e188]: Copyright © 2025 Ashford Borough Council\n```",
+          "tool_call_id": "pyd_ai_9835bde176a940eeb82dc55b2d8c4498",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:44:30.524440Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e126",
+            "element": "Continue >"
+          },
+          "tool_call_id": "pyd_ai_d8c05b66715f4102b61949323de44788",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 26282,
+        "response_tokens": 11,
+        "total_tokens": 26355,
+        "details": {
+          "cached_content_tokens": 23978,
+          "thoughts_tokens": 62,
+          "text_cache_tokens": 23978,
+          "text_candidates_tokens": 11,
+          "text_prompt_tokens": 26282
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:31.996462Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "3u99aI7WI4P32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Continue >\nawait page.getByRole('button', { name: 'Continue >' }).click();\n```\n\n### Page state\n- Page URL: https://secure.ashford.gov.uk/waste/collectiondaylookup/\n- Page Title: Ashford Borough Council - Waste Collection Day Lookup\n- Page Snapshot:\n```yaml\n- generic [ref=e5]:\n  - link \"Click to return to the Ashford Borough Council website home page\" [ref=e195] [cursor=pointer]:\n    - /url: https://www.ashford.gov.uk\n    - img \"Click to return to the Ashford Borough Council website home page\" [ref=e196] [cursor=pointer]\n  - generic [ref=e198]:\n    - generic [ref=e199]:\n      - heading \"Waste Collection Day Lookup\" [level=3] [ref=e200]\n      - paragraph [ref=e201]: To find out the dates for your household refuse, recycling, food waste and garden waste collections please enter your postcode and then select your property from the drop down list.\n    - generic [ref=e202]:\n      - heading \"Property Address\" [level=4] [ref=e203]\n      - generic [ref=e204]: This is the address of the property that you are viewing collection dates for.\n      - generic [ref=e205]:\n        - generic [ref=e206]: ACORN RISE, COBBS HILL, CHILHAM, CANTERBURY, CT4 8AL\n        - paragraph [ref=e207]:\n          - link \"Wrong address? Click here to start this form again\" [ref=e208] [cursor=pointer]:\n            - /url: ./\n      - heading \"Collection Dates\" [level=4] [ref=e209]\n      - generic [ref=e210]: The collection details are displayed below.\n      - generic [ref=e211]:\n        - generic [ref=e212]: \"Please note:\"\n        - text: Check the dates against the type of collection carefully to ensure you are presenting the right bin on the right day.\n      - generic [ref=e213]:\n        - generic [ref=e214]: Refuse / Recycling Collection Calendar\n        - generic [ref=e215]:\n          - generic [ref=e217]: \n          - link \"Download your refuse / recycling collection calendar\" [ref=e218] [cursor=pointer]:\n            - /url: DownloadCalendar/?id=2\n      - table [ref=e219]:\n        - rowgroup [ref=e220]:\n          - 'row \"Household Refuse (grey bin / black sacks) Your household refuse collection day is Thursday. It is a fortnightly collection, and your next collection date is Thursday 24/07/2025. Please note: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\" [ref=e221]':\n            - cell [ref=e222]:\n              - img [ref=e223]\n            - 'cell \"Household Refuse (grey bin / black sacks) Your household refuse collection day is Thursday. It is a fortnightly collection, and your next collection date is Thursday 24/07/2025. Please note: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\" [ref=e224]':\n              - generic [ref=e225]: Household Refuse (grey bin / black sacks)\n              - generic [ref=e227]:\n                - text: Your household refuse collection day is\n                - generic [ref=e228]: Thursday\n                - text: .\n                - text: It is a\n                - generic [ref=e230]: fortnightly\n                - text: collection, and your\n                - generic [ref=e231]: next\n                - text: collection date is\n                - generic [ref=e232]: Thursday 24/07/2025\n                - text: .\n              - generic [ref=e233]:\n                - generic [ref=e234]: \"Please note:\"\n                - text: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\n      - separator [ref=e235]\n      - table [ref=e236]:\n        - rowgroup [ref=e237]:\n          - 'row \"Recycling (green bin / clear sacks) Your recycling collection day is Thursday. It is a fortnightly collection, and your next collection date is Thursday 31/07/2025. Please note: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\" [ref=e238]':\n            - cell [ref=e239]:\n              - img [ref=e240]\n            - 'cell \"Recycling (green bin / clear sacks) Your recycling collection day is Thursday. It is a fortnightly collection, and your next collection date is Thursday 31/07/2025. Please note: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\" [ref=e241]':\n              - generic [ref=e242]: Recycling (green bin / clear sacks)\n              - generic [ref=e244]:\n                - text: Your recycling collection day is\n                - generic [ref=e245]: Thursday\n                - text: .\n                - text: It is a\n                - generic [ref=e247]: fortnightly\n                - text: collection, and your\n                - generic [ref=e248]: next\n                - text: collection date is\n                - generic [ref=e249]: Thursday 31/07/2025\n                - text: .\n              - generic [ref=e250]:\n                - generic [ref=e251]: \"Please note:\"\n                - text: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\n      - separator [ref=e252]\n      - table [ref=e253]:\n        - rowgroup [ref=e254]:\n          - 'row \"Food Waste (black container with orange lid) Your food waste collection day is Thursday. It is a weekly collection, and your next collection date is Thursday 24/07/2025. Please note: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\" [ref=e255]':\n            - cell [ref=e256]:\n              - img [ref=e257]\n            - 'cell \"Food Waste (black container with orange lid) Your food waste collection day is Thursday. It is a weekly collection, and your next collection date is Thursday 24/07/2025. Please note: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\" [ref=e258]':\n              - generic [ref=e259]: Food Waste (black container with orange lid)\n              - generic [ref=e261]:\n                - text: Your food waste collection day is\n                - generic [ref=e262]: Thursday\n                - text: .\n                - text: It is a\n                - generic [ref=e264]: weekly\n                - text: collection, and your\n                - generic [ref=e265]: next\n                - text: collection date is\n                - generic [ref=e266]: Thursday 24/07/2025\n                - text: .\n              - generic [ref=e267]:\n                - generic [ref=e268]: \"Please note:\"\n                - text: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\n      - separator [ref=e269]\n      - table [ref=e270]:\n        - rowgroup [ref=e271]:\n          - 'row \"Garden Waste (brown bin) Your garden waste collection day is Wednesday. It is a fortnightly collection, and your collection route is Week 2. Your next collection date is Wednesday 23/07/2025. Please note: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.  Download your garden waste collection calendar\" [ref=e272]':\n            - cell [ref=e273]:\n              - img [ref=e274]\n            - 'cell \"Garden Waste (brown bin) Your garden waste collection day is Wednesday. It is a fortnightly collection, and your collection route is Week 2. Your next collection date is Wednesday 23/07/2025. Please note: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.  Download your garden waste collection calendar\" [ref=e275]':\n              - generic [ref=e276]: Garden Waste (brown bin)\n              - text: Your garden waste collection day is\n              - generic [ref=e278]: Wednesday\n              - text: .\n              - text: It is a\n              - generic [ref=e280]: fortnightly\n              - text: collection, and your collection route is\n              - generic [ref=e281]: Week 2\n              - text: .\n              - text: Your\n              - generic [ref=e283]: next\n              - text: collection date is\n              - generic [ref=e284]: Wednesday 23/07/2025\n              - text: .\n              - generic [ref=e285]:\n                - generic [ref=e286]: \"Please note:\"\n                - text: If this collection day is different from your usual collection day it will show when we intend to return to collect a missed bin.\n              - generic [ref=e287]:\n                - generic [ref=e289]: \n                - link \"Download your garden waste collection calendar\" [ref=e290] [cursor=pointer]:\n                  - /url: DownloadCalendar/?id=4\n      - separator [ref=e291]\n      - table [ref=e292]:\n        - rowgroup [ref=e293]:\n          - row \"Large Item Collections Large item collections are available weekly. Click here to book a large item collection online\" [ref=e294]:\n            - cell [ref=e295]:\n              - img [ref=e296]\n            - cell \"Large Item Collections Large item collections are available weekly. Click here to book a large item collection online\" [ref=e297]:\n              - generic [ref=e298]: Large Item Collections\n              - text: Large item collections are available\n              - generic [ref=e300]: weekly\n              - text: .\n              - paragraph [ref=e301]:\n                - link \"Click here to book a large item collection online\" [ref=e302] [cursor=pointer]:\n                  - /url: https://www.ashford.gov.uk/recycling-waste-and-bins/large-item-collection\n  - contentinfo [ref=e303]:\n    - generic [ref=e306]:\n      - generic [ref=e307]:\n        - generic [ref=e308]:\n          - link \"Your Council\" [ref=e310] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/your-council\n          - link \"Transparency\" [ref=e312] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/transparency\n          - link \"Contact Us\" [ref=e314] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/contact-us\n        - generic [ref=e315]:\n          - link \"Working for Us\" [ref=e317] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/working-for-us\n          - link \"Consultations\" [ref=e319] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/consultations\n          - link \"Conditions of Use\" [ref=e321] [cursor=pointer]:\n            - /url: https://www.ashford.gov.uk/conditions-of-use\n      - generic [ref=e323]:\n        - link \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e324] [cursor=pointer]:\n          - /url: https://en-gb.facebook.com/AshfordBoroughCouncil/\n          - img \"Click to go to the Ashford Borough Council Facebook page.\" [ref=e325] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e326] [cursor=pointer]:\n          - /url: https://twitter.com/AshfordCouncil\n          - img \"Click to view the Ashford Borough Council X formally known as Twitter feed.\" [ref=e327] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e328] [cursor=pointer]:\n          - /url: https://www.instagram.com/ashfordbc/\n          - img \"Click to view the Ashford Borough Council Instagram feed.\" [ref=e329] [cursor=pointer]\n        - link \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e330] [cursor=pointer]:\n          - /url: https://www.youtube.com/ashfordboroughcouncil\n          - img \"Click to view the Ashford Borough Council YouTube channel.\" [ref=e331] [cursor=pointer]\n    - generic [ref=e334]:\n      - link \"Click here to go to the Love Ashford website\" [ref=e338] [cursor=pointer]:\n        - /url: https://www.loveashford.com\n        - img \"Click here to go to the Love Ashford website\" [ref=e339] [cursor=pointer]\n      - link \"Click here to go to the Ashford 4 website\" [ref=e343] [cursor=pointer]:\n        - /url: https://www.ashfordfor.com\n        - img \"Click here to go to the Ashford 4 website\" [ref=e344] [cursor=pointer]\n      - link \"Click here to go to the Ashford and Tenterden website\" [ref=e348] [cursor=pointer]:\n        - /url: https://www.visitashfordandtenterden.co.uk\n        - img \"Click here to go to the Ashford and Tenterden website\" [ref=e349] [cursor=pointer]\n      - link \"Click here to go to the Digital Ashford website\" [ref=e353] [cursor=pointer]:\n        - /url: https://digital.ashford.gov.uk\n        - img \"Click here to go to the Digital Ashford website\" [ref=e354] [cursor=pointer]\n    - generic [ref=e359]: Copyright © 2025 Ashford Borough Council\n```",
+          "tool_call_id": "pyd_ai_d8c05b66715f4102b61949323de44788",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:44:33.875407Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "args": {
+            "garden_waste": {
+              "next_pickup_day": "Wednesday 23/07/2025",
+              "bin_colour": "brown",
+              "frequency": "fortnightly"
+            },
+            "recycling": {
+              "frequency": "fortnightly",
+              "next_pickup_day": "Thursday 31/07/2025",
+              "bin_colour": "green"
+            },
+            "general_waste": {
+              "frequency": "fortnightly",
+              "bin_colour": "grey",
+              "next_pickup_day": "Thursday 24/07/2025"
+            },
+            "postcode": "CT4 8AL",
+            "food_waste": {
+              "frequency": "weekly",
+              "next_pickup_day": "Thursday 24/07/2025",
+              "bin_colour": "black"
+            }
+          },
+          "tool_call_id": "pyd_ai_0aef12be22b0474080683257c4aaf047",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 29937,
+        "response_tokens": 117,
+        "total_tokens": 30377,
+        "details": {
+          "thoughts_tokens": 323,
+          "text_candidates_tokens": 117,
+          "text_prompt_tokens": 29937
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T07:44:37.771675Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "4e99aL6gOabitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "content": "Final result processed.",
+          "tool_call_id": "pyd_ai_0aef12be22b0474080683257c4aaf047",
+          "metadata": null,
+          "timestamp": "2025-07-21T07:44:37.772176Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    }
+  ]
+}

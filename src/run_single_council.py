@@ -7,8 +7,6 @@ from pydantic_agent import create_agent
 from pydantic_ai.usage import UsageLimits
 from prompts import PROMPT  # Assuming PROMPT is in a prompts.py file
 
-OUTPUT_DIR = "./data/traces/{council_name}"
-
 
 async def run_agent(
     prompt,
@@ -17,11 +15,17 @@ async def run_agent(
 ):
     """Runs the agent for a single council."""
 
-    agent = create_agent(output_dir=output_dir, model_id=model_id)
+    agent = create_agent(
+        output_dir=output_dir,
+        model_id=model_id,
+    )
 
     # Start MCP servers and run the agent
     async with agent.run_mcp_servers():
-        result = await agent.run(prompt, usage_limits=UsageLimits(request_limit=20))
+        result = await agent.run(
+            prompt,
+            usage_limits=UsageLimits(request_limit=20),
+        )
         return result
 
 
@@ -29,26 +33,24 @@ async def main():
     """Parses arguments and executes the agent run."""
     parser = argparse.ArgumentParser(description="Run agent for a single council.")
     parser.add_argument(
-        "--council-name", required=True, help="Name of the council authority."
+        "--output-dir", required=True, help="Name of the council authority."
     )
     parser.add_argument("--url", required=True, help="URL for the council.")
     parser.add_argument("--postcode", required=True, help="Postcode for the council.")
     args = parser.parse_args()
 
     # Sanitize council name for directory path
-    council_name_fs = args.council_name.replace(" ", "_").lower()
-    output_dir = OUTPUT_DIR.format(council_name=council_name_fs)
     prompt = PROMPT.format(
         URL=args.url,
         POSTCODE1=args.postcode,
     )
     try:
         result = await run_agent(
-            output_dir=output_dir,
+            output_dir=args.output_dir,
             prompt=prompt,
             model_id="gemini-2.5-flash",
         )
-        print(f"--- Output for {council_name_fs} ---")
+        print(f"--- Output for {args.output_dir} ---")
         print(result.output)
         print(result.usage())
 
@@ -58,7 +60,7 @@ async def main():
         }
 
         # Define the full path for the output file
-        output_path = f"{output_dir}/result.json"
+        output_path = f"{args.output_dir}/result.json"
 
         # Write to JSON file
         with open(output_path, "w", encoding="utf-8") as f:
@@ -67,7 +69,7 @@ async def main():
         print(f"✅ File saved to {output_path}")
 
     except Exception as e:
-        print(f"❌ Run for {args.council_name} failed with exception: {e}")
+        print(f"❌ Run for {args.output_dir} failed with exception: {e}")
 
 
 if __name__ == "__main__":
