@@ -1,0 +1,435 @@
+{
+  "output": {
+    "postcode": "AL6 0FD",
+    "general_waste": {
+      "next_pickup_day": "Thursday, 24 July 2025",
+      "frequency": "3-weekly",
+      "bin_colour": "black"
+    },
+    "recycling": {
+      "next_pickup_day": "Wednesday, 6 August 2025",
+      "frequency": "3-weekly",
+      "bin_colour": "black"
+    },
+    "food_waste": {
+      "next_pickup_day": "Wednesday, 6 August 2025",
+      "frequency": "Weekly",
+      "bin_colour": "brown"
+    },
+    "garden_waste": {
+      "next_pickup_day": "Thursday, 31 July 2025",
+      "frequency": "Two weekly",
+      "bin_colour": "brown"
+    },
+    "notes": "The new collection system starts on August 4, 2025. The general waste bin is described as 'Black or Purple Bin Lid' for current and 'Purple Bin Lid' for the new schedule. Since 'purple' is not an available option for bin_colour, 'black' has been used. The food waste bin is described as a 'Food Caddy', and 'brown' has been used as a common color for food caddies. The recycling bin is 'Black Bin Lid' for mixed recycling and 'Blue Bin Lid' for paper & card. The mixed recycling bin color has been used."
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "You are a helpful web-browsing agent who researches and retrieves bin collection information for a specific council area by accessing their official website and lookup system",
+          "timestamp": "2025-07-21T16:37:35.520592Z",
+          "dynamic_ref": null,
+          "part_kind": "system-prompt"
+        },
+        {
+          "content": "\n### Bin Collection Schedule Lookup Task\n\n## Objective\n\nResearch and retrieve bin collection information for a specific council area by accessing their official website and lookup system.\n\n## Instructions\n\n# Step 1: Navigate to Council Website\nAccess the council website at: https://www.eastherts.gov.uk/bins-waste-recycling\n\n# Step 2: Test Postcodes\nSearch for the collection schedules for this postcodes: AL6 0FD\nIf a full address is required, use any house number (e.g., \"1 [Street Name]\") or select any option on a dropdown. The specific address doesn't matter - we only need the collection schedule format\n\n## Output\n\nProvide the following information for each bin type (if exists) + the postcode:\n    next_pickup_day\n    frequency \n    bin_colour\n\nIf it doesn't exist, that is ok. Just answer None for these fields.\n\n## Troubleshooting\nIf you encounter issues:\n\nLook for alternative entry points (e.g., \"Check my bin day\")\nNote any technical difficulties in your response\nIf the provided postcode doesn't work try postcodes from the same council area (use your knowledge of local postcodes).\n",
+          "timestamp": "2025-07-21T16:37:35.520598Z",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "https://www.eastherts.gov.uk/bins-waste-recycling"
+          },
+          "tool_call_id": "pyd_ai_63103ed114124f3da8352b395a036075",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1393,
+        "response_tokens": 21,
+        "total_tokens": 1575,
+        "details": {
+          "thoughts_tokens": 161,
+          "text_candidates_tokens": 21,
+          "text_prompt_tokens": 1393
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T16:37:37.585809Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "z2x-aNXxLqbitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "content": "### Ran Playwright code\n```js\n// Navigate to https://www.eastherts.gov.uk/bins-waste-recycling\nawait page.goto('https://www.eastherts.gov.uk/bins-waste-recycling');\n```\n\n### New console messages\n- ReferenceError: Mmenu is not defined\n    at https://www.eastherts.gov.uk/themes/custom/eastherts/js/...\n- [DEBUG] Deleting cookie: _gat_gtag_UA_15796910_11 Matched pattern: /^_ga(_.*)?/i Path: / Domain: www...\n- [DEBUG] Deleting cookie: _ga_X4RF2BEBQE Matched pattern: /^_ga(_.*)?/i Path: / Domain: www.eastherts...\n- [DEBUG] Deleting cookie: _ga Matched pattern: /^_ga(_.*)?/i Path: / Domain: www.eastherts.gov.uk @ h...\n- [DEBUG] Deleting cookie: _gid Matched pattern: /^_gid/i Path: / Domain: www.eastherts.gov.uk @ https...\n- TypeError: Cannot read properties of undefined (reading 'bind')\n    at Object.attach (https://www.ea...\n- [WARNING] Hotjar not launching due to suspicious userAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 1...\n\n### Page state\n- Page URL: https://www.eastherts.gov.uk/bins-waste-and-recycling\n- Page Title: Bins, Waste and Recycling | East Herts District Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - button \"Manage consents\" [ref=e2] [cursor=pointer]\n  - link \"Skip to main content\" [ref=e3] [cursor=pointer]:\n    - /url: \"#content\"\n  - generic [ref=e4]:\n    - generic [ref=e7]:\n      - banner \"Site header\" [ref=e8]:\n        - navigation [ref=e9]:\n          - generic [ref=e10]:\n            - link \"Home\" [ref=e11] [cursor=pointer]:\n              - /url: /\n              - img \"Home\" [ref=e12] [cursor=pointer]\n            - generic [ref=e19]:\n              - generic [ref=e20]:\n                - generic [ref=e21]: Search\n                - textbox \"Search\" [ref=e22]\n              - button \" Search\" [ref=e24] [cursor=pointer]\n            - button \" View all services\" [ref=e27] [cursor=pointer]:\n              - generic [ref=e28] [cursor=pointer]: \n              - generic [ref=e29] [cursor=pointer]: View all services\n      - complementary [ref=e31]:\n        - generic [ref=e33]:\n          - paragraph [ref=e36]:\n            - generic [ref=e37]: Bin deliveries are still taking place. If you believe you have been missed, or if you have received the wrong bins, please\n            - link \"contact us\" [ref=e38] [cursor=pointer]:\n              - /url: mailto:customer.services@eastherts.gov.uk\n              - strong [ref=e40] [cursor=pointer]: contact us\n            - generic [ref=e41]: .\n          - img [ref=e43]\n      - generic:\n        - complementary\n      - generic [ref=e49]:\n        - navigation \"breadcrumb\" [ref=e55]:\n          - list [ref=e56]:\n            - listitem [ref=e57]:\n              - link \"Home\" [ref=e58] [cursor=pointer]:\n                - /url: /\n            - listitem [ref=e59]: / Bins, Waste and Recycling\n        - main [ref=e61]:\n          - generic [ref=e62]:\n            - article [ref=e65]:\n              - generic [ref=e69]:\n                - generic [ref=e70]:\n                  - generic [ref=e74]:\n                    - generic [ref=e76]:\n                      - paragraph [ref=e79]:\n                        - link \"Find out more\" [ref=e80] [cursor=pointer]:\n                          - /url: https://www.eastherts.gov.uk/bins-waste-and-recycling/bin-collection-changes\n                          - strong [ref=e81] [cursor=pointer]: Find out more\n                        - strong [ref=e82]: about the upcoming waste changes.\n                      - img [ref=e84]\n                    - heading \"Bins, Waste and Recycling\" [level=1] [ref=e88]\n                    - generic [ref=e91]:\n                      - heading \"Find your collection day\" [level=2] [ref=e95]\n                      - link \"Look up your collection day\" [ref=e99] [cursor=pointer]:\n                        - /url: https://east-herts.co.uk/\n                        - text: Look up your collection day\n                        - img [ref=e100] [cursor=pointer]: \n                  - generic [ref=e104]:\n                    - generic [ref=e105]:\n                      - link \"Garden Waste\" [ref=e107] [cursor=pointer]:\n                        - /url: /bins-waste-and-recycling/garden-waste-service-garden-waste-bin\n                        - heading \"Garden Waste\" [level=2] [ref=e109] [cursor=pointer]\n                      - link \"Refuse Bin\" [ref=e111] [cursor=pointer]:\n                        - /url: /bins-waste-and-recycling/bins-waste-and-recycling-charges/refuse-bins\n                        - heading \"Refuse Bin\" [level=2] [ref=e113] [cursor=pointer]\n                    - generic [ref=e114]:\n                      - link \"Recycling Bin\" [ref=e116] [cursor=pointer]:\n                        - /url: /bins-waste-and-recycling/recycling-bins\n                        - heading \"Recycling Bin\" [level=2] [ref=e118] [cursor=pointer]\n                      - link \"Food Waste and Composting\" [ref=e120] [cursor=pointer]:\n                        - /url: /bins-waste-and-recycling/food-waste\n                        - heading \"Food Waste and Composting\" [level=2] [ref=e122] [cursor=pointer]\n                  - generic [ref=e125]:\n                    - generic [ref=e127]:\n                      - heading \"Streets and Litter\" [level=2] [ref=e128]\n                      - generic [ref=e130]:\n                        - link \"Street Cleaning and Litter\" [ref=e132] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/street-cleaning-and-litter\n                        - link \"Report Overflowing or Full Litter Bins\" [ref=e134] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/report-overflowing-or-full-litter-bins\n                        - link \"Community Litter Picking Form\" [ref=e136] [cursor=pointer]:\n                          - /url: /bins-waste-recycling/street-cleaning-and-litter/community-litter-picking-form\n                        - link \"Dumped Rubbish (Fly tipping and littering)\" [ref=e138] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/dumped-rubbish-fly-tipping-and-littering\n                        - link \"Fly-posting\" [ref=e140] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/dumped-rubbish-fly-tipping-and-littering/fly-posting\n                        - link \"Pay or Challenge a Fixed Penalty Notice\" [ref=e142] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/street-cleaning-and-litter/pay-or-challenge-fixed-penalty-notice\n                    - generic [ref=e143]:\n                      - generic [ref=e144]:\n                        - heading \"Services and Information\" [level=2] [ref=e145]\n                        - generic [ref=e147]:\n                          - link \"What goes in my bins\" [ref=e149] [cursor=pointer]:\n                            - /url: /bins-waste-and-recycling/what-goes-my-bins\n                          - link \"Find your bin collection day\" [ref=e151] [cursor=pointer]:\n                            - /url: /bins-waste-and-recycling/find-your-bin-collection-day\n                          - link \"Clinical Waste\" [ref=e153] [cursor=pointer]:\n                            - /url: /bins-waste-and-recycling/clinical-waste\n                          - link \"Trade Waste\" [ref=e155] [cursor=pointer]:\n                            - /url: /bins-waste-and-recycling/trade-waste\n                          - link \"Communal Properties\" [ref=e157] [cursor=pointer]:\n                            - /url: /bins-waste-and-recycling/communal-properties\n                          - link \"Bin Collection Changes\" [ref=e159] [cursor=pointer]:\n                            - /url: /bins-waste-and-recycling/bin-collection-changes\n                          - link \"Recycle Right\" [ref=e161] [cursor=pointer]:\n                            - /url: /bins-waste-and-recycling/recycle-right\n                      - generic [ref=e162]:\n                        - heading \"Animals\" [level=2] [ref=e163]\n                        - generic [ref=e165]:\n                          - link \"Dead Animals\" [ref=e167] [cursor=pointer]:\n                            - /url: /highways-and-parking/dead-animals\n                          - link \"Dog Fouling, Dog Bins and Dog Control\" [ref=e169] [cursor=pointer]:\n                            - /url: /environmental-health/dog-fouling-dog-bins-and-dog-control\n                - generic [ref=e173]:\n                  - heading \"Useful Links\" [level=2] [ref=e174]\n                  - link \"Find your Local Tip \" [ref=e177] [cursor=pointer]:\n                    - /url: https://www.hertfordshire.gov.uk/services/recycling-waste-and-environment/recycling-and-waste/where-can-i-recycle/household-waste-recycling-centres/household-waste-recycling-centres-local-tips.aspx\n                  - link \"Report a missed bin \" [ref=e180] [cursor=pointer]:\n                    - /url: https://myaccount.eastherts.gov.uk/en/AchieveForms/?form_uri=sandbox-publish%3A//AF-Process-361197eb-1294-4a52-9bc5-89677614229e/AF-Stage-dc7b3578-d3cb-41f7-84da-b1f5cece5cda/definition.json&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes\n                  - link \"Report fly-tipping \" [ref=e183] [cursor=pointer]:\n                    - /url: https://eastherts-self.achieveservice.com/waste-services\n                  - link \"Report an issue with your Waste Service \" [ref=e186] [cursor=pointer]:\n                    - /url: https://eastherts-self.achieveservice.com/en/AchieveForms/?form_uri=sandbox-publish%3A//AF-Process-daeb699e-8638-4fc0-971b-64fc2819b8b9/AF-Stage-1c549cb6-ec6e-4646-bf3b-37b61a70ac53/definition.json&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes&noLoginPrompt=1\n            - button \"Feedback button\" [ref=e195] [cursor=pointer]:\n              - img \"Feedback button\" [ref=e196] [cursor=pointer]\n      - contentinfo [ref=e197]:\n        - generic [ref=e198]:\n          - list [ref=e212]:\n            - listitem [ref=e213]:\n              - link \"Facebook\" [ref=e214] [cursor=pointer]:\n                - /url: https://www.facebook.com/EastHertsDC\n                - img [ref=e215] [cursor=pointer]: \n            - listitem [ref=e217]:\n              - link \"Instagram\" [ref=e218] [cursor=pointer]:\n                - /url: https://www.instagram.com/easthertscouncil/\n                - img [ref=e219] [cursor=pointer]: \n            - listitem [ref=e221]:\n              - link \"Twitter\" [ref=e222] [cursor=pointer]:\n                - /url: https://twitter.com/eastherts\n                - img [ref=e223] [cursor=pointer]\n          - generic [ref=e225]:\n            - generic [ref=e227]:\n              - paragraph [ref=e235]: © East Herts District Council, 2023\n              - navigation \"Footer Menu\" [ref=e236]:\n                - heading \"Footer Menu\" [level=2] [ref=e237]\n                - list [ref=e238]:\n                  - listitem [ref=e239]:\n                    - link \"Accessibility\" [ref=e240] [cursor=pointer]:\n                      - /url: /accessibility-statement-east-herts-council-website\n                  - listitem [ref=e241]:\n                    - link \"Contact Us\" [ref=e242] [cursor=pointer]:\n                      - /url: /contactus\n                  - listitem [ref=e243]:\n                    - link \"Privacy Notice\" [ref=e244] [cursor=pointer]:\n                      - /url: /about-east-herts-0/data-protection/corporate-privacy-notice\n                  - listitem [ref=e245]:\n                    - link \"Privacy and Cookies\" [ref=e246] [cursor=pointer]:\n                      - /url: /about-east-herts-0/data-protection/corporate-privacy-notice/privacy-and-cookies\n              - paragraph [ref=e254]:\n                - text: Designed and built by\n                - link \"Webcurl\" [ref=e255] [cursor=pointer]:\n                  - /url: https://www.webcurl.co.uk/\n            - link \"Home\" [ref=e265] [cursor=pointer]:\n              - /url: /\n              - img \"Home\" [ref=e266] [cursor=pointer]\n    - generic [ref=e274]:\n      - generic [ref=e275]:\n        - heading \"Use of personal data and cookies\" [level=1] [ref=e276]:\n          - generic [ref=e277]: Use of personal data and cookies\n        - paragraph [ref=e278]:\n          - generic [ref=e279]:\n            - text: Please choose the services and 3rd party applications we would like to use. To learn more, please read our\n            - link \"privacy policy\" [ref=e280] [cursor=pointer]:\n              - /url: /\n            - text: .\n      - list [ref=e282]:\n        - listitem [ref=e283]:\n          - checkbox \"Functional\" [checked] [disabled] [ref=e284]\n          - generic \"Functional\" [ref=e285]:\n            - generic [ref=e286]: Functional\n            - generic \"This service is always required.\" [ref=e287]: (always required)\n          - link \"↓ 2 Services\" [ref=e293] [cursor=pointer]:\n            - /url: \"#\"\n            - generic [ref=e294] [cursor=pointer]: ↓\n            - text: 2 Services\n        - listitem [ref=e295]:\n          - checkbox \"Analytics\" [ref=e296]\n          - generic [ref=e298] [cursor=pointer]: Analytics\n          - link \"↓ 1 Service\" [ref=e304] [cursor=pointer]:\n            - /url: \"#\"\n            - generic [ref=e305] [cursor=pointer]: ↓\n            - text: 1 Service\n        - listitem [ref=e306]:\n          - checkbox \"Advertising and Marketing\" [ref=e307]\n          - generic [ref=e309] [cursor=pointer]: Advertising and Marketing\n          - link \"↓ 1 Service\" [ref=e315] [cursor=pointer]:\n            - /url: \"#\"\n            - generic [ref=e316] [cursor=pointer]: ↓\n            - text: 1 Service\n        - listitem [ref=e317]:\n          - checkbox \"Toggle all services\" [ref=e318]\n          - generic [ref=e320] [cursor=pointer]: Toggle all services\n          - paragraph [ref=e324]:\n            - generic [ref=e325]: Use this switch to enable/disable all services.\n      - generic [ref=e326]:\n        - generic [ref=e327]:\n          - button \"Decline\" [ref=e328] [cursor=pointer]\n          - button \"Accept selected\" [ref=e329] [cursor=pointer]\n          - button \"Accept all\" [ref=e330] [cursor=pointer]\n        - paragraph [ref=e331]:\n          - link \"Powered by Klaro!\" [ref=e332] [cursor=pointer]:\n            - /url: https://kiprotect.com/klaro\n```",
+          "tool_call_id": "pyd_ai_63103ed114124f3da8352b395a036075",
+          "metadata": null,
+          "timestamp": "2025-07-21T16:37:40.021362Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e330",
+            "element": "Accept all"
+          },
+          "tool_call_id": "pyd_ai_c6bb942ac62647e990ddafdec0a92332",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 5776,
+        "response_tokens": 11,
+        "total_tokens": 5828,
+        "details": {
+          "thoughts_tokens": 41,
+          "text_candidates_tokens": 11,
+          "text_prompt_tokens": 5776
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T16:37:40.866795Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "1Gx-aIjnB4P32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Accept all\nawait page.getByRole('button', { name: 'Accept all' }).click();\n```\n\n### Page state\n- Page URL: https://www.eastherts.gov.uk/bins-waste-and-recycling\n- Page Title: Bins, Waste and Recycling | East Herts District Council\n- Page Snapshot:\n```yaml\n- generic [active] [ref=e1]:\n  - button \"Manage consents\" [ref=e2] [cursor=pointer]\n  - link \"Skip to main content\" [ref=e3] [cursor=pointer]:\n    - /url: \"#content\"\n  - generic [ref=e7]:\n    - banner \"Site header\" [ref=e8]:\n      - navigation [ref=e9]:\n        - generic [ref=e10]:\n          - link \"Home\" [ref=e11] [cursor=pointer]:\n            - /url: /\n            - img \"Home\" [ref=e12] [cursor=pointer]\n          - generic [ref=e19]:\n            - generic [ref=e20]:\n              - generic [ref=e21]: Search\n              - textbox \"Search\" [ref=e22]\n            - button \" Search\" [ref=e24] [cursor=pointer]\n          - button \" View all services\" [ref=e27] [cursor=pointer]:\n            - generic [ref=e28] [cursor=pointer]: \n            - generic [ref=e29] [cursor=pointer]: View all services\n    - complementary [ref=e31]:\n      - generic [ref=e33]:\n        - paragraph [ref=e36]:\n          - generic [ref=e37]: Bin deliveries are still taking place. If you believe you have been missed, or if you have received the wrong bins, please\n          - link \"contact us\" [ref=e38] [cursor=pointer]:\n            - /url: mailto:customer.services@eastherts.gov.uk\n            - strong [ref=e40] [cursor=pointer]: contact us\n          - generic [ref=e41]: .\n        - img [ref=e43]\n    - generic:\n      - complementary\n    - generic [ref=e49]:\n      - navigation \"breadcrumb\" [ref=e55]:\n        - list [ref=e56]:\n          - listitem [ref=e57]:\n            - link \"Home\" [ref=e58] [cursor=pointer]:\n              - /url: /\n          - listitem [ref=e59]: / Bins, Waste and Recycling\n      - main [ref=e61]:\n        - generic [ref=e62]:\n          - article [ref=e65]:\n            - generic [ref=e69]:\n              - generic [ref=e70]:\n                - generic [ref=e74]:\n                  - generic [ref=e76]:\n                    - paragraph [ref=e79]:\n                      - link \"Find out more\" [ref=e80] [cursor=pointer]:\n                        - /url: https://www.eastherts.gov.uk/bins-waste-and-recycling/bin-collection-changes\n                        - strong [ref=e81] [cursor=pointer]: Find out more\n                      - strong [ref=e82]: about the upcoming waste changes.\n                    - img [ref=e84]\n                  - heading \"Bins, Waste and Recycling\" [level=1] [ref=e88]\n                  - generic [ref=e91]:\n                    - heading \"Find your collection day\" [level=2] [ref=e95]\n                    - link \"Look up your collection day\" [ref=e99] [cursor=pointer]:\n                      - /url: https://east-herts.co.uk/\n                      - text: Look up your collection day\n                      - img [ref=e100] [cursor=pointer]: \n                - generic [ref=e104]:\n                  - generic [ref=e105]:\n                    - link \"Garden Waste\" [ref=e107] [cursor=pointer]:\n                      - /url: /bins-waste-and-recycling/garden-waste-service-garden-waste-bin\n                      - heading \"Garden Waste\" [level=2] [ref=e109] [cursor=pointer]\n                    - link \"Refuse Bin\" [ref=e111] [cursor=pointer]:\n                      - /url: /bins-waste-and-recycling/bins-waste-and-recycling-charges/refuse-bins\n                      - heading \"Refuse Bin\" [level=2] [ref=e113] [cursor=pointer]\n                  - generic [ref=e114]:\n                    - link \"Recycling Bin\" [ref=e116] [cursor=pointer]:\n                      - /url: /bins-waste-and-recycling/recycling-bins\n                      - heading \"Recycling Bin\" [level=2] [ref=e118] [cursor=pointer]\n                    - link \"Food Waste and Composting\" [ref=e120] [cursor=pointer]:\n                      - /url: /bins-waste-and-recycling/food-waste\n                      - heading \"Food Waste and Composting\" [level=2] [ref=e122] [cursor=pointer]\n                - generic [ref=e125]:\n                  - generic [ref=e127]:\n                    - heading \"Streets and Litter\" [level=2] [ref=e128]\n                    - generic [ref=e130]:\n                      - link \"Street Cleaning and Litter\" [ref=e132] [cursor=pointer]:\n                        - /url: /bins-waste-and-recycling/street-cleaning-and-litter\n                      - link \"Report Overflowing or Full Litter Bins\" [ref=e134] [cursor=pointer]:\n                        - /url: /bins-waste-and-recycling/report-overflowing-or-full-litter-bins\n                      - link \"Community Litter Picking Form\" [ref=e136] [cursor=pointer]:\n                        - /url: /bins-waste-recycling/street-cleaning-and-litter/community-litter-picking-form\n                      - link \"Dumped Rubbish (Fly tipping and littering)\" [ref=e138] [cursor=pointer]:\n                        - /url: /bins-waste-and-recycling/dumped-rubbish-fly-tipping-and-littering\n                      - link \"Fly-posting\" [ref=e140] [cursor=pointer]:\n                        - /url: /bins-waste-and-recycling/dumped-rubbish-fly-tipping-and-littering/fly-posting\n                      - link \"Pay or Challenge a Fixed Penalty Notice\" [ref=e142] [cursor=pointer]:\n                        - /url: /bins-waste-and-recycling/street-cleaning-and-litter/pay-or-challenge-fixed-penalty-notice\n                  - generic [ref=e143]:\n                    - generic [ref=e144]:\n                      - heading \"Services and Information\" [level=2] [ref=e145]\n                      - generic [ref=e147]:\n                        - link \"What goes in my bins\" [ref=e149] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/what-goes-my-bins\n                        - link \"Find your bin collection day\" [ref=e151] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/find-your-bin-collection-day\n                        - link \"Clinical Waste\" [ref=e153] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/clinical-waste\n                        - link \"Trade Waste\" [ref=e155] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/trade-waste\n                        - link \"Communal Properties\" [ref=e157] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/communal-properties\n                        - link \"Bin Collection Changes\" [ref=e159] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/bin-collection-changes\n                        - link \"Recycle Right\" [ref=e161] [cursor=pointer]:\n                          - /url: /bins-waste-and-recycling/recycle-right\n                    - generic [ref=e162]:\n                      - heading \"Animals\" [level=2] [ref=e163]\n                      - generic [ref=e165]:\n                        - link \"Dead Animals\" [ref=e167] [cursor=pointer]:\n                          - /url: /highways-and-parking/dead-animals\n                        - link \"Dog Fouling, Dog Bins and Dog Control\" [ref=e169] [cursor=pointer]:\n                          - /url: /environmental-health/dog-fouling-dog-bins-and-dog-control\n              - generic [ref=e173]:\n                - heading \"Useful Links\" [level=2] [ref=e174]\n                - link \"Find your Local Tip \" [ref=e177] [cursor=pointer]:\n                  - /url: https://www.hertfordshire.gov.uk/services/recycling-waste-and-environment/recycling-and-waste/where-can-i-recycle/household-waste-recycling-centres/household-waste-recycling-centres-local-tips.aspx\n                - link \"Report a missed bin \" [ref=e180] [cursor=pointer]:\n                  - /url: https://myaccount.eastherts.gov.uk/en/AchieveForms/?form_uri=sandbox-publish%3A//AF-Process-361197eb-1294-4a52-9bc5-89677614229e/AF-Stage-dc7b3578-d3cb-41f7-84da-b1f5cece5cda/definition.json&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes\n                - link \"Report fly-tipping \" [ref=e183] [cursor=pointer]:\n                  - /url: https://eastherts-self.achieveservice.com/waste-services\n                - link \"Report an issue with your Waste Service \" [ref=e186] [cursor=pointer]:\n                  - /url: https://eastherts-self.achieveservice.com/en/AchieveForms/?form_uri=sandbox-publish%3A//AF-Process-daeb699e-8638-4fc0-971b-64fc2819b8b9/AF-Stage-1c549cb6-ec6e-4646-bf3b-37b61a70ac53/definition.json&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes&noLoginPrompt=1\n          - button \"Feedback button\" [ref=e195] [cursor=pointer]:\n            - img \"Feedback button\" [ref=e196] [cursor=pointer]\n    - contentinfo [ref=e197]:\n      - generic [ref=e198]:\n        - list [ref=e212]:\n          - listitem [ref=e213]:\n            - link \"Facebook\" [ref=e214] [cursor=pointer]:\n              - /url: https://www.facebook.com/EastHertsDC\n              - img [ref=e215] [cursor=pointer]: \n          - listitem [ref=e217]:\n            - link \"Instagram\" [ref=e218] [cursor=pointer]:\n              - /url: https://www.instagram.com/easthertscouncil/\n              - img [ref=e219] [cursor=pointer]: \n          - listitem [ref=e221]:\n            - link \"Twitter\" [ref=e222] [cursor=pointer]:\n              - /url: https://twitter.com/eastherts\n              - img [ref=e223] [cursor=pointer]\n        - generic [ref=e225]:\n          - generic [ref=e227]:\n            - paragraph [ref=e235]: © East Herts District Council, 2023\n            - navigation \"Footer Menu\" [ref=e236]:\n              - heading \"Footer Menu\" [level=2] [ref=e237]\n              - list [ref=e238]:\n                - listitem [ref=e239]:\n                  - link \"Accessibility\" [ref=e240] [cursor=pointer]:\n                    - /url: /accessibility-statement-east-herts-council-website\n                - listitem [ref=e241]:\n                  - link \"Contact Us\" [ref=e242] [cursor=pointer]:\n                    - /url: /contactus\n                - listitem [ref=e243]:\n                  - link \"Privacy Notice\" [ref=e244] [cursor=pointer]:\n                    - /url: /about-east-herts-0/data-protection/corporate-privacy-notice\n                - listitem [ref=e245]:\n                  - link \"Privacy and Cookies\" [ref=e246] [cursor=pointer]:\n                    - /url: /about-east-herts-0/data-protection/corporate-privacy-notice/privacy-and-cookies\n            - paragraph [ref=e254]:\n              - text: Designed and built by\n              - link \"Webcurl\" [ref=e255] [cursor=pointer]:\n                - /url: https://www.webcurl.co.uk/\n          - link \"Home\" [ref=e265] [cursor=pointer]:\n            - /url: /\n            - img \"Home\" [ref=e266] [cursor=pointer]\n```",
+          "tool_call_id": "pyd_ai_c6bb942ac62647e990ddafdec0a92332",
+          "metadata": null,
+          "timestamp": "2025-07-21T16:37:42.035723Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e99",
+            "element": "Look up your collection day"
+          },
+          "tool_call_id": "pyd_ai_5d76b9a46b184628ba0c3c517c8672d6",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 9120,
+        "response_tokens": 13,
+        "total_tokens": 9197,
+        "details": {
+          "cached_content_tokens": 5868,
+          "thoughts_tokens": 64,
+          "text_cache_tokens": 5868,
+          "text_candidates_tokens": 13,
+          "text_prompt_tokens": 9120
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T16:37:43.141979Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "1mx-aJSiCPfr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Look up your collection day\nawait page.getByRole('link', { name: 'Look up your collection day' }).click();\n```\n\n### New console messages\n- [ERROR] Refused to load the script 'https://replit.com/public/js/replit-dev-banner.js' because it vi...\n\n### Page state\n- Page URL: https://east-herts.co.uk/\n- Page Title: Waste Service Lookup | East Herts Council\n- Page Snapshot:\n```yaml\n- generic [ref=e2]:\n  - region \"Notifications (F8)\":\n    - list\n  - generic [ref=e5]:\n    - banner [ref=e6]:\n      - generic [ref=e8]:\n        - generic [ref=e9]:\n          - heading \"Garden, Refuse & Recycling Collection Lookup\" [level=1] [ref=e10]\n          - paragraph [ref=e11]: East Hertfordshire District Council\n        - generic [ref=e12]:\n          - img [ref=e13]\n          - generic [ref=e16]: Collections start from 6:30 AM\n    - main [ref=e17]:\n      - generic [ref=e22]:\n        - heading \"Garden, Refuse & Recycling Collection Lookup\" [level=2] [ref=e23]\n        - paragraph [ref=e24]: Find your collection dates. NEW collection system starts August 4, 2025.\n        - generic [ref=e25]: Here to help • Working together • Going the extra mile\n      - generic [ref=e26]:\n        - generic [ref=e27]:\n          - generic [ref=e28]:\n            - img [ref=e29]\n            - text: Find Your Collection Dates\n          - generic [ref=e32]: Follow these steps to view your waste collection schedule\n        - generic [ref=e34]:\n          - generic [ref=e35]:\n            - generic [ref=e36]: \"1\"\n            - heading \"Enter your postcode\" [level=3] [ref=e37]\n          - generic [ref=e38]:\n            - textbox \"Enter postcode (e.g., CM233GN)\" [ref=e39]\n            - button \"Find My Address\" [ref=e40] [cursor=pointer]\n    - contentinfo [ref=e41]:\n      - generic [ref=e42]:\n        - generic [ref=e43]:\n          - generic [ref=e44]:\n            - heading \"East Hertfordshire District Council\" [level=3] [ref=e45]\n            - paragraph [ref=e46]: Providing essential services to our community with dedication and care.\n          - generic [ref=e47]:\n            - heading \"Contact Information\" [level=4] [ref=e48]\n            - generic [ref=e49]:\n              - paragraph [ref=e50]: \"Phone: 01279 655261\"\n              - paragraph [ref=e51]:\n                - link \"Waste Service Portal\" [ref=e52] [cursor=pointer]:\n                  - /url: https://myaccount.eastherts.gov.uk/waste-services\n              - paragraph [ref=e53]:\n                - link \"Contact Us Online\" [ref=e54] [cursor=pointer]:\n                  - /url: https://www.eastherts.gov.uk/contactus\n          - generic [ref=e55]:\n            - heading \"Office Hours\" [level=4] [ref=e56]\n            - generic [ref=e57]:\n              - paragraph [ref=e58]: \"Monday - Thursday: 8:30 AM - 5:00 PM\"\n              - paragraph [ref=e59]: \"Friday: 8:30 AM - 4:30 PM\"\n              - paragraph [ref=e60]: \"Weekend: Closed\"\n        - paragraph [ref=e62]: © 2025 East Hertfordshire District Council. All rights reserved.\n```",
+          "tool_call_id": "pyd_ai_5d76b9a46b184628ba0c3c517c8672d6",
+          "metadata": null,
+          "timestamp": "2025-07-21T16:37:44.735209Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "args": {
+            "ref": "e39",
+            "element": "Enter postcode (e.g., CM233GN)",
+            "text": "AL6 0FD"
+          },
+          "tool_call_id": "pyd_ai_cbc198d28dcf40f1867118640374299c",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 10101,
+        "response_tokens": 27,
+        "total_tokens": 10182,
+        "details": {
+          "cached_content_tokens": 8471,
+          "thoughts_tokens": 54,
+          "text_cache_tokens": 8471,
+          "text_candidates_tokens": 27,
+          "text_prompt_tokens": 10101
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T16:37:45.985941Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "2Gx-aIiFMoP32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_type",
+          "content": "### Ran Playwright code\n```js\n// Fill \"AL6 0FD\" into \"Enter postcode (e.g., CM233GN)\"\nawait page.getByRole('textbox', { name: 'Enter postcode (e.g., CM233GN)' }).fill('AL6 0FD');\n```\n\n### Page state\n- Page URL: https://east-herts.co.uk/\n- Page Title: Waste Service Lookup | East Herts Council\n- Page Snapshot:\n```yaml\n- generic [ref=e2]:\n  - region \"Notifications (F8)\":\n    - list\n  - generic [ref=e5]:\n    - banner [ref=e6]:\n      - generic [ref=e8]:\n        - generic [ref=e9]:\n          - heading \"Garden, Refuse & Recycling Collection Lookup\" [level=1] [ref=e10]\n          - paragraph [ref=e11]: East Hertfordshire District Council\n        - generic [ref=e12]:\n          - img [ref=e13]\n          - generic [ref=e16]: Collections start from 6:30 AM\n    - main [ref=e17]:\n      - generic [ref=e22]:\n        - heading \"Garden, Refuse & Recycling Collection Lookup\" [level=2] [ref=e23]\n        - paragraph [ref=e24]: Find your collection dates. NEW collection system starts August 4, 2025.\n        - generic [ref=e25]: Here to help • Working together • Going the extra mile\n      - generic [ref=e26]:\n        - generic [ref=e27]:\n          - generic [ref=e28]:\n            - img [ref=e29]\n            - text: Find Your Collection Dates\n          - generic [ref=e32]: Follow these steps to view your waste collection schedule\n        - generic [ref=e34]:\n          - generic [ref=e35]:\n            - generic [ref=e36]: \"1\"\n            - heading \"Enter your postcode\" [level=3] [ref=e37]\n          - generic [ref=e38]:\n            - textbox \"Enter postcode (e.g., CM233GN)\" [active] [ref=e39]: AL6 0FD\n            - button \"Find My Address\" [ref=e40] [cursor=pointer]\n    - contentinfo [ref=e41]:\n      - generic [ref=e42]:\n        - generic [ref=e43]:\n          - generic [ref=e44]:\n            - heading \"East Hertfordshire District Council\" [level=3] [ref=e45]\n            - paragraph [ref=e46]: Providing essential services to our community with dedication and care.\n          - generic [ref=e47]:\n            - heading \"Contact Information\" [level=4] [ref=e48]\n            - generic [ref=e49]:\n              - paragraph [ref=e50]: \"Phone: 01279 655261\"\n              - paragraph [ref=e51]:\n                - link \"Waste Service Portal\" [ref=e52] [cursor=pointer]:\n                  - /url: https://myaccount.eastherts.gov.uk/waste-services\n              - paragraph [ref=e53]:\n                - link \"Contact Us Online\" [ref=e54] [cursor=pointer]:\n                  - /url: https://www.eastherts.gov.uk/contactus\n          - generic [ref=e55]:\n            - heading \"Office Hours\" [level=4] [ref=e56]\n            - generic [ref=e57]:\n              - paragraph [ref=e58]: \"Monday - Thursday: 8:30 AM - 5:00 PM\"\n              - paragraph [ref=e59]: \"Friday: 8:30 AM - 4:30 PM\"\n              - paragraph [ref=e60]: \"Weekend: Closed\"\n        - paragraph [ref=e62]: © 2025 East Hertfordshire District Council. All rights reserved.\n```",
+          "tool_call_id": "pyd_ai_cbc198d28dcf40f1867118640374299c",
+          "metadata": null,
+          "timestamp": "2025-07-21T16:37:47.052643Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e40",
+            "element": "Find My Address"
+          },
+          "tool_call_id": "pyd_ai_cf4dfd13e682471d8cd6c58c5264a49a",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 11093,
+        "response_tokens": 11,
+        "total_tokens": 11154,
+        "details": {
+          "cached_content_tokens": 9399,
+          "thoughts_tokens": 50,
+          "text_cache_tokens": 9399,
+          "text_candidates_tokens": 11,
+          "text_prompt_tokens": 11093
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T16:37:48.007823Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "22x-aN_9CPfr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Find My Address\nawait page.getByRole('button', { name: 'Find My Address' }).click();\n```\n\n### New console messages\n- [LOG] Searching for postcode: AL60FD @ https://east-herts.co.uk/assets/index-B7_FAeKO.js:240\n- [LOG] searchedPostcode set to: AL60FD @ https://east-herts.co.uk/assets/index-B7_FAeKO.js:240\n- [LOG] selectedUprn reset to:  @ https://east-herts.co.uk/assets/index-B7_FAeKO.js:240\n- [LOG] Fetching addresses for: AL60FD @ https://east-herts.co.uk/assets/index-B7_FAeKO.js:240\n- [LOG] Response status: 200 @ https://east-herts.co.uk/assets/index-B7_FAeKO.js:240\n- [LOG] Response headers: {access-control-allow-credentials: true, alt-svc: h3=\":443\"; ma=2592000,h3-2...\n- [LOG] Parsed data: {addresses: Array(82)} @ https://east-herts.co.uk/assets/index-B7_FAeKO.js:240\n- [LOG] Address search successful: {addresses: Array(82)} @ https://east-herts.co.uk/assets/index-B7_F...\n- [LOG] Number of addresses found: 82 @ https://east-herts.co.uk/assets/index-B7_FAeKO.js:240\n\n### Page state\n- Page URL: https://east-herts.co.uk/\n- Page Title: Waste Service Lookup | East Herts Council\n- Page Snapshot:\n```yaml\n- generic [ref=e2]:\n  - region \"Notifications (F8)\":\n    - list\n  - generic [ref=e5]:\n    - banner [ref=e6]:\n      - generic [ref=e8]:\n        - generic [ref=e9]:\n          - heading \"Garden, Refuse & Recycling Collection Lookup\" [level=1] [ref=e10]\n          - paragraph [ref=e11]: East Hertfordshire District Council\n        - generic [ref=e12]:\n          - img [ref=e13]\n          - generic [ref=e16]: Collections start from 6:30 AM\n    - main [ref=e17]:\n      - generic [ref=e22]:\n        - heading \"Garden, Refuse & Recycling Collection Lookup\" [level=2] [ref=e23]\n        - paragraph [ref=e24]: Find your collection dates. NEW collection system starts August 4, 2025.\n        - generic [ref=e25]: Here to help • Working together • Going the extra mile\n      - generic [ref=e26]:\n        - generic [ref=e27]:\n          - generic [ref=e28]:\n            - img [ref=e29]\n            - text: Find Your Collection Dates\n          - generic [ref=e32]: Follow these steps to view your waste collection schedule\n        - generic [ref=e33]:\n          - generic [ref=e34]:\n            - generic [ref=e35]:\n              - generic [ref=e36]: \"1\"\n              - heading \"Enter your postcode\" [level=3] [ref=e37]\n            - generic [ref=e38]:\n              - textbox \"Enter postcode (e.g., CM233GN)\" [ref=e39]: AL6 0FD\n              - button \"Find My Address\" [ref=e40] [cursor=pointer]\n          - generic [ref=e63]:\n            - generic [ref=e64]:\n              - generic [ref=e65]: \"2\"\n              - heading \"Select your address\" [level=3] [ref=e66]\n            - combobox [ref=e67] [cursor=pointer]:\n              - generic: Add your property number or select from the list\n              - img [ref=e69] [cursor=pointer]\n          - generic [ref=e71]:\n            - generic [ref=e72]:\n              - generic [ref=e73]: \"3\"\n              - heading \"View your collection schedule\" [level=3] [ref=e74]\n            - paragraph [ref=e75]: Select an address above to see collection dates\n    - contentinfo [ref=e41]:\n      - generic [ref=e42]:\n        - generic [ref=e43]:\n          - generic [ref=e44]:\n            - heading \"East Hertfordshire District Council\" [level=3] [ref=e45]\n            - paragraph [ref=e46]: Providing essential services to our community with dedication and care.\n          - generic [ref=e47]:\n            - heading \"Contact Information\" [level=4] [ref=e48]\n            - generic [ref=e49]:\n              - paragraph [ref=e50]: \"Phone: 01279 655261\"\n              - paragraph [ref=e51]:\n                - link \"Waste Service Portal\" [ref=e52] [cursor=pointer]:\n                  - /url: https://myaccount.eastherts.gov.uk/waste-services\n              - paragraph [ref=e53]:\n                - link \"Contact Us Online\" [ref=e54] [cursor=pointer]:\n                  - /url: https://www.eastherts.gov.uk/contactus\n          - generic [ref=e55]:\n            - heading \"Office Hours\" [level=4] [ref=e56]\n            - generic [ref=e57]:\n              - paragraph [ref=e58]: \"Monday - Thursday: 8:30 AM - 5:00 PM\"\n              - paragraph [ref=e59]: \"Friday: 8:30 AM - 4:30 PM\"\n              - paragraph [ref=e60]: \"Weekend: Closed\"\n        - paragraph [ref=e62]: © 2025 East Hertfordshire District Council. All rights reserved.\n```",
+          "tool_call_id": "pyd_ai_cf4dfd13e682471d8cd6c58c5264a49a",
+          "metadata": null,
+          "timestamp": "2025-07-21T16:37:50.200585Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e67",
+            "element": "Add your property number or select from the list"
+          },
+          "tool_call_id": "pyd_ai_529f942e876b4d6f8d89f93a989b5959",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 12604,
+        "response_tokens": 17,
+        "total_tokens": 12683,
+        "details": {
+          "cached_content_tokens": 1731,
+          "thoughts_tokens": 62,
+          "text_cache_tokens": 1731,
+          "text_candidates_tokens": 17,
+          "text_prompt_tokens": 12604
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T16:37:51.309843Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "3mx-aKSJEqbitfAP1MvpmQw"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click Add your property number or select from the list\nawait page.getByRole('combobox').click();\n```\n\n### Page state\n- Page URL: https://east-herts.co.uk/\n- Page Title: Waste Service Lookup | East Herts Council\n- Page Snapshot:\n```yaml\n- generic:\n  - generic:\n    - list\n    - generic:\n      - banner:\n        - generic:\n          - generic:\n            - generic:\n              - heading [level=1]: Garden, Refuse & Recycling Collection Lookup\n              - paragraph: East Hertfordshire District Council\n            - generic:\n              - img\n              - generic: Collections start from 6:30 AM\n      - main:\n        - generic:\n          - generic:\n            - generic:\n              - generic:\n                - heading [level=2]: Garden, Refuse & Recycling Collection Lookup\n                - paragraph: Find your collection dates. NEW collection system starts August 4, 2025.\n                - generic: Here to help • Working together • Going the extra mile\n        - generic:\n          - generic:\n            - generic:\n              - img\n              - text: Find Your Collection Dates\n            - generic: Follow these steps to view your waste collection schedule\n          - generic:\n            - generic:\n              - generic:\n                - generic: \"1\"\n                - heading [level=3]: Enter your postcode\n              - generic:\n                - textbox: AL6 0FD\n                - button: Find My Address\n            - generic:\n              - generic:\n                - generic: \"2\"\n                - heading [level=3]: Select your address\n              - combobox [expanded]:\n                - generic: Add your property number or select from the list\n                - img\n            - generic:\n              - generic:\n                - generic: \"3\"\n                - heading [level=3]: View your collection schedule\n              - paragraph: Select an address above to see collection dates\n      - contentinfo:\n        - generic:\n          - generic:\n            - generic:\n              - heading [level=3]: East Hertfordshire District Council\n              - paragraph: Providing essential services to our community with dedication and care.\n            - generic:\n              - heading [level=4]: Contact Information\n              - generic:\n                - paragraph: \"Phone: 01279 655261\"\n                - paragraph:\n                  - link:\n                    - /url: https://myaccount.eastherts.gov.uk/waste-services\n                    - text: Waste Service Portal\n                - paragraph:\n                  - link:\n                    - /url: https://www.eastherts.gov.uk/contactus\n                    - text: Contact Us Online\n            - generic:\n              - heading [level=4]: Office Hours\n              - generic:\n                - paragraph: \"Monday - Thursday: 8:30 AM - 5:00 PM\"\n                - paragraph: \"Friday: 8:30 AM - 4:30 PM\"\n                - paragraph: \"Weekend: Closed\"\n          - generic:\n            - paragraph: © 2025 East Hertfordshire District Council. All rights reserved.\n  - listbox [ref=e89]:\n    - option \"1 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [active] [ref=e90]:\n      - generic [ref=e92]: 1 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"2 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e93]:\n      - generic [ref=e95]: 2 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"3 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e96]:\n      - generic [ref=e98]: 3 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"4 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e99]:\n      - generic [ref=e101]: 4 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"5 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e102]:\n      - generic [ref=e104]: 5 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"6 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e105]:\n      - generic [ref=e107]: 6 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"7 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e108]:\n      - generic [ref=e110]: 7 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"8 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e111]:\n      - generic [ref=e113]: 8 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"9 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e114]:\n      - generic [ref=e116]: 9 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"10 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e117]:\n      - generic [ref=e119]: 10 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"11 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e120]:\n      - generic [ref=e122]: 11 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"12 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e123]:\n      - generic [ref=e125]: 12 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"13 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e126]:\n      - generic [ref=e128]: 13 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"14 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e129]:\n      - generic [ref=e131]: 14 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"15 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e132]:\n      - generic [ref=e134]: 15 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"16 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e135]:\n      - generic [ref=e137]: 16 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"17 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e138]:\n      - generic [ref=e140]: 17 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"18 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e141]:\n      - generic [ref=e143]: 18 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"19 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e144]:\n      - generic [ref=e146]: 19 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"20 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e147]:\n      - generic [ref=e149]: 20 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"21 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e150]:\n      - generic [ref=e152]: 21 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"22 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e153]:\n      - generic [ref=e155]: 22 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"23 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e156]:\n      - generic [ref=e158]: 23 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"24 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e159]:\n      - generic [ref=e161]: 24 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"25 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e162]:\n      - generic [ref=e164]: 25 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"26 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e165]:\n      - generic [ref=e167]: 26 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"27 SEVENACRES, TEWIN, WELWYN, AL6 0FD\" [ref=e168]:\n      - generic [ref=e170]: 27 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n    - option \"SEVEN ACRES FARM, SEVENACRES, TEWIN, AL6 0FD\" [ref=e171]:\n      - generic [ref=e173]: SEVEN ACRES FARM, SEVENACRES, TEWIN, AL6 0FD\n    - img [ref=e175]\n```",
+          "tool_call_id": "pyd_ai_529f942e876b4d6f8d89f93a989b5959",
+          "metadata": null,
+          "timestamp": "2025-07-21T16:37:52.420981Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "args": {
+            "ref": "e90",
+            "element": "1 SEVENACRES, TEWIN, WELWYN, AL6 0FD"
+          },
+          "tool_call_id": "pyd_ai_d48fc92e829e4f06b397fa1fb005e6cb",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 15106,
+        "response_tokens": 25,
+        "total_tokens": 15206,
+        "details": {
+          "cached_content_tokens": 10543,
+          "thoughts_tokens": 75,
+          "text_cache_tokens": 10543,
+          "text_candidates_tokens": 25,
+          "text_prompt_tokens": 15106
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T16:37:53.564264Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "4Gx-aParH4P32fMP693i8QM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_click",
+          "content": "### Ran Playwright code\n```js\n// Click 1 SEVENACRES, TEWIN, WELWYN, AL6 0FD\nawait page.getByRole('option', { name: '1 SEVENACRES, TEWIN, WELWYN, AL6 0FD', exact: true }).click();\n```\n\n### New console messages\n- [LOG] Fetching services for UPRN: 10023086655 @ https://east-herts.co.uk/assets/index-B7_FAeKO.js:24...\n\n### Page state\n- Page URL: https://east-herts.co.uk/\n- Page Title: Waste Service Lookup | East Herts Council\n- Page Snapshot:\n```yaml\n- generic [ref=e2]:\n  - region \"Notifications (F8)\":\n    - list\n  - generic [ref=e5]:\n    - banner [ref=e6]:\n      - generic [ref=e8]:\n        - generic [ref=e9]:\n          - heading \"Garden, Refuse & Recycling Collection Lookup\" [level=1] [ref=e177]\n          - paragraph [ref=e11]: East Hertfordshire District Council\n        - generic [ref=e12]:\n          - img [ref=e13]\n          - generic [ref=e16]: Collections start from 6:30 AM\n    - main [ref=e17]:\n      - generic [ref=e22]:\n        - heading \"Garden, Refuse & Recycling Collection Lookup\" [level=2] [ref=e178]\n        - paragraph [ref=e24]: Find your collection dates. NEW collection system starts August 4, 2025.\n        - generic [ref=e25]: Here to help • Working together • Going the extra mile\n      - generic [ref=e26]:\n        - generic [ref=e27]:\n          - generic [ref=e28]:\n            - img [ref=e29]\n            - text: Find Your Collection Dates\n          - generic [ref=e32]: Follow these steps to view your waste collection schedule\n        - generic [ref=e33]:\n          - generic [ref=e34]:\n            - generic [ref=e35]:\n              - generic [ref=e36]: \"1\"\n              - heading \"Enter your postcode\" [level=3] [ref=e179]\n            - generic [ref=e38]:\n              - textbox \"Enter postcode (e.g., CM233GN)\" [ref=e180]: AL6 0FD\n              - button \"Find My Address\" [ref=e181] [cursor=pointer]\n          - generic [ref=e63]:\n            - generic [ref=e64]:\n              - generic [ref=e65]: \"2\"\n              - heading \"Select your address\" [level=3] [ref=e182]\n            - combobox [active] [ref=e67] [cursor=pointer]:\n              - generic: 1 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n              - img [ref=e69] [cursor=pointer]\n          - generic [ref=e71]:\n            - generic [ref=e72]:\n              - generic [ref=e73]: \"3\"\n              - heading \"View your collection schedule\" [level=3] [ref=e183]\n            - paragraph [ref=e75]: ✓ Ready to view collection dates below\n      - generic [ref=e184]:\n        - generic [ref=e186]:\n          - generic [ref=e187]:\n            - generic [ref=e188]:\n              - img [ref=e189]\n              - generic [ref=e194]: Your Collection Schedule\n            - generic [ref=e195]: 1 SEVENACRES, TEWIN, WELWYN, AL6 0FD\n          - generic [ref=e196]:\n            - button \"Print\" [ref=e197] [cursor=pointer]:\n              - img\n              - generic [ref=e202] [cursor=pointer]: Print\n            - button \"PDF\" [ref=e203] [cursor=pointer]:\n              - img\n              - generic [ref=e208] [cursor=pointer]: PDF\n        - generic [ref=e211]:\n          - tablist [ref=e212]:\n            - tab \"Timeline View\" [selected] [ref=e213] [cursor=pointer]\n            - tab \"Calendar View\" [ref=e214] [cursor=pointer]\n            - tab \"Table View\" [ref=e215] [cursor=pointer]\n          - tabpanel \"Timeline View\" [ref=e216]:\n            - generic [ref=e218]:\n              - generic [ref=e220]:\n                - generic [ref=e221]:\n                  - img [ref=e222]\n                  - text: Collection Timeline\n                - generic [ref=e227]:\n                  - button \"Print\" [ref=e228] [cursor=pointer]:\n                    - img\n                    - generic [ref=e233] [cursor=pointer]: Print\n                  - button \"PDF\" [ref=e234] [cursor=pointer]:\n                    - img\n                    - generic [ref=e239] [cursor=pointer]: PDF\n              - generic [ref=e241]:\n                - generic [ref=e244]:\n                  - generic [ref=e247]:\n                    - generic [ref=e248]:\n                      - generic [ref=e249]: Thursday\n                      - generic [ref=e250]: 24 July 2025\n                      - generic [ref=e251]: 3 days\n                    - generic [ref=e253]:\n                      - generic [ref=e254]:\n                        - generic [ref=e255]: Current Domestic Refuse\n                        - generic [ref=e256]: Black or Purple Bin Lid\n                      - img [ref=e258]\n                  - generic [ref=e266]:\n                    - generic [ref=e267]:\n                      - generic [ref=e268]: Thursday\n                      - generic [ref=e269]: 31 July 2025\n                      - generic [ref=e270]: 10 days\n                    - generic [ref=e271]:\n                      - generic [ref=e272]:\n                        - generic [ref=e273]:\n                          - generic [ref=e274]: Current Domestic Mixed Recycling\n                          - generic [ref=e275]: Blue Bin Lid\n                        - img [ref=e277]\n                      - generic [ref=e284]:\n                        - generic [ref=e285]:\n                          - generic [ref=e286]: Current Domestic Paper\n                          - generic [ref=e287]:\n                            - text: Blue Box\n                            - generic [ref=e288]: Service Ends 04/08/2025\n                        - img [ref=e290]\n                      - generic [ref=e294]:\n                        - generic [ref=e295]:\n                          - generic [ref=e296]: Garden Waste Collection\n                          - generic [ref=e297]: Brown Bin Lid\n                        - img [ref=e299]\n                      - generic [ref=e302]:\n                        - generic [ref=e303]:\n                          - generic [ref=e304]: Additional Refuse Collection\n                          - generic [ref=e305]: Black or Purple Lid Bin\n                        - img [ref=e307]\n                  - generic [ref=e315]:\n                    - generic [ref=e316]:\n                      - generic [ref=e317]: Wednesday\n                      - generic [ref=e318]: 6 August 2025\n                      - generic [ref=e319]: 16 days\n                    - generic [ref=e320]:\n                      - generic [ref=e321]:\n                        - generic [ref=e322]:\n                          - generic [ref=e323]: New Domestic Mixed Recycling\n                          - generic [ref=e324]: Black Bin Lid\n                        - img [ref=e326]\n                      - generic [ref=e333]:\n                        - generic [ref=e334]:\n                          - generic [ref=e335]: New Domestic Food Waste\n                          - generic [ref=e336]: Food Caddy\n                        - img [ref=e338]\n                  - generic [ref=e345]:\n                    - generic [ref=e346]:\n                      - generic [ref=e347]: Wednesday\n                      - generic [ref=e348]: 13 August 2025\n                      - generic [ref=e349]: 23 days\n                    - generic [ref=e350]:\n                      - generic [ref=e351]:\n                        - generic [ref=e352]:\n                          - generic [ref=e353]: New Domestic Paper and Card\n                          - generic [ref=e354]: Blue Bin Lid\n                        - img [ref=e356]\n                      - generic [ref=e363]:\n                        - generic [ref=e364]:\n                          - generic [ref=e365]: New Domestic Food Waste\n                          - generic [ref=e366]: Food Caddy\n                        - img [ref=e368]\n                  - generic [ref=e375]:\n                    - generic [ref=e376]:\n                      - generic [ref=e377]: Thursday\n                      - generic [ref=e378]: 14 August 2025\n                      - generic [ref=e379]: 24 days\n                    - generic [ref=e381]:\n                      - generic [ref=e382]:\n                        - generic [ref=e383]: Garden Waste Collection\n                        - generic [ref=e384]: Brown Bin Lid\n                      - img [ref=e386]\n                  - generic [ref=e391]:\n                    - generic [ref=e392]:\n                      - generic [ref=e393]: Wednesday\n                      - generic [ref=e394]: 20 August 2025\n                      - generic [ref=e395]: 30 days\n                    - generic [ref=e396]:\n                      - generic [ref=e397]:\n                        - generic [ref=e398]:\n                          - generic [ref=e399]: New Domestic Refuse\n                          - generic [ref=e400]: Purple Bin Lid\n                        - img [ref=e402]\n                      - generic [ref=e408]:\n                        - generic [ref=e409]:\n                          - generic [ref=e410]: New Domestic Food Waste\n                          - generic [ref=e411]: Food Caddy\n                        - img [ref=e413]\n                  - generic [ref=e420]:\n                    - generic [ref=e421]:\n                      - generic [ref=e422]: Wednesday\n                      - generic [ref=e423]: 27 August 2025\n                      - generic [ref=e424]: 37 days\n                    - generic [ref=e425]:\n                      - generic [ref=e426]:\n                        - generic [ref=e427]:\n                          - generic [ref=e428]: New Domestic Mixed Recycling\n                          - generic [ref=e429]: Black Bin Lid\n                        - img [ref=e431]\n                      - generic [ref=e438]:\n                        - generic [ref=e439]:\n                          - generic [ref=e440]: New Domestic Food Waste\n                          - generic [ref=e441]: Food Caddy\n                        - img [ref=e443]\n                  - generic [ref=e450]:\n                    - generic [ref=e451]:\n                      - generic [ref=e452]: Thursday\n                      - generic [ref=e453]: 28 August 2025\n                      - generic [ref=e454]: 38 days\n                    - generic [ref=e456]:\n                      - generic [ref=e457]:\n                        - generic [ref=e458]: Garden Waste Collection\n                        - generic [ref=e459]: Brown Bin Lid\n                      - img [ref=e461]\n                - generic [ref=e464]:\n                  - generic [ref=e465]:\n                    - img [ref=e466]\n                    - generic [ref=e471]: Next Collection\n                  - generic [ref=e472]:\n                    - generic [ref=e473]: Thursday - 24 July 2025\n                    - generic [ref=e474]: Current Domestic Refuse\n                - generic [ref=e475]:\n                  - heading \"Collection Key\" [level=4] [ref=e476]:\n                    - img [ref=e477]\n                    - text: Collection Key\n                  - generic [ref=e482]:\n                    - heading \"SERVICE ICONS\" [level=5] [ref=e483]\n                    - generic [ref=e484]:\n                      - generic [ref=e485]:\n                        - img [ref=e487]\n                        - generic [ref=e492]: Food Caddy\n                      - generic [ref=e493]:\n                        - img [ref=e495]\n                        - generic [ref=e502]: Mixed Recycling\n                      - generic [ref=e503]:\n                        - img [ref=e505]\n                        - generic [ref=e509]: Blue Box\n                      - generic [ref=e510]:\n                        - img [ref=e512]\n                        - generic [ref=e518]: Refuse\n                      - generic [ref=e519]:\n                        - img [ref=e521]\n                        - generic [ref=e524]: Garden Waste\n                      - generic [ref=e525]:\n                        - img [ref=e527]\n                        - generic [ref=e534]: Paper & Card\n                  - generic [ref=e535]:\n                    - heading \"BIN LID COLORS & SERVICES\" [level=5] [ref=e536]\n                    - generic [ref=e537]:\n                      - generic [ref=e540]: Purple Lid - Refuse\n                      - generic [ref=e543]: Black Lid - Mixed Recycling\n                      - generic [ref=e546]: Blue Lid - Paper & Card\n                      - generic [ref=e549]: Blue Box - Current Paper\n                      - generic [ref=e552]: Brown Lid - Garden Waste\n                      - generic [ref=e555]: Food Caddy - Food Waste\n      - generic [ref=e556]:\n        - generic [ref=e557]:\n          - generic [ref=e558]: Collection Schedule\n          - generic [ref=e559]: \"New Schedule Effective: 04 August 2025\"\n        - generic [ref=e561]:\n          - generic [ref=e562]:\n            - img [ref=e565]\n            - generic [ref=e571]: Purple Bin Lid\n            - generic [ref=e572]: Refuse\n            - generic [ref=e573]: (3-weekly)\n          - generic [ref=e574]:\n            - img [ref=e577]\n            - generic [ref=e584]: Black Bin Lid\n            - generic [ref=e585]: Mixed Recycling\n            - generic [ref=e586]: (3-weekly)\n          - generic [ref=e587]:\n            - img [ref=e590]\n            - generic [ref=e597]: Blue Bin Lid\n            - generic [ref=e598]: Paper & Cardboard\n            - generic [ref=e599]: (3-weekly)\n          - generic [ref=e600]:\n            - img [ref=e603]\n            - generic [ref=e608]: Food Caddy\n            - generic [ref=e609]: Food Waste\n            - generic [ref=e610]: (Weekly)\n          - generic [ref=e611]:\n            - img [ref=e614]\n            - generic [ref=e617]: Brown Bin Lid\n            - generic [ref=e618]: Garden Waste\n            - generic [ref=e619]: (Two weekly)\n    - contentinfo [ref=e41]:\n      - generic [ref=e42]:\n        - generic [ref=e43]:\n          - generic [ref=e44]:\n            - heading \"East Hertfordshire District Council\" [level=3] [ref=e620]\n            - paragraph [ref=e46]: Providing essential services to our community with dedication and care.\n          - generic [ref=e47]:\n            - heading \"Contact Information\" [level=4] [ref=e621]\n            - generic [ref=e49]:\n              - paragraph [ref=e50]: \"Phone: 01279 655261\"\n              - paragraph [ref=e51]:\n                - link \"Waste Service Portal\" [ref=e622] [cursor=pointer]:\n                  - /url: https://myaccount.eastherts.gov.uk/waste-services\n              - paragraph [ref=e53]:\n                - link \"Contact Us Online\" [ref=e623] [cursor=pointer]:\n                  - /url: https://www.eastherts.gov.uk/contactus\n          - generic [ref=e55]:\n            - heading \"Office Hours\" [level=4] [ref=e624]\n            - generic [ref=e57]:\n              - paragraph [ref=e58]: \"Monday - Thursday: 8:30 AM - 5:00 PM\"\n              - paragraph [ref=e59]: \"Friday: 8:30 AM - 4:30 PM\"\n              - paragraph [ref=e60]: \"Weekend: Closed\"\n        - paragraph [ref=e62]: © 2025 East Hertfordshire District Council. All rights reserved.\n```",
+          "tool_call_id": "pyd_ai_d48fc92e829e4f06b397fa1fb005e6cb",
+          "metadata": null,
+          "timestamp": "2025-07-21T16:37:55.771357Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "args": {
+            "food_waste": {
+              "frequency": "Weekly",
+              "bin_colour": "brown",
+              "next_pickup_day": "Wednesday, 6 August 2025"
+            },
+            "garden_waste": {
+              "next_pickup_day": "Thursday, 31 July 2025",
+              "frequency": "Two weekly",
+              "bin_colour": "brown"
+            },
+            "recycling": {
+              "frequency": "3-weekly",
+              "bin_colour": "black",
+              "next_pickup_day": "Wednesday, 6 August 2025"
+            },
+            "postcode": "AL6 0FD",
+            "general_waste": {
+              "next_pickup_day": "Thursday, 24 July 2025",
+              "bin_colour": "black",
+              "frequency": "3-weekly"
+            },
+            "notes": "The new collection system starts on August 4, 2025. The general waste bin is described as 'Black or Purple Bin Lid' for current and 'Purple Bin Lid' for the new schedule. Since 'purple' is not an available option for bin_colour, 'black' has been used. The food waste bin is described as a 'Food Caddy', and 'brown' has been used as a common color for food caddies. The recycling bin is 'Black Bin Lid' for mixed recycling and 'Blue Bin Lid' for paper & card. The mixed recycling bin color has been used."
+          },
+          "tool_call_id": "pyd_ai_e5af002d4ef54734a4302689312d3fcb",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 19525,
+        "response_tokens": 235,
+        "total_tokens": 21027,
+        "details": {
+          "thoughts_tokens": 1267,
+          "text_candidates_tokens": 235,
+          "text_prompt_tokens": 19525
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T16:38:06.973546Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "42x-aJ6JNffr2fMPpZmI-Qk"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "content": "Final result processed.",
+          "tool_call_id": "pyd_ai_e5af002d4ef54734a4302689312d3fcb",
+          "metadata": null,
+          "timestamp": "2025-07-21T16:38:06.974152Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    }
+  ]
+}

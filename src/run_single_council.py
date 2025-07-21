@@ -1,6 +1,7 @@
 # run_single_council.py
 
 import asyncio
+from datetime import datetime
 import json
 import argparse
 from pydantic_agent import create_agent
@@ -11,6 +12,7 @@ from prompts import PROMPT  # Assuming PROMPT is in a prompts.py file
 async def run_agent(
     prompt,
     output_dir,
+    request_limit=40,
     model_id="gemini-2.5-flash",
 ):
     """Runs the agent for a single council."""
@@ -24,7 +26,7 @@ async def run_agent(
     async with agent.run_mcp_servers():
         result = await agent.run(
             prompt,
-            usage_limits=UsageLimits(request_limit=20),
+            usage_limits=UsageLimits(request_limit=request_limit),
         )
         return result
 
@@ -66,7 +68,7 @@ async def main():
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(result_dict_parsed, f, indent=2, ensure_ascii=False)
 
-        print(f"✅ File saved to {output_path}")
+        print(f"✅ File saved to {output_path} at {datetime.now()}")
 
     except Exception as e:
         print(f"❌ Run for {args.output_dir} failed with exception: {e}")

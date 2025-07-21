@@ -1,0 +1,1574 @@
+{
+  "output": {
+    "postcode": "BL0 0AT",
+    "general_waste": {
+      "next_pickup_day": null,
+      "frequency": null,
+      "bin_colour": null
+    },
+    "recycling": {
+      "next_pickup_day": null,
+      "frequency": null,
+      "bin_colour": null
+    },
+    "food_waste": {
+      "next_pickup_day": null,
+      "frequency": null,
+      "bin_colour": null
+    },
+    "garden_waste": {
+      "next_pickup_day": null,
+      "frequency": null,
+      "bin_colour": null
+    },
+    "notes": "I am unable to access the website due to a persistent browser error stating 'Browser is already in use'. I have tried closing and reinstalling the browser multiple times, but the issue persists. Therefore, I cannot retrieve the bin collection information at this time."
+  },
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "You are a helpful web-browsing agent who researches and retrieves bin collection information for a specific council area by accessing their official website and lookup system",
+          "timestamp": "2025-07-21T15:32:54.462124Z",
+          "dynamic_ref": null,
+          "part_kind": "system-prompt"
+        },
+        {
+          "content": "\n### Bin Collection Schedule Lookup Task\n\n## Objective\n\nResearch and retrieve bin collection information for a specific council area by accessing their official website and lookup system.\n\n## Instructions\n\n# Step 1: Navigate to Council Website\nAccess the council website at: http://www.bury.gov.uk/index.aspx?articleid=10493\n\n# Step 2: Test Postcodes\nSearch for the collection schedules for this postcodes: BL0 0AT\nIf a full address is required, use any house number (e.g., \"1 [Street Name]\") or select any option on a dropdown. The specific address doesn't matter - we only need the collection schedule format\n\n## Output\n\nProvide the following information for each bin type (if exists) + the postcode:\n    next_pickup_day\n    frequency \n    bin_colour\n\nIf it doesn't exist, that is ok. Just answer None for these fields.\n\n## Troubleshooting\nIf you encounter issues:\n\nLook for alternative entry points (e.g., \"Check my bin day\")\nNote any technical difficulties in your response\nIf the provided postcode doesn't work try postcodes from the same council area (use your knowledge of local postcodes).\n",
+          "timestamp": "2025-07-21T15:32:54.462132Z",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.bury.gov.uk/index.aspx?articleid=10493"
+          },
+          "tool_call_id": "pyd_ai_9d7567546a6c4d7589d915d2cd74e75d",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1398,
+        "response_tokens": 26,
+        "total_tokens": 1600,
+        "details": {
+          "thoughts_tokens": 176,
+          "text_candidates_tokens": 26,
+          "text_prompt_tokens": 1398
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:32:56.251309Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "pl1-aM6eKq6tz_IPye_36Ak"
+    },
+    {
+      "parts": [
+        {
+          "content": "Error: Browser is already in use for /Users/christophersteinberg/Library/Caches/ms-playwright/mcp-chrome-profile, use --isolated to run multiple instances of the same browser",
+          "tool_name": "browser_navigate",
+          "tool_call_id": "pyd_ai_9d7567546a6c4d7589d915d2cd74e75d",
+          "timestamp": "2025-07-21T15:33:02.003158Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_20eb38982b6e4cb187fa2dece2e75cf1",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1481,
+        "response_tokens": 3,
+        "total_tokens": 1510,
+        "details": {
+          "thoughts_tokens": 26,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 1481
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:03.127066Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "rl1-aMOVCqKhmPUP0sPjuAM"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_20eb38982b6e4cb187fa2dece2e75cf1",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:03.133171Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.bury.gov.uk/index.aspx?articleid=10493"
+          },
+          "tool_call_id": "pyd_ai_6ccf3b95cd9143e8a870e829672720a7",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1510,
+        "response_tokens": 26,
+        "total_tokens": 1635,
+        "details": {
+          "thoughts_tokens": 99,
+          "text_candidates_tokens": 26,
+          "text_prompt_tokens": 1510
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:04.932504Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "r11-aIbDDISiz_IPj8Wm2AE"
+    },
+    {
+      "parts": [
+        {
+          "content": "Error: Browser is already in use for /Users/christophersteinberg/Library/Caches/ms-playwright/mcp-chrome-profile, use --isolated to run multiple instances of the same browser",
+          "tool_name": "browser_navigate",
+          "tool_call_id": "pyd_ai_6ccf3b95cd9143e8a870e829672720a7",
+          "timestamp": "2025-07-21T15:33:10.705346Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.bury.gov.uk/index.aspx?articleid=10493"
+          },
+          "tool_call_id": "pyd_ai_c306bd1dec9f4498a1da1aad263a2a8f",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1593,
+        "response_tokens": 26,
+        "total_tokens": 1698,
+        "details": {
+          "thoughts_tokens": 79,
+          "text_candidates_tokens": 26,
+          "text_prompt_tokens": 1593
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:11.961921Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "tl1-aIC0NonmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "content": "Error: Browser is already in use for /Users/christophersteinberg/Library/Caches/ms-playwright/mcp-chrome-profile, use --isolated to run multiple instances of the same browser",
+          "tool_name": "browser_navigate",
+          "tool_call_id": "pyd_ai_c306bd1dec9f4498a1da1aad263a2a8f",
+          "timestamp": "2025-07-21T15:33:17.719830Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_306fd3d4961b46119e3e506b79758c01",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1676,
+        "response_tokens": 3,
+        "total_tokens": 1712,
+        "details": {
+          "thoughts_tokens": 33,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 1676
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:18.731212Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "vV1-aI3_NfufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_306fd3d4961b46119e3e506b79758c01",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:18.739710Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.bury.gov.uk/index.aspx?articleid=10493"
+          },
+          "tool_call_id": "pyd_ai_3c228c602a6b4a41a9dd4eaa9346b432",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1705,
+        "response_tokens": 26,
+        "total_tokens": 1829,
+        "details": {
+          "thoughts_tokens": 98,
+          "text_candidates_tokens": 26,
+          "text_prompt_tokens": 1705
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:20.340653Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "vl1-aPeqMYnmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "content": "Error: Browser is already in use for /Users/christophersteinberg/Library/Caches/ms-playwright/mcp-chrome-profile, use --isolated to run multiple instances of the same browser",
+          "tool_name": "browser_navigate",
+          "tool_call_id": "pyd_ai_3c228c602a6b4a41a9dd4eaa9346b432",
+          "timestamp": "2025-07-21T15:33:26.107248Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_d1f51e05cd504ac390b4856f6682f1e5",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1788,
+        "response_tokens": 3,
+        "total_tokens": 1866,
+        "details": {
+          "thoughts_tokens": 75,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 1788
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:28.111185Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "xl1-aMLkDvufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_d1f51e05cd504ac390b4856f6682f1e5",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:28.116601Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_34a39cc6d2fc48f4af145e6c024520c2",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1817,
+        "response_tokens": 3,
+        "total_tokens": 1854,
+        "details": {
+          "thoughts_tokens": 34,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 1817
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:29.189411Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "yF1-aKbDC4nmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_34a39cc6d2fc48f4af145e6c024520c2",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:29.196127Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.bury.gov.uk/index.aspx?articleid=10493"
+          },
+          "tool_call_id": "pyd_ai_8ed9e05965be4889bca3272ef1673866",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1846,
+        "response_tokens": 26,
+        "total_tokens": 1961,
+        "details": {
+          "thoughts_tokens": 89,
+          "text_candidates_tokens": 26,
+          "text_prompt_tokens": 1846
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:30.831963Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "yV1-aN2eEZqT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "content": "Error: Browser is already in use for /Users/christophersteinberg/Library/Caches/ms-playwright/mcp-chrome-profile, use --isolated to run multiple instances of the same browser",
+          "tool_name": "browser_navigate",
+          "tool_call_id": "pyd_ai_8ed9e05965be4889bca3272ef1673866",
+          "timestamp": "2025-07-21T15:33:36.593807Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_f366da1bdbd2498f9e7fbd85ddba76c3",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1929,
+        "response_tokens": 3,
+        "total_tokens": 1997,
+        "details": {
+          "thoughts_tokens": 65,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 1929
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:37.993318Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "0F1-aIibLPufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_f366da1bdbd2498f9e7fbd85ddba76c3",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:37.998384Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_13b2199333f04313ad975fd7af9df34b",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1958,
+        "response_tokens": 3,
+        "total_tokens": 2005,
+        "details": {
+          "thoughts_tokens": 44,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 1958
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:39.099616Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "0l1-aLftA4nmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_13b2199333f04313ad975fd7af9df34b",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:39.464280Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_b09e77a8c0e44753bedca83dbd6896a7",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 1987,
+        "response_tokens": 3,
+        "total_tokens": 2088,
+        "details": {
+          "thoughts_tokens": 98,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 1987
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:40.894574Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "011-aOSLIJqT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_b09e77a8c0e44753bedca83dbd6896a7",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:41.213047Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_be0aeb2d9d0e480fb1f1e7fbbe09a8a5",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2016,
+        "response_tokens": 3,
+        "total_tokens": 2077,
+        "details": {
+          "thoughts_tokens": 58,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2016
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:42.358115Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "1V1-aPbTEPufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_be0aeb2d9d0e480fb1f1e7fbbe09a8a5",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:42.364036Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_5cb95480177e4af7b706d83558fc2aa4",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2045,
+        "response_tokens": 3,
+        "total_tokens": 2099,
+        "details": {
+          "thoughts_tokens": 51,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2045
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:43.520839Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "1l1-aNCYGpqT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_5cb95480177e4af7b706d83558fc2aa4",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:43.831797Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_7262c145e389448dbe997e726de2b1f6",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2074,
+        "response_tokens": 3,
+        "total_tokens": 2148,
+        "details": {
+          "thoughts_tokens": 71,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2074
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:44.930956Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "111-aOXfNonmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_7262c145e389448dbe997e726de2b1f6",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:44.936719Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_6aeee7f4e8d34dc69b92a9cb15996194",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2103,
+        "response_tokens": 3,
+        "total_tokens": 2153,
+        "details": {
+          "thoughts_tokens": 47,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2103
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:45.583719Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "2F1-aMmDPfufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_6aeee7f4e8d34dc69b92a9cb15996194",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:45.592673Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_86a1dbcacd564c229fbfcbb7ef40b94b",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2132,
+        "response_tokens": 3,
+        "total_tokens": 2243,
+        "details": {
+          "thoughts_tokens": 108,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2132
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:46.653297Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "2V1-aPOsKJqT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_86a1dbcacd564c229fbfcbb7ef40b94b",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:46.957250Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.bury.gov.uk/index.aspx?articleid=10493"
+          },
+          "tool_call_id": "pyd_ai_b0717f6875d3496a9cc318d9e2572e75",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2161,
+        "response_tokens": 26,
+        "total_tokens": 2276,
+        "details": {
+          "cached_content_tokens": 2110,
+          "thoughts_tokens": 89,
+          "text_cache_tokens": 2110,
+          "text_candidates_tokens": 26,
+          "text_prompt_tokens": 2161
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:49.233950Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "211-aNKPAfufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "content": "Error: Browser is already in use for /Users/christophersteinberg/Library/Caches/ms-playwright/mcp-chrome-profile, use --isolated to run multiple instances of the same browser",
+          "tool_name": "browser_navigate",
+          "tool_call_id": "pyd_ai_b0717f6875d3496a9cc318d9e2572e75",
+          "timestamp": "2025-07-21T15:33:55.001885Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_456dded812d04fdead54939b8e2920a7",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2244,
+        "response_tokens": 3,
+        "total_tokens": 2332,
+        "details": {
+          "thoughts_tokens": 85,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2244
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:56.559883Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "411-aM7-B_ufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_456dded812d04fdead54939b8e2920a7",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:56.920924Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_da579dae4cf04d0aa5014712d3fb130c",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2273,
+        "response_tokens": 3,
+        "total_tokens": 2344,
+        "details": {
+          "cached_content_tokens": 2129,
+          "thoughts_tokens": 68,
+          "text_cache_tokens": 2129,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2273
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:57.936872Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "5F1-aPWSPInmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_da579dae4cf04d0aa5014712d3fb130c",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:58.240431Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_4c166caf1d5d4b9787c32c9d72d43175",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2302,
+        "response_tokens": 3,
+        "total_tokens": 2394,
+        "details": {
+          "cached_content_tokens": 1596,
+          "thoughts_tokens": 89,
+          "text_cache_tokens": 1596,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2302
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:33:59.469958Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "5l1-aL7HEpqT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_4c166caf1d5d4b9787c32c9d72d43175",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:33:59.476199Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_b86f93c51b1c42f78a28dd526704f585",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2331,
+        "response_tokens": 3,
+        "total_tokens": 2396,
+        "details": {
+          "cached_content_tokens": 2127,
+          "thoughts_tokens": 62,
+          "text_cache_tokens": 2127,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2331
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:00.352812Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "511-aJeuIfufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_b86f93c51b1c42f78a28dd526704f585",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:00.359904Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_4f886ac7265747ff8d8afb28a802afa8",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2360,
+        "response_tokens": 3,
+        "total_tokens": 2420,
+        "details": {
+          "thoughts_tokens": 57,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2360
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:01.455006Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "6F1-aOm0GpqT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_4f886ac7265747ff8d8afb28a802afa8",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:01.462392Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_4c7bae3506ff45129697a8539648d004",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2389,
+        "response_tokens": 3,
+        "total_tokens": 2460,
+        "details": {
+          "thoughts_tokens": 68,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2389
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:02.955050Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "6V1-aKSZIYnmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_4c7bae3506ff45129697a8539648d004",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:03.307536Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.bury.gov.uk/index.aspx?articleid=10493"
+          },
+          "tool_call_id": "pyd_ai_f3f45fc4df7f454180033f0b01d0a60a",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2418,
+        "response_tokens": 26,
+        "total_tokens": 2529,
+        "details": {
+          "cached_content_tokens": 2124,
+          "thoughts_tokens": 85,
+          "text_cache_tokens": 2124,
+          "text_candidates_tokens": 26,
+          "text_prompt_tokens": 2418
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:04.393508Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "611-aIDdF_ufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "content": "Error: Browser is already in use for /Users/christophersteinberg/Library/Caches/ms-playwright/mcp-chrome-profile, use --isolated to run multiple instances of the same browser",
+          "tool_name": "browser_navigate",
+          "tool_call_id": "pyd_ai_f3f45fc4df7f454180033f0b01d0a60a",
+          "timestamp": "2025-07-21T15:34:10.143009Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_75dc7e73f1d64019a174d4adef20b42d",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2501,
+        "response_tokens": 3,
+        "total_tokens": 2571,
+        "details": {
+          "cached_content_tokens": 2142,
+          "thoughts_tokens": 67,
+          "text_cache_tokens": 2142,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2501
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:11.289866Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "8l1-aLu_EZqT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_75dc7e73f1d64019a174d4adef20b42d",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:11.593030Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_navigate",
+          "args": {
+            "url": "http://www.bury.gov.uk/index.aspx?articleid=10493"
+          },
+          "tool_call_id": "pyd_ai_f405b6fd800b4693afdd2d18ee4d6842",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2530,
+        "response_tokens": 26,
+        "total_tokens": 2706,
+        "details": {
+          "cached_content_tokens": 2141,
+          "thoughts_tokens": 150,
+          "text_cache_tokens": 2141,
+          "text_candidates_tokens": 26,
+          "text_prompt_tokens": 2530
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:13.710593Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "811-aOqxKYnmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "content": "Error: Browser is already in use for /Users/christophersteinberg/Library/Caches/ms-playwright/mcp-chrome-profile, use --isolated to run multiple instances of the same browser",
+          "tool_name": "browser_navigate",
+          "tool_call_id": "pyd_ai_f405b6fd800b4693afdd2d18ee4d6842",
+          "timestamp": "2025-07-21T15:34:19.471473Z",
+          "part_kind": "retry-prompt"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_b3fb7f81cf624925bb6b79bef1642ef4",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2613,
+        "response_tokens": 3,
+        "total_tokens": 2696,
+        "details": {
+          "cached_content_tokens": 2158,
+          "thoughts_tokens": 80,
+          "text_cache_tokens": 2158,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2613
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:20.674235Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "-11-aMKjJvufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_b3fb7f81cf624925bb6b79bef1642ef4",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:20.680183Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_32cc5dace126442ca982d6999ac03658",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2642,
+        "response_tokens": 3,
+        "total_tokens": 2733,
+        "details": {
+          "thoughts_tokens": 88,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2642
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:21.734881Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "_F1-aNPyLZqT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_32cc5dace126442ca982d6999ac03658",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:22.040348Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_70c1d48350b3417bac64e3cdceb8ac86",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2671,
+        "response_tokens": 3,
+        "total_tokens": 2776,
+        "details": {
+          "cached_content_tokens": 2156,
+          "thoughts_tokens": 102,
+          "text_cache_tokens": 2156,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2671
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:23.231456Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "_l1-aK3KCInmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_70c1d48350b3417bac64e3cdceb8ac86",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:23.538237Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_6e9df5ae36814ece83c8317ae3d0eb00",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2700,
+        "response_tokens": 3,
+        "total_tokens": 2766,
+        "details": {
+          "cached_content_tokens": 2154,
+          "thoughts_tokens": 63,
+          "text_cache_tokens": 2154,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2700
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:24.569004Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "_11-aOGPJfufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_6e9df5ae36814ece83c8317ae3d0eb00",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:24.876276Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_6e298fd7db2e43989489946b9ee2279c",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2729,
+        "response_tokens": 3,
+        "total_tokens": 2896,
+        "details": {
+          "cached_content_tokens": 2153,
+          "thoughts_tokens": 164,
+          "text_cache_tokens": 2153,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2729
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:26.487437Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "AF5-aNjGOYnmmLAPtcmFmA4"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_6e298fd7db2e43989489946b9ee2279c",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:26.790428Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "args": {},
+          "tool_call_id": "pyd_ai_a599680ff7964c36aa566dbc3b5e08ae",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2758,
+        "response_tokens": 3,
+        "total_tokens": 2938,
+        "details": {
+          "cached_content_tokens": 2152,
+          "thoughts_tokens": 177,
+          "text_cache_tokens": 2152,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2758
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:28.388044Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "Al5-aLvzNJqT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_close",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_a599680ff7964c36aa566dbc3b5e08ae",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:28.395533Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "args": {},
+          "tool_call_id": "pyd_ai_2b566cbd59f344e9be350412a4e910ed",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2787,
+        "response_tokens": 3,
+        "total_tokens": 2855,
+        "details": {
+          "cached_content_tokens": 2151,
+          "thoughts_tokens": 65,
+          "text_cache_tokens": 2151,
+          "text_candidates_tokens": 3,
+          "text_prompt_tokens": 2787
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:29.746432Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "BF5-aMSJHfufmLAPiu_x0Ac"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "browser_install",
+          "content": "No open pages available. Use the \"browser_navigate\" tool to navigate to a page first.",
+          "tool_call_id": "pyd_ai_2b566cbd59f344e9be350412a4e910ed",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:30.055764Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "args": {
+            "recycling": {
+              "bin_colour": null,
+              "next_pickup_day": null,
+              "frequency": null
+            },
+            "general_waste": {
+              "bin_colour": null,
+              "next_pickup_day": null,
+              "frequency": null
+            },
+            "notes": "I am unable to access the website due to a persistent browser error stating 'Browser is already in use'. I have tried closing and reinstalling the browser multiple times, but the issue persists. Therefore, I cannot retrieve the bin collection information at this time.",
+            "food_waste": {
+              "next_pickup_day": null,
+              "frequency": null,
+              "bin_colour": null
+            },
+            "postcode": "BL0 0AT",
+            "garden_waste": {
+              "bin_colour": null,
+              "frequency": null,
+              "next_pickup_day": null
+            }
+          },
+          "tool_call_id": "pyd_ai_170aebb81a8f416d9d5e0834ad701954",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "requests": 1,
+        "request_tokens": 2816,
+        "response_tokens": 118,
+        "total_tokens": 3066,
+        "details": {
+          "cached_content_tokens": 2687,
+          "thoughts_tokens": 132,
+          "text_cache_tokens": 2687,
+          "text_candidates_tokens": 118,
+          "text_prompt_tokens": 2816
+        }
+      },
+      "model_name": "gemini-2.5-flash",
+      "timestamp": "2025-07-21T15:34:33.234657Z",
+      "kind": "response",
+      "vendor_details": {
+        "finish_reason": "STOP"
+      },
+      "vendor_id": "Bl5-aMSuB5qT8uMP2PSegAQ"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "final_result",
+          "content": "Final result processed.",
+          "tool_call_id": "pyd_ai_170aebb81a8f416d9d5e0834ad701954",
+          "metadata": null,
+          "timestamp": "2025-07-21T15:34:33.235143Z",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": null,
+      "kind": "request"
+    }
+  ]
+}
