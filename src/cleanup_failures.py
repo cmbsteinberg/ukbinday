@@ -63,6 +63,7 @@ def check_and_cleanup_council_dirs(
                             "404 not found",
                             "500 internal server error",
                             "CAPTCHA",
+                            "Could not retrieve bin collection information",
                         ]
                         notes_lower = notes.lower()
 
