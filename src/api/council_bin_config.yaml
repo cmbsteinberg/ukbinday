@@ -1,79 +1,161 @@
-# UK Council Bin Collection API Configuration
-# Based on analysis of Playwright traces from council websites
+# Standardized template with YAML anchors for defaults
 
-# REST API Pattern - Direct GET requests with URL parameters
+# Default template - all councils inherit from this
+default_council: &default_council
+  name: ""
+  
+  # Default: no authentication needed
+  auth:
+    type: "none"
+    landing_page: ""
+    token_patterns: {}
+    form_data: {}
+  
+  # Default endpoint structure
+  endpoints:
+    address_search:
+      url: ""
+      method: "GET"
+      params: {}
+    collection_data:
+      url: ""
+      method: "GET"
+      params: {}
+  
+  headers: {}
+  metadata_endpoint: ""
+  payload_template: ""
+
+# Pattern 1: REST API (Cambridge style)
 cambridge_city_council:
+  <<: *default_council
   name: "Cambridge City Council"
-  api_type: "rest"
-  authority_code: "CCC"
-  address_id_field: "id"
+  
   endpoints:
-    address_search: "https://servicelayer3c.azure-api.net/wastecalendar/address/search?postcode={postcode}"
-    collection_data: "https://servicelayer3c.azure-api.net/wastecalendar/collection/search/{address_id}/?authority={authority}&numberOfCollections=12"
-  url_params:
-    numberOfCollections: 12
+    address_search:
+      url: "https://servicelayer3c.azure-api.net/wastecalendar/address/search"
+      method: "GET"
+      params:
+        postcode: "{postcode}"
+    collection_data:
+      url: "https://servicelayer3c.azure-api.net/wastecalendar/collection/search/{address_id}"
+      method: "GET" 
+      params:
+        authority: "CCC"
+        numberOfCollections: 12
 
-# POST Service Pattern - JSON POST requests to service endpoints
+# Pattern 2: POST Service (Brighton style)  
 brighton_and_hove_city_council:
+  <<: *default_council
   name: "Brighton and Hove City Council"
-  api_type: "post_service"
-  metadata_endpoint: "https://enviroservices.brighton-hove.gov.uk/metamodel.json"
-  service_endpoint: "https://enviroservices.brighton-hove.gov.uk/xas/"
-  payload_template: '{{"postcode": "{postcode}", "action": "search"}}'
-
-# Token-based API Pattern - Extract tokens from initial requests
-london_borough_of_croydon:
-  name: "London Borough of Croydon"
-  api_type: "token_based"
-  landing_page: "https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address"
-  token_pattern: "webpage_token=([a-f0-9]+)"
-  endpoint: "https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address?webpage_token={token}"
-  method: "POST"
-  postcode_field: "postcode"
-  request_data:
-    action: "search"
-
-# Form Token API Pattern - Extract ViewState/CSRF tokens from forms
-wigan_metropolitan_borough_council:
-  name: "Wigan Metropolitan Borough Council"
-  api_type: "form_token"
-  form_page: "https://apps.wigan.gov.uk/MyNeighbourhood/"
-  postcode_field: "ctl00$ContentPlaceHolder1$txtPostcode"
-  token_patterns:
-    __VIEWSTATE: '__VIEWSTATE[^>]+value="([^"]+)"'
-    __VIEWSTATEGENERATOR: '__VIEWSTATEGENERATOR[^>]+value="([^"]+)"'
-    __EVENTVALIDATION: '__EVENTVALIDATION[^>]+value="([^"]+)"'
-  additional_form_data:
-    "ctl00$ContentPlaceHolder1$btnPostcodeSearch": "Search"
-
-# Additional REST API example with different structure
-ashford_borough_council:
-  name: "Ashford Borough Council"
-  api_type: "rest"
+  
   endpoints:
-    address_search: "https://secure.ashford.gov.uk/waste/collectiondaylookup/api/address?postcode={postcode}"
-    collection_data: "https://secure.ashford.gov.uk/waste/collectiondaylookup/api/collections/{address_id}"
-  address_id_field: "uprn"
+    address_search:
+      url: "https://enviroservices.brighton-hove.gov.uk/xas/"
+      method: "POST"
+      params:
+        postcode: "{postcode}"
+        action: "search"
+  
+  metadata_endpoint: "https://enviroservices.brighton-hove.gov.uk/metamodel.json"
+  payload_template: '{"postcode": "{postcode}", "action": "search"}'
 
-# POST Service with authentication headers
-example_auth_council:
-  name: "Example Council with Auth"
-  api_type: "post_service"
-  service_endpoint: "https://api.example-council.gov.uk/waste/collections"
-  payload_template: '{{"postcode": "{postcode}", "service": "bins"}}'
-  headers:
-    Authorization: "Bearer example-token"
-    Content-Type: "application/json"
+# Pattern 3: Token-based API (Croydon style)
+london_borough_of_croydon:
+  <<: *default_council
+  name: "London Borough of Croydon"
+  
+  auth:
+    type: "token"
+    landing_page: "https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address"
+    token_patterns:
+      webpage_token: "webpage_token=([a-f0-9]+)"
+    form_data: {}
+  
+  endpoints:
+    address_search:
+      url: "https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address"
+      method: "POST"
+      params:
+        webpage_token: "{webpage_token}"
+        postcode: "{postcode}"
+        action: "search"
 
-# Complex token-based with multiple steps
-example_complex_token_council:
-  name: "Example Complex Token Council"
-  api_type: "token_based"
-  landing_page: "https://example.council.gov.uk/bins/lookup"
-  token_pattern: 'data-csrf-token="([^"]+)"'
-  endpoint: "https://example.council.gov.uk/api/bins/search"
-  method: "POST"
-  postcode_field: "search_postcode"
-  request_data:
-    format: "json"
-    include_schedule: "true"
+# Pattern 4: Form Token API (Wigan style)
+wigan_metropolitan_borough_council:
+  <<: *default_council
+  name: "Wigan Metropolitan Borough Council"
+  
+  auth:
+    type: "form_token"
+    landing_page: "https://apps.wigan.gov.uk/MyNeighbourhood/"
+    token_patterns:
+      __VIEWSTATE: '__VIEWSTATE[^>]+value="([^"]+)"'
+      __VIEWSTATEGENERATOR: '__VIEWSTATEGENERATOR[^>]+value="([^"]+)"'
+      __EVENTVALIDATION: '__EVENTVALIDATION[^>]+value="([^"]+)"'
+    form_data:
+      "ctl00$ContentPlaceHolder1$btnPostcodeSearch": "Search"
+  
+  endpoints:
+    address_search:
+      url: "https://apps.wigan.gov.uk/MyNeighbourhood/"
+      method: "POST"
+      params:
+        "ctl00$ContentPlaceHolder1$txtPostcode": "{postcode}"
+        __VIEWSTATE: "{__VIEWSTATE}"
+        __VIEWSTATEGENERATOR: "{__VIEWSTATEGENERATOR}"
+        __EVENTVALIDATION: "{__EVENTVALIDATION}"
+        "ctl00$ContentPlaceHolder1$btnPostcodeSearch": "Search"
+
+# Pattern 5: Simple REST with UPRN (Ashford style)
+ashford_borough_council:
+  <<: *default_council
+  name: "Ashford Borough Council"
+  
+  endpoints:
+    address_search:
+      url: "https://secure.ashford.gov.uk/waste/collectiondaylookup/api/address"
+      method: "GET"
+      params:
+        postcode: "{postcode}"
+    collection_data:
+      url: "https://secure.ashford.gov.uk/waste/collectiondaylookup/api/collections/{uprn}"
+      method: "GET"
+      params: {}
+
+# Pattern 6: Postcode lookup with address selection (Barnsley style)
+barnsley_metropolitan_borough_council:
+  <<: *default_council
+  name: "Barnsley Metropolitan Borough Council"
+  
+  endpoints:
+    address_search:
+      url: "https://waste.barnsley.gov.uk/ViewCollection/SelectAddress"
+      method: "GET"
+      params:
+        postcode: "{postcode}"
+    collection_data:
+      url: "https://waste.barnsley.gov.uk/ViewCollection/Collections"
+      method: "GET"
+      params:
+        address_id: "{address_id}"
+
+# Pattern 7: Legacy form-based postcode lookup (Basildon style)
+basildon_borough_council:
+  <<: *default_council
+  name: "Basildon Borough Council"
+  
+  endpoints:
+    address_search:
+      url: "http://www3.basildon.gov.uk/website2/postcodes.nsf/frmMyBasildonMobile"
+      method: "POST"
+      params:
+        postcode: "{postcode}"
+        openform: ""
+    collection_data:
+      url: "http://www3.basildon.gov.uk/website2/postcodes.nsf/frmMyBasildonMobile"
+      method: "POST"
+      params:
+        Seq: "2"
+        PC: ""
+        address: "{address}"

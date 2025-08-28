@@ -41,9 +41,9 @@ def _(BytesIO, pl, requests, zipfile):
             print(f"Reading from: {csv_file_name}")
             with zip_file.open(csv_file_name) as csv_file:
                 # Select only the necessary columns to reduce memory usage
-                postcodes_full = pl.read_csv(csv_file, columns=["pcd", "laua"]).with_columns(
-                        pl.col("pcd").str.replace_all(" ", "").alias("pcd")
-                    )
+                postcodes_full = pl.read_csv(
+                    csv_file, columns=["pcd", "laua"]
+                ).with_columns(pl.col("pcd").str.replace_all(" ", "").alias("pcd"))
 
         return postcodes_full
 
@@ -106,9 +106,7 @@ def _(pl, requests):
             .slice(6)
             .select(
                 pl.col("column_1").cast(pl.String).alias("postcode"),
-                pl.col("column_2")
-                .cast(pl.Int64, strict=False)
-                .alias("population"),
+                pl.col("column_2").cast(pl.Int64, strict=False).alias("population"),
             )
         )
         combined_df = (
@@ -123,6 +121,7 @@ def _(pl, requests):
             .with_columns(pl.col("postcode").str.replace_all(" ", "").alias("pcd"))
         )
         return combined_df
+
     return (get_pop_data,)
 
 
@@ -180,7 +179,7 @@ def _(get_council_urls, get_populous_postcodes, pl):
 
 @app.cell
 def _(main):
-    output=main()
+    output = main()
     return
 
 

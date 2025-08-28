@@ -3,12 +3,9 @@ from dotenv import load_dotenv
 from pydantic_ai import Agent
 from pydantic_ai.models.google import GoogleModel
 from pydantic_ai.providers.google import GoogleProvider
-from pydantic_ai.mcp import MCPServerStdio, MCPServerHTTP
+from pydantic_ai.mcp import MCPServerStdio
 from pydantic_ai.settings import ModelSettings
 
-from mcp.server.fastmcp import FastMCP
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
 from models import BinDays
 
 # Loads GOOGLE_APPLICATION_CREDENTIALS
