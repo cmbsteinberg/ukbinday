@@ -1,0 +1,1 @@
+{"name":"stroud_district_council","auth":{"type":"none","landing_page":null,"token_patterns":{},"form_data":{}},"endpoints":{"address_search":{"url":"https://www.stroud.gov.uk/webservice/getaddress","method":"GET","params":{}},"collection_data":{"url":"https://www.stroud.gov.uk/my-house","method":"GET","params":{}}},"headers":{},"metadata_endpoint":null,"payload_template":null}

@@ -9,12 +9,15 @@ import asyncio
 import json
 import logging
 from pathlib import Path
-from typing import dict, Any, Optional, Union
+from typing import Any, Optional, Union
 from dotenv import load_dotenv
+from enum import Enum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl, validator
+from pydantic_ai import Agent
 from pydantic_ai.models.google import GoogleModel
 from pydantic_ai.providers.google import GoogleProvider
+from pydantic_ai.settings import ModelSettings
 
 # Load environment variables for Google credentials
 load_dotenv()
@@ -24,21 +27,68 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+class AuthType(str, Enum):
+    """Supported authentication types."""
+
+    NONE = "none"
+    TOKEN = "token"
+    FORM_TOKEN = "form_token"
+
+
+class HttpMethod(str, Enum):
+    """Supported HTTP methods."""
+
+    GET = "GET"
+    POST = "POST"
+    PUT = "PUT"
+    DELETE = "DELETE"
+
+
 class AuthConfig(BaseModel):
     """Authentication configuration for council APIs."""
 
-    type: str = "none"
-    landing_page: Optional[str] = None
+    type: AuthType = AuthType.NONE
+    landing_page: Optional[HttpUrl] = None
     token_patterns: dict[str, str] = Field(default_factory=dict)
     form_data: dict[str, str] = Field(default_factory=dict)
+
+    @validator("landing_page")
+    def landing_page_required_for_auth(cls, v, values):
+        """Validate that landing_page is provided when auth type requires it."""
+        auth_type = values.get("type")
+        if auth_type in [AuthType.TOKEN, AuthType.FORM_TOKEN] and not v:
+            raise ValueError(
+                f"landing_page is required when auth type is '{auth_type.value}'"
+            )
+        return v
+
+    @validator("token_patterns")
+    def token_patterns_required_for_auth(cls, v, values):
+        """Validate that token_patterns are provided when auth type requires them."""
+        auth_type = values.get("type")
+        if auth_type in [AuthType.TOKEN, AuthType.FORM_TOKEN] and not v:
+            raise ValueError(
+                f"token_patterns are required when auth type is '{auth_type.value}'"
+            )
+        return v
 
 
 class EndpointConfig(BaseModel):
     """API endpoint configuration."""
 
-    url: str
-    method: str = "GET"
+    url: HttpUrl
+    method: HttpMethod = HttpMethod.GET
     params: dict[str, Union[str, int]] = Field(default_factory=dict)
+
+    @validator("params")
+    def validate_params(cls, v):
+        """Ensure all param values are strings or integers."""
+        for key, value in v.items():
+            if not isinstance(value, (str, int)):
+                raise ValueError(
+                    f"Parameter '{key}' must be a string or integer, got {type(value)}"
+                )
+        return v
 
 
 class EndpointsConfig(BaseModel):
@@ -47,16 +97,48 @@ class EndpointsConfig(BaseModel):
     address_search: EndpointConfig
     collection_data: Optional[EndpointConfig] = None
 
+    @validator("collection_data")
+    def collection_data_validation(cls, v, values):
+        """Add any cross-endpoint validation if needed."""
+        # Could add validation here, e.g., ensuring collection_data URL is compatible
+        # with address_search results
+        return v
+
 
 class CouncilConfig(BaseModel):
     """Complete configuration for a council bin collection API."""
 
-    name: str
+    name: str = Field(..., min_length=1, description="Council name")
     auth: AuthConfig = Field(default_factory=AuthConfig)
     endpoints: EndpointsConfig
     headers: dict[str, str] = Field(default_factory=dict)
-    metadata_endpoint: Optional[str] = None
+    metadata_endpoint: Optional[HttpUrl] = None
     payload_template: Optional[str] = None
+
+    @validator("name")
+    def name_not_empty(cls, v):
+        """Ensure name is not empty or just whitespace."""
+        if not v or not v.strip():
+            raise ValueError("Council name cannot be empty")
+        return v.strip()
+
+    @validator("payload_template")
+    def payload_template_for_post(cls, v, values):
+        """Validate payload template is provided for POST endpoints if needed."""
+        endpoints = values.get("endpoints")
+        if endpoints and hasattr(endpoints, "address_search"):
+            if endpoints.address_search.method == HttpMethod.POST and not v:
+                # This is a warning rather than an error, as some POST endpoints
+                # might use form data instead of JSON payload
+                pass
+        return v
+
+    class Config:
+        """Pydantic model configuration."""
+
+        use_enum_values = True
+        validate_assignment = True
+        extra = "forbid"  # Prevent additional fields not defined in the model
 
 
 class ConfigGenerationResult(BaseModel):
@@ -109,17 +191,27 @@ a configuration.
 """
 
 
-def create_model():
-    """Create and configure the LLM model for config generation."""
+def create_agent() -> Agent:
+    """Create and configure the LLM agent for config generation."""
     provider = GoogleProvider(
         location="global",
         vertexai=True,
     )
 
-    return GoogleModel(
+    model = GoogleModel(
         "gemini-2.5-flash",
         provider=provider,
     )
+
+    # Create agent with structured output and temperature settings
+    agent = Agent(
+        model,
+        output_type=CouncilConfig,
+        system_prompt=SYSTEM_PROMPT,
+        model_settings=ModelSettings(temperature=0.1),
+    )
+
+    return agent
 
 
 async def load_council_data(council_dir: Path) -> dict[str, Any]:
@@ -182,7 +274,15 @@ def check_scraping_success(council_data: dict[str, Any]) -> tuple[bool, Optional
     return False, "No output data found in reduced_results"
 
 
-async def generate_council_config(model, council_data: dict[str, Any]) -> CouncilConfig:
+def check_council_already_processed(council_dir: Path) -> bool:
+    """Check if a council has already been processed by looking for generated_config.json."""
+    generated_config_file = council_dir / "generated_config.json"
+    return generated_config_file.exists()
+
+
+async def generate_council_config(
+    agent: Agent, council_data: dict[str, Any]
+) -> CouncilConfig:
     """Generate configuration for a single council using the LLM."""
     council_name = council_data["council_name"]
 
@@ -209,87 +309,84 @@ programmatically.
     logger.info(f"Generating config for {council_name}")
 
     try:
-        # Use structured outputs for precise parsing
-        response = await model.request(
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": prompt},
-            ],
-            response_format=CouncilConfig,
+        # Use run with the agent (run method is async by default)
+        result = await agent.run(
+            prompt,
+            model_settings=ModelSettings(
+                temperature=0.0
+            ),  # Override for maximum determinism
         )
-
-        return response.message.content
+        return result.output
     except Exception as e:
         logger.error(f"Failed to generate config for {council_name}: {e}")
         raise
 
 
-async def llm_call(traces_dir: Path, council_name: str) -> ConfigGenerationResult:
+async def llm_call(
+    traces_dir: Path, council_name: str, semaphore: asyncio.Semaphore
+) -> ConfigGenerationResult:
     """Generate configuration for a single council."""
     council_dir = traces_dir / council_name
 
-    try:
-        # Load council data
+    async with semaphore:
         try:
-            council_data = await load_council_data(council_dir)
-        except FileNotFoundError as e:
-            return ConfigGenerationResult(
-                council_name=council_name,
-                success=False,
-                error=str(e),
-                error_type="missing_files",
-            )
+            # Load council data
+            try:
+                council_data = await load_council_data(council_dir)
+            except FileNotFoundError as e:
+                return ConfigGenerationResult(
+                    council_name=council_name,
+                    success=False,
+                    error=str(e),
+                    error_type="missing_files",
+                )
 
-        # Check if scraping was successful
-        success, error_msg = check_scraping_success(council_data)
-        if not success:
-            return ConfigGenerationResult(
-                council_name=council_name,
-                success=False,
-                error=error_msg,
-                error_type="unsuccessful_scraping",
-            )
+            # Check if scraping was successful
+            success, error_msg = check_scraping_success(council_data)
+            if not success:
+                return ConfigGenerationResult(
+                    council_name=council_name,
+                    success=False,
+                    error=error_msg,
+                    error_type="unsuccessful_scraping",
+                )
 
-        # Generate config using LLM
-        model = create_model()
-        try:
-            config = await generate_council_config(model, council_data)
+            # Generate config using LLM agent
+            agent = create_agent()
+            try:
+                config = await generate_council_config(agent, council_data)
 
-            # Save config to council directory
-            config_file = council_dir / "generated_config.json"
-            with open(config_file, "w") as f:
-                json.dump(config.model_dump(), f, indent=2)
+                result = ConfigGenerationResult(
+                    council_name=council_name, success=True, config=config
+                )
 
-            result = ConfigGenerationResult(
-                council_name=council_name, success=True, config=config
-            )
+                # Also save the result
+                result_file = council_dir / "generated_config.json"
+                with open(result_file, "w") as f:
+                    f.write(config.model_dump_json())
 
-            # Also save the result
-            result_file = council_dir / "config_generation_result.json"
-            with open(result_file, "w") as f:
-                json.dump(result.model_dump(), f, indent=2)
+                return result
 
-            return result
+            except Exception as e:
+                return ConfigGenerationResult(
+                    council_name=council_name,
+                    success=False,
+                    error=str(e),
+                    error_type="llm_error",
+                )
 
         except Exception as e:
             return ConfigGenerationResult(
                 council_name=council_name,
                 success=False,
                 error=str(e),
-                error_type="llm_error",
+                error_type="parsing_error",
             )
-
-    except Exception as e:
-        return ConfigGenerationResult(
-            council_name=council_name,
-            success=False,
-            error=str(e),
-            error_type="parsing_error",
-        )
 
 
 async def for_all_councils(
     traces_dir: Path = None,
+    max_concurrent: int = 5,
 ) -> dict[str, ConfigGenerationResult]:
     """Generate configurations for all councils in the traces directory."""
     if traces_dir is None:
@@ -300,37 +397,53 @@ async def for_all_councils(
         raise FileNotFoundError(f"Traces directory not found: {traces_dir}")
 
     # Get all council directories
-    council_dirs = [d for d in traces_dir.iterdir() if d.is_dir()]
-    logger.info(f"Found {len(council_dirs)} council directories")
+    all_council_dirs = [d for d in traces_dir.iterdir() if d.is_dir()]
+    logger.info(f"Found {len(all_council_dirs)} council directories")
+
+    # Filter out councils that have already been processed
+    council_dirs = []
+    skipped_count = 0
+    for council_dir in all_council_dirs:
+        if check_council_already_processed(council_dir):
+            skipped_count += 1
+            logger.info(f"Skipping {council_dir.name} - already processed")
+        else:
+            council_dirs.append(council_dir)
+
+    logger.info(
+        f"Processing {len(council_dirs)} councils ({skipped_count} already processed)"
+    )
+
+    if not council_dirs:
+        logger.info("No councils to process")
+        return {}
+
+    # Create semaphore for concurrency control
+    semaphore = asyncio.Semaphore(max_concurrent)
 
     results = {}
 
-    # Process councils in batches to avoid overwhelming the API
-    batch_size = 3
-    for i in range(0, len(council_dirs), batch_size):
-        batch = council_dirs[i : i + batch_size]
+    # Create tasks for all councils
+    tasks = [
+        llm_call(traces_dir, council_dir.name, semaphore)
+        for council_dir in council_dirs
+    ]
 
-        # Create tasks for the batch
-        tasks = [llm_call(traces_dir, council_dir.name) for council_dir in batch]
+    # Execute all tasks with progress logging
+    logger.info(f"Starting processing with max {max_concurrent} concurrent requests")
+    batch_results = await asyncio.gather(*tasks, return_exceptions=True)
 
-        # Execute batch
-        batch_results = await asyncio.gather(*tasks, return_exceptions=True)
-
-        for council_dir, result in zip(batch, batch_results):
-            council_name = council_dir.name
-            if isinstance(result, Exception):
-                results[council_name] = ConfigGenerationResult(
-                    council_name=council_name,
-                    success=False,
-                    error=str(result),
-                    error_type="processing_error",
-                )
-            else:
-                results[council_name] = result
-
-        # Brief pause between batches to be respectful to the API
-        if i + batch_size < len(council_dirs):
-            await asyncio.sleep(2)
+    for council_dir, result in zip(council_dirs, batch_results):
+        council_name = council_dir.name
+        if isinstance(result, Exception):
+            results[council_name] = ConfigGenerationResult(
+                council_name=council_name,
+                success=False,
+                error=str(result),
+                error_type="processing_error",
+            )
+        else:
+            results[council_name] = result
 
     # Summary statistics
     successful = sum(1 for r in results.values() if r.success)
@@ -353,29 +466,5 @@ async def for_all_councils(
     return results
 
 
-async def main():
-    """Main execution function for testing."""
-    try:
-        # Test with a single council first
-        test_council = "cambridge_city_council"
-        logger.info(f"Testing with {test_council}")
-
-        result = await llm_call(Path("data/traces"), test_council)
-        print(f"\nResult for {test_council}:")
-        if result.success:
-            print("SUCCESS - Config generated:")
-            print(result.config.model_dump_json(indent=2))
-        else:
-            print(f"FAILED ({result.error_type}): {result.error}")
-
-        # Uncomment to process all councils
-        # all_results = await for_all_councils()
-        # successful_configs = {k: v.config for k, v in all_results.items() if v.success}
-        # print(f"\nGenerated {len(successful_configs)} successful configurations")
-
-    except Exception as e:
-        logger.error(f"Error: {e}")
-
-
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(for_all_councils(traces_dir=Path("data/traces"), max_concurrent=20))
