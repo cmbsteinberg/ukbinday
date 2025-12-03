@@ -5,13 +5,15 @@ Runner script for the bin discovery agent.
 This shows how to invoke the Claude Agent SDK agent to discover a council's bin API.
 """
 
+import asyncio
 import sys
 import os
 from pathlib import Path
-from claude_agent_sdk import query
+from claude_agent_sdk import query, ClaudeAgentOptions
 from bin_discovery_agent import bin_discovery_agent
 
-def discover_council(council_name: str, url: str, postcode: str):
+
+async def discover_council(council_name: str, url: str, postcode: str):
     """
     Run the discovery agent for a single council.
 
@@ -24,7 +26,9 @@ def discover_council(council_name: str, url: str, postcode: str):
     os.chdir(Path(__file__).parent)
 
     # Create output directories
-    (Path.cwd().parent.parent / "data" / "discoveries").mkdir(exist_ok=True, parents=True)
+    (Path.cwd().parent.parent / "data" / "discoveries").mkdir(
+        exist_ok=True, parents=True
+    )
     (Path.cwd().parent.parent / "configs").mkdir(exist_ok=True, parents=True)
 
     # Build the user prompt with council details
@@ -40,29 +44,27 @@ Please:
 4. Identify the bin collection API
 5. Generate a YAML config file
 
-Save the network log as: ../../data/discoveries/{council_name.lower().replace(' ', '_')}_network.json
-Save the config as: ../../configs/{council_name.lower().replace(' ', '_')}.yaml
+Save the network log as: ../../data/discoveries/{council_name.lower().replace(" ", "_")}_network.json
+Save the config as: ../../configs/{council_name.lower().replace(" ", "_")}.yaml
 """
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"Starting discovery for: {council_name}")
-    print(f"{'='*60}\n")
+    print(f"{'=' * 60}\n")
 
-    # Run the agent
-    result = query(
-        prompt=user_prompt,
-        agent=bin_discovery_agent
-    )
+    # Create options with the agent registered
+    options = ClaudeAgentOptions(agents={"bin_discovery": bin_discovery_agent})
 
-    print(f"\n{'='*60}")
+    # Run the agent - query() is async
+    async for message in query(prompt=user_prompt, options=options):
+        print(str(message))
+
+    print(f"\n{'=' * 60}")
     print("Discovery complete!")
-    print(f"{'='*60}\n")
-    print(result)
-
-    return result
+    print(f"{'=' * 60}\n")
 
 
-if __name__ == "__main__":
+async def main():
     """
     Usage:
         # Single council
@@ -75,11 +77,17 @@ if __name__ == "__main__":
     if len(sys.argv) < 4:
         print("Usage: python run_discovery.py <council-name> <url> <postcode>")
         print("\nExample:")
-        print('  python run_discovery.py "Stirling Council" "https://my.stirling.gov.uk/" "FK15 0AF"')
+        print(
+            '  python run_discovery.py "Stirling Council" "https://my.stirling.gov.uk/" "FK15 0AF"'
+        )
         sys.exit(1)
 
     council_name = sys.argv[1]
     url = sys.argv[2]
     postcode = sys.argv[3]
 
-    discover_council(council_name, url, postcode)
+    await discover_council(council_name, url, postcode)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
