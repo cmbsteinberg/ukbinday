@@ -21,8 +21,8 @@ import time
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    datefmt='%H:%M:%S'
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    datefmt="%H:%M:%S",
 )
 logger = logging.getLogger(__name__)
 
@@ -101,13 +101,14 @@ def get_council_urls(
         )
         # Filter out invalid URLs
         .filter(
-            (pl.col("URL").str.starts_with("http://") | pl.col("URL").str.starts_with("https://")) &
-            (~pl.col("URL").str.contains(":///"))
+            (
+                pl.col("URL").str.starts_with("http://")
+                | pl.col("URL").str.starts_with("https://")
+            )
+            & (~pl.col("URL").str.contains(":///"))
         )
         # Upgrade http to https for consistency
-        .with_columns(
-            pl.col("URL").str.replace("http://", "https://").alias("URL")
-        )
+        .with_columns(pl.col("URL").str.replace("http://", "https://").alias("URL"))
         # Group by Authority Name and get first unique URL
         .unique(subset=["Authority Name"])
     )
@@ -137,22 +138,22 @@ async def try_sitemap_url(sitemap_url: str, client: httpx.AsyncClient) -> Option
         logger.debug(f"HEAD timeout: {sitemap_url}")
     except httpx.ConnectError as e:
         error_msg = str(e).lower()
-        if 'ssl' in error_msg or 'tls' in error_msg or 'certificate' in error_msg:
+        if "ssl" in error_msg or "tls" in error_msg or "certificate" in error_msg:
             logger.warning(f"🔒 HEAD TLS/SSL error for {sitemap_url}: {e}")
         else:
-            logger.debug(f"HEAD connection error for {sitemap_url}: {type(e).__name__}: {e}")
+            logger.debug(
+                f"HEAD connection error for {sitemap_url}: {type(e).__name__}: {e}"
+            )
     except Exception as e:
         error_msg = str(e).lower()
-        if 'ssl' in error_msg or 'tls' in error_msg or 'certificate' in error_msg:
+        if "ssl" in error_msg or "tls" in error_msg or "certificate" in error_msg:
             logger.warning(f"🔒 HEAD TLS/SSL error for {sitemap_url}: {e}")
         else:
             logger.debug(f"HEAD failed for {sitemap_url}: {type(e).__name__}: {e}")
 
     # Try GET if HEAD fails
     try:
-        response = await client.get(
-            sitemap_url, follow_redirects=True, timeout=5.0
-        )
+        response = await client.get(sitemap_url, follow_redirects=True, timeout=5.0)
         if response.status_code == 200:
             logger.debug(f"GET success: {sitemap_url}")
             return sitemap_url
@@ -162,13 +163,15 @@ async def try_sitemap_url(sitemap_url: str, client: httpx.AsyncClient) -> Option
         logger.debug(f"GET timeout: {sitemap_url}")
     except httpx.ConnectError as e:
         error_msg = str(e).lower()
-        if 'ssl' in error_msg or 'tls' in error_msg or 'certificate' in error_msg:
+        if "ssl" in error_msg or "tls" in error_msg or "certificate" in error_msg:
             logger.warning(f"🔒 GET TLS/SSL error for {sitemap_url}: {e}")
         else:
-            logger.debug(f"GET connection error for {sitemap_url}: {type(e).__name__}: {e}")
+            logger.debug(
+                f"GET connection error for {sitemap_url}: {type(e).__name__}: {e}"
+            )
     except Exception as e:
         error_msg = str(e).lower()
-        if 'ssl' in error_msg or 'tls' in error_msg or 'certificate' in error_msg:
+        if "ssl" in error_msg or "tls" in error_msg or "certificate" in error_msg:
             logger.warning(f"🔒 GET TLS/SSL error for {sitemap_url}: {e}")
         else:
             logger.debug(f"GET failed for {sitemap_url}: {type(e).__name__}: {e}")
@@ -192,9 +195,9 @@ async def check_robots_txt(url: str, client: httpx.AsyncClient) -> Optional[str]
         response = await client.get(robots_url, follow_redirects=True, timeout=5.0)
         if response.status_code == 200:
             # Parse robots.txt for Sitemap directive
-            for line in response.text.split('\n'):
-                if line.lower().startswith('sitemap:'):
-                    sitemap_url = line.split(':', 1)[1].strip()
+            for line in response.text.split("\n"):
+                if line.lower().startswith("sitemap:"):
+                    sitemap_url = line.split(":", 1)[1].strip()
                     logger.debug(f"Found sitemap in robots.txt: {sitemap_url}")
                     return sitemap_url
     except Exception as e:
@@ -230,7 +233,9 @@ async def find_sitemap_for_url(
         verified = await try_sitemap_url(sitemap_from_robots, client)
         if verified:
             elapsed = time.time() - start_time
-            logger.info(f"✓ Found sitemap via robots.txt for {council_name} in {elapsed:.1f}s: {verified}")
+            logger.info(
+                f"✓ Found sitemap via robots.txt for {council_name} in {elapsed:.1f}s: {verified}"
+            )
             return verified
 
     # If robots.txt didn't work, try common locations
@@ -252,7 +257,9 @@ async def find_sitemap_for_url(
     # Return the first successful result
     for result in results:
         if result:
-            logger.info(f"✓ Found sitemap for {council_name} in {elapsed:.1f}s: {result}")
+            logger.info(
+                f"✓ Found sitemap for {council_name} in {elapsed:.1f}s: {result}"
+            )
             return result
 
     logger.warning(f"✗ No sitemap found for {council_name} after {elapsed:.1f}s: {url}")
@@ -322,7 +329,9 @@ async def find_waste_urls_in_sitemap(
     try:
         response = await client.get(sitemap_url, follow_redirects=True, timeout=15.0)
         if response.status_code != 200:
-            logger.warning(f"Sitemap returned status {response.status_code} for {council_name}")
+            logger.warning(
+                f"Sitemap returned status {response.status_code} for {council_name}"
+            )
             return []
 
         # Parse XML
@@ -352,31 +361,45 @@ async def find_waste_urls_in_sitemap(
 
         elapsed = time.time() - start_time
         if waste_urls:
-            logger.info(f"Found {len(waste_urls)} waste URLs for {council_name} in {elapsed:.1f}s")
+            logger.info(
+                f"Found {len(waste_urls)} waste URLs for {council_name} in {elapsed:.1f}s"
+            )
         else:
-            logger.debug(f"No waste URLs found in sitemap for {council_name} (checked {len(urls)} URLs in {elapsed:.1f}s)")
+            logger.debug(
+                f"No waste URLs found in sitemap for {council_name} (checked {len(urls)} URLs in {elapsed:.1f}s)"
+            )
 
         return waste_urls[:5]  # Limit to 5 most relevant URLs
 
     except httpx.TimeoutException:
         elapsed = time.time() - start_time
-        logger.warning(f"Timeout parsing sitemap for {council_name} after {elapsed:.1f}s")
+        logger.warning(
+            f"Timeout parsing sitemap for {council_name} after {elapsed:.1f}s"
+        )
         return []
     except httpx.ConnectError as e:
         elapsed = time.time() - start_time
         error_msg = str(e).lower()
-        if 'ssl' in error_msg or 'tls' in error_msg or 'certificate' in error_msg:
-            logger.warning(f"🔒 TLS/SSL error parsing sitemap for {council_name} after {elapsed:.1f}s: {e}")
+        if "ssl" in error_msg or "tls" in error_msg or "certificate" in error_msg:
+            logger.warning(
+                f"🔒 TLS/SSL error parsing sitemap for {council_name} after {elapsed:.1f}s: {e}"
+            )
         else:
-            logger.error(f"Connection error parsing sitemap for {council_name} after {elapsed:.1f}s: {e}")
+            logger.error(
+                f"Connection error parsing sitemap for {council_name} after {elapsed:.1f}s: {e}"
+            )
         return []
     except Exception as e:
         elapsed = time.time() - start_time
         error_msg = str(e).lower()
-        if 'ssl' in error_msg or 'tls' in error_msg or 'certificate' in error_msg:
-            logger.warning(f"🔒 TLS/SSL error parsing sitemap for {council_name} after {elapsed:.1f}s: {e}")
+        if "ssl" in error_msg or "tls" in error_msg or "certificate" in error_msg:
+            logger.warning(
+                f"🔒 TLS/SSL error parsing sitemap for {council_name} after {elapsed:.1f}s: {e}"
+            )
         else:
-            logger.error(f"Error parsing sitemap for {council_name} after {elapsed:.1f}s: {type(e).__name__}: {e}")
+            logger.error(
+                f"Error parsing sitemap for {council_name} after {elapsed:.1f}s: {type(e).__name__}: {e}"
+            )
         return []
 
 
@@ -415,7 +438,9 @@ async def process_council(
         waste_urls = await find_waste_urls_in_sitemap(council_name, sitemap_url, client)
 
     elapsed = time.time() - start_time
-    logger.info(f"✅ Completed {council_name} in {elapsed:.1f}s (sitemap: {'Yes' if sitemap_url else 'No'}, waste URLs: {len(waste_urls)})")
+    logger.info(
+        f"✅ Completed {council_name} in {elapsed:.1f}s (sitemap: {'Yes' if sitemap_url else 'No'}, waste URLs: {len(waste_urls)})"
+    )
 
     return {
         "Authority Name": council_name,
@@ -426,7 +451,9 @@ async def process_council(
     }
 
 
-async def process_all_councils(councils_df: pl.DataFrame, batch_size: int = 10) -> pl.DataFrame:
+async def process_all_councils(
+    councils_df: pl.DataFrame, batch_size: int = 10
+) -> pl.DataFrame:
     """
     Processes all councils in small batches to avoid connection pool exhaustion.
 
@@ -447,9 +474,11 @@ async def process_all_councils(councils_df: pl.DataFrame, batch_size: int = 10) 
     """
     start_time = time.time()
     total_councils = len(councils_df)
-    logger.info(f"\n{'='*80}")
-    logger.info(f"🚀 Starting to process {total_councils} councils in batches of {batch_size}...")
-    logger.info(f"{'='*80}\n")
+    logger.info(f"\n{'=' * 80}")
+    logger.info(
+        f"🚀 Starting to process {total_councils} councils in batches of {batch_size}..."
+    )
+    logger.info(f"{'=' * 80}\n")
 
     # Use a browser-like user agent to avoid being blocked
     headers = {
@@ -459,20 +488,24 @@ async def process_all_councils(councils_df: pl.DataFrame, batch_size: int = 10) 
     all_results = []
 
     async with httpx.AsyncClient(
-        limits=httpx.Limits(max_connections=batch_size * 2, max_keepalive_connections=batch_size),
+        limits=httpx.Limits(
+            max_connections=batch_size * 2, max_keepalive_connections=batch_size
+        ),
         timeout=httpx.Timeout(10.0, connect=5.0),
         headers=headers,
-        follow_redirects=True
+        follow_redirects=True,
     ) as client:
         # Process councils in batches
         councils_list = list(councils_df.iter_rows(named=True))
 
         for i in range(0, len(councils_list), batch_size):
-            batch = councils_list[i:i+batch_size]
+            batch = councils_list[i : i + batch_size]
             batch_num = i // batch_size + 1
             total_batches = (len(councils_list) + batch_size - 1) // batch_size
 
-            logger.info(f"Processing batch {batch_num}/{total_batches} ({len(batch)} councils)...")
+            logger.info(
+                f"Processing batch {batch_num}/{total_batches} ({len(batch)} councils)..."
+            )
 
             tasks = [
                 process_council(row["Authority Name"], row["GSS"], row["URL"], client)
@@ -486,27 +519,31 @@ async def process_all_councils(councils_df: pl.DataFrame, batch_size: int = 10) 
                 if isinstance(result, Exception):
                     logger.error(f"Council failed with exception: {result}")
                     row = batch[j]
-                    all_results.append({
-                        "Authority Name": row["Authority Name"],
-                        "GSS": row["GSS"],
-                        "URL": row["URL"],
-                        "sitemap_url": None,
-                        "waste_collection_urls": [],
-                    })
+                    all_results.append(
+                        {
+                            "Authority Name": row["Authority Name"],
+                            "GSS": row["GSS"],
+                            "URL": row["URL"],
+                            "sitemap_url": None,
+                            "waste_collection_urls": [],
+                        }
+                    )
                 else:
                     all_results.append(result)
 
     elapsed = time.time() - start_time
-    logger.info(f"\n{'='*80}")
-    logger.info(f"🎉 Completed processing all {total_councils} councils in {elapsed:.1f}s ({elapsed/total_councils:.1f}s per council average)")
-    logger.info(f"{'='*80}\n")
+    logger.info(f"\n{'=' * 80}")
+    logger.info(
+        f"🎉 Completed processing all {total_councils} councils in {elapsed:.1f}s ({elapsed / total_councils:.1f}s per council average)"
+    )
+    logger.info(f"{'=' * 80}\n")
 
     # Convert results back to DataFrame
     return pl.DataFrame(all_results)
 
 
 def get_land_registry_data(
-    land_registry_url: str = "http://prod.publicdata.landregistry.gov.uk.s3-website-eu-west-1.amazonaws.com/pp-2024.txt",
+    land_registry_url: str = "http://prod1.publicdata.landregistry.gov.uk.s3-website-eu-west-1.amazonaws.com/pp-2024.txt",
 ) -> pl.DataFrame:
     """
     Downloads Land Registry Price Paid Data for 2024.
@@ -542,37 +579,32 @@ def get_land_registry_data(
         httpx.HTTPError: If the download fails.
     """
     print("Downloading Land Registry Price Paid Data for 2024...")
-    print("(This is a large file ~1GB, may take a few minutes...)")
 
-    # The file is large (~1GB), so we'll stream it
-    with httpx.stream("GET", land_registry_url, follow_redirects=True, timeout=120.0) as response:
-        response.raise_for_status()
-
-        # Read and parse as CSV (comma-separated file with no header)
-        land_registry_df = pl.read_csv(
-            response.iter_bytes(),
-            has_header=False,
-            separator=",",
-            quote_char='"',
-            new_columns=[
-                "transaction_id",
-                "price",
-                "date_of_transfer",
-                "postcode",
-                "property_type",
-                "old_new",
-                "duration",
-                "paon",
-                "saon",
-                "street",
-                "locality",
-                "town_city",
-                "district",
-                "county",
-                "ppd_category",
-                "record_status",
-            ],
-        )
+    # Read and parse as CSV (comma-separated file with no header)
+    land_registry_df = pl.read_csv(
+        land_registry_url,
+        has_header=False,
+        separator=",",
+        quote_char='"',
+        new_columns=[
+            "transaction_id",
+            "price",
+            "date_of_transfer",
+            "postcode",
+            "property_type",
+            "old_new",
+            "duration",
+            "paon",
+            "saon",
+            "street",
+            "locality",
+            "town_city",
+            "district",
+            "county",
+            "ppd_category",
+            "record_status",
+        ],
+    )
 
     print(f"Loaded {len(land_registry_df):,} property transactions.")
 
@@ -582,45 +614,64 @@ def get_land_registry_data(
     )
 
     # Create separate address columns and combined fields (title case except postcode)
-    land_registry_df = land_registry_df.with_columns([
-        # Number: Combine SAON (flat/unit) and PAON (house number/name)
-        pl.concat_str(
-            [
-                pl.when(pl.col("saon") != "").then(pl.col("saon") + ", ").otherwise(pl.lit("")),
-                pl.col("paon"),
-            ]
-        ).str.to_titlecase().alias("Number"),
-
-        # Street: Just the street name
-        pl.col("street").str.to_titlecase().alias("Street"),
-
-        # Town: Use town_city column
-        pl.col("town_city").str.to_titlecase().alias("Town"),
-
-        # Address: Combine Number + Street
-        pl.concat_str(
-            [
-                pl.when(pl.col("saon") != "").then(pl.col("saon") + ", ").otherwise(pl.lit("")),
-                pl.when(pl.col("paon") != "").then(pl.col("paon") + " ").otherwise(pl.lit("")),
-                pl.col("street"),
-            ]
-        ).str.strip_chars().str.to_titlecase().alias("Address"),
-
-        # Full address (for reference, includes town)
-        pl.concat_str(
-            [
-                pl.when(pl.col("saon") != "").then(pl.col("saon") + ", ").otherwise(pl.lit("")),
-                pl.when(pl.col("paon") != "").then(pl.col("paon") + " ").otherwise(pl.lit("")),
-                pl.when(pl.col("street") != "").then(pl.col("street")).otherwise(pl.lit("")),
-                pl.when(pl.col("locality") != "").then(pl.lit(", ") + pl.col("locality")).otherwise(pl.lit("")),
-                pl.when(pl.col("town_city") != "").then(pl.lit(", ") + pl.col("town_city")).otherwise(pl.lit("")),
-            ]
-        ).str.to_titlecase().alias("full_address")
-    ])
+    land_registry_df = land_registry_df.with_columns(
+        [
+            # Number: Combine SAON (flat/unit) and PAON (house number/name)
+            pl.concat_str(
+                [
+                    pl.when(pl.col("saon") != "")
+                    .then(pl.col("saon") + ", ")
+                    .otherwise(pl.lit("")),
+                    pl.col("paon"),
+                ]
+            )
+            .str.to_titlecase()
+            .alias("Number"),
+            # Street: Just the street name
+            pl.col("street").str.to_titlecase().alias("Street"),
+            # Town: Use town_city column
+            pl.col("town_city").str.to_titlecase().alias("Town"),
+            # Address: Combine Number + Street
+            pl.concat_str(
+                [
+                    pl.when(pl.col("saon") != "")
+                    .then(pl.col("saon") + ", ")
+                    .otherwise(pl.lit("")),
+                    pl.when(pl.col("paon") != "")
+                    .then(pl.col("paon") + " ")
+                    .otherwise(pl.lit("")),
+                    pl.col("street"),
+                ]
+            )
+            .str.strip_chars()
+            .str.to_titlecase()
+            .alias("Address"),
+            # Full address (for reference, includes town)
+            pl.concat_str(
+                [
+                    pl.when(pl.col("saon") != "")
+                    .then(pl.col("saon") + ", ")
+                    .otherwise(pl.lit("")),
+                    pl.when(pl.col("paon") != "")
+                    .then(pl.col("paon") + " ")
+                    .otherwise(pl.lit("")),
+                    pl.when(pl.col("street") != "")
+                    .then(pl.col("street"))
+                    .otherwise(pl.lit("")),
+                    pl.when(pl.col("locality") != "")
+                    .then(pl.lit(", ") + pl.col("locality"))
+                    .otherwise(pl.lit("")),
+                    pl.when(pl.col("town_city") != "")
+                    .then(pl.lit(", ") + pl.col("town_city"))
+                    .otherwise(pl.lit("")),
+                ]
+            )
+            .str.to_titlecase()
+            .alias("full_address"),
+        ]
+    )
 
     return land_registry_df
-
-
 
 
 def main(output_filename: str = "data/postcodes_by_council.csv") -> pl.DataFrame:
@@ -675,16 +726,22 @@ def main(output_filename: str = "data/postcodes_by_council.csv") -> pl.DataFrame
     # Merge postcode data with Land Registry data to get addresses with local authorities
     print("Merging postcode data with Land Registry addresses...")
     postcode_with_addresses = postcode_df.join(
-        land_registry_df.select(["pcd", "postcode", "Number", "Street", "Town", "Address", "full_address"]),
+        land_registry_df.select(
+            ["pcd", "postcode", "Number", "Street", "Town", "Address", "full_address"]
+        ),
         on="pcd",
-        how="inner"
+        how="inner",
     )
 
     # Merge with council data
     print("Merging council URL data with postcodes and addresses...")
     merged_df = (
-        council_urls_df.join(postcode_with_addresses, left_on="GSS", right_on="laua", how="left")
-        .group_by("Authority Name", "URL", "sitemap_url", "waste_collection_urls", "GSS")
+        council_urls_df.join(
+            postcode_with_addresses, left_on="GSS", right_on="laua", how="left"
+        )
+        .group_by(
+            "Authority Name", "URL", "sitemap_url", "waste_collection_urls", "GSS"
+        )
         .agg(
             [
                 # Select the first available postcode and address components
@@ -695,18 +752,20 @@ def main(output_filename: str = "data/postcodes_by_council.csv") -> pl.DataFrame
                 pl.col("Address").first().alias("Address"),
             ]
         )
-        .select([
-            "Authority Name",
-            "GSS",
-            "URL",
-            "sitemap_url",
-            "waste_collection_urls",
-            "Number",
-            "Street",
-            "Town",
-            "Address",
-            "postcode",
-        ])
+        .select(
+            [
+                "Authority Name",
+                "GSS",
+                "URL",
+                "sitemap_url",
+                "waste_collection_urls",
+                "Number",
+                "Street",
+                "Town",
+                "Address",
+                "postcode",
+            ]
+        )
     )
 
     # Save the final enriched data to a CSV
