@@ -505,101 +505,122 @@ async def process_all_councils(councils_df: pl.DataFrame, batch_size: int = 10) 
     return pl.DataFrame(all_results)
 
 
-def get_pop_data(
-    eng_wales_postcode_pop_url: str = "https://www.nomisweb.co.uk/output/census/2021/pcd_p002.csv",
-    scotland_postcode_pop_url: str = "https://www.nrscotland.gov.uk/media/mafbfvmj/postcode2022_usualresidentpopulation.csv",
-    ni_postcode_pop_url: str = "https://www.nisra.gov.uk/system/files/statistics/census-2021-person-and-household-estimates-for-postcodes-in-northern-ireland.xlsx",
+def get_land_registry_data(
+    land_registry_url: str = "http://prod.publicdata.landregistry.gov.uk.s3-website-eu-west-1.amazonaws.com/pp-2024.txt",
 ) -> pl.DataFrame:
     """
-    Downloads and combines population data for all UK postcodes.
+    Downloads Land Registry Price Paid Data for 2024.
 
-    Fetches postcode-level population data from:
-    - England and Wales (NOMIS)
-    - Scotland (National Records of Scotland)
-    - Northern Ireland (NISRA)
-
-    Uses httpx for consistent, modern HTTP handling.
+    The Price Paid Data contains property transaction information including
+    addresses and postcodes for all residential property sales in the UK.
 
     Args:
-        eng_wales_postcode_pop_url: URL for England and Wales postcode population data.
-        scotland_postcode_pop_url: URL for Scotland postcode population data.
-        ni_postcode_pop_url: URL for Northern Ireland postcode population data.
+        land_registry_url: URL to the Land Registry Price Paid Data file.
 
     Returns:
         A Polars DataFrame with columns:
-            - postcode: Original postcode format
-            - population: Number of usual residents
+            - transaction_id: Unique transaction identifier
+            - price: Sale price
+            - date_of_transfer: Transaction date
+            - postcode: Full postcode
+            - property_type: D/S/T/F/O (Detached/Semi/Terraced/Flat/Other)
+            - old_new: Y/N (new build or established)
+            - duration: F/L (Freehold/Leasehold)
+            - paon: Primary Addressable Object Name (house number/name)
+            - saon: Secondary Addressable Object Name (flat number)
+            - street: Street name
+            - locality: Locality
+            - town_city: Town or city
+            - district: District
+            - county: County
+            - ppd_category: A/B (Standard/Additional Price Paid transaction)
+            - record_status: A/C/D (Addition/Change/Delete)
             - pcd: Normalized postcode (spaces removed)
+            - full_address: Concatenated full address
 
     Raises:
-        httpx.HTTPError: If any of the downloads fail.
+        httpx.HTTPError: If the download fails.
     """
-    print("Downloading population data for Scotland...")
-    with httpx.stream(
-        "GET", scotland_postcode_pop_url, follow_redirects=True
-    ) as response:
+    print("Downloading Land Registry Price Paid Data for 2024...")
+    print("(This is a large file ~1GB, may take a few minutes...)")
+
+    # The file is large (~1GB), so we'll stream it
+    with httpx.stream("GET", land_registry_url, follow_redirects=True, timeout=120.0) as response:
         response.raise_for_status()
-        scotland_content = response.read()
 
-    scotland_postcode_pop = pl.read_csv(scotland_content).select(
-        pl.col("Postcode").cast(pl.String).alias("postcode"),
-        pl.col("UsualResidentPopulation")
-        .cast(pl.Int64, strict=False)
-        .alias("population"),
-    )
-
-    print("Downloading population data for England and Wales...")
-    eng_wales_pop = pl.read_csv(eng_wales_postcode_pop_url).select(
-        pl.col("Postcode").cast(pl.String).alias("postcode"),
-        pl.col("Count").cast(pl.Int64, strict=False).alias("population"),
-    )
-
-    print("Downloading population data for Northern Ireland...")
-    ni_postcode_pop = (
-        pl.read_excel(
-            ni_postcode_pop_url,
-            sheet_name="Postcode",
-            columns=[0, 4],
+        # Read and parse as CSV (comma-separated file with no header)
+        land_registry_df = pl.read_csv(
+            response.iter_bytes(),
             has_header=False,
+            separator=",",
+            quote_char='"',
+            new_columns=[
+                "transaction_id",
+                "price",
+                "date_of_transfer",
+                "postcode",
+                "property_type",
+                "old_new",
+                "duration",
+                "paon",
+                "saon",
+                "street",
+                "locality",
+                "town_city",
+                "district",
+                "county",
+                "ppd_category",
+                "record_status",
+            ],
         )
-        .slice(6)
-        .select(
-            pl.col("column_1").cast(pl.String).alias("postcode"),
-            pl.col("column_2").cast(pl.Int64, strict=False).alias("population"),
-        )
+
+    print(f"Loaded {len(land_registry_df):,} property transactions.")
+
+    # Add normalized postcode for joining
+    land_registry_df = land_registry_df.with_columns(
+        pl.col("postcode").str.replace_all(" ", "").alias("pcd")
     )
 
-    combined_df = (
-        pl.concat(
+    # Create separate address columns and combined fields (title case except postcode)
+    land_registry_df = land_registry_df.with_columns([
+        # Number: Combine SAON (flat/unit) and PAON (house number/name)
+        pl.concat_str(
             [
-                scotland_postcode_pop,
-                eng_wales_pop,
-                ni_postcode_pop,
+                pl.when(pl.col("saon") != "").then(pl.col("saon") + ", ").otherwise(pl.lit("")),
+                pl.col("paon"),
             ]
-        )
-        .drop_nulls()
-        .with_columns(pl.col("postcode").str.replace_all(" ", "").alias("pcd"))
-    )
+        ).str.to_titlecase().alias("Number"),
 
-    return combined_df
+        # Street: Just the street name
+        pl.col("street").str.to_titlecase().alias("Street"),
+
+        # Town: Use town_city column
+        pl.col("town_city").str.to_titlecase().alias("Town"),
+
+        # Address: Combine Number + Street
+        pl.concat_str(
+            [
+                pl.when(pl.col("saon") != "").then(pl.col("saon") + ", ").otherwise(pl.lit("")),
+                pl.when(pl.col("paon") != "").then(pl.col("paon") + " ").otherwise(pl.lit("")),
+                pl.col("street"),
+            ]
+        ).str.strip_chars().str.to_titlecase().alias("Address"),
+
+        # Full address (for reference, includes town)
+        pl.concat_str(
+            [
+                pl.when(pl.col("saon") != "").then(pl.col("saon") + ", ").otherwise(pl.lit("")),
+                pl.when(pl.col("paon") != "").then(pl.col("paon") + " ").otherwise(pl.lit("")),
+                pl.when(pl.col("street") != "").then(pl.col("street")).otherwise(pl.lit("")),
+                pl.when(pl.col("locality") != "").then(pl.lit(", ") + pl.col("locality")).otherwise(pl.lit("")),
+                pl.when(pl.col("town_city") != "").then(pl.lit(", ") + pl.col("town_city")).otherwise(pl.lit("")),
+            ]
+        ).str.to_titlecase().alias("full_address")
+    ])
+
+    return land_registry_df
 
 
-def get_populous_postcodes() -> pl.DataFrame:
-    """
-    Combines postcode geographic data with population data.
-
-    Returns:
-        A Polars DataFrame containing postcodes with their local authority codes
-        and population data.
-    """
-    postcode_df = get_postcode_data()
-    postcode_pop = get_pop_data()
-
-    postcode_merge = postcode_df.join(
-        postcode_pop, how="inner", left_on="pcd", right_on="pcd"
-    ).drop("pcd")
-
-    return postcode_merge
 
 
 def main(output_filename: str = "data/postcodes_by_council.csv") -> pl.DataFrame:
@@ -607,26 +628,35 @@ def main(output_filename: str = "data/postcodes_by_council.csv") -> pl.DataFrame
     Main function to combine all data sources and generate output.
 
     This function:
-    1. Gets postcode and population data
-    2. Fetches council URLs
-    3. Processes all councils in parallel (finds sitemaps and waste URLs)
-    4. Merges everything with postcode data
-    5. Selects a representative high-population postcode for each council
-    6. Saves the results to a CSV file
+    1. Gets postcode geographic data (NSPL)
+    2. Downloads Land Registry property data with addresses
+    3. Fetches council URLs
+    4. Processes all councils in parallel (finds sitemaps and waste URLs)
+    5. Merges everything with postcode and Land Registry data
+    6. Selects a representative address for each council
+    7. Saves the results to a CSV file
 
     Args:
         output_filename: Path where the output CSV should be saved.
 
     Returns:
         A Polars DataFrame containing the final merged data with columns:
-            - Authority Name
+            - Authority Name: Name of the local authority/council
+            - GSS: Government Statistical Service code
             - URL: Council base URL
             - sitemap_url: Found sitemap URL
             - waste_collection_urls: List of relevant waste collection URLs
-            - postcode: A representative postcode for the council area
+            - Number: Property number (including flat/unit if applicable)
+            - Street: Street name
+            - Town: Town or city name
+            - Address: Combined Number + Street
+            - postcode: Corresponding postcode for the address
     """
-    # Get postcode and population data
-    postcode_merge = get_populous_postcodes()
+    # Get postcode geographic data (local authority mapping)
+    postcode_df = get_postcode_data()
+
+    # Get Land Registry data with addresses
+    land_registry_df = get_land_registry_data()
 
     # Get council URLs (now returns base domains)
     council_urls_df = get_council_urls()
@@ -642,19 +672,41 @@ def main(output_filename: str = "data/postcodes_by_council.csv") -> pl.DataFrame
         .alias("waste_collection_urls")
     )
 
-    # Merge with postcode data
-    print("Merging postcode and council URL data...")
+    # Merge postcode data with Land Registry data to get addresses with local authorities
+    print("Merging postcode data with Land Registry addresses...")
+    postcode_with_addresses = postcode_df.join(
+        land_registry_df.select(["pcd", "postcode", "Number", "Street", "Town", "Address", "full_address"]),
+        on="pcd",
+        how="inner"
+    )
+
+    # Merge with council data
+    print("Merging council URL data with postcodes and addresses...")
     merged_df = (
-        council_urls_df.join(postcode_merge, left_on="GSS", right_on="laua", how="left")
-        .group_by("Authority Name", "URL", "sitemap_url", "waste_collection_urls")
+        council_urls_df.join(postcode_with_addresses, left_on="GSS", right_on="laua", how="left")
+        .group_by("Authority Name", "URL", "sitemap_url", "waste_collection_urls", "GSS")
         .agg(
             [
-                pl.col("postcode")
-                .filter(pl.col("population") >= pl.col("population").quantile(0.5))
-                .first()
-                .alias("postcode"),
+                # Select the first available postcode and address components
+                pl.col("postcode").first().alias("postcode"),
+                pl.col("Number").first().alias("Number"),
+                pl.col("Street").first().alias("Street"),
+                pl.col("Town").first().alias("Town"),
+                pl.col("Address").first().alias("Address"),
             ]
         )
+        .select([
+            "Authority Name",
+            "GSS",
+            "URL",
+            "sitemap_url",
+            "waste_collection_urls",
+            "Number",
+            "Street",
+            "Town",
+            "Address",
+            "postcode",
+        ])
     )
 
     # Save the final enriched data to a CSV

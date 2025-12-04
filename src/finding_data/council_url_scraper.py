@@ -118,6 +118,21 @@ class CouncilURLScraper:
             "refuse",
             "rubbish",
         ]
+        # Keywords that indicate a URL is a bin lookup page (not just general info)
+        self.high_priority_keywords = [
+            "day",
+            "days",
+            "calendar",
+            "schedule",
+        ]
+        self.medium_priority_keywords = [
+            "check",
+            "find",
+            "when",
+            "search",
+            "lookup",
+            "my",
+        ]
 
     async def _try_sitemap_url(self, sitemap_url: str, client: httpx.AsyncClient) -> Optional[str]:
         """
@@ -204,15 +219,50 @@ class CouncilURLScraper:
             logger.debug(f"Could not fetch robots.txt for {url}: {type(e).__name__}")
         return None
 
+    def _score_url(self, url: str) -> int:
+        """
+        Score a URL based on how likely it is to be a bin collection lookup page.
+
+        Higher scores indicate URLs more likely to be actual lookup pages where
+        residents can check their bin collection days.
+
+        Args:
+            url: The URL to score
+
+        Returns:
+            Integer score (higher is better)
+        """
+        url_lower = url.lower()
+        score = 0
+
+        # Base score: must contain waste-related keyword
+        if any(keyword in url_lower for keyword in self.waste_keywords):
+            score += 1
+
+        # High priority: indicates actual lookup functionality
+        for keyword in self.high_priority_keywords:
+            if keyword in url_lower:
+                score += 10
+
+        # Medium priority: indicates user-facing lookup tool
+        for keyword in self.medium_priority_keywords:
+            if keyword in url_lower:
+                score += 5
+
+        return score
+
     def _extract_waste_urls_from_urlset(self, root: ET.Element) -> List[str]:
         """
         Extract waste-related URLs from a regular sitemap (urlset).
+
+        URLs are scored and sorted to prioritize bin collection lookup pages
+        over general waste information pages.
 
         Args:
             root: Parsed XML root element.
 
         Returns:
-            List of up to 5 waste-related URLs.
+            List of up to 5 waste-related URLs, sorted by relevance score.
         """
         namespaces = {"ns": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
@@ -228,14 +278,16 @@ class CouncilURLScraper:
                 if loc.text:
                     urls.append(loc.text)
 
-        # Filter URLs containing waste-related keywords
-        waste_urls = [
-            url
+        # Filter URLs containing waste-related keywords and score them
+        waste_urls_with_scores = [
+            (url, self._score_url(url))
             for url in urls
             if any(keyword in url.lower() for keyword in self.waste_keywords)
         ]
 
-        return waste_urls[:5]
+        # Sort by score (descending) and return top 5 URLs
+        waste_urls_with_scores.sort(key=lambda x: x[1], reverse=True)
+        return [url for url, score in waste_urls_with_scores[:5]]
 
     async def _process_sitemap_index(
         self,
@@ -490,9 +542,8 @@ class CouncilURLScraper:
 
             # Parse base domain for filtering
             parsed_base = urlparse(homepage_url)
-            base_domain = f"{parsed_base.scheme}://{parsed_base.netloc}"
 
-            waste_urls = []
+            waste_urls_with_scores = []
             seen_urls = set()
 
             for href in hrefs:
@@ -520,11 +571,12 @@ class CouncilURLScraper:
 
                     if normalized_url not in seen_urls:
                         seen_urls.add(normalized_url)
-                        waste_urls.append(absolute_url)
+                        score = self._score_url(absolute_url)
+                        waste_urls_with_scores.append((absolute_url, score))
 
-                        # Stop after finding 5 URLs
-                        if len(waste_urls) >= 5:
-                            break
+            # Sort by score (descending) and take top 5
+            waste_urls_with_scores.sort(key=lambda x: x[1], reverse=True)
+            waste_urls = [url for url, score in waste_urls_with_scores[:5]]
 
             if waste_urls:
                 logger.info(f"Found {len(waste_urls)} waste URLs from homepage for {council_name}")

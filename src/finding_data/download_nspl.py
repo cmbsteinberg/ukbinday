@@ -65,7 +65,7 @@ def download_and_prepare_nspl(
                 columns=["pcd", "laua"],
                 low_memory=False,  # Faster parsing
                 rechunk=True,  # Optimize memory layout for subsequent operations
-            ).with_columns(pl.col("pcd").str.replace_all(" ", ""))
+            )
 
     # Ensure output directory exists
     output_file = Path(output_path)
