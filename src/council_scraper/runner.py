@@ -42,19 +42,9 @@ class Runner:
                 f"[yellow]Found {len(existing_results)} existing results[/yellow]"
             )
 
-        # Run preflight validation
-        console.log("[cyan]Running preflight validation...[/cyan]")
-        preflight_results = await self._run_preflight()
-        self._save_preflight_report(preflight_results)
-
-        # Filter councils to process
+        # Filter councils to process (skip existing results)
         councils_to_process = [
-            c
-            for c in self.councils
-            if c.council_id not in existing_results
-            and not any(
-                r.skip_reason for r in preflight_results if r.council_id == c.council_id
-            )
+            c for c in self.councils if c.council_id not in existing_results
         ]
 
         console.log(
@@ -68,6 +58,24 @@ class Runner:
             try:
                 for i, council in enumerate(councils_to_process):
                     console.rule(f"Council {i + 1}/{len(councils_to_process)}")
+
+                    # Run preflight check before processing this council
+                    preflight = await self._preflight_check(council)
+                    if preflight.skip_reason:
+                        console.log(
+                            f"[yellow]Skipping {council.council_id}: {preflight.skip_reason}[/yellow]"
+                        )
+                        self.results.append(
+                            SessionResult(
+                                status="skipped",
+                                council_id=council.council_id,
+                                final_url="",
+                                iterations=0,
+                                history=[],
+                                failure_detail=preflight.skip_reason,
+                            )
+                        )
+                        continue
 
                     # Add delay between councils to avoid rate limiting (except first)
                     if i > 0 and self.config.inter_council_delay_ms > 0:
@@ -137,17 +145,13 @@ class Runner:
                 failure_detail=str(e),
             )
         finally:
-            await context.close()
-
-    async def _run_preflight(self) -> list[PreflightResult]:
-        """Validate councils before processing."""
-        results = []
-
-        for council in self.councils:
-            result = await self._preflight_check(council)
-            results.append(result)
-
-        return results
+            try:
+                # Add a small delay to allow pending network requests to complete
+                await asyncio.sleep(0.5)
+                await context.close()
+            except Exception:
+                # Ignore errors closing context (e.g., target already closed)
+                pass
 
     async def _preflight_check(self, council: Council) -> PreflightResult:
         """Quick validation before full exploration."""
@@ -168,10 +172,13 @@ class Runner:
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.head(
-                    council.url, timeout=aiohttp.ClientTimeout(total=10)
+                    council.url, timeout=aiohttp.ClientTimeout(total=5)
                 ) as resp:
                     http_status = resp.status
                     url_reachable = resp.status < 400
+        except asyncio.TimeoutError:
+            url_reachable = False
+            issues.append("url_timeout")
         except Exception:
             url_reachable = False
             issues.append("url_unreachable")
@@ -234,29 +241,6 @@ class Runner:
             if council_dir.is_dir() and (council_dir / "observations.jsonl").exists():
                 processed.add(council_dir.name)
         return processed
-
-    def _save_preflight_report(self, results: list[PreflightResult]) -> None:
-        """Save preflight validation report."""
-        report = {
-            "total": len(results),
-            "reachable": sum(1 for r in results if r.url_reachable),
-            "valid_postcodes": sum(1 for r in results if r.postcode_valid),
-            "will_skip": sum(1 for r in results if r.skip_reason),
-            "details": [
-                {
-                    "council_id": r.council_id,
-                    "url_reachable": r.url_reachable,
-                    "http_status": r.http_status,
-                    "postcode_valid": r.postcode_valid,
-                    "issues": r.detected_issues,
-                    "skip_reason": r.skip_reason,
-                }
-                for r in results
-            ],
-        }
-
-        with open(self.output_dir / "preflight_report.json", "w") as f:
-            json.dump(report, f, indent=2)
 
     def _generate_report(self) -> None:
         """Generate summary report."""

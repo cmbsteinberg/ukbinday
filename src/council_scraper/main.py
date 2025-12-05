@@ -5,9 +5,8 @@
    - --output - Output directory (default: output/)
    - --headless/--headed - Run browser headless or with UI (default: headless)
    - --max-iterations - Max iterations per council (default: 50)
- 2. preflight - Validate councils before running
- uv run src/council_scraper/main.py preflight
- This checks URL reachability, postcode validity, and generates a preflight report.
+
+Preflight checks (URL reachability, postcode validity) are run per-council during processing.
 """
 
 import asyncio
@@ -60,41 +59,6 @@ def run(
 
     result = asyncio.run(main())
     return result
-
-
-@app.command()
-def preflight(
-    councils: str = typer.Option(
-        "data/postcodes_by_council.csv",
-        "--councils",
-        help="Path to council list",
-    ),
-    output: str = typer.Option(
-        "output/",
-        "--output",
-        help="Output directory for results",
-    ),
-):
-    """Run preflight validation only."""
-    config = Config()
-    runner = Runner(councils, output, config)
-
-    async def main():
-        runner._load_councils()
-        results = await runner._run_preflight()
-        runner._save_preflight_report(results)
-
-        reachable = sum(1 for r in results if r.url_reachable)
-        valid = sum(1 for r in results if r.postcode_valid)
-        will_skip = sum(1 for r in results if r.skip_reason)
-
-        print("✓ Preflight check complete:")
-        print(f"  - Total councils: {len(results)}")
-        print(f"  - URLs reachable: {reachable}")
-        print(f"  - Valid postcodes: {valid}")
-        print(f"  - Will skip: {will_skip}")
-
-    asyncio.run(main())
 
 
 if __name__ == "__main__":

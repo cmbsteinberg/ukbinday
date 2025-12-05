@@ -54,12 +54,23 @@ class Recorder:
         # Generate unique ID for this request to avoid race conditions
         request_uuid = str(uuid.uuid4())
 
+        # Safely extract post data - may be binary and not UTF-8 decodable
+        request_body = None
+        try:
+            request_body = request.post_data
+        except UnicodeDecodeError:
+            # Binary data that can't be decoded as UTF-8 (e.g., form uploads)
+            request_body = "[Binary data]"
+        except Exception:
+            # Other errors getting post data
+            request_body = None
+
         entry = NetworkEntry(
             timestamp=datetime.now(),
             request_url=request.url,
             request_method=request.method,
             request_headers=dict(request.headers),
-            request_body=request.post_data,
+            request_body=request_body,
             response_status=None,
             response_headers=None,
             response_body=None,

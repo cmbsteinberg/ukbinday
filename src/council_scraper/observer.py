@@ -1,5 +1,6 @@
 """Observer for capturing page state."""
 
+import re
 from datetime import datetime
 
 from playwright.async_api import Page
@@ -43,13 +44,29 @@ class Observer:
             "dwelling",
             "premises",
         ]
-        self.success_keywords = [
-            "next collection",
-            "bin day",
-            "collection date",
-            "recycling",
-            "waste collection",
-            "collection day",
+        # Date patterns for detecting actual bin collection dates
+        self.date_day_names = [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+        ]
+        self.date_month_abbrevs = [
+            "jan",
+            "feb",
+            "mar",
+            "apr",
+            "may",
+            "jun",
+            "jul",
+            "aug",
+            "sep",
+            "oct",
+            "nov",
+            "dec",
         ]
         self.error_keywords = [
             "postcode not found",
@@ -236,7 +253,10 @@ class Observer:
                         elem_selector = f"#{elem_id}"
                     elif text and len(text.strip()) < 50:
                         # Use text-based selector for short, unique text
-                        clean_text = text.strip().replace('"', '\\"')
+                        clean_text = text.strip()
+                        # Normalize whitespace: collapse multiple spaces/newlines to single space
+                        clean_text = " ".join(clean_text.split())
+                        clean_text = clean_text.replace('"', '\\"')
                         elem_selector = f'{selector}:has-text("{clean_text}")'
                     else:
                         # Fallback to nth
@@ -535,11 +555,26 @@ class Observer:
         return min(score, 1.0)
 
     def _detect_success_indicators(self, text: str) -> tuple[bool, str | None]:
-        """Detect if page contains success indicators."""
+        """Detect if page contains success indicators (actual bin collection dates)."""
         text_lower = text.lower()
-        for keyword in self.success_keywords:
-            if keyword in text_lower:
-                return True, keyword
+
+        # Check for day names
+        has_day = any(day in text_lower for day in self.date_day_names)
+        if not has_day:
+            return False, None
+
+        # Check for month/day pattern (e.g., "15 jan", "jan 15")
+        has_date = bool(
+            re.search(
+                r"\d{1,2}\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)",
+                text_lower,
+            )
+        )
+
+        if has_day and has_date:
+            # Found both day name and date pattern - likely a success page
+            return True, "date_pattern_detected"
+
         return False, None
 
     def _detect_error_indicators(self, text: str) -> tuple[bool, str | None]:
