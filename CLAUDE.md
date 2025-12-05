@@ -5,5 +5,4 @@ Create a unified API wrapper for UK council bin collection times. Currently, eac
 
 ### Best Practise
 Always use uv in this code to run code - `uv run`
-We use Claude Agent SDK for our agent backend
 We use Polars for data wrangling

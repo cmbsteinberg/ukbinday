@@ -2,7 +2,11 @@
 
 from abc import ABC, abstractmethod
 
+from rich.console import Console
+
 from .models import Action, Config, HistoryEntry, Observation
+
+console = Console()
 
 
 class Rule(ABC):
@@ -42,7 +46,17 @@ class DismissCookieConsentRule(Rule):
         candidates = []
 
         # Look for buttons with cookie-related text
-        accept_terms = ["accept", "agree", "ok", "got it", "allow", "consent", "accept all", "allow all", "dismiss"]
+        accept_terms = [
+            "accept",
+            "agree",
+            "ok",
+            "got it",
+            "allow",
+            "consent",
+            "accept all",
+            "allow all",
+            "dismiss",
+        ]
 
         for btn in observation.buttons:
             btn_text_lower = btn.text.lower()
@@ -86,7 +100,11 @@ class FillPostcodeRule(Rule):
 
         # Find highest-relevance empty input
         high_relevance_inputs = sorted(
-            [inp for inp in observation.inputs if inp.relevance_score > 0.3 and not inp.current_value],
+            [
+                inp
+                for inp in observation.inputs
+                if inp.relevance_score > 0.3 and not inp.current_value
+            ],
             key=lambda x: x.relevance_score,
             reverse=True,
         )
@@ -227,14 +245,19 @@ class SelectFromCustomDropdownRule(Rule):
         candidates = []
 
         for dropdown in observation.custom_dropdowns:
-            if dropdown.is_open and dropdown.options and dropdown.looks_like_address_list:
-                # Return action to click first option
-                # (In reality, we'd need to construct a proper selector for the option)
+            if (
+                dropdown.is_open
+                and dropdown.options
+                and dropdown.looks_like_address_list
+            ):
+                # Build a proper selector for the first option
                 first_option = dropdown.options[0]
+                # Use :has-text or role='option' for better targeting
+                option_selector = f"[role='option']:has-text(\"{first_option[:30]}\")"
                 candidates.append(
                     Action(
                         action_type="click",
-                        selector=f"{dropdown.trigger_selector}:first-of-type",
+                        selector=option_selector,
                         description=f"Select from custom dropdown: {first_option[:50]}",
                         confidence=0.7,
                     )
@@ -261,7 +284,10 @@ class ClickContinueButtonRule(Rule):
 
         continue_terms = ["next", "continue", "proceed", "confirm"]
         for btn in observation.buttons:
-            if any(term in btn.text.lower() for term in continue_terms) and btn.is_enabled:
+            if (
+                any(term in btn.text.lower() for term in continue_terms)
+                and btn.is_enabled
+            ):
                 candidates.append(
                     Action(
                         action_type="click",
@@ -292,11 +318,17 @@ class ExploratoryClickRule(Rule):
 
         # Get buttons we've already tried
         tried_selectors = {
-            entry.action.selector for entry in history if entry.action.action_type == "click"
+            entry.action.selector
+            for entry in history
+            if entry.action.action_type == "click"
         }
 
         # Find buttons we haven't tried
-        untried = [btn for btn in observation.buttons if btn.selector not in tried_selectors and btn.is_enabled]
+        untried = [
+            btn
+            for btn in observation.buttons
+            if btn.selector not in tried_selectors and btn.is_enabled
+        ]
 
         # Sort by relevance and return top few
         untried.sort(key=lambda x: x.relevance_score, reverse=True)
@@ -333,11 +365,22 @@ class Strategist:
             candidates = rule.propose(observation, history, test_postcode)
             all_candidates.extend(candidates)
 
+        console.log(
+            f"[dim]Generated {len(all_candidates)} candidate actions from rules[/dim]"
+        )
+
         # Filter already-tried actions
         filtered = self._filter_tried(all_candidates, history, observation)
 
+        console.log(f"[dim]After filtering: {len(filtered)} unique actions[/dim]")
+
         # Sort by confidence descending
         filtered.sort(key=lambda a: a.confidence, reverse=True)
+
+        if filtered:
+            console.log(
+                f"[dim]Top action: {filtered[0].description} (confidence: {filtered[0].confidence:.2f})[/dim]"
+            )
 
         return filtered
 
@@ -351,25 +394,42 @@ class Strategist:
         seen = set()
         result = []
 
+        # Build set of recently tried action keys
+        recently_tried = set()
+        for entry in history[-5:]:  # Check last 5 actions
+            if entry.action.action_type in ("fill", "select"):
+                # For fill/select, exact match on (type, selector, value)
+                key = (
+                    entry.action.action_type,
+                    entry.action.selector,
+                    entry.action.value,
+                )
+                recently_tried.add(key)
+            elif entry.action.action_type == "click":
+                # For clicks, match on (type, selector) but only if recent (last 2 actions)
+                # This allows click retries after page changes
+                if entry in history[-2:]:
+                    key = (entry.action.action_type, entry.action.selector, None)
+                    recently_tried.add(key)
+
         for action in candidates:
-            # For fill/select, use (type, selector, value) as key
+            # Build key for this action
             if action.action_type in ("fill", "select"):
                 key = (action.action_type, action.selector, action.value)
             else:
-                # For clicks, only use (type, selector) and allow retries if page changed
-                key = (action.action_type, action.selector)
+                # For clicks, normalize value to None
+                key = (action.action_type, action.selector, None)
 
-            # Check if we've tried this recently
-            has_tried = any(
-                (entry.action.action_type, entry.action.selector, entry.action.value) == key
-                for entry in history[-5:]  # Check last 5 actions
-                if entry.action.action_type in ("fill", "select")
-            )
+            # Skip if we've tried this recently
+            if key in recently_tried:
+                continue
 
-            if not has_tried or action.action_type == "click":
-                if key not in seen:
-                    seen.add(key)
-                    result.append(action)
+            # Skip duplicates within current candidates
+            if key in seen:
+                continue
+
+            seen.add(key)
+            result.append(action)
 
         return result
 

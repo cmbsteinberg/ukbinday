@@ -3,13 +3,10 @@ name = "bins"
 version = "0.1.0"
 description = "UK Council Bin Collection API Discovery and Runtime Library"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.13"
 dependencies = [
-    "anthropic>=0.40.0",
-    "claude-agent-sdk>=0.1.10",
     "dotenv>=0.9.9",
     "fastexcel>=0.14.0",
-    "google-auth>=2.40.3",
     "httpx>=0.28.1",
     "ipykernel>=6.29.5",
     "polars>=1.31.0",

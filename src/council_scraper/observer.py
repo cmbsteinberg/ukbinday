@@ -1,9 +1,9 @@
 """Observer for capturing page state."""
 
-import re
 from datetime import datetime
 
 from playwright.async_api import Page
+from rich.console import Console
 
 from .models import (
     ButtonElement,
@@ -14,12 +14,14 @@ from .models import (
     SelectOption,
 )
 
+console = Console()
+
 
 class Observer:
     """Observes and snapshots page state."""
 
     def __init__(self):
-        self._previous_element_selectors: set[str] = set()
+        # Keywords are instance variables for potential customization
         self.postcode_keywords = [
             "postcode",
             "post code",
@@ -52,18 +54,22 @@ class Observer:
         self.error_keywords = [
             "postcode not found",
             "invalid postcode",
-            "not recognised",
-            "no addresses",
+            "postcode is not recognised",
+            "postcode not recognised",
+            "no addresses found",
             "address not found",
-            "not found",
-            "error",
+            "no properties found",
         ]
 
-    async def observe(self, page: Page) -> Observation:
+    async def observe(
+        self, page: Page, previous_selectors: set[str] | None = None
+    ) -> Observation:
         """Create a snapshot of the current page state."""
         url = page.url
         title = await page.title()
         timestamp = datetime.now()
+
+        console.log(f"[dim]Observing page: {url}[/dim]")
 
         # Get visible text sample
         visible_text = await page.locator("body").text_content() or ""
@@ -75,14 +81,27 @@ class Observer:
         selects = await self._find_selects(page)
         custom_dropdowns = await self._find_custom_dropdowns(page)
 
+        console.log(
+            f"[dim]Found {len(inputs)} inputs, {len(buttons)} buttons, {len(selects)} selects[/dim]"
+        )
+
         # Detect success and error indicators
         contains_success, success_text = self._detect_success_indicators(visible_text)
         contains_error, error_text = self._detect_error_indicators(visible_text)
 
-        # Find new elements
-        current_selectors = {inp.selector for inp in inputs} | {btn.selector for btn in buttons}
-        new_elements = list(current_selectors - self._previous_element_selectors)
-        self._previous_element_selectors = current_selectors
+        if contains_success:
+            console.log(f"[green]✓ Success indicator detected: {success_text}[/green]")
+        if contains_error:
+            console.log(f"[yellow]! Error indicator detected: {error_text}[/yellow]")
+
+        # Find new elements (stateless - pass in previous selectors)
+        if previous_selectors is None:
+            previous_selectors = set()
+
+        current_selectors = {inp.selector for inp in inputs} | {
+            btn.selector for btn in buttons
+        }
+        new_elements = list(current_selectors - previous_selectors)
 
         return Observation(
             url=url,
@@ -120,10 +139,23 @@ class Observer:
                     if not is_visible:
                         continue
 
-                    elem_selector = f"{selector}:nth-of-type({i})"
-                    input_type = await element.get_attribute("type")
+                    # Build a reliable selector: prefer ID > name > nth-child
                     elem_id = await element.get_attribute("id")
                     name = await element.get_attribute("name")
+                    input_type = await element.get_attribute("type")
+
+                    if elem_id:
+                        elem_selector = f"#{elem_id}"
+                    elif name:
+                        # Use name with type to be more specific
+                        if input_type:
+                            elem_selector = f"{selector}[name='{name}']"
+                        else:
+                            elem_selector = f"[name='{name}']"
+                    else:
+                        # Fallback to nth-child (1-indexed) within a more specific parent
+                        elem_selector = f"{selector} >> nth={i}"
+
                     placeholder = await element.get_attribute("placeholder")
                     value = await element.input_value()
                     is_enabled = await element.is_enabled()
@@ -158,7 +190,8 @@ class Observer:
                     # Score relevance
                     inp.relevance_score = self._score_input_relevance(inp)
                     inputs.append(inp)
-                except Exception:
+                except Exception as e:
+                    console.log(f"[red]Error processing input element: {e}[/red]")
                     continue
 
         return inputs
@@ -177,11 +210,21 @@ class Observer:
                     if not is_visible:
                         continue
 
-                    elem_selector = f"{selector}:nth-of-type({i})"
-                    text = await element.text_content()
+                    # Build reliable selector: prefer ID > text > nth
                     elem_id = await element.get_attribute("id")
+                    text = await element.text_content()
                     button_type = await element.get_attribute("type")
                     is_enabled = await element.is_enabled()
+
+                    if elem_id:
+                        elem_selector = f"#{elem_id}"
+                    elif text and len(text.strip()) < 50:
+                        # Use text-based selector for short, unique text
+                        clean_text = text.strip().replace('"', '\\"')
+                        elem_selector = f'{selector}:has-text("{clean_text}")'
+                    else:
+                        # Fallback to nth
+                        elem_selector = f"{selector} >> nth={i}"
 
                     # Check if it's a primary button
                     classes = await element.get_attribute("class") or ""
@@ -204,7 +247,8 @@ class Observer:
                     # Score relevance
                     btn.relevance_score = self._score_button_relevance(btn)
                     buttons.append(btn)
-                except Exception:
+                except Exception as e:
+                    console.log(f"[red]Error processing button element: {e}[/red]")
                     continue
 
         return buttons
@@ -221,10 +265,17 @@ class Observer:
                 if not is_visible:
                     continue
 
-                elem_selector = f"select:nth-of-type({i})"
+                # Build reliable selector
                 elem_id = await element.get_attribute("id")
                 name = await element.get_attribute("name")
                 is_enabled = await element.is_enabled()
+
+                if elem_id:
+                    elem_selector = f"#{elem_id}"
+                elif name:
+                    elem_selector = f"select[name='{name}']"
+                else:
+                    elem_selector = f"select >> nth={i}"
 
                 # Get label
                 label_text = await self._get_label_for_element(page, element)
@@ -237,15 +288,23 @@ class Observer:
                         option_elem = element.locator("option").nth(j)
                         option_value = await option_elem.get_attribute("value") or ""
                         option_text = await option_elem.text_content() or ""
-                        is_placeholder = "select" in option_text.lower() or option_value == ""
+                        is_placeholder = (
+                            "select" in option_text.lower() or option_value == ""
+                        )
                         options.append(
-                            SelectOption(value=option_value, text=option_text, is_placeholder=is_placeholder)
+                            SelectOption(
+                                value=option_value,
+                                text=option_text,
+                                is_placeholder=is_placeholder,
+                            )
                         )
                     except Exception:
                         continue
 
                 # Detect if it looks like addresses
-                looks_like_address = any("street" in opt.text.lower() or "," in opt.text for opt in options)
+                looks_like_address = any(
+                    "street" in opt.text.lower() or "," in opt.text for opt in options
+                )
 
                 # Get selected value
                 selected = await element.evaluate("el => el.value")
@@ -262,7 +321,8 @@ class Observer:
                     looks_like_address_list=looks_like_address,
                 )
                 selects.append(sel)
-            except Exception:
+            except Exception as e:
+                console.log(f"[red]Error processing select element: {e}[/red]")
                 continue
 
         return selects
@@ -295,16 +355,22 @@ class Observer:
                         "el => Array.from(el.querySelectorAll('[role=option], .option, .dropdown-item')).map(o => o.textContent)"
                     )
 
-                    is_open = await element.evaluate("el => el.getAttribute('aria-expanded') === 'true'")
+                    is_open = await element.evaluate(
+                        "el => el.getAttribute('aria-expanded') === 'true'"
+                    )
 
                     dropdown = CustomDropdown(
                         trigger_selector=elem_selector,
                         options=options,
                         is_open=is_open,
-                        looks_like_address_list=any("street" in str(opt).lower() or "," in str(opt) for opt in options),
+                        looks_like_address_list=any(
+                            "street" in str(opt).lower() or "," in str(opt)
+                            for opt in options
+                        ),
                     )
                     dropdowns.append(dropdown)
-            except Exception:
+            except Exception as e:
+                console.log(f"[red]Error processing custom dropdown: {e}[/red]")
                 continue
 
         return dropdowns
@@ -355,7 +421,9 @@ class Observer:
         score = 0.0
 
         # Check label and placeholder
-        combined_text = (inp.label_text or "") + (inp.placeholder or "") + (inp.nearby_text or "")
+        combined_text = (
+            (inp.label_text or "") + (inp.placeholder or "") + (inp.nearby_text or "")
+        )
         combined_text_lower = combined_text.lower()
 
         for kw in self.postcode_keywords:
@@ -370,7 +438,10 @@ class Observer:
 
         # Check name/id
         name_id_text = ((inp.name or "") + (inp.id or "")).lower()
-        if any(kw in name_id_text for kw in ["postcode", "postal", "address", "uprn", "property"]):
+        if any(
+            kw in name_id_text
+            for kw in ["postcode", "postal", "address", "uprn", "property"]
+        ):
             score += 0.3
 
         # Check pattern
@@ -396,7 +467,16 @@ class Observer:
         score = 0.0
         text_lower = btn.text.lower()
 
-        search_terms = ["find", "search", "look up", "lookup", "submit", "go", "check", "get"]
+        search_terms = [
+            "find",
+            "search",
+            "look up",
+            "lookup",
+            "submit",
+            "go",
+            "check",
+            "get",
+        ]
         if any(term in text_lower for term in search_terms):
             score += 0.4
 

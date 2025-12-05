@@ -2,9 +2,13 @@
 
 import time
 
-from playwright.async_api import Error, Page, TimeoutError
+from playwright.async_api import Error, Page
+from playwright.async_api import TimeoutError as PlaywrightTimeoutError
+from rich.console import Console
 
 from .models import Action, Config, ExecutionResult
+
+console = Console()
 
 
 class Executor:
@@ -16,6 +20,10 @@ class Executor:
     async def execute(self, page: Page, action: Action) -> ExecutionResult:
         """Execute an action on the page."""
         start_time = time.time()
+
+        console.log(
+            f"[cyan]→ Executing: {action.description or action.action_type}[/cyan]"
+        )
 
         try:
             if action.action_type == "fill":
@@ -34,9 +42,18 @@ class Executor:
                 )
 
             result.duration_ms = int((time.time() - start_time) * 1000)
+
+            if result.success:
+                console.log(f"[green]✓ Success ({result.duration_ms}ms)[/green]")
+            else:
+                console.log(
+                    f"[red]✗ Failed: {result.error_type} - {result.error_message}[/red]"
+                )
+
             return result
 
         except Exception as e:
+            console.log(f"[red]✗ Exception: {e}[/red]")
             return ExecutionResult(
                 success=False,
                 action=action,
@@ -51,7 +68,9 @@ class Executor:
             element = page.locator(action.selector)
 
             # Ensure element is ready
-            await element.wait_for(state="visible", timeout=self.config.element_timeout_ms)
+            await element.wait_for(
+                state="visible", timeout=self.config.element_timeout_ms
+            )
 
             # Scroll into view
             await element.scroll_into_view_if_needed()
@@ -62,7 +81,7 @@ class Executor:
 
             return ExecutionResult(success=True, action=action)
 
-        except TimeoutError:
+        except PlaywrightTimeoutError:
             return ExecutionResult(
                 success=False,
                 action=action,
@@ -82,7 +101,9 @@ class Executor:
         try:
             element = page.locator(action.selector)
 
-            await element.wait_for(state="visible", timeout=self.config.element_timeout_ms)
+            await element.wait_for(
+                state="visible", timeout=self.config.element_timeout_ms
+            )
             await element.scroll_into_view_if_needed()
 
             # Use force=False to ensure element is actually clickable
@@ -90,7 +111,7 @@ class Executor:
 
             return ExecutionResult(success=True, action=action)
 
-        except TimeoutError:
+        except PlaywrightTimeoutError:
             return ExecutionResult(
                 success=False,
                 action=action,
@@ -116,7 +137,9 @@ class Executor:
         """Select an option from a dropdown."""
         try:
             element = page.locator(action.selector)
-            await element.wait_for(state="visible", timeout=self.config.element_timeout_ms)
+            await element.wait_for(
+                state="visible", timeout=self.config.element_timeout_ms
+            )
 
             # Try selecting by value first, then by label
             try:
@@ -126,7 +149,7 @@ class Executor:
 
             return ExecutionResult(success=True, action=action)
 
-        except TimeoutError:
+        except PlaywrightTimeoutError:
             return ExecutionResult(
                 success=False,
                 action=action,

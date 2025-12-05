@@ -1,15 +1,15 @@
 """Session for exploring a single council website."""
 
-from datetime import datetime
+import re
 
 from playwright.async_api import Page
+from rich.console import Console
 
 from .executor import Executor
 from .models import (
     Action,
     Config,
     Council,
-    ExecutionResult,
     FailureCategory,
     HistoryEntry,
     Observation,
@@ -18,6 +18,8 @@ from .models import (
 from .observer import Observer
 from .recorder import Recorder
 from .strategist import Strategist
+
+console = Console()
 
 
 class Session:
@@ -39,21 +41,42 @@ class Session:
         self.executor = Executor(config)
         self.history: list[HistoryEntry] = []
         self.phase = "initial"
+        self._previous_selectors: set[str] = (
+            set()
+        )  # Track selectors for stateless observer
 
     async def run(self) -> SessionResult:
         """Main exploration loop."""
+        console.rule(f"[bold cyan]Starting session for {self.council.name}[/bold cyan]")
+        console.log(f"[dim]URL: {self.council.url}[/dim]")
+        console.log(f"[dim]Test postcode: {self.council.test_postcode}[/dim]")
+
         try:
             # Navigate to start URL
             await self._navigate_to_start_url()
 
             # Main loop
             for iteration in range(self.config.max_iterations):
-                # 1. Observe current state
-                observation = await self.observer.observe(self.page)
+                console.log(
+                    f"[bold]Iteration {iteration + 1}/{self.config.max_iterations}[/bold]"
+                )
+
+                # 1. Observe current state (pass previous selectors for stateless operation)
+                observation = await self.observer.observe(
+                    self.page, self._previous_selectors
+                )
                 self.recorder.record_observation(observation)
+
+                # Update selectors for next iteration
+                self._previous_selectors = {
+                    inp.selector for inp in observation.inputs
+                } | {btn.selector for btn in observation.buttons}
 
                 # 2. Check termination conditions
                 if self._is_success(observation):
+                    console.log(
+                        "[bold green]✓ SUCCESS: Bin collection page detected![/bold green]"
+                    )
                     return SessionResult(
                         status="success",
                         council_id=self.council.council_id,
@@ -64,6 +87,7 @@ class Session:
 
                 if self._is_dead_end(observation):
                     category, detail = self._classify_failure(observation, None, None)
+                    console.log(f"[yellow]Dead end detected: {detail}[/yellow]")
                     return SessionResult(
                         status="failure",
                         council_id=self.council.council_id,
@@ -72,13 +96,15 @@ class Session:
                         history=self.history,
                         failure_category=category,
                         failure_detail=detail,
-                        is_recoverable=category not in [
+                        is_recoverable=category
+                        not in [
                             FailureCategory.CAPTCHA_PRESENT,
                             FailureCategory.LOGIN_REQUIRED,
                         ],
                     )
 
                 if self._is_loop(observation):
+                    console.log("[yellow]Loop detected in navigation[/yellow]")
                     return SessionResult(
                         status="failure",
                         council_id=self.council.council_id,
@@ -91,9 +117,12 @@ class Session:
                     )
 
                 # 3. Get candidate actions
-                candidates = self.strategist.get_actions(observation, self.history, self.council.test_postcode)
+                candidates = self.strategist.get_actions(
+                    observation, self.history, self.council.test_postcode
+                )
 
                 if not candidates:
+                    console.log("[yellow]No more actions available[/yellow]")
                     return SessionResult(
                         status="failure",
                         council_id=self.council.council_id,
@@ -107,10 +136,15 @@ class Session:
 
                 # 4. Execute top action
                 action = candidates[0]
+                console.log(
+                    f"[dim]Confidence: {action.confidence:.2f}, Candidates: {len(candidates)}[/dim]"
+                )
                 result = await self.executor.execute(self.page, action)
 
                 # 5. Record the action
-                self.history.append(HistoryEntry(observation=observation, action=action, result=result))
+                self.history.append(
+                    HistoryEntry(observation=observation, action=action, result=result)
+                )
                 self.recorder.record_action(action, result)
 
                 if not result.success:
@@ -121,6 +155,9 @@ class Session:
                 await self._wait_for_settle()
 
             # Max iterations exceeded
+            console.log(
+                f"[red]Max iterations ({self.config.max_iterations}) exceeded[/red]"
+            )
             return SessionResult(
                 status="failure",
                 council_id=self.council.council_id,
@@ -133,6 +170,7 @@ class Session:
             )
 
         except Exception as e:
+            console.log(f"[red]Session exception: {e}[/red]")
             category, detail = self._classify_failure(None, None, e)
             return SessionResult(
                 status="failure",
@@ -147,7 +185,11 @@ class Session:
 
     async def _navigate_to_start_url(self) -> None:
         """Navigate to the council's bin lookup URL."""
-        await self.page.goto(self.council.url, wait_until="load", timeout=self.config.page_load_timeout_ms)
+        await self.page.goto(
+            self.council.url,
+            wait_until="load",
+            timeout=self.config.page_load_timeout_ms,
+        )
         await self._wait_for_settle()
 
     def _is_success(self, observation: Observation) -> bool:
@@ -157,12 +199,23 @@ class Session:
 
         # Check for dates in near future (simple heuristic)
         text_lower = observation.visible_text_sample.lower()
-        date_patterns = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "jan", "feb"]
+        date_patterns = [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday",
+            "jan",
+            "feb",
+        ]
         if any(pattern in text_lower for pattern in date_patterns):
             # Also check for month/day pattern
-            import re
-
-            if re.search(r"\d{1,2}\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)", text_lower):
+            if re.search(
+                r"\d{1,2}\s*(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)",
+                text_lower,
+            ):
                 return True
 
         return False
@@ -196,13 +249,19 @@ class Session:
     def _is_loop(self, observation: Observation) -> bool:
         """Detect if we're in a loop."""
         # Check if we've visited the same URL many times
-        url_count = sum(1 for entry in self.history[-10:] if entry.observation.url == observation.url)
+        url_count = sum(
+            1
+            for entry in self.history[-10:]
+            if entry.observation.url == observation.url
+        )
         if url_count > self.config.max_same_url_visits:
             return True
 
         # Check if we've seen the same observation hash recently
         current_hash = observation.hash
-        hash_count = sum(1 for entry in self.history[-10:] if entry.observation.hash == current_hash)
+        hash_count = sum(
+            1 for entry in self.history[-10:] if entry.observation.hash == current_hash
+        )
         if hash_count > 3:
             return True
 
@@ -218,17 +277,38 @@ class Session:
         if observation:
             page_text = observation.visible_text_sample.lower()
 
-            if any(phrase in page_text for phrase in ["captcha", "robot", "verify you're human"]):
+            if any(
+                phrase in page_text
+                for phrase in ["captcha", "robot", "verify you're human"]
+            ):
                 return FailureCategory.CAPTCHA_PRESENT, "CAPTCHA detected on page"
 
-            if any(phrase in page_text for phrase in ["sign in", "log in", "login required"]):
+            if any(
+                phrase in page_text
+                for phrase in ["sign in", "log in", "login required"]
+            ):
                 return FailureCategory.LOGIN_REQUIRED, "Login wall detected"
 
-            if any(phrase in page_text for phrase in ["postcode not found", "invalid postcode", "not recognised"]):
-                return FailureCategory.POSTCODE_NOT_FOUND, "Site rejected the test postcode"
+            if any(
+                phrase in page_text
+                for phrase in [
+                    "postcode not found",
+                    "invalid postcode",
+                    "not recognised",
+                ]
+            ):
+                return (
+                    FailureCategory.POSTCODE_NOT_FOUND,
+                    "Site rejected the test postcode",
+                )
 
-            if any(phrase in page_text for phrase in ["no addresses", "address not found"]):
-                return FailureCategory.ADDRESS_NOT_FOUND, "No addresses found for postcode"
+            if any(
+                phrase in page_text for phrase in ["no addresses", "address not found"]
+            ):
+                return (
+                    FailureCategory.ADDRESS_NOT_FOUND,
+                    "No addresses found for postcode",
+                )
 
             if "404" in page_text or observation.url.endswith("/404"):
                 return FailureCategory.PAGE_NOT_FOUND, "Page not found (404)"
@@ -246,7 +326,9 @@ class Session:
         """Wait for page to be stable enough to observe."""
         try:
             # Wait for network idle with timeout
-            await self.page.wait_for_load_state("networkidle", timeout=self.config.settle_timeout_ms)
+            await self.page.wait_for_load_state(
+                "networkidle", timeout=self.config.settle_timeout_ms
+            )
         except Exception:
             # Network didn't idle, but that's okay
             pass
