@@ -4,9 +4,15 @@ from abc import ABC, abstractmethod
 
 from rich.console import Console
 
-from .models import Action, Config, HistoryEntry, Observation
+from .models import Action, Config, HistoryEntry, Observation, TestData
 
 console = Console()
+
+# Constants for scoring and filtering
+MIN_RELEVANCE_SCORE = 0.3  # Minimum score for inputs/buttons to be considered
+MAX_EXPLORATORY_BUTTONS = 3  # Max buttons to try in exploratory mode
+RECENT_HISTORY_WINDOW = 5  # Look back this many actions for deduplication
+CLICK_RETRY_WINDOW = 2  # Only block clicks if in last N actions
 
 
 class Rule(ABC):
@@ -17,7 +23,7 @@ class Rule(ABC):
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """Return proposed actions, possibly empty."""
         pass
@@ -40,7 +46,7 @@ class DismissCookieConsentRule(Rule):
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """Look for cookie consent buttons and propose to click them."""
         candidates = []
@@ -93,7 +99,7 @@ class FillPostcodeRule(Rule):
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """Find high-relevance empty input and propose to fill with postcode."""
         candidates = []
@@ -103,7 +109,7 @@ class FillPostcodeRule(Rule):
             [
                 inp
                 for inp in observation.inputs
-                if inp.relevance_score > 0.3 and not inp.current_value
+                if inp.relevance_score > MIN_RELEVANCE_SCORE and not inp.current_value
             ],
             key=lambda x: x.relevance_score,
             reverse=True,
@@ -115,7 +121,7 @@ class FillPostcodeRule(Rule):
                 Action(
                     action_type="fill",
                     selector=inp.selector,
-                    value=test_postcode,
+                    value=test_data.test_postcode,
                     description=f"Fill postcode field: {inp.label_text or inp.placeholder or inp.name}",
                     confidence=inp.relevance_score,
                 )
@@ -135,7 +141,7 @@ class ClickSubmitAfterFillRule(Rule):
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """If we just filled something, look for a submit button."""
         candidates = []
@@ -144,7 +150,11 @@ class ClickSubmitAfterFillRule(Rule):
         if history and history[-1].action.action_type == "fill":
             # Find high-relevance buttons near the filled input
             high_relevance_buttons = sorted(
-                [btn for btn in observation.buttons if btn.relevance_score > 0.3],
+                [
+                    btn
+                    for btn in observation.buttons
+                    if btn.relevance_score > MIN_RELEVANCE_SCORE
+                ],
                 key=lambda x: x.relevance_score,
                 reverse=True,
             )
@@ -174,7 +184,7 @@ class SelectAddressRule(Rule):
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """Find address-looking select elements and propose to select first option."""
         candidates = []
@@ -209,7 +219,7 @@ class OpenCustomDropdownRule(Rule):
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """Find closed custom dropdowns and propose to click them."""
         candidates = []
@@ -239,7 +249,7 @@ class SelectFromCustomDropdownRule(Rule):
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """Find open custom dropdowns and propose to select first option."""
         candidates = []
@@ -277,7 +287,7 @@ class ClickContinueButtonRule(Rule):
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """Find and propose to click continue/next buttons."""
         candidates = []
@@ -311,7 +321,7 @@ class ExploratoryClickRule(Rule):
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """Propose clicks on any buttons we haven't tried yet."""
         candidates = []
@@ -332,7 +342,7 @@ class ExploratoryClickRule(Rule):
 
         # Sort by relevance and return top few
         untried.sort(key=lambda x: x.relevance_score, reverse=True)
-        for btn in untried[:3]:
+        for btn in untried[:MAX_EXPLORATORY_BUTTONS]:
             candidates.append(
                 Action(
                     action_type="click",
@@ -356,13 +366,13 @@ class Strategist:
         self,
         observation: Observation,
         history: list[HistoryEntry],
-        test_postcode: str,
+        test_data: TestData,
     ) -> list[Action]:
         """Return prioritised list of candidate actions."""
         all_candidates = []
 
         for rule in sorted(self.rules, key=lambda r: r.priority):
-            candidates = rule.propose(observation, history, test_postcode)
+            candidates = rule.propose(observation, history, test_data)
             all_candidates.extend(candidates)
 
         console.log(
@@ -396,7 +406,7 @@ class Strategist:
 
         # Build set of recently tried action keys
         recently_tried = set()
-        for entry in history[-5:]:  # Check last 5 actions
+        for entry in history[-RECENT_HISTORY_WINDOW:]:  # Check recent actions
             if entry.action.action_type in ("fill", "select"):
                 # For fill/select, exact match on (type, selector, value)
                 key = (
@@ -406,9 +416,9 @@ class Strategist:
                 )
                 recently_tried.add(key)
             elif entry.action.action_type == "click":
-                # For clicks, match on (type, selector) but only if recent (last 2 actions)
+                # For clicks, match on (type, selector) but only if very recent
                 # This allows click retries after page changes
-                if entry in history[-2:]:
+                if entry in history[-CLICK_RETRY_WINDOW:]:
                     key = (entry.action.action_type, entry.action.selector, None)
                     recently_tried.add(key)
 

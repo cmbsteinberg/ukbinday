@@ -1,5 +1,6 @@
 """Runner for orchestrating the overall scraping process."""
 
+import asyncio
 import json
 import re
 from pathlib import Path
@@ -67,6 +68,15 @@ class Runner:
             try:
                 for i, council in enumerate(councils_to_process):
                     console.rule(f"Council {i + 1}/{len(councils_to_process)}")
+
+                    # Add delay between councils to avoid rate limiting (except first)
+                    if i > 0 and self.config.inter_council_delay_ms > 0:
+                        delay_seconds = self.config.inter_council_delay_ms / 1000
+                        console.log(
+                            f"[dim]Rate limit delay: {delay_seconds:.1f}s[/dim]"
+                        )
+                        await asyncio.sleep(delay_seconds)
+
                     result = await self.run_single(browser, council)
                     self.results.append(result)
 

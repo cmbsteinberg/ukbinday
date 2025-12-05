@@ -21,6 +21,11 @@ from .strategist import Strategist
 
 console = Console()
 
+# Constants for detection thresholds
+MIN_PAGE_TEXT_LENGTH = 50  # Minimum text length for non-empty page
+LOOP_HISTORY_WINDOW = 10  # Look back window for loop detection
+MAX_HASH_REPEATS = 3  # Max times same observation hash before declaring loop
+
 
 class Session:
     """Manages a single exploration attempt for one council."""
@@ -65,7 +70,7 @@ class Session:
                 observation = await self.observer.observe(
                     self.page, self._previous_selectors
                 )
-                self.recorder.record_observation(observation)
+                await self.recorder.record_observation(observation)
 
                 # Update selectors for next iteration
                 self._previous_selectors = {
@@ -77,6 +82,13 @@ class Session:
                     console.log(
                         "[bold green]✓ SUCCESS: Bin collection page detected![/bold green]"
                     )
+                    # Take success screenshot if configured
+                    if self.config.screenshot_on_success:
+                        screenshot_path = await self.recorder.take_screenshot(
+                            self.page, f"success_iteration_{iteration}"
+                        )
+                        console.log(f"[dim]Screenshot: {screenshot_path}[/dim]")
+
                     return SessionResult(
                         status="success",
                         council_id=self.council.council_id,
@@ -88,6 +100,16 @@ class Session:
                 if self._is_dead_end(observation):
                     category, detail = self._classify_failure(observation, None, None)
                     console.log(f"[yellow]Dead end detected: {detail}[/yellow]")
+
+                    # Take failure screenshot if configured
+                    error_screenshots = []
+                    if self.config.screenshot_on_failure:
+                        screenshot_path = await self.recorder.take_screenshot(
+                            self.page, f"failure_deadend_iteration_{iteration}"
+                        )
+                        error_screenshots.append(screenshot_path)
+                        console.log(f"[dim]Screenshot: {screenshot_path}[/dim]")
+
                     return SessionResult(
                         status="failure",
                         council_id=self.council.council_id,
@@ -101,10 +123,19 @@ class Session:
                             FailureCategory.CAPTCHA_PRESENT,
                             FailureCategory.LOGIN_REQUIRED,
                         ],
+                        error_screenshots=error_screenshots,
                     )
 
                 if self._is_loop(observation):
                     console.log("[yellow]Loop detected in navigation[/yellow]")
+
+                    error_screenshots = []
+                    if self.config.screenshot_on_failure:
+                        screenshot_path = await self.recorder.take_screenshot(
+                            self.page, f"failure_loop_iteration_{iteration}"
+                        )
+                        error_screenshots.append(screenshot_path)
+
                     return SessionResult(
                         status="failure",
                         council_id=self.council.council_id,
@@ -114,11 +145,13 @@ class Session:
                         failure_category=FailureCategory.LOOP_DETECTED,
                         failure_detail="Loop detected in navigation",
                         is_recoverable=True,
+                        error_screenshots=error_screenshots,
                     )
 
                 # 3. Get candidate actions
+                test_data = self.council.get_test_data()
                 candidates = self.strategist.get_actions(
-                    observation, self.history, self.council.test_postcode
+                    observation, self.history, test_data
                 )
 
                 if not candidates:
@@ -145,7 +178,7 @@ class Session:
                 self.history.append(
                     HistoryEntry(observation=observation, action=action, result=result)
                 )
-                self.recorder.record_action(action, result)
+                await self.recorder.record_action(action, result)
 
                 if not result.success:
                     # Action failed, continue to next iteration to reassess
@@ -154,10 +187,21 @@ class Session:
                 # 6. Wait for page to settle
                 await self._wait_for_settle()
 
+                # 7. Clean up stale network requests to prevent memory leak
+                await self.recorder.cleanup_stale_requests()
+
             # Max iterations exceeded
             console.log(
                 f"[red]Max iterations ({self.config.max_iterations}) exceeded[/red]"
             )
+
+            error_screenshots = []
+            if self.config.screenshot_on_failure:
+                screenshot_path = await self.recorder.take_screenshot(
+                    self.page, "failure_max_iterations"
+                )
+                error_screenshots.append(screenshot_path)
+
             return SessionResult(
                 status="failure",
                 council_id=self.council.council_id,
@@ -167,6 +211,7 @@ class Session:
                 failure_category=FailureCategory.MAX_ITERATIONS,
                 failure_detail=f"Exceeded max iterations ({self.config.max_iterations})",
                 is_recoverable=True,
+                error_screenshots=error_screenshots,
             )
 
         except Exception as e:
@@ -225,23 +270,25 @@ class Session:
         if observation.contains_error_message:
             return True
 
-        # Check for "not found" type messages
+        # Check for specific error messages (not just "sign in" which is too broad)
         text_lower = observation.visible_text_sample.lower()
         dead_end_indicators = [
             "postcode not found",
             "invalid postcode",
-            "no results",
+            "no results found",
             "page not found",
-            "404",
-            "login required",
-            "sign in",
+            "404 error",
+            "you must login",
+            "you must sign in",
+            "login required to access",
+            "please log in to continue",
         ]
 
         if any(indicator in text_lower for indicator in dead_end_indicators):
             return True
 
-        # If page is empty
-        if len(observation.visible_text_sample.strip()) < 100:
+        # If page is nearly empty (but not completely empty to avoid false positives)
+        if len(observation.visible_text_sample.strip()) < MIN_PAGE_TEXT_LENGTH:
             return True
 
         return False
@@ -251,7 +298,7 @@ class Session:
         # Check if we've visited the same URL many times
         url_count = sum(
             1
-            for entry in self.history[-10:]
+            for entry in self.history[-LOOP_HISTORY_WINDOW:]
             if entry.observation.url == observation.url
         )
         if url_count > self.config.max_same_url_visits:
@@ -260,9 +307,11 @@ class Session:
         # Check if we've seen the same observation hash recently
         current_hash = observation.hash
         hash_count = sum(
-            1 for entry in self.history[-10:] if entry.observation.hash == current_hash
+            1
+            for entry in self.history[-LOOP_HISTORY_WINDOW:]
+            if entry.observation.hash == current_hash
         )
-        if hash_count > 3:
+        if hash_count > MAX_HASH_REPEATS:
             return True
 
         return False

@@ -1,8 +1,6 @@
 """CLI entry point for the bin collection scraper."""
 
 import asyncio
-import sys
-from pathlib import Path
 
 import typer
 
@@ -45,7 +43,9 @@ def run(
 
     async def main():
         result = await runner.run()
-        print(f"\n✓ Processed {result.success_count} successful, {result.failure_count} failed, {result.skipped_count} skipped")
+        print(
+            f"\n✓ Processed {result.success_count} successful, {result.failure_count} failed, {result.skipped_count} skipped"
+        )
         return result
 
     result = asyncio.run(main())
@@ -78,7 +78,7 @@ def preflight(
         valid = sum(1 for r in results if r.postcode_valid)
         will_skip = sum(1 for r in results if r.skip_reason)
 
-        print(f"✓ Preflight check complete:")
+        print("✓ Preflight check complete:")
         print(f"  - Total councils: {len(results)}")
         print(f"  - URLs reachable: {reachable}")
         print(f"  - Valid postcodes: {valid}")

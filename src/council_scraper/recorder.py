@@ -7,6 +7,7 @@ from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
 
+import aiofiles
 from playwright.async_api import Page, Request, Response
 from rich.console import Console
 
@@ -23,16 +24,19 @@ class Recorder:
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.council_id = council_id
 
-        # Open file handles for streaming writes
-        self._network_file = open(self.output_dir / "network.jsonl", "a")
-        self._action_file = open(self.output_dir / "actions.jsonl", "a")
-        self._observation_file = open(self.output_dir / "observations.jsonl", "a")
+        # File paths for async operations
+        self._network_path = self.output_dir / "network.jsonl"
+        self._action_path = self.output_dir / "actions.jsonl"
+        self._observation_path = self.output_dir / "observations.jsonl"
 
         # Track pending requests with unique IDs to avoid race conditions
         self._pending_requests: dict[str, NetworkEntry] = {}
         self._request_id_map: dict[
             int, str
         ] = {}  # Maps Playwright request id to our UUID
+
+        # Timeout for stale request cleanup (60 seconds)
+        self._request_timeout_seconds = 60
 
         console.log(f"[dim]Recorder initialized for {council_id}[/dim]")
 
@@ -95,35 +99,35 @@ class Recorder:
                     )
                     entry.response_body = None
 
-            # Stream to disk immediately
-            self._write_network_entry(entry)
+            # Stream to disk immediately (schedule async write)
+            asyncio.create_task(self._write_network_entry(entry))
         else:
             console.log(
                 f"[yellow]Orphaned response (no matching request): {response.url}[/yellow]"
             )
 
-    def _write_network_entry(self, entry: NetworkEntry) -> None:
+    async def _write_network_entry(self, entry: NetworkEntry) -> None:
         """Append a network entry to the JSONL file."""
-        self._network_file.write(json.dumps(asdict(entry), default=str) + "\n")
-        self._network_file.flush()
+        async with aiofiles.open(self._network_path, "a") as f:
+            await f.write(json.dumps(asdict(entry), default=str) + "\n")
 
-    def record_observation(self, observation: Observation) -> None:
+    async def record_observation(self, observation: Observation) -> None:
         """Log an observation."""
         data = asdict(observation)
         # Convert timestamp to ISO format
         data["timestamp"] = observation.timestamp.isoformat()
-        self._observation_file.write(json.dumps(data, default=str) + "\n")
-        self._observation_file.flush()
+        async with aiofiles.open(self._observation_path, "a") as f:
+            await f.write(json.dumps(data, default=str) + "\n")
 
-    def record_action(self, action: Action, result: ExecutionResult) -> None:
+    async def record_action(self, action: Action, result: ExecutionResult) -> None:
         """Log an action and its result."""
         entry = {
             "action": asdict(action),
             "result": asdict(result),
             "timestamp": datetime.now().isoformat(),
         }
-        self._action_file.write(json.dumps(entry, default=str) + "\n")
-        self._action_file.flush()
+        async with aiofiles.open(self._action_path, "a") as f:
+            await f.write(json.dumps(entry, default=str) + "\n")
 
     async def take_screenshot(self, page: Page, name: str) -> str:
         """Take a screenshot and return the path."""
@@ -133,21 +137,44 @@ class Recorder:
         await page.screenshot(path=str(path), full_page=True)
         return str(path)
 
+    async def cleanup_stale_requests(self) -> None:
+        """Clean up pending requests that are older than timeout threshold."""
+        current_time = datetime.now()
+        stale_uuids = []
+
+        for request_uuid, entry in self._pending_requests.items():
+            age_seconds = (current_time - entry.timestamp).total_seconds()
+            if age_seconds > self._request_timeout_seconds:
+                # Request is stale, write it without response data
+                console.log(
+                    f"[yellow]Stale request timeout ({age_seconds:.1f}s): {entry.request_url[:80]}[/yellow]"
+                )
+                await self._write_network_entry(entry)
+                stale_uuids.append(request_uuid)
+
+        # Remove stale entries
+        for stale_uuid in stale_uuids:
+            self._pending_requests.pop(stale_uuid, None)
+
+        # Clean up orphaned request ID mappings
+        # (when request objects are garbage collected but no response came)
+        if len(self._request_id_map) > len(self._pending_requests) * 2:
+            # If request_id_map is more than 2x the size of pending requests,
+            # we likely have orphaned entries
+            valid_uuids = set(self._pending_requests.keys())
+            orphaned_ids = [
+                req_id
+                for req_id, uuid in self._request_id_map.items()
+                if uuid not in valid_uuids
+            ]
+            for req_id in orphaned_ids:
+                self._request_id_map.pop(req_id, None)
+
     def close(self) -> None:
-        """Close file handles."""
-        self._network_file.close()
-        self._action_file.close()
-        self._observation_file.close()
+        """Close recorder (no-op for async file operations)."""
         console.log(f"[dim]Recorder closed for {self.council_id}[/dim]")
 
-    # Sync context manager (deprecated, kept for compatibility)
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.close()
-
-    # Async context manager (proper)
+    # Async context manager
     async def __aenter__(self):
         return self
 

@@ -2,7 +2,7 @@
 
 import hashlib
 import json
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from typing import Literal
@@ -128,11 +128,16 @@ class Observation:
     @property
     def hash(self) -> str:
         """Compute hash for loop detection."""
+        # Use more text to avoid collision, include input/button identifiers
         key_data = {
             "url": self.url,
-            "text_sample": self.visible_text_sample[:100],
+            "text_sample": self.visible_text_sample[:500],  # More text for uniqueness
             "num_inputs": len(self.inputs),
             "num_buttons": len(self.buttons),
+            "num_selects": len(self.selects),
+            # Include selector fingerprint for better uniqueness
+            "input_selectors": sorted([inp.selector for inp in self.inputs[:5]]),
+            "button_selectors": sorted([btn.selector for btn in self.buttons[:5]]),
         }
         return hashlib.md5(json.dumps(key_data, sort_keys=True).encode()).hexdigest()
 
@@ -202,6 +207,14 @@ class SessionResult:
 
 
 @dataclass
+class TestData:
+    """Test data for a council exploration session."""
+
+    test_postcode: str
+    test_address: str | None = None
+
+
+@dataclass
 class Council:
     """Represents a UK council."""
 
@@ -210,6 +223,13 @@ class Council:
     url: str
     test_postcode: str
     test_address: str | None = None
+
+    def get_test_data(self) -> TestData:
+        """Get TestData from Council."""
+        return TestData(
+            test_postcode=self.test_postcode,
+            test_address=self.test_address,
+        )
 
 
 @dataclass
@@ -238,6 +258,7 @@ class Config:
     typing_delay_ms: int = 50
     action_delay_ms: int = 500
     settle_check_interval_ms: int = 100
+    inter_council_delay_ms: int = 2000  # Delay between councils to avoid rate limiting
 
     # Limits
     max_iterations: int = 50

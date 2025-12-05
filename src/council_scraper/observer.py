@@ -139,7 +139,7 @@ class Observer:
                     if not is_visible:
                         continue
 
-                    # Build a reliable selector: prefer ID > name > nth-child
+                    # Build a reliable selector: prefer ID > name+type > name+nth > nth
                     elem_id = await element.get_attribute("id")
                     name = await element.get_attribute("name")
                     input_type = await element.get_attribute("type")
@@ -147,13 +147,29 @@ class Observer:
                     if elem_id:
                         elem_selector = f"#{elem_id}"
                     elif name:
-                        # Use name with type to be more specific
-                        if input_type:
-                            elem_selector = f"{selector}[name='{name}']"
-                        else:
+                        # Check if name is unique to avoid collision
+                        name_count = await page.locator(f"[name='{name}']").count()
+                        if name_count == 1:
+                            # Unique name, safe to use
                             elem_selector = f"[name='{name}']"
+                        else:
+                            # Multiple elements with same name, need to be more specific
+                            if input_type:
+                                # Try name + type combination
+                                type_name_count = await page.locator(
+                                    f"{selector}[name='{name}']"
+                                ).count()
+                                if type_name_count == 1:
+                                    elem_selector = f"{selector}[name='{name}']"
+                                else:
+                                    # Still not unique, use nth with name as context
+                                    elem_selector = (
+                                        f"{selector}[name='{name}'] >> nth={i}"
+                                    )
+                            else:
+                                elem_selector = f"[name='{name}'] >> nth={i}"
                     else:
-                        # Fallback to nth-child (1-indexed) within a more specific parent
+                        # Fallback to nth with selector type
                         elem_selector = f"{selector} >> nth={i}"
 
                     placeholder = await element.get_attribute("placeholder")
@@ -350,7 +366,18 @@ class Observer:
                     if not is_visible:
                         continue
 
-                    elem_selector = f"{selector}:nth-of-type({i})"
+                    # Build reliable selector: prefer ID > aria-label > nth
+                    elem_id = await element.get_attribute("id")
+                    aria_label = await element.get_attribute("aria-label")
+
+                    if elem_id:
+                        elem_selector = f"#{elem_id}"
+                    elif aria_label:
+                        elem_selector = f"{selector}[aria-label='{aria_label}']"
+                    else:
+                        # Use Playwright's nth syntax (0-indexed)
+                        elem_selector = f"{selector} >> nth={i}"
+
                     options = await element.evaluate(
                         "el => Array.from(el.querySelectorAll('[role=option], .option, .dropdown-item')).map(o => o.textContent)"
                     )
@@ -386,9 +413,11 @@ class Observer:
             # Try associated label via for attribute
             elem_id = await element.get_attribute("id")
             if elem_id:
-                label = page.locator(f"label[for='{elem_id}']").first
-                if await label.is_visible():
-                    return await label.text_content()
+                label = page.locator(f"label[for='{elem_id}']")
+                # Check if label exists before checking visibility
+                label_count = await label.count()
+                if label_count > 0 and await label.first.is_visible():
+                    return await label.first.text_content()
 
             # Try parent label
             label = await element.evaluate("el => el.closest('label')?.textContent")
@@ -405,9 +434,18 @@ class Observer:
             # Get nearby text from parent and siblings
             text = await element.evaluate(
                 """el => {
-                let text = el.parentElement?.textContent || '';
-                let siblings = el.parentElement?.textContent || '';
-                return (text + ' ' + siblings).substring(0, 200);
+                let parentText = el.parentElement?.textContent || '';
+                let siblingText = '';
+
+                // Get text from previous and next siblings
+                if (el.previousElementSibling) {
+                    siblingText += el.previousElementSibling.textContent || '';
+                }
+                if (el.nextElementSibling) {
+                    siblingText += ' ' + (el.nextElementSibling.textContent || '');
+                }
+
+                return (parentText + ' ' + siblingText).substring(0, 200);
             }"""
             )
             return text if text.strip() else None
