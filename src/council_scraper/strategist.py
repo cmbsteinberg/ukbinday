@@ -49,6 +49,10 @@ class DismissCookieConsentRule(Rule):
         test_data: TestData,
     ) -> list[Action]:
         """Look for cookie consent buttons and propose to click them."""
+        # Only trigger on first few iterations to avoid getting stuck
+        if len(history) > 2:
+            return []
+
         candidates = []
 
         # Look for buttons with cookie-related text
@@ -276,6 +280,43 @@ class SelectFromCustomDropdownRule(Rule):
         return candidates
 
 
+class ClickBinCollectionLinkRule(Rule):
+    """Click on links to bin collection lookup pages."""
+
+    @property
+    def priority(self) -> int:
+        return 5  # High priority - if we're on a page with bin lookup link, follow it
+
+    def propose(
+        self,
+        observation: Observation,
+        history: list[HistoryEntry],
+        test_data: TestData,
+    ) -> list[Action]:
+        """Find high-relevance bin collection links and propose to click them."""
+        candidates = []
+
+        # Find high-scoring links (> 0.6 relevance)
+        high_relevance_links = sorted(
+            [link for link in observation.links if link.relevance_score > 0.6],
+            key=lambda x: x.relevance_score,
+            reverse=True,
+        )
+
+        if high_relevance_links:
+            link = high_relevance_links[0]
+            candidates.append(
+                Action(
+                    action_type="click",
+                    selector=link.selector,
+                    description=f"Navigate to bin collection page: {link.text[:50]}",
+                    confidence=link.relevance_score,
+                )
+            )
+
+        return candidates
+
+
 class ClickContinueButtonRule(Rule):
     """Click a continue/next button."""
 
@@ -446,6 +487,7 @@ class Strategist:
     def _default_rules(self) -> list[Rule]:
         return [
             DismissCookieConsentRule(),
+            ClickBinCollectionLinkRule(),
             FillPostcodeRule(),
             ClickSubmitAfterFillRule(),
             SelectAddressRule(),

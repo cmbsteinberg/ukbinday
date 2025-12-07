@@ -10,6 +10,7 @@ from models import (
     ButtonElement,
     CustomDropdown,
     InputElement,
+    LinkElement,
     Observation,
     SelectElement,
     SelectOption,
@@ -95,11 +96,12 @@ class Observer:
         # Find elements
         inputs = await self._find_inputs(page)
         buttons = await self._find_buttons(page)
+        links = await self._find_links(page)
         selects = await self._find_selects(page)
         custom_dropdowns = await self._find_custom_dropdowns(page)
 
         console.log(
-            f"[dim]Found {len(inputs)} inputs, {len(buttons)} buttons, {len(selects)} selects[/dim]"
+            f"[dim]Found {len(inputs)} inputs, {len(buttons)} buttons, {len(links)} links, {len(selects)} selects[/dim]"
         )
 
         # Detect success and error indicators
@@ -115,9 +117,11 @@ class Observer:
         if previous_selectors is None:
             previous_selectors = set()
 
-        current_selectors = {inp.selector for inp in inputs} | {
-            btn.selector for btn in buttons
-        }
+        current_selectors = (
+            {inp.selector for inp in inputs}
+            | {btn.selector for btn in buttons}
+            | {link.selector for link in links}
+        )
         new_elements = list(current_selectors - previous_selectors)
 
         return Observation(
@@ -126,6 +130,7 @@ class Observer:
             timestamp=timestamp,
             inputs=inputs,
             buttons=buttons,
+            links=links,
             selects=selects,
             custom_dropdowns=custom_dropdowns,
             visible_text_sample=visible_text_sample,
@@ -288,6 +293,62 @@ class Observer:
                     continue
 
         return buttons
+
+    async def _find_links(self, page: Page) -> list[LinkElement]:
+        """Find all relevant navigation links on the page."""
+        links = []
+        # Only look for <a> tags that are NOT buttons (already captured)
+        selector = "a:not([role='button'])"
+
+        count = await page.locator(selector).count()
+        for i in range(count):
+            try:
+                element = page.locator(selector).nth(i)
+                is_visible = await element.is_visible()
+                if not is_visible:
+                    continue
+
+                # Get link properties
+                href = await element.get_attribute("href")
+                if not href or href.startswith(("#", "javascript:", "mailto:", "tel:")):
+                    continue
+
+                text = await element.text_content()
+                if not text or len(text.strip()) == 0:
+                    continue
+
+                elem_id = await element.get_attribute("id")
+
+                # Build selector: prefer ID > text > nth
+                if elem_id:
+                    elem_selector = f"#{elem_id}"
+                elif text and len(text.strip()) < 100:
+                    clean_text = " ".join(text.strip().split())
+                    clean_text = clean_text.replace('"', '\\"')
+                    elem_selector = f'a:has-text("{clean_text}")'
+                else:
+                    elem_selector = f"a >> nth={i}"
+
+                link = LinkElement(
+                    selector=elem_selector,
+                    href=href,
+                    text=text.strip() or "",
+                    id=elem_id,
+                    is_visible=is_visible,
+                )
+
+                # Score relevance
+                link.relevance_score = self._score_link_relevance(link)
+
+                # Only include links with some relevance to bins/waste
+                if link.relevance_score > 0.1:
+                    links.append(link)
+
+            except Exception as e:
+                console.log(f"[red]Error processing link element: {e}[/red]")
+                continue
+
+        return links
 
     async def _find_selects(self, page: Page) -> list[SelectElement]:
         """Find all select elements on the page."""
@@ -525,31 +586,97 @@ class Observer:
         score = 0.0
         text_lower = btn.text.lower()
 
+        # Negative scoring for UI chrome (carousel, slides, etc.)
+        carousel_terms = [
+            "slide",
+            "carousel",
+            "pause",
+            "previous",
+            "prev",
+            "go to slide",
+        ]
+        if any(term in text_lower for term in carousel_terms):
+            return 0.0  # Zero out carousel buttons completely
+
+        # High priority: bin-specific terms
+        bin_terms = [
+            "find my bin",
+            "collection",
+            "bin day",
+            "check bins",
+            "waste",
+            "recycling",
+            "bin",
+            "rubbish",
+        ]
+        if any(term in text_lower for term in bin_terms):
+            score += 0.5
+
+        # Medium priority: search/lookup terms
         search_terms = [
             "find",
             "search",
             "look up",
             "lookup",
             "submit",
-            "go",
             "check",
             "get",
         ]
         if any(term in text_lower for term in search_terms):
             score += 0.4
 
-        nav_terms = ["next", "continue", "proceed", "confirm"]
+        # Lower priority: generic navigation (but not "next" which is often carousel)
+        nav_terms = ["continue", "proceed", "confirm"]
         if any(term in text_lower for term in nav_terms):
             score += 0.3
 
-        bin_terms = ["find my bin", "collection", "bin day", "check bins"]
-        if any(term in text_lower for term in bin_terms):
+        # Penalize generic "next" unless combined with bin terms
+        if "next" in text_lower and not any(term in text_lower for term in bin_terms):
+            score -= 0.3
+
+        # Bonus for submit buttons
+        if btn.type == "submit":
             score += 0.3
 
-        if btn.type == "submit":
+        # Bonus for primary buttons
+        if btn.is_primary:
             score += 0.2
 
-        if btn.is_primary:
+        return max(0.0, min(score, 1.0))
+
+    def _score_link_relevance(self, link: LinkElement) -> float:
+        """Score how relevant a link is to bin collection lookup."""
+        score = 0.0
+        text_lower = link.text.lower()
+        href_lower = link.href.lower()
+
+        # High priority: links with specific bin/waste lookup language
+        high_priority_terms = [
+            "find my bin",
+            "bin day",
+            "bin collection",
+            "check my bin",
+            "when is my bin",
+            "collection day",
+            "collection calendar",
+            "bin calendar",
+            "waste collection",
+        ]
+        if any(term in text_lower for term in high_priority_terms):
+            score += 0.8
+
+        # Medium priority: general bin/waste terms
+        bin_terms = ["bin", "waste", "recycling", "rubbish", "refuse", "collection"]
+        if any(term in text_lower for term in bin_terms):
+            score += 0.4
+
+        # Bonus for waste terms in URL path
+        if any(term in href_lower for term in bin_terms):
+            score += 0.2
+
+        # Lookup-style terms
+        lookup_terms = ["find", "search", "check", "lookup", "when", "my"]
+        if any(term in text_lower for term in lookup_terms):
             score += 0.2
 
         return min(score, 1.0)

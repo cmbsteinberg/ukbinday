@@ -209,13 +209,25 @@ class Runner:
                 reader = csv.DictReader(f)
                 for row in reader:
                     if row.get("URL") and row.get("postcode"):
+                        # Use waste_collection_urls if available, else fall back to homepage
+                        waste_urls = row.get("waste_collection_urls", "")
+                        if waste_urls and waste_urls.strip():
+                            # Take first URL from pipe-separated list
+                            url = waste_urls.split("|")[0].strip()
+                        else:
+                            # Skip councils without waste collection URLs
+                            console.log(
+                                f"[yellow]Skipping {row['Authority Name']}: no waste_collection_urls[/yellow]"
+                            )
+                            continue
+
                         self.councils.append(
                             Council(
                                 council_id=row["Authority Name"]
                                 .lower()
                                 .replace(" ", "_")[:30],
                                 name=row["Authority Name"],
-                                url=row["URL"],
+                                url=url,
                                 test_postcode=row["postcode"],
                                 test_address=row.get("Address"),
                             )

@@ -25,6 +25,8 @@ console = Console()
 MIN_PAGE_TEXT_LENGTH = 50  # Minimum text length for non-empty page
 LOOP_HISTORY_WINDOW = 10  # Look back window for loop detection
 MAX_HASH_REPEATS = 3  # Max times same observation hash before declaring loop
+UNPRODUCTIVE_ACTION_THRESHOLD = 5  # Max unproductive actions before declaring loop
+PROGRESS_SCORE_THRESHOLD = 0.3  # Minimum average progress score to avoid loop
 
 
 class Session:
@@ -73,9 +75,11 @@ class Session:
                 await self.recorder.record_observation(observation)
 
                 # Update selectors for next iteration
-                self._previous_selectors = {
-                    inp.selector for inp in observation.inputs
-                } | {btn.selector for btn in observation.buttons}
+                self._previous_selectors = (
+                    {inp.selector for inp in observation.inputs}
+                    | {btn.selector for btn in observation.buttons}
+                    | {link.selector for link in observation.links}
+                )
 
                 # 2. Check termination conditions
                 if self._is_success(observation):
@@ -127,7 +131,10 @@ class Session:
                     )
 
                 if self._is_loop(observation):
-                    console.log("[yellow]Loop detected in navigation[/yellow]")
+                    # Calculate final progress score for diagnostics
+                    progress_score = (
+                        self._calculate_recent_progress() if self.history else 0.0
+                    )
 
                     error_screenshots = []
                     if self.config.screenshot_on_failure:
@@ -136,6 +143,14 @@ class Session:
                         )
                         error_screenshots.append(screenshot_path)
 
+                    # Build detailed failure message
+                    url_visits = sum(
+                        1
+                        for entry in self.history[-LOOP_HISTORY_WINDOW:]
+                        if entry.observation.url == observation.url
+                    )
+                    failure_detail = f"Loop detected: visited {observation.url} {url_visits} times, progress score: {progress_score:.2f}"
+
                     return SessionResult(
                         status="failure",
                         council_id=self.council.council_id,
@@ -143,7 +158,7 @@ class Session:
                         iterations=iteration,
                         history=self.history,
                         failure_category=FailureCategory.LOOP_DETECTED,
-                        failure_detail="Loop detected in navigation",
+                        failure_detail=failure_detail,
                         is_recoverable=True,
                         error_screenshots=error_screenshots,
                     )
@@ -294,17 +309,23 @@ class Session:
         return False
 
     def _is_loop(self, observation: Observation) -> bool:
-        """Detect if we're in a loop."""
-        # Check if we've visited the same URL many times
+        """Detect if we're in a loop using multiple heuristics."""
+        if len(self.history) < 3:
+            return False  # Need some history to detect loops
+
+        # Heuristic 1: Check if we've visited the same URL many times
         url_count = sum(
             1
             for entry in self.history[-LOOP_HISTORY_WINDOW:]
             if entry.observation.url == observation.url
         )
         if url_count > self.config.max_same_url_visits:
+            console.log(
+                f"[yellow]Loop detected: visited {observation.url} {url_count} times[/yellow]"
+            )
             return True
 
-        # Check if we've seen the same observation hash recently
+        # Heuristic 2: Check if we've seen the same observation hash recently
         current_hash = observation.hash
         hash_count = sum(
             1
@@ -312,9 +333,68 @@ class Session:
             if entry.observation.hash == current_hash
         )
         if hash_count > MAX_HASH_REPEATS:
+            console.log(
+                f"[yellow]Loop detected: same page state {hash_count} times[/yellow]"
+            )
             return True
 
+        # Heuristic 3: Check action effectiveness - are we making progress?
+        if len(self.history) >= UNPRODUCTIVE_ACTION_THRESHOLD:
+            recent_progress = self._calculate_recent_progress()
+            if recent_progress < PROGRESS_SCORE_THRESHOLD:
+                console.log(
+                    f"[yellow]Loop detected: low progress score {recent_progress:.2f}[/yellow]"
+                )
+                return True
+
         return False
+
+    def _calculate_recent_progress(self) -> float:
+        """
+        Calculate a progress score based on recent actions.
+        Higher score = more progress being made.
+        """
+        if len(self.history) < 2:
+            return 1.0
+
+        recent_history = self.history[-UNPRODUCTIVE_ACTION_THRESHOLD:]
+        progress_score = 0.0
+        visited_urls = set()
+        seen_hashes = set()
+
+        for i, entry in enumerate(recent_history):
+            # Track unique URLs and page states
+            url = entry.observation.url
+            page_hash = entry.observation.hash
+
+            # Reward new URLs
+            if url not in visited_urls:
+                progress_score += 0.3
+                visited_urls.add(url)
+
+            # Reward new page states (different content)
+            if page_hash not in seen_hashes:
+                progress_score += 0.2
+                seen_hashes.add(page_hash)
+
+            # Reward new elements appearing
+            if entry.observation.new_elements_since_last:
+                progress_score += 0.1
+
+            # Reward successful form fills (higher value actions)
+            if entry.action.action_type == "fill" and entry.result.success:
+                progress_score += 0.4
+
+            # Reward clicks with high confidence
+            if entry.action.confidence > 0.7:
+                progress_score += 0.1
+
+            # Penalize failed actions
+            if not entry.result.success:
+                progress_score -= 0.2
+
+        # Normalize by number of actions
+        return progress_score / len(recent_history) if recent_history else 0.0
 
     def _classify_failure(
         self,

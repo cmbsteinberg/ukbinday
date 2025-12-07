@@ -73,6 +73,18 @@ class ButtonElement:
 
 
 @dataclass
+class LinkElement:
+    """Represents a navigation link (<a> tag)."""
+
+    selector: str
+    href: str
+    text: str
+    id: str | None = None
+    is_visible: bool = True
+    relevance_score: float = 0.0
+
+
+@dataclass
 class SelectOption:
     """Represents an option in a dropdown."""
 
@@ -116,6 +128,7 @@ class Observation:
     timestamp: datetime
     inputs: list[InputElement]
     buttons: list[ButtonElement]
+    links: list[LinkElement]
     selects: list[SelectElement]
     custom_dropdowns: list[CustomDropdown]
     visible_text_sample: str
