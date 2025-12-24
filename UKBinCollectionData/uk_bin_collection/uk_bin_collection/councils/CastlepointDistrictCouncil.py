@@ -1,0 +1,120 @@
+from bs4 import BeautifulSoup
+
+from uk_bin_collection.uk_bin_collection.common import *
+from uk_bin_collection.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+
+
+# import the wonderful Beautiful Soup and the URL grabber
+class CouncilClass(AbstractGetBinDataClass):
+    """
+    Concrete classes have to implement all abstract operations of the
+    base class. They can also override some operations with a default
+    implementation.
+    """
+
+    def parse_data(self, page: str, **kwargs) -> dict:
+        # Disable the SSL warnings that otherwise break everything
+        requests.packages.urllib3.disable_warnings()
+        try:
+            requests.packages.urllib3.contrib.pyopenssl.util.ssl_.DEFAULT_CIPHERS += (
+                ":HIGH:!DH:!aNULL"
+            )
+        except AttributeError:
+            pass
+
+        # UPRN is street id here
+        uprn = kwargs.get("uprn")
+        check_uprn(uprn)
+
+        base_url = "https://apps.castlepoint.gov.uk/cpapps/"
+
+        post_url = f"{base_url}index.cfm?fa=myStreet.displayDetails"
+        post_header_str = (
+            "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,"
+            "image/apng,"
+            "*/*;q=0.8,application/signed-exchange;v=b3;q=0.9|Accept-Encoding: gzip, deflate, "
+            "br|Accept-Language: en-GB;q=0.8|Cache-Control: max-age=0|Connection: "
+            "keep-alive|Content-Length: "
+            "11|Content-Type: application/x-www-form-urlencoded|Host: apps.castlepoint.gov.uk|Origin: "
+            "https://apps.castlepoint.gov.uk|Referer: "
+            "https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=wastecalendar|Sec-Fetch-Dest: "
+            "document|Sec-Fetch-Mode: navigate|Sec-Fetch-Site: same-origin|Sec-Fetch-User: ?1|Sec-GPC: "
+            "1|Upgrade-Insecure-Requests: 1|User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 "
+        )
+
+        post_headers = parse_header(post_header_str)
+        form_data = {"USRN": uprn}
+        post_response = requests.post(
+            post_url, headers=post_headers, data=form_data, verify=False
+        )
+
+        # Make a BS4 object
+        soup = BeautifulSoup(post_response.text, features="html.parser")
+        soup.prettify()
+
+        calMonthNext = f"{base_url}{soup.select_one('div.calMonthNext a')['href']}"
+        nextmonth_response = requests.post(
+            calMonthNext, headers=post_headers, data=form_data, verify=False
+        )
+        soup_nextmonth = BeautifulSoup(nextmonth_response.text, features="html.parser")
+        soup_nextmonth.prettify()
+
+        data = {"bins": []}
+
+        def parse_calendar_month(soup_one_month):
+            out = []
+
+            calendar = soup_one_month.find("table", class_="calendar")
+            if not calendar:
+                return out  # be robust
+
+            # e.g. "[Aug]"
+            month_txt = soup_one_month.find("div", class_="calMonthCurrent").get_text(
+                strip=True
+            )
+            month = datetime.strptime(month_txt, "[%b]").strftime("%m")
+
+            # e.g. "About my Street - August 2025"
+            year_txt = soup_one_month.find("h1").get_text(strip=True)
+            year = datetime.strptime(year_txt, "About my Street - %B %Y").strftime("%Y")
+
+            pink_days = [
+                td.get_text(strip=True) for td in calendar.find_all("td", class_="pink")
+            ]
+            black_days = [
+                td.get_text(strip=True)
+                for td in calendar.find_all("td", class_="normal")
+            ]
+
+            for day in pink_days:
+                out.append(
+                    (
+                        "Pink collection",
+                        datetime(year=int(year), month=int(month), day=int(day)),
+                    )
+                )
+            for day in black_days:
+                out.append(
+                    (
+                        "Normal collection",
+                        datetime(year=int(year), month=int(month), day=int(day)),
+                    )
+                )
+
+            return out
+
+        collection_tuple = []
+        for s in (soup, soup_nextmonth):
+            collection_tuple.extend(parse_calendar_month(s))
+
+        ordered_data = sorted(collection_tuple, key=lambda x: x[1])
+
+        for item in ordered_data:
+            dict_data = {
+                "type": item[0],
+                "collectionDate": item[1].strftime(date_format),
+            }
+            data["bins"].append(dict_data)
+
+        return data

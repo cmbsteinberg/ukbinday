@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UK Council Coverage Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([54.5, -2.7], 6); // Centered on UK
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    function slugify(str) {
+      return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+
+    Promise.all([
+      fetch('tests/input.json').then(res => res.json()),
+      fetch('../build/integration-test-results/test_results.json').then(res => res.json()).catch(() => ({}))
+    ])
+    .then(([integrationData, testResults]) => {
+      console.log("🔍 Loaded integration data:", integrationData);
+      console.log("🧪 Loaded test results:", testResults);
+
+      const coveredLADs = new Set();
+      const integrationByLAD24CD = {};
+      const testStatusByLAD24CD = {};
+
+      for (const [moduleName, entry] of Object.entries(integrationData)) {
+        const wikiName = entry.wiki_name || moduleName;
+        const wikiUrl = `https://github.com/robbrad/UKBinCollectionData/wiki/Councils#${slugify(wikiName)}`;
+        const normalizeKey = str => str.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+        const testResult = testResults[normalizeKey(moduleName)] || null;
+
+        const addCode = (code) => {
+          const cleanCode = code?.replace(/[^\x20-\x7E]/g, '').trim();
+          if (!cleanCode) return;
+
+          coveredLADs.add(cleanCode);
+          if (!integrationByLAD24CD[cleanCode]) {
+            integrationByLAD24CD[cleanCode] = { wiki_name: wikiName, url: wikiUrl };
+            testStatusByLAD24CD[cleanCode] = testResult;
+          }
+        };
+
+        if (entry.LAD24CD) addCode(entry.LAD24CD);
+        if (Array.isArray(entry.supported_councils_LAD24CD)) {
+          for (const code of entry.supported_councils_LAD24CD) addCode(code);
+        }
+      }
+
+      return fetch('Local_Authority_Boundaries.geojson')
+        .then(res => res.json())
+        .then(geojson => {
+          L.geoJSON(geojson, {
+            style: feature => {
+              const code = feature.properties.LAD24CD?.trim();
+              const isCovered = coveredLADs.has(code);
+              const testResult = testStatusByLAD24CD[code];
+
+              let fillColor = 'red'; // default: not covered
+              if (isCovered) {
+                fillColor = (testResult === 'pass') ? 'green' :
+                            (testResult === 'fail') ? 'orange' : 'green';
+              }
+
+              return {
+                color: '#333',
+                weight: 1,
+                fillColor,
+                fillOpacity: 0.6
+              };
+            },
+            onEachFeature: (feature, layer) => {
+              const code = feature.properties.LAD24CD?.trim();
+              const name = feature.properties.LAD24NM;
+              const isCovered = coveredLADs.has(code);
+              const testResult = testStatusByLAD24CD[code];
+              const wiki = integrationByLAD24CD[code];
+
+              if (!code) return;
+
+              if (isCovered && wiki) {
+                const status = (testResult === 'pass') ? '✅ Covered (Test Passed)' :
+                               (testResult === 'fail') ? '🟠 Covered (Test Failed)' :
+                               '✅ Covered (No test result)';
+                layer.bindPopup(`<strong>${name}</strong><br>Status: ${status}<br><a href="${wiki.url}" target="_blank">📘 ${wiki.wiki_name}</a>`);
+              } else {
+                layer.bindPopup(`<strong>${name}</strong><br>Status: ❌ Not Covered`);
+              }
+            }
+          }).addTo(map);
+        });
+    })
+    .catch(err => console.error('❌ Error loading data:', err));
+  </script>
+</body>
+
+</html>

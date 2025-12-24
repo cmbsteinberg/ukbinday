@@ -1,0 +1,137 @@
+name: Scheduled - Test All Councils
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # Nightly schedule for full test run
+
+jobs:
+  setup:
+    name: Setup Environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Poetry
+        run: pipx install poetry==1.8.4
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: 3.12
+
+      - name: Install Dependencies
+        run: make install-dev
+
+      - name: Lint JSON
+        run: jq empty uk_bin_collection/tests/input.json
+
+      - name: Set Council Tests Environment Variable
+        id: set-council-tests
+        run: |
+          COUNCIL_TESTS=""
+          echo "council_tests=$COUNCIL_TESTS" >> $GITHUB_OUTPUT
+
+    outputs:
+      council_tests: ${{ steps.set-council-tests.outputs.council_tests }}
+
+  unit-tests:
+    name: Run Unit Tests
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+        poetry-version: [1.8.4]
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        run: pipx install poetry==${{ matrix.poetry-version }}
+
+      - name: Install Dependencies
+        run: make install-dev
+
+      - name: Run Unit Tests
+        run: make unit-tests
+
+      - name: Upload Test Results to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage.xml
+
+  parity-check:
+    name: Parity Check
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+        poetry-version: [1.8.4]
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        run: pipx install poetry==${{ matrix.poetry-version }}
+
+      - name: Install Dependencies
+        run: make install-dev
+
+      - name: Check Parity of Councils / input.json / Feature file
+        run: |
+          repo=${{ github.event.pull_request.head.repo.full_name || 'robbrad/UKBinCollectionData' }}
+          branch=${{ github.event.pull_request.head.ref || 'master' }}
+          make parity-check repo=$repo branch=$branch
+
+  integration-tests:
+    name: Run Integration Tests
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+        poetry-version: [1.8.4]
+    services:
+      selenium:
+        image: selenium/standalone-chrome:latest
+        options: --shm-size=2gb --name selenium --hostname selenium
+        ports:
+          - 4444:4444
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        run: pipx install poetry==${{ matrix.poetry-version }}
+
+      - name: Install Dependencies
+        run: make install-dev
+
+      - name: Run Integration Tests
+        env:
+          HEADLESS: True
+          COUNCIL_TESTS: ${{ needs.setup.outputs.council_tests }}
+        run: make matrix=${{ matrix.python-version }} councils="${{ env.COUNCIL_TESTS }}" integration-tests
+        continue-on-error: true
+
+      - name: Upload Integration Test Results to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+          report_type: test_results
+          file: build/${{ matrix.python-version }}/integration-test-results/junit.xml
+          flags: integrationtestsfullnightly
+          name: integration-tests-full-nightly

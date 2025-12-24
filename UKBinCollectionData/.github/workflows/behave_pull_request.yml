@@ -1,0 +1,155 @@
+name: PR - Test Councils
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ "master" ]
+    paths-ignore:
+      - "wiki/**"
+      - "**/*.md"
+      - "uk_bin_collection_api_server/**"
+
+jobs:
+  setup:
+    name: Setup Environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install Poetry
+        run: pipx install poetry==1.8.4
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: 3.12
+
+      - name: Install Dependencies
+        run: make install-dev
+
+      - name: Lint JSON
+        run: jq empty uk_bin_collection/tests/input.json
+
+      - name: Get All Council Files That Have Changed
+        id: changed-council-files
+        uses: tj-actions/changed-files@v47
+        with:
+          files: |
+            uk_bin_collection/uk_bin_collection/councils/**.py
+      - name: Set Council Tests Environment Variable
+        id: set-council-tests
+        run: |
+          IFS=' ' read -ra FILES <<< "${{ steps.changed-council-files.outputs.all_changed_files }}"
+          COUNCIL_TESTS=""
+          for file in "${FILES[@]}"; do
+            FILENAME=$(basename "$file" .py)
+            if [ -z "$COUNCIL_TESTS" ]; then
+              COUNCIL_TESTS="$FILENAME"
+            else
+              COUNCIL_TESTS="$COUNCIL_TESTS or $FILENAME"
+            fi
+          done
+          echo "council_tests=$COUNCIL_TESTS" >> $GITHUB_OUTPUT
+    outputs:
+      council_tests: ${{ steps.set-council-tests.outputs.council_tests }}
+
+  unit-tests:
+    name: Run Unit Tests
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+        poetry-version: [1.8.4]
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        run: pipx install poetry==${{ matrix.poetry-version }}
+
+      - name: Install Dependencies
+        run: make install-dev
+
+      - name: Run Unit Tests
+        run: make unit-tests
+
+      - name: Upload Test Results to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage.xml
+
+  parity-check:
+    name: Parity Check
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+        poetry-version: [1.8.4]
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        run: pipx install poetry==${{ matrix.poetry-version }}
+
+      - name: Install Dependencies
+        run: make install-dev
+      
+      - name: Check Parity of Councils / input.json / Feature file
+        env:
+          repo: ${{ github.event.pull_request.head.repo.full_name || 'robbrad/UKBinCollectionData' }}
+          branch: ${{ github.event.pull_request.head.ref || 'master' }}
+        run: make parity-check repo="$repo" branch="$branch"
+
+  integration-tests:
+    name: Run Integration Tests
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+        poetry-version: [1.8.4]
+    services:
+      selenium:
+        image: selenium/standalone-chrome:latest
+        options: --shm-size=2gb --name selenium --hostname selenium
+        ports:
+          - 4444:4444
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        run: pipx install poetry==${{ matrix.poetry-version }}
+
+      - name: Install Dependencies
+        run: make install-dev
+
+      - name: Run Integration Tests
+        env:
+          HEADLESS: True
+          COUNCIL_TESTS: ${{ needs.setup.outputs.council_tests }}
+        run: make matrix=${{ matrix.python-version }} councils="${{ env.COUNCIL_TESTS }}" integration-tests
+        continue-on-error: true
+
+      - name: Upload Integration Test Results to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+          report_type: test_results
+          file: build/${{ matrix.python-version }}/integration-test-results/junit.xml
+          flags: integrationtestspr
+          name: integration-tests-pr

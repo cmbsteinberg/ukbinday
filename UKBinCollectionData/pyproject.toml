@@ -1,0 +1,99 @@
+[project]
+name = "uk_bin_collection"
+version = "0.162.5"
+description = "Python Lib to collect UK Bin Data"
+authors = [{ name = "Robert Bradley", email = "robbrad182@gmail.com" }]
+requires-python = ">=3.12,<3.13"
+readme = "README.md"
+dependencies = [
+    "bs4",
+    "python-dateutil",
+    "holidays",
+    "pandas",
+    "requests",
+    "selenium",
+    "lxml",
+    "urllib3",
+    "webdriver-manager>=4.0.1,<5",
+    "tabulate>=0.9.0,<0.10",
+    "icalevents>=0.2.1,<0.3",
+    "selenium-wire>=5.1.0",
+    "blinker<1.8.0",
+]
+
+[project.optional-dependencies]
+ocr = [
+    "easyocr>=1.7.0,<2",
+    "pillow>=10.0.0",
+]
+
+[project.urls]
+issues = "https://github.com/robbrad/UKBinCollectionData/issues"
+
+[project.scripts]
+uk_bin_collection = "uk_bin_collection.uk_bin_collection.collect_data:run"
+
+[dependency-groups]
+dev = [
+    "black",
+    "coverage",
+    "flake8",
+    "jsonschema",
+    "pylint",
+    "pytest",
+    "setuptools",
+    "pytest-bdd",
+    "pytest-xdist[psutil]",
+    "pyhamcrest",
+    "tabulate>=0.9.0,<0.10",
+    "pytest-asyncio>=0.24.0,<0.25",
+    "pytest-freezer>=0.4.8,<0.5",
+    "homeassistant>=2023.10,<2024",
+    "geopandas>=1.0.1,<2",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    ".", "uk_bin_collection"
+]
+
+[tool.flit.metadata]
+module = "uk_bin_collection"
+
+[tool.hatch.build.targets.sdist]
+include = ["./uk_bin_collection"]
+
+[tool.hatch.build.targets.sdist.force-include]
+uk_bin_collection = "uk_bin_collection"
+
+[tool.hatch.build.targets.wheel]
+include = ["./uk_bin_collection"]
+
+[tool.hatch.build.targets.wheel.sources]
+"./uk_bin_collection" = "uk_bin_collection"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.dephell.main]
+versioning = "semver"
+from = {format = "poetrylock", path = "poetry.lock"}
+envs = ["main"]
+to = {format = "poetry", path = "pyproject.toml"}
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version_provider = "poetry"
+version_scheme = "semver"
+major_version_zero = true
+tag_format = "$version"
+update_changelog_on_bump = true
+annotated_tag = true
+version_files = [
+    "custom_components/uk_bin_collection/manifest.json:version",
+    "custom_components/uk_bin_collection/manifest.json:requirements",
+    "custom_components/uk_bin_collection/const.py:INPUT_JSON_URL",
+    "uk_bin_collection_api_server/requirements.txt:uk-bin-collection"
+]
+

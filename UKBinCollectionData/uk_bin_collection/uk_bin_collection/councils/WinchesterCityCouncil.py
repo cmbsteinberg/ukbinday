@@ -1,0 +1,146 @@
+from bs4 import BeautifulSoup
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
+from uk_bin_collection.uk_bin_collection.common import *
+from uk_bin_collection.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+
+
+# import the wonderful Beautiful Soup and the URL grabber
+class CouncilClass(AbstractGetBinDataClass):
+    """
+    Concrete classes have to implement all abstract operations of the
+    base class. They can also override some operations with a default
+    implementation.
+    """
+
+    def parse_data(self, page: str, **kwargs) -> dict:
+        """
+        Parse Winchester council bin calendar and extract upcoming collection types and dates.
+
+        Parameters:
+            page (str): Unused by this implementation; kept for interface compatibility.
+            **kwargs:
+                paon (str): Property name or number to match in the address selection.
+                postcode (str): Postcode to search for addresses.
+                web_driver: Optional identifier or configuration for the Selenium webdriver.
+                headless (bool): Whether to run the webdriver in headless mode.
+
+        Returns:
+            dict: A dictionary with a single key "bins" whose value is a list of dictionaries, each containing:
+                - "type" (str): The bin type/name.
+                - "collectionDate" (str): Collection date formatted as "dd/mm/YYYY".
+
+        Raises:
+            ValueError: If the page does not contain the expected collections container.
+        """
+        driver = None
+        try:
+            data = {"bins": []}
+            user_paon = kwargs.get("paon")
+            user_postcode = kwargs.get("postcode")
+            web_driver = kwargs.get("web_driver")
+            headless = kwargs.get("headless")
+            check_paon(user_paon)
+            check_postcode(user_postcode)
+
+            # Create Selenium webdriver
+            driver = create_webdriver(web_driver, headless, None, __name__)
+            driver.get("http://www.winchester.gov.uk/bin-calendar")
+
+            # Wait for the postcode field to appear then populate it
+            inputElement_postcode = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "postcodeSearch"))
+            )
+            inputElement_postcode.send_keys(user_postcode)
+
+            # Click search button
+            findAddress = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, '//button[@class="govuk-button mt-4"]')
+                )
+            )
+            findAddress.click()
+
+            # Wait for the 'Select address' dropdown to appear and select option matching the house name/number
+            WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable(
+                    (
+                        By.XPATH,
+                        "//select[@id='addressSelect']//option[contains(., '"
+                        + user_paon
+                        + "')]",
+                    )
+                )
+            ).click()
+
+            # Wait for the collections table to appear
+            # Wait for the collections container to appear (use contains to be resilient to CSS name changes)
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located(
+                    (
+                        By.XPATH,
+                        '//div[contains(@class, "ant-row") and contains(@class, "justify-content-between")]',
+                    )
+                )
+            )
+
+            soup = BeautifulSoup(driver.page_source, features="html.parser")
+
+            # Find the main container and then each card. Use class contains so small CSS changes don't break parsing.
+            recyclingcalendar = soup.find(
+                "div",
+                class_=lambda c: c
+                and "ant-row" in c
+                and "justify-content-between" in c,
+            )
+
+            if not recyclingcalendar:
+                raise ValueError("Could not find the collections container on the page")
+
+            # Each collection card uses a "p-2 d-flex flex-column justify-content-between" wrapper.
+            cards = recyclingcalendar.find_all(
+                "div",
+                class_=lambda c: c and "p-2" in c and "flex-column" in c,
+            )
+
+            current_year = datetime.now().year
+            current_month = datetime.now().month
+
+            for card in cards:
+                h3 = card.find("h3")
+                if not h3:
+                    # skip unexpected card
+                    continue
+                BinType = h3.text.strip()
+
+                date_div = card.find("div", class_=lambda c: c and "fw-bold" in c)
+                if not date_div:
+                    # no date found for this card, skip
+                    continue
+
+                date_text = date_div.text.strip()
+                # Expect format like: 'Friday 5 December'
+                collectiondate = datetime.strptime(date_text, "%A %d %B")
+                if (current_month > 10) and (collectiondate.month < 3):
+                    collectiondate = collectiondate.replace(year=(current_year + 1))
+                else:
+                    collectiondate = collectiondate.replace(year=current_year)
+
+                dict_data = {
+                    "type": BinType,
+                    "collectionDate": collectiondate.strftime("%d/%m/%Y"),
+                }
+                data["bins"].append(dict_data)
+
+        except Exception as e:
+            # Here you can log the exception if needed
+            print(f"An error occurred: {e}")
+            # Optionally, re-raise the exception if you want it to propagate
+            raise
+        finally:
+            # This block ensures that the driver is closed regardless of an exception
+            if driver:
+                driver.quit()
+        return data
