@@ -1,0 +1,375 @@
+{
+  "council": "AberdeenCityCouncil",
+  "timestamp": "2025-12-24T18:26:25.592038",
+  "success": true,
+  "total_requests": 4,
+  "requests": [
+    {
+      "method": "get",
+      "url": "https://www.aberdeencity.gov.uk",
+      "request_headers": {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+      },
+      "request_params": null,
+      "request_body": null,
+      "status_code": 200,
+      "response_headers": {
+        "Server": "nginx",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Vary": "Accept-Encoding, Cookie",
+        "Cache-Control": "max-age=2700, public",
+        "Date": "Wed, 24 Dec 2025 15:14:15 GMT",
+        "X-Drupal-Dynamic-Cache": "MISS",
+        "Content-language": "en",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "Last-Modified": "Wed, 24 Dec 2025 15:14:14 GMT",
+        "ETag": "W/\"1766589254\"",
+        "X-Generator": "Drupal 10 (https://www.drupal.org)",
+        "X-Drupal-Cache": "HIT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Content-Encoding": "gzip"
+      },
+      "response_body": "<!DOCTYPE html>\n<html  lang=\"en\" dir=\"ltr\" prefix=\"content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# \">\n  <head>\n    <meta charset=\"utf-8\" />\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-6202539-1\"></script>\n<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};gtag(\"js\", new Date());gtag(\"set\", \"developer_id.dMDhkMT\", true);gtag(\"config\", \"UA-6202539-1\", {\"groups\":\"default\",\"anonymize_ip\":true,\"page_placeholder\":\"PLACEHOLDER_page_path\",\"allow_ad_personalization_signals\":false});</script>\n<meta name=\"description\" content=\"Aberdeen is a thriving, cosmopolitan port in the North-east of Scotland offering a wide range of information and services to residents and businesses\" />\n<meta name=\"keywords\" content=\"a, b, c, d\" />\n<link rel=\"shortlink\" href=\"https://www.aberdeencity.gov.uk/\" />\n<link rel=\"canonical\" href=\"https://www.aberdeencity.gov.uk/\" />\n<meta name=\"dcterms.title\" content=\"Home | Aberdeen City Council\" />\n<meta name=\"msvalidate.01\" content=\"17F582D2961E6D735D161227B45FFA5A\" />\n<meta name=\"google-site-verification\" content=\"hClkOHqJ-6kd7LL4ganAtZWZQqPh5IJRa4PlpJ0d6R0\" />\n<meta name=\"Generator\" content=\"Drupal 10 (https://www.drupal.org)\" />\n<meta name=\"MobileOptimized\" content=\"width\" />\n<meta name=\"HandheldFriendly\" content=\"true\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n<script src=\"https://use.typekit.com/pgu4hkr.js\"></script>\n<script>try{Typekit.load({ async: true });}catch(e){}</script>\n<style>div#sliding-popup, div#sliding-popup .eu-cookie-withdraw-banner, .eu-cookie-withdraw-tab {background: #452947} div#sliding-popup.eu-cookie-withdraw-wrapper { background: transparent; } #sliding-popup h1, #sliding-popup h2, #sliding-popup h3, #sliding-popup p, #sliding-popup label, #sliding-popup div, .eu-cookie-compliance-more-button, .eu-cookie-compliance-secondary-button, .eu-cookie-withdraw-tab { color: #ffffff;} .eu-cookie-withdraw-tab { border-color: #ffffff;}</style>\n<style media=\"all\">.banner-wrapper {background-color: #FFFFFF ;background-image:  url('https://www.aberdeencity.gov.uk/sites/default/files/2025-11/Xmas%20WEB%20header%202025%20%281%29.png') ;background-repeat: no-repeat ;background-attachment: scroll ;background-position: left top ;z-index: auto;}</style>\n<link rel=\"icon\" href=\"/sites/default/files/Favicon.png\" type=\"image/png\" />\n\n    <title>Home | Aberdeen City Council</title>\n    <link rel=\"stylesheet\" media=\"all\" href=\"/sites/default/files/css/css_f2_RvCKg28gcCFDLW_mSGHc72aRuL8xXnMinJjIia3c.css?delta=0&amp;language=en&amp;theme=aberdeen_bootstrap_cdn&amp;include=eJxtkFFuAyEMRC8Ey5GQF2YpLWCEIdvcvpA2TSLlx5g3ksdj2tE8UOzO3KU3qtb5Yg4uXRS9F0PinZKWfk2xBPUQM3tKNkOEAsT8C_om6LugHCUUT83cm61_IEM5bjC-jUppo0_6fgE-UuKgMKxj_oqYT64pUnEw76D1OGikrlYWOiGcYZ767cT-GzNTKPGIzlauo5rXr5KrdGSzk0BdIk4xt7rNTCP9oceBzFqAC9bcE_MWgTLKmMYtT0e9gF5EH22az_Q_LHqYHg\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"/sites/default/files/css/css_qc59Azl_wVJtHfVBwIO3hiBc640VjFitnq4XpsqVtRk.css?delta=2&amp;language=en&amp;theme=aberdeen_bootstrap_cdn&amp;include=eJxtkFFuAyEMRC8Ey5GQF2YpLWCEIdvcvpA2TSLlx5g3ksdj2tE8UOzO3KU3qtb5Yg4uXRS9F0PinZKWfk2xBPUQM3tKNkOEAsT8C_om6LugHCUUT83cm61_IEM5bjC-jUppo0_6fgE-UuKgMKxj_oqYT64pUnEw76D1OGikrlYWOiGcYZ767cT-GzNTKPGIzlauo5rXr5KrdGSzk0BdIk4xt7rNTCP9oceBzFqAC9bcE_MWgTLKmMYtT0e9gF5EH22az_Q_LHqYHg\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"https://cdn.jsdelivr.net/npm/entreprise7pro-bootstrap@3.4.8/dist/css/bootstrap.min.css\" integrity=\"sha256-zL9fLm9PT7/fK/vb1O9aIIAdm/+bGtxmUm/M1NPTU7Y=\" crossorigin=\"anonymous\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"https://cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.1.1/7.x-3.x/drupal-bootstrap.min.css\" integrity=\"sha512-nrwoY8z0/iCnnY9J1g189dfuRMCdI5JBwgvzKvwXC4dZ+145UNBUs+VdeG/TUuYRqlQbMlL4l8U3yT7pVss9Rg==\" crossorigin=\"anonymous\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"https://cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.1.1/8.x-3.x/drupal-bootstrap.min.css\" integrity=\"sha512-jM5OBHt8tKkl65deNLp2dhFMAwoqHBIbzSW0WiRRwJfHzGoxAFuCowGd9hYi1vU8ce5xpa5IGmZBJujm/7rVtw==\" crossorigin=\"anonymous\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"https://cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.2.0/7.x-3.x/drupal-bootstrap.min.css\" integrity=\"sha512-U2uRfTiJxR2skZ8hIFUv5y6dOBd9s8xW+YtYScDkVzHEen0kU0G9mH8F2W27r6kWdHc0EKYGY3JTT3C4pEN+/g==\" crossorigin=\"anonymous\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"https://cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.2.0/8.x-3.x/drupal-bootstrap.min.css\" integrity=\"sha512-JXQ3Lp7Oc2/VyHbK4DKvRSwk2MVBTb6tV5Zv/3d7UIJKlNEGT1yws9vwOVUkpsTY0o8zcbCLPpCBG2NrZMBJyQ==\" crossorigin=\"anonymous\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"https://cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.3.1/7.x-3.x/drupal-bootstrap.min.css\" integrity=\"sha512-ZbcpXUXjMO/AFuX8V7yWatyCWP4A4HMfXirwInFWwcxibyAu7jHhwgEA1jO4Xt/UACKU29cG5MxhF/i8SpfiWA==\" crossorigin=\"anonymous\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"https://cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.3.1/8.x-3.x/drupal-bootstrap.min.css\" integrity=\"sha512-kTMXGtKrWAdF2+qSCfCTa16wLEVDAAopNlklx4qPXPMamBQOFGHXz0HDwz1bGhstsi17f2SYVNaYVRHWYeg3RQ==\" crossorigin=\"anonymous\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"https://cdn.jsdelivr.net/npm/@unicorn-fail/drupal-bootstrap-styles@0.0.2/dist/3.4.0/8.x-3.x/drupal-bootstrap.min.css\" integrity=\"sha512-tGFFYdzcicBwsd5EPO92iUIytu9UkQR3tLMbORL9sfi/WswiHkA1O3ri9yHW+5dXk18Rd+pluMeDBrPKSwNCvw==\" crossorigin=\"anonymous\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"//fonts.googleapis.com/css?family=Open+Sans:400,700\" />\n<link rel=\"stylesheet\" media=\"all\" href=\"/sites/default/files/css/css_KGt8OXXCHl0g99jFvwCq2l3C8VtPGLHhP9iHJ2Juajc.css?delta=12&amp;language=en&amp;theme=aberdeen_bootstrap_cdn&amp;include=eJxtkFFuAyEMRC8Ey5GQF2YpLWCEIdvcvpA2TSLlx5g3ksdj2tE8UOzO3KU3qtb5Yg4uXRS9F0PinZKWfk2xBPUQM3tKNkOEAsT8C_om6LugHCUUT83cm61_IEM5bjC-jUppo0_6fgE-UuKgMKxj_oqYT64pUnEw76D1OGikrlYWOiGcYZ767cT-GzNTKPGIzlauo5rXr5KrdGSzk0BdIk4xt7rNTCP9oceBzFqAC9bcE_MWgTLKmMYtT0e9gF5EH22az_Q_LHqYHg\" />\n\n    \n  </head>\n  <body class=\"fontyourface path-frontpage page-node-type-page navbar-is-static-top has-glyphicons\">\n    \n      <div class=\"dialog-off-canvas-main-canvas\" data-off-canvas-main-canvas>\n    \n          <header class=\"navbar navbar-default navbar-static-top\" id=\"navbar\">\n      <a href=\"#main-content\" class=\"visually-hidden focusable skip-link\">\n        Skip to main content\n      </a>\n      <div class=\"container\">\n        <div class=\"navbar-header\">\n          <div>\n              <div class=\"region region-navigation\">\n        \n\n<div id=\"block-homedate\" class=\"hidden-xs date-nav block block-block-content block-block-contentd15d6c2b-92fe-4c17-81ba-3232235a8b98 clearfix\" >\n  \n    \n\n      \n            <div class=\"field field--name-body field--type-text-with-summary field--label-hidden field--item\"><p id=\"home-date-text\"></p>\n<script>\nvar date = new Date();\n\nvar weekday = date.toLocaleString('en-gb', { weekday: 'long' });\nvar day = date.toLocaleString('en-gb', { day: 'numeric' });\nvar month = date.toLocaleString('en-gb', { month: 'long' });\nvar year = date.toLocaleString('en-gb', { year: 'numeric' });\n\ndocument.querySelector('#home-date-text').innerText = weekday + ', ' + day + ' ' + month + ' ' + year;\n</script></div>\n      \n  </div>\n\n      <a class=\"logo navbar-btn pull-left\" href=\"/\" title=\"Home\" rel=\"home\">\n      <img src=\"/sites/default/files/acc_crestV2final.png\" alt=\"Home\" />\n    </a>\n          \n\n<div id=\"block-recitemelaunch\" class=\"col-xs-5 visible-xs pull-right block block-simple-block block-simple-blockreciteme-launch clearfix\" >\n  \n    \n\n      <div class=\"topline top-buttons\">\n<ul>\n\t<li><a href=\"#reciteme-launch\"><span class=\"fa fa-eye accessible-btn\">&nbsp;</span></a></li>\n</ul>\n</div>\n\n  </div>\n\n\n\n<div id=\"block-topbarplaceholder\" class=\"hidden-xs col-sm-6 col-md-6 block block-simple-block block-simple-blocktopbarplaceholder clearfix\" >\n  \n    \n\n      <div class=\"topline top-buttons\">\n<ul>\n\t<li><a href=\"#reciteme-launch\"><span class=\"fa fa-eye\">&nbsp;</span>Accessibility Tools</a></li>\n\t<li><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"71727baa-c1ec-4919-977a-8425bd95b633\" href=\"/link/webcams\"><span aria-hidden=\"true\" class=\"fa fa-video-camera\">&nbsp;</span>Live Webcams</a></li>\n\t<li><a data-entity-substitution=\"canonical\" data-entity-type=\"node\" data-entity-uuid=\"c943640c-3189-4977-9f3f-88fbe50ed503\" href=\"/log-in-or-register-for-online-services\"><span aria-hidden=\"true\" class=\"fa fa-user-o\">&nbsp;</span>Login</a></li>\n</ul>\n</div>\n\n  </div>\n\n    \n\n<div id=\"block-mainnavigation-2\" class=\"col-xs-12 col-sm-12 col-md-6 hidden-xs hidden-sm block block-we-megamenu block-we-megamenu-blockmain clearfix\" >\n  \n    \n\n      <div class=\"region-we-mega-menu\">\n\t<a class=\"navbar-toggle collapsed\">\n\t    <span class=\"icon-bar\"></span>\n\t    <span class=\"icon-bar\"></span>\n\t    <span class=\"icon-bar\"></span>\n\t</a>\n\t<nav  class=\"main navbar navbar-default navbar-we-mega-menu mobile-collapse hover-action\" data-menu-name=\"main\" data-block-theme=\"aberdeen_bootstrap_cdn\" data-style=\"Default\" data-animation=\"None\" data-delay=\"\" data-duration=\"\" data-autoarrow=\"\" data-alwayshowsubmenu=\"\" data-action=\"hover\" data-mobile-collapse=\"0\" aria-label=\"Main Navigation\">\n\t  <div class=\"container-fluid\">\n\t    <ul  class=\"we-mega-menu-ul nav nav-tabs\">\n  <li  class=\"we-mega-menu-li dropdow... [truncated]",
+      "source": "requests.Session",
+      "timestamp": "2025-12-24T18:26:25.733684"
+    },
+    {
+      "method": "GET",
+      "url": "https://integration.aberdeencity.gov.uk/authapi/isauthenticated?uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice%252Fbin_collection_calendar___view&hostname=integration.aberdeencity.gov.uk&withCredentials=true",
+      "request_headers": {},
+      "request_params": null,
+      "request_body": null,
+      "status_code": 200,
+      "response_headers": {
+        "Date": "Wed, 24 Dec 2025 18:26:25 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "800",
+        "Connection": "keep-alive",
+        "Set-Cookie": "AWSALB=ovM69vV3ynQmpVxao6Ndt9Pzi95gu+MVyIXut231RxIC06LfTKUS0lcGxM7DmF+b1pRT2gbM+vsrXjg2BdeXuvLwKZy+4qj05OWHAi2t1qX5gF0kA8317/2Xi8G2; Expires=Wed, 31 Dec 2025 18:26:25 GMT; Path=/, AWSALBCORS=ovM69vV3ynQmpVxao6Ndt9Pzi95gu+MVyIXut231RxIC06LfTKUS0lcGxM7DmF+b1pRT2gbM+vsrXjg2BdeXuvLwKZy+4qj05OWHAi2t1qX5gF0kA8317/2Xi8G2; Expires=Wed, 31 Dec 2025 18:26:25 GMT; Path=/; SameSite=None; Secure, PHPSESSID=tm8abq8frk2o10cdqbbdcfp1vq; path=/; secure; HttpOnly, SESSIONCHECK=8722ea85b8d0bf8891accb13dccf9c399e385595efffc1e8564bfbb415dc16df229d005e1856d7b0f89e9276d474ee57f2d4f816b210f5ce10bf11a595174280; expires=Thu, 25-Dec-2025 00:26:25 GMT; Max-Age=21600; path=/api/; domain=integration.aberdeencity.gov.uk; secure; HttpOnly, SimpleSAMLSessionID=93b2d3b5d5a262259aa6b5225a42a60c; path=/; secure; HttpOnly, SESSfsauthsession=0; path=/; secure; HttpOnly",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache",
+        "X-Auth-Session": "tm8abq8frk2o10cdqbbdcfp1vq",
+        "Vary": "Accept-Encoding",
+        "Content-Encoding": "gzip",
+        "Accept-Ranges": "none",
+        "X-XSS-Protection": "0",
+        "Strict-Transport-Security": "max-age=31536000;",
+        "Content-Security-Policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: * ;media-src 'self' data: blob:"
+      },
+      "response_body": {
+        "auth-session": "357d3d2a46fe967cb33299550f35777f",
+        "cookie-domain": "",
+        "is_authenticated": false,
+        "providers": [
+          {
+            "name": "Azure__Hidden_",
+            "displayname": "Azure (Hidden)",
+            "image": "https://fs-filestore-eu.s3-eu-west-1.amazonaws.com/resources/azure.png",
+            "supportonly": "true",
+            "mapping": "{\"username\" : \"sAMAccountName\",\"email\" : \"emailaddress\",\"memberof\" :\"memberof\",\"name\":\"displayName\",\"first_name\" : \"givenName\",\"last_name\" :\"surname\",\"groupof\" :\"groups\"}",
+            "url": "https://integration.aberdeencity.gov.uk/authapi/auth?provider=Azure__Hidden_&uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice%252Fbin_collection_calendar___view"
+          },
+          {
+            "name": "google_admin",
+            "displayname": "Firmstep Admin",
+            "image": "https://fs-filestore-eu.s3.amazonaws.com/resources/Googlethumb.jpg",
+            "supportonly": "true",
+            "url": "https://integration.aberdeencity.gov.uk/authapi/auth?provider=google_admin&uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice%252Fbin_collection_calendar___view"
+          },
+          {
+            "name": "google_fam",
+            "displayname": "Firmstep Google FAM",
+            "image": "//fs-filestore-eu.s3.amazonaws.com/resources/Logo_icon_round_100px.png",
+            "supportonly": "true",
+            "url": "https://integration.aberdeencity.gov.uk/authapi/auth?provider=google_fam&uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice%252Fbin_collection_calendar___view"
+          },
+          {
+            "name": "MS_Dynamics_SSO",
+            "displayname": "MS Dynamics SSO",
+            "image": "https://fs-filestore-eu.s3.amazonaws.com/resources/Dynamics365_scalable.svg",
+            "supportonly": "true",
+            "mapping": "{    \"first_name\": \"first_name\",    \"last_name\": \"last_name\",    \"username\": \"username\",    \"name\": \"displayname\",    \"email\": \"email\",    \"Mobile_Number\": \"mobile\",    \"Phone_Number\": \"phone\",    \"flat\": \"flat\",    \"house\": \"house\",    \"street\": \"streetName\",    \"town\": \"town\",    \"county\": \"State\",    \"postcode\": \"postalCode\",    \"country\": \"country\",    \"Date_of_Birth\": \"dateOfBirth\",    \"UPRN\": \"uprn\",    \"uprn\": \"uprn\",    \"ward\": \"ward\"}",
+            "url": "https://integration.aberdeencity.gov.uk/authapi/auth?provider=MS_Dynamics_SSO&uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice%252Fbin_collection_calendar___view"
+          },
+          {
+            "name": "Self_Office_Login",
+            "displayname": "Self Office Login",
+            "image": "https://fs-filestore-eu.s3.amazonaws.com/resources/network.png",
+            "supportonly": "true",
+            "url": "https://integration.aberdeencity.gov.uk/authapi/auth?provider=Self_Office_Login&uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice%252Fbin_collection_calendar___view"
+          },
+          {
+            "name": "ssauth",
+            "displayname": "Self-service",
+            "image": "https://fs-filestore-eu.s3.amazonaws.com/resources/network.png",
+            "url": "https://integration.aberdeencity.gov.uk/authapi/auth?provider=ssauth&uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice%252Fbin_collection_calendar___view",
+            "register_url": "https://integration.aberdeencity.gov.uk/authapi/register?provider=ssauth&uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice%252Fbin_collection_calendar___view"
+          }
+        ]
+      },
+      "source": "requests.Session",
+      "timestamp": "2025-12-24T18:26:25.878601"
+    },
+    {
+      "method": "POST",
+      "url": "https://integration.aberdeencity.gov.uk/apibroker/runLookup",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "User-Agent": "Mozilla/5.0",
+        "X-Requested-With": "XMLHttpRequest",
+        "Referer": "https://integration.aberdeencity.gov.uk/fillform/?iframe_id=fillform-frame-1&db_id="
+      },
+      "request_params": {
+        "id": "583c08ffc47fe",
+        "repeat_against": "",
+        "noRetry": "true",
+        "getOnlyTokens": "undefined",
+        "log_id": "",
+        "app_name": "AF-Renderer::Self",
+        "_": "1766600785878",
+        "sid": "357d3d2a46fe967cb33299550f35777f"
+      },
+      "request_body": null,
+      "status_code": 200,
+      "response_headers": {
+        "Date": "Wed, 24 Dec 2025 18:26:26 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Length": "623",
+        "Connection": "keep-alive",
+        "Set-Cookie": "AWSALB=ZdCyu5xMYfosLrjJTfMxrYIW3/N+Byv6OWqAw6UZw5a6vZKxXqjB6GFpPvA9lynV8ZxU28fSRRDRx9HRSav5SgqBnu8SnnZMbpW24O19h/DCryBeVefigzfmq6rO; Expires=Wed, 31 Dec 2025 18:26:25 GMT; Path=/, AWSALBCORS=ZdCyu5xMYfosLrjJTfMxrYIW3/N+Byv6OWqAw6UZw5a6vZKxXqjB6GFpPvA9lynV8ZxU28fSRRDRx9HRSav5SgqBnu8SnnZMbpW24O19h/DCryBeVefigzfmq6rO; Expires=Wed, 31 Dec 2025 18:26:25 GMT; Path=/; SameSite=None; Secure",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Strict-Transport-Security": "max-age=31536000;",
+        "Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache",
+        "Vary": "Accept-Encoding",
+        "Content-Encoding": "gzip",
+        "Accept-Ranges": "none",
+        "X-XSS-Protection": "0",
+        "Content-Security-Policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: * ;media-src 'self' data: blob:"
+      },
+      "response_body": {
+        "status": "done",
+        "data": "<?xml version=\"1.0\"?>\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\"varchar\" Name=\"token\"/></Fields><Rows><Row id=\"0\"><result column=\"token\" isNull=\"False\">o6rmgX5tS4dofdoamiBrnO2L+2kcUNyR+tKhQ3GeVgYjilYmfsEhfHhGn8B1Hhq1rYTCwohbEWk=</result></Row></Rows></DatabaseResponse></RequestResponse></Responses>\n",
+        "integration": {
+          "id": "583c08ffc47fe",
+          "type": "webservice",
+          "transformed": {
+            "error": null,
+            "xml_data": "<?xml version=\"1.0\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\"varchar\" Name=\"token\"/></Fields><Rows><Row id=\"0\"><result column=\"token\" isNull=\"False\">o6rmgX5tS4dofdoamiBrnO2L+2kcUNyR+tKhQ3GeVgYjilYmfsEhfHhGn8B1Hhq1rYTCwohbEWk=</result></Row></Rows></DatabaseResponse></RequestResponse></Responses>",
+            "rows_data": {
+              "0": {
+                "token": "o6rmgX5tS4dofdoamiBrnO2L+2kcUNyR+tKhQ3GeVgYjilYmfsEhfHhGn8B1Hhq1rYTCwohbEWk="
+              }
+            },
+            "fields_data": {
+              "token": {
+                "type": "varchar",
+                "name": "token"
+              }
+            },
+            "select_data": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ],
+            "meta_data": [],
+            "results_page": null,
+            "post_transform": null,
+            "pre_transform": null
+          },
+          "tokens": [
+            "{tokenBartecAPIPath}",
+            "{BartecLiveAPIUsername}",
+            "{BartecLiveAPIPassword}"
+          ],
+          "runtimes": {
+            "integration": {
+              "template": "13ms",
+              "lim": "17ms",
+              "webservice": "135ms"
+            },
+            "api": "135ms",
+            "lim": "17ms"
+          },
+          "log_id": "c262845c-acde-412c-8042-7374502bf1bc"
+        },
+        "hash": "9BBF8E7AD3CEA74D2A280AC65A21B37073656A4FA2DD86A3A6BEB714F1A0F383"
+      },
+      "source": "requests.Session",
+      "timestamp": "2025-12-24T18:26:26.279333"
+    },
+    {
+      "method": "POST",
+      "url": "https://integration.aberdeencity.gov.uk/apibroker/runLookup",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "User-Agent": "Mozilla/5.0",
+        "X-Requested-With": "XMLHttpRequest",
+        "Referer": "https://integration.aberdeencity.gov.uk/fillform/?iframe_id=fillform-frame-1&db_id="
+      },
+      "request_params": {
+        "id": "5a3141caf4016",
+        "repeat_against": "",
+        "noRetry": "true",
+        "getOnlyTokens": "undefined",
+        "log_id": "",
+        "app_name": "AF-Renderer::Self",
+        "_": "1766600786279",
+        "sid": "357d3d2a46fe967cb33299550f35777f"
+      },
+      "request_body": {
+        "formValues": {
+          "Section 1": {
+            "nauprn": {
+              "value": "9051156186"
+            },
+            "token": {
+              "value": "o6rmgX5tS4dofdoamiBrnO2L+2kcUNyR+tKhQ3GeVgYjilYmfsEhfHhGn8B1Hhq1rYTCwohbEWk="
+            },
+            "mindate": {
+              "value": "2025-12-24"
+            },
+            "maxdate": {
+              "value": "2026-01-23"
+            }
+          }
+        }
+      },
+      "status_code": 200,
+      "response_headers": {
+        "Date": "Wed, 24 Dec 2025 18:26:27 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Length": "830",
+        "Connection": "keep-alive",
+        "Set-Cookie": "AWSALB=wSFQXFK5Ew23izBHPCvzYQkDbZyqmOyGlfFusmFek5eo/TG/FXQK5vndRO/DxNYE7WUP6AjGEmgnIds5hoFbUblC3ObEpUN1bGoELT/cITb1H+HcCQd6BEQeP1pp; Expires=Wed, 31 Dec 2025 18:26:26 GMT; Path=/, AWSALBCORS=wSFQXFK5Ew23izBHPCvzYQkDbZyqmOyGlfFusmFek5eo/TG/FXQK5vndRO/DxNYE7WUP6AjGEmgnIds5hoFbUblC3ObEpUN1bGoELT/cITb1H+HcCQd6BEQeP1pp; Expires=Wed, 31 Dec 2025 18:26:26 GMT; Path=/; SameSite=None; Secure",
+        "Server": "Apache",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Strict-Transport-Security": "max-age=31536000;",
+        "Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache",
+        "Vary": "Accept-Encoding",
+        "Content-Encoding": "gzip",
+        "Accept-Ranges": "none",
+        "X-XSS-Protection": "0",
+        "Content-Security-Policy": "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: * ;media-src 'self' data: blob:"
+      },
+      "response_body": {
+        "status": "done",
+        "data": "<?xml version=\"1.0\"?>\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\"varchar\" Name=\"GeneralDate1\"/><Field Type=\"varchar\" Name=\"RecyclingDate1\"/><Field Type=\"varchar\" Name=\"GeneralDate2\"/><Field Type=\"varchar\" Name=\"GardenDate1\"/><Field Type=\"varchar\" Name=\"RecyclingDate2\"/><Field Type=\"varchar\" Name=\"GeneralDate3\"/><Field Type=\"varchar\" Name=\"CountGarden\"/><Field Type=\"varchar\" Name=\"CountRecycling\"/><Field Type=\"varchar\" Name=\"CountGeneral\"/></Fields><Rows><Row id=\"0\"><result column=\"GeneralDate1\" isNull=\"False\">Saturday 27 December 2025</result><result column=\"RecyclingDate1\" isNull=\"False\">Saturday 03 January 2026</result><result column=\"GeneralDate2\" isNull=\"False\">Thursday 08 January 2026</result><result column=\"GardenDate1\" isNull=\"False\">Thursday 15 January 2026</result><result column=\"RecyclingDate2\" isNull=\"False\">Thursday 15 January 2026</result><result column=\"GeneralDate3\" isNull=\"False\">Thursday 22 January 2026</result><result column=\"CountGarden\" isNull=\"False\">1</result><result column=\"CountRecycling\" isNull=\"False\">2</result><result column=\"CountGeneral\" isNull=\"False\">3</result></Row></Rows></DatabaseResponse></RequestResponse></Responses>\n",
+        "integration": {
+          "id": "5a3141caf4016",
+          "type": "webservice",
+          "transformed": {
+            "error": null,
+            "xml_data": "<?xml version=\"1.0\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\"varchar\" Name=\"GeneralDate1\"/><Field Type=\"varchar\" Name=\"RecyclingDate1\"/><Field Type=\"varchar\" Name=\"GeneralDate2\"/><Field Type=\"varchar\" Name=\"GardenDate1\"/><Field Type=\"varchar\" Name=\"RecyclingDate2\"/><Field Type=\"varchar\" Name=\"GeneralDate3\"/><Field Type=\"varchar\" Name=\"CountGarden\"/><Field Type=\"varchar\" Name=\"CountRecycling\"/><Field Type=\"varchar\" Name=\"CountGeneral\"/></Fields><Rows><Row id=\"0\"><result column=\"GeneralDate1\" isNull=\"False\">Saturday 27 December 2025</result><result column=\"RecyclingDate1\" isNull=\"False\">Saturday 03 January 2026</result><result column=\"GeneralDate2\" isNull=\"False\">Thursday 08 January 2026</result><result column=\"GardenDate1\" isNull=\"False\">Thursday 15 January 2026</result><result column=\"RecyclingDate2\" isNull=\"False\">Thursday 15 January 2026</result><result column=\"GeneralDate3\" isNull=\"False\">Thursday 22 January 2026</result><result column=\"CountGarden\" isNull=\"False\">1</result><result column=\"CountRecycling\" isNull=\"False\">2</result><result column=\"CountGeneral\" isNull=\"False\">3</result></Row></Rows></DatabaseResponse></RequestResponse></Responses>",
+            "rows_data": {
+              "0": {
+                "GeneralDate1": "Saturday 27 December 2025",
+                "RecyclingDate1": "Saturday 03 January 2026",
+                "GeneralDate2": "Thursday 08 January 2026",
+                "GardenDate1": "Thursday 15 January 2026",
+                "RecyclingDate2": "Thursday 15 January 2026",
+                "GeneralDate3": "Thursday 22 January 2026",
+                "CountGarden": "1",
+                "CountRecycling": "2",
+                "CountGeneral": "3"
+              }
+            },
+            "fields_data": {
+              "GeneralDate1": {
+                "type": "varchar",
+                "name": "GeneralDate1"
+              },
+              "RecyclingDate1": {
+                "type": "varchar",
+                "name": "RecyclingDate1"
+              },
+              "GeneralDate2": {
+                "type": "varchar",
+                "name": "GeneralDate2"
+              },
+              "GardenDate1": {
+                "type": "varchar",
+                "name": "GardenDate1"
+              },
+              "RecyclingDate2": {
+                "type": "varchar",
+                "name": "RecyclingDate2"
+              },
+              "GeneralDate3": {
+                "type": "varchar",
+                "name": "GeneralDate3"
+              },
+              "CountGarden": {
+                "type": "varchar",
+                "name": "CountGarden"
+              },
+              "CountRecycling": {
+                "type": "varchar",
+                "name": "CountRecycling"
+              },
+              "CountGeneral": {
+                "type": "varchar",
+                "name": "CountGeneral"
+              }
+            },
+            "select_data": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ],
+            "meta_data": [],
+            "results_page": null,
+            "post_transform": null,
+            "pre_transform": null
+          },
+          "tokens": [
+            "{tokenBartecAPIPath}",
+            "{tokenBartecAPIRelease}",
+            "{token}",
+            "{nauprn}",
+            "{mindate}",
+            "{maxdate}"
+          ],
+          "runtimes": {
+            "integration": {
+              "template": "14ms",
+              "lim": "14ms",
+              "webservice": "680ms"
+            },
+            "api": "680ms",
+            "lim": "14ms"
+          },
+          "log_id": "e3bba1f0-6fff-4f3e-8b6a-4a30b7306318"
+        },
+        "hash": "331931A95C9575A121236D9073A1EB6DFBDEF1BA12149F876AE0F34B235D16B5"
+      },
+      "source": "requests.Session",
+      "timestamp": "2025-12-24T18:26:27.221605"
+    }
+  ],
+  "metadata": {
+    "LAD24CD": "S12000033",
+    "uprn": "9051156186",
+    "url": "https://www.aberdeencity.gov.uk",
+    "wiki_name": "Aberdeen City",
+    "wiki_note": "You will need to use [FindMyAddress](https://www.findmyaddress.co.uk/search) to find the UPRN."
+  }
+}

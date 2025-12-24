@@ -1,0 +1,17 @@
+{
+  "council": "BaberghDistrictCouncil",
+  "timestamp": "2025-12-24T18:23:45.363076",
+  "success": true,
+  "total_requests": 0,
+  "requests": [],
+  "metadata": {
+    "house_number": "Monday",
+    "postcode": "Week 1",
+    "skip_get_url": true,
+    "uprn": "Tuesday",
+    "url": "https://www.babergh.gov.uk",
+    "wiki_name": "Babergh",
+    "wiki_note": "Use the House Number field to pass the DAY of the week for your NORMAL collections. [Monday/Tuesday/Wednesday/Thursday/Friday]. [OPTIONAL] Use the 'postcode' field to pass the WEEK for your garden collection. [Week 1/Week 2]. [OPTIONAL] Use the 'uprn' field to pass the DAY for your garden collection. [Monday/Tuesday/Wednesday/Thursday/Friday]",
+    "LAD24CD": "E07000200"
+  }
+}

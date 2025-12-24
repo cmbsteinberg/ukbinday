@@ -1,0 +1,88 @@
+{
+  "council": "AmberValleyBoroughCouncil",
+  "timestamp": "2025-12-24T18:26:29.133798",
+  "success": true,
+  "total_requests": 2,
+  "requests": [
+    {
+      "method": "get",
+      "url": "https://ambervalley.gov.uk",
+      "request_headers": {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+      },
+      "request_params": null,
+      "request_body": null,
+      "status_code": 200,
+      "response_headers": {
+        "Cache-Control": "private",
+        "Content-Type": "text/html; charset=utf-8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Content-Type-Options": "nosniff",
+        "Date": "Wed, 24 Dec 2025 18:26:29 GMT",
+        "Content-Length": "57924"
+      },
+      "response_body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n\r\n<html lang=\"en-GB\">\r\n    \r\n<head>\r\n\r\n    <script id=\"Cookiebot\" src=\"https://consent.cookiebot.com/uc.js\" data-cbid=\"91ff495d-2161-415f-b4a0-9f3d07ca2de0\" data-blockingmode=\"auto\"  type=\"text/javascript\" ></script>\r\n\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <meta charset=\"utf-8\" />\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\r\n\r\n    <meta name=\"description\" content=\"This is the description of Amber Valley Borough Council\" />\r\n    <!-- eGov Meta Data  -->\r\n    <!-- this will make your html5 page invalid! -->\r\n    <meta name=\"DC.Subject\" content=\"\">\r\n    <meta name=\"DC.Date\" content=\"01/03/2024 14:24:29\">\r\n    <meta name=\"DC.Creator\" content=\"Amber Valley Borough Council\">\r\n    <meta name=\"DC.Publisher\" content=\"Amber Valley Borough Council\">\r\n    <meta name=\"DC.Title\" content=\"Amber Valley Borough Council \">\r\n    <!-- end eGov -->\r\n\r\n\r\n\r\n    <title>Amber Valley Borough Council</title>\r\n    \r\n    <link rel=\"stylesheet\" href=\"/css/avmain.css\">\r\n    <link rel=\"stylesheet\" href=\"/css/contourForms.css\">\r\n\r\n    <!-- Unpublished jQuery libraries-->\r\n    <!--\r\n    <script src=\"https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js\"></script>\r\n    <script src=\"https://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js\"></script>\r\n    <link rel=\"stylesheet\" href=\"https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css\" />\r\n    <script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>\r\n    <script src=\"https://code.jquery.com/ui/1.12.0/jquery-ui.js\"></script>\r\n    <script src=\"https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js\"></script>\r\n    <script src=\"https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js\"></script>\r\n    <script src=\"https://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js\"></script>\r\n    -->\r\n    <!--end of Unpublished jQuery libraries-->\r\n    \r\n    <!-- new jQuery libraries -->\r\n    <script src=\"/scripts/jQuery/code.jquery.com_jquery-3.7.0.min.js\"></script>\r\n    <script src=\"/scripts/jQuery/jquery-3.7.0.js\"></script>\r\n    <link rel=\"stylesheet\" href=\"//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css\">\r\n    <script src=\"//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js\"></script>\r\n    <script src=\"https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js\"></script>\r\n    <script src=\"https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js\"></script>\r\n    <script src=\"https://code.jquery.com/ui/1.13.1/jquery-ui.js\" integrity=\"sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=\" crossorigin=\"anonymous\"></script>\r\n    <script src=\"https://code.jquery.com/ui/1.13.1/jquery-ui.min.js\" integrity=\"sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=\" crossorigin=\"anonymous\"></script>\r\n    <link rel=\"stylesheet\" href=\"/css/code.jquery.com_ui_1.13.1_themes_smoothness_jquery-ui.css\">\r\n    <!-- end of new jQuery libraries -->\r\n    \r\n    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">\r\n    <link rel=\"stylesheet\" href=\"/css/bootstrap-accessibility.css\">\r\n    <link rel=\"stylesheet\" href=\"https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css\">\r\n    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>\r\n    <script src=\"/scripts/bootstrap-accessibility.min.js\"></script>\r\n    <script src=\"https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js\"></script>\r\n    <script src=\"//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js\"></script>\r\n    <script src=\"//cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js\"></script>\r\n    <script src=\"https://cdn.datatables.net/plug-ins/1.10.20/sorting/date-uk.js\"></script>\r\n    <script src=\"/scripts/natural.js\"></script>\r\n    <script type=\"text/javascript\" src=\"/scripts/full_numbers_no_ellipses.js\"></script>\r\n    <script src=\"//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js\"></script>\r\n    \r\n    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.4.0/dist/leaflet.css\"\r\n      integrity=\"sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==\" crossorigin=\"anonymous\" />\r\n    <script src=\"https://unpkg.com/leaflet@1.4.0/dist/leaflet.js\"\r\n      integrity=\"sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==\" crossorigin=\"anonymous\"></script>\r\n      \r\n    <link rel=\"stylesheet\" href=\"/scripts/leaflet-measure/dist/leaflet-measure.css\"  crossorigin=\"anonymous\">\r\n    <script src=\"/scripts/dist/bundle.js\"></script>\r\n    <script src=\"/scripts/leaflet-measure/dist/leaflet-measure.js\"></script>\r\n    <script src=\"https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js\" crossorigin=\"anonymous\"></script>\r\n    <link href=\"https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css\" rel=\"stylesheet\" crossorigin=\"anonymous\" />\r\n    <script src=\"/scripts/leafletpip/leaflet-pip.js\" ></script>\r\n    <script src=\"/scripts/spin.js\"></script>\r\n    <script src=\"/scripts/date-uk.js\"></script>\r\n    <link href=\"//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css\" rel=\"stylesheet\" />\r\n    <script src=\"//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js\"></script>\r\n    <script src=\"/js/forms-propertylookup.js\"></script>\r\n    <link href=\"/css/glyphicons.css\" rel=\"stylesheet\" />\r\n    \r\n    <!-- Global site tag (gtag.js) - Google Analytics Universal -->\r\n    <!--\r\n    <script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-2965051-1\"></script>\r\n    <script>\r\n        window.dataLayer = window.dataLayer || [];\r\n        function gtag(){dataLayer.push(arguments);}\r\n        gtag('js', new Date());\r\n        gtag('config', 'UA-2965051-1' , { 'anonymize_ip': true });\r\n    </script>\r\n    -->\r\n    \r\n    <!-- Global site tag (gtag.js) - Google Analytics 4 replacing Universal in 2023-->\r\n    <script async src=\"https://www.googletagmanager.com/gtag/js?id=G-EG1NVCML6B\"></script>\r\n    <script>\r\n        window.dataLayer = window.dataLayer || [];\r\n        function gtag(){dataLayer.push(arguments);}\r\n        gtag('js', new Date());\r\n        gtag('config', 'G-EG1NVCML6B');\r\n    </script>\r\n    \r\n    <script src='https://www.google.com/recaptcha/api.js'></script>\r\n    <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/images/fav-icons/apple-touch-icon.png?v=lk9w5JY0zl\">\r\n    <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/images/fav-icons/favicon-32x32.png?v=lk9w5JY0zl\">\r\n    <link rel=\"icon\" type=\"image/png\" sizes=\"194x194\" href=\"/images/fav-icons/favicon-194x194.png?v=lk9w5JY0zl\">\r\n    <link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/images/fav-icons/android-chrome-192x192.png?v=lk9w5JY0zl\">\r\n    <link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/images/fav-icons/favicon-16x16.png?v=lk9w5JY0zl\">\r\n    <link rel=\"shortcut icon\" href=\"/images/fav-icons/favicon.ico?v=lk9w5JY0zl\">\r\n    <meta name=\"msapplication-TileColor\" content=\"#008080\">\r\n    <meta name=\"msapplication-TileImage\" content=\"/images/fav-icons/mstile-144x144.png?v=lk9w5JY0zl\">\r\n    <meta name=\"msapplication-config\" content=\"/images/fav-icons/browserconfig.xml?v=lk9w5JY0zl\">\r\n    <meta name=\"theme-color\" content=\"#ffffff\">\r\n    \r\n    \r\n    \r\n    \r\n    <script type=\"text/javascript\" src=\"https://www.browsealoud.com/plus/scripts/3.1.0/ba.js\" crossorigin=\"anonymous\" integrity=\"sha256-VCrJcQdV3IbbIVjmUyF7DnCqBbWD1BcZ/1sda2KWeFc= sha384-k2OQFn+wNFrKjU9HiaHAcHlEvLbfsVfvOnpmKBGWVBrpmGaIleDNHnnCJO4z2Y2H sha512-gxDfysgvGhVPSHDTieJ/8AlcIEjFbF3MdUgZZL2M5GXXDdIXCcX0CpH7Dh6jsHLOLOjRzTFdXASWZtxO+eMgyQ==\">  </script>\r\n    \r\n    <script>\r\n    \r\n        //var avGlobalIsIntranet = window.location.hostname.toLowerCase().includes(\"avbc.gov.uk\");\r\n        \r\n        /*#####################\r\n        Additional jQuery (required)\r\n        #####################*/\r\n        $(document).ready(function () {\r\n\r\n            var clickEvent = false;\r\n            $('#myCarousel').carousel({\r\n                interval: 4000\r\n            }).on('click', '.list-group li', function () {\r\n                clickEvent = true;\r\n                $('.list-group li').removeClass('active');\r\n                $(this).addClass('active');\r\n            }).on('slid.bs.carousel', function (e) {\r\n                if (!clickEvent) {\r\n                    var count = $('.list-group').children().length - 1;\r\n                    var current = $('.list-group li.active');\r\n                    current.removeClass('active').next().addClass('active');\r\n                    var id = parseInt(current.data('slide-to'));\r\n                    if (count == id) {\r\n                        $('.list-group li').first().addClass('active');\r\n                    }\r\n                }\r\n                clickEvent = false;\r\n            });\r\n            $('#btnA2Z').click(function () {\r\n                $('#searchPopout').hide();\r\n                $('#menuPopout').hide();\r\n                if ($('#a2zPopout').css('display') == 'none' || $('#a2zPopout').css(\"visibility\") == \"hidden\") {\r\n                    $('#a2zPopout').slideDown(\"slow\");\r\n                }\r\n                else {\r\n                    $('#a2zPopout').slideUp(\"slow\");\r\n                }\r\n\r\n            });\r\n            $('#btnMenu').click(function () {\r\n                //closeAllPopouts();\r\n                $('#searchPopout').hide();\r\n                $('#a2zPopout').hide();\r\n                if ($('#menuPopout').css('display') == 'none' || $('#menuPopout').css(\"visibility\") == \"hidden\") {\r\n                    $('#menuPopout').slideDown(\"slow\");\r\n                }\r\n                else {\r\n                    $('#menuPopout').slideUp(\"slow\");\r\n                }\r\n            });\r\n            $('#btnOpenSearch').click(function () {\r\n                $('#a2zPopout').hide();\r\n   ... [truncated]",
+      "source": "requests.Session",
+      "timestamp": "2025-12-24T18:26:29.336400"
+    },
+    {
+      "method": "get",
+      "url": "https://info.ambervalley.gov.uk/WebServices/AVBCFeeds/WasteCollectionJSON.asmx/GetCollectionDetailsByUPRN?uprn=100030026621",
+      "request_headers": {},
+      "request_params": null,
+      "request_body": null,
+      "status_code": 200,
+      "response_headers": {
+        "Cache-Control": "private, max-age=0",
+        "Content-Type": "application/json; charset=utf-8",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+        "Access-Control-Allow-Origin": "*",
+        "Date": "Wed, 24 Dec 2025 18:26:27 GMT",
+        "Content-Length": "809"
+      },
+      "response_body": {
+        "communalWasteId": 0,
+        "UPRN": "100030026621",
+        "collectionZone": "G",
+        "clinical": "False",
+        "refuseRound": "4",
+        "recyclingRound": "4",
+        "gardenZone": "0",
+        "greenRound": 0,
+        "gardenZone2020": " ",
+        "greenRound2020": 0,
+        "communalWasteLocation": "",
+        "recyclingNextDate": "2025-12-30T00:00:00",
+        "refuseNextDate": "2026-01-06T00:00:00",
+        "calendarUrl": "https://info.ambervalley.gov.uk/docarc/docviewer.aspx?docguid=9fc67b5104b14c279f190a0b5f4aba22",
+        "gardenCalendarUrl": "",
+        "greenNextDate": "0001-01-01T00:00:00",
+        "communalRefNextDate": "1900-01-01T00:00:00",
+        "communalRycNextDate": "1900-01-01T00:00:00",
+        "bags": false,
+        "communalRefuse": false,
+        "communalRecycle": false,
+        "communalRefWeekly": false,
+        "communalRycWeekly": false,
+        "weeklyCollection": false,
+        "recycling": true,
+        "hasService": true,
+        "isTodayRefColDay": false,
+        "isTodayRecColDay": false,
+        "isTodayGrdColDay": false
+      },
+      "source": "requests.Session",
+      "timestamp": "2025-12-24T18:26:29.477694"
+    }
+  ],
+  "metadata": {
+    "uprn": "100030026621",
+    "url": "https://ambervalley.gov.uk",
+    "wiki_name": "Amber Valley",
+    "wiki_note": "You will need to use [FindMyAddress](https://www.findmyaddress.co.uk/search) to find the UPRN.",
+    "LAD24CD": "E07000032"
+  }
+}

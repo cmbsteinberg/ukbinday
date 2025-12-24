@@ -19,6 +19,7 @@ dependencies = [
     "icalevents>=0.2.1,<0.3",
     "selenium-wire>=5.1.0",
     "blinker<1.8.0",
+    "pytest>=8.3.5",
 ]
 
 [project.optional-dependencies]

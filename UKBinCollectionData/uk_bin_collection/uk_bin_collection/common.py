@@ -335,6 +335,12 @@ def create_webdriver(
     :return: An instance of a Chrome WebDriver.
     :raises WebDriverException: If the WebDriver cannot be created.
     """
+    # FORCE LOCAL BROWSER for Selenium-based councils
+    # Override remote web_driver to use local selenium-wire instead
+    # This ensures better request tracking while maintaining performance
+    if web_driver:  # Only override if web_driver was specified
+        web_driver = None
+
     options = webdriver.ChromeOptions()
     if headless:
         options.add_argument("--headless")
@@ -364,6 +370,8 @@ def create_webdriver(
             # Use selenium-wire for local webdriver to enable request tracking
             seleniumwire_options = {
                 'disable_encoding': True,  # Don't decode responses
+                # Exclude patterns to avoid buffering static resources (improves performance)
+                'exclude_hosts': [],  # We'll filter in quit() instead for better control
             }
             driver = wiredriver.Chrome(
                 service=ChromeService(ChromeDriverManager().install()),
@@ -373,6 +381,84 @@ def create_webdriver(
 
         # Set window position to ensure it's visible on screen
         driver.set_window_position(0, 0)
+
+        # If there's an active RequestTracker, register this driver and wrap quit()
+        if hasattr(_tracker_context, 'tracker') and _tracker_context.tracker:
+            tracker = _tracker_context.tracker
+            tracker.drivers.append(driver)
+
+            # Wrap quit() to extract logs BEFORE the driver is closed
+            original_quit = driver.quit
+            def quit_with_logging():
+                try:
+                    # Extract selenium-wire requests before quitting
+                    if hasattr(driver, 'requests'):  # selenium-wire
+                        # Filter out static assets (images, fonts, media, CSS) to improve performance
+                        # Keep JS as it might contain important data or API calls
+                        static_extensions = (
+                            '.css', '.jpg', '.jpeg', '.png', '.gif', '.svg', '.ico',
+                            '.woff', '.woff2', '.ttf', '.eot', '.otf',
+                            '.mp4', '.webm', '.mp3', '.wav',
+                            '.webp', '.avif', '.bmp', '.tiff'
+                        )
+
+                        for req in driver.requests:
+                            # Skip static assets by URL extension
+                            url_lower = req.url.lower()
+                            if any(url_lower.endswith(ext) for ext in static_extensions):
+                                continue
+
+                            # Skip common static asset paths
+                            if any(path in url_lower for path in ['/fonts/', '/images/', '/img/', '/media/']):
+                                continue
+                            # Extract request body (limit size to avoid memory issues)
+                            request_body = None
+                            if req.body:
+                                # Skip very large request bodies (>1MB)
+                                if len(req.body) > 1_000_000:
+                                    request_body = f'<too large: {len(req.body)} bytes>'
+                                else:
+                                    try:
+                                        request_body = json.loads(req.body.decode('utf-8'))
+                                    except:
+                                        try:
+                                            body_str = req.body.decode('utf-8')
+                                            request_body = body_str if len(body_str) < 10000 else body_str[:10000] + '... [truncated]'
+                                        except:
+                                            request_body = '<binary or unreadable>'
+
+                            # Extract response body (limit size to avoid memory issues)
+                            response_body = None
+                            if req.response and req.response.body:
+                                # Skip very large responses (>1MB) to improve performance
+                                if len(req.response.body) > 1_000_000:
+                                    response_body = f'<too large: {len(req.response.body)} bytes>'
+                                else:
+                                    try:
+                                        response_body = json.loads(req.response.body.decode('utf-8'))
+                                    except:
+                                        try:
+                                            body_str = req.response.body.decode('utf-8')
+                                            response_body = body_str if len(body_str) < 10000 else body_str[:10000] + '... [truncated]'
+                                        except:
+                                            response_body = '<binary or unreadable>'
+
+                            tracker.requests_log.append({
+                                'method': req.method,
+                                'url': req.url,
+                                'request_headers': dict(req.headers) if req.headers else {},
+                                'request_body': request_body,
+                                'status_code': req.response.status_code if req.response else None,
+                                'response_headers': dict(req.response.headers) if req.response and req.response.headers else {},
+                                'response_body': response_body,
+                                'source': 'selenium-wire',
+                                'timestamp': datetime.now().isoformat()
+                            })
+                except Exception:
+                    pass  # Don't fail if log extraction fails
+                finally:
+                    original_quit()  # Always quit the driver
+            driver.quit = quit_with_logging
 
         return driver
     except MaxRetryError as e:
@@ -518,17 +604,6 @@ class RequestTracker:
 
         requests.Session.request = logged_session_request
 
-        # Monkey-patch create_webdriver to auto-register drivers
-        import uk_bin_collection.uk_bin_collection.common as common_module
-        self._original_create_webdriver = common_module.create_webdriver
-
-        def tracked_create_webdriver(*args, **kwargs):
-            driver = tracker_self._original_create_webdriver(*args, **kwargs)
-            tracker_self.drivers.append(driver)
-            return driver
-
-        common_module.create_webdriver = tracked_create_webdriver
-
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -538,10 +613,6 @@ class RequestTracker:
 
         if hasattr(self, '_original_session_request') and self._original_session_request:
             requests.Session.request = self._original_session_request
-
-        if self._original_create_webdriver:
-            import uk_bin_collection.uk_bin_collection.common as common_module
-            common_module.create_webdriver = self._original_create_webdriver
 
         # Clear thread-local storage
         if hasattr(_tracker_context, 'tracker'):
@@ -640,57 +711,9 @@ class RequestTracker:
 
     def get_all_requests(self) -> List[Dict[str, Any]]:
         """Get all tracked requests from both requests library and selenium"""
-        all_requests = list(self.requests_log)
-
-        # Add selenium-wire requests if drivers were used
-        for driver in self.drivers:
-            if hasattr(driver, 'requests'):  # selenium-wire provides this
-                for req in driver.requests:
-                    # Extract request body
-                    request_body = None
-                    if req.body:
-                        try:
-                            # Try to decode as JSON
-                            request_body = json.loads(req.body.decode('utf-8'))
-                        except:
-                            # If not JSON, store as string (truncated if needed)
-                            try:
-                                body_str = req.body.decode('utf-8')
-                                request_body = body_str if len(body_str) < 10000 else body_str[:10000] + '... [truncated]'
-                            except:
-                                request_body = '<binary or unreadable>'
-
-                    # Extract response body
-                    response_body = None
-                    if req.response and req.response.body:
-                        try:
-                            # Try to decode as JSON
-                            response_body = json.loads(req.response.body.decode('utf-8'))
-                        except:
-                            # If not JSON, store as string (truncated if needed)
-                            try:
-                                body_str = req.response.body.decode('utf-8')
-                                response_body = body_str if len(body_str) < 10000 else body_str[:10000] + '... [truncated]'
-                            except:
-                                response_body = '<binary or unreadable>'
-
-                    all_requests.append({
-                        'method': req.method,
-                        'url': req.url,
-                        'request_headers': dict(req.headers) if req.headers else {},
-                        'request_body': request_body,
-                        'status_code': req.response.status_code if req.response else None,
-                        'response_headers': dict(req.response.headers) if req.response and req.response.headers else {},
-                        'response_body': response_body,
-                        'source': 'selenium-wire',
-                        'timestamp': datetime.now().isoformat()
-                    })
-            else:
-                # If not selenium-wire, try to get CDP performance logs
-                cdp_requests = self._extract_network_from_performance_logs(driver)
-                all_requests.extend(cdp_requests)
-
-        return all_requests
+        # All requests (HTTP and selenium-wire) are already in requests_log
+        # They are extracted in real-time or in the quit() wrapper
+        return list(self.requests_log)
 
     def add_metadata(self, **kwargs):
         """Add metadata like UPRN, postcode, etc."""

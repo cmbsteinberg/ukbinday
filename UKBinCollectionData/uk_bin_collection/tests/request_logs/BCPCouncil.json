@@ -1,0 +1,130 @@
+{
+  "council": "BCPCouncil",
+  "timestamp": "2025-12-24T18:23:44.536521",
+  "success": true,
+  "total_requests": 1,
+  "requests": [
+    {
+      "method": "POST",
+      "url": "https://prod-17.uksouth.logic.azure.com/workflows/58253d7b7d754447acf9fe5fcf76f493/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TAvYIUFj6dzaP90XQCm2ElY6Cd34ze05I3ba7LKTiBs",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "User-Agent": "Mozilla/5.0",
+        "Referer": "https://bcpportal.bcpcouncil.gov.uk/"
+      },
+      "request_params": null,
+      "request_body": {
+        "uprn": "100040810214"
+      },
+      "status_code": 200,
+      "response_headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Date": "Wed, 24 Dec 2025 18:23:44 GMT",
+        "Cache-Control": "no-cache",
+        "Content-Encoding": "gzip",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Transfer-Encoding": "chunked",
+        "Vary": "Accept-Encoding",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-workflow-run-id": "08584350062607490129276773316CU57",
+        "x-ms-correlation-id": "060c1b3c-b78f-48fa-9840-3b8c211efd55",
+        "x-ms-client-tracking-id": "08584350062607490129276773316CU57",
+        "x-ms-trigger-history-name": "08584350062607490129276773316CU57",
+        "x-ms-execution-location": "uksouth",
+        "x-ms-workflow-system-id": "/locations/uksouth/scaleunits/prod-17/workflows/58253d7b7d754447acf9fe5fcf76f493",
+        "x-ms-workflow-id": "58253d7b7d754447acf9fe5fcf76f493",
+        "x-ms-workflow-version": "08584364691046568064",
+        "x-ms-workflow-name": "04f55797-e891-459d-5969-13e3efdb16b4",
+        "x-ms-tracking-id": "060c1b3c-b78f-48fa-9840-3b8c211efd55",
+        "x-ms-ratelimit-burst-remaining-workflow-writes": "1728",
+        "x-ms-ratelimit-remaining-workflow-download-contentsize": "123888036",
+        "x-ms-ratelimit-remaining-workflow-upload-contentsize": "123892692",
+        "x-ms-ratelimit-time-remaining-directapirequests": "11537351",
+        "x-ms-request-id": "uksouth:060c1b3c-b78f-48fa-9840-3b8c211efd55"
+      },
+      "response_body": {
+        "pageInfo": {
+          "total": 3,
+          "count": 3,
+          "pageSize": 10,
+          "pageNum": 1,
+          "pages": 1
+        },
+        "data": [
+          {
+            "uniquereference": "685824db45236127de78f5b6",
+            "address": null,
+            "uprn": "100040810214",
+            "wasteContainerDescription": "180 Litre Refuse ( x1 )",
+            "wasteContainerNLPGPremiseId": "65ea05066c3f4f626e0a4bde",
+            "wasteContainerUsageTypeDescription": "Rubbish",
+            "wasteContainerUsageTypeitemId": "664647e42d5afade1df2dc35",
+            "wasteContainerRoundName": "WEDREF1 P03",
+            "wasteContainerRoundItemId": "66f43e68c51b8c4489256e39",
+            "wasteContainerDomesticschedule": "Wednesday Week 1",
+            "wasteContainerDomesticscheduleitemId": "6646455ff645a3194a306b56",
+            "collectionDay": "3",
+            "collectionWeek": "1",
+            "scheduleDateRange": [
+              "2026-01-03",
+              "2026-01-15"
+            ],
+            "pdfLink": null
+          },
+          {
+            "uniquereference": "68586eee7d3a525720216a97",
+            "address": null,
+            "uprn": "100040810214",
+            "wasteContainerDescription": "240 Litre Recycling ( x1 )",
+            "wasteContainerNLPGPremiseId": "65ea05066c3f4f626e0a4bde",
+            "wasteContainerUsageTypeDescription": "Recycling",
+            "wasteContainerUsageTypeitemId": "5c49c0dce68ba84170c5df92",
+            "wasteContainerRoundName": "WEDREC2 P11",
+            "wasteContainerRoundItemId": "66f43e68c51b8c4489256e19",
+            "wasteContainerDomesticschedule": "Wednesday Week 2",
+            "wasteContainerDomesticscheduleitemId": "6646455ff645a3194a306b58",
+            "collectionDay": "3",
+            "collectionWeek": "2",
+            "scheduleDateRange": [
+              "2025-12-24",
+              "2026-01-09"
+            ],
+            "pdfLink": "https://www.bcpcouncil.gov.uk/bincollectionpooleWed2"
+          },
+          {
+            "uniquereference": "6859b7c9fc37229d7cc3325e",
+            "address": null,
+            "uprn": "100040810214",
+            "wasteContainerDescription": "240 Litre Garden ( x0 )",
+            "wasteContainerNLPGPremiseId": "65ea05066c3f4f626e0a4bde",
+            "wasteContainerUsageTypeDescription": "Garden Waste",
+            "wasteContainerUsageTypeitemId": "664647ff6c4f711c1fd87509",
+            "wasteContainerRoundName": "TUEGAR1 P02",
+            "wasteContainerRoundItemId": "66f43e68c51b8c4489256cef",
+            "wasteContainerDomesticschedule": "Tuesday Week 1 GW",
+            "wasteContainerDomesticscheduleitemId": "67f39b9b82549b5285598dbf",
+            "collectionDay": "2",
+            "collectionWeek": "1",
+            "scheduleDateRange": [
+              "2026-01-27",
+              "2026-02-10"
+            ],
+            "pdfLink": "https://www.bcpcouncil.gov.uk/gardenbincollectionsTue1"
+          }
+        ]
+      },
+      "source": "requests.Session",
+      "timestamp": "2025-12-24T18:23:45.352800"
+    }
+  ],
+  "metadata": {
+    "LAD24CD": "E06000058",
+    "skip_get_url": true,
+    "uprn": "100040810214",
+    "url": "https://bcpportal.bcpcouncil.gov.uk/checkyourbincollection",
+    "wiki_name": "Bournemouth, Christchurch and Poole",
+    "wiki_note": "You will need to use [FindMyAddress](https://www.findmyaddress.co.uk/search) to find the UPRN."
+  }
+}

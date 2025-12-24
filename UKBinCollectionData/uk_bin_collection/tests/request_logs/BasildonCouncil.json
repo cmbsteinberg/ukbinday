@@ -1,0 +1,180 @@
+{
+  "council": "BasildonCouncil",
+  "timestamp": "2025-12-24T18:24:51.341428",
+  "success": true,
+  "total_requests": 1,
+  "requests": [
+    {
+      "method": "post",
+      "url": "https://basildonportal.azurewebsites.net/api/getPropertyRefuseInformation",
+      "request_headers": {
+        "Content-Type": "application/json"
+      },
+      "request_params": null,
+      "request_body": {
+        "uprn": "10013350430"
+      },
+      "status_code": 200,
+      "response_headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Dec 2025 18:24:50 GMT",
+        "Content-Encoding": "gzip",
+        "Transfer-Encoding": "chunked",
+        "Vary": "Accept-Encoding",
+        "Request-Context": "appId=cid-v1:713a46d7-4692-4133-a4c3-3d1755f083fc"
+      },
+      "response_body": {
+        "result": "success",
+        "refuse": {
+          "assistedcollections": false,
+          "available_services": {
+            "general_waste": {
+              "route": "D5_MON_W1",
+              "day": "Monday",
+              "week": 1,
+              "frequency": "Weekly",
+              "last_collection_active": true,
+              "last_collection_date": "2025-12-22",
+              "last_collection_date_formatted": "Monday, 22nd December 2025",
+              "current_collection_active": true,
+              "current_collection_date": "2025-12-31",
+              "current_collection_date_formatted": "Wednesday, 31st December 2025",
+              "current_collection_reason": "Changes due to Christmas catch up",
+              "next_collection_active": true,
+              "next_collection_date": "2026-01-07",
+              "next_collection_date_formatted": "Wednesday, 7th January 2026",
+              "next_collection_reason": "Changes due to Christmas catch up",
+              "missed_collection_reportable": false,
+              "name": "Non-Recyclable Waste Collection - Black Wheelie Bin",
+              "container": "Black Wheelie Bin"
+            },
+            "green_waste": {
+              "route": "W5_MON_W1",
+              "day": "Monday",
+              "week": 1,
+              "frequency": "Weekly",
+              "last_collection_active": true,
+              "last_collection_date": "2025-12-22",
+              "last_collection_date_formatted": "Monday, 22nd December 2025",
+              "current_collection_active": false,
+              "current_collection_date": "2025-12-29",
+              "current_collection_date_formatted": "Monday, 29th December 2025",
+              "current_collection_reason": "Service suspended Dec 25th - Jan 19th",
+              "next_collection_active": false,
+              "next_collection_date": "2026-01-05",
+              "next_collection_date_formatted": "Monday, 5th January 2026",
+              "next_collection_reason": "Service suspended Dec 25th - Jan 19th",
+              "missed_collection_reportable": false,
+              "name": "Garden Waste Collection - Green Wheelie Bin",
+              "container": "Green Wheelie Bin",
+              "subscription": {
+                "active": true,
+                "startdate": "2025-04-01",
+                "enddate": "2026-03-31"
+              }
+            },
+            "food_waste": {
+              "route": "F4_MON_W1",
+              "day": "Monday",
+              "week": 1,
+              "frequency": "Weekly",
+              "last_collection_active": true,
+              "last_collection_date": "2025-12-22",
+              "last_collection_date_formatted": "Monday, 22nd December 2025",
+              "current_collection_active": true,
+              "current_collection_date": "2025-12-31",
+              "current_collection_date_formatted": "Wednesday, 31st December 2025",
+              "current_collection_reason": "Changes due to Christmas catch up",
+              "next_collection_active": true,
+              "next_collection_date": "2026-01-07",
+              "next_collection_date_formatted": "Wednesday, 7th January 2026",
+              "next_collection_reason": "Changes due to Christmas catch up",
+              "missed_collection_reportable": false,
+              "name": "Food Waste Collection - External - Green Caddy",
+              "container": "Green Caddy"
+            },
+            "glass_waste": {
+              "route": "G1_MON_W1",
+              "day": "Monday",
+              "week": 1,
+              "frequency": "Fortnightly",
+              "last_collection_active": true,
+              "last_collection_date": "2025-12-15",
+              "last_collection_date_formatted": "Monday, 15th December 2025",
+              "current_collection_active": true,
+              "current_collection_date": "2025-12-31",
+              "current_collection_date_formatted": "Wednesday, 31st December 2025",
+              "current_collection_reason": "Changes due to Christmas catch up",
+              "next_collection_active": true,
+              "next_collection_date": "2026-01-13",
+              "next_collection_date_formatted": "Tuesday, 13th January 2026",
+              "next_collection_reason": "Changes due to Christmas catch up",
+              "missed_collection_reportable": false,
+              "name": "Glass Bottles and Jars Collection - Orange Box",
+              "container": "Orange Box"
+            },
+            "papercard_waste": {
+              "route": "R7_MON_W1",
+              "day": "Monday",
+              "week": 1,
+              "frequency": "Weekly",
+              "last_collection_active": true,
+              "last_collection_date": "2025-12-22",
+              "last_collection_date_formatted": "Monday, 22nd December 2025",
+              "current_collection_active": true,
+              "current_collection_date": "2025-12-31",
+              "current_collection_date_formatted": "Wednesday, 31st December 2025",
+              "current_collection_reason": "Changes due to Christmas catch up",
+              "next_collection_active": true,
+              "next_collection_date": "2026-01-07",
+              "next_collection_date_formatted": "Wednesday, 7th January 2026",
+              "next_collection_reason": "Changes due to Christmas catch up",
+              "missed_collection_reportable": false,
+              "name": "Paper and Card Recycling Collection - Blue Bag",
+              "container": "Blue Bag"
+            },
+            "plasticcans_waste": {
+              "route": "R7_MON_W1",
+              "day": "Monday",
+              "week": 1,
+              "frequency": "Weekly",
+              "last_collection_active": true,
+              "last_collection_date": "2025-12-22",
+              "last_collection_date_formatted": "Monday, 22nd December 2025",
+              "current_collection_active": true,
+              "current_collection_date": "2025-12-31",
+              "current_collection_date_formatted": "Wednesday, 31st December 2025",
+              "current_collection_reason": "Changes due to Christmas catch up",
+              "next_collection_active": true,
+              "next_collection_date": "2026-01-07",
+              "next_collection_date_formatted": "Wednesday, 7th January 2026",
+              "next_collection_reason": "Changes due to Christmas catch up",
+              "missed_collection_reportable": false,
+              "name": "Plastic and Cans Recycling Collection - White Bag",
+              "container": "White Bag"
+            },
+            "bulky_waste": {
+              "route": "S4_MON_W1",
+              "day": "Monday",
+              "week": 1,
+              "frequency": "Weekly",
+              "name": "Bulky Waste",
+              "container": "Bulky Waste",
+              "booking": null
+            }
+          }
+        }
+      },
+      "source": "requests.Session",
+      "timestamp": "2025-12-24T18:24:51.821427"
+    }
+  ],
+  "metadata": {
+    "skip_get_url": true,
+    "uprn": "10013350430",
+    "url": "https://mybasildon.powerappsportals.com/check/where_i_live/",
+    "wiki_name": "Basildon",
+    "wiki_note": "To get the UPRN, you will need to use [FindMyAddress](https://www.findmyaddress.co.uk/search).",
+    "LAD24CD": "E07000066"
+  }
+}
