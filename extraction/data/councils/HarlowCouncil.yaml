@@ -11,3 +11,5 @@ api_description: Fetches bin collection data using a UPRN as a query parameter f
 response_format: html
 bin_selector: div.collectionsrow
 date_format: '%a - %d %b %Y'
+test_inputs:
+  uprn: '10003713342'

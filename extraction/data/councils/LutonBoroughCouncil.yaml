@@ -16,3 +16,5 @@ api_description: First, a GET request is made to the authentication endpoint to 
 response_format: json
 bin_selector: tr
 date_format: '%A %d %b %Y'
+test_inputs:
+  uprn: '100080155778'

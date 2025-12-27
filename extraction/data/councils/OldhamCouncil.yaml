@@ -1,8 +1,18 @@
 council: OldhamCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
-api_description: A direct GET request to the results portal using the UPRN (Unique
-  Property Reference Number).
+api_urls:
+- https://portal.oldham.gov.uk/bincollectiondates/details?uprn={uprn}
+api_methods:
+- GET
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] A direct GET request to
+  the results portal using the UPRN (Unique Property Reference Number).'
+api_headers:
+  Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+  User-Agent: Mozilla/5.0
+response_format: html
+bin_selector: table.data-table.confirmation
+date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '422000033556'

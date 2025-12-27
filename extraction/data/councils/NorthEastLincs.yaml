@@ -11,3 +11,5 @@ api_description: The council provides a direct URL that takes a UPRN as a query 
 response_format: html
 bin_selector: li.list-group-item
 date_format: dd/mm/yyyy
+test_inputs:
+  uprn: '11062649'

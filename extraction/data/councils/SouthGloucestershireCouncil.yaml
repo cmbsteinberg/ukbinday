@@ -10,3 +10,5 @@ api_description: Takes a UPRN as a query parameter and returns a JSON array of c
   details including service names and next collection dates.
 response_format: json
 date_format: dddd, d MMMM yyyy
+test_inputs:
+  uprn: '566419'

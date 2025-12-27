@@ -1,8 +1,13 @@
 council: PembrokeshireCountyCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://www.pembrokeshire.gov.uk/waste-collections/collection-day-checker?uprn={uprn}
+api_methods:
+- GET
 api_description: The URL provided in the playwright code suggests that the page is
   pre-populated with data based on a query parameter 'uprn'.
+response_format: html
+bin_selector: div.col-6.col-md-4.text-center.mb-3
+date_format: '%d/%m/%Y'

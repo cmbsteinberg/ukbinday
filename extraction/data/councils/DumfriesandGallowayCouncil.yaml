@@ -11,3 +11,5 @@ api_description: The council provides an ICS (iCalendar) file for each UPRN cont
   start dates.
 response_format: xml
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '137034556'

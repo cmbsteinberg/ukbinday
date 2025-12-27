@@ -9,3 +9,6 @@ api_description: The service uses an iframe pointing to a Firmstep (AchieveForms
   platform. These platforms typically use dynamic session tokens, CSRF protection,
   and complex state management across multiple steps (postcode search -> address selection
   -> results page).
+test_inputs:
+  uprn: '117053733'
+  postcode: DD7 7LE

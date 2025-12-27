@@ -11,3 +11,5 @@ api_description: The API returns a JSON array where the first object contains a 
 response_format: json
 bin_selector: tr
 date_format: '%d %B'
+test_inputs:
+  uprn: '100062349291'

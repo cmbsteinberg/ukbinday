@@ -11,3 +11,5 @@ api_description: Calls the Wyre Council bin collection API using the UPRN and pa
 response_format: html
 bin_selector: div.boxed
 date_format: '%A %d %B'
+test_inputs:
+  uprn: '10003519994'

@@ -1,5 +1,5 @@
 council: NuneatonBedworthBoroughCouncil
-request_type: id_lookup_then_api
+request_type: single_api
 required_user_input:
 - house_number
 - skip_get_url
@@ -7,9 +7,10 @@ api_urls:
 - https://www.nuneatonandbedworth.gov.uk/directory/search?directoryID=3&showInMap=&keywords={street}&search=Search+directory
 api_methods:
 - GET
-api_description: First searches for the street name (keyword) in the council directory.
-  This returns a link to a specific page for that street. On the street page, a download
-  link identifies a bin calendar file name (e.g., bin-calendar-monday-a), which then
-  maps to internal static collection schedules.
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] First searches for the
+  street name (keyword) in the council directory. This returns a link to a specific
+  page for that street. On the street page, a download link identifies a bin calendar
+  file name (e.g., bin-calendar-monday-a), which then maps to internal static collection
+  schedules.'
 response_format: html
 date_format: '%Y-%m-%d'

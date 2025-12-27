@@ -15,3 +15,5 @@ api_description: The script first authenticates to obtain a session ID (auth-ses
 response_format: json
 bin_selector: HTMLCollectionDatesText
 date_format: DD/MM/YYYY
+test_inputs:
+  uprn: '100110019551'

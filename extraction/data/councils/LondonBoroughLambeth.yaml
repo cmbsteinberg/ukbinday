@@ -10,3 +10,5 @@ api_description: A POST request to the Lambeth waste service API using a JSON bo
   containing the UPRN.
 response_format: json
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100021881738'

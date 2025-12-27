@@ -11,3 +11,5 @@ api_description: The site accepts a POST request to the property URL containing 
 response_format: html
 bin_selector: div.property-service-wrapper
 date_format: dd/mm/yyyy
+test_inputs:
+  uprn: '100021203052'

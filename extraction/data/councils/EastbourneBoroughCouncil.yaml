@@ -12,3 +12,5 @@ api_description: Returns HTML page containing bin collection schedules for a spe
 response_format: html
 bin_selector: div.collect p
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: '100060011258'

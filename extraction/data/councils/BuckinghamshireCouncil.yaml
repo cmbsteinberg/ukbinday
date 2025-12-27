@@ -11,3 +11,5 @@ api_description: The API requires a hex-encoded AES-256-CBC encrypted payload co
   is a hex-encoded encrypted string that decrypts to JSON.
 response_format: json
 date_format: dd/MM/yyyy
+test_inputs:
+  uprn: '100081093078'

@@ -1,10 +1,22 @@
 council: BroxtoweBoroughCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - postcode
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
-api_description: The site uses standard ASP.NET WebForms postbacks. It involves submitting
-  the postcode to get a list of addresses, selecting the address (UPRN) from a dropdown,
-  and then submitting the form to get the final results.
+api_urls:
+- https://selfservice.broxtowe.gov.uk/renderform.aspx?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528
+api_methods:
+- POST
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The site uses standard
+  ASP.NET WebForms postbacks. It involves submitting the postcode to get a list of
+  addresses, selecting the address (UPRN) from a dropdown, and then submitting the
+  form to get the final results.'
+api_headers:
+  content-type: application/x-www-form-urlencoded
+api_payload_example: ctl00$ContentPlaceHolder1$txtPositionLL=&ctl00$ContentPlaceHolder1$txtPosition=&ctl00$ContentPlaceHolder1$FF5683DDL=U100031325997&__EVENTTARGET=ctl00$ContentPlaceHolder1$btnSubmit&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE=[EXTRACTED]&__VIEWSTATEGENERATOR=CA57E1E8&__EVENTVALIDATION=[EXTRACTED]
+response_format: html
+bin_selector: '#ctl00_ContentPlaceHolder1_FF5686FormGroup table tr'
+date_format: '%A, %d %B %Y'
+test_inputs:
+  uprn: '100031325997'
+  postcode: NG16 2LY

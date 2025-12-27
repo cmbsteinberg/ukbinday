@@ -10,3 +10,5 @@ api_description: The process uses the Salesforce Lightning Aura framework. First
   'a0K0X00000FCFMTUA5'). This ID is then passed into a series of 'navigateFlow' POST
   requests that advance a Salesforce Screen Flow ('WebFormAlloyWasteCollectionEnquiry')
   to the final screen containing the collection dates.
+test_inputs:
+  postcode: OX28 1YA

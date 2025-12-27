@@ -10,3 +10,5 @@ api_description: The API takes a postcode and returns a JSON object containing b
   collection information in a string format within a 'rows' array.
 response_format: json
 date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: PO14 4NR

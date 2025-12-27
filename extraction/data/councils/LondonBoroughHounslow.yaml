@@ -16,3 +16,5 @@ api_description: First, the script calls a session URL to obtain an 'auth-sessio
   JSON collection schedule.
 response_format: json
 date_format: YYYY-MM-DD
+test_inputs:
+  uprn: '100021577765'

@@ -14,3 +14,5 @@ api_description: The process involves getting an authentication session ID (sid)
   schedules.
 response_format: json
 date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '9051156186'

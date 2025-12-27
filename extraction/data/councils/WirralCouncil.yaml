@@ -13,3 +13,5 @@ api_description: 'The council website uses a direct URL with query parameters fo
 response_format: html
 bin_selector: li
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: Vernon Avenue,Seacombe

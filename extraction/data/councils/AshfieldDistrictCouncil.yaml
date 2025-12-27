@@ -1,10 +1,23 @@
 council: AshfieldDistrictCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://portal.digital.ashfield.gov.uk/api/v1/type-ahead/search
+- https://portal.digital.ashfield.gov.uk/w/webpage/raise-case?service=bin_calendar
+api_methods:
+- GET
+- POST
 api_description: The site uses a type-ahead search to find addresses based on a postcode,
   which likely returns a unique ID or reference. This is followed by a form submission
   (POST) using the selected address to retrieve the bin calendar table.
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+  Accept: text/html
+api_payload_example: service=bin_calendar&address_id=1234567&submit=Search
+response_format: html
+bin_selector: table.listing.table-striped tbody tr
+date_format: '%a, %d %b %Y'
+test_inputs:
+  postcode: NG16 6RH

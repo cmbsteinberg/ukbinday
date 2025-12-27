@@ -1,5 +1,5 @@
 council: SouthTynesideCouncil
-request_type: id_lookup_then_api
+request_type: single_api
 required_user_input:
 - house_number
 - postcode
@@ -8,8 +8,10 @@ api_urls:
 - https://www.southtyneside.gov.uk/apiserver/ajaxlibrary/
 api_methods:
 - POST
-api_description: First call uses stc.common.snippets.getAddressList to find the address
-  and UPRN. Second call uses stc.waste.collections.getDates with the addresscode (UPRN
-  + Address) to retrieve bin collection dates.
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] First call uses stc.common.snippets.getAddressList
+  to find the address and UPRN. Second call uses stc.waste.collections.getDates with
+  the addresscode (UPRN + Address) to retrieve bin collection dates.'
 response_format: json
 date_format: '%d %B %Y'
+test_inputs:
+  postcode: NE33 3JW

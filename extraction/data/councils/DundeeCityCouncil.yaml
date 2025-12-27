@@ -10,3 +10,5 @@ api_description: A direct GET request to the council's bin calendar endpoint usi
   the UPRN as a query parameter. The response is a JSON array of collection events.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '9059043390'

@@ -10,3 +10,5 @@ api_description: Calls the North Northants CMS API with a UPRN and a date range 
   date and current date plus 42 days).
 response_format: json
 date_format: dd/MM/yyyy
+test_inputs:
+  uprn: '100031021317'

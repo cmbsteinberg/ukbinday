@@ -11,3 +11,5 @@ api_description: GET request to the location endpoint with the UPRN prefixed by 
 response_format: html
 bin_selector: ul.refuse li
 date_format: '%A %d %b'
+test_inputs:
+  uprn: '10010149102'

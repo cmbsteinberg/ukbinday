@@ -14,3 +14,5 @@ bin_selector: div#rteelem_ctl03_pnlCollections_Refuse li, div#rteelem_ctl03_pnlC
   li, div#rteelem_ctl03_pnlCollections_Glass li, div#rteelem_ctl03_pnlCollections_GardenWaste
   li, div#rteelem_ctl03_pnlCollections_Food li
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: '100060220926'

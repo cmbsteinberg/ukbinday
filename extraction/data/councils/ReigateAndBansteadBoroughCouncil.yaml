@@ -1,9 +1,23 @@
 council: ReigateAndBansteadBoroughCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://my.reigate-banstead.gov.uk/apibroker/runLookup?id=595ce0f243541&app_name=AF-Renderer::Self
+- https://my.reigate-banstead.gov.uk/apibroker/runLookup?id=609d41ca89251&app_name=AF-Renderer::Self
+- https://my.reigate-banstead.gov.uk/apibroker/runLookup?id=6734bfc5a0a93&app_name=AF-Renderer::Self
+api_methods:
+- POST
 api_description: The site uses multiple 'runLookup' POST requests to initialize a
   session and then query bin collection data using a UPRN. The bin data is returned
   in the response of the final lookup ID.
+api_headers:
+  content-type: application/json
+  X-Requested-With: XMLHttpRequest
+api_payload_example: '{"stopOnFailure":true,"usePHPIntegrations":true,"formId":"AF-Form-7ea2eba0-028f-40f7-8eeb-c0d13ef21e48","formValues":{"Section
+  1":{"queryUprn":{"value":"000068134867"},"customerUprn":{"value":"68134867"},"uprn":{"value":"68134867"}}}}'
+response_format: html
+bin_selector: span[data-name="html2"] > div
+date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '68134867'

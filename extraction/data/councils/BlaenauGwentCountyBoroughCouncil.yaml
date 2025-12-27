@@ -1,10 +1,19 @@
 council: BlaenauGwentCountyBoroughCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://iweb.itouchvision.com/portal/itouchvision/kmbd/address
+- https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay
+api_methods:
+- GET
 api_description: The site uses iTouchVision's portal. It first looks up address details
   (including UPRN verification) via an address endpoint and then fetches collection
   days using a collectionDay endpoint with the UPRN and potentially a client UUID.
+api_headers:
+  content-type: application/json; charset=UTF-8
+date_format: '%A %d %B'
+test_inputs:
+  uprn: '100100471367'
+  postcode: NP23 7TE

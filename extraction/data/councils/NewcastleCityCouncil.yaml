@@ -12,3 +12,5 @@ api_description: The council provides a PHP endpoint that takes a UPRN as a quer
 response_format: html
 bin_selector: strong
 date_format: '%d-%b-%Y'
+test_inputs:
+  uprn: '004510730634'

@@ -12,3 +12,5 @@ api_description: Takes the UPRN and calls the council's bin collection page dire
 response_format: html
 bin_selector: h3.c-supplement__heading
 date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '200002618844'

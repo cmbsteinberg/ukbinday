@@ -14,3 +14,5 @@ api_description: The site uses a cookie named SVBINZONE containing the UPRN in t
 response_format: html
 bin_selector: div.bintxt
 date_format: '%A %d %B -'
+test_inputs:
+  uprn: '100121391443'

@@ -1,9 +1,19 @@
 council: PrestonCityCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - house_number
 - postcode
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
-api_description: The site uses ASP.NET WebForms (ViewState/EventValidation) to manage
-  form states and search results.
+api_urls:
+- https://selfservice.preston.gov.uk/service/Forms/FindMyNearest.aspx?Service=bins
+api_methods:
+- POST
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The site uses ASP.NET WebForms
+  (ViewState/EventValidation) to manage form states and search results.'
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+api_payload_example: __VIEWSTATE=...&__EVENTVALIDATION=...&MainContent_txtAddress=Town+Hall+PR1+2RL&MainContent_btnSearch=Search
+response_format: html
+bin_selector: '#MainContent_lblMoreCollectionDates div#container'
+date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: PR1 2RL

@@ -1,10 +1,22 @@
 council: SwaleBoroughCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
-api_description: The site uses a multi-step Matrix Squiz form. The first POST sends
-  the postcode to retrieve a dropdown list of addresses. The second POST selects the
-  address (ID) from the dropdown to display the bin collection summary.
+api_urls:
+- https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day
+api_methods:
+- POST
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The site uses a multi-step
+  Matrix Squiz form. The first POST sends the postcode to retrieve a dropdown list
+  of addresses. The second POST selects the address (ID) from the dropdown to display
+  the bin collection summary.'
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+  User-Agent: Mozilla/5.0
+api_payload_example: form_email_485465_submit=Submit&q485476_q1=ME12+2NQ
+response_format: html
+bin_selector: '#SBCYBDSummary'
+date_format: '%A, %d %B'
+test_inputs:
+  postcode: ME12 2NQ

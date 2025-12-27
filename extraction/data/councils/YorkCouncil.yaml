@@ -10,3 +10,5 @@ api_description: Calls the York waste API with a UPRN to retrieve bin collection
   and dates.
 response_format: json
 date_format: '%Y-%m-%dT%H:%M:%S'
+test_inputs:
+  uprn: '100050535540'

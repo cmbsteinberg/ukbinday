@@ -12,3 +12,5 @@ api_description: A SOAP XML request is sent to the web service containing the UP
 response_format: xml
 bin_selector: b
 date_format: '%a %d %b %Y'
+test_inputs:
+  uprn: '10091078762'

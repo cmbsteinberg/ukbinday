@@ -10,3 +10,5 @@ api_description: Direct API call using the UPRN to retrieve a JSON response cont
   collection items with types and dates.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '28056796'

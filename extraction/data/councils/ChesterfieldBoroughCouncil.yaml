@@ -16,3 +16,5 @@ api_description: Initial GET to establish session. Secondary GET to retrieve the
 response_format: json
 bin_selector: actions[0].returnValue.returnValue.serviceUnits
 date_format: '%Y-%m-%dT%H:%M:%S.%f%z'
+test_inputs:
+  uprn: '74008234'

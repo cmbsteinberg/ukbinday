@@ -10,3 +10,5 @@ api_description: Direct GET request to the council's internal API using the UPRN
   the URL path to retrieve collection schedule in JSON format.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '10067626314'

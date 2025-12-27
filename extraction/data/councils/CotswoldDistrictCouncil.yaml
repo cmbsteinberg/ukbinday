@@ -8,3 +8,5 @@ notes: Requires Playwright/Selenium automation - not yet implemented as HTTP req
 api_description: The site uses Salesforce Experience Cloud (Community Cloud) which
   relies on complex, stateful 'aura' or 'lwc' framework calls involving context tokens,
   action descriptors, and security nonces.
+test_inputs:
+  postcode: GL56 0GB

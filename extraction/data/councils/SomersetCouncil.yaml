@@ -1,14 +1,13 @@
 council: SomersetCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
-api_description: Based on the UI flow (Postcode search -> Address selection -> Data
-  display), the site likely uses an internal lookup service (possibly an ArcGIS or
-  bespoke Gov.uk backend) to find a UPRN (Unique Property Reference Number) before
-  displaying the collection schedule. While this can usually be simplified to two
-  GET/POST requests, without the network log to identify the specific endpoint and
-  data structure (e.g., whether it uses a hidden API or server-side rendering with
-  session cookies), a definitive 'single_api' cannot be confirmed.
+api_urls: null
+api_methods: null
+api_description: null
+response_format: html
+bin_selector: div.p-2
+date_format: '%A %d %B'
+test_inputs:
+  postcode: TA6 4AA

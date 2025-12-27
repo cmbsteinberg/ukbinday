@@ -1,10 +1,21 @@
 council: WokinghamBoroughCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - paon
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/find-your-bin-collection-day
+api_methods:
+- POST
 api_description: The site uses a standard Drupal-style form. A POST request with the
   postcode triggers an address lookup (AJAX/Refresh), followed by another POST containing
   the selected address ID to retrieve the collection dates.
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+  User-Agent: Mozilla/5.0
+api_payload_example: postcode_search_csv=RG40+2HR&address_options_csv=100062164478&op=Show+collection+dates&form_id=wokingham_waste_collection_search_form
+response_format: html
+bin_selector: div.card.card--waste.card--blue-light
+date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: RG40 2HR

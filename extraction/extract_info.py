@@ -77,6 +77,24 @@ Classify request_type as:
 
 Extract: URLs, methods, selectors, date formats, Playwright code if needed.
 
+CRITICAL - Multi-step URL Extraction:
+⚠️ For multi-step processes, you MUST extract ALL URLs involved:
+  - single_api: Provide 1 URL in api_urls list
+  - token_then_api: Provide ALL URLs [token_url, api_url] - typically 2 URLs
+    * If same endpoint used for both: provide 1 URL with 2 methods ["GET", "POST"]
+  - id_lookup_then_api: Provide [lookup_url, data_url] - MUST have 2 URLs minimum
+    * First URL: Where you lookup the ID/address from postcode
+    * Second URL: Where you query bin data using the ID
+  - api_urls must be a LIST containing all URLs in the order they're called
+  - api_methods must be a LIST with one method per URL (e.g., ["POST", "GET"])
+
+Example for id_lookup_then_api:
+  api_urls: ["https://council.gov/address-lookup", "https://council.gov/bin-data"]
+  api_methods: ["POST", "GET"]
+
+If you identify a multi-step process, carefully read the code to find ALL endpoint URLs.
+DO NOT provide only 1 URL if the process requires multiple steps.
+
 IMPORTANT: If you provide playwright_code, it MUST be Python code using async/await syntax.
 DO NOT use JavaScript syntax (const, let, var). Use Python syntax with await.
 

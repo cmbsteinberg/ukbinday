@@ -13,3 +13,5 @@ api_description: The council's collection date form uses a cookie named 'COLLECT
 response_format: html
 bin_selector: .CTID-FHGh1Q77-_, [id^='CTID-D0TUYGxO-'], [id^='CTID-d3gapLk-'], [id^='CTID-L8OidMPA-']
 date_format: '%a %b %d %Y'
+test_inputs:
+  uprn: '100051146921'

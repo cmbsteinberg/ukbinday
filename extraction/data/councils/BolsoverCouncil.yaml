@@ -14,3 +14,5 @@ api_description: First, a GET request is made to the authentication endpoint to 
   collection route information.
 response_format: json
 date_format: dd/mm/YYYY
+test_inputs:
+  uprn: '100030066827'

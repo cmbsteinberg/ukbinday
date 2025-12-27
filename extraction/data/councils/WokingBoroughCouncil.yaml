@@ -14,3 +14,5 @@ api_description: The workflow scrapes a session-based URL from the homepage, sub
 response_format: html
 bin_selector: u1.displayinlineblock.justifycontentleft.alignitemscenter.margin0.padding0
 date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: GU21 4JY

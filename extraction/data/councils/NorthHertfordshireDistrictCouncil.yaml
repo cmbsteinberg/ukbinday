@@ -15,3 +15,5 @@ api_description: First, the system looks up the UPRN via the addresses endpoint 
   the mobile app.
 response_format: json
 date_format: ISO format (YYYY-MM-DDTHH:MM:SS)
+test_inputs:
+  uprn: '100081258147'

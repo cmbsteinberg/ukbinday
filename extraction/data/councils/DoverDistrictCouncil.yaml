@@ -10,3 +10,5 @@ api_description: Fetches the collection schedule directly by property UPRN.
 response_format: html
 bin_selector: div.service-wrapper
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100060908340'

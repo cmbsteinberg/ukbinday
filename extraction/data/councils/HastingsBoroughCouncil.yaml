@@ -11,3 +11,5 @@ api_description: A POST request to the .asmx endpoint with a JSON payload contai
   types and lists of Unix timestamps for collection dates.
 response_format: json
 date_format: Unix timestamp (milliseconds)
+test_inputs:
+  uprn: '100060038877'

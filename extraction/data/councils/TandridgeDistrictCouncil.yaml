@@ -11,3 +11,5 @@ api_description: Submits a POST request with the UPRN in a JSON body to the Whit
 response_format: json
 bin_selector: lstNextCollections
 date_format: '%d/%m/%Y %H:%M:%S'
+test_inputs:
+  uprn: '100062160432'

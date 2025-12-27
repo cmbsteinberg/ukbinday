@@ -13,3 +13,5 @@ api_description: The scraper queries the Merton FixMyStreet waste endpoint with 
 response_format: html
 bin_selector: div.waste__collections
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: '4328213'

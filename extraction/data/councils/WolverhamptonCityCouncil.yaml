@@ -12,3 +12,6 @@ api_description: Takes the postcode and UPRN directly in the URL to return a pag
 response_format: html
 bin_selector: div.jumbotron-fluid div.col-md-4
 date_format: '%B %d, %Y'
+test_inputs:
+  uprn: '100071205205'
+  postcode: WV3 9NZ

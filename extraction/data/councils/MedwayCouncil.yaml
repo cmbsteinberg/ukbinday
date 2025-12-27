@@ -10,3 +10,5 @@ api_description: Fetches bin collection data directly from Medway's API using th
   UPRN.
 response_format: json
 date_format: '%Y-%m-%dT%H:%M:%S%z'
+test_inputs:
+  uprn: '200000907059'

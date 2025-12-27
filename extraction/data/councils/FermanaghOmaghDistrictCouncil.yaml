@@ -14,3 +14,5 @@ api_description: First, search for the address using the postcode to retrieve a 
   from the calendar endpoint.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  postcode: BT74 6DQ

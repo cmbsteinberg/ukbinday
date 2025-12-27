@@ -1,8 +1,16 @@
 council: ThanetDistrictCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php?pAddress={uprn}
+api_methods:
+- GET
 api_description: A direct GET request to a PHP endpoint that takes a UPRN as a query
   parameter and returns bin collection data in JSON format.
+api_headers:
+  Accept: application/json
+response_format: json
+date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100061111858'

@@ -12,3 +12,5 @@ api_description: Fetches the HTML schedule page directly using the UPRN in the U
 response_format: html
 bin_selector: li.waste-collection__day
 date_format: YYYY-MM-DD
+test_inputs:
+  uprn: '47097627'

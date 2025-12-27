@@ -14,3 +14,6 @@ api_description: The process involves getting an authentication session ID, then
   UPRN and Bartec token to retrieve bin collection dates.
 response_format: json
 date_format: '%Y-%m-%dT%H:%M:%S'
+test_inputs:
+  uprn: '10094358428'
+  postcode: OL11 5BE

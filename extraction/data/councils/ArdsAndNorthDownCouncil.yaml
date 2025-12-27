@@ -12,3 +12,5 @@ api_description: A SOAP XML request is sent to the webaspx service with the UPRN
 response_format: xml
 bin_selector: b
 date_format: '%a %d %b'
+test_inputs:
+  uprn: '187136177'

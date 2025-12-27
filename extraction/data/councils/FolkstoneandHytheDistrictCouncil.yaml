@@ -11,3 +11,5 @@ api_description: A single GET request to the council's myarea endpoint with a UP
 response_format: html
 bin_selector: '#bincollections'
 date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '50032097'

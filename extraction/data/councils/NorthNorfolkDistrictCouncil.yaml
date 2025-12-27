@@ -8,3 +8,5 @@ notes: Requires Playwright/Selenium automation - not yet implemented as HTTP req
 api_description: The system uses an OFML form (Open Form Markup Language) which usually
   involves complex state management, session-based tokens, and dynamic viewstate-like
   parameters managed by the outreach server.
+test_inputs:
+  postcode: NR25 6BH

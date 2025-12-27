@@ -11,3 +11,5 @@ api_description: A POST request is sent to the council's API service with the UP
 response_format: json
 bin_selector: GetBinCollectionResult.Data
 date_format: '%d/%m/%Y %H:%M:%S'
+test_inputs:
+  uprn: '100012835362'

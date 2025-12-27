@@ -14,3 +14,5 @@ api_description: First API call uses an address string to find location coordina
 response_format: json
 bin_selector: li.auroraListItem li
 date_format: dd/mm
+test_inputs:
+  postcode: LN8 3AX

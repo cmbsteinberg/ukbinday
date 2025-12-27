@@ -12,3 +12,6 @@ api_description: The council website uses a UPRN lookup to a property details pa
 response_format: html
 bin_selector: h2#rubbish-header + ul.list-group li
 date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '100120512183'
+  postcode: GL10 3BH

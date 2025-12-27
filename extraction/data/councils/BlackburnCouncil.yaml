@@ -11,3 +11,5 @@ api_description: The council provides a REST API that returns JSON data for bin 
 response_format: json
 bin_selector: BinCollectionDays
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '100010733027'

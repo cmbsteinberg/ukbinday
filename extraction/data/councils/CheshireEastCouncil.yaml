@@ -11,3 +11,5 @@ api_description: Fetches bin collection data directly using the UPRN in a GET re
 response_format: html
 bin_selector: table.job-details tr.data-row
 date_format: Expected to be parsed from label text within the table cells
+test_inputs:
+  uprn: '100012830647'

@@ -10,3 +10,5 @@ api_description: Calls the Fenland District Council's website with a UPRN and ge
   coordinates to retrieve a JSON response containing upcoming bin collection data.
 response_format: json
 date_format: '%Y-%m-%dT%H:%M:%SZ'
+test_inputs:
+  uprn: '200002981143'

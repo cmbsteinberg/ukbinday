@@ -14,3 +14,5 @@ api_description: First, a session token is retrieved from the authapi endpoint. 
 response_format: json
 bin_selector: integration.transformed.rows_data
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '10090058289'

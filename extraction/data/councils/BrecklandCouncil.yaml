@@ -10,3 +10,5 @@ api_description: Sends a JSON-RPC request to the Breckland API with the UPRN and
   method 'Breckland.Whitespace.JointWasteAPI.GetBinCollectionsByUprn'.
 response_format: json
 date_format: '%d/%m/%Y %H:%M:%S'
+test_inputs:
+  uprn: '100091495479'

@@ -12,3 +12,5 @@ api_description: Fetches bin collection data directly using the UPRN via a URL p
 response_format: html
 bin_selector: table.eb-EVDNdR1G-tableContent tr.eb-EVDNdR1G-tableRow
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100060861698'

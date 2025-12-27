@@ -1,10 +1,20 @@
 council: ColchesterCityCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - postcode
 - paon
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
-api_description: The site uses a multi-step form process. First, the postcode is submitted
-  to retrieve a list of addresses (UPRNs). Then, the specific address selection is
-  submitted to return the recycling calendar.
+api_urls:
+- https://www.colchester.gov.uk/your-recycling-calendar/?start=true
+api_methods:
+- POST
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The site uses a multi-step
+  form process. First, the postcode is submitted to retrieve a list of addresses (UPRNs).
+  Then, the specific address selection is submitted to return the recycling calendar.'
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+api_payload_example: postcode=CO2+8UN&address_id=12345678
+response_format: html
+bin_selector: div.recycling-calendar-row
+date_format: '%d %B %Y'
+test_inputs:
+  postcode: CO2 8UN

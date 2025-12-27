@@ -11,3 +11,5 @@ api_description: The Playwright script interacts with a postcode lookup and then
   often use server-side state tracking and AJAX callbacks that are extremely brittle
   to replicate with Python requests. Without specific network logs showing the API
   endpoints or form POST targets, it is safer to continue using Playwright.
+test_inputs:
+  postcode: EH52 5JE

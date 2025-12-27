@@ -11,3 +11,5 @@ api_description: Takes a UPRN and returns a JSON array where the first element c
 response_format: json
 bin_selector: h2
 date_format: '%A, %d %B %Y'
+test_inputs:
+  uprn: '100040212270'

@@ -11,3 +11,5 @@ api_description: The council provides an endpoint where the UPRN is appended to 
 response_format: html
 bin_selector: div[aria-labelledby]
 date_format: '%a, %d %B %Y'
+test_inputs:
+  uprn: '200003469271'

@@ -11,3 +11,5 @@ api_description: The council website uses a direct URL with the UPRN to set the 
 response_format: html
 bin_selector: ul.refuse li
 date_format: '%a %d %b %Y'
+test_inputs:
+  uprn: '100030446438'

@@ -14,3 +14,5 @@ api_description: First call searches for addresses based on postcode to retrieve
   unique address ID. The second call uses that ID to fetch the collection schedule.
 response_format: json
 date_format: '%Y-%m-%dT%H:%M:%SZ'
+test_inputs:
+  postcode: CB23 6GZ

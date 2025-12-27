@@ -11,3 +11,5 @@ api_description: GET request to the council website using the UPRN to retrieve a
 response_format: html
 bin_selector: table.data-table tbody tr
 date_format: '%A %d %B'
+test_inputs:
+  uprn: '100031725433'

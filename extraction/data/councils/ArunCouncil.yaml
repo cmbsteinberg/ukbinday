@@ -1,10 +1,24 @@
 council: ArunCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://www1.arun.gov.uk/when-are-my-bins-collected/postcode
+- https://www1.arun.gov.uk/when-are-my-bins-collected/select
+- https://www1.arun.gov.uk/when-are-my-bins-collected/collections
+api_methods:
+- POST
+- POST
+- GET
 api_description: The process involves submitting a postcode to a search endpoint,
   selecting the specific address UPRN from the resulting list, and then fetching the
   collections page which uses the session cookie to display the results.
+api_headers:
+  content-type: application/x-www-form-urlencoded
+api_payload_example: postcode=BN16+4DA&address=100061721819
+response_format: html
+bin_selector: table.govuk-table tbody tr
+date_format: dddd DD MMMM YYYY
+test_inputs:
+  postcode: BN16 4DA

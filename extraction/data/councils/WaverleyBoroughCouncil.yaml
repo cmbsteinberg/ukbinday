@@ -17,3 +17,5 @@ api_description: The script first accesses the root URL to extract a session 'Tr
 response_format: html
 bin_selector: u1.displayinlineblock.justifycontentleft.alignitemscenter.margin0.padding0
 date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: GU9 9QG

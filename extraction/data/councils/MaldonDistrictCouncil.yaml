@@ -11,3 +11,5 @@ api_description: Calls the Suez service summary endpoint with the UPRN to retrie
 response_format: html
 bin_selector: div.panel
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100090557253'

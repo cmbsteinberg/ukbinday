@@ -15,3 +15,5 @@ api_description: First, the script calls an authentication endpoint to obtain a 
   the bin collection schedules.
 response_format: json
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100012346655'

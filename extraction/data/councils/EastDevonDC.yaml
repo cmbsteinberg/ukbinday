@@ -10,3 +10,5 @@ api_description: Scrapes a static HTML calendar page based on the property UPRN.
 response_format: html
 bin_selector: ol.nonumbers.news.collections li
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: 010090909915

@@ -11,3 +11,5 @@ api_description: Submits the UPRN via a POST request to retrieve the bin collect
 response_format: html
 bin_selector: div.collection-container
 date_format: '%A, %d %B %Y'
+test_inputs:
+  uprn: '10094557691'

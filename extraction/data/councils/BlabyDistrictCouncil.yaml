@@ -11,3 +11,5 @@ api_description: Fetches bin collection data by passing the UPRN in a URL parame
 response_format: html
 bin_selector: .box-item
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100030401782'

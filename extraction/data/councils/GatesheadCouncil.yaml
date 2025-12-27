@@ -1,11 +1,23 @@
 council: GatesheadCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker
+api_methods:
+- POST
 api_description: The site uses a multi-step form process within a single URL. It first
   performs a postcode lookup to populate an address dropdown, and then likely submits
   a form post (or AJAX request) to retrieve the specific collection dates for the
   selected address ID.
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+  User-Agent: Mozilla/5.0
+api_payload_example: BINCOLLECTIONCHECKER_ADDRESSSEARCH_ADDRESSLOOKUPPOSTCODE=NE16
+  5LQ&BINCOLLECTIONCHECKER_ADDRESSSEARCH_ADDRESSLOOKUPSEARCH=Search&BINCOLLECTIONCHECKER_ADDRESSSEARCH_ADDRESSLOOKUPADDRESS=UPRN_HERE
+response_format: html
+bin_selector: 'null'
+date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: NE16 5LQ

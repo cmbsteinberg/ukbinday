@@ -6,3 +6,5 @@ required_user_input:
 status: not_implemented
 notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
 api_description: ASP.NET WebForms search page which includes a reCAPTCHA challenge.
+test_inputs:
+  postcode: WA7 4HA

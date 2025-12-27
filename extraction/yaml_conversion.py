@@ -1,5 +1,6 @@
 import json
 import yaml
+import re
 from pathlib import Path
 from typing import Dict, Any, Optional
 
@@ -10,11 +11,128 @@ from typing import Dict, Any, Optional
 
 COUNCIL_EXTRACTION_JSON = "extraction/data/council_extraction_results.json"
 NETWORK_ANALYSIS_JSON = "extraction/data/network_analysis_results.json"
+INPUT_JSON = "extraction/data/input.json"
 OUTPUT_DIR = "extraction/data/councils"
+
+# ============================================================================
+# TEST INPUT EXTRACTION
+# ============================================================================
+
+
+def extract_test_inputs(input_data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Extract test inputs from input.json entry
+
+    Args:
+        input_data: Single council entry from input.json
+
+    Returns:
+        Dictionary of test inputs (uprn, postcode, etc.)
+    """
+    test_inputs = {}
+
+    # Direct fields
+    if "uprn" in input_data:
+        test_inputs["uprn"] = input_data["uprn"]
+    if "postcode" in input_data:
+        test_inputs["postcode"] = input_data["postcode"]
+
+    # Extract UPRN from URL if present
+    if "url" in input_data and "uprn" not in test_inputs:
+        url = input_data["url"]
+        # Match various UPRN patterns in URLs:
+        # - ?uprn=12345
+        # - brlu-selected-address=12345
+        # - /uprn/12345
+        # - uprn-12345
+        uprn_patterns = [
+            r'[?&]uprn[=:](\d+)',
+            r'brlu-selected-address[=:](\d+)',
+            r'/uprn[/-](\d+)',
+            r'uprn[_-](\d+)',
+            r'UPRN[=:](\d+)',
+        ]
+        for pattern in uprn_patterns:
+            match = re.search(pattern, url, re.IGNORECASE)
+            if match:
+                test_inputs["uprn"] = match.group(1)
+                break
+
+    # Extract postcode from URL if present
+    if "url" in input_data and "postcode" not in test_inputs:
+        url = input_data["url"]
+        # UK postcode pattern
+        postcode_pattern = r'\b([A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2})\b'
+        match = re.search(postcode_pattern, url, re.IGNORECASE)
+        if match:
+            test_inputs["postcode"] = match.group(1)
+
+    # Extract other common parameters from URL
+    if "url" in input_data:
+        url = input_data["url"]
+
+        # Extract house number (paon)
+        paon_patterns = [
+            r'[?&]paon[=:](\d+)',
+            r'houseNumber[=:](\d+)',
+        ]
+        for pattern in paon_patterns:
+            match = re.search(pattern, url, re.IGNORECASE)
+            if match:
+                test_inputs["paon"] = match.group(1)
+                break
+
+        # Extract USRN
+        usrn_patterns = [
+            r'[?&]usrn[=:](\d+)',
+        ]
+        for pattern in usrn_patterns:
+            match = re.search(pattern, url, re.IGNORECASE)
+            if match:
+                test_inputs["usrn"] = match.group(1)
+                break
+
+    return test_inputs
+
 
 # ============================================================================
 # CONVERSION FUNCTIONS
 # ============================================================================
+
+
+def auto_correct_request_type(config: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Auto-correct misclassified request types
+
+    Fix common LLM extraction mistakes:
+    - id_lookup_then_api with only 1 URL should likely be single_api
+    - id_lookup_then_api where description doesn't mention two steps
+    """
+    request_type = config.get("request_type")
+    api_urls = config.get("api_urls", [])
+    api_methods = config.get("api_methods", [])
+    description = (config.get("api_description") or "").lower()
+
+    # If id_lookup_then_api but only 1 URL and 1 method, likely misclassified
+    if request_type == "id_lookup_then_api":
+        if api_urls and api_methods and len(api_urls) == 1 and len(api_methods) == 1:
+            # Check if description mentions two-step process
+            two_step_indicators = [
+                "then a post", "followed by", "final post", "second request",
+                "initial get", "first get", "lookup", "search for address"
+            ]
+
+            has_two_step_description = any(indicator in description for indicator in two_step_indicators)
+
+            if not has_two_step_description:
+                # Likely should be single_api
+                config["request_type"] = "single_api"
+                config["api_description"] = (
+                    "[AUTO-CORRECTED from id_lookup_then_api] " +
+                    config.get("api_description", "")
+                )
+
+    return config
 
 
 def merge_council_data(
@@ -58,6 +176,9 @@ def merge_council_data(
             "api_description": data.get("api_description"),
         }
 
+    # Auto-correct misclassified request types
+    base_config = auto_correct_request_type(base_config)
+
     # Add parsing info from extraction data if available
     if extraction_data:
         data = extraction_data.get("data", {})
@@ -79,7 +200,7 @@ def convert_json_to_yaml():
     print("Converting JSON to YAML files")
     print("=" * 80)
 
-    # Load both input JSON files
+    # Load all input JSON files
     print(f"\nLoading {COUNCIL_EXTRACTION_JSON}...")
     with open(COUNCIL_EXTRACTION_JSON, "r") as f:
         extraction_councils = json.load(f)
@@ -90,59 +211,54 @@ def convert_json_to_yaml():
         network_councils = json.load(f)
     print(f"Loaded {len(network_councils)} councils from network analysis")
 
+    print(f"\nLoading {INPUT_JSON}...")
+    with open(INPUT_JSON, "r") as f:
+        input_test_data = json.load(f)
+    print(f"Loaded {len(input_test_data)} councils from input.json (test data)")
+
     # Create lookup dictionaries by council name
     extraction_by_name = {c["council"]: c for c in extraction_councils}
     network_by_name = {c["council"]: c for c in network_councils}
 
-    # Get all unique council names
-    all_council_names = set(extraction_by_name.keys()) | set(network_by_name.keys())
-    print(f"\nTotal unique councils: {len(all_council_names)}")
+    print(f"\nTotal councils: {len(extraction_by_name)}")
+    print(f"Councils with network analysis (selenium refinement): {len(network_by_name)}")
 
     # Categorize councils
+    # Process all extraction councils, using network analysis as override where available
     api_ready = []
     selenium_councils = []
     skipped = []
 
-    for council_name in sorted(all_council_names):
-        extraction_data = extraction_by_name.get(council_name)
+    for council_name, extraction_data in sorted(extraction_by_name.items()):
         network_data = network_by_name.get(council_name)
 
-        # Check if selenium in EITHER source
-        is_selenium_extraction = (
-            extraction_data and
-            extraction_data.get("data", {}).get("request_type") == "selenium"
-        )
-        is_selenium_network = (
-            network_data and
-            network_data.get("analysis", {}).get("alternative_request_type") == "selenium"
-        )
+        # Determine final request type (network analysis overrides extraction if present)
+        if network_data:
+            # This council was selenium initially, but network analysis may have found a simpler way
+            final_request_type = network_data.get("analysis", {}).get("alternative_request_type")
+        else:
+            # Use original extraction result
+            final_request_type = extraction_data.get("data", {}).get("request_type")
 
-        if is_selenium_extraction or is_selenium_network:
+        # Categorize based on final request type
+        if final_request_type == "selenium":
+            # Still requires selenium/playwright
             selenium_councils.append({
                 "name": council_name,
                 "extraction_data": extraction_data,
                 "network_data": network_data,
-                "source": "network_analysis" if is_selenium_network else "extraction",
+                "source": "network_analysis" if network_data else "extraction",
+            })
+        elif final_request_type in ["single_api", "token_then_api", "id_lookup_then_api", "calendar"]:
+            # Can be implemented with HTTP requests
+            api_ready.append({
+                "name": council_name,
+                "extraction_data": extraction_data,
+                "network_data": network_data,
             })
         else:
-            # Check if has valid request type
-            has_extraction_type = (
-                extraction_data and
-                extraction_data.get("data", {}).get("request_type") not in [None, "selenium"]
-            )
-            has_network_type = (
-                network_data and
-                network_data.get("analysis", {}).get("alternative_request_type") not in [None, "selenium"]
-            )
-
-            if has_extraction_type or has_network_type:
-                api_ready.append({
-                    "name": council_name,
-                    "extraction_data": extraction_data,
-                    "network_data": network_data,
-                })
-            else:
-                skipped.append(council_name)
+            # No valid request type (None or unclear)
+            skipped.append(council_name)
 
     print(f"\nCategories:")
     print(f"  API-ready: {len(api_ready)}")
@@ -162,6 +278,12 @@ def convert_json_to_yaml():
             council_info["extraction_data"],
             council_info["network_data"],
         )
+
+        # Add test inputs from input.json if available
+        if council_name in input_test_data:
+            test_inputs = extract_test_inputs(input_test_data[council_name])
+            if test_inputs:
+                config["test_inputs"] = test_inputs
 
         yaml_file = output_path / f"{council_name}.yaml"
         with open(yaml_file, "w") as f:
@@ -205,6 +327,12 @@ def convert_json_to_yaml():
             "notes": "Requires Playwright/Selenium automation - not yet implemented as HTTP requests",
             "api_description": description,
         }
+
+        # Add test inputs from input.json if available
+        if council_name in input_test_data:
+            test_inputs = extract_test_inputs(input_test_data[council_name])
+            if test_inputs:
+                config["test_inputs"] = test_inputs
 
         yaml_file = output_path / f"{council_name}.yaml"
         with open(yaml_file, "w") as f:

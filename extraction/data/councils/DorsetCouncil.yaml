@@ -11,3 +11,5 @@ api_description: The script iterates through a list of service types (recyclingd
   fetch the next collection date for each bin type.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '100040711049'

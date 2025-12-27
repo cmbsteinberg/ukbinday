@@ -15,3 +15,5 @@ api_description: The workflow first authenticates with a session URL to obtain a
   collection dates and round types.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '100040420582'

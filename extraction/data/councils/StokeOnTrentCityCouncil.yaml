@@ -12,3 +12,5 @@ api_description: The council uses a SOAP/XML based web service. Passing a UPRN t
 response_format: xml
 bin_selector: BinRound
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '3455121482'

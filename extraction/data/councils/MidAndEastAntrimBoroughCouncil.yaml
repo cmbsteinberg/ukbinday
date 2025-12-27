@@ -7,3 +7,5 @@ notes: Requires Playwright/Selenium automation - not yet implemented as HTTP req
 api_description: The site uses an embedded iframe that appears to be a third-party
   application. The interaction involves a dynamic search (#txtAjaxSearch) and a subsequent
   click on an ID-based result button (#show-button-0).
+test_inputs:
+  postcode: 100 Galgorm Road

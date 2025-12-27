@@ -13,3 +13,6 @@ api_description: Initial GET request to form page to extract a CSRF token from t
 response_format: html
 bin_selector: div.date_display
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '10006930172'
+  postcode: CO5 9BD

@@ -12,3 +12,5 @@ api_description: Fetches bin collection data by passing a UPRN as the 'selectedA
 response_format: html
 bin_selector: p
 date_format: '%Y-%m-%dT%H:%M:%S'
+test_inputs:
+  uprn: '100060545034'

@@ -8,3 +8,5 @@ notes: Requires Playwright/Selenium automation - not yet implemented as HTTP req
 api_description: The site uses a complex iframe-based form system (Firmstep/Granicus)
   which typically involves multiple stateful POST requests, dynamic session tokens,
   and XHR polling to generate and display collection data within the DOM.
+test_inputs:
+  postcode: ME16 8BT

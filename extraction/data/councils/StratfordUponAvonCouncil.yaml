@@ -11,3 +11,5 @@ api_description: Posts the UPRN directly to the collection calendar page to retr
 response_format: html
 bin_selector: table.table
 date_format: '%A, %d/%m/%Y'
+test_inputs:
+  uprn: '100070212698'

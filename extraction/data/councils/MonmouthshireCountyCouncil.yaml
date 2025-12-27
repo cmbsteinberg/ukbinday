@@ -12,3 +12,5 @@ api_description: The council website takes a UPRN via a query parameter and retu
 response_format: html
 bin_selector: div[aria-label='Waste Collections'] .atPanelContent
 date_format: '%A %d %B'
+test_inputs:
+  uprn: '100100266220'

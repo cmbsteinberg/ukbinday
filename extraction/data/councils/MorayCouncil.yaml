@@ -11,3 +11,5 @@ api_description: The site takes an 8-digit zero-padded UPRN as a query parameter
 response_format: html
 bin_selector: div.container_images
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: '45438'

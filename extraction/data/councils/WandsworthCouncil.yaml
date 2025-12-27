@@ -11,3 +11,5 @@ api_description: GET request to the property search page with the UPRN as a quer
 response_format: html
 bin_selector: h4.collection-heading
 date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '100022684035'

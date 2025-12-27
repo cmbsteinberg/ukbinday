@@ -13,3 +13,5 @@ api_description: The script first authenticates to obtain a session key (auth-se
   the formValues payload.
 response_format: json
 date_format: '%d/%m/%Y %H:%M:%S'
+test_inputs:
+  uprn: '10013119164'

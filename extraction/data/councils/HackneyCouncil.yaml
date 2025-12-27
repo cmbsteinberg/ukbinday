@@ -18,3 +18,5 @@ api_description: The process involves a postcode lookup to find a property syste
   the collection dates.
 response_format: json
 date_format: '%Y-%m-%dT%H:%M:%SZ'
+test_inputs:
+  postcode: N16 9AS

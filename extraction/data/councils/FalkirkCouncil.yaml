@@ -10,3 +10,5 @@ api_description: A single GET request to the council API using the UPRN returns 
   JSON object containing bin types and an array of collection dates.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '136065818'

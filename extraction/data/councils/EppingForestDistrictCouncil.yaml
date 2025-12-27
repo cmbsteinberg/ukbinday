@@ -1,9 +1,19 @@
 council: EppingForestDistrictCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://utility.arcgis.com/usrsvcs/servers/9a7c005e72a747f0948d9a179c31ab75/rest/services/OSPlacesCascade_basic---fq--COUNTRY_CODE-E---fq--LOCAL_CUSTODIAN_CODE-1535/GeocodeServer/findAddressCandidates
+- https://services-eu1.arcgis.com/SDWAhoV6ICvQHz6h/arcgis/rest/services/Website_WasteCollectionRoutes/FeatureServer/0/query
+api_methods:
+- GET
 api_description: First, the postcode is sent to an ArcGIS GeocodeServer to get coordinates
   (X/Y). Then, those coordinates are used to query a FeatureServer layer containing
   waste collection route polygons to return collection details.
+api_headers:
+  Accept: application/json
+response_format: html
+bin_selector: .esri-feature-content p
+date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: IG9 6EP

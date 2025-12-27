@@ -11,3 +11,5 @@ api_description: A single GET request to a URL containing the UPRN returns an HT
 response_format: html
 bin_selector: div[class*="containererf"]
 date_format: '%A, %d/%m/%Y'
+test_inputs:
+  uprn: '100100429249'

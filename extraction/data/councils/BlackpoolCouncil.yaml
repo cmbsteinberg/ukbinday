@@ -16,3 +16,6 @@ api_description: The script first fetches an authentication token from the secur
 response_format: json
 bin_selector: jobsField
 date_format: '%Y-%m-%dT%H:%M:%S'
+test_inputs:
+  uprn: '100010813607'
+  postcode: FY3 8EB

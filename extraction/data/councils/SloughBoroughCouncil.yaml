@@ -1,10 +1,15 @@
 council: SloughBoroughCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - user_address
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls: null
+api_methods: null
 api_description: The website uses a keyword-based search that results in a list of
   street links. Each link leads to a specific page that appears to be dynamically
   generated or part of a directory structure where collection dates are stored in
   list items.
+response_format: html
+bin_selector: dt.definition__heading
+date_format: '%d %B %Y'
+test_inputs:
+  postcode: SL2 2EW

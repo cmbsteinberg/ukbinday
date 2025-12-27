@@ -11,3 +11,5 @@ api_description: Calls the bin collection search page with the UPRN in the query
 response_format: html
 bin_selector: div.bin-collection-results__tasks li.list__item
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: '100121292407'

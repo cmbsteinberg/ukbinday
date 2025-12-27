@@ -12,3 +12,5 @@ api_description: A single GET request to the council's waste calendar page using
 response_format: html
 bin_selector: (Glass|Recycling|General Waste|Garden Waste).*?([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4})
 date_format: '%m/%d/%Y'
+test_inputs:
+  uprn: '100060731893'

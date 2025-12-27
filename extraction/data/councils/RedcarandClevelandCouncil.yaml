@@ -13,3 +13,5 @@ api_description: First looks up the address ID using a postcode and house number
   API.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  postcode: TS10 2RE

@@ -13,3 +13,5 @@ api_description: First, a GET request is made to the AUTH_URL to retrieve an 'Au
   the UPRN and a date range to retrieve bin collection dates.
 response_format: json
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '77127089'

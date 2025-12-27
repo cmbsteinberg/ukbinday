@@ -12,3 +12,6 @@ api_description: Submits a POST request using multipart/form-data with 'postcode
 response_format: html
 bin_selector: h3
 date_format: '%A, %d %B %Y'
+test_inputs:
+  uprn: '10000802040'
+  postcode: SG19 2UP

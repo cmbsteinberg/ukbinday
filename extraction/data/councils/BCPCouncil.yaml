@@ -11,3 +11,5 @@ api_description: A POST request is sent to an Azure Logic App workflow with the 
   date ranges.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '100040810214'

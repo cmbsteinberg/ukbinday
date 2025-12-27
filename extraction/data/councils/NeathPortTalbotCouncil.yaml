@@ -1,10 +1,21 @@
 council: NeathPortTalbotCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
-api_description: The site uses a multi-step form process. Step 1 submits a postcode
-  to retrieve a list of addresses (with internal IDs or values). Step 2 submits the
-  selected address ID to retrieve the bin collection details.
+api_urls:
+- https://beta.npt.gov.uk/bins-and-recycling/bin-day-finder/
+api_methods:
+- POST
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The site uses a multi-step
+  form process. Step 1 submits a postcode to retrieve a list of addresses (with internal
+  IDs or values). Step 2 submits the selected address ID to retrieve the bin collection
+  details.'
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+api_payload_example: PostCode=SA13+3BA&Address=12345678&__RequestVerificationToken=...
+response_format: html
+bin_selector: div.umb-block-grid__layout-item h2
+date_format: '%A, %d %B %Y'
+test_inputs:
+  postcode: SA13 3BA

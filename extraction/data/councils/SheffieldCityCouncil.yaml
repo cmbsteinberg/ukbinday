@@ -1,8 +1,16 @@
 council: SheffieldCityCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://wasteservices.sheffield.gov.uk/Property/SearchByUprn?uprn={uprn}
+api_methods:
+- GET
 api_description: A direct GET request to the UPRN search endpoint returns an HTML
   page containing a table with class 'table' which lists the bin collection schedules.
+api_headers:
+  Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+  User-Agent: Mozilla/5.0
+response_format: html
+bin_selector: table.table tr
+date_format: '%d %b %Y'

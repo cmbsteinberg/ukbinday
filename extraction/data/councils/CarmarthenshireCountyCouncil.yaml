@@ -11,3 +11,5 @@ api_description: Takes the UPRN and returns an HTML fragment containing collecti
 response_format: html
 bin_selector: .bin-day-container
 date_format: '%A %d/%m/%Y'
+test_inputs:
+  uprn: '10004859302'

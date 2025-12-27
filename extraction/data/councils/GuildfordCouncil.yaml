@@ -10,3 +10,5 @@ api_description: Salesforce sites typically require maintaining state across mul
   it is extremely fragile compared to browser automation due to the way Salesforce
   handles CSRF tokens and component actions. Direct requests are not recommended for
   this platform.
+test_inputs:
+  postcode: GU3 1AH

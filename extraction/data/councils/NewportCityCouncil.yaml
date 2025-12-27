@@ -12,3 +12,5 @@ api_description: The API accepts an AES-CBC encrypted JSON payload containing th
   dates.
 response_format: json
 date_format: MM/DD/YYYY
+test_inputs:
+  uprn: '100100688819'

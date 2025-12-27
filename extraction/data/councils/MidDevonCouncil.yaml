@@ -15,3 +15,5 @@ api_description: First, the script authenticates to get a session ID ('sid') fro
   collection data in the 'rows_data' field.
 response_format: json
 date_format: '%d-%b-%y'
+test_inputs:
+  uprn: '200003997770'

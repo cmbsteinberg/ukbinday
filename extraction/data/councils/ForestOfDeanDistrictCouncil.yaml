@@ -10,3 +10,5 @@ api_description: The automation interacts with a Salesforce Experience Cloud sit
   state information. Replicating these requests manually requires managing complex
   context headers and session states that are inherently tied to the browser session.
   Therefore, sticking with browser-based automation is the most reliable approach.
+test_inputs:
+  postcode: GL15 6JT

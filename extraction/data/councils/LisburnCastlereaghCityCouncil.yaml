@@ -14,3 +14,5 @@ api_description: First, retrieve a list of addresses in HTML format wrapped in a
   date to get the collection schedule.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  postcode: BT28 1JN

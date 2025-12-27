@@ -13,3 +13,6 @@ api_description: A POST request is made to a dynamic DLL endpoint with the UPRN 
 response_format: xml
 bin_selector: Collection
 date_format: '%d/%m/%Y %H:%M:%S'
+test_inputs:
+  uprn: '200003095389'
+  postcode: WS15 1JA

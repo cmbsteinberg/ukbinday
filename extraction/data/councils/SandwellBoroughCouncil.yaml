@@ -14,3 +14,5 @@ api_description: First, a GET request to the session URL retrieves an 'auth-sess
   types. The payload includes the UPRN and a timestamp.
 response_format: json
 date_format: YYYY-MM-DD
+test_inputs:
+  uprn: '32101971'

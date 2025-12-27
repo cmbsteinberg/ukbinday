@@ -13,3 +13,6 @@ api_description: The council's 'Your Area' page returns collection details based
 response_format: html
 bin_selector: div.m-toggle-content ul li
 date_format: DD/MM/YYYY
+test_inputs:
+  uprn: '5300094897'
+  postcode: N1 1XR

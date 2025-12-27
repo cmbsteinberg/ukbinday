@@ -12,3 +12,5 @@ api_description: The script sends a POST request to an Azure-hosted API for Bris
   and passes the UPRN in a JSON body.
 response_format: json
 date_format: '%Y-%m-%dT%H:%M:%S'
+test_inputs:
+  uprn: '116638'

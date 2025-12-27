@@ -12,3 +12,5 @@ api_description: The council website accepts a UPRN in a POST request to a prope
 response_format: html
 bin_selector: table.hbcRounds tr
 date_format: '%a %d %b %Y'
+test_inputs:
+  uprn: '100050414307'

@@ -15,3 +15,5 @@ api_description: The council uses a two-step API process. First, it searches for
   The results are then calculated locally based on fixed start dates.
 response_format: json
 date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: BR7 6DN

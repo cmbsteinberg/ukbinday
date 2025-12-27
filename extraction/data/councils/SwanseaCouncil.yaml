@@ -13,3 +13,6 @@ api_description: Submits a POST request to the Swansea Council recycling search 
 response_format: html
 bin_selector: span#lblNextRefuse, span#lblNextRecycling
 date_format: dd/mm/yyyy
+test_inputs:
+  uprn: '100100324821'
+  postcode: SA43PQ

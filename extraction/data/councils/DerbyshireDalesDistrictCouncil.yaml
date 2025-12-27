@@ -14,3 +14,6 @@ api_description: First GET request to fetch form tokens and session data. Second
 response_format: html
 bin_selector: div.ss_confPanel div.row
 date_format: '%A%d %B, %Y'
+test_inputs:
+  uprn: '10070102161'
+  postcode: DE4 3AS

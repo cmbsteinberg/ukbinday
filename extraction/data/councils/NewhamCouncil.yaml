@@ -11,3 +11,5 @@ api_description: The script constructs a URL using the UPRN and parses the retur
 response_format: html
 bin_selector: div.card.h-100
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '46077811'

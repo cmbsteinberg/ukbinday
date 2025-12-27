@@ -7,3 +7,5 @@ api_urls: null
 api_methods: null
 api_description: null
 date_format: DD/MM/YYYY
+test_inputs:
+  postcode: Week 1

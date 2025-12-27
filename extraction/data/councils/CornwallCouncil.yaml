@@ -11,3 +11,5 @@ api_description: Takes a UPRN as a query parameter and returns HTML content cont
 response_format: html
 bin_selector: div.collection.text-center.service
 date_format: '%d %b'
+test_inputs:
+  uprn: '100040128734'

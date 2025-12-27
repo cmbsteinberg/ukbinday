@@ -11,3 +11,5 @@ api_description: Fetches the HTML bin collection schedule page directly using th
 response_format: html
 bin_selector: div.lgd-region--content
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: '10009457328'

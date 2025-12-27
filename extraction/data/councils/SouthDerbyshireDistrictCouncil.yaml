@@ -12,3 +12,5 @@ api_description: The council uses an iShareLIVE endpoint that returns JSONP. The
   and bin type.
 response_format: json
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: '10000820668'

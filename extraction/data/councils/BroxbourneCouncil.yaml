@@ -8,3 +8,6 @@ notes: Requires Playwright/Selenium automation - not yet implemented as HTTP req
 api_description: The current automation interacts with a multi-step form involving
   postcode entry, address selection from a dropdown, and a final submission button
   to render a results table.
+test_inputs:
+  uprn: '148048608'
+  postcode: EN8 7FL

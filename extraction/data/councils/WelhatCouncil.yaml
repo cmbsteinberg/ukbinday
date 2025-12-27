@@ -13,3 +13,6 @@ api_description: The workflow first extracts a CSRF __token from the initial for
 response_format: html
 bin_selector: table tr
 date_format: '%A %d %B  %Y'
+test_inputs:
+  uprn: '100080982825'
+  postcode: AL8 6HQ

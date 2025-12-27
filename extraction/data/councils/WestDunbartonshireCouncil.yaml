@@ -11,3 +11,5 @@ api_description: The script calls a specific URL with the UPRN passed as a query
 response_format: html
 bin_selector: div.round-info
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: '129001383'

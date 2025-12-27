@@ -11,3 +11,5 @@ api_description: Fetches a result page using the UPRN in the URL parameter 'addr
 response_format: html
 bin_selector: .heading
 date_format: DD/MM/YYYY
+test_inputs:
+  uprn: '185625284'

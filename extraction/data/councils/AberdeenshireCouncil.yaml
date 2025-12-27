@@ -12,3 +12,5 @@ api_description: A direct GET request to the council's waste collection route pa
 response_format: html
 bin_selector: table tbody tr
 date_format: '%d/%m/%Y %A'
+test_inputs:
+  uprn: '151176430'

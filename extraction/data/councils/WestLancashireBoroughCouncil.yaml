@@ -14,3 +14,6 @@ api_description: Initial GET to the URL with the postcode in the query string re
 response_format: html
 bin_selector: '#StreetSceneTable'
 date_format: dd/MM/yyyy
+test_inputs:
+  uprn: '10012343339'
+  postcode: WN8 0HR

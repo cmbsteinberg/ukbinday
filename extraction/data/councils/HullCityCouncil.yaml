@@ -10,3 +10,5 @@ api_description: A single GET request using the UPRN as a query parameter called
   which returns a JSON array of bin collection schedules.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '21033995'

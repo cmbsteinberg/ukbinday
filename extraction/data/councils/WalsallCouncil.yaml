@@ -1,15 +1,17 @@
 council: WalsallCouncil
-request_type: id_lookup_then_api
+request_type: single_api
 required_user_input:
 - uprn
 api_urls:
 - https://cag.walsall.gov.uk/BinCollections/GetBins?uprn={uprn}
 api_methods:
 - GET
-api_description: The initial request retrieves a list of collection schedules for
-  different bin types using the UPRN. It then iterates through the links for each
-  bin type (e.g., bin colour) to fetch the specific collection dates from separate
-  pages.
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The initial request retrieves
+  a list of collection schedules for different bin types using the UPRN. It then iterates
+  through the links for each bin type (e.g., bin colour) to fetch the specific collection
+  dates from separate pages.'
 response_format: html
 bin_selector: tr
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100071080513'

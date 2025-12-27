@@ -11,3 +11,5 @@ api_description: Takes a UPRN in a POST request as 'alAddrsel' and returns an HT
 response_format: html
 bin_selector: table tbody tr
 date_format: '%A %d/%m/%Y'
+test_inputs:
+  uprn: '100121348457'

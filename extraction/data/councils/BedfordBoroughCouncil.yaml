@@ -11,3 +11,5 @@ api_description: A GET request to the Bartec API using the UPRN returns bin coll
 response_format: json
 bin_selector: BinCollections
 date_format: '%Y-%m-%dT%H:%M:%S'
+test_inputs:
+  uprn: '10024232065'

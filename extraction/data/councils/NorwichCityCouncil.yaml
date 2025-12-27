@@ -1,5 +1,5 @@
 council: NorwichCityCouncil
-request_type: id_lookup_then_api
+request_type: single_api
 required_user_input:
 - house_number
 - postcode
@@ -7,11 +7,13 @@ api_urls:
 - https://bnr-wrp.whitespacews.com/
 api_methods:
 - POST
-api_description: The workflow involves fetching the initial landing page to retrieve
-  a session-specific URL, then posting the house number and postcode to the search
-  endpoint (replacing seq=1 with seq=2 in the URL). This returns a list of address
-  links; the script follows the first address link to a results page containing a
-  'scheduled-collections' section.
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The workflow involves fetching
+  the initial landing page to retrieve a session-specific URL, then posting the house
+  number and postcode to the search endpoint (replacing seq=1 with seq=2 in the URL).
+  This returns a list of address links; the script follows the first address link
+  to a results page containing a ''scheduled-collections'' section.'
 response_format: html
 bin_selector: section#scheduled-collections ul
 date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: NR2 3TT

@@ -14,3 +14,6 @@ api_description: The site uses a multi-step form process. First, it requests a t
 response_format: html
 bin_selector: table.data-table tbody tr
 date_format: dd/mm/yy
+test_inputs:
+  uprn: '10013243496'
+  postcode: PR266QW

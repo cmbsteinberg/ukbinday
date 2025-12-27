@@ -1,10 +1,17 @@
 council: PowysCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
-api_description: The site uses a multi-step form (likely GOSS or similar CMS forms)
-  that relies on server-side session state and view-state-like parameters managed
-  through successive POST requests.
+api_urls:
+- https://en.powys.gov.uk/binday
+api_methods:
+- POST
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The site uses a multi-step
+  form (likely GOSS or similar CMS forms) that relies on server-side session state
+  and view-state-like parameters managed through successive POST requests.'
+response_format: html
+bin_selector: h3
+date_format: '%d %B %Y'
+test_inputs:
+  postcode: HR3 5JS

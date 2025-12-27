@@ -10,3 +10,5 @@ api_description: While technically possible to reverse-engineer Goss forms using
   lookup -> address selection -> next), it is notoriously fragile and complex compared
   to Playwright. Without specific API endpoints visible, the interaction remains a
   browser-based form submission.
+test_inputs:
+  postcode: PE22 0YD

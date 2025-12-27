@@ -10,3 +10,5 @@ api_description: A single GET request to the council's bin collection endpoint u
   the UPRN in the URL path.
 response_format: json
 date_format: '%Y-%m-%dT%H:%M:%S'
+test_inputs:
+  uprn: '10094964379'

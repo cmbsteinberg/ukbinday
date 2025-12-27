@@ -11,3 +11,5 @@ api_description: Passes the UPRN in a GET request which sets the location and re
 response_format: html
 bin_selector: li[class*='box-item']
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100030540956'

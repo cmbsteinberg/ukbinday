@@ -10,3 +10,5 @@ api_description: Uses the ArcGIS REST API to query bin collection dates using th
   UPRN. It returns the next collection dates for Blue, Grey, Purple, and Brown bins.
 response_format: json
 bin_selector: features[0].attributes
+test_inputs:
+  uprn: '126045552'

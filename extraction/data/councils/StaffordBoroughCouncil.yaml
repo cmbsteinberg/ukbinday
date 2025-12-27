@@ -12,3 +12,5 @@ api_description: The council website uses a UPRN passed as a query parameter (up
 response_format: html
 bin_selector: table.my-area tr
 date_format: Day DD Mon YYYY
+test_inputs:
+  uprn: '100032203010'

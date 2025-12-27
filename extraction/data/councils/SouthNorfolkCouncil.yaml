@@ -12,3 +12,5 @@ api_description: A SOAP request that returns an XML envelope containing an HTML 
 response_format: xml
 bin_selector: b
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '2630102526'

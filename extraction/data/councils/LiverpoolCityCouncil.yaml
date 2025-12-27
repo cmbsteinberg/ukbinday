@@ -12,3 +12,5 @@ api_description: Calls a specific URL with the UPRN appended as a query paramete
 response_format: html
 bin_selector: tr
 date_format: '%A, %d %B'
+test_inputs:
+  uprn: '38164600'

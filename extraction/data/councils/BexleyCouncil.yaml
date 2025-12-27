@@ -1,9 +1,19 @@
 council: BexleyCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://waste.bexley.gov.uk/waste/{uprn}?page_loading=1
+api_methods:
+- GET
 api_description: A single GET request with the query parameter 'page_loading=1' returns
   the waste collection data in HTML or JSON format once the UPRN is provided in the
   URL path.
+api_headers:
+  Accept: '*/*'
+  X-Requested-With: XMLHttpRequest
+response_format: html
+bin_selector: h3.waste-service-name
+date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '100020196143'

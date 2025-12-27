@@ -1,11 +1,22 @@
 council: BostonBoroughCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://www.boston.gov.uk/findwastecollections
+api_methods:
+- POST
 api_description: The site uses a multi-step form system (likely Goss iCapture or similar).
   It involves a stateful session where a POST request with the postcode triggers a
   lookup, followed by a selection of the UPRN (property ID) which then displays the
   results.
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+  User-Agent: Mozilla/5.0
+api_payload_example: BBCWASTECOLLECTIONS_START_SEARCHPOSTCODE=PE20+1AY&BBCWASTECOLLECTIONS_START_START10_NEXT=Next
+response_format: html
+bin_selector: div.grid__cell--listitem
+date_format: '%A %d %B'
+test_inputs:
+  postcode: PE20 1AY

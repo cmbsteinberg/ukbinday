@@ -11,3 +11,5 @@ api_description: Fetches bin collection data directly using the UPRN in a single
 response_format: json
 bin_selector: collections
 date_format: '%Y-%m-%dT%H:%M:%SZ'
+test_inputs:
+  uprn: '200004159750'

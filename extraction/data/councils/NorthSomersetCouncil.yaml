@@ -1,5 +1,5 @@
 council: NorthSomersetCouncil
-request_type: id_lookup_then_api
+request_type: single_api
 required_user_input:
 - postcode
 - uprn
@@ -7,8 +7,12 @@ api_urls:
 - https://forms.n-somerset.gov.uk/Waste/CollectionSchedule
 api_methods:
 - POST
-api_description: A POST request is made to the collection schedule endpoint using
-  the postcode and UPRN to retrieve an HTML table containing bin collection dates.
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] A POST request is made
+  to the collection schedule endpoint using the postcode and UPRN to retrieve an HTML
+  table containing bin collection dates.'
 response_format: html
 bin_selector: table.table tr
 date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '24051674'
+  postcode: BS49 5AA

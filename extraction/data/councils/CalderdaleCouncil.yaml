@@ -1,11 +1,22 @@
 council: CalderdaleCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - postcode
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
-api_description: The site uses a standard multi-step form submission process where
-  the postcode is first submitted to get a list of addresses (UPRNs), and then the
-  selected UPRN is submitted along with a GDPR acceptance flag to retrieve the collection
-  calendar.
+api_urls:
+- https://www.calderdale.gov.uk/environment/waste/household-collections/collectiondayfinder.jsp
+api_methods:
+- POST
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The site uses a standard
+  multi-step form submission process where the postcode is first submitted to get
+  a list of addresses (UPRNs), and then the selected UPRN is submitted along with
+  a GDPR acceptance flag to retrieve the collection calendar.'
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+api_payload_example: pPostcode=OL14+7EX&uprn=010035034598&gdprTerms=on
+response_format: html
+bin_selector: table#collection tr
+date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: 010035034598
+  postcode: OL14 7EX

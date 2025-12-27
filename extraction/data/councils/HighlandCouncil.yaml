@@ -13,3 +13,5 @@ api_description: First, a GET request is made to the session URL to obtain an 'a
   API broker URL. The POST request includes a JSON body containing the property UPRN.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '130072429'

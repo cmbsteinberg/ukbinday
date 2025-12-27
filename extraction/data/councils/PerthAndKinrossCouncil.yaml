@@ -13,3 +13,5 @@ api_description: First call is a GET to retrieve a session ID (auth-session). Se
   (sid) and the UPRN in the JSON body.
 response_format: json
 date_format: ISO
+test_inputs:
+  uprn: '124032322'

@@ -10,3 +10,5 @@ api_description: Takes a UPRN as a path parameter and returns a JSON object cont
   bin collection details including collection dates and types.
 response_format: json
 date_format: fromisoformat
+test_inputs:
+  uprn: '100031540180'

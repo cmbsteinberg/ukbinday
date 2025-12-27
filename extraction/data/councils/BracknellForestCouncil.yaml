@@ -14,3 +14,5 @@ api_description: Initial GET to waste-collection-days to retrieve a CSRF token f
   the addressId to get collection dates.
 response_format: json
 date_format: '%A %d %B %Y'
+test_inputs:
+  postcode: GU47 9BS

@@ -15,3 +15,5 @@ api_description: First, a GET request is made to the authentication endpoint to 
 response_format: json
 bin_selector: integration.transformed.rows_data
 date_format: '%A %d %B'
+test_inputs:
+  uprn: '100010347165'

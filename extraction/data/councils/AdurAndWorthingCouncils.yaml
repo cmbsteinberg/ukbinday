@@ -1,8 +1,18 @@
 council: AdurAndWorthingCouncils
-request_type: selenium
+request_type: single_api
 required_user_input:
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://www.adur-worthing.gov.uk/bin-day/?uprn={uprn}
+api_methods:
+- GET
 api_description: The bin collection dates are rendered server-side or via a simple
   GET request based on the UPRN parameter passed in the URL.
+api_headers:
+  User-Agent: Mozilla/5.0
+  Accept: text/html
+response_format: html
+bin_selector: div.bin-collection-listing-row
+date_format: '%A %d %B'
+test_inputs:
+  uprn: '100061878829'

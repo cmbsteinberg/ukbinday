@@ -1,12 +1,25 @@
 council: ThreeRiversDistrictCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://my.threerivers.gov.uk/apibroker/?api=RunLookup&id=569502c503341
+api_methods:
+- POST
 api_description: The site uses an API Broker system. First, a lookup is performed
   with the postcode to get address options. After selecting an address (UPRN), a final
   POST request is sent to the RunLookup endpoint which returns the collection dates
   within a complex JSON payload (look for 'subCollectionCalendar' or 'collectionDate'
   fields).
+api_headers:
+  content-type: application/json
+  accept: application/json
+api_payload_example: '{"stopOnFailure":true,"formValues":{"Your address details":{"subCustDetails":{"value":{"Section
+  1":{"subAddressDetails":{"value":{"Section 1":{"postcode_search":"WD3 7AZ","chooseAddress":"100080913662"}}}}}}}}}'
+response_format: html
+bin_selector: div[data-field-name='subCollectionCalendar'] tr.repeatable-value
+date_format: DD/MM/YYYY
+test_inputs:
+  uprn: '100080913662'
+  postcode: WD3 7AZ

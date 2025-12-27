@@ -11,3 +11,5 @@ api_description: Fetches a JSON payload containing collection dates for a specif
   mapped using a service identifier dictionary.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '10003582028'

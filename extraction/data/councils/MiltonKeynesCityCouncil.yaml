@@ -14,3 +14,5 @@ api_description: The workflow first calls the authentication API to retrieve a s
   formValues object.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '25109551'

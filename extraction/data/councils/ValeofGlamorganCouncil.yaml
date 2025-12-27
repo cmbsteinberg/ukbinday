@@ -14,3 +14,5 @@ api_description: The workflow first queries a JSONP endpoint using the UPRN to f
 response_format: html
 bin_selector: table.TableStyle_Activities tbody tr
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '64029020'

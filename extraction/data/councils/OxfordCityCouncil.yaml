@@ -13,3 +13,6 @@ api_description: Initial GET to the form page to retrieve a CSRF __token, follow
 response_format: html
 bin_selector: div.editor p
 date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '100120820551'
+  postcode: OX3 7QF

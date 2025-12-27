@@ -10,3 +10,5 @@ api_description: Sends a POST request with the UPRN in form data to retrieve a J
   response containing collection dates and service types.
 response_format: json
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '12073883'

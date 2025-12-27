@@ -12,3 +12,5 @@ api_description: First, a POST request is sent to the lookup endpoint with the U
 response_format: json
 bin_selector: div#upcoming-collection table tbody tr
 date_format: '%d %B %Y'
+test_inputs:
+  uprn: '10093091235'

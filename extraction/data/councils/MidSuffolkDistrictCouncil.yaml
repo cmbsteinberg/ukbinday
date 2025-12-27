@@ -8,3 +8,6 @@ api_urls: null
 api_methods: null
 api_description: null
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: Monday
+  postcode: Week 2

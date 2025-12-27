@@ -11,3 +11,5 @@ api_description: Directly fetches the bin collection details page using the UPRN
 response_format: html
 bin_selector: div.col-md-12.col-lg-12.col-sm-12.col-xs-12
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100100213710'

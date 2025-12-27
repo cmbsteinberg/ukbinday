@@ -115,6 +115,15 @@ ANALYSIS REQUIREMENTS:
 
 5. Rate your confidence: high (very clear), medium (likely works), low (uncertain)
 
+CRITICAL - Multi-step URL Extraction:
+⚠️ If you classify as token_then_api or id_lookup_then_api, you MUST provide ALL URLs in sequence:
+  - token_then_api: Provide [token_url, api_url] - typically 2 URLs (or 1 URL if same endpoint)
+  - id_lookup_then_api: Provide [lookup_url, data_url] - MUST have 2 URLs minimum
+  - api_urls must be a LIST with all URLs in order
+  - api_methods must be a LIST matching each URL (e.g., ["GET", "POST"])
+
+If you describe a multi-step process but only provide 1 URL, the config will be INVALID and fail validation.
+
 Focus on the ESSENTIAL requests that return bin data, ignore analytics/tracking/static resources.
 """
 

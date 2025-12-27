@@ -12,3 +12,6 @@ api_description: The council provides an API for their Android/iOS app. It requi
   with 'className' representing the bin color and 'start' representing the date.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '141003134'
+  postcode: KA19 7BN

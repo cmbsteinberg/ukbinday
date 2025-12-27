@@ -11,3 +11,5 @@ api_description: The council website provides a direct URL that displays bin col
 response_format: html
 bin_selector: table.bin-table tbody tr
 date_format: '%A, %d %B %Y'
+test_inputs:
+  uprn: '132027197'

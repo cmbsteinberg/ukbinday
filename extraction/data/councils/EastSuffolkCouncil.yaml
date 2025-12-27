@@ -1,11 +1,24 @@
 council: EastSuffolkCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://my.eastsuffolk.gov.uk/service/Bin_collection_dates_finder
+api_methods:
+- POST
 api_description: The form uses a multi-step AJAX process within an iframe. It first
   performs a lookup based on the postcode to populate a dropdown, and then, upon selecting
   a UPRN, it triggers a background POST request to the back-end (likely a 'fillform'
   or 'process' endpoint) which returns the collection details table.
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+  X-Requested-With: XMLHttpRequest
+api_payload_example: postcode=IP119FJ&uprn=10093544720&action=lookup
+response_format: html
+bin_selector: //div[@data-field-name="collection_details"]/div[contains(@class, "fieldContent")]/div[contains(@class,
+  "repeatable-table-wrapper")]
+date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '10093544720'
+  postcode: IP11 9FJ

@@ -8,3 +8,5 @@ api_urls: null
 api_methods: null
 api_description: null
 date_format: dd/MM/yyyy
+test_inputs:
+  postcode: Round A

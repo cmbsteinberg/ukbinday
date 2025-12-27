@@ -12,3 +12,5 @@ api_description: A GET request is made directly to the council's bin collection 
 response_format: html
 bin_selector: table.waste-table tr
 date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '100100778320'

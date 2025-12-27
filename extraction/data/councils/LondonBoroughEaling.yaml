@@ -11,3 +11,5 @@ api_description: A single POST request to the council's custom script API using 
 response_format: json
 bin_selector: param2
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '12081498'

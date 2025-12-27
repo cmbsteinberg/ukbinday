@@ -13,3 +13,5 @@ api_description: Initial call establishes a session cookie. The second call uses
 response_format: json
 bin_selector: integration.transformed.rows_data
 date_format: '%d %B'
+test_inputs:
+  uprn: '200002649711'

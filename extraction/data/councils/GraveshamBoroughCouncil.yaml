@@ -16,3 +16,5 @@ api_description: First, the script calls an authentication endpoint to obtain a 
   (ID 5c8f869376376).
 response_format: json
 date_format: '%Y-%m-%dT%H:%M:%S'
+test_inputs:
+  uprn: '100060927046'

@@ -14,3 +14,6 @@ api_description: The site is an ASP.NET WebForms application. It requires an ini
 response_format: html
 bin_selector: div#binsGrid tr
 date_format: '%a%b%d%Y'
+test_inputs:
+  uprn: '185086469'
+  postcode: BT10 0GY

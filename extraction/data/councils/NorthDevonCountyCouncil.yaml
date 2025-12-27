@@ -1,10 +1,23 @@
 council: NorthDevonCountyCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://my.northdevon.gov.uk/apibroker/runLookup
+api_methods:
+- POST
 api_description: The site uses the Firmstep (AchieveForms) platform. It involves a
   postcode lookup to get address IDs, followed by a specific lookup ID (610943652e64f)
   that returns the waste collection 'details' within a JSON object.
+api_headers:
+  Content-Type: application/json
+  Accept: application/json
+api_payload_example: '{"stopOnFailure":true,"usePHPIntegrations":true,"stage_id":"AF-Stage-0e576350-a6e1-444e-a105-cb020f910845","formId":"AF-Form-a9a357e7-8b6d-416e-b974-04a2aa857e87","formValues":{"Your
+  address":{"postcode_search":{"value":"EX312LE"},"chooseAddress":{"value":"100040249471"}}}}'
+response_format: html
+bin_selector: ul.wasteDates li
+date_format: '%d %B %Y'
+test_inputs:
+  uprn: '100040249471'
+  postcode: EX31 2LE

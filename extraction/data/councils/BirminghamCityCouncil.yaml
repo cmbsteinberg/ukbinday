@@ -13,3 +13,6 @@ api_description: First, a GET request is made to the form URL to extract a CSRF 
 response_format: html
 bin_selector: table.data-table tbody tr
 date_format: '%a %d/%m/%Y'
+test_inputs:
+  uprn: '100070445256'
+  postcode: B5 7XE

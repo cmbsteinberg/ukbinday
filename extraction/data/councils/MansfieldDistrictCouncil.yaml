@@ -10,3 +10,5 @@ api_description: Direct API call using a static API key and UPRN to retrieve bin
   dates.
 response_format: json
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100031396580'

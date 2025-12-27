@@ -11,3 +11,5 @@ api_description: Takes a UPRN as a query parameter and returns HTML containing b
 response_format: html
 bin_selector: div.row.collectionsrow
 date_format: '%a - %d %b %Y'
+test_inputs:
+  uprn: '10002597178'

@@ -1,11 +1,22 @@
 council: DacorumBoroughCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://webapps.dacorum.gov.uk/bincollections/
+api_methods:
+- POST
 api_description: The site uses ASP.NET WebForms. It requires a GET request to obtain
   ViewState/EventValidation, followed by a POST request with the postcode to populate
   the address dropdown, and a final POST request selecting the address to retrieve
   the schedule.
+api_headers:
+  Content-Type: application/x-www-form-urlencoded
+  User-Agent: Mozilla/5.0
+api_payload_example: __VIEWSTATE=...&__EVENTVALIDATION=...&txtBxPCode=HP3+9JY&btnFindAddr=Find+Address
+response_format: html
+bin_selector: div[style=" margin:5px;"]
+date_format: '%a, %d %b %Y'
+test_inputs:
+  postcode: HP3 9JY

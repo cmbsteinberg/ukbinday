@@ -11,3 +11,5 @@ api_description: Scrapes the HTML response from the Westmorland and Furness wast
 response_format: html
 bin_selector: div.waste-collection__month
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100110353478'

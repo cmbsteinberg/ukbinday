@@ -11,3 +11,5 @@ api_description: GET request to the bin collection dates page with the UPRN pass
 response_format: html
 bin_selector: h3.bin-collection-tasks__heading
 date_format: '%d %B'
+test_inputs:
+  uprn: '100031694085'

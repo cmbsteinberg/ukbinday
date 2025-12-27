@@ -1,10 +1,23 @@
 council: EpsomandEwellBoroughCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://iweb.itouchvision.com/portal/itouchvision/kmbd/address
+- https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay
+api_methods:
+- GET
+- GET
 api_description: The site uses iTouchVision's portal. It first looks up address details
   (including UPRN) using the postcode via the address endpoint, then fetches the specific
   bin collection days using the UPRN via the collectionDay endpoint.
+api_headers:
+  Accept: application/json
+  Content-Type: application/json
+response_format: html
+bin_selector: h3
+date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '100061349083'
+  postcode: KT17 2RG

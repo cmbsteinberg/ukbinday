@@ -11,3 +11,5 @@ api_description: Submits a POST request with the property UPRN to retrieve refus
   and recycling collection data from the Basildon Azure portal API.
 response_format: json
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '10013350430'

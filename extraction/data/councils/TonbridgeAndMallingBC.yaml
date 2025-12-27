@@ -13,3 +13,6 @@ api_description: Submits a multipart/form-data request containing the user's pos
 response_format: html
 bin_selector: table.data-table.waste-collections-table tbody tr
 date_format: '%a %d %B'
+test_inputs:
+  uprn: '10002914589'
+  postcode: ME19 4JS

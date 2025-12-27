@@ -11,3 +11,5 @@ api_description: The UPRN is used to set the location cookie which redirects to 
 response_format: html
 bin_selector: div.first_date_bins, div.last_date_bins
 date_format: '%d %B'
+test_inputs:
+  uprn: '100030533512'

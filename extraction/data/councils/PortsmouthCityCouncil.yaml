@@ -1,11 +1,25 @@
 council: PortsmouthCityCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://my.portsmouth.gov.uk/fillform-endpoint/address-lookup
+- https://my.portsmouth.gov.uk/fillform-endpoint/bin-collection-dates
+api_methods:
+- POST
 api_description: 'The site uses Firmstep (AchieveForms). It typically involves a multi-step
   process: 1. Fetching the form definition/session. 2. Performing an address lookup
   via a POST request to an internal fillform-endpoint. 3. Submitting the address selection
   to trigger a backend lookup for bin collection dates.'
+api_headers:
+  Content-Type: application/json
+  X-Requested-With: XMLHttpRequest
+api_payload_example: '{ "uprn": "1775027504", "form_id": "AF-Process-26e27e70-f771-47b1-a34d-af276075cede"
+  }'
+response_format: html
+bin_selector: div[data-field-name^='html']
+date_format: '%A %d %B %Y'
+test_inputs:
+  uprn: '1775027504'
+  postcode: PO4 0LE

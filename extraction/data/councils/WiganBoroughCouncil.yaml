@@ -1,5 +1,5 @@
 council: WiganBoroughCouncil
-request_type: id_lookup_then_api
+request_type: single_api
 required_user_input:
 - postcode
 - uprn
@@ -7,9 +7,13 @@ api_urls:
 - https://apps.wigan.gov.uk/MyNeighbourhood/
 api_methods:
 - POST
-api_description: The workflow mimics a multi-step form submission. First, it posts
-  the postcode to get the address list, then posts the selected UPRN (prefixed with
-  'UPRN' and padded to 12 digits) to retrieve the bin collection dates.
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] The workflow mimics a multi-step
+  form submission. First, it posts the postcode to get the address list, then posts
+  the selected UPRN (prefixed with ''UPRN'' and padded to 12 digits) to retrieve the
+  bin collection dates.'
 response_format: html
 bin_selector: div.BinsRecycling
 date_format: '%A%d%b%Y'
+test_inputs:
+  uprn: 010093942934
+  postcode: WN2 4UQ

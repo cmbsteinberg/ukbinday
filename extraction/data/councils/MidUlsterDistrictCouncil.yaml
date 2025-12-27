@@ -1,10 +1,23 @@
 council: MidUlsterDistrictCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://www.midulstercouncil.org/api/address/search
+- https://www.midulstercouncil.org/api/bin-collections/get-collections
+api_methods:
+- GET
+- POST
 api_description: The site uses an address lookup based on the postcode, which likely
   returns a unique property identifier or address string, followed by a request to
   a collection endpoint to retrieve the bin schedule.
+api_headers:
+  Content-Type: application/json
+  Accept: application/json
+api_payload_example: '{"postcode": "BT71 5HY", "addressId": "12345"}'
+response_format: html
+bin_selector: div.bin
+date_format: '%d %b %Y'
+test_inputs:
+  postcode: BT71 5HY

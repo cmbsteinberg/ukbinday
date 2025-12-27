@@ -10,3 +10,5 @@ api_description: While many council forms use an underlying API, this specific s
   cookies and hidden form fields (ViewState or similar). Without network logs to confirm
   a clean API endpoint for the second step, it is safer to stick with browser automation
   as the form uses internal dynamic IDs.
+test_inputs:
+  postcode: PA6 7FJ

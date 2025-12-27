@@ -11,3 +11,6 @@ api_description: The automation uses an AchieveForms process which usually invol
   to replicate with simple requests. While an underlying API (e.g., /AchieveForms/fill/...)
   likely exists, navigating the form stages (lookup -> confirm -> result) without
   a browser context is highly prone to breakage in this environment.
+test_inputs:
+  uprn: '200001415697'
+  postcode: E17 4PW

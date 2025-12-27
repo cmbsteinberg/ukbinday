@@ -11,3 +11,5 @@ api_description: Takes a UPRN and returns a JSON response containing upcoming bi
 response_format: json
 bin_selector: results/collections/all
 date_format: '%Y-%m-%d'
+test_inputs:
+  uprn: '100021298754'

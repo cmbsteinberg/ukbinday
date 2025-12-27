@@ -16,3 +16,5 @@ api_description: The workflow first authenticates by calling the isauthenticated
 response_format: json
 bin_selector: li
 date_format: Found in <strong> tag
+test_inputs:
+  uprn: '100080942183'

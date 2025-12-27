@@ -1,10 +1,22 @@
 council: BarnetCouncil
-request_type: selenium
+request_type: id_lookup_then_api
 required_user_input:
 - postcode
 - house_number
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://account.barnet.gov.uk/OnlineApplication/ApplicationForm.aspx?form=BNTCOLDATE
+api_methods:
+- POST
 api_description: The site uses a standard .NET WebForms UpdatePanel pattern. It involves
   a POST to find addresses based on a postcode, followed by a POST selecting the specific
   address from a dropdown, which then returns the collection dates in the HTML response.
+api_headers:
+  content-type: application/x-www-form-urlencoded; charset=UTF-8
+  x-requested-with: XMLHttpRequest
+api_payload_example: ctl00$ToolkitScriptManager1=ctl00$MainContent$UpdatePanel1|ctl00$MainContent$CUSTOM_FIELD_...&__EVENTTARGET=ctl00$MainContent$CUSTOM_FIELD_...&__EVENTARGUMENT=Click&__VIEWSTATE=...&ctl00$MainContent$CUSTOM_FIELD_...=EN4
+  8TB&ctl00$MainContent$CUSTOM_FIELD_...=EN4 8TB, 26A, CHURCH HILL ROAD, BARNET, BARNET&__ASYNCPOST=true
+response_format: html
+bin_selector: div:has-text('Next collection date:')
+date_format: '%A %d %B %Y'
+test_inputs:
+  postcode: EN4 8TB

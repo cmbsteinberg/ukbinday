@@ -12,3 +12,5 @@ api_description: The council provides a simple GET endpoint that takes a UPRN as
 response_format: json
 bin_selector: bincollections
 date_format: '%A %d %B'
+test_inputs:
+  uprn: '000452015013'

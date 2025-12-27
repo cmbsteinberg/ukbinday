@@ -16,3 +16,5 @@ api_description: First, POST the postcode to the waste endpoint to retrieve a li
 response_format: html
 bin_selector: div.waste__collections h3.waste-service-name
 date_format: '%A, %d %B'
+test_inputs:
+  postcode: HA3 0QU

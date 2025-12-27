@@ -1,8 +1,16 @@
 council: KingstonUponThamesCouncil
-request_type: selenium
+request_type: single_api
 required_user_input:
 - uprn
-status: not_implemented
-notes: Requires Playwright/Selenium automation - not yet implemented as HTTP requests
+api_urls:
+- https://waste-services.kingston.gov.uk/waste/{uprn}
+api_methods:
+- GET
 api_description: A standard GET request to the URL containing the UPRN returns a static
   HTML page containing the bin collection information in a govuk-summary-list format.
+api_headers:
+  User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
+    like Gecko) Chrome/91.0.4472.124 Safari/537.36
+response_format: html
+bin_selector: h3.waste-service-name
+date_format: '%A, %d %B'

@@ -5,6 +5,8 @@ from pathlib import Path
 from typing import Dict, Any, Optional, Tuple, Union
 import re
 import logging
+import time
+from functools import wraps
 
 # Optional: requests library for TLS fallback
 try:
@@ -188,6 +190,47 @@ def validate_response(response: httpx.Response, council_name: str) -> None:
 
 
 # ============================================================================
+# CONFIG VALIDATION
+# ============================================================================
+
+
+def validate_council_config(config: Dict[str, Any], council_name: str) -> None:
+    """
+    Validate council config before execution
+
+    Raises:
+        ValueError: If config is invalid
+    """
+    request_type = config.get("request_type", "")
+    api_urls = config.get("api_urls", [])
+    api_methods = config.get("api_methods", [])
+
+    # Check id_lookup_then_api has at least 2 URLs
+    if request_type == "id_lookup_then_api":
+        if not api_urls or len(api_urls) < 2:
+            raise ValueError(
+                f"{council_name}: id_lookup_then_api requires at least 2 URLs "
+                f"(got {len(api_urls)}). Config needs updating."
+            )
+
+    # Check single_api/token_then_api has at least 1 URL
+    if request_type in ["single_api", "token_then_api"]:
+        if not api_urls or len(api_urls) < 1:
+            raise ValueError(
+                f"{council_name}: {request_type} requires at least 1 URL "
+                f"(got {len(api_urls)}). Config needs updating."
+            )
+
+    # Check methods match URLs count
+    if api_urls and api_methods:
+        if len(api_methods) < len(api_urls):
+            raise ValueError(
+                f"{council_name}: Mismatch between URLs ({len(api_urls)}) "
+                f"and methods ({len(api_methods)}). Config needs updating."
+            )
+
+
+# ============================================================================
 # REQUEST EXECUTORS
 # ============================================================================
 
@@ -196,13 +239,23 @@ def execute_single_api(
     config: Dict[str, Any],
     inputs: Dict[str, Any],
     client: httpx.Client,
+    council_name: str = "Unknown",
 ) -> httpx.Response:
     """Execute a single API request"""
-    url_template = config["api_urls"][0]
-    method = config["api_methods"][0]
+    api_urls = config.get("api_urls", [])
+    api_methods = config.get("api_methods", [])
+
+    if not api_urls or len(api_urls) < 1:
+        raise ValueError(f"{council_name}: No API URLs defined in config")
+    if not api_methods or len(api_methods) < 1:
+        raise ValueError(f"{council_name}: No API methods defined in config")
+
+    url_template = api_urls[0]
+    method = api_methods[0]
     headers = prepare_headers(config)
 
     url = fill_url_template(url_template, inputs)
+    logger.debug(f"{council_name}: Requesting {method} {url}")
 
     if method == "GET":
         response = client.get(url, headers=headers)
@@ -223,6 +276,7 @@ def execute_single_api(
     else:
         raise ValueError(f"Unsupported HTTP method: {method}")
 
+    logger.debug(f"{council_name}: Response status {response.status_code}")
     return response
 
 
@@ -393,6 +447,9 @@ def lookup_bin_times(
     # Load council config
     config = load_council_config(council_name)
 
+    # Validate config before proceeding
+    validate_council_config(config, council_name)
+
     # Validate required inputs
     required = set(config.get("required_user_input", []))
     provided = set(inputs.keys())
@@ -401,47 +458,81 @@ def lookup_bin_times(
     if missing:
         raise ValueError(f"Missing required inputs: {missing}")
 
-    # Create HTTP client with session support
-    with httpx.Client(
-        timeout=timeout,
-        follow_redirects=True,
-        verify=verify_ssl
-    ) as client:
-        request_type = config.get("request_type", "")
+    # Retry logic
+    last_exception = None
+    for attempt in range(max_retries + 1):
+        try:
+            # Create HTTP client with session support
+            with httpx.Client(
+                timeout=timeout,
+                follow_redirects=True,
+                verify=verify_ssl
+            ) as client:
+                request_type = config.get("request_type", "")
 
-        # Handle different request types
-        if request_type == "selenium":
-            raise NotImplementedError(
-                f"{council_name} requires Playwright/Selenium automation. "
-                f"HTTP requests not yet implemented for this council."
-            )
+                # Handle different request types
+                if request_type == "selenium":
+                    raise NotImplementedError(
+                        f"{council_name} requires Playwright/Selenium automation. "
+                        f"HTTP requests not yet implemented for this council."
+                    )
 
-        elif request_type == "calendar":
-            raise NotImplementedError(
-                f"{council_name} uses calendar request type which is not yet implemented. "
-                f"This likely requires iCal/calendar file parsing."
-            )
+                elif request_type == "calendar":
+                    raise NotImplementedError(
+                        f"{council_name} uses calendar request type which is not yet implemented. "
+                        f"This likely requires iCal/calendar file parsing."
+                    )
 
-        elif request_type == "single_api":
-            response = execute_single_api(config, inputs, client)
-            validate_response(response, council_name)
-            return response
+                elif request_type == "single_api":
+                    response = execute_single_api(config, inputs, client, council_name)
+                    validate_response(response, council_name)
+                    return response
 
-        elif request_type == "token_then_api":
-            response = execute_token_then_api(config, inputs, client)
-            validate_response(response, council_name)
-            return response
+                elif request_type == "token_then_api":
+                    response = execute_token_then_api(config, inputs, client)
+                    validate_response(response, council_name)
+                    return response
 
-        elif request_type == "id_lookup_then_api":
-            response = execute_id_lookup_then_api(config, inputs, client)
-            validate_response(response, council_name)
-            return response
+                elif request_type == "id_lookup_then_api":
+                    response = execute_id_lookup_then_api(config, inputs, client)
+                    validate_response(response, council_name)
+                    return response
 
-        else:
-            raise ValueError(
-                f"Unsupported request_type: '{request_type}'. "
-                f"Supported types: single_api, token_then_api, id_lookup_then_api, selenium, calendar"
-            )
+                else:
+                    raise ValueError(
+                        f"Unsupported request_type: '{request_type}'. "
+                        f"Supported types: single_api, token_then_api, id_lookup_then_api, selenium, calendar"
+                    )
+
+        except (httpx.TimeoutException, httpx.ReadTimeout) as e:
+            last_exception = e
+            if attempt < max_retries:
+                wait_time = 2 ** attempt  # Exponential backoff
+                logger.warning(
+                    f"{council_name}: Timeout on attempt {attempt + 1}/{max_retries + 1}, "
+                    f"retrying in {wait_time}s..."
+                )
+                time.sleep(wait_time)
+            else:
+                logger.error(f"{council_name}: Timeout after {max_retries + 1} attempts")
+                raise
+
+        except httpx.HTTPStatusError as e:
+            # Don't retry on client errors (4xx), only server errors (5xx)
+            if e.response.status_code >= 500 and attempt < max_retries:
+                last_exception = e
+                wait_time = 2 ** attempt
+                logger.warning(
+                    f"{council_name}: Server error {e.response.status_code} on attempt "
+                    f"{attempt + 1}/{max_retries + 1}, retrying in {wait_time}s..."
+                )
+                time.sleep(wait_time)
+            else:
+                raise
+
+    # If we get here, all retries failed
+    if last_exception:
+        raise last_exception
 
 
 # ============================================================================
@@ -453,13 +544,23 @@ async def execute_single_api_async(
     config: Dict[str, Any],
     inputs: Dict[str, Any],
     client: httpx.AsyncClient,
+    council_name: str = "Unknown",
 ) -> httpx.Response:
     """Execute a single API request (async version)"""
-    url_template = config["api_urls"][0]
-    method = config["api_methods"][0]
+    api_urls = config.get("api_urls", [])
+    api_methods = config.get("api_methods", [])
+
+    if not api_urls or len(api_urls) < 1:
+        raise ValueError(f"{council_name}: No API URLs defined in config")
+    if not api_methods or len(api_methods) < 1:
+        raise ValueError(f"{council_name}: No API methods defined in config")
+
+    url_template = api_urls[0]
+    method = api_methods[0]
     headers = prepare_headers(config)
 
     url = fill_url_template(url_template, inputs)
+    logger.debug(f"{council_name}: Requesting {method} {url}")
 
     if method == "GET":
         response = await client.get(url, headers=headers)
@@ -478,6 +579,7 @@ async def execute_single_api_async(
     else:
         raise ValueError(f"Unsupported HTTP method: {method}")
 
+    logger.debug(f"{council_name}: Response status {response.status_code}")
     return response
 
 
@@ -626,6 +728,9 @@ async def lookup_bin_times_async(
     # Load council config
     config = load_council_config(council_name)
 
+    # Validate config before proceeding
+    validate_council_config(config, council_name)
+
     # Validate required inputs
     required = set(config.get("required_user_input", []))
     provided = set(inputs.keys())
@@ -657,7 +762,7 @@ async def lookup_bin_times_async(
                 )
 
             elif request_type == "single_api":
-                response = await execute_single_api_async(config, inputs, client)
+                response = await execute_single_api_async(config, inputs, client, council_name)
                 validate_response(response, council_name)
                 return response
 

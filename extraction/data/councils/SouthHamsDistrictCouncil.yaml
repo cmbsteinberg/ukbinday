@@ -15,3 +15,5 @@ api_description: Initial GET request to /mycollections retrieves a session cooki
 response_format: json
 bin_selector: .collectionDiv
 date_format: '%A, %d %B %Y'
+test_inputs:
+  uprn: '10004742851'

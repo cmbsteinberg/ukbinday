@@ -15,3 +15,5 @@ api_description: The site uses Whitespace Portal. It first fetches an entry page
 response_format: html
 bin_selector: section#scheduled-collections u1
 date_format: '%d/%m/%Y'
+test_inputs:
+  postcode: CA13 0DE

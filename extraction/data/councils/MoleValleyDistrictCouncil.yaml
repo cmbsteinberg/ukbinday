@@ -1,5 +1,5 @@
 council: MoleValleyDistrictCouncil
-request_type: id_lookup_then_api
+request_type: single_api
 required_user_input:
 - postcode
 - skip_get_url
@@ -8,9 +8,12 @@ api_urls:
 - https://myproperty.molevalley.gov.uk/molevalley/api/live_addresses/{postcode}?format=json
 api_methods:
 - GET
-api_description: Fetches address details and bin collection HTML from the Mole Valley
-  'myproperty' API using the postcode. It then filters the results by UPRN if provided,
-  or takes the first result.
+api_description: '[AUTO-CORRECTED from id_lookup_then_api] Fetches address details
+  and bin collection HTML from the Mole Valley ''myproperty'' API using the postcode.
+  It then filters the results by UPRN if provided, or takes the first result.'
 response_format: json
 bin_selector: h2:contains('Bins and Recycling')
 date_format: '%d/%m/%Y'
+test_inputs:
+  uprn: '200000171235'
+  postcode: RH4 1SJ

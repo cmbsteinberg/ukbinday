@@ -11,3 +11,5 @@ api_description: Uses a single POST request to an Azure API Management endpoint.
   UPRN and the current date.
 response_format: json
 date_format: '%d/%m/%Y %H:%M:%S'
+test_inputs:
+  uprn: '100021380730'

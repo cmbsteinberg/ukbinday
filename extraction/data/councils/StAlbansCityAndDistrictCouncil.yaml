@@ -10,3 +10,5 @@ api_description: Takes a UPRN and a noticeBoard parameter in a JSON POST body to
   collection dates from a Veolia proxy endpoint.
 response_format: json
 date_format: ISO8601
+test_inputs:
+  uprn: '100081153583'
