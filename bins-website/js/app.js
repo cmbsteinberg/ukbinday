@@ -410,7 +410,7 @@ async function handleFindBins() {
       hideLoading();
       showError(
         'address-error',
-        `Sorry, ${councilInfo.name} is not yet supported. We support 306 councils with API-based lookups.`,
+        `Apologies, your council ${councilInfo.name} is not supported. Complain to them if you would like it supported.`,
       );
       return;
     }
