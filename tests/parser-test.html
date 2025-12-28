@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bin Response Parser - Test Suite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .test-case {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-case h2 {
+            margin-bottom: 1rem;
+            color: #2563eb;
+            font-size: 1.25rem;
+        }
+
+        .test-input {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .test-input h3 {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        pre {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.875rem;
+        }
+
+        .result {
+            margin-top: 1rem;
+        }
+
+        .confidence {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .confidence-high {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .confidence-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .confidence-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .confidence-none {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .collections {
+            margin-top: 1rem;
+        }
+
+        .bin-item {
+            padding: 0.75rem;
+            background: #f9fafb;
+            border-left: 4px solid #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .bin-item strong {
+            color: #1f2937;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .stats {
+            background: #eff6ff;
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid #bfdbfe;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bin Response Parser - Test Suite</h1>
+    <p style="margin-bottom: 2rem; color: #6b7280;">
+        Testing heuristic-based parsing across different council response formats
+    </p>
+
+    <div id="stats" class="stats" style="display: none;">
+        <strong>Test Results:</strong>
+        <span id="stats-content"></span>
+    </div>
+
+    <div id="test-cases"></div>
+
+    <button onclick="runAllTests()">Run All Tests</button>
+
+    <script src="js/binResponseParser.js"></script>
+    <script>
+        // Test cases covering different council patterns
+        const testCases = [
+            {
+                name: "JSON - Simple array with common keys",
+                councilConfig: {
+                    response_format: 'json'
+                },
+                response: {
+                    collections: [
+                        { type: 'Recycling', collectionDate: '2024-12-30' },
+                        { type: 'General Waste', collectionDate: '2025-01-06' },
+                        { type: 'Garden Waste', collectionDate: '2025-01-13' }
+                    ]
+                }
+            },
+            {
+                name: "JSON - Nested with dot notation path",
+                councilConfig: {
+                    response_format: 'json',
+                    bin_selector: 'data.bins'
+                },
+                response: {
+                    status: 'success',
+                    data: {
+                        bins: [
+                            { service: 'Black Bin', next_date: '30/12/2024' },
+                            { service: 'Blue Bin', next_date: '06/01/2025' }
+                        ]
+                    }
+                }
+            },
+            {
+                name: "JSON - Root array (no wrapper)",
+                councilConfig: {
+                    response_format: 'json'
+                },
+                response: [
+                    { BinType: 'Refuse', Date: 'Monday 30 December 2024' },
+                    { BinType: 'Recycling', Date: 'Friday 3 January 2025' }
+                ]
+            },
+            {
+                name: "HTML - Table with rows (Somerset Council pattern)",
+                councilConfig: {
+                    response_format: 'html',
+                    bin_selector: 'div.p-2'
+                },
+                response: `
+                    <div class="container">
+                        <div class="p-2">
+                            <strong>General Waste</strong>
+                            <p>Monday 30 December</p>
+                        </div>
+                        <div class="p-2">
+                            <strong>Recycling</strong>
+                            <p>Friday 3 January</p>
+                        </div>
+                        <div class="p-2">
+                            <strong>Garden Waste</strong>
+                            <p>Monday 6 January</p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                name: "HTML - Table rows (heuristic detection)",
+                councilConfig: {
+                    response_format: 'html'
+                },
+                response: `
+                    <table class="bin-collections">
+                        <thead>
+                            <tr><th>Service</th><th>Next Collection</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Black Bin</td><td>30/12/2024</td></tr>
+                            <tr><td>Green Bin</td><td>06/01/2025</td></tr>
+                            <tr><td>Brown Bin</td><td>13/01/2025</td></tr>
+                        </tbody>
+                    </table>
+                `
+            },
+            {
+                name: "HTML - List items with dates",
+                councilConfig: {
+                    response_format: 'html'
+                },
+                response: `
+                    <div class="waste-collections">
+                        <h2>Your collections</h2>
+                        <ul class="refuse">
+                            <li>Refuse collection: Monday 30 December 2024</li>
+                            <li>Recycling collection: Friday 3 January 2025</li>
+                            <li>Garden waste: Monday 6 January 2025</li>
+                        </ul>
+                    </div>
+                `
+            },
+            {
+                name: "HTML - Headings with semantic keywords",
+                councilConfig: {
+                    response_format: 'html'
+                },
+                response: `
+                    <div>
+                        <h3 class="waste-service-name">General Waste - Monday 30 December 2024</h3>
+                        <h3 class="waste-service-name">Recycling - Friday 3 January 2025</h3>
+                        <h3 class="waste-service-name">Garden Waste - Monday 13 January 2025</h3>
+                    </div>
+                `
+            },
+            {
+                name: "JSON - Complex nested structure (deep search)",
+                councilConfig: {
+                    response_format: 'json'
+                },
+                response: {
+                    result: {
+                        status: 200,
+                        integration: {
+                            transformed: {
+                                rows_data: [
+                                    { serviceName: 'Refuse', date: '2024-12-30T00:00:00' },
+                                    { serviceName: 'Recycling', date: '2025-01-03T00:00:00' }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name: "Date Format Test - Multiple formats",
+                councilConfig: {
+                    response_format: 'json'
+                },
+                response: {
+                    collections: [
+                        { type: 'Format 1', date: '30/12/2024' },
+                        { type: 'Format 2', date: '2024-12-30' },
+                        { type: 'Format 3', date: 'Monday 30 December 2024' },
+                        { type: 'Format 4', date: '30 December 2024' },
+                        { type: 'Format 5', date: 'Monday 30 December' },
+                        { type: 'Format 6', date: '2024-12-30T14:30:00' }
+                    ]
+                }
+            }
+        ];
+
+        function runAllTests() {
+            const container = document.getElementById('test-cases');
+            container.innerHTML = '';
+
+            let totalTests = 0;
+            let highConfidence = 0;
+            let mediumConfidence = 0;
+            let lowConfidence = 0;
+            let failed = 0;
+
+            testCases.forEach((testCase, index) => {
+                totalTests++;
+
+                try {
+                    // Run parser
+                    const result = BinResponseParser.parseBinResponse(
+                        testCase.response,
+                        testCase.councilConfig
+                    );
+
+                    // Count confidence
+                    if (result.confidence === 'high') highConfidence++;
+                    else if (result.confidence === 'medium') mediumConfidence++;
+                    else if (result.confidence === 'low') lowConfidence++;
+                    else failed++;
+
+                    // Display test case
+                    const testDiv = document.createElement('div');
+                    testDiv.className = 'test-case';
+                    testDiv.innerHTML = `
+                        <h2>Test ${index + 1}: ${testCase.name}
+                            <span class="confidence confidence-${result.confidence}">${result.confidence}</span>
+                        </h2>
+
+                        <div class="test-input">
+                            <h3>Config</h3>
+                            <pre>${JSON.stringify(testCase.councilConfig, null, 2)}</pre>
+                        </div>
+
+                        <div class="test-input">
+                            <h3>Sample Response</h3>
+                            <pre>${JSON.stringify(testCase.response, null, 2)}</pre>
+                        </div>
+
+                        <div class="result">
+                            <h3>Parsed Result</h3>
+                            <p><strong>Method:</strong> ${result.method}</p>
+                            ${result.selector ? `<p><strong>Selector:</strong> ${result.selector}</p>` : ''}
+                            ${result.score ? `<p><strong>Score:</strong> ${result.score}</p>` : ''}
+
+                            ${result.collections && result.collections.length > 0 ? `
+                                <div class="collections">
+                                    <h4>Collections Found: ${result.collections.length}</h4>
+                                    ${result.collections.map(bin => `
+                                        <div class="bin-item">
+                                            <strong>${bin.type}</strong>:
+                                            ${bin.date ? bin.date.toLocaleDateString('en-GB', {
+                                                weekday: 'long',
+                                                day: 'numeric',
+                                                month: 'long',
+                                                year: 'numeric'
+                                            }) : bin.rawDate}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : '<p style="color: #ef4444;">No collections found</p>'}
+
+                            <details style="margin-top: 1rem;">
+                                <summary style="cursor: pointer; color: #2563eb;">Raw Result Object</summary>
+                                <pre>${JSON.stringify(result, null, 2)}</pre>
+                            </details>
+                        </div>
+                    `;
+
+                    container.appendChild(testDiv);
+                } catch (error) {
+                    failed++;
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'test-case';
+                    errorDiv.innerHTML = `
+                        <h2>Test ${index + 1}: ${testCase.name}
+                            <span class="confidence confidence-none">ERROR</span>
+                        </h2>
+                        <pre style="color: #ef4444;">${error.message}\n${error.stack}</pre>
+                    `;
+                    container.appendChild(errorDiv);
+                }
+            });
+
+            // Show stats
+            const statsDiv = document.getElementById('stats');
+            const statsContent = document.getElementById('stats-content');
+            statsDiv.style.display = 'block';
+            statsContent.innerHTML = `
+                Total: ${totalTests} |
+                <span style="color: #065f46;">High: ${highConfidence}</span> |
+                <span style="color: #92400e;">Medium: ${mediumConfidence}</span> |
+                <span style="color: #991b1b;">Low: ${lowConfidence}</span> |
+                <span style="color: #374151;">Failed: ${failed}</span>
+            `;
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Auto-run tests on load
+        window.addEventListener('DOMContentLoaded', runAllTests);
+    </script>
+</body>
+</html>
