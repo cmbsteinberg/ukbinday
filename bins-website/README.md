@@ -17,14 +17,20 @@ A simple, fast, client-side web application for looking up bin collection schedu
 bins-website/
 ├── index.html              # Main lookup page
 ├── about.html              # About page
-├── app.js                  # Application logic
-├── councils-data.json      # Council configurations (generated)
-├── convert-yaml.py         # YAML → JSON converter
-├── package.json            # npm dependencies (Biome only)
-├── biome.json             # Biome linter configuration
+├── js/
+│   └── app.js             # Application logic
+├── data/
+│   └── councils-data.json # Council configurations (generated)
+├── utils/
+│   └── convert-yaml.py    # YAML → JSON converter
 └── worker/
     ├── cors-proxy.js      # Cloudflare Worker (CORS proxy)
     └── wrangler.toml      # Worker configuration
+
+Repository root:
+├── package.json            # npm dependencies (Biome only)
+├── biome.json             # Biome linter configuration
+└── node_modules/          # npm packages
 ```
 
 ## Local Development
@@ -120,9 +126,9 @@ This is the easiest way - every git push automatically deploys your site!
    ```
    Project name: uk-bin-lookup (or whatever you prefer)
    Production branch: main
-   Build command: npm run convert-yaml
+   Build command: npm install && npm run convert-yaml
    Build output directory: bins-website
-   Root directory: bins-website
+   Root directory: (leave blank - use repository root)
    ```
 
 4. **Click "Save and Deploy"**

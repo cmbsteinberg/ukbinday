@@ -1,0 +1,25 @@
+{
+  "name": "uk-bin-lookup",
+  "version": "1.0.0",
+  "description": "UK Bin Collection Lookup - Find bin collection schedules across 300+ UK councils",
+  "scripts": {
+    "lint": "biome lint --write bins-website/",
+    "check": "biome check --write bins-website/",
+    "format": "biome format --write bins-website/",
+    "convert-yaml": "cd bins-website && python3 utils/convert-yaml.py",
+    "convert-yaml:local": "cd bins-website && uv run python utils/convert-yaml.py",
+    "test:website": "node tests/test_bins_website.js"
+  },
+  "keywords": [
+    "uk",
+    "bins",
+    "waste",
+    "council",
+    "collection"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4"
+  }
+}

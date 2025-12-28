@@ -29,7 +29,7 @@
     }
   },
   "files": {
-    "include": ["*.js", "worker/*.js"],
-    "ignore": ["node_modules", "councils-data.json"]
+    "include": ["bins-website/**/*.js"],
+    "ignore": ["node_modules", "bins-website/data/councils-data.json"]
   }
 }

@@ -22,7 +22,7 @@ repos:
     # Regenerate councils-data.json from YAML files
     - id: regenerate-councils-json
       name: Regenerate councils-data.json
-      entry: bash -c 'cd bins-website && uv run python convert-yaml.py'
+      entry: bash -c 'cd bins-website && uv run python utils/convert-yaml.py'
       language: system
       files: ^src/councils/.*\.yaml$
       pass_filenames: false
