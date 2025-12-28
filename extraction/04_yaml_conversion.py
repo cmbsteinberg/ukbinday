@@ -1,18 +1,8 @@
-import json
-import yaml
 import re
 from pathlib import Path
 from typing import Dict, Any, Optional
-
-
-# ============================================================================
-# CONFIGURATION
-# ============================================================================
-
-COUNCIL_EXTRACTION_JSON = "extraction/data/council_extraction_results.json"
-NETWORK_ANALYSIS_JSON = "extraction/data/network_analysis_results.json"
-INPUT_JSON = "extraction/data/input.json"
-OUTPUT_DIR = "extraction/data/councils"
+from extraction.utils.error_handling import read_json, write_yaml
+from extraction.utils.paths import paths
 
 # ============================================================================
 # TEST INPUT EXTRACTION
@@ -201,19 +191,19 @@ def convert_json_to_yaml():
     print("=" * 80)
 
     # Load all input JSON files
-    print(f"\nLoading {COUNCIL_EXTRACTION_JSON}...")
-    with open(COUNCIL_EXTRACTION_JSON, "r") as f:
-        extraction_councils = json.load(f)
+    print(f"\nLoading {paths.council_extraction_json}...")
+    extraction_councils = read_json(paths.council_extraction_json, default=[])
+    if not extraction_councils:
+        print("❌ Failed to load council extraction results")
+        return
     print(f"Loaded {len(extraction_councils)} councils from initial extraction")
 
-    print(f"\nLoading {NETWORK_ANALYSIS_JSON}...")
-    with open(NETWORK_ANALYSIS_JSON, "r") as f:
-        network_councils = json.load(f)
+    print(f"\nLoading {paths.network_analysis_json}...")
+    network_councils = read_json(paths.network_analysis_json, default=[])
     print(f"Loaded {len(network_councils)} councils from network analysis")
 
-    print(f"\nLoading {INPUT_JSON}...")
-    with open(INPUT_JSON, "r") as f:
-        input_test_data = json.load(f)
+    print(f"\nLoading {paths.input_json}...")
+    input_test_data = read_json(paths.input_json, default={})
     print(f"Loaded {len(input_test_data)} councils from input.json (test data)")
 
     # Create lookup dictionaries by council name
@@ -265,10 +255,6 @@ def convert_json_to_yaml():
     print(f"  Selenium (holding patterns): {len(selenium_councils)}")
     print(f"  Skipped (no valid request type): {len(skipped)}\n")
 
-    # Create output directory
-    output_path = Path(OUTPUT_DIR)
-    output_path.mkdir(parents=True, exist_ok=True)
-
     # Convert API-ready councils to YAML
     api_count = 0
     print("Processing API-ready councils:")
@@ -285,9 +271,8 @@ def convert_json_to_yaml():
             if test_inputs:
                 config["test_inputs"] = test_inputs
 
-        yaml_file = output_path / f"{council_name}.yaml"
-        with open(yaml_file, "w") as f:
-            yaml.dump(config, f, default_flow_style=False, sort_keys=False)
+        yaml_file = paths.get_council_yaml_path(council_name)
+        write_yaml(config, yaml_file, sort_keys=False)
 
         print(f"✅ {council_name}.yaml")
         api_count += 1
@@ -334,9 +319,8 @@ def convert_json_to_yaml():
             if test_inputs:
                 config["test_inputs"] = test_inputs
 
-        yaml_file = output_path / f"{council_name}.yaml"
-        with open(yaml_file, "w") as f:
-            yaml.dump(config, f, default_flow_style=False, sort_keys=False)
+        yaml_file = paths.get_council_yaml_path(council_name)
+        write_yaml(config, yaml_file, sort_keys=False)
 
         print(f"⏸️  {council_name}.yaml (selenium - {council_info['source']})")
 
@@ -349,7 +333,7 @@ def convert_json_to_yaml():
     print(f"  - From network analysis: {len(selenium_from_network)} councils")
     print(f"  - From extraction only: {len(selenium_from_extraction)} councils")
     print(f"Skipped (no valid request type): {len(skipped)} councils")
-    print(f"\nOutput directory: {output_path.absolute()}")
+    print(f"\nOutput directory: {paths.councils_dir.absolute()}")
     print(f"{'=' * 80}")
 
     # Log selenium councils from network analysis

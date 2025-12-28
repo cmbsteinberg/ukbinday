@@ -2,18 +2,12 @@ import asyncio
 import aiohttp
 import json
 from dotenv import load_dotenv
-from structured_output import CouncilExtraction
-from gemini import llm_call_with_struct_output
+from extraction.utils.structured_output import CouncilExtraction
+from extraction.utils.gemini import llm_call_with_struct_output
+from extraction.utils.error_handling import write_json, print_summary, safe_execute
+from extraction.utils.paths import paths
 
 load_dotenv()
-
-
-# ============================================================================
-# CONFIGURATION
-# ============================================================================
-
-GITHUB_API_URL = "https://api.github.com/repos/robbrad/UKBinCollectionData/contents/uk_bin_collection/uk_bin_collection/councils"
-INPUT_JSON_URL = "https://raw.githubusercontent.com/robbrad/UKBinCollectionData/refs/heads/master/uk_bin_collection/tests/input.json"
 
 
 # ============================================================================
@@ -23,12 +17,16 @@ INPUT_JSON_URL = "https://raw.githubusercontent.com/robbrad/UKBinCollectionData/
 
 async def fetch_input_json(session: aiohttp.ClientSession) -> dict:
     """Fetch the test input.json to validate against"""
-    async with session.get(INPUT_JSON_URL) as resp:
+    async with session.get(paths.input_json_url) as resp:
         if resp.status != 200:
             print("⚠️  Failed to fetch input.json")
             return {}
         text = await resp.text()
-        return json.loads(text)
+        return safe_execute(
+            lambda: json.loads(text),
+            error_message="Failed to parse input.json",
+            return_on_error={},
+        )
 
 
 async def process_council(
@@ -140,7 +138,7 @@ async def main():
         print(f"Loaded {len(input_json)} council configs from input.json\n")
 
         print("Fetching council scripts from GitHub...")
-        async with session.get(GITHUB_API_URL) as resp:
+        async with session.get(paths.github_api_url) as resp:
             if resp.status != 200:
                 print("Failed to access GitHub")
                 return
@@ -163,9 +161,10 @@ async def main():
             1 for r in final_results if r.get("validation", {}).get("match", False)
         )
 
-        with open("data/council_extraction_results.json", "w") as f:
-            json.dump(final_results, f, indent=2)
+        # Save results
+        write_json(final_results, paths.council_extraction_json)
 
+        # Print summary
         print(f"\n{'=' * 60}")
         print(f"🚀 Completed! Saved {total} extractions")
         if total > 0:

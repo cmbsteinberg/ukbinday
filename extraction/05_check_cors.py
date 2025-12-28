@@ -3,29 +3,21 @@ import yaml
 from pathlib import Path
 import re
 import asyncio
+from extraction.utils.paths import paths
 
 
-COUNCILS_DIR = Path("extraction/data/councils")
 MAX_CONCURRENT_REQUESTS = 50
 
 
 def load_council_config(council_name: str) -> dict:
     """Load YAML config for a specific council"""
-    yaml_file = COUNCILS_DIR / f"{council_name}.yaml"
+    yaml_file = paths.get_council_yaml_path(council_name)
 
     if not yaml_file.exists():
         raise FileNotFoundError(f"No config found for council: {council_name}")
 
     with open(yaml_file, "r") as f:
         return yaml.safe_load(f)
-
-
-def list_available_councils() -> list[str]:
-    """List all councils with YAML configs"""
-    if not COUNCILS_DIR.exists():
-        return []
-
-    return sorted([f.stem for f in COUNCILS_DIR.glob("*.yaml")])
 
 
 def fill_url_template(url_template: str, test_inputs: dict) -> str:
@@ -124,7 +116,7 @@ async def check_cors_for_councils():
     print(f"{'Council':<30} | {'Type':<10} | {'Success':<8} | {'CORS':<8} | {'URL'}")
     print("-" * 120)
 
-    councils = list_available_councils()
+    councils = paths.list_council_names()
     semaphore = asyncio.Semaphore(MAX_CONCURRENT_REQUESTS)
 
     async with httpx.AsyncClient(headers=headers, verify=False) as client:

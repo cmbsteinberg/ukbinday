@@ -2,18 +2,12 @@ import asyncio
 import json
 from typing import List, Dict, Any
 from dotenv import load_dotenv
-from structured_output import NetworkAnalysisResult
-from gemini import llm_call_with_struct_output
+from extraction.utils.structured_output import NetworkAnalysisResult
+from extraction.utils.gemini import llm_call_with_struct_output
+from extraction.utils.error_handling import read_json, write_json
+from extraction.utils.paths import paths
 
 load_dotenv()
-
-
-# ============================================================================
-# CONFIGURATION
-# ============================================================================
-
-NETWORK_LOGS_PATH = "extraction/data/playwright_network_logs.json"
-OUTPUT_PATH = "extraction/data/network_analysis_results.json"
 
 
 # ============================================================================
@@ -160,9 +154,12 @@ async def main():
     print("=" * 80)
 
     # Load network logs from Phase 1
-    print(f"\nLoading network logs from {NETWORK_LOGS_PATH}...")
-    with open(NETWORK_LOGS_PATH, "r") as f:
-        network_logs = json.load(f)
+    print(f"\nLoading network logs from {paths.playwright_network_logs_json}...")
+    network_logs = read_json(paths.playwright_network_logs_json, default=[])
+
+    if not network_logs:
+        print("❌ Failed to load network logs or file is empty")
+        return
 
     print(f"Loaded {len(network_logs)} council network captures")
 
@@ -199,8 +196,7 @@ async def main():
     final_results = [r for r in results if r is not None]
 
     # Save results
-    with open(OUTPUT_PATH, "w") as f:
-        json.dump(final_results, f, indent=2)
+    write_json(final_results, paths.network_analysis_json)
 
     # Summary statistics
     total = len(final_results)
@@ -227,7 +223,7 @@ async def main():
         print(f"\nBy Confidence:")
         for conf, count in sorted(by_confidence.items()):
             print(f"  {conf}: {count} ({count / total * 100:.1f}%)")
-        print(f"\n📄 Output saved to: {OUTPUT_PATH}")
+        print(f"\n📄 Output saved to: {paths.network_analysis_json}")
         print(f"{'=' * 80}")
     else:
         print("\n⚠️  No successful analyses")

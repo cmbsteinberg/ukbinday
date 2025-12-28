@@ -3,6 +3,8 @@ import time
 from typing import List, Optional, Dict, Any
 from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
+from extraction.utils.error_handling import read_json, write_json
+from extraction.utils.paths import paths
 
 load_dotenv()
 
@@ -163,14 +165,15 @@ def phase1_capture_network_logs():
 
     # Load council extraction results
     print("Loading council_extraction_results.json...", flush=True)
-    with open("data/council_extraction_results.json", "r") as f:
-        councils = json.load(f)
+    councils = read_json(paths.council_extraction_json, default=[])
+    if not councils:
+        print("❌ Failed to load council extraction results")
+        return
     print(f"Loaded {len(councils)} councils", flush=True)
 
     # Load input.json for test parameters
     print("Loading input.json...", flush=True)
-    with open("data/input.json", "r") as f:
-        input_params = json.load(f)
+    input_params = read_json(paths.input_json, default={})
     print(f"Loaded {len(input_params)} council parameters", flush=True)
 
     # Filter for selenium councils with playwright_code
@@ -280,8 +283,7 @@ def phase1_capture_network_logs():
             )
 
     # Save network logs
-    with open("playwright_network_logs.json", "w") as f:
-        json.dump(results, f, indent=2)
+    write_json(results, paths.playwright_network_logs_json)
 
     print(f"\n{'=' * 80}")
     print("PHASE 1 COMPLETE!")
