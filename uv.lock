@@ -175,6 +175,7 @@ dependencies = [
     { name = "requests" },
     { name = "rich" },
     { name = "ruff" },
+    { name = "tenacity" },
     { name = "typer" },
 ]
 
@@ -196,6 +197,7 @@ requires-dist = [
     { name = "requests", specifier = ">=2.32.5" },
     { name = "rich", specifier = ">=14.2.0" },
     { name = "ruff", specifier = ">=0.12.3" },
+    { name = "tenacity", specifier = ">=9.1.2" },
     { name = "typer", specifier = ">=0.14.0" },
 ]
 
