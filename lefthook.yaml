@@ -1,0 +1,26 @@
+pre-commit:
+  parallel: true
+  commands:
+    sync-gov-uk-sources:
+      run: src/pull_scrapers/sync_gov_uk_sources.sh
+    # 1. Sync dependencies with uv
+    # This ensures your lockfile is up to date before any code is committed.
+    uv-sync:
+      tags: backend
+      run: uv sync --locked
+
+    # 2. Linting with Ruff
+    # Uses 'ruff check' to catch errors and code style issues.
+    ruff-check:
+      tags: linter
+      glob: "*.py"
+      exclude: "src/scrapers/**"
+      run: uv run ruff check {staged_files}
+
+    # 3. Formatting with Ruff (Optional but recommended)
+    # Checks if the code is properly formatted without changing files.
+    ruff-format:
+      tags: formatter
+      glob: "*.py"
+      exclude: "src/scrapers/**"
+      run: uv run ruff format --check {staged_files}

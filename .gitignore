@@ -1,5 +1,5 @@
-.claude
-.pyscn
+src/waste_sources
+.claude/docs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

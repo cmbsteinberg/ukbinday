@@ -1,8 +1,0 @@
-council: WyreForestDistrictCouncil
-request_type: calendar
-required_user_input:
-- house_number
-api_urls: null
-api_methods: null
-api_description: null
-date_format: '%d/%m/%Y'
