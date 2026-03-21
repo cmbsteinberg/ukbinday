@@ -101,6 +101,16 @@ echo "waste_collection_schedule package synced."
 echo "Running ruff check --fix on scrapers..."
 uv run ruff check --fix "$SCRAPERS_DIR"
 
+# Regenerate lookup files
+echo ""
+echo "=== Regenerating lookup files ==="
+
+echo "Generating admin scraper lookup..."
+uv run python -m src.address_lookup.generate_admin_lookup
+
+echo "Generating test cases lookup..."
+uv run python -m src.address_lookup.generate_test_lookup
+
 # Save the version
 echo "$latest_sha" > "$VERSION_FILE"
 echo "Version saved: ${latest_sha}"

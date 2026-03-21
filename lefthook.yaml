@@ -15,12 +15,5 @@ pre-commit:
       tags: linter
       glob: "*.py"
       exclude: "src/scrapers/**"
-      run: uv run ruff check {staged_files}
+      run: uv run ruff check --fix {staged_files}
 
-    # 3. Formatting with Ruff (Optional but recommended)
-    # Checks if the code is properly formatted without changing files.
-    ruff-format:
-      tags: formatter
-      glob: "*.py"
-      exclude: "src/scrapers/**"
-      run: uv run ruff format --check {staged_files}

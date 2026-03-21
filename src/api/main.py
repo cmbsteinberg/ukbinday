@@ -11,7 +11,7 @@ from fastapi.responses import HTMLResponse
 from src.address_lookup.address_lookup import AddressLookup
 from src.api.routes import router
 from src.api.scraper_registry import ScraperRegistry
-from src.api.views import index_page
+from src.api.views import api_page, index_page
 
 logger = logging.getLogger(__name__)
 
@@ -75,3 +75,8 @@ app.include_router(router, prefix="/api/v1")
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def landing_page():
     return index_page()
+
+
+@app.get("/api-docs", response_class=HTMLResponse, include_in_schema=False)
+async def api_docs_page():
+    return api_page()

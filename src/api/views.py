@@ -1,25 +1,31 @@
 from __future__ import annotations
 
 from htpy import (
+    a,
     body,
     button,
     fieldset,
     form,
     h1,
+    h2,
     head,
     html,
     input,
     label,
+    li,
     link,
     main,
     meta,
+    nav,
     option,
     p,
     script,
     section,
     select,
+    strong,
     style,
     title,
+    ul,
 )
 from markupsafe import Markup
 
@@ -174,20 +180,35 @@ function renderResults(addr, data) {
 """)
 
 
+def _navbar(active: str = "home"):
+    return nav(".container")[
+        ul[li[strong["UK Bin Collections"]]],
+        ul[
+            li[a(href="/", **{"class": "contrast" if active != "home" else ""})["Home"]],
+            li[a(href="/api-docs", **{"class": "contrast" if active != "api" else ""})["API"]],
+        ],
+    ]
+
+
+def _head(page_title: str):
+    return head[
+        meta(charset="utf-8"),
+        meta(name="viewport", content="width=device-width, initial-scale=1"),
+        title[page_title],
+        link(
+            rel="stylesheet",
+            href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css",
+        ),
+        style[_CSS],
+    ]
+
+
 def index_page() -> str:
     return str(
         html(lang="en", data_theme="light")[
-            head[
-                meta(charset="utf-8"),
-                meta(name="viewport", content="width=device-width, initial-scale=1"),
-                title["UK Bin Collections"],
-                link(
-                    rel="stylesheet",
-                    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css",
-                ),
-                style[_CSS],
-            ],
+            _head("UK Bin Collections"),
             body[
+                _navbar("home"),
                 main(".container")[
                     h1["UK Bin Collections"],
                     p["Find your next bin collection dates."],
@@ -219,6 +240,43 @@ def index_page() -> str:
                     p("#error.hidden"),
                 ],
                 script[_JS],
+            ],
+        ]
+    )
+
+
+def api_page() -> str:
+    return str(
+        html(lang="en", data_theme="light")[
+            _head("API - UK Bin Collections"),
+            body[
+                _navbar("api"),
+                main(".container")[
+                    h1["API Documentation"],
+                    p["This project exposes a public REST API for looking up UK bin collection schedules."],
+                    section[
+                        h2["Interactive Docs"],
+                        p[
+                            a(href="/api/v1/docs", role="button")["Swagger UI (OpenAPI)"],
+                            " ",
+                            a(href="/api/v1/redoc", role="button", **{"class": "outline"})["ReDoc"],
+                        ],
+                    ],
+                    section[
+                        h2["Endpoints"],
+                        ul[
+                            li[a(href="/api/v1/docs#/default/addresses_addresses__postcode__get")[strong["GET /api/v1/addresses/{postcode}"], " - Look up addresses for a postcode"]],
+                            li[a(href="/api/v1/docs#/default/lookup_lookup__uprn__get")[strong["GET /api/v1/lookup/{uprn}"], " - Get bin collection dates"]],
+                            li[a(href="/api/v1/docs#/default/calendar_calendar__uprn__get")[strong["GET /api/v1/calendar/{uprn}"], " - Subscribe via .ics calendar"]],
+                            li[a(href="/api/v1/docs#/default/list_councils_councils_get")[strong["GET /api/v1/councils"], " - List supported councils"]],
+                            li[a(href="/api/v1/docs#/default/health_health_get")[strong["GET /api/v1/health"], " - Scraper health status"]],
+                        ],
+                    ],
+                    section[
+                        h2["OpenAPI Schema"],
+                        p["The raw OpenAPI JSON schema is available at ", a(href="/api/v1/openapi.json")["/api/v1/openapi.json"], "."],
+                    ],
+                ],
             ],
         ]
     )
