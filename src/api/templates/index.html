@@ -30,7 +30,7 @@
       <form id="postcode-form">
         <label for="postcode">Enter your postcode</label>
         <fieldset role="group">
-          <input id="postcode" type="text" name="postcode" placeholder="e.g. BR8 7RE" required autofocus>
+          <input id="postcode" type="text" name="postcode" placeholder="e.g. BR8 7RE" required>
           <button type="submit">Search</button>
         </fieldset>
       </form>
@@ -41,8 +41,8 @@
       <select id="address-select">
         <option value="">-- Choose address --</option>
       </select>
-      <button id="address-btn" disabled>Get bin dates</button>
-      <button id="back-btn" class="outline secondary">Back</button>
+      <button id="address-btn" type="button" disabled>Get bin dates</button>
+      <button id="back-btn" type="button" class="outline secondary">Back</button>
     </section>
 
     <section id="results" class="hidden"></section>
