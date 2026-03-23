@@ -7,11 +7,11 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-from waste_collection_schedule import Collection
+from src.api.waste_collection_schedule import Collection
 
 logger = logging.getLogger(__name__)
 
-SCRAPERS_DIR = Path(__file__).parent.parent / "scrapers"
+SCRAPERS_DIR = Path(__file__).parent / "scrapers"
 
 
 @dataclass
@@ -54,7 +54,7 @@ class ScraperRegistry:
         for path in scraper_files:
             name = path.stem
             try:
-                module = importlib.import_module(f"src.scrapers.{name}")
+                module = importlib.import_module(f"src.api.scrapers.{name}")
                 if not hasattr(module, "Source"):
                     continue
 
@@ -72,6 +72,7 @@ class ScraperRegistry:
                     else:
                         optional.append(param_name)
 
+                module.Source.__qualname__ = name
                 registry._scrapers[name] = ScraperMeta(
                     id=name,
                     title=title,

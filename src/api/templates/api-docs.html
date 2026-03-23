@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API - UK Bin Collections</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+<body>
+  <nav class="container">
+    <ul><li><strong>UK Bin Collections</strong></li></ul>
+    <ul>
+      <li><a href="/" class="contrast">Home</a></li>
+      <li><a href="/api-docs">API</a></li>
+    </ul>
+  </nav>
+  <main class="container">
+    <h1>API Documentation</h1>
+    <p>This project exposes a public REST API for looking up UK bin collection schedules.</p>
+
+    <section>
+      <h2>Interactive Docs</h2>
+      <p>
+        <a href="/api/v1/docs" role="button">Swagger UI (OpenAPI)</a>
+        <a href="/api/v1/redoc" role="button" class="outline">ReDoc</a>
+      </p>
+    </section>
+
+    <section>
+      <h2>Endpoints</h2>
+      <ul>
+        <li><a href="/api/v1/docs#/default/addresses_addresses__postcode__get"><strong>GET /api/v1/addresses/{postcode}</strong> - Look up addresses for a postcode</a></li>
+        <li><a href="/api/v1/docs#/default/lookup_lookup__uprn__get"><strong>GET /api/v1/lookup/{uprn}</strong> - Get bin collection dates</a></li>
+        <li><a href="/api/v1/docs#/default/calendar_calendar__uprn__get"><strong>GET /api/v1/calendar/{uprn}</strong> - Subscribe via .ics calendar</a></li>
+        <li><a href="/api/v1/docs#/default/list_councils_councils_get"><strong>GET /api/v1/councils</strong> - List supported councils</a></li>
+        <li><a href="/api/v1/docs#/default/health_health_get"><strong>GET /api/v1/health</strong> - Scraper health status</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>OpenAPI Schema</h2>
+      <p>The raw OpenAPI JSON schema is available at <a href="/api/v1/openapi.json">/api/v1/openapi.json</a>.</p>
+    </section>
+  </main>
+</body>
+</html>

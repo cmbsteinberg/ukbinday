@@ -21,7 +21,7 @@ from src.api.models import (
     LookupResponse,
 )
 from src.api.rate_limiting import rate_limit
-from waste_collection_schedule.exceptions import (
+from src.api.waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
 )
@@ -29,7 +29,7 @@ from waste_collection_schedule.exceptions import (
 logger = logging.getLogger(__name__)
 
 _LOOKUP_PATH = (
-    Path(__file__).parent.parent / "address_lookup" / "admin_scraper_lookup.json"
+    Path(__file__).parent.parent / "scripts" / "address_lookup" / "admin_scraper_lookup.json"
 )
 _DOMAIN_TO_SCRAPER: dict[str, str] = json.loads(_LOOKUP_PATH.read_text())
 

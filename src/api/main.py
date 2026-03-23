@@ -3,15 +3,17 @@ from __future__ import annotations
 import logging
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 
-from src.address_lookup.address_lookup import AddressLookup
-from src.api.routes import router
+from src.api.routes import router as api_router
 from src.api.scraper_registry import ScraperRegistry
-from src.api.views import api_page, index_page
+from src.scripts.address_lookup.address_lookup import AddressLookup
+
+_TEMPLATES_DIR = Path(__file__).resolve().parent / "templates"
 
 logger = logging.getLogger(__name__)
 
@@ -67,16 +69,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount router at both paths — internal and versioned public API
-app.include_router(router, prefix="/api")
-app.include_router(router, prefix="/api/v1")
+# API routes
+app.include_router(api_router, prefix="/api")
+app.include_router(api_router, prefix="/api/v1")
 
 
+# Frontend pages
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def landing_page():
-    return index_page()
+    return (_TEMPLATES_DIR / "index.html").read_text()
 
 
 @app.get("/api-docs", response_class=HTMLResponse, include_in_schema=False)
 async def api_docs_page():
-    return api_page()
+    return (_TEMPLATES_DIR / "api-docs.html").read_text()
