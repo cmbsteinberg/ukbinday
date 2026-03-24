@@ -1116,14 +1116,6 @@
 			}
 		}
 	],
-	"chiltern_gov_uk": [
-		{
-			"label": "Test_004",
-			"params": {
-				"uprn": "10094593823"
-			}
-		}
-	],
 	"colchester_gov_uk": [
 		{
 			"label": "Church Road, Colchester",
@@ -4781,26 +4773,6 @@
 			"label": "Hill Crest, Wrexham, LL13 8RN",
 			"params": {
 				"uprn": "100100860092"
-			}
-		}
-	],
-	"wychavon_gov_uk": [
-		{
-			"label": "10013938132",
-			"params": {
-				"uprn": "10013938132"
-			}
-		},
-		{
-			"label": "10013938131",
-			"params": {
-				"uprn": "10013938131"
-			}
-		},
-		{
-			"label": "100121280854",
-			"params": {
-				"uprn": "100121280854"
 			}
 		}
 	],
