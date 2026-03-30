@@ -4,7 +4,7 @@ from typing import List
 import httpx
 from bs4 import BeautifulSoup
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Wakefield Council"
 DESCRIPTION = "Source for Wakefield.gov.uk services for Wakefield Council"

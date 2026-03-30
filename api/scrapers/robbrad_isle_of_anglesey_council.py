@@ -3,12 +3,12 @@ from datetime import datetime, timedelta, timezone
 
 import httpx
 
-from api.uk_bin_collection.common import (
+from api.compat.ukbcd.common import (
     check_postcode,
     check_uprn,
     date_format,
 )
-from api.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 logger = logging.getLogger(__name__)
 
@@ -239,7 +239,7 @@ class CouncilClass(AbstractGetBinDataClass):
         return {"bins": bins}
 
 # --- Adapter for Project API ---
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Isle of Anglesey"
 URL = "https://www.anglesey.gov.wales/en/Residents/Bins-and-recycling/Waste-Collection-Day.aspx"

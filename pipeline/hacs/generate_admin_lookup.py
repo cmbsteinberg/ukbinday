@@ -18,10 +18,9 @@ from urllib.parse import urlparse
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-SCRAPERS_DIR = Path(__file__).resolve().parent.parent.parent.parent / "api" / "scrapers"
-OUTPUT_PATH = (
-    Path(__file__).resolve().parent.parent.parent.parent / "api" / "data" / "admin_scraper_lookup.json"
-)
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+SCRAPERS_DIR = PROJECT_ROOT / "api" / "scrapers"
+OUTPUT_PATH = PROJECT_ROOT / "api" / "data" / "admin_scraper_lookup.json"
 
 
 def extract_url_from_scraper(path: Path) -> str | None:

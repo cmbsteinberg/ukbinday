@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-UK Bin Collection API — a FastAPI service that scrapes UK council websites to return bin/waste collection schedules. ~240 council scrapers live in `api/scrapers/`, each ported from the Home Assistant waste_collection_schedule project and monkey-patched to work as async API endpoints.
+UK Bin Collection API — a FastAPI service that scrapes UK council websites to return bin/waste collection schedules. ~350 council scrapers live in `api/scrapers/`, monkey-patched from two upstream repos (hacs_waste_collection_schedule and UKBinCollectionData) to work as async API endpoints.
 
 ## Commands
 
@@ -30,11 +30,15 @@ uv run ruff check --fix
 # Lint JS/JSON (biome)
 npx @biomejs/biome check --write
 
+# Sync and patch scrapers from upstream repos
+pipeline/hacs/sync.sh      # hacs_waste_collection_schedule (primary)
+pipeline/ukbcd/sync.sh     # UKBinCollectionData (fallback)
+
 # Regenerate test_cases.json from scraper TEST_CASES
-uv run python scripts/scraper_transformation/generate_test_lookup.py
+uv run python -m pipeline.hacs.generate_test_lookup
 
 # Regenerate admin_scraper_lookup.json (council domain → scraper ID mapping)
-uv run python scripts/address_lookup/generate_admin_lookup.py
+uv run python -m pipeline.hacs.generate_admin_lookup
 
 # Docker
 docker compose up --build
@@ -52,14 +56,23 @@ docker compose up --build
 - `data/admin_scraper_lookup.json` — Council domain → scraper ID mapping
 
 **Scrapers** (`api/scrapers/`):
-- ~240 files, one per council. Each defines `TITLE`, `URL`, `TEST_CASES`, and a `Source` class with `async def fetch() -> list[Collection]`
-- Originally synchronous; `scripts/scraper_transformation/patch_scrapers.py` converts them to async (replacing `requests`/`urllib` with `httpx`)
+- ~350 files (flat directory), one per council. Each defines `TITLE`, `URL`, `TEST_CASES`, and a `Source` class with `async def fetch() -> list[Collection]`
+- ~240 from hacs (named `*_gov_uk.py`), ~110 from ukbcd (named `robbrad_*.py`)
 - Excluded from ruff linting (configured in `pyproject.toml`)
-- `waste_collection_schedule/` contains shared types (`Collection`) and helpers (`ICS`, `SSLError`)
+
+**Compat shims** (`api/compat/`):
+- `hacs/` — Minimal types/helpers synced from hacs upstream: `Collection`, `CollectionBase`, `CollectionGroup`, `ICS`, `SSLError`. Avoids pulling full Home Assistant dependencies
+- `ukbcd/` — Lightweight reimplementation of UKBinCollectionData helpers: `AbstractGetBinDataClass`, validators, date functions. Avoids selenium/pandas dependencies
+
+**Pipeline** (`pipeline/`):
+- `hacs/` — Scripts to sync and patch hacs_waste_collection_schedule scrapers (AST-based `requests` → async `httpx`)
+- `ukbcd/` — Scripts to sync and patch UKBinCollectionData scrapers (import rewrite, sync httpx, Source adapter generation)
+- `upstream/` — Downloaded originals from both repos (gitignored, populated by sync scripts)
+- Each source has a `sync.sh` entry point that clones upstream, patches, and deploys to `api/scrapers/`
 
 **Scripts** (`scripts/`):
-- `scraper_transformation/` — Tools to patch upstream scrapers for async, generate test cases, sync `.gov.uk` source list
-- `address_lookup/` — Generates `admin_scraper_lookup.json` mapping council domains to scraper IDs
+- `lookup/` — Address lookup utilities
+- `generate_coverage_map.py` — Coverage map generation
 
 **Tests** (`tests/`):
 - `test_frontend.py` — Fast unit tests for app startup, pages, CORS, error cases
@@ -75,3 +88,4 @@ docker compose up --build
 - The registry filters params to only those accepted by each scraper's `__init__` signature before invocation
 - `admin_scraper_lookup.json` maps council website domains to scraper filenames — used to auto-detect which scraper to use from a postcode lookup
 - The `/calendar/{uprn}` endpoint returns iCal format for calendar subscription
+- hacs scrapers take priority over ukbcd (left merge in lookup generation)

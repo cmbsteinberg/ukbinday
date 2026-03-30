@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 
 import httpx
 
-from api.waste_collection_schedule import Collection
-from api.waste_collection_schedule.exceptions import (
+from api.compat.hacs import Collection
+from api.compat.hacs.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
 )

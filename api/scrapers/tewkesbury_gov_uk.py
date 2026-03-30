@@ -4,7 +4,7 @@ from urllib.parse import quote as urlquote
 
 import httpx
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Tewkesbury Borough Council"
 DESCRIPTION = "Home waste collection schedule for Tewkesbury Borough Council"

@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Pembrokeshire County Council"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for pembrokeshire.gov.uk"  # Describe your source

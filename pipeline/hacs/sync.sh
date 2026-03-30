@@ -9,15 +9,15 @@ WCS_DIR="custom_components/waste_collection_schedule/waste_collection_schedule"
 PATTERN="*_gov_uk.py"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PARENT_DIR="$(dirname "$SCRIPT_DIR")"
-SCRIPTS_DIR="$(dirname "$PARENT_DIR")"
-API_DIR="$(dirname "$SCRIPTS_DIR")/api"
-LOCAL_DIR="${SCRIPT_DIR}/waste_sources"
+PIPELINE_DIR="$(dirname "$SCRIPT_DIR")"
+PROJECT_ROOT="$(dirname "$PIPELINE_DIR")"
+API_DIR="${PROJECT_ROOT}/api"
+LOCAL_DIR="${PIPELINE_DIR}/upstream/hacs"
 SCRAPERS_DIR="${API_DIR}/scrapers"
-WCS_LOCAL_DIR="${API_DIR}/waste_collection_schedule"
+COMPAT_DIR="${API_DIR}/compat/hacs"
 PATCH_SCRIPT="${SCRIPT_DIR}/patch_scrapers.py"
-PATCH_WCS_SCRIPT="${SCRIPT_DIR}/patch_wcs.py"
-VERSION_FILE="${SCRIPT_DIR}/.gov_uk_sources_version"
+PATCH_COMPAT_SCRIPT="${SCRIPT_DIR}/patch_compat.py"
+VERSION_FILE="${SCRIPT_DIR}/.upstream_version"
 
 API_BASE="https://api.github.com/repos/${REPO}"
 
@@ -60,44 +60,44 @@ echo "Copied ${count} files to ${LOCAL_DIR}/"
 echo "Patching scrapers for async httpx..."
 python3 "$PATCH_SCRIPT" "$LOCAL_DIR" "$SCRAPERS_DIR"
 
-# --- Sync waste_collection_schedule support package ---
+# --- Sync compat/hacs support package ---
 echo ""
-echo "=== Syncing waste_collection_schedule package ==="
+echo "=== Syncing compat/hacs package ==="
 
-WCS_FILES=(
+COMPAT_FILES=(
     "collection.py"
     "exceptions.py"
 )
-WCS_SERVICE_FILES=(
+COMPAT_SERVICE_FILES=(
     "ICS.py"
     "SSLError.py"
 )
 
-mkdir -p "${WCS_LOCAL_DIR}/service"
+mkdir -p "${COMPAT_DIR}/service"
 
-for f in "${WCS_FILES[@]}"; do
+for f in "${COMPAT_FILES[@]}"; do
     echo "Copying ${f}..."
-    cp "$CLONE_DIR/${WCS_DIR}/${f}" "${WCS_LOCAL_DIR}/${f}"
+    cp "$CLONE_DIR/${WCS_DIR}/${f}" "${COMPAT_DIR}/${f}"
 done
 
-for f in "${WCS_SERVICE_FILES[@]}"; do
+for f in "${COMPAT_SERVICE_FILES[@]}"; do
     echo "Copying service/${f}..."
-    cp "$CLONE_DIR/${WCS_DIR}/service/${f}" "${WCS_LOCAL_DIR}/service/${f}"
+    cp "$CLONE_DIR/${WCS_DIR}/service/${f}" "${COMPAT_DIR}/service/${f}"
 done
 
-# Patch WCS files (SSLError.py: requests -> httpx)
-echo "Patching waste_collection_schedule files..."
-python3 "$PATCH_WCS_SCRIPT" "$WCS_LOCAL_DIR"
+# Patch compat files (SSLError.py: requests -> httpx)
+echo "Patching compat/hacs files..."
+python3 "$PATCH_COMPAT_SCRIPT" "$COMPAT_DIR"
 
 # Write __init__.py (imports only what our scrapers need)
-cat > "${WCS_LOCAL_DIR}/__init__.py" << 'PYEOF'
+cat > "${COMPAT_DIR}/__init__.py" << 'PYEOF'
 from .collection import Collection, CollectionBase, CollectionGroup  # noqa: F401
 PYEOF
 
 # Empty service __init__.py
-touch "${WCS_LOCAL_DIR}/service/__init__.py"
+touch "${COMPAT_DIR}/service/__init__.py"
 
-echo "waste_collection_schedule package synced."
+echo "compat/hacs package synced."
 
 # Lint and auto-fix scrapers
 echo "Running ruff check --fix on scrapers..."
@@ -108,10 +108,10 @@ echo ""
 echo "=== Regenerating lookup files ==="
 
 echo "Generating admin scraper lookup..."
-uv run python -m scripts.scraper_transformation.mampfes.generate_admin_lookup
+uv run python -m pipeline.hacs.generate_admin_lookup
 
 echo "Generating test cases lookup..."
-uv run python -m scripts.scraper_transformation.mampfes.generate_test_lookup
+uv run python -m pipeline.hacs.generate_test_lookup
 
 # Save the version
 echo "$latest_sha" > "$VERSION_FILE"

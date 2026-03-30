@@ -2,7 +2,7 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil import parser
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "North West Leicestershire District Council"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source for www.nwleics.gov.uk services for the city of North West Leicestershire District Council, UK"  # Describe your source

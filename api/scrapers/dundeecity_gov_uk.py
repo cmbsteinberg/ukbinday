@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Dundee City Council"
 DESCRIPTION = "Source script for dundeecity.gov.uk"

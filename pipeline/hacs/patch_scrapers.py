@@ -1206,15 +1206,15 @@ def _final_requests_cleanup(source: str) -> str:
     if "urllib.request" in source and "import requests" not in source:
         source = _handle_urllib(source)
 
-    # Rewrite waste_collection_schedule imports to use api prefix
+    # Rewrite waste_collection_schedule imports to use api.compat.hacs
     source = re.sub(
         r"from (?:src\.)?api\.waste_collection_schedule(\b)",
-        r"from api.waste_collection_schedule\1",
+        r"from api.compat.hacs\1",
         source,
     )
     source = re.sub(
         r"from waste_collection_schedule(\b)",
-        r"from api.waste_collection_schedule\1",
+        r"from api.compat.hacs\1",
         source,
     )
 

@@ -5,8 +5,8 @@ from datetime import date, datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.waste_collection_schedule import Collection
-from api.waste_collection_schedule.exceptions import SourceArgumentException
+from api.compat.hacs import Collection
+from api.compat.hacs.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
 

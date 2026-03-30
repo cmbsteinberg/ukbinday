@@ -3,7 +3,7 @@ from datetime import date, datetime
 import httpx
 from bs4 import BeautifulSoup, Tag
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Ards and North Down Borough Council"
 DESCRIPTION = "Source for Ards and North Down Borough Council."

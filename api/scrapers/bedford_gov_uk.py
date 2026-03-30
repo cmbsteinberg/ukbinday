@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Bedford Borough Council"
 DESCRIPTION = "Source for bradford.gov.uk services for Bedford Borough Council, UK."

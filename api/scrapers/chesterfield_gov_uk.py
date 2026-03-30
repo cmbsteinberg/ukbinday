@@ -5,7 +5,7 @@ from datetime import datetime
 import httpx
 import urllib3
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:

@@ -17,10 +17,9 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-SCRAPERS_DIR = Path(__file__).resolve().parent.parent.parent.parent / "api" / "scrapers"
-OUTPUT_PATH = (
-    Path(__file__).resolve().parent.parent.parent.parent / "tests" / "test_cases.json"
-)
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+SCRAPERS_DIR = PROJECT_ROOT / "api" / "scrapers"
+OUTPUT_PATH = PROJECT_ROOT / "tests" / "test_cases.json"
 
 
 def extract_test_cases(path: Path) -> dict | None:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-patch_wcs.py — Patch waste_collection_schedule support files for async httpx.
+patch_compat.py — Patch hacs compat shim files for async httpx.
 
 Currently patches:
   - service/SSLError.py: Convert requests-based legacy SSL session to httpx.

@@ -6,8 +6,8 @@ from bs4 import BeautifulSoup
 # import rrule
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, weekday
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from api.waste_collection_schedule.exceptions import (
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
 )

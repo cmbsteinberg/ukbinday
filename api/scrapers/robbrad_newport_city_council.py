@@ -7,8 +7,8 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
-from api.uk_bin_collection.common import check_uprn
-from api.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+from api.compat.ukbcd.common import check_uprn
+from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 key_hex = "F57E76482EE3DC3336495DEDEEF3962671B054FE353E815145E29C5689F72FEC"
 iv_hex = "2CBF4FC35C69B82362D393A4F0B9971A"
@@ -141,7 +141,7 @@ class CouncilClass(AbstractGetBinDataClass):
         return data
 
 # --- Adapter for Project API ---
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Newport"
 URL = "https://www.newport.gov.uk/"

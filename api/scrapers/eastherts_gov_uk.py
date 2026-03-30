@@ -8,7 +8,7 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "East Herts Council"
 DESCRIPTION = "Source for www.eastherts.gov.uk services for East Herts Council."

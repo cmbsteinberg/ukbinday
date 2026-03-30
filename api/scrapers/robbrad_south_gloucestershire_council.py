@@ -1,7 +1,7 @@
 from datetime import timedelta
 
-from api.uk_bin_collection.common import *
-from api.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+from api.compat.ukbcd.common import *
+from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 
 def format_bin_data(key: str, date: datetime):
@@ -85,7 +85,7 @@ class CouncilClass(AbstractGetBinDataClass):
         return data
 
 # --- Adapter for Project API ---
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "South Gloucestershire"
 URL = "https://api.southglos.gov.uk/wastecomp/GetCollectionDetails"

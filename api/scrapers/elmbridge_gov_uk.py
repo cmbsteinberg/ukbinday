@@ -4,7 +4,7 @@ from typing import TypedDict
 import httpx
 from dateutil.parser import parse
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Elmbridge Borough Council"
 DESCRIPTION = "Source for waste collection services for Elmbridge Borough Council"

@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 
 import httpx
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Cardiff Council"
 DESCRIPTION = "Source script for cardiff.gov.uk"

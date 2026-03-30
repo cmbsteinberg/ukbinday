@@ -3,7 +3,7 @@ import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "East Cambridgeshire District Council"
 DESCRIPTION = "Source for eastcambs.gov.uk, East Cambridgeshire District Council, UK"

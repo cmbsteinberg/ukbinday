@@ -3,8 +3,8 @@ import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.waste_collection_schedule import Collection
-from api.waste_collection_schedule.exceptions import (
+from api.compat.hacs import Collection
+from api.compat.hacs.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 

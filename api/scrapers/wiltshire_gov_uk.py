@@ -3,7 +3,7 @@ from datetime import date, datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Wiltshire Council"
 DESCRIPTION = "Source for wiltshire.gov.uk services for Wiltshire Council"

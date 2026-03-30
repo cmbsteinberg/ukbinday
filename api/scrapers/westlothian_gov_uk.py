@@ -9,10 +9,10 @@ from urllib.parse import parse_qs, urlparse
 import httpx
 from bs4 import BeautifulSoup
 
-from api.waste_collection_schedule.collection import (
+from api.compat.hacs.collection import (
     Collection,  # type: ignore[attr-defined]
 )
-from api.waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defined]
+from api.compat.hacs.service.ICS import ICS  # type: ignore[attr-defined]
 
 TITLE = "West Lothian Council"
 DESCRIPTION = "Source for services for West Lothian"

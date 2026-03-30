@@ -3,7 +3,7 @@ import json
 import httpx
 from dateutil import parser
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Bracknell Forest Council"
 DESCRIPTION = "Bracknell Forest Council, UK - Waste Collection"

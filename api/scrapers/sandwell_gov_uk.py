@@ -6,7 +6,7 @@ from typing import Any
 
 import httpx
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Sandwell Council"
 DESCRIPTION = "Bin collection dates via my.sandwell.gov.uk (APIBroker runLookup)"

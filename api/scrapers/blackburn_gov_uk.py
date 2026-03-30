@@ -2,8 +2,8 @@ from datetime import datetime
 
 import urllib3
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from api.waste_collection_schedule.service.SSLError import get_legacy_session
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.service.SSLError import get_legacy_session
 
 TITLE = "Blackburn with Darwen Borough Council"
 DESCRIPTION = "Source for mybins.blackburn.gov.uk services for Blackburn with Darwen Borough Council, UK."

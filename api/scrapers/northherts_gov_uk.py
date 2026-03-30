@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, cast
 
 import httpx
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "North Herts Council"
 DESCRIPTION = "Source for www.north-herts.gov.uk services for North Herts Council."

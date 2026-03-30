@@ -4,8 +4,8 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.uk_bin_collection.common import *
-from api.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+from api.compat.ukbcd.common import *
+from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 
 class CouncilClass(AbstractGetBinDataClass):
@@ -136,7 +136,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
 
 # --- Adapter for Project API ---
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Mole Valley"
 URL = "https://myproperty.molevalley.gov.uk/molevalley/"

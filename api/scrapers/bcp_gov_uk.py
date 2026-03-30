@@ -4,7 +4,7 @@ from datetime import datetime
 
 import httpx
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 _LOGGER = logging.getLogger(__name__)
 

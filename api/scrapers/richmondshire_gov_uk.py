@@ -2,7 +2,7 @@ from datetime import datetime
 
 import httpx
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Richmondshire District Council"
 DESCRIPTION = "To find your UPRN, visit the Richmondshire page and use the address search. Right-click your entry in the house dropdown, choose Inspect, and copy the UPRN from the value"

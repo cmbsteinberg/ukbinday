@@ -1,8 +1,8 @@
 import httpx
 
-from api.waste_collection_schedule import Collection
-from api.waste_collection_schedule.exceptions import SourceArgumentNotFound
-from api.waste_collection_schedule.service.ICS import ICS
+from api.compat.hacs import Collection
+from api.compat.hacs.exceptions import SourceArgumentNotFound
+from api.compat.hacs.service.ICS import ICS
 
 TITLE = "Peterborough City Council"
 DESCRIPTION = "Source for peterborough.gov.uk services for Peterborough"

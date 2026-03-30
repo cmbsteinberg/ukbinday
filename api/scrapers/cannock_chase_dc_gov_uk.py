@@ -3,8 +3,8 @@ import xml.etree.ElementTree as ET
 
 import httpx
 
-from api.waste_collection_schedule import Collection
-from api.waste_collection_schedule.exceptions import SourceArgumentException
+from api.compat.hacs import Collection
+from api.compat.hacs.exceptions import SourceArgumentException
 
 TITLE = "Cannock Chase Council"
 DESCRIPTION = "Source for cannockchasedc.gov.uk services for Cannock Chase Council, UK."

@@ -1,7 +1,7 @@
 import httpx
 from dateutil import parser
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "North Ayrshire Council"
 DESCRIPTION = "Source for north-ayrshire.gov.uk services for North Ayrshire"

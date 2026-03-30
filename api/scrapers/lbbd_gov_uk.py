@@ -2,7 +2,7 @@ from datetime import datetime
 
 import httpx
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "London Borough of Barking and Dagenham"
 DESCRIPTION = "Source for London Borough of Barking and Dagenham."

@@ -5,7 +5,7 @@ from time import time_ns
 
 import httpx
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "North Yorkshire Council - Hambleton"
 DESCRIPTION = "Source for North Yorkshire Council - Hambleton."

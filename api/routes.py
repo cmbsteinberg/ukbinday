@@ -19,7 +19,7 @@ from api.services.models import (
     LookupResponse,
 )
 from api.services.rate_limiting import rate_limit
-from api.waste_collection_schedule.exceptions import (
+from api.compat.hacs.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
 )

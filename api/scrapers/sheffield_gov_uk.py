@@ -4,7 +4,7 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil import parser
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Sheffield City Council"
 DESCRIPTION = "Source for waste collection services from Sheffield City Council (SCC)"

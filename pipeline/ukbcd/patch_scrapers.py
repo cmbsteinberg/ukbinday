@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 # Paths
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parent.parent.parent
+PROJECT_ROOT = SCRIPT_DIR.parent.parent
 API_DIR = PROJECT_ROOT / "api"
 SCRAPERS_DIR = API_DIR / "scrapers"
 ADMIN_LOOKUP_PATH = API_DIR / "data" / "admin_scraper_lookup.json"
@@ -69,19 +69,19 @@ def rewrite_imports(source: str) -> str:
     # from uk_bin_collection.uk_bin_collection.common import *
     source = re.sub(
         r"from\s+uk_bin_collection\.uk_bin_collection\.common\s+import\s+",
-        "from api.uk_bin_collection.common import ",
+        "from api.compat.ukbcd.common import ",
         source,
     )
     # from uk_bin_collection.uk_bin_collection.get_bin_data import ...
     source = re.sub(
         r"from\s+uk_bin_collection\.uk_bin_collection\.get_bin_data\s+import\s+",
-        "from api.uk_bin_collection.get_bin_data import ",
+        "from api.compat.ukbcd.get_bin_data import ",
         source,
     )
     # Any other uk_bin_collection imports
     source = re.sub(
         r"from\s+uk_bin_collection\.uk_bin_collection\.",
-        "from api.uk_bin_collection.",
+        "from api.compat.ukbcd.",
         source,
     )
     return source
@@ -158,7 +158,7 @@ def generate_adapter_code(original_class_name: str, params: list[str], url: str,
     code = f'''
 
 # --- Adapter for Project API ---
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "{title}"
 URL = "{url}"
@@ -209,7 +209,7 @@ class Source:
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: python patch_robbrad_scrapers.py <CLONE_DIR> <SCRAPERS_DIR>")
+        print("Usage: python patch_scrapers.py <CLONE_DIR> <SCRAPERS_DIR>")
         sys.exit(1)
 
     clone_dir = Path(sys.argv[1])

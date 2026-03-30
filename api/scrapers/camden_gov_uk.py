@@ -1,8 +1,8 @@
 import httpx
 from bs4 import BeautifulSoup
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from api.waste_collection_schedule.service.ICS import ICS
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.service.ICS import ICS
 
 TITLE = "London Borough of Camden"
 DESCRIPTION = "Source for London Borough of Camden."

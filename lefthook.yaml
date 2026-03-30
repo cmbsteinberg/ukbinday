@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     sync-gov-uk-sources:
-      run: scripts/scraper_transformation/mampfes/sync_gov_uk_sources.sh
+      run: pipeline/hacs/sync.sh
     # 1. Sync dependencies with uv
     # This ensures your lockfile is up to date before any code is committed.
     uv-sync:
@@ -16,8 +16,7 @@ pre-commit:
       glob: "*.py"
       exclude:
         - "api/scrapers/**"
-        - "scripts/scraper_transformation/mampfes/waste_sources/**"
-        - "scripts/scraper_transformation/robbrad/robbrad_sources/**"
+        - "pipeline/upstream/**"
       run: uv run ruff check --fix {staged_files}
 
     docker-check:

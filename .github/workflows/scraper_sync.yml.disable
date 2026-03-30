@@ -19,19 +19,22 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
-      - name: Run sync script
-        run: bash src/pull_scrapers/sync_gov_uk_sources.sh
+      - name: Run hacs sync script
+        run: bash pipeline/hacs/sync.sh
+
+      - name: Run ukbcd sync script
+        run: bash pipeline/ukbcd/sync.sh
 
       - name: Check for changes
         id: diff
         run: |
-          git diff --quiet src/scrapers/ src/waste_sources/ src/waste_collection_schedule/ && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
+          git diff --quiet api/scrapers/ api/compat/ && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
 
       - name: Commit and push
         if: steps.diff.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/scrapers/ src/waste_sources/ src/waste_collection_schedule/
-          git commit -m "chore: sync gov_uk scrapers from upstream"
+          git add api/scrapers/ api/compat/
+          git commit -m "chore: sync scrapers from upstream"
           git push

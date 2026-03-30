@@ -1,7 +1,7 @@
 import httpx
 
-from api.uk_bin_collection.common import *
-from api.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+from api.compat.ukbcd.common import *
+from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 
 # import the wonderful Beautiful Soup and the URL grabber
@@ -61,7 +61,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
 
 # --- Adapter for Project API ---
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "South Derbyshire"
 URL = "https://maps.southderbyshire.gov.uk/iShareLIVE.web//getdata.aspx?RequestType=LocalInfo&ms=mapsources/MyHouse&format=JSONP&group=Recycling%20Bins%20and%20Waste|Next%20Bin%20Collections&uid="

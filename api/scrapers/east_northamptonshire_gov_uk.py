@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import httpx
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "East Northamptonshire and Wellingborough"
 DESCRIPTION = "Source for East Northamptonshire and Wellingborough"

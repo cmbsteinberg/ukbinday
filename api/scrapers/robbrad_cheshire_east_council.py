@@ -2,8 +2,8 @@ from typing import Any, Dict, Optional
 
 from bs4 import BeautifulSoup, NavigableString, Tag
 
-from api.uk_bin_collection.common import *
-from api.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+from api.compat.ukbcd.common import *
+from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 """
 This module provides bin collection data for Cheshire East Council.
@@ -70,7 +70,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
 
 # --- Adapter for Project API ---
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Cheshire East"
 URL = "https://online.cheshireeast.gov.uk/mycollectionday"

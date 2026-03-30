@@ -4,8 +4,8 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from api.waste_collection_schedule.exceptions import (
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )

@@ -3,8 +3,8 @@ from datetime import datetime
 import bs4.element
 from bs4 import BeautifulSoup
 
-from api.uk_bin_collection.common import *
-from api.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+from api.compat.ukbcd.common import *
+from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 
 class CouncilClass(AbstractGetBinDataClass):
@@ -97,7 +97,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
 
 # --- Adapter for Project API ---
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Pembrokeshire"
 URL = "https://nearest.pembrokeshire.gov.uk/property/100100278790"

@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 logger = logging.getLogger(__name__)
 

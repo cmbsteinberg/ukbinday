@@ -7,7 +7,7 @@ from datetime import datetime
 import httpx
 from dateutil.parser import parse
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Crawley Borough Council (myCrawley)"
 DESCRIPTION = "Source for Crawley Borough Council (myCrawley)."

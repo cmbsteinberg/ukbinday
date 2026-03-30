@@ -2,7 +2,7 @@ import httpx
 from bs4 import BeautifulSoup, Tag
 from dateutil import parser
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "North East Lincolnshire Council"
 DESCRIPTION = "Source for North East Lincolnshire Council."

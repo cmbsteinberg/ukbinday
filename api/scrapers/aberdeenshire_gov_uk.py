@@ -2,10 +2,10 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 # Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
-from api.waste_collection_schedule.service.SSLError import get_legacy_session
+from api.compat.hacs.service.SSLError import get_legacy_session
 
 TITLE = "Aberdeenshire Council"
 DESCRIPTION = "Source for Aberdeenshire Council, UK."

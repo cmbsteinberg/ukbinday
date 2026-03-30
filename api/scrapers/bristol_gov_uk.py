@@ -6,7 +6,7 @@ from datetime import datetime
 
 import httpx
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Bristol City Council"
 DESCRIPTION = "Source for bristol.gov.uk services for Bristol City Council, UK."

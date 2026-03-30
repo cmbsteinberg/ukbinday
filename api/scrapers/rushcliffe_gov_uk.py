@@ -5,7 +5,7 @@ import re
 import httpx
 from bs4 import BeautifulSoup
 
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Rushcliffe Brough Council"
 DESCRIPTION = "Source for Rushcliffe Brough Council."

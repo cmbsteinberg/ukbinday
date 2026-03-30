@@ -2,7 +2,7 @@ from datetime import datetime
 
 import httpx
 
-from api.waste_collection_schedule import Collection
+from api.compat.hacs import Collection
 
 TITLE = "Plymouth City Council"
 DESCRIPTION = "Source for waste collection services for Plymouth City Council"

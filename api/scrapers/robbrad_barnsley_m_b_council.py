@@ -5,12 +5,12 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil.relativedelta import relativedelta
 
-from api.uk_bin_collection.common import (
+from api.compat.ukbcd.common import (
     check_postcode,
     check_uprn,
     date_format,
 )
-from api.uk_bin_collection.get_bin_data import AbstractGetBinDataClass
+from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 
 def parse_bin_text(bin_type_str: str, bin_date_str: str) -> List[Dict[str, str]]:
@@ -130,7 +130,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
 
 # --- Adapter for Project API ---
-from api.waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Barnsley"
 URL = "https://waste.barnsley.gov.uk/ViewCollection/Collections"
