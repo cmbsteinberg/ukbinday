@@ -4,7 +4,6 @@ import json
 import re
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
@@ -30,10 +29,10 @@ class Source:
     def __init__(self, uprn):
         self._uprn = uprn
 
-    async def fetch(self):
-        session = httpx.AsyncClient(follow_redirects=True)
+    def fetch(self):
+        session = httpx.AsyncClient(impersonate="chrome124")
 
-        r = await session.get(
+        r = session.get(
             "https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker",
             timeout=30,
         )
@@ -74,7 +73,7 @@ class Source:
             "BINCOLLECTIONCHECKER_ADDRESSSEARCH_ADDRESSTEXT": " ",
         }
 
-        r = await session.post(form_url, data=form_data)
+        r = session.post(form_url, data=form_data)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")

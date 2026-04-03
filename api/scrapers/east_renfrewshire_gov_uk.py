@@ -1,6 +1,5 @@
 from urllib.parse import parse_qs, urlparse
 
-import httpx
 from bs4 import BeautifulSoup
 from dateutil import parser
 
@@ -32,9 +31,9 @@ class Source:
         self._postcode = postcode
         self._uprn = str(uprn).zfill(12)
 
-    async def fetch(self):
+    def fetch(self):
         # Cloudflare-aware session
-        session = httpx.AsyncClient(follow_redirects=True)
+        session = httpx.AsyncClient(impersonate="chrome124")
         session.headers.update(
             {
                 "User-Agent": (
@@ -47,14 +46,14 @@ class Source:
             }
         )
 
-        address_page = await self.__get_address_page(session, self._postcode)
-        bin_collection_info_page = await self.__get_bin_collection_info_page(
+        address_page = self.__get_address_page(session, self._postcode)
+        bin_collection_info_page = self.__get_bin_collection_info_page(
             session, address_page, self._uprn
         )
         return self.__get_bin_collection_info(bin_collection_info_page)
 
-    async def __get_address_page(self, s, postcode):
-        r = await s.get(FORM_PAGE, timeout=30)
+    def __get_address_page(self, s, postcode):
+        r = s.get(FORM_PAGE, timeout=30)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
         form = soup.find(id="BINDAYSV2_FORM")
@@ -77,7 +76,7 @@ class Source:
             session_id = session_id or goss_ids["session_id"]
             nonce = nonce or goss_ids["nonce"]
 
-        r = await s.post(
+        r = s.post(
             form["action"],
             headers={"Origin": URL, "Referer": FORM_PAGE},
             data={
@@ -95,7 +94,7 @@ class Source:
         r.raise_for_status()
         return r.text
 
-    async def __get_bin_collection_info_page(self, session, address_page, uprn):
+    def __get_bin_collection_info_page(self, session, address_page, uprn):
         soup = BeautifulSoup(address_page, "html.parser")
         form = soup.find(id="BINDAYSV2_FORM")
         if not form or not form.has_attr("action"):
@@ -116,7 +115,7 @@ class Source:
             session_id = session_id or goss_ids["session_id"]
             nonce = nonce or goss_ids["nonce"]
 
-        r = await session.post(
+        r = session.post(
             form["action"],
             headers={"Origin": URL, "Referer": FORM_PAGE},
             data={

@@ -1,6 +1,5 @@
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
@@ -31,11 +30,12 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn: str | int = uprn
 
-    async def fetch(self):
+    def fetch(self):
+        session = httpx.AsyncClient(impersonate="chrome124")
         args = {"uprn": self._uprn}
 
         # get json file
-        r = await httpx.AsyncClient(follow_redirects=True).get(API_URL, params=args)
+        r = session.get(API_URL, params=args)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")

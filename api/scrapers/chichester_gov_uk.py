@@ -1,7 +1,6 @@
 import re
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection
@@ -27,10 +26,10 @@ class Source:
     def __init__(self, uprn):
         self._uprn = uprn
 
-    async def fetch(self):
-        session = httpx.AsyncClient(follow_redirects=True)
+    def fetch(self):
+        session = httpx.AsyncClient(impersonate="chrome124")
         # Start a session
-        r = await session.get("https://www.chichester.gov.uk/checkyourbinday")
+        r = session.get("https://www.chichester.gov.uk/checkyourbinday")
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
 
@@ -46,7 +45,7 @@ class Source:
             f"{ID}_FORMACTION_NEXT": "Submit",
             f"{ID}_CALENDAR_UPRN": self._uprn,
         }
-        r = await session.post(form_url, data=form_data)
+        r = session.post(form_url, data=form_data)
         r.raise_for_status()
 
         # Extract collection dates

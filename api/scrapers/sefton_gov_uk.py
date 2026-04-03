@@ -4,9 +4,7 @@ import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection
-from api.compat.hacs.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from api.compat.hacs.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Sefton Council"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source for Sefton Council, UK"  # Describe your source

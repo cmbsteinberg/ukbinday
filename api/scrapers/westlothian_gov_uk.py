@@ -9,9 +9,7 @@ from urllib.parse import parse_qs, urlparse
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs.collection import (
-    Collection,  # type: ignore[attr-defined]
-)
+from api.compat.hacs.collection import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.service.ICS import ICS  # type: ignore[attr-defined]
 
 TITLE = "West Lothian Council"

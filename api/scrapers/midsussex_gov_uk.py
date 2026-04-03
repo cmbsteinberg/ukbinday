@@ -5,10 +5,7 @@ import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection
-from api.compat.hacs.exceptions import (
-    SourceArgumentException,
-    SourceArgumentNotFound,
-)
+from api.compat.hacs.exceptions import SourceArgumentException, SourceArgumentNotFound
 
 _LOGGER = logging.getLogger(__name__)
 

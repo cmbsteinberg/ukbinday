@@ -3,7 +3,6 @@ import json
 import re
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection
@@ -35,12 +34,12 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn: str | int = uprn
 
-    async def fetch(self):
-        """Fetch using cloudscraper to bypass Cloudflare anti-bot protection"""
-        scraper = httpx.AsyncClient(follow_redirects=True)
+    def fetch(self):
+        """Fetch using curl_cffi to bypass Cloudflare anti-bot protection"""
+        scraper = httpx.AsyncClient(impersonate="chrome124")
 
         # Start a session with the target URL
-        r = await scraper.get(API_URL, timeout=30)
+        r = scraper.get(API_URL, timeout=30)
         r.raise_for_status()
 
         # Process the response and extract collection data
@@ -88,7 +87,7 @@ class Source:
         }
 
         # Submit form
-        r = await scraper.post(form_url, data=form_data, timeout=30)
+        r = scraper.post(form_url, data=form_data, timeout=30)
         r.raise_for_status()
 
         # Extract encoded response data

@@ -1,4 +1,3 @@
-import httpx
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 
@@ -31,12 +30,12 @@ class Source:
     def __init__(self, postcode, uprn):
         self._uprn = str(uprn)
         self._postcode = str(postcode)
-        self._session = httpx.AsyncClient(follow_redirects=True)
+        self._session = httpx.AsyncClient(impersonate="chrome124")
 
-    async def fetch(self):
+    def fetch(self):
         url = f"https://www.islington.gov.uk/your-area?Postcode={self._postcode}&Uprn={self._uprn}"
 
-        response = await self._session.get(url)
+        response = self._session.get(url)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
 
