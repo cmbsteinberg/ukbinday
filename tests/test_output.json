@@ -2488,7 +2488,7 @@
       "council": "aberdeenshire_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.05
+      "duration": 0.06
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[adur_worthing_gov_uk]",
@@ -2614,7 +2614,7 @@
       "council": "bexley_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.01
+      "duration": 0.02
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[birmingham_gov_uk]",
@@ -2831,7 +2831,7 @@
       "council": "chichester_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.04
+      "duration": 0.05
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[colchester_gov_uk]",
@@ -3608,7 +3608,7 @@
       "council": "redbridge_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.04
+      "duration": 0.05
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[reigatebanstead_gov_uk]",
