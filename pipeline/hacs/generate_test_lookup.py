@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 SCRAPERS_DIR = PROJECT_ROOT / "api" / "scrapers"
 OUTPUT_PATH = PROJECT_ROOT / "tests" / "test_cases.json"
+OVERRIDES_PATH = PROJECT_ROOT / "pipeline" / "overrides.json"
 
 
 def extract_test_cases(path: Path) -> dict | None:
@@ -46,12 +47,26 @@ def extract_test_cases(path: Path) -> dict | None:
     return None
 
 
+def _load_overridden_scrapers() -> set[str]:
+    """Return set of HACS scraper IDs that are overridden by UKBCD equivalents."""
+    if not OVERRIDES_PATH.exists():
+        return set()
+    overrides = json.loads(OVERRIDES_PATH.read_text())
+    return {
+        entry["hacs_scraper"] for entry in overrides.get("hacs_to_ukbcd", {}).values()
+    }
+
+
 def main():
     output: dict[str, list[dict]] = {}
     no_tests: list[str] = []
+    overridden = _load_overridden_scrapers()
 
     for path in sorted(SCRAPERS_DIR.glob("*.py")):
         scraper_name = path.stem
+        if scraper_name in overridden:
+            logger.info("Skipping overridden scraper %s", scraper_name)
+            continue
         cases = extract_test_cases(path)
         if not cases:
             no_tests.append(scraper_name)

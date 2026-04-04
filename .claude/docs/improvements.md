@@ -1,6 +1,7 @@
-1
-## Future Enhancements (Out of Scope for v1)
 
-- iCal feed per UPRN (subscribe in calendar app)
+## Future Enhancements
+
 - Push notifications ("your recycling is tomorrow")
-- Coverage map showing which councils are supported
+- Health-based routing: automatically fall back to UKBCD scraper when HACS scraper is failing
+- Cache warming: nightly re-scrape of high-traffic UPRNs
+- Runtime fallback logic: if primary scraper errors, try alternate source before returning 503

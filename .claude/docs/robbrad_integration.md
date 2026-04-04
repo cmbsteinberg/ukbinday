@@ -15,28 +15,28 @@ The integration follows a "left merge" strategy:
 
 RobBrad scrapers use a different internal API and are generally synchronous. We use a shim package and adapter pattern to integrate them.
 
-### 1. Local Shim: `api/uk_bin_collection/`
+### 1. Local Shim: `api/compat/ukbcd/`
 
-RobBrad scrapers import from `uk_bin_collection.uk_bin_collection.common` and `...get_bin_data`. That upstream package has heavy dependencies (selenium, pandas, holidays). Instead of installing it, we provide a lightweight local shim at `api/uk_bin_collection/` (mirroring how `api/waste_collection_schedule/` shims the Mampfes types).
+RobBrad scrapers import from `uk_bin_collection.uk_bin_collection.common` and `...get_bin_data`. That upstream package has heavy dependencies (selenium, pandas, holidays). Instead of installing it, we provide a lightweight local shim at `api/compat/ukbcd/` (mirroring how `api/compat/hacs/` shims the Mampfes types).
 
-- **`common.py`** — Reimplements helpers scrapers actually use: `check_uprn`, `check_postcode`, `check_paon`, `check_usrn`, `date_format`, `days_of_week`, `Region`, `remove_ordinal_indicator_from_date_string`, `parse_header`, `has_numbers`, `contains_date`, `get_weekday_dates_in_period`, `get_dates_every_x_days`, `get_next_occurrence_from_day_month`, `get_next_day_of_week`, `remove_alpha_characters`. Functions that originally used pandas (`get_weekday_dates_in_period`, `get_dates_every_x_days`, `get_next_occurrence_from_day_month`) are rewritten with pure `datetime`/`timedelta`. Only external dep is `python-dateutil` (already in project).
-- **`get_bin_data.py`** — Provides `AbstractGetBinDataClass` with `parse_data` as an abstract method and `get_data` using sync httpx.
+- **`common.py`** -- Reimplements helpers scrapers actually use: `check_uprn`, `check_postcode`, `check_paon`, `check_usrn`, `date_format`, `days_of_week`, `Region`, `remove_ordinal_indicator_from_date_string`, `parse_header`, `has_numbers`, `contains_date`, `get_weekday_dates_in_period`, `get_dates_every_x_days`, `get_next_occurrence_from_day_month`, `get_next_day_of_week`, `remove_alpha_characters`. Functions that originally used pandas are rewritten with pure `datetime`/`timedelta`. Only external dep is `python-dateutil` (already in project).
+- **`get_bin_data.py`** -- Provides `AbstractGetBinDataClass` with `parse_data` as an abstract method and `get_data` using sync httpx.
 
-### 2. Synchronization (`sync_robbrad_sources.sh`)
+### 2. Synchronization (`pipeline/ukbcd/sync.sh`)
 
-Located in `scripts/scraper_transformation/robbrad/`, this script:
-*   Performs a shallow clone of the RobBrad repository.
+This script:
+*   Performs a shallow clone of the RobBrad repository into `pipeline/upstream/`.
 *   Triggers the Python patching script.
 
-### 3. Patching and Adaptation (`patch_robbrad_scrapers.py`)
+### 3. Patching and Adaptation (`pipeline/ukbcd/patch_scrapers.py`)
 
 This script performs the following steps for each RobBrad scraper:
 *   **Domain Matching:** Extracts the council URL from RobBrad's `input.json` and normalizes it to a domain.
 *   **Blocked Domains:** Skips overly broad domains (`gov.uk`, `calendar.google.com`) that would shadow other lookups.
 *   **Coverage Check:** Skips the scraper if the domain is already covered by a non-robbrad (Mampfes) scraper.
 *   **Selenium Check:** Skips if the source code imports `selenium` or `webdriver`.
-*   **Import Rewriting:** Rewrites `from uk_bin_collection.uk_bin_collection.X import ...` → `from api.uk_bin_collection.X import ...` to use the local shim.
-*   **HTTP Conversion:** Converts `requests` → sync `httpx` (`httpx.get`, `httpx.Client`, etc. — NOT `AsyncClient`). The scraper code stays synchronous; the adapter wraps it in `asyncio.to_thread`.
+*   **Import Rewriting:** Rewrites `from uk_bin_collection.uk_bin_collection.X import ...` to `from api.compat.ukbcd.X import ...` to use the local shim.
+*   **HTTP Conversion:** Converts `requests` to sync `httpx` (`httpx.get`, `httpx.Client`, etc., not `AsyncClient`). The scraper code stays synchronous; the adapter wraps it in `asyncio.to_thread`.
 *   **Param Detection:** Reads `input.json` fields (`uprn`, `postcode`, `paon`/`house_number`, `usrn`) to determine which params each scraper needs.
 *   **Adapter Generation:** Appends a `Source` class to the file that:
     *   Accepts only the params that scraper actually needs (avoiding `NameError`).
@@ -53,7 +53,7 @@ The script updates `api/data/admin_scraper_lookup.json`, preserving all existing
 To update or re-sync the RobBrad scrapers:
 
 ```bash
-./scripts/scraper_transformation/robbrad/sync_robbrad_sources.sh
+pipeline/ukbcd/sync.sh
 ```
 
 ## Current State (2026-03-24)
@@ -80,13 +80,13 @@ The original implementation had several critical bugs that prevented all 116 scr
 ### Fix (2026-03-24)
 
 All issues resolved by:
-- Creating `api/uk_bin_collection/` shim package (like `api/waste_collection_schedule/`)
-- Rewriting `patch_robbrad_scrapers.py` from scratch with correct import rewriting, sync httpx conversion, fixed adapter template, correct entry point (`parse_data`), param-aware init generation, and blocked domain filtering
+- Creating `api/compat/ukbcd/` shim package (like `api/compat/hacs/`)
+- Rewriting `pipeline/ukbcd/patch_scrapers.py` from scratch with correct import rewriting, sync httpx conversion, fixed adapter template, correct entry point (`parse_data`), param-aware init generation, and blocked domain filtering
 - Regenerating all scrapers and verifying 112/114 import and register successfully
 
 ## Maintenance Notes
 
-*   **Adding new shim functions:** If a future RobBrad scraper uses a `common.py` function not yet in our shim, add it to `api/uk_bin_collection/common.py`. Keep implementations dependency-free where possible.
+*   **Adding new shim functions:** If a future RobBrad scraper uses a `common.py` function not yet in our shim, add it to `api/compat/ukbcd/common.py`. Keep implementations dependency-free where possible.
 *   **`cryptography` scrapers:** The 2 failing scrapers could be fixed by adding `cryptography` as a project dependency if those councils are needed.
 *   **Date Parsing:** The adapter handles ISO and UK slash formats. Councils using unique date strings may require manual parsing adjustments in their specific `robbrad_*.py` file.
 *   **Prefix:** All integrated scrapers are named `api/scrapers/robbrad_[sanitized_name].py`.

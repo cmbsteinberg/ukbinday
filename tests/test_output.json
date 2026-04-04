@@ -1,6 +1,6 @@
 {
-  "total": 725,
-  "passed": 725,
+  "total": 734,
+  "passed": 734,
   "failed": 0,
   "skipped": 0,
   "failure_categories": {},
@@ -3608,7 +3608,7 @@
       "council": "redbridge_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.06
+      "duration": 0.05
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[reigatebanstead_gov_uk]",
@@ -5046,6 +5046,13 @@
       "duration": 0.0
     },
     {
+      "node_id": "tests/test_ci.py::test_script_parses[generate_disabled_list.py]",
+      "council": "generate_disabled_list.py",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
       "node_id": "tests/test_ci.py::test_script_parses[create_lookup_table.py]",
       "council": "create_lookup_table.py",
       "label": "",
@@ -5075,6 +5082,62 @@
     },
     {
       "node_id": "tests/test_ci.py::test_health_endpoint_returns_all",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_frontend.py::test_landing_page",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_frontend.py::test_api_docs_page",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_frontend.py::test_openapi_and_docs",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.01
+    },
+    {
+      "node_id": "tests/test_frontend.py::test_councils_and_health",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_frontend.py::test_both_api_prefixes",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_frontend.py::test_lookup_error_cases",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_frontend.py::test_calendar_error_cases",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_frontend.py::test_cors",
       "council": "",
       "label": "",
       "status": "passed",

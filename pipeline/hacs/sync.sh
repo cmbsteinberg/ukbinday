@@ -99,6 +99,19 @@ touch "${COMPAT_DIR}/service/__init__.py"
 
 echo "compat/hacs package synced."
 
+# Remove overridden HACS scrapers (replaced by UKBCD equivalents)
+echo "Removing overridden HACS scrapers..."
+python3 -c "
+import json, pathlib
+overrides = json.loads(pathlib.Path('${PIPELINE_DIR}/overrides.json').read_text())
+scrapers_dir = pathlib.Path('${SCRAPERS_DIR}')
+for entry in overrides.get('hacs_to_ukbcd', {}).values():
+    hacs_file = scrapers_dir / (entry['hacs_scraper'] + '.py')
+    if hacs_file.exists():
+        hacs_file.unlink()
+        print(f'  Removed {hacs_file.name} (replaced by {entry[\"ukbcd_scraper\"]})')
+"
+
 # Lint and auto-fix scrapers
 echo "Running ruff check --fix on scrapers..."
 uv run ruff check --fix --ignore E402,E701,E722,E741,F403,F405,F821,F841,W293 "$SCRAPERS_DIR" || true

@@ -13,51 +13,53 @@ from api.compat.hacs.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
 )
+from api.services.council_lookup import LookupDatabaseError, PostcodeNotFoundError
 from api.services.models import (
-    AddressItem,
-    AddressLookupResponse,
     CollectionItem,
     CouncilInfo,
     CouncilLookupResponse,
     HealthEntry,
     LookupResponse,
+    SystemHealth,
 )
 from api.services.rate_limiting import rate_limit
+from api.services.scraper_registry import ScraperTimeoutError
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
 
-@router.get("/addresses/{postcode}", response_model=AddressLookupResponse)
-async def addresses(
-    request: Request,
-    postcode: str,
-    _rate_limit: None = Depends(rate_limit),
-):
-    lookup = request.app.state.address_lookup
+async def _resolve_council(lookup, postcode: str) -> tuple[str | None, str | None]:
+    """Resolve postcode to council, raising HTTPException on distinct failures."""
     try:
-        addrs = await lookup.search_addresses(postcode)
-    except httpx.HTTPError as e:
-        raise HTTPException(status_code=502, detail=f"Address lookup failed: {e}")
+        authorities = await lookup.get_local_authority(postcode)
+    except LookupDatabaseError:
+        raise HTTPException(
+            status_code=503,
+            detail="Our postcode lookup service is temporarily unavailable. "
+            "Please try again later.",
+        )
+    except PostcodeNotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail="We couldn't find that postcode in our database. "
+            "Please check it's correct. If it's a new postcode, "
+            "our data may not include it yet.",
+        )
 
-    authorities = await lookup.get_local_authority(postcode)
-
-    council_id = None
-    council_name = None
     if len(authorities) == 1:
         council_name = authorities[0].name
         council_id = authorities[0].slug or None
+        if not council_id:
+            raise HTTPException(
+                status_code=404,
+                detail=f"We found your council ({council_name}) but don't have "
+                "a scraper for it yet. Check /api/v1/councils for supported councils.",
+            )
+        return council_id, council_name
 
-    return AddressLookupResponse(
-        postcode=postcode.strip().upper(),
-        council_id=council_id,
-        council_name=council_name,
-        addresses=[
-            AddressItem(uprn=a.uprn, full_address=a.full_address, postcode=a.postcode)
-            for a in addrs
-        ],
-    )
+    return None, None
 
 
 @router.get("/council/{postcode}", response_model=CouncilLookupResponse)
@@ -66,14 +68,8 @@ async def council_lookup(
     postcode: str,
     _rate_limit: None = Depends(rate_limit),
 ):
-    lookup = request.app.state.address_lookup
-    authorities = await lookup.get_local_authority(postcode)
-
-    council_id = None
-    council_name = None
-    if len(authorities) == 1:
-        council_name = authorities[0].name
-        council_id = authorities[0].slug or None
+    lookup = request.app.state.council_lookup
+    council_id, council_name = await _resolve_council(lookup, postcode)
 
     return CouncilLookupResponse(
         postcode=postcode.strip().upper(),
@@ -95,7 +91,9 @@ async def lookup(
     meta = registry.get(council)
     if meta is None:
         raise HTTPException(
-            status_code=404, detail=f"Council scraper '{council}' not found"
+            status_code=404,
+            detail="We don't have a scraper for this council yet. "
+            "Check /api/v1/councils for the list of supported councils.",
         )
 
     # Build params from path + query, excluding 'council' which is routing-only
@@ -118,15 +116,32 @@ async def lookup(
         registry.record_success(council)
     except (SourceArgumentException, SourceArgumentExceptionMultiple) as e:
         registry.record_failure(council, str(e))
-        raise HTTPException(status_code=422, detail=str(e))
+        raise HTTPException(
+            status_code=422,
+            detail="The details provided don't match what this council's system expects. "
+            "Please check your UPRN and postcode are correct.",
+        )
+    except ScraperTimeoutError as e:
+        registry.record_failure(council, str(e))
+        raise HTTPException(
+            status_code=504,
+            detail="Your council's website is taking too long to respond. "
+            "Please try again later.",
+        )
     except (httpx.HTTPError, TimeoutError) as e:
         registry.record_failure(council, str(e))
-        raise HTTPException(status_code=503, detail=f"Council site unreachable: {e}")
+        raise HTTPException(
+            status_code=503,
+            detail="We couldn't reach your council's website. "
+            "The site may be temporarily down — please try again later.",
+        )
     except Exception as e:
         registry.record_failure(council, str(e))
         logger.exception("Scraper %s failed", council)
         raise HTTPException(
-            status_code=503, detail=f"Scraper error: {type(e).__name__}"
+            status_code=503,
+            detail="Something went wrong while fetching your collection schedule. "
+            "Please try again later.",
         )
 
     return LookupResponse(
@@ -156,7 +171,9 @@ async def calendar(
     meta = registry.get(council)
     if meta is None:
         raise HTTPException(
-            status_code=404, detail=f"Council scraper '{council}' not found"
+            status_code=404,
+            detail="We don't have a scraper for this council yet. "
+            "Check /api/v1/councils for the list of supported councils.",
         )
 
     params: dict[str, str] = {"uprn": uprn}
@@ -176,15 +193,32 @@ async def calendar(
         registry.record_success(council)
     except (SourceArgumentException, SourceArgumentExceptionMultiple) as e:
         registry.record_failure(council, str(e))
-        raise HTTPException(status_code=422, detail=str(e))
+        raise HTTPException(
+            status_code=422,
+            detail="The details provided don't match what this council's system expects. "
+            "Please check your UPRN and postcode are correct.",
+        )
+    except ScraperTimeoutError as e:
+        registry.record_failure(council, str(e))
+        raise HTTPException(
+            status_code=504,
+            detail="Your council's website is taking too long to respond. "
+            "Please try again later.",
+        )
     except (httpx.HTTPError, TimeoutError) as e:
         registry.record_failure(council, str(e))
-        raise HTTPException(status_code=503, detail=f"Council site unreachable: {e}")
+        raise HTTPException(
+            status_code=503,
+            detail="We couldn't reach your council's website. "
+            "The site may be temporarily down — please try again later.",
+        )
     except Exception as e:
         registry.record_failure(council, str(e))
         logger.exception("Scraper %s failed", council)
         raise HTTPException(
-            status_code=503, detail=f"Scraper error: {type(e).__name__}"
+            status_code=503,
+            detail="Something went wrong while fetching your collection schedule. "
+            "Please try again later.",
         )
 
     cal = Calendar()
@@ -237,3 +271,35 @@ async def health(request: Request):
         )
         for m in registry.list_all()
     ]
+
+
+@router.get("/status", response_model=SystemHealth)
+async def system_status(request: Request):
+    registry = request.app.state.registry
+    lookup = request.app.state.council_lookup
+    redis_client = getattr(request.app.state, "redis", None)
+
+    redis_ok = False
+    if redis_client is not None:
+        try:
+            await redis_client.ping()
+            redis_ok = True
+        except Exception:
+            pass
+
+    all_ok = lookup.parquet_loaded and lookup.lad_loaded
+    if all_ok:
+        status = "healthy"
+    elif lookup.parquet_loaded or lookup.lad_loaded:
+        status = "degraded"
+    else:
+        status = "unhealthy"
+
+    return SystemHealth(
+        status=status,
+        scraper_count=len(registry.list_all()),
+        postcode_lookup=lookup.parquet_loaded,
+        lad_lookup=lookup.lad_loaded,
+        redis_connected=redis_ok,
+        rate_limiting_active=redis_ok,
+    )

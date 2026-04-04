@@ -24,19 +24,6 @@ class CouncilInfo(BaseModel):
     params: list[str]
 
 
-class AddressItem(BaseModel):
-    uprn: str
-    full_address: str
-    postcode: str
-
-
-class AddressLookupResponse(BaseModel):
-    postcode: str
-    council_id: str | None = None
-    council_name: str | None = None
-    addresses: list[AddressItem]
-
-
 class CouncilLookupResponse(BaseModel):
     postcode: str
     council_id: str | None = None
@@ -50,3 +37,12 @@ class HealthEntry(BaseModel):
     last_success: datetime | None = None
     last_error: str | None = None
     error_count: int = 0
+
+
+class SystemHealth(BaseModel):
+    status: str  # "healthy", "degraded", "unhealthy"
+    scraper_count: int
+    postcode_lookup: bool
+    lad_lookup: bool
+    redis_connected: bool
+    rate_limiting_active: bool

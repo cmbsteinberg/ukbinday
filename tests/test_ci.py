@@ -28,9 +28,7 @@ BASE_URL = "http://testserver"
 # Collect all scraper and compat module paths
 # ---------------------------------------------------------------------------
 
-SCRAPER_FILES = sorted(
-    p for p in SCRAPERS_DIR.glob("*.py") if p.name != "__init__.py"
-)
+SCRAPER_FILES = sorted(p for p in SCRAPERS_DIR.glob("*.py") if p.name != "__init__.py")
 
 COMPAT_MODULES = sorted(
     p
@@ -173,12 +171,20 @@ async def test_registry_loads_all_scrapers(client):
     assert resp.status_code == 200
     councils = resp.json()
     # We expect the registry to have loaded the vast majority of scrapers.
-    # A few may legitimately fail to load, but if more than 5% are missing
-    # something is seriously wrong.
-    expected_min = len(SCRAPER_FILES) * 0.95
+    # Subtract disabled scrapers (from disabled_scrapers.json) from the count.
+    # Of the remaining, if more than 5% are missing something is seriously wrong.
+    disabled_path = SCRAPERS_DIR.parent / "data" / "disabled_scrapers.json"
+    disabled_count = 0
+    if disabled_path.exists():
+        import json
+
+        disabled_count = len(json.loads(disabled_path.read_text()).get("disabled", []))
+    eligible = len(SCRAPER_FILES) - disabled_count
+    expected_min = eligible * 0.95
     assert len(councils) >= expected_min, (
-        f"Registry only loaded {len(councils)} scrapers but {len(SCRAPER_FILES)} "
-        f"scraper files exist (expected at least {int(expected_min)})"
+        f"Registry only loaded {len(councils)} scrapers but {eligible} eligible "
+        f"scraper files exist ({disabled_count} disabled). "
+        f"Expected at least {int(expected_min)}"
     )
 
 

@@ -11,7 +11,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from api.routes import router as api_router
-from api.services.address_lookup import AddressLookup
+from api.services.council_lookup import CouncilLookup
 from api.services.scraper_registry import ScraperRegistry
 
 _TEMPLATES_DIR = Path(__file__).resolve().parent / "templates"
@@ -27,7 +27,17 @@ async def lifespan(app: FastAPI):
     app.state.registry = ScraperRegistry.build()
     logger.info("Registry ready: %d scrapers", len(app.state.registry.list_all()))
 
-    app.state.address_lookup = AddressLookup()
+    app.state.council_lookup = CouncilLookup()
+    if not app.state.council_lookup.parquet_loaded:
+        logger.error(
+            "STARTUP WARNING: postcode_lookup.parquet not loaded — "
+            "postcode-to-council lookups will not work"
+        )
+    if not app.state.council_lookup.lad_loaded:
+        logger.error(
+            "STARTUP WARNING: lad_lookup.json not loaded — "
+            "council metadata will be unavailable"
+        )
 
     # Redis (optional)
     redis_url = os.getenv("REDIS_URL")
@@ -48,8 +58,8 @@ async def lifespan(app: FastAPI):
     yield
 
     # Shutdown
-    if getattr(app.state, "address_lookup", None):
-        await app.state.address_lookup.close()
+    if getattr(app.state, "council_lookup", None):
+        await app.state.council_lookup.close()
     if getattr(app.state, "redis", None):
         await app.state.redis.aclose()
 

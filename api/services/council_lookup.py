@@ -4,32 +4,26 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-import httpx
 import ibis
 
 logger = logging.getLogger(__name__)
 
-ADDRESS_API_URL = "https://www.midsuffolk.gov.uk/api/jsonws/invoke"
 
-ADDRESS_HEADERS = {
-    "accept": "*/*",
-    "content-type": "text/plain;charset=UTF-8",
-    "x-csrf-token": "Ba9vI91W",
-}
+class LookupDatabaseError(Exception):
+    """Raised when the postcode lookup database is not loaded."""
 
-_POSTCODE_RE = re.compile(r"^[A-Z0-9 ]{2,8}$")
+
+class PostcodeNotFoundError(Exception):
+    """Raised when a postcode is not in the lookup database."""
+
+
+class NoScraperError(Exception):
+    """Raised when a council exists but has no scraper mapped."""
 
 
 def _normalize_postcode(postcode: str) -> str:
     """Strip whitespace and uppercase — matches the parquet lookup format."""
     return re.sub(r"\s+", "", postcode).upper()
-
-
-@dataclass
-class Address:
-    uprn: str
-    full_address: str
-    postcode: str
 
 
 @dataclass
@@ -39,17 +33,18 @@ class LocalAuthority:
     homepage_url: str
 
 
-class AddressLookup:
+class CouncilLookup:
     def __init__(self) -> None:
-        self._client = httpx.AsyncClient(timeout=15, follow_redirects=True)
         self._data_dir = Path(__file__).parent.parent / "data"
         self._postcode_parquet = self._data_dir / "postcode_lookup.parquet"
         self._lad_json = self._data_dir / "lad_lookup.json"
 
         # Load LAD metadata
+        self.lad_loaded = False
         if self._lad_json.exists():
             with open(self._lad_json) as f:
                 self._lad_to_council = json.load(f)
+            self.lad_loaded = True
         else:
             logger.warning("lad_lookup.json not found, local lookup will fail")
             self._lad_to_council = {}
@@ -57,14 +52,15 @@ class AddressLookup:
         # Initialize ibis/duckdb for fast parquet queries
         self._con = None
         self._postcodes = None
+        self.parquet_loaded = False
         if self._postcode_parquet.exists():
             self._con = ibis.duckdb.connect()
             self._postcodes = self._con.read_parquet(self._postcode_parquet)
+            self.parquet_loaded = True
         else:
             logger.warning("postcode_lookup.parquet not found, local lookup will fail")
 
     async def close(self) -> None:
-        await self._client.aclose()
         if self._con is not None:
             self._con.disconnect()
 
@@ -74,44 +70,15 @@ class AddressLookup:
     async def __aexit__(self, *exc):
         await self.close()
 
-    async def search_addresses(self, postcode: str) -> list[Address]:
-        postcode = postcode.strip().upper()
-        if not _POSTCODE_RE.match(postcode):
-            return []
-
-        logger.info("Searching addresses for postcode %s", postcode)
-
-        body = json.dumps(
-            {
-                "/placecube_digitalplace.addresscontext/search-address-by-postcode": {
-                    "companyId": "1486681",
-                    "postcode": postcode,
-                    "fallbackToNationalLookup": False,
-                }
-            }
-        )
-        resp = await self._client.post(
-            ADDRESS_API_URL, headers=ADDRESS_HEADERS, content=body
-        )
-        resp.raise_for_status()
-        data = resp.json()
-
-        addresses = [
-            Address(
-                uprn=item["UPRN"],
-                full_address=item["fullAddress"],
-                postcode=item["postcode"],
-            )
-            for item in data
-        ]
-        logger.info("Found %d addresses for %s", len(addresses), postcode)
-        return addresses
-
     async def get_local_authority(self, postcode: str) -> list[LocalAuthority]:
-        """Look up local authorities by postcode via local parquet lookup."""
+        """Look up local authorities by postcode via local parquet lookup.
+
+        Raises:
+            LookupDatabaseError: if the parquet database is not loaded.
+            PostcodeNotFoundError: if the postcode is not in the database.
+        """
         if self._postcodes is None:
-            logger.error("Local lookup database not initialized")
-            return []
+            raise LookupDatabaseError("Postcode lookup database is not loaded")
 
         pc_clean = _normalize_postcode(postcode)
         logger.info("Looking up local authority locally for postcode %s", pc_clean)
@@ -119,8 +86,9 @@ class AddressLookup:
         res = self._postcodes.filter(self._postcodes.postcode == pc_clean).execute()
 
         if res.empty:
-            logger.warning("Postcode %s not found in local lookup", pc_clean)
-            return []
+            raise PostcodeNotFoundError(
+                f"Postcode {pc_clean} not found in our database"
+            )
 
         lad_codes = res["lad_code"].unique()
         authorities = []
@@ -136,7 +104,11 @@ class AddressLookup:
                 )
 
         if not authorities:
-            logger.warning("Postcode %s found but no LAD metadata matching %s", pc_clean, lad_codes)
+            logger.warning(
+                "Postcode %s found but no LAD metadata matching %s",
+                pc_clean,
+                lad_codes,
+            )
 
         return authorities
 
