@@ -132,7 +132,9 @@ async def lookup(
         )
 
     # Build params from path + query, excluding 'council' which is routing-only
-    params: dict[str, str] = {"uprn": uprn}
+    params: dict[str, str] = {}
+    if uprn and uprn != "0":
+        params["uprn"] = uprn
     for key, value in request.query_params.items():
         if key != "council" and value:
             params[key] = value
@@ -222,7 +224,9 @@ async def calendar(
             "Check /api/v1/councils for the list of supported councils.",
         )
 
-    params: dict[str, str] = {"uprn": uprn}
+    params: dict[str, str] = {}
+    if uprn and uprn != "0":
+        params["uprn"] = uprn
     for key, value in request.query_params.items():
         if key != "council" and value:
             params[key] = value

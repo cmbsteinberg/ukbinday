@@ -30,7 +30,7 @@ def _get_project_root() -> Path:
     return Path(__file__).resolve().parent.parent.parent
 
 
-def _load_failing_robbrad_scrapers() -> dict[str, str]:
+def _load_failing_ukbcd_scrapers() -> dict[str, str]:
     """Return {scraper_id: error_detail} for failing robbrad scrapers."""
     output_path = _get_project_root() / "tests" / "integration_output.json"
     if not output_path.exists():
@@ -44,16 +44,16 @@ def _load_failing_robbrad_scrapers() -> dict[str, str]:
     for _group, info in data.get("failure_groups", {}).items():
         for case in info.get("cases", []):
             council = case.get("council", "")
-            if council.startswith("robbrad_"):
+            if council.startswith("ukbcd_"):
                 error = case.get("error_detail", "unknown")
                 failures[council] = error
     return failures
 
 
 def _scraper_id_to_council_class(scraper_id: str) -> str:
-    """Convert robbrad_some_council to SomeCouncil (upstream filename stem)."""
-    # Strip robbrad_ prefix
-    name = scraper_id.removeprefix("robbrad_")
+    """Convert ukbcd_some_council to SomeCouncil (upstream filename stem)."""
+    # Strip ukbcd_ prefix
+    name = scraper_id.removeprefix("ukbcd_")
     # Convert snake_case to CamelCase
     return "".join(word.capitalize() for word in name.split("_"))
 
@@ -64,9 +64,15 @@ def _gh_api(endpoint: str, paginate: bool = False) -> list | dict:
     if paginate:
         cmd.append("--paginate")
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=30)
+        result = subprocess.run(
+            cmd, capture_output=True, text=True, check=True, timeout=30
+        )
         return json.loads(result.stdout)
-    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, json.JSONDecodeError) as e:
+    except (
+        subprocess.CalledProcessError,
+        subprocess.TimeoutExpired,
+        json.JSONDecodeError,
+    ) as e:
         logger.warning(f"gh api call failed: {e}")
         return []
 
@@ -107,25 +113,29 @@ def _council_file_to_scraper_id(filepath: str) -> str | None:
     """Convert upstream council filepath to our scraper ID.
 
     Uses the same logic as patch_scrapers.py line 349:
-      "robbrad_" + re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower()
+      "ukbcd_" + re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower()
     """
     if not filepath.endswith(".py"):
         return None
     stem = Path(filepath).stem
     if stem.startswith("_") or stem == "__init__":
         return None
-    return "robbrad_" + re.sub(r"(?<!^)(?=[A-Z])", "_", stem).lower()
+    return "ukbcd_" + re.sub(r"(?<!^)(?=[A-Z])", "_", stem).lower()
 
 
 def _fetch_file_from_branch(branch: str, filepath: str) -> str | None:
     """Fetch raw file content from a specific branch."""
     cmd = [
-        "gh", "api",
+        "gh",
+        "api",
         f"repos/{REPO}/contents/{filepath}?ref={branch}",
-        "-H", "Accept: application/vnd.github.raw+json",
+        "-H",
+        "Accept: application/vnd.github.raw+json",
     ]
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=30)
+        result = subprocess.run(
+            cmd, capture_output=True, text=True, check=True, timeout=30
+        )
         return result.stdout
     except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
         return None
@@ -152,12 +162,14 @@ def check_upstream_fixes(
 
     Returns list of matches: [{scraper_id, error, source, ref, pr_number?, title?, url?}]
     """
-    failures = _load_failing_robbrad_scrapers()
+    failures = _load_failing_ukbcd_scrapers()
     if not failures:
         logger.info("No failing robbrad scrapers — nothing to check upstream")
         return []
 
-    logger.info(f"Checking upstream for fixes to {len(failures)} failing robbrad scrapers...")
+    logger.info(
+        f"Checking upstream for fixes to {len(failures)} failing robbrad scrapers..."
+    )
 
     # Build lookup: upstream council filename stem -> our scraper_id
     scraper_to_class = {}
@@ -176,7 +188,9 @@ def check_upstream_fixes(
         pr_url = pr.get("html_url", "")
 
         files = _get_pr_files(pr_number)
-        council_files = [f for f in files if f.startswith(COUNCILS_PATH) and f.endswith(".py")]
+        council_files = [
+            f for f in files if f.startswith(COUNCILS_PATH) and f.endswith(".py")
+        ]
 
         for filepath in council_files:
             scraper_id = _council_file_to_scraper_id(filepath)
@@ -205,7 +219,9 @@ def check_upstream_fixes(
             continue  # Already checked via PR
 
         files = _get_branch_diff_files(branch_name)
-        council_files = [f for f in files if f.startswith(COUNCILS_PATH) and f.endswith(".py")]
+        council_files = [
+            f for f in files if f.startswith(COUNCILS_PATH) and f.endswith(".py")
+        ]
 
         for filepath in council_files:
             scraper_id = _council_file_to_scraper_id(filepath)
@@ -226,7 +242,11 @@ def check_upstream_fixes(
     if matches:
         logger.info(f"\nFound {len(matches)} upstream fix(es) for failing scrapers:\n")
         for m in matches:
-            source_label = f"PR #{m['pr_number']} ({m.get('title', '')})" if m["source"] == "open_pr" else f"branch '{m['ref']}'"
+            source_label = (
+                f"PR #{m['pr_number']} ({m.get('title', '')})"
+                if m["source"] == "open_pr"
+                else f"branch '{m['ref']}'"
+            )
             action = " [APPLIED]" if include_unmerged and clone_dir else ""
             logger.info(f"  {m['scraper_id']}: {source_label}{action}")
             logger.info(f"    Error: {m['error'][:100]}")
@@ -239,8 +259,12 @@ def check_upstream_fixes(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Check upstream UKBCD for fixes to failing scrapers")
-    parser.add_argument("--clone-dir", type=Path, help="Clone directory (for --include-unmerged)")
+    parser = argparse.ArgumentParser(
+        description="Check upstream UKBCD for fixes to failing scrapers"
+    )
+    parser.add_argument(
+        "--clone-dir", type=Path, help="Clone directory (for --include-unmerged)"
+    )
     parser.add_argument(
         "--include-unmerged",
         action="store_true",

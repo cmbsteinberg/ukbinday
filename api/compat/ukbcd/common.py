@@ -9,6 +9,7 @@ import re
 from datetime import datetime, timedelta
 from enum import Enum
 
+import httpx  # noqa: E401, F401 -- re-exported so robbrad scrapers get it via ``import *``
 from dateutil.parser import parse
 
 date_format = "%d/%m/%Y"

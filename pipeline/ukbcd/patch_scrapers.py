@@ -245,8 +245,8 @@ def generate_adapter_code(
 
     kwargs_lines = []
     for p in params:
-        robbrad_key = "paon" if p == "house_number" else p
-        kwargs_lines.append(f"        if self.{p}: kwargs['{robbrad_key}'] = self.{p}")
+        ukbcd_key = "paon" if p == "house_number" else p
+        kwargs_lines.append(f"        if self.{p}: kwargs['{ukbcd_key}'] = self.{p}")
     kwargs_block = "\n".join(kwargs_lines)
 
     return f'''
@@ -353,7 +353,7 @@ def _process_council(
     adapter = generate_adapter_code(class_name, params, url, title)
     final_source = new_source + adapter
 
-    sanitized_name = "robbrad_" + re.sub(r"(?<!^)(?=[A-Z])", "_", council_name).lower()
+    sanitized_name = "ukbcd_" + re.sub(r"(?<!^)(?=[A-Z])", "_", council_name).lower()
     target_file = target_dir / f"{sanitized_name}.py"
     target_file.write_text(final_source)
     return sanitized_name
@@ -376,7 +376,7 @@ class _PatchStats:
 
 def _should_skip_council(
     data: dict,
-    non_robbrad_lookup: dict[str, str],
+    non_ukbcd_lookup: dict[str, str],
     hacs_prefixes: set[str],
     ukbcd_override_domains: set[str],
     stats: _PatchStats,
@@ -393,7 +393,7 @@ def _should_skip_council(
         return True, domain
 
     # Check by full domain first, then by gov.uk prefix
-    has_hacs = domain in non_robbrad_lookup
+    has_hacs = domain in non_ukbcd_lookup
     if not has_hacs:
         prefix = extract_gov_uk_prefix(url)
         if prefix and prefix in hacs_prefixes:
@@ -410,12 +410,12 @@ def _patch_councils(
     input_data: dict,
     councils_dir: Path,
     target_dir: Path,
-    non_robbrad_lookup: dict[str, str],
+    non_ukbcd_lookup: dict[str, str],
     hacs_prefixes: set[str],
     ukbcd_override_domains: set[str],
 ) -> tuple[dict[str, str], _PatchStats]:
-    """Process all councils from input.json. Returns (new_robbrad_lookup, stats)."""
-    new_robbrad_lookup: dict[str, str] = {}
+    """Process all councils from input.json. Returns (new_ukbcd_lookup, stats)."""
+    new_ukbcd_lookup: dict[str, str] = {}
     stats = _PatchStats()
 
     for council_name, data in input_data.items():
@@ -423,7 +423,7 @@ def _patch_councils(
             continue
 
         skip, domain = _should_skip_council(
-            data, non_robbrad_lookup, hacs_prefixes, ukbcd_override_domains, stats
+            data, non_ukbcd_lookup, hacs_prefixes, ukbcd_override_domains, stats
         )
         if skip:
             continue
@@ -438,9 +438,9 @@ def _patch_councils(
             continue
 
         stats.added += 1
-        new_robbrad_lookup[domain] = sanitized_name
+        new_ukbcd_lookup[domain] = sanitized_name
 
-    return new_robbrad_lookup, stats
+    return new_ukbcd_lookup, stats
 
 
 def _load_input_data(clone_dir: Path) -> dict:
@@ -468,37 +468,36 @@ def main():
     input_data = _load_input_data(clone_dir)
 
     admin_lookup = load_admin_lookup()
-    non_robbrad_lookup = {
-        k: v for k, v in admin_lookup.items() if not v.startswith("robbrad_")
+    non_ukbcd_lookup = {
+        k: v for k, v in admin_lookup.items() if not v.startswith("ukbcd_")
     }
     ukbcd_override_domains = _load_ukbcd_override_domains()
 
     # Build gov.uk prefix set from HACS scrapers on disk for fuzzy matching
     hacs_prefixes = set()
-    for p in sorted(target_dir.glob("*.py")):
-        if p.stem.startswith("robbrad_"):
-            continue
-        if "_gov_uk" in p.stem:
-            hacs_prefixes.add(p.stem.rsplit("_gov_uk", 1)[0].replace("_", "-"))
+    for p in sorted(target_dir.glob("hacs_*.py")):
+        stem = p.stem.removeprefix("hacs_")
+        if "_gov_uk" in stem:
+            hacs_prefixes.add(stem.rsplit("_gov_uk", 1)[0].replace("_", "-"))
 
     logger.info(
-        f"Loaded {len(non_robbrad_lookup)} existing non-robbrad councils from lookup "
+        f"Loaded {len(non_ukbcd_lookup)} existing non-ukbcd councils from lookup "
         f"({len(hacs_prefixes)} gov.uk prefixes)."
     )
 
-    new_robbrad_lookup, stats = _patch_councils(
+    new_ukbcd_lookup, stats = _patch_councils(
         input_data,
         councils_dir,
         target_dir,
-        non_robbrad_lookup,
+        non_ukbcd_lookup,
         hacs_prefixes,
         ukbcd_override_domains,
     )
 
     if stats.added > 0:
-        merged_lookup = {**non_robbrad_lookup, **new_robbrad_lookup}
+        merged_lookup = {**non_ukbcd_lookup, **new_ukbcd_lookup}
         logger.info(
-            f"Updating admin_scraper_lookup.json with {stats.added} new robbrad entries..."
+            f"Updating admin_scraper_lookup.json with {stats.added} new ukbcd entries..."
         )
         save_admin_lookup(merged_lookup)
 

@@ -94,15 +94,26 @@ def main():
             if domain in lookup and (SCRAPERS_DIR / f"{ukbcd_scraper}.py").exists():
                 old = lookup[domain]
                 lookup[domain] = ukbcd_scraper
-                logger.info("Override: %s -> %s (was %s, reason: %s)", domain, ukbcd_scraper, old, entry.get("reason", ""))
+                logger.info(
+                    "Override: %s -> %s (was %s, reason: %s)",
+                    domain,
+                    ukbcd_scraper,
+                    old,
+                    entry.get("reason", ""),
+                )
                 override_count += 1
 
     OUTPUT_PATH.write_text(json.dumps(lookup, indent=2, sort_keys=True))
-    logger.info("Wrote %d domain -> scraper mappings to %s (%d overrides applied)", len(lookup), OUTPUT_PATH, override_count)
+    logger.info(
+        "Wrote %d domain -> scraper mappings to %s (%d overrides applied)",
+        len(lookup),
+        OUTPUT_PATH,
+        override_count,
+    )
 
     total_scrapers = len(list(SCRAPERS_DIR.glob("*.py")))
-    hacs_count = sum(1 for v in lookup.values() if not v.startswith("robbrad_"))
-    ukbcd_count = sum(1 for v in lookup.values() if v.startswith("robbrad_"))
+    hacs_count = sum(1 for v in lookup.values() if v.startswith("hacs_"))
+    ukbcd_count = sum(1 for v in lookup.values() if v.startswith("ukbcd_"))
 
     print(f"\n{'=' * 50}")
     print("Domain -> Scraper Lookup Summary")

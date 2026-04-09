@@ -28,8 +28,8 @@ TEST_PARAMS = {"uprn", "postcode", "house_number", "usrn"}
 
 
 def council_name_to_scraper_stem(council_name: str) -> str:
-    """Convert CamelCase council name to our robbrad_ snake_case filename stem."""
-    return "robbrad_" + re.sub(r"(?<!^)(?=[A-Z])", "_", council_name).lower()
+    """Convert CamelCase council name to our ukbcd_ snake_case filename stem."""
+    return "ukbcd_" + re.sub(r"(?<!^)(?=[A-Z])", "_", council_name).lower()
 
 
 def extract_test_params(data: dict) -> dict[str, str]:
@@ -53,13 +53,17 @@ def main():
 
     input_data = json.loads(INPUT_JSON.read_text())
 
-    # Load existing test_cases.json (hacs entries)
+    # Load existing test_cases.json (hacs entries), stripping stale robbrad entries
     existing: dict[str, list[dict]] = {}
     if OUTPUT_PATH.exists():
-        existing = json.loads(OUTPUT_PATH.read_text())
+        existing = {
+            k: v
+            for k, v in json.loads(OUTPUT_PATH.read_text()).items()
+            if not k.startswith("ukbcd_")
+        }
 
     # Collect the set of robbrad scrapers we actually have
-    our_scrapers = {p.stem for p in SCRAPERS_DIR.glob("robbrad_*.py")}
+    our_scrapers = {p.stem for p in SCRAPERS_DIR.glob("ukbcd_*.py")}
 
     added = 0
     skipped_not_ours = 0

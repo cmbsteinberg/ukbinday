@@ -1,48 +1,48 @@
 {
 	"hacs_to_ukbcd": {
 		"dudley.gov.uk": {
-			"hacs_scraper": "dudley_gov_uk",
-			"ukbcd_scraper": "robbrad_dudley_council",
+			"hacs_scraper": "hacs_dudley_gov_uk",
+			"ukbcd_scraper": "ukbcd_dudley_council",
 			"reason": "unreachable"
 		},
 		"westsuffolk.gov.uk": {
-			"hacs_scraper": "westsuffolk_gov_uk",
-			"ukbcd_scraper": "robbrad_west_suffolk_council",
+			"hacs_scraper": "hacs_westsuffolk_gov_uk",
+			"ukbcd_scraper": "ukbcd_west_suffolk_council",
 			"reason": "unreachable"
 		},
 		"hounslow.gov.uk": {
-			"hacs_scraper": "hounslow_gov_uk",
-			"ukbcd_scraper": "robbrad_london_borough_hounslow",
+			"hacs_scraper": "hacs_hounslow_gov_uk",
+			"ukbcd_scraper": "ukbcd_london_borough_hounslow",
 			"reason": "404_not_found"
 		},
 		"merton.gov.uk": {
-			"hacs_scraper": "merton_gov_uk",
-			"ukbcd_scraper": "robbrad_merton_council",
+			"hacs_scraper": "hacs_merton_gov_uk",
+			"ukbcd_scraper": "ukbcd_merton_council",
 			"reason": "404_not_found"
 		},
 		"sutton.gov.uk": {
-			"hacs_scraper": "sutton_gov_uk",
-			"ukbcd_scraper": "robbrad_london_borough_sutton",
+			"hacs_scraper": "hacs_sutton_gov_uk",
+			"ukbcd_scraper": "ukbcd_london_borough_sutton",
 			"reason": "503_unavailable"
 		},
 		"swansea.gov.uk": {
-			"hacs_scraper": "swansea_gov_uk",
-			"ukbcd_scraper": "robbrad_swansea_council",
+			"hacs_scraper": "hacs_swansea_gov_uk",
+			"ukbcd_scraper": "ukbcd_swansea_council",
 			"reason": "500_server_error"
 		},
 		"cheshireeast.gov.uk": {
-			"hacs_scraper": "cheshire_east_gov_uk",
-			"ukbcd_scraper": "robbrad_cheshire_east_council",
+			"hacs_scraper": "hacs_cheshire_east_gov_uk",
+			"ukbcd_scraper": "ukbcd_cheshire_east_council",
 			"reason": "scraper_error_file_not_found"
 		},
 		"milton-keynes.gov.uk": {
-			"hacs_scraper": "milton_keynes_gov_uk",
-			"ukbcd_scraper": "robbrad_milton_keynes_city_council",
+			"hacs_scraper": "hacs_milton_keynes_gov_uk",
+			"ukbcd_scraper": "ukbcd_milton_keynes_city_council",
 			"reason": "scraper_error_value_error"
 		},
 		"torridge.gov.uk": {
-			"hacs_scraper": "torridge_gov_uk",
-			"ukbcd_scraper": "robbrad_torridge_district_council",
+			"hacs_scraper": "hacs_torridge_gov_uk",
+			"ukbcd_scraper": "ukbcd_torridge_district_council",
 			"reason": "scraper_error_value_error"
 		}
 	},

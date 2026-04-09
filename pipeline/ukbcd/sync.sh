@@ -31,23 +31,27 @@ trap 'rm -rf "$CLONE_DIR"' EXIT
 echo "Cloning ${REPO} (shallow)..."
 git clone --depth 1 --branch "$BRANCH" "https://github.com/${REPO}.git" "$CLONE_DIR"
 
-# Check upstream branches/PRs for fixes to failing scrapers
-if command -v gh &>/dev/null; then
-  echo "Checking upstream for unmerged fixes..."
-  if [ "$INCLUDE_UNMERGED" = true ]; then
-    uv run python "$CHECK_SCRIPT" --clone-dir "$CLONE_DIR" --include-unmerged || true
-  else
-    uv run python "$CHECK_SCRIPT" || true
-  fi
-else
-  echo "Skipping upstream check (gh CLI not available)"
-fi
+# Check upstream branches/PRs for fixes to failing scrapers (disabled)
+# if command -v gh &>/dev/null; then
+#   echo "Checking upstream for unmerged fixes..."
+#   if [ "$INCLUDE_UNMERGED" = true ]; then
+#     uv run python "$CHECK_SCRIPT" --clone-dir "$CLONE_DIR" --include-unmerged || true
+#   else
+#     uv run python "$CHECK_SCRIPT" || true
+#   fi
+# else
+#   echo "Skipping upstream check (gh CLI not available)"
+# fi
 
 # Create local dir
 mkdir -p "$LOCAL_DIR"
 
 # Copy input.json to local dir for reference
 cp "$CLONE_DIR/$INPUT_JSON" "$LOCAL_DIR/input.json"
+
+# Remove stale robbrad scrapers before re-patching
+echo "Removing old robbrad scrapers..."
+rm -f "$SCRAPERS_DIR"/ukbcd_*.py
 
 # Run the patch script
 # It will read input.json, find corresponding files in CLONE_DIR/SOURCE_DIR,

@@ -398,6 +398,13 @@ def transform_source(source: str) -> tuple[str, list[str]]:
 
     if not analysis.has_requests_import and not analysis.has_cloudscraper_import:
         patched = _final_requests_cleanup(source)
+        # Even without requests/cloudscraper, fetch() must be async for the registry
+        if "async def fetch" not in patched:
+            patched = re.sub(
+                r"(\s+)def fetch\(self\)",
+                r"\1async def fetch(self)",
+                patched,
+            )
         if patched != source:
             return patched, []
         return source, [
@@ -1221,6 +1228,12 @@ def _handle_urllib(source: str) -> str:
         r"\1__urllib_url__ = \2\n\1__urllib_headers__ = \3\n",
         source,
     )
+    # Handle multi-line urllib.request.Request() calls
+    source = re.sub(
+        r"(\s+)\w+\s*=\s*urllib\.request\.Request\(\s*\n\s+([^,\n]+?)(?:,\s*headers=(\w+))?\s*\n\s*\)\n",
+        r"\1__urllib_url__ = \2\n\1__urllib_headers__ = \3\n",
+        source,
+    )
     source = re.sub(
         r"(\s+)with urllib\.request\.urlopen\(\w+\) as (\w+):\n\s+(\w+)\s*=\s*\2\.read\(\)\n",
         r"\1__urllib_resp__ = await httpx.AsyncClient(follow_redirects=True).get(__urllib_url__, headers=__urllib_headers__)\n\1\3 = __urllib_resp__.content\n",
@@ -1508,7 +1521,7 @@ def _patch_single_file(
 
     Returns (deprecated_name_or_None, warnings).
     """
-    out = output_dir / src.name
+    out = output_dir / f"hacs_{src.name}"
     raw = src.read_text()
     if _is_deprecated_scraper(raw):
         if out.exists():

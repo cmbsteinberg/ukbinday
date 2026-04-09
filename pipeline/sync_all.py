@@ -4,7 +4,7 @@ Orchestrator for the full scraper sync pipeline.
 
 Flow:
   1. Fetch input.json from UKBCD (source of truth for needed councils)
-  2. Build the set of needed council domains (gov.uk prefixes)
+  2. Wipe all scrapers so stale files never linger across syncs
   3. Run HACS sync (clone, patch, copy scrapers)
   4. Filter HACS scrapers: remove any whose gov.uk prefix isn't in input.json
   5. Regenerate admin lookup (so UKBCD sync sees filtered state)
@@ -100,10 +100,8 @@ def filter_hacs_scrapers(needed_prefixes: set[str]) -> list[str]:
     }
 
     removed = []
-    for path in sorted(SCRAPERS_DIR.glob("*.py")):
-        # Only filter HACS scrapers (non-robbrad)
-        if path.stem.startswith("robbrad_"):
-            continue
+    for path in sorted(SCRAPERS_DIR.glob("hacs_*.py")):
+        # Only filter HACS scrapers
         # Don't remove scrapers that are explicitly overridden (handled separately)
         if path.stem in override_hacs:
             continue
@@ -117,10 +115,11 @@ def filter_hacs_scrapers(needed_prefixes: set[str]) -> list[str]:
             # Non-gov.uk scraper -- keep it (rare edge case)
             continue
 
-        # Also try matching by filename (e.g. solihull_gov_uk -> solihull)
+        # Also try matching by filename (e.g. hacs_solihull_gov_uk -> solihull)
         fname_prefix = None
-        if "_gov_uk" in path.stem:
-            fname_prefix = path.stem.rsplit("_gov_uk", 1)[0].replace("_", "-")
+        stem = path.stem.removeprefix("hacs_")
+        if "_gov_uk" in stem:
+            fname_prefix = stem.rsplit("_gov_uk", 1)[0].replace("_", "-")
 
         if prefix not in needed_prefixes and (
             fname_prefix is None or fname_prefix not in needed_prefixes
@@ -159,7 +158,19 @@ def main():
     needed_prefixes = build_needed_prefixes(input_data)
     save_needed_councils(needed_prefixes)
 
-    # 2. Run HACS sync (clone, patch, copy)
+    # 2. Wipe all scrapers so stale files never linger across syncs
+    print("\n" + "=" * 50)
+    print("=== Cleaning scrapers directory ===")
+    print("=" * 50)
+    removed_count = 0
+    for path in SCRAPERS_DIR.glob("*.py"):
+        if path.name == "__init__.py":
+            continue
+        path.unlink()
+        removed_count += 1
+    logger.info("Removed %d scraper files.", removed_count)
+
+    # 3. Run HACS sync (clone, patch, copy)
     print("\n" + "=" * 50)
     print("=== Syncing HACS scrapers ===")
     print("=" * 50)
@@ -168,7 +179,7 @@ def main():
         "HACS sync",
     )
 
-    # 3. Filter HACS scrapers against input.json
+    # 4. Filter HACS scrapers against input.json
     print("\n" + "=" * 50)
     print("=== Filtering HACS scrapers against input.json ===")
     print("=" * 50)
@@ -180,7 +191,7 @@ def main():
     else:
         logger.info("No stale HACS scrapers found.")
 
-    # 4. Regenerate admin lookup so UKBCD sync sees filtered HACS state
+    # 5. Regenerate admin lookup so UKBCD sync sees filtered HACS state
     print("\n" + "=" * 50)
     print("=== Regenerating admin lookup (post-filter) ===")
     print("=" * 50)
@@ -189,7 +200,7 @@ def main():
         "admin lookup regeneration (post-filter)",
     )
 
-    # 5. Run UKBCD sync (fills gaps)
+    # 6. Run UKBCD sync (fills gaps)
     print("\n" + "=" * 50)
     print("=== Syncing UKBCD scrapers (filling gaps) ===")
     print("=" * 50)
@@ -198,7 +209,7 @@ def main():
         ukbcd_cmd.append("--include-unmerged")
     run_shell(ukbcd_cmd, "UKBCD sync")
 
-    # 6. Final admin lookup regeneration (includes UKBCD scrapers)
+    # 7. Final admin lookup regeneration (includes UKBCD scrapers)
     print("\n" + "=" * 50)
     print("=== Regenerating admin lookup (final) ===")
     print("=" * 50)
@@ -207,7 +218,7 @@ def main():
         "admin lookup regeneration (final)",
     )
 
-    # 7. Regenerate test cases (after filtering, so stale scrapers are excluded)
+    # 8. Regenerate test cases (after filtering, so stale scrapers are excluded)
     print("\n" + "=" * 50)
     print("=== Regenerating test cases ===")
     print("=" * 50)
@@ -220,7 +231,7 @@ def main():
         "UKBCD test cases",
     )
 
-    # 8. Regenerate LAD lookup (postcode -> council -> scraper mapping)
+    # 9. Regenerate LAD lookup (postcode -> council -> scraper mapping)
     print("\n" + "=" * 50)
     print("=== Regenerating LAD lookup ===")
     print("=" * 50)

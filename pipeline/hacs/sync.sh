@@ -49,6 +49,10 @@ trap 'rm -rf "$CLONE_DIR"' EXIT
 echo "Cloning ${REPO} (shallow)..."
 git clone --depth 1 --branch "$BRANCH" "https://github.com/${REPO}.git" "$CLONE_DIR"
 
+# Remove stale hacs scrapers before re-syncing
+echo "Removing old hacs scrapers..."
+rm -f "$SCRAPERS_DIR"/hacs_*.py
+
 # Copy gov_uk source files
 echo "Copying gov_uk source files..."
 mkdir -p "$LOCAL_DIR"
