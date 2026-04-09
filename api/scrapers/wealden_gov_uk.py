@@ -19,14 +19,14 @@ ICON_MAP = {
     "refuseCollectionDate": "mdi:trash-can",
     "recyclingCollectionDate": "mdi:recycle",
     "gardenCollectionDate": "mdi:leaf",
-    "foodCollectionDate": "mdi:food-apple"
+    "foodCollectionDate": "mdi:food-apple",
 }
 
 COLLECTIONS = {
     "refuseCollectionDate": "Rubbish",
     "recyclingCollectionDate": "Recycling",
     "gardenCollectionDate": "Garden",
-    "foodCollectionDate": "Food"
+    "foodCollectionDate": "Food",
 }
 
 HEADERS = {

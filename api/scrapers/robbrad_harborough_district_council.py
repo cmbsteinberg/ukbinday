@@ -39,9 +39,9 @@ class CouncilClass(AbstractGetBinDataClass):
         # Check for service errors
         if response.status_code == 502:
             raise ValueError(
-                "The FCC Environment service is currently unavailable (502 Bad Gateway). "
-                "This is a temporary issue with the council's waste collection system. "
-                "Please try again later."
+                f"The FCC Environment service is currently unavailable (502 Bad Gateway). "
+                f"This is a temporary issue with the council's waste collection system. "
+                f"Please try again later."
             )
 
         response.raise_for_status()

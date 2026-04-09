@@ -65,9 +65,8 @@ class Source:
 
     def _parse_collection_date(self, collection_date_str: str) -> date | None:
         """Convert a date string without a year into the next valid future date."""
-
         cleaned_date = " ".join(
-            re.sub(r'(\d+)(st|nd|rd|th)', r'\1', collection_date_str).split()
+            re.sub(r"(\d+)(st|nd|rd|th)", r"\1", collection_date_str).split()
         )
 
         # Find Date & Month in String
@@ -89,7 +88,7 @@ class Source:
         for year in (today.year, today.year + 1):
             try:
                 date_temp = date(year, month, day)
-                
+
                 # Handles 29 Feb on non-leap year
                 if date_temp >= today:
                     return date_temp
@@ -103,16 +102,21 @@ class Source:
         try:
             r = await httpx.AsyncClient(follow_redirects=True).get(
                 API_URL,
-                params={"action":"SetAddress", "UniqueId":self._uprn,},
+                params={
+                    "action": "SetAddress",
+                    "UniqueId": self._uprn,
+                },
                 headers=HEADERS,
-                timeout=30
-                )
+                timeout=30,
+            )
 
             r.raise_for_status()
 
         # Check for Website Errors
         except httpx.HTTPError as e:
-            raise SourceArgumentException(self._uprn, "Monmouthshire Council website unreachable") from e
+            raise SourceArgumentException(
+                self._uprn, "Monmouthshire Council website unreachable"
+            ) from e
 
         soup = BeautifulSoup(r.text, "html.parser")
 
@@ -122,14 +126,13 @@ class Source:
         if not uprn_check or not uprn_check.next_sibling:
             raise SourceArgumentException(
                 self._uprn,
-                f"UPRN {self._uprn} is invalid or outside the Monmouthshire Council area. Make sure your address returns entries on the council website: {API_URL}"
+                f"UPRN {self._uprn} is invalid or outside the Monmouthshire Council area. Make sure your address returns entries on the council website: {API_URL}",
             )
 
         # Check UPRN provided & UPRN on page match
         if uprn_check.next_sibling.strip() != str(self._uprn):
             raise SourceArgumentException(
-                self._uprn,
-                f"UPRN {self._uprn} does not match UPRN provided."
+                self._uprn, f"UPRN {self._uprn} does not match UPRN provided."
             )
 
         entries = []
@@ -165,13 +168,15 @@ class Source:
 
                     entries.append(
                         Collection(
-                            date = collection_date,
-                            t = waste_type,
-                            icon = ICON_MAP.get(waste_type, "mdi:trash-can"),
+                            date=collection_date,
+                            t=waste_type,
+                            icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
                         )
                     )
 
         if not entries:
-            raise SourceArgumentException(self._uprn, "No collection dates found in response.")
+            raise SourceArgumentException(
+                self._uprn, "No collection dates found in response."
+            )
 
         return entries

@@ -1,10 +1,10 @@
 import logging
 from datetime import datetime
-
 from bs4 import BeautifulSoup
 
 from api.compat.ukbcd.common import check_uprn, date_format
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
+import httpx
 
 logger = logging.getLogger(__name__)
 

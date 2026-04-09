@@ -1,4 +1,5 @@
 pipeline/upstream
+pipeline/.needed_councils.json
 
 # Test output (generated, not source)
 tests/test_output.json

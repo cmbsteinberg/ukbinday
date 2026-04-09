@@ -1,13 +1,11 @@
+from bs4 import BeautifulSoup
+import httpx
 import re
 from datetime import datetime
 from typing import Any, Dict, List
 
-import httpx
-from bs4 import BeautifulSoup
-
-from api.compat.ukbcd.common import check_postcode, check_uprn
+from api.compat.ukbcd.common import check_uprn, check_postcode
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
-
 
 class CouncilClass(AbstractGetBinDataClass):
     def get_and_parse_data(self, url: str, **kwargs: Any) -> Dict[str, List[Dict[str, str]]]:
@@ -57,7 +55,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "page": page_id,
             "locale": "en_GB",
             postcode_field: user_postcode,
-            "callback": lookup_value
+            "callback": lookup_value 
         }, timeout=30)
         res.raise_for_status()
 

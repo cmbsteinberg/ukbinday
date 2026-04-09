@@ -9,7 +9,9 @@ from urllib.parse import parse_qs, urlparse
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs.collection import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.collection import (
+    Collection,  # type: ignore[attr-defined]
+)
 from api.compat.hacs.service.ICS import ICS  # type: ignore[attr-defined]
 
 TITLE = "West Lothian Council"
@@ -49,25 +51,32 @@ class Source:
             "Connection": "keep-alive",
             "Referer": "westlothian.gov.uk",
             "Cache-Control": "no-cache",
-            "DNT": "1"
+            "DNT": "1",
         }
         address_page = await self.__get_address_page(session)
         bin_collection_info_page = await self.__get_bin_collection_info_page(
             session, address_page, self._postcode, self._uprn
         )
-        bin_collection_info = self.__get_ical_bin_collection_info(bin_collection_info_page)
+        bin_collection_info = self.__get_ical_bin_collection_info(
+            bin_collection_info_page
+        )
         ical_content = bin_collection_info.get("ICALCONTENT", {}).get("value", {})
-        if isinstance(ical_content,dict) and ical_content.get("error", None) is not None:
+        if (
+            isinstance(ical_content, dict)
+            and ical_content.get("error", None) is not None
+        ):
             # West Lothian have broken their iCal generation again - use the page content
-            bin_collection_info = self.__get_immediate_bin_collection_info(bin_collection_info_page)
+            bin_collection_info = self.__get_immediate_bin_collection_info(
+                bin_collection_info_page
+            )
         return self.__generate_collection_entries(bin_collection_info)
 
     def __generate_collection_entries(self, bin_collection_info):
         ical_content = bin_collection_info.get("ICALCONTENT")
         webpage_content = bin_collection_info.get("PAGE2_1")
         if ical_content is not None:
-            if ical_content.get('error') is not None:
-             raise Exception(ical_content.get('error'))
+            if ical_content.get("error") is not None:
+                raise Exception(ical_content.get("error"))
             # iCal data returned isn't compatible with _ics.convert because it's UNTIL values
             # don't specify a timezone, but the ICS module asks for "timezone-aware" parsing.
             # So, change the UNTILs to be Z because they're date only and are UK-based.
@@ -90,13 +99,21 @@ class Source:
                 collections = json.loads(webpage_content["COLLECTIONS"])
                 entries = []
                 for d in collections:
-                    icon = ICON_MAP.get(d['binName'].split(" ")[0])
+                    icon = ICON_MAP.get(d["binName"].split(" ")[0])
                     if icon is None:
-                        icon = ICON_MAP.get(d['binType'])
-                    entries.append(Collection(datetime.strptime(d['nextCollectionISO'], "%Y-%m-%d").date(), d['binType'], icon=icon))
+                        icon = ICON_MAP.get(d["binType"])
+                    entries.append(
+                        Collection(
+                            datetime.strptime(
+                                d["nextCollectionISO"], "%Y-%m-%d"
+                            ).date(),
+                            d["binType"],
+                            icon=icon,
+                        )
+                    )
 
                 return entries
-        raise Exception('No entries could be parsed')
+        raise Exception("No entries could be parsed")
 
     def __get_ical_bin_collection_info(self, bin_collection_info_page):
         serialized_collection_info_pattern = re.compile(
@@ -124,9 +141,7 @@ class Source:
         soup = BeautifulSoup(bin_collection_info_page, "html.parser")
         script = soup.find("script", text=serialized_collection_info_pattern)
         if not script:
-            raise Exception(
-                "no script tag cannot find WLBINCOLLECTIONFormData"
-            )
+            raise Exception("no script tag cannot find WLBINCOLLECTIONFormData")
         match = serialized_collection_info_pattern.search(script.text)
         if not match:
             raise Exception("no match cannot find WLBINCOLLECTIONFormData")
@@ -152,7 +167,8 @@ class Source:
                 "WLBINCOLLECTION_PAGE1_ADDRESSLOOKUPPOSTCODE": postcode,
                 "WLBINCOLLECTION_PAGE1_ADDRESSLOOKUPADDRESS": "4",
                 "WLBINCOLLECTION_FORMACTION_NEXT": "WLBINCOLLECTION_PAGE1_NAVBUTTONS",
-            })
+            },
+        )
         r.raise_for_status()
         return r.text
 

@@ -3,7 +3,6 @@ import time
 from datetime import date, datetime
 
 import httpx
-
 from api.compat.ukbcd.common import *
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
@@ -56,7 +55,7 @@ class CouncilClass(AbstractGetBinDataClass):
                     break
 
             if not place_id:
-                print("An error occurred: retrieving the address")
+                print(f"An error occurred: retrieving the address")
                 return
 
             url = "https://api.eu.recollect.net/api/areas/MiddlesbroughUK/services/50005/pages/en-GB/place_calendar.json?widget_config=%7B%22area%22%3A%22MiddlesbroughUK%22%2C%22name%22%3A%22calendar%22%2C%22base%22%3A%22https%3A%2F%2Frecollect.net%22%2C%22third_party_cookie_enabled%22%3A1%2C%22place_not_found_in_guest%22%3A0%2C%22is_guest_service%22%3A0%7D"

@@ -11,7 +11,7 @@ URL = "https://southtyneside.gov.uk"
 HEADERS = {
     "Content-Type": "application/json; charset=UTF-8",
     "Referer": "https://www.southtyneside.gov.uk/article/1023/Bin-collection-dates",
-    "User-Agent":"Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0",
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0",
 }
 API = "https://www.southtyneside.gov.uk/apiserver/ajaxlibrary"
 TEST_CASES = {
@@ -28,7 +28,7 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, postcode, uprn):
-        self._postcode = str(postcode).replace(" ","")
+        self._postcode = str(postcode).replace(" ", "")
         self._uprn = str(uprn).zfill(12)
 
     async def fetch(self):
@@ -41,10 +41,7 @@ class Source:
                 "id": "1682761045902",
                 "jsonrpc": "2.0",
                 "method": "stc.common.snippets.getAddressList",
-                "params": {
-                    "localonly": "true",
-                    "postcode": self._postcode
-                }
+                "params": {"localonly": "true", "postcode": self._postcode},
             }
         )
         r1 = await s.post(API, headers=HEADERS, data=payload)
@@ -60,25 +57,23 @@ class Source:
                 "id": "1682761056660",
                 "jsonrpc": "2.0",
                 "method": "stc.waste.collections.getDates",
-                "params": {
-                    "addresscode": f"{self._uprn}|{self._address}"
-                }
+                "params": {"addresscode": f"{self._uprn}|{self._address}"},
             }
         )
         r2 = await s.post(API, headers=HEADERS, data=payload)
         json_data = json.loads(r2.text)["result"]["SortedCollections"]
-        
+
         entries = []
         for item in json_data:
             for monthyear in item["Collections"]:
                 entries.append(
                     Collection(
                         date=datetime.strptime(
-                            monthyear["DateofCollection"], "%Y-%m-%dT%H:%M:%S").date(),
+                            monthyear["DateofCollection"], "%Y-%m-%dT%H:%M:%S"
+                        ).date(),
                         t=monthyear["TypeClass"],
                         icon=ICON_MAP.get(monthyear["TypeClass"].upper()),
                     )
                 )
 
         return entries
-

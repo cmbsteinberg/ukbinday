@@ -5,9 +5,14 @@ import json
 from datetime import datetime
 
 import httpx
-
-from api.compat.ukbcd.common import check_paon, check_postcode, check_uprn, date_format
+from api.compat.ukbcd.common import (
+    check_paon,
+    check_postcode,
+    check_uprn,
+    date_format
+)
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
+
 
 # Mobile API constants
 MOBILE_API_BASE = "https://apps.cloud9technologies.com/northherts/citizenmobile/mobileapi"

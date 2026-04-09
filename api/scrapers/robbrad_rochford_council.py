@@ -1,10 +1,9 @@
-from datetime import timedelta
-
 from bs4 import BeautifulSoup
-from dateutil.relativedelta import relativedelta
-
 from api.compat.ukbcd.common import *
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
+from dateutil.relativedelta import relativedelta
+from datetime import timedelta
+import httpx
 
 
 # import the wonderful Beautiful Soup and the URL grabber

@@ -47,7 +47,6 @@
 		}
 	},
 	"requests_fallback": [
-		"allerdale_gov_uk",
 		"basingstoke_gov_uk",
 		"braintree_gov_uk",
 		"calderdale_gov_uk",

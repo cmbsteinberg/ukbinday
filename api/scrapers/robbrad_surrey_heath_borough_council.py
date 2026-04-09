@@ -1,10 +1,10 @@
 import urllib
 
-import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.ukbcd.common import *
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
+import httpx
 
 
 class CouncilClass(AbstractGetBinDataClass):

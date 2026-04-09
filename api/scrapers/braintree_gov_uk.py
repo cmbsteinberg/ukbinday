@@ -35,7 +35,7 @@ class Source:
         }
 
     async def fetch(self):
-        self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetchs fail
+        self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetches fail
         address_lookup = await _FallbackClient(follow_redirects=True).post(str(self.url), data=self.form_data)
         address_lookup.raise_for_status()
         addresses = {}

@@ -18,6 +18,7 @@ from pathlib import Path
 
 from pipeline.shared import (
     BLOCKED_DOMAINS,
+    extract_gov_uk_prefix,
     load_admin_lookup,
     load_overrides,
     normalise_domain,
@@ -87,7 +88,9 @@ def _replace_requests_imports(source: str) -> str:
 
 def _replace_requests_api_calls(source: str) -> str:
     """Replace requests.get/post/etc and Session() with httpx equivalents."""
-    source = re.sub(r"\brequests\.(get|post|put|delete|patch|head|request)\b", r"httpx.\1", source)
+    source = re.sub(
+        r"\brequests\.(get|post|put|delete|patch|head|request)\b", r"httpx.\1", source
+    )
     source = source.replace("requests.Session()", "httpx.Client(follow_redirects=True)")
     source = source.replace("requests.session()", "httpx.Client(follow_redirects=True)")
     source = source.replace("requests.Response", "httpx.Response")
@@ -167,9 +170,9 @@ def _fix_httpx_compat(source: str) -> str:
 
 def _hoist_verify_false(source: str) -> str:
     """Move verify=False from per-request calls to Client constructor."""
-    has_verify_in_calls = bool(re.search(
-        r"\.(get|post|put|delete|patch|head)\([^)]*verify=", source
-    ))
+    has_verify_in_calls = bool(
+        re.search(r"\.(get|post|put|delete|patch|head)\([^)]*verify=", source)
+    )
     if not has_verify_in_calls:
         return source
 
@@ -196,7 +199,9 @@ def _ensure_httpx_import(source: str) -> str:
     last_import_idx = 0
     for i, line in enumerate(lines):
         stripped = line.strip()
-        if stripped.startswith(("import ", "from ")) and not line.startswith((" ", "\t")):
+        if stripped.startswith(("import ", "from ")) and not line.startswith(
+            (" ", "\t")
+        ):
             last_import_idx = i
     lines.insert(last_import_idx + 1, "import httpx")
     return "\n".join(lines)
@@ -231,7 +236,9 @@ def detect_init_params(data: dict) -> list[str]:
     return params
 
 
-def generate_adapter_code(original_class_name: str, params: list[str], url: str, title: str) -> str:
+def generate_adapter_code(
+    original_class_name: str, params: list[str], url: str, title: str
+) -> str:
     """Generate the Source adapter class."""
     init_args = ", ".join([f"{p}: str | None = None" for p in params])
     init_body = "\n".join([f"        self.{p} = {p}" for p in params])
@@ -370,6 +377,7 @@ class _PatchStats:
 def _should_skip_council(
     data: dict,
     non_robbrad_lookup: dict[str, str],
+    hacs_prefixes: set[str],
     ukbcd_override_domains: set[str],
     stats: _PatchStats,
 ) -> tuple[bool, str | None]:
@@ -384,7 +392,14 @@ def _should_skip_council(
         stats.skipped_blocked += 1
         return True, domain
 
-    if domain in non_robbrad_lookup and domain not in ukbcd_override_domains:
+    # Check by full domain first, then by gov.uk prefix
+    has_hacs = domain in non_robbrad_lookup
+    if not has_hacs:
+        prefix = extract_gov_uk_prefix(url)
+        if prefix and prefix in hacs_prefixes:
+            has_hacs = True
+
+    if has_hacs and domain not in ukbcd_override_domains:
         stats.skipped_existing += 1
         return True, domain
 
@@ -396,6 +411,7 @@ def _patch_councils(
     councils_dir: Path,
     target_dir: Path,
     non_robbrad_lookup: dict[str, str],
+    hacs_prefixes: set[str],
     ukbcd_override_domains: set[str],
 ) -> tuple[dict[str, str], _PatchStats]:
     """Process all councils from input.json. Returns (new_robbrad_lookup, stats)."""
@@ -406,7 +422,9 @@ def _patch_councils(
         if not isinstance(data, dict):
             continue
 
-        skip, domain = _should_skip_council(data, non_robbrad_lookup, ukbcd_override_domains, stats)
+        skip, domain = _should_skip_council(
+            data, non_robbrad_lookup, hacs_prefixes, ukbcd_override_domains, stats
+        )
         if skip:
             continue
 
@@ -450,18 +468,38 @@ def main():
     input_data = _load_input_data(clone_dir)
 
     admin_lookup = load_admin_lookup()
-    non_robbrad_lookup = {k: v for k, v in admin_lookup.items() if not v.startswith("robbrad_")}
+    non_robbrad_lookup = {
+        k: v for k, v in admin_lookup.items() if not v.startswith("robbrad_")
+    }
     ukbcd_override_domains = _load_ukbcd_override_domains()
 
-    logger.info(f"Loaded {len(non_robbrad_lookup)} existing non-robbrad councils from lookup.")
+    # Build gov.uk prefix set from HACS scrapers on disk for fuzzy matching
+    hacs_prefixes = set()
+    for p in sorted(target_dir.glob("*.py")):
+        if p.stem.startswith("robbrad_"):
+            continue
+        if "_gov_uk" in p.stem:
+            hacs_prefixes.add(p.stem.rsplit("_gov_uk", 1)[0].replace("_", "-"))
+
+    logger.info(
+        f"Loaded {len(non_robbrad_lookup)} existing non-robbrad councils from lookup "
+        f"({len(hacs_prefixes)} gov.uk prefixes)."
+    )
 
     new_robbrad_lookup, stats = _patch_councils(
-        input_data, councils_dir, target_dir, non_robbrad_lookup, ukbcd_override_domains,
+        input_data,
+        councils_dir,
+        target_dir,
+        non_robbrad_lookup,
+        hacs_prefixes,
+        ukbcd_override_domains,
     )
 
     if stats.added > 0:
         merged_lookup = {**non_robbrad_lookup, **new_robbrad_lookup}
-        logger.info(f"Updating admin_scraper_lookup.json with {stats.added} new robbrad entries...")
+        logger.info(
+            f"Updating admin_scraper_lookup.json with {stats.added} new robbrad entries..."
+        )
         save_admin_lookup(merged_lookup)
 
     stats.log_summary()

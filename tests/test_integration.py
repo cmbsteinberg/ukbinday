@@ -236,6 +236,18 @@ async def all_results(client: httpx.AsyncClient):
     _run_summary.update(summary)
     OUTPUT_PATH.write_text(json.dumps(summary, indent=2, default=str) + "\n")
 
+    # Regenerate coverage map and disabled scrapers list from fresh results
+    import subprocess
+
+    subprocess.run(
+        ["uv", "run", "python", "-m", "scripts.coverage.generate_coverage_map"],
+        cwd=Path(__file__).parent.parent,
+    )
+    subprocess.run(
+        ["uv", "run", "python", "-m", "scripts.generate_disabled_list"],
+        cwd=Path(__file__).parent.parent,
+    )
+
     return _results_cache
 
 

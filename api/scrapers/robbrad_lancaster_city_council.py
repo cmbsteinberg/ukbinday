@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from api.compat.ukbcd.common import date_format
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
+
 BIN_TYPES = (
     "Domestic Waste",
     "Garden Waste",

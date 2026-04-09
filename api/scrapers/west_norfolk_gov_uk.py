@@ -18,11 +18,7 @@ TEST_CASES = {
     "Test_003": {"uprn": "10000021270"},
     "Test_004": {"uprn": 100090969937},
 }
-ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf"
-}
+ICON_MAP = {"REFUSE": "mdi:trash-can", "RECYCLING": "mdi:recycle", "GARDEN": "mdi:leaf"}
 
 
 class Source:
@@ -35,7 +31,7 @@ class Source:
         s = httpx.AsyncClient(follow_redirects=True)
         await s.get(
             "https://www.west-norfolk.gov.uk/info/20174/bins_and_recycling_collection_dates",
-            headers=HEADERS
+            headers=HEADERS,
         )
         s.cookies.update(
             {
@@ -48,14 +44,14 @@ class Source:
         await s.get(
             "https://www.west-norfolk.gov.uk/info/20174/bins_and_recycling_collection_dates",
             headers=HEADERS,
-            cookies=s.cookies
+            cookies=s.cookies,
         )
 
         # Get extended collection schedule from calendar end point
         r2 = await s.get(
             "https://www.west-norfolk.gov.uk/bincollectionscalendar",
             headers=HEADERS,
-            cookies=s.cookies
+            cookies=s.cookies,
         )
 
         # Extract dates and waste types: Extracts ~6 months worth of collections from the optional website calendar page
@@ -64,7 +60,9 @@ class Source:
         pickups = soup.findAll("div", {"class": "cldr_month"})
         for item in pickups:
             month = item.find("h2")
-            dates = item.findAll("td", {"class": re.compile(" (recycling|refuse|garden)")})
+            dates = item.findAll(
+                "td", {"class": re.compile(" (recycling|refuse|garden)")}
+            )
             for d in dates:
                 attr = d.attrs.get("class")
                 for a in attr[2:]:
@@ -73,7 +71,7 @@ class Source:
                         Collection(
                             date=datetime.strptime(dt, "%d %B %Y").date(),
                             t=a,
-                            icon=ICON_MAP.get(a.upper())
+                            icon=ICON_MAP.get(a.upper()),
                         )
                     )
 

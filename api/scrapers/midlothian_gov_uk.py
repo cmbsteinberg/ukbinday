@@ -49,6 +49,7 @@ PARAM_TRANSLATIONS = {
     },
 }
 
+
 class Source:
     def __init__(self, uprn: str, postcode: str):
         self._uprn = uprn
@@ -96,7 +97,7 @@ class Source:
                     "fromDate": {"value": from_date},
                     "toDate": {"value": to_date},
                 }
-            }
+            },
         }
         params = {
             "id": LOOKUP_ID_BIN_COLLECTION_SERVICE,
@@ -121,11 +122,7 @@ class Source:
             raise SourceArgumentException(
                 "uprn", "Session expired while querying collection data."
             )
-        rows = (
-            data.get("integration", {})
-            .get("transformed", {})
-            .get("rows_data", {})
-        )
+        rows = data.get("integration", {}).get("transformed", {}).get("rows_data", {})
         if not rows:
             raise SourceArgumentNotFound(
                 "uprn", self._uprn, "No collection data returned for this address."
@@ -155,7 +152,7 @@ class Source:
             raise SourceArgumentException(
                 "uprn",
                 f"Failed to parse any collection dates from {len(rows)} rows. "
-                f"API format may have changed. Failures: {failed_rows[:3]}"
+                f"API format may have changed. Failures: {failed_rows[:3]}",
             )
 
         return entries

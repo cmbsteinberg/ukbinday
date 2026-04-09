@@ -1,10 +1,10 @@
 from typing import Any, Dict, Optional
 
-import httpx
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 from api.compat.ukbcd.common import *
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
+import httpx
 
 """
 This module provides bin collection data for Cheshire East Council.

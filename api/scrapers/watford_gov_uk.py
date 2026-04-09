@@ -87,7 +87,9 @@ class Source:
             "sid": sid,
         }
         payload = {"formId": FORM_ID, "formValues": form_values}
-        r = await self._session.post(API_URL, params=params, json=payload, timeout=REQUEST_TIMEOUT)
+        r = await self._session.post(
+            API_URL, params=params, json=payload, timeout=REQUEST_TIMEOUT
+        )
         r.raise_for_status()
         data = r.json()
         transformed = data.get("integration", {}).get("transformed", {})
@@ -119,7 +121,9 @@ class Source:
             raise ValueError("Watford source could not resolve echoAddressPoint")
         return str(address_token), normalised_uprn, str(echo_address_point)
 
-    async def _fetch_collections(self, sid: str, address_token: str, uprn_value: str, echo_address_point: str) -> dict:
+    async def _fetch_collections(
+        self, sid: str, address_token: str, uprn_value: str, echo_address_point: str
+    ) -> dict:
         return await self._run_lookup(
             sid,
             LOOKUP_NEXT_COLLECTIONS,
@@ -132,7 +136,9 @@ class Source:
             },
         )
 
-    async def _fetch_calendar(self, sid: str, address_token: str, uprn_value: str, echo_address_point: str) -> dict:
+    async def _fetch_calendar(
+        self, sid: str, address_token: str, uprn_value: str, echo_address_point: str
+    ) -> dict:
         return await self._run_lookup(
             sid,
             LOOKUP_CALENDAR,
@@ -147,17 +153,19 @@ class Source:
 
     def _extract_collections_from_html(self, html_text: str) -> list[Collection]:
         html_text = unescape(html_text)
-        items = re.findall(r'<li class="binItem">(.*?)</li>', html_text, flags=re.DOTALL)
+        items = re.findall(
+            r'<li class="binItem">(.*?)</li>', html_text, flags=re.DOTALL
+        )
         entries = []
 
         for item in items:
-            title_match = re.search(r'<h3>(.*?)</h3>', item, flags=re.DOTALL)
-            date_match = re.search(r'(\d{2}/\d{2}/\d{4})', item)
+            title_match = re.search(r"<h3>(.*?)</h3>", item, flags=re.DOTALL)
+            date_match = re.search(r"(\d{2}/\d{2}/\d{4})", item)
             if not title_match or not date_match:
                 continue
 
-            waste_type = re.sub(r'\s+', ' ', unescape(title_match.group(1))).strip()
-            day, month, year = date_match.group(1).split('/')
+            waste_type = re.sub(r"\s+", " ", unescape(title_match.group(1))).strip()
+            day, month, year = date_match.group(1).split("/")
             icon = None
             lowered = waste_type.lower()
             for token, mapped_icon in ICON_MAP.items():
@@ -179,7 +187,9 @@ class Source:
         sid = await self._init_session()
         address_token, uprn_value, echo_address_point = await self._resolve_identifiers(sid)
 
-        collections_data = await self._fetch_collections(sid, address_token, uprn_value, echo_address_point)
+        collections_data = await self._fetch_collections(
+            sid, address_token, uprn_value, echo_address_point
+        )
 
         row = collections_data.get("rows_data", {}).get("0", {})
         html_text = row.get("dispHTML", "")
@@ -193,7 +203,9 @@ class Source:
 
         # Only fetch the calendar when needed (to diagnose why no entries were returned).
         if row.get("lastCollection") == "NaN-aN-aN":
-            calendar_data = await self._fetch_calendar(sid, address_token, uprn_value, echo_address_point)
+            calendar_data = await self._fetch_calendar(
+                sid, address_token, uprn_value, echo_address_point
+            )
             calendar = calendar_data.get("rows_data", {}).get("0", {}).get("calendar")
             raise SourceArgumentException(
                 arg,

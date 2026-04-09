@@ -32,7 +32,10 @@ class Source:
     async def fetch(self):
 
         s = httpx.AsyncClient(follow_redirects=True)
-        r = await s.get(f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35", headers=HEADERS)
+        r = await s.get(
+            f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35",
+            headers=HEADERS,
+        )
         json_data = json.loads(r.text)["BinCollections"]
 
         entries = []
@@ -41,7 +44,9 @@ class Source:
             for bin in day:
                 entries.append(
                     Collection(
-                        date=datetime.strptime(bin["JobScheduledStart"], "%Y-%m-%dT00:00:00").date(),
+                        date=datetime.strptime(
+                            bin["JobScheduledStart"], "%Y-%m-%dT00:00:00"
+                        ).date(),
                         t=bin["BinType"],
                         icon=ICON_MAP.get(bin["BinType"].upper()),
                     )

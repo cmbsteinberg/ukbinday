@@ -1,7 +1,5 @@
-from datetime import datetime
-
 import httpx
-
+from datetime import datetime
 from api.compat.ukbcd.common import date_format
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 

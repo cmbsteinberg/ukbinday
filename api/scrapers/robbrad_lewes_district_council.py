@@ -1,10 +1,10 @@
 # Eastbourne uses the same script.
 
-import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.ukbcd.common import *
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
+import httpx
 
 
 # import the wonderful Beautiful Soup and the URL grabber

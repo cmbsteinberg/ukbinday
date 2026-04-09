@@ -40,7 +40,10 @@ class Source:
 
         for row in x:
             fields = row.findChildren()
-            if fields[0].text.strip() == "Please select an address to view the upcoming collections.":
+            if (
+                fields[0].text.strip()
+                == "Please select an address to view the upcoming collections."
+            ):
                 continue
 
             entries.append(

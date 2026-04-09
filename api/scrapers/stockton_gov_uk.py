@@ -36,7 +36,7 @@ class Source:
         self._uprn: str | int = uprn
 
     async def fetch(self):
-        """Fetch using curl_cffi to bypass Cloudflare anti-bot protection"""
+        """Fetch using curl_cffi to bypass Cloudflare anti-bot protection."""
         scraper = _CurlCffiClient(follow_redirects=True)
 
         # Start a session with the target URL
@@ -52,7 +52,9 @@ class Source:
             attrs={"id": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_FORM"},
         )
         if not form or not form.get("action"):
-            raise ValueError("Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_FORM or action")
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_FORM or action"
+            )
         form_url = form["action"]
 
         pageSessionId_input = soup.find(
@@ -68,11 +70,17 @@ class Source:
             attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_NONCE"},
         )
         if not pageSessionId_input or not pageSessionId_input.get("value"):
-            raise ValueError("Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_PAGESESSIONID")
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_PAGESESSIONID"
+            )
         if not sessionId_input or not sessionId_input.get("value"):
-            raise ValueError("Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_SESSIONID")
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_SESSIONID"
+            )
         if not nonce_input or not nonce_input.get("value"):
-            raise ValueError("Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_NONCE")
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_NONCE"
+            )
 
         pageSessionId = pageSessionId_input["value"]
         sessionId = sessionId_input["value"]
@@ -99,10 +107,14 @@ class Source:
         )
         script = soup.find("script", string=pattern)
         if not script:
-            raise ValueError("Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2FormData in response")
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2FormData in response"
+            )
         match = pattern.search(script.get_text())
         if not match:
-            raise ValueError("Could not extract LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2FormData value")
+            raise ValueError(
+                "Could not extract LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2FormData value"
+            )
         response_data = match.group(1)
 
         # Decode base64 encoded response data and convert to JSON

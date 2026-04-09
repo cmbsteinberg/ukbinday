@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 import httpx
@@ -85,6 +86,7 @@ class Source:
 
     async def fetch(self) -> list[Collection]:
         import asyncio
+        from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
