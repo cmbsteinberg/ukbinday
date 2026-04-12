@@ -10,7 +10,7 @@
       "council": "api.compat.curl_cffi_fallback",
       "label": "",
       "status": "passed",
-      "duration": 0.04
+      "duration": 0.01
     },
     {
       "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.collection]",
@@ -31,7 +31,7 @@
       "council": "api.compat.hacs.service.ICS",
       "label": "",
       "status": "passed",
-      "duration": 0.05
+      "duration": 0.01
     },
     {
       "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.SSLError]",
@@ -52,7 +52,7 @@
       "council": "api.compat.requests_fallback",
       "label": "",
       "status": "passed",
-      "duration": 0.05
+      "duration": 0.02
     },
     {
       "node_id": "tests/test_ci.py::test_compat_imports[api.compat.ukbcd.common]",
@@ -108,7 +108,7 @@
       "council": "",
       "label": "",
       "status": "passed",
-      "duration": 0.01
+      "duration": 0.0
     },
     {
       "node_id": "tests/test_ci.py::test_registry_loads_all_scrapers",
