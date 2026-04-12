@@ -1,0 +1,1959 @@
+{
+  "total_test_cases": 44,
+  "passed": 9,
+  "failed": 35,
+  "pass_rate": "20.5%",
+  "concurrency": 10,
+  "timeout_s": 120,
+  "timing": {
+    "min_s": 0.002,
+    "max_s": 60.027,
+    "median_s": 30.013,
+    "mean_s": 17.445,
+    "p95_s": 32.817,
+    "total_wall_clock_s": 94.766
+  },
+  "failure_groups": {
+    "http_504": {
+      "count": 18,
+      "cases": [
+        {
+          "council": "ukbcd_barnet_council",
+          "label": "Barnet",
+          "uprn": "0",
+          "elapsed_s": 30.043,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_ceredigion_county_council",
+          "label": "Ceredigion",
+          "uprn": "0",
+          "elapsed_s": 30.725,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_cotswold_district_council",
+          "label": "Cotswold",
+          "uprn": "0",
+          "elapsed_s": 30.732,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_east_lindsey_district_council",
+          "label": "East Lindsey",
+          "uprn": "0",
+          "elapsed_s": 30.1,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_east_suffolk_council",
+          "label": "East Suffolk",
+          "uprn": "10093544720",
+          "elapsed_s": 30.127,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_epping_forest_district_council",
+          "label": "Epping Forest",
+          "uprn": "0",
+          "elapsed_s": 30.025,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_forest_of_dean_district_council",
+          "label": "Forest of Dean",
+          "uprn": "0",
+          "elapsed_s": 30.016,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_halton_borough_council",
+          "label": "Halton",
+          "uprn": "0",
+          "elapsed_s": 30.014,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_hertsmere_borough_council",
+          "label": "Hertsmere",
+          "uprn": "0",
+          "elapsed_s": 30.019,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_mid_ulster_district_council",
+          "label": "Mid Ulster",
+          "uprn": "0",
+          "elapsed_s": 30.015,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_north_devon_county_council",
+          "label": "North Devon",
+          "uprn": "100040249471",
+          "elapsed_s": 30.013,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_north_east_derbyshire_district_council",
+          "label": "North East Derbyshire",
+          "uprn": "010034492222",
+          "elapsed_s": 30.013,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_powys_council",
+          "label": "Powys",
+          "uprn": "0",
+          "elapsed_s": 30.021,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_slough_borough_council",
+          "label": "Slough",
+          "uprn": "0",
+          "elapsed_s": 30.014,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_test_valley_borough_council",
+          "label": "Test Valley",
+          "uprn": "0",
+          "elapsed_s": 30.021,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_three_rivers_district_council",
+          "label": "Three Rivers",
+          "uprn": "100080913662",
+          "elapsed_s": 30.013,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_torbay_council",
+          "label": "Torbay",
+          "uprn": "10000016984",
+          "elapsed_s": 30.019,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_winchester_city_council",
+          "label": "Winchester",
+          "uprn": "0",
+          "elapsed_s": 30.02,
+          "status_code": 504,
+          "error_class": null,
+          "error_detail": "Your council's website is taking too long to respond. Please try again later.",
+          "error_message": ""
+        }
+      ]
+    },
+    "http_503": {
+      "count": 17,
+      "cases": [
+        {
+          "council": "ukbcd_argylland_bute_council",
+          "label": "Argyll and Bute",
+          "uprn": "000125011723",
+          "elapsed_s": 9.371,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_babergh_district_council",
+          "label": "Babergh",
+          "uprn": "0",
+          "elapsed_s": 7.436,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_boston_borough_council",
+          "label": "Boston",
+          "uprn": "0",
+          "elapsed_s": 30.71,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_brightonand_hove_city_council",
+          "label": "Brighton and Hove",
+          "uprn": "0",
+          "elapsed_s": 4.794,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_edinburgh_city_council",
+          "label": "City of Edinburgh",
+          "uprn": "0",
+          "elapsed_s": 0.008,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_enfield_council",
+          "label": "Enfield",
+          "uprn": "0",
+          "elapsed_s": 60.027,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_epsomand_ewell_borough_council",
+          "label": "Epsom and Ewell",
+          "uprn": "100061349083",
+          "elapsed_s": 0.801,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_great_yarmouth_borough_council",
+          "label": "Great Yarmouth",
+          "uprn": "100090834792",
+          "elapsed_s": 0.121,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_hillingdon",
+          "label": "Hillingdon",
+          "uprn": "0",
+          "elapsed_s": 0.171,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_knowsley_m_b_council",
+          "label": "Knowsley",
+          "uprn": "0",
+          "elapsed_s": 36.97,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_london_borough_of_richmond_upon_thames",
+          "label": "Richmond upon Thames",
+          "uprn": "0",
+          "elapsed_s": 0.002,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_mid_suffolk_district_council",
+          "label": "Mid Suffolk",
+          "uprn": "0",
+          "elapsed_s": 1.977,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_new_forest_council",
+          "label": "New Forest",
+          "uprn": "100060482345",
+          "elapsed_s": 0.792,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_northumberland_council",
+          "label": "Northumberland",
+          "uprn": "010096302588",
+          "elapsed_s": 3.148,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_somerset_council",
+          "label": "Somerset",
+          "uprn": "0",
+          "elapsed_s": 4.666,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_staffordshire_moorlands_district_council",
+          "label": "Staffordshire Moorlands",
+          "uprn": "100031863037",
+          "elapsed_s": 4.986,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        },
+        {
+          "council": "ukbcd_stirling_council",
+          "label": "Stirling",
+          "uprn": "0",
+          "elapsed_s": 0.061,
+          "status_code": 503,
+          "error_class": null,
+          "error_detail": "Something went wrong while fetching your collection schedule. Please try again later.",
+          "error_message": ""
+        }
+      ]
+    }
+  },
+  "all_results": [
+    {
+      "council": "ukbcd_argylland_bute_council",
+      "label": "Argyll and Bute",
+      "uprn": "000125011723",
+      "query_params": {
+        "council": "ukbcd_argylland_bute_council",
+        "postcode": "PA286LJ"
+      },
+      "endpoint": "/lookup/000125011723",
+      "passed": false,
+      "elapsed_s": 9.371,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "cb8b7c27",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_babergh_district_council",
+      "label": "Babergh",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_babergh_district_council",
+        "house_number": "Little Changes",
+        "postcode": "CO6 4RA"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 7.436,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "8b77813a",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_barnet_council",
+      "label": "Barnet",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_barnet_council",
+        "house_number": "26A",
+        "postcode": "EN4 8TB"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.043,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "47cc3c3a",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_basildon_council",
+      "label": "Basildon",
+      "uprn": "10013350430",
+      "query_params": {
+        "council": "ukbcd_basildon_council"
+      },
+      "endpoint": "/lookup/10013350430",
+      "passed": true,
+      "elapsed_s": 1.668,
+      "status_code": 200,
+      "response_headers": {
+        "content-length": "450",
+        "content-type": "application/json",
+        "x-request-id": "f83313fb",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 450,
+      "response_body_preview": "{\"uprn\":\"10013350430\",\"council\":\"ukbcd_basildon_council\",\"cached\":false,\"cached_at\":null,\"collections\":[{\"date\":\"2026-04-13\",\"type\":\"Black Wheelie Bin\",\"icon\":null},{\"date\":\"2026-04-13\",\"type\":\"Green Wheelie Bin (Active)\",\"icon\":null},{\"date\":\"2026-04-13\",\"type\":\"Green Caddy\",\"icon\":null},{\"date\":\"2026-04-20\",\"type\":\"Orange Box\",\"icon\":null},{\"date\":\"2026-04-13\",\"type\":\"Blue Bag\",\"icon\":null},{\"date\":\"2026-04-13\",\"type\":\"White Bag\",\"icon\":null}]}",
+      "response_json": {
+        "uprn": "10013350430",
+        "council": "ukbcd_basildon_council",
+        "cached": false,
+        "cached_at": null,
+        "collections": [
+          {
+            "date": "2026-04-13",
+            "type": "Black Wheelie Bin",
+            "icon": null
+          },
+          {
+            "date": "2026-04-13",
+            "type": "Green Wheelie Bin (Active)",
+            "icon": null
+          },
+          {
+            "date": "2026-04-13",
+            "type": "Green Caddy",
+            "icon": null
+          },
+          {
+            "date": "2026-04-20",
+            "type": "Orange Box",
+            "icon": null
+          },
+          {
+            "date": "2026-04-13",
+            "type": "Blue Bag",
+            "icon": null
+          },
+          {
+            "date": "2026-04-13",
+            "type": "White Bag",
+            "icon": null
+          }
+        ]
+      },
+      "collections_count": 6,
+      "first_collection": {
+        "date": "2026-04-13",
+        "type": "Black Wheelie Bin",
+        "icon": null
+      },
+      "last_collection": {
+        "date": "2026-04-13",
+        "type": "White Bag",
+        "icon": null
+      },
+      "collection_types": [
+        "Black Wheelie Bin",
+        "Blue Bag",
+        "Green Caddy",
+        "Green Wheelie Bin (Active)",
+        "Orange Box",
+        "White Bag"
+      ]
+    },
+    {
+      "council": "ukbcd_blaenau_gwent_county_borough_council",
+      "label": "Blaenau Gwent",
+      "uprn": "100100471367",
+      "query_params": {
+        "council": "ukbcd_blaenau_gwent_county_borough_council",
+        "postcode": "NP23 7TE"
+      },
+      "endpoint": "/lookup/100100471367",
+      "passed": true,
+      "elapsed_s": 9.12,
+      "status_code": 200,
+      "response_headers": {
+        "content-length": "127",
+        "content-type": "application/json",
+        "x-request-id": "f0cbec8b",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 127,
+      "response_body_preview": "{\"uprn\":\"100100471367\",\"council\":\"ukbcd_blaenau_gwent_county_borough_council\",\"cached\":false,\"cached_at\":null,\"collections\":[]}",
+      "response_json": {
+        "uprn": "100100471367",
+        "council": "ukbcd_blaenau_gwent_county_borough_council",
+        "cached": false,
+        "cached_at": null,
+        "collections": []
+      },
+      "collections_count": 0
+    },
+    {
+      "council": "ukbcd_boston_borough_council",
+      "label": "Boston",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_boston_borough_council",
+        "house_number": "CEDAR",
+        "postcode": "PE20 1AY"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.71,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "60ba8188",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_brightonand_hove_city_council",
+      "label": "Brighton and Hove",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_brightonand_hove_city_council",
+        "house_number": "44",
+        "postcode": "BN1 8NE"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 4.794,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "03d89b64",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_ceredigion_county_council",
+      "label": "Ceredigion",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_ceredigion_county_council",
+        "house_number": "BLAEN CWMMAGWR, TRISANT, CEREDIGION, SY23 4RQ",
+        "postcode": "SY23 4RQ"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.725,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "3ab632a0",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_cotswold_district_council",
+      "label": "Cotswold",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_cotswold_district_council",
+        "house_number": "19 SUMMERS WAY, MORETON-IN-MARSH, GL56 0GB",
+        "postcode": "GL56 0GB"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.732,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "94d2b792",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_dumfriesand_galloway_council",
+      "label": "Dumfries and Galloway Council",
+      "uprn": "137034556",
+      "query_params": {
+        "council": "ukbcd_dumfriesand_galloway_council"
+      },
+      "endpoint": "/lookup/137034556",
+      "passed": true,
+      "elapsed_s": 1.667,
+      "status_code": 200,
+      "response_headers": {
+        "content-length": "785",
+        "content-type": "application/json",
+        "x-request-id": "f7cb9da9",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 785,
+      "response_body_preview": "{\"uprn\":\"137034556\",\"council\":\"ukbcd_dumfriesand_galloway_council\",\"cached\":false,\"cached_at\":null,\"collections\":[{\"date\":\"2026-04-17\",\"type\":\"Grey lidded bins for Non-recyclable waste\",\"icon\":null},{\"date\":\"2026-04-24\",\"type\":\"Red lidded bins for Cans and plastics\",\"icon\":null},{\"date\":\"2026-05-01\",\"type\":\"Grey lidded bins for Non-recyclable waste\",\"icon\":null},{\"date\":\"2026-05-08\",\"type\":\"Blue lidded bins for Paper and cardboard\",\"icon\":null},{\"date\":\"2026-05-15\",\"type\":\"Grey lidded bins for Non-recyclable waste\",\"icon\":null},{\"date\":\"2026-05-22\",\"type\":\"Red lidded bins for Cans and plastics\",\"icon\":null},{\"date\":\"2026-05-29\",\"type\":\"Grey lidded bins for Non-recyclable waste\",\"icon\":null},{\"date\":\"2026-06-05\",\"type\":\"Blue lidded bins for Paper and cardboard\",\"icon\":null}]}",
+      "response_json": {
+        "uprn": "137034556",
+        "council": "ukbcd_dumfriesand_galloway_council",
+        "cached": false,
+        "cached_at": null,
+        "collections": [
+          {
+            "date": "2026-04-17",
+            "type": "Grey lidded bins for Non-recyclable waste",
+            "icon": null
+          },
+          {
+            "date": "2026-04-24",
+            "type": "Red lidded bins for Cans and plastics",
+            "icon": null
+          },
+          {
+            "date": "2026-05-01",
+            "type": "Grey lidded bins for Non-recyclable waste",
+            "icon": null
+          },
+          {
+            "date": "2026-05-08",
+            "type": "Blue lidded bins for Paper and cardboard",
+            "icon": null
+          },
+          {
+            "date": "2026-05-15",
+            "type": "Grey lidded bins for Non-recyclable waste",
+            "icon": null
+          },
+          {
+            "date": "2026-05-22",
+            "type": "Red lidded bins for Cans and plastics",
+            "icon": null
+          },
+          {
+            "date": "2026-05-29",
+            "type": "Grey lidded bins for Non-recyclable waste",
+            "icon": null
+          },
+          {
+            "date": "2026-06-05",
+            "type": "Blue lidded bins for Paper and cardboard",
+            "icon": null
+          }
+        ]
+      },
+      "collections_count": 8,
+      "first_collection": {
+        "date": "2026-04-17",
+        "type": "Grey lidded bins for Non-recyclable waste",
+        "icon": null
+      },
+      "last_collection": {
+        "date": "2026-06-05",
+        "type": "Blue lidded bins for Paper and cardboard",
+        "icon": null
+      },
+      "collection_types": [
+        "Blue lidded bins for Paper and cardboard",
+        "Grey lidded bins for Non-recyclable waste",
+        "Red lidded bins for Cans and plastics"
+      ]
+    },
+    {
+      "council": "ukbcd_east_lindsey_district_council",
+      "label": "East Lindsey",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_east_lindsey_district_council",
+        "house_number": "1",
+        "postcode": "PE22 0YD"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.1,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "2d5ec378",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_east_suffolk_council",
+      "label": "East Suffolk",
+      "uprn": "10093544720",
+      "query_params": {
+        "council": "ukbcd_east_suffolk_council",
+        "postcode": "IP11 9FJ"
+      },
+      "endpoint": "/lookup/10093544720",
+      "passed": false,
+      "elapsed_s": 30.127,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "c754baeb",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_edinburgh_city_council",
+      "label": "City of Edinburgh",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_edinburgh_city_council",
+        "house_number": "Tuesday",
+        "postcode": "Week 1"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 0.008,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "3c650479",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_enfield_council",
+      "label": "Enfield",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_enfield_council",
+        "house_number": "111",
+        "postcode": "N13 5AJ"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 60.027,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "744dcdac",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_epping_forest_district_council",
+      "label": "Epping Forest",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_epping_forest_district_council",
+        "postcode": "IG9 6EP"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.025,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "b23a1f37",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_epsomand_ewell_borough_council",
+      "label": "Epsom and Ewell",
+      "uprn": "100061349083",
+      "query_params": {
+        "council": "ukbcd_epsomand_ewell_borough_council",
+        "postcode": "KT17 2RG"
+      },
+      "endpoint": "/lookup/100061349083",
+      "passed": false,
+      "elapsed_s": 0.801,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "f7a79f4b",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_forest_of_dean_district_council",
+      "label": "Forest of Dean",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_forest_of_dean_district_council",
+        "house_number": "ELMOGAL, PARKEND ROAD, BREAM, LYDNEY",
+        "postcode": "GL15 6JT"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.016,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "c49e3c1a",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_gloucester_city_council",
+      "label": "Gloucester",
+      "uprn": "100120479507",
+      "query_params": {
+        "council": "ukbcd_gloucester_city_council",
+        "house_number": "111",
+        "postcode": "GL2 0RR"
+      },
+      "endpoint": "/lookup/100120479507",
+      "passed": true,
+      "elapsed_s": 4.642,
+      "status_code": 200,
+      "response_headers": {
+        "content-length": "114",
+        "content-type": "application/json",
+        "x-request-id": "932def37",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 114,
+      "response_body_preview": "{\"uprn\":\"100120479507\",\"council\":\"ukbcd_gloucester_city_council\",\"cached\":false,\"cached_at\":null,\"collections\":[]}",
+      "response_json": {
+        "uprn": "100120479507",
+        "council": "ukbcd_gloucester_city_council",
+        "cached": false,
+        "cached_at": null,
+        "collections": []
+      },
+      "collections_count": 0
+    },
+    {
+      "council": "ukbcd_great_yarmouth_borough_council",
+      "label": "Great Yarmouth",
+      "uprn": "100090834792",
+      "query_params": {
+        "council": "ukbcd_great_yarmouth_borough_council",
+        "postcode": "NR31 7EB"
+      },
+      "endpoint": "/lookup/100090834792",
+      "passed": false,
+      "elapsed_s": 0.121,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "7b5160c1",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_halton_borough_council",
+      "label": "Halton",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_halton_borough_council",
+        "house_number": "12",
+        "postcode": "WA7 4HA"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.014,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "4f778986",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_hertsmere_borough_council",
+      "label": "Hertsmere",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_hertsmere_borough_council",
+        "house_number": "1",
+        "postcode": "WD7 9HZ"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.019,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "0cdfd371",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_hillingdon",
+      "label": "Hillingdon",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_hillingdon",
+        "house_number": "1, Milverton Drive, Ickenham, UB10 8PP, Ickenham, Hillingdon",
+        "postcode": "UB10 8PP"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 0.171,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "2763e27d",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_hyndburn_borough_council",
+      "label": "Hyndburn",
+      "uprn": "100010448773",
+      "query_params": {
+        "council": "ukbcd_hyndburn_borough_council",
+        "postcode": "BB1 4DJ"
+      },
+      "endpoint": "/lookup/100010448773",
+      "passed": true,
+      "elapsed_s": 1.208,
+      "status_code": 200,
+      "response_headers": {
+        "content-length": "285",
+        "content-type": "application/json",
+        "x-request-id": "cebc222c",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 285,
+      "response_body_preview": "{\"uprn\":\"100010448773\",\"council\":\"ukbcd_hyndburn_borough_council\",\"cached\":false,\"cached_at\":null,\"collections\":[{\"date\":\"2026-04-13\",\"type\":\"RECYCLING - BLUE\",\"icon\":null},{\"date\":\"2026-04-20\",\"type\":\"REFUSE\",\"icon\":null},{\"date\":\"2026-04-27\",\"type\":\"RECYCLING - BROWN\",\"icon\":null}]}",
+      "response_json": {
+        "uprn": "100010448773",
+        "council": "ukbcd_hyndburn_borough_council",
+        "cached": false,
+        "cached_at": null,
+        "collections": [
+          {
+            "date": "2026-04-13",
+            "type": "RECYCLING - BLUE",
+            "icon": null
+          },
+          {
+            "date": "2026-04-20",
+            "type": "REFUSE",
+            "icon": null
+          },
+          {
+            "date": "2026-04-27",
+            "type": "RECYCLING - BROWN",
+            "icon": null
+          }
+        ]
+      },
+      "collections_count": 3,
+      "first_collection": {
+        "date": "2026-04-13",
+        "type": "RECYCLING - BLUE",
+        "icon": null
+      },
+      "last_collection": {
+        "date": "2026-04-27",
+        "type": "RECYCLING - BROWN",
+        "icon": null
+      },
+      "collection_types": [
+        "RECYCLING - BLUE",
+        "RECYCLING - BROWN",
+        "REFUSE"
+      ]
+    },
+    {
+      "council": "ukbcd_knowsley_m_b_council",
+      "label": "Knowsley",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_knowsley_m_b_council",
+        "house_number": "2 ALTMOOR ROAD HUYTON L36 3UY",
+        "postcode": "L36 3UY"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 36.97,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "50885b39",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_london_borough_of_richmond_upon_thames",
+      "label": "Richmond upon Thames",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_london_borough_of_richmond_upon_thames",
+        "house_number": "March Road"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 0.002,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "8b09e183",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_mid_suffolk_district_council",
+      "label": "Mid Suffolk",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_mid_suffolk_district_council",
+        "house_number": "91",
+        "postcode": "IP23 8EF"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 1.977,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "e42adec6",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_mid_ulster_district_council",
+      "label": "Mid Ulster",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_mid_ulster_district_council",
+        "house_number": "20 HILLHEAD, STEWARTSTOWN, BT71 5HY",
+        "postcode": "BT71 5HY"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.015,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "c1260602",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_new_forest_council",
+      "label": "New Forest",
+      "uprn": "100060482345",
+      "query_params": {
+        "council": "ukbcd_new_forest_council",
+        "postcode": "SO41 0GJ"
+      },
+      "endpoint": "/lookup/100060482345",
+      "passed": false,
+      "elapsed_s": 0.792,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "c3825ee7",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_north_devon_county_council",
+      "label": "North Devon",
+      "uprn": "100040249471",
+      "query_params": {
+        "council": "ukbcd_north_devon_county_council",
+        "house_number": "1",
+        "postcode": "EX31 2LE"
+      },
+      "endpoint": "/lookup/100040249471",
+      "passed": false,
+      "elapsed_s": 30.013,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "b5f119b1",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_north_east_derbyshire_district_council",
+      "label": "North East Derbyshire",
+      "uprn": "010034492222",
+      "query_params": {
+        "council": "ukbcd_north_east_derbyshire_district_council",
+        "postcode": "S42 5RB"
+      },
+      "endpoint": "/lookup/010034492222",
+      "passed": false,
+      "elapsed_s": 30.013,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "667ec0c8",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_northumberland_council",
+      "label": "Northumberland",
+      "uprn": "010096302588",
+      "query_params": {
+        "council": "ukbcd_northumberland_council",
+        "postcode": "NE65 0ZP"
+      },
+      "endpoint": "/lookup/010096302588",
+      "passed": false,
+      "elapsed_s": 3.148,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "e5db3bcc",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_powys_council",
+      "label": "Powys",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_powys_council",
+        "house_number": "LANE COTTAGE",
+        "postcode": "HR3 5JS"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.021,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "9685a871",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_sevenoaks_district_council",
+      "label": "Sevenoaks",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_sevenoaks_district_council",
+        "house_number": "60 Hever Road",
+        "postcode": "TN15 6EB"
+      },
+      "endpoint": "/lookup/0",
+      "passed": true,
+      "elapsed_s": 0.493,
+      "status_code": 200,
+      "response_headers": {
+        "content-length": "106",
+        "content-type": "application/json",
+        "x-request-id": "01b3d229",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 106,
+      "response_body_preview": "{\"uprn\":\"0\",\"council\":\"ukbcd_sevenoaks_district_council\",\"cached\":false,\"cached_at\":null,\"collections\":[]}",
+      "response_json": {
+        "uprn": "0",
+        "council": "ukbcd_sevenoaks_district_council",
+        "cached": false,
+        "cached_at": null,
+        "collections": []
+      },
+      "collections_count": 0
+    },
+    {
+      "council": "ukbcd_slough_borough_council",
+      "label": "Slough",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_slough_borough_council",
+        "postcode": "SL2 2EW"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.014,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "51f9ebed",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_somerset_council",
+      "label": "Somerset",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_somerset_council",
+        "house_number": "5",
+        "postcode": "TA6 4AA"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 4.666,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "446072f2",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_staffordshire_moorlands_district_council",
+      "label": "Staffordshire Moorlands",
+      "uprn": "100031863037",
+      "query_params": {
+        "council": "ukbcd_staffordshire_moorlands_district_council",
+        "postcode": "ST8 6HN"
+      },
+      "endpoint": "/lookup/100031863037",
+      "passed": false,
+      "elapsed_s": 4.986,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "4f92709e",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_stirling_council",
+      "label": "Stirling",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_stirling_council",
+        "house_number": "5, SUNNYLAW ROAD, BRIDGE OF ALLAN, STIRLING, FK9 4QA",
+        "postcode": "FK9 4QA"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 0.061,
+      "status_code": 503,
+      "response_headers": {
+        "content-length": "98",
+        "content-type": "application/json",
+        "x-request-id": "8f0666e5",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 98,
+      "response_body_preview": "{\"detail\":\"Something went wrong while fetching your collection schedule. Please try again later.\"}",
+      "response_json": {
+        "detail": "Something went wrong while fetching your collection schedule. Please try again later."
+      },
+      "error_type": "http_503",
+      "error_detail": "Something went wrong while fetching your collection schedule. Please try again later."
+    },
+    {
+      "council": "ukbcd_teignbridge_council",
+      "label": "Teignbridge",
+      "uprn": "100040338776",
+      "query_params": {
+        "council": "ukbcd_teignbridge_council"
+      },
+      "endpoint": "/lookup/100040338776",
+      "passed": true,
+      "elapsed_s": 1.315,
+      "status_code": 200,
+      "response_headers": {
+        "content-length": "991",
+        "content-type": "application/json",
+        "x-request-id": "d6ed5ef5",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 991,
+      "response_body_preview": "{\"uprn\":\"100040338776\",\"council\":\"ukbcd_teignbridge_council\",\"cached\":false,\"cached_at\":null,\"collections\":[{\"date\":\"2026-04-17\",\"type\":\"Food waste container\",\"icon\":null},{\"date\":\"2026-04-17\",\"type\":\"Black box\",\"icon\":null},{\"date\":\"2026-04-17\",\"type\":\"Green box\",\"icon\":null},{\"date\":\"2026-04-17\",\"type\":\"Sack for paper\",\"icon\":null},{\"date\":\"2026-04-17\",\"type\":\"Garden waste - green bin\",\"icon\":null},{\"date\":\"2026-04-23\",\"type\":\"Food waste container\",\"icon\":null},{\"date\":\"2026-04-23\",\"type\":\"Black box\",\"icon\":null},{\"date\":\"2026-04-23\",\"type\":\"Green box\",\"icon\":null},{\"date\":\"2026-04-23\",\"type\":\"Sack for paper\",\"icon\":null},{\"date\":\"2026-04-23\",\"type\":\"Refuse - black bin\",\"icon\":null},{\"date\":\"2026-04-30\",\"type\":\"Food waste container\",\"icon\":null},{\"date\":\"2026-04-30\",\"type\":\"Black box\",\"icon\":null},{\"date\":\"2026-04-30\",\"type\":\"Green box\",\"icon\":null},{\"date\":\"2026-04-30\",\"type\":\"Sack for paper\",\"icon\":null},{\"date\":\"2026-04-30\",\"type\":\"Garden waste - green bin\",\"icon\":null}]}",
+      "response_json": {
+        "uprn": "100040338776",
+        "council": "ukbcd_teignbridge_council",
+        "cached": false,
+        "cached_at": null,
+        "collections": [
+          {
+            "date": "2026-04-17",
+            "type": "Food waste container",
+            "icon": null
+          },
+          {
+            "date": "2026-04-17",
+            "type": "Black box",
+            "icon": null
+          },
+          {
+            "date": "2026-04-17",
+            "type": "Green box",
+            "icon": null
+          },
+          {
+            "date": "2026-04-17",
+            "type": "Sack for paper",
+            "icon": null
+          },
+          {
+            "date": "2026-04-17",
+            "type": "Garden waste - green bin",
+            "icon": null
+          },
+          {
+            "date": "2026-04-23",
+            "type": "Food waste container",
+            "icon": null
+          },
+          {
+            "date": "2026-04-23",
+            "type": "Black box",
+            "icon": null
+          },
+          {
+            "date": "2026-04-23",
+            "type": "Green box",
+            "icon": null
+          },
+          {
+            "date": "2026-04-23",
+            "type": "Sack for paper",
+            "icon": null
+          },
+          {
+            "date": "2026-04-23",
+            "type": "Refuse - black bin",
+            "icon": null
+          },
+          {
+            "date": "2026-04-30",
+            "type": "Food waste container",
+            "icon": null
+          },
+          {
+            "date": "2026-04-30",
+            "type": "Black box",
+            "icon": null
+          },
+          {
+            "date": "2026-04-30",
+            "type": "Green box",
+            "icon": null
+          },
+          {
+            "date": "2026-04-30",
+            "type": "Sack for paper",
+            "icon": null
+          },
+          {
+            "date": "2026-04-30",
+            "type": "Garden waste - green bin",
+            "icon": null
+          }
+        ]
+      },
+      "collections_count": 15,
+      "first_collection": {
+        "date": "2026-04-17",
+        "type": "Food waste container",
+        "icon": null
+      },
+      "last_collection": {
+        "date": "2026-04-30",
+        "type": "Garden waste - green bin",
+        "icon": null
+      },
+      "collection_types": [
+        "Black box",
+        "Food waste container",
+        "Garden waste - green bin",
+        "Green box",
+        "Refuse - black bin",
+        "Sack for paper"
+      ]
+    },
+    {
+      "council": "ukbcd_tendring_district_council",
+      "label": "Tendring",
+      "uprn": "100090604247",
+      "query_params": {
+        "council": "ukbcd_tendring_district_council",
+        "postcode": "CO15 4EU"
+      },
+      "endpoint": "/lookup/100090604247",
+      "passed": true,
+      "elapsed_s": 6.655,
+      "status_code": 200,
+      "response_headers": {
+        "content-length": "116",
+        "content-type": "application/json",
+        "x-request-id": "14c9d5e7",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 116,
+      "response_body_preview": "{\"uprn\":\"100090604247\",\"council\":\"ukbcd_tendring_district_council\",\"cached\":false,\"cached_at\":null,\"collections\":[]}",
+      "response_json": {
+        "uprn": "100090604247",
+        "council": "ukbcd_tendring_district_council",
+        "cached": false,
+        "cached_at": null,
+        "collections": []
+      },
+      "collections_count": 0
+    },
+    {
+      "council": "ukbcd_test_valley_borough_council",
+      "label": "Test Valley",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_test_valley_borough_council",
+        "house_number": "2",
+        "postcode": "SO51 0BY"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.021,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "ae0b7822",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_three_rivers_district_council",
+      "label": "Three Rivers",
+      "uprn": "100080913662",
+      "query_params": {
+        "council": "ukbcd_three_rivers_district_council",
+        "postcode": "WD3 7AZ"
+      },
+      "endpoint": "/lookup/100080913662",
+      "passed": false,
+      "elapsed_s": 30.013,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "84d27427",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_torbay_council",
+      "label": "Torbay",
+      "uprn": "10000016984",
+      "query_params": {
+        "council": "ukbcd_torbay_council",
+        "postcode": "TQ1 1AG"
+      },
+      "endpoint": "/lookup/10000016984",
+      "passed": false,
+      "elapsed_s": 30.019,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "c14acb97",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_winchester_city_council",
+      "label": "Winchester",
+      "uprn": "0",
+      "query_params": {
+        "council": "ukbcd_winchester_city_council",
+        "house_number": "12",
+        "postcode": "SO23 7GA"
+      },
+      "endpoint": "/lookup/0",
+      "passed": false,
+      "elapsed_s": 30.02,
+      "status_code": 504,
+      "response_headers": {
+        "content-length": "90",
+        "content-type": "application/json",
+        "x-request-id": "4a55b562",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 90,
+      "response_body_preview": "{\"detail\":\"Your council's website is taking too long to respond. Please try again later.\"}",
+      "response_json": {
+        "detail": "Your council's website is taking too long to respond. Please try again later."
+      },
+      "error_type": "http_504",
+      "error_detail": "Your council's website is taking too long to respond. Please try again later."
+    },
+    {
+      "council": "ukbcd_wychavon_district_council",
+      "label": "Wychavon",
+      "uprn": "100120716273",
+      "query_params": {
+        "council": "ukbcd_wychavon_district_council",
+        "postcode": "WR3 7RU"
+      },
+      "endpoint": "/lookup/100120716273",
+      "passed": true,
+      "elapsed_s": 32.817,
+      "status_code": 200,
+      "response_headers": {
+        "content-length": "254",
+        "content-type": "application/json",
+        "x-request-id": "e059bb51",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "response_size_bytes": 254,
+      "response_body_preview": "{\"uprn\":\"100120716273\",\"council\":\"ukbcd_wychavon_district_council\",\"cached\":false,\"cached_at\":null,\"collections\":[{\"date\":\"2026-04-17\",\"type\":\"Non-recyclable waste collection\",\"icon\":null},{\"date\":\"2026-04-24\",\"type\":\"Recycling collection\",\"icon\":null}]}",
+      "response_json": {
+        "uprn": "100120716273",
+        "council": "ukbcd_wychavon_district_council",
+        "cached": false,
+        "cached_at": null,
+        "collections": [
+          {
+            "date": "2026-04-17",
+            "type": "Non-recyclable waste collection",
+            "icon": null
+          },
+          {
+            "date": "2026-04-24",
+            "type": "Recycling collection",
+            "icon": null
+          }
+        ]
+      },
+      "collections_count": 2,
+      "first_collection": {
+        "date": "2026-04-17",
+        "type": "Non-recyclable waste collection",
+        "icon": null
+      },
+      "last_collection": {
+        "date": "2026-04-24",
+        "type": "Recycling collection",
+        "icon": null
+      },
+      "collection_types": [
+        "Non-recyclable waste collection",
+        "Recycling collection"
+      ]
+    }
+  ]
+}

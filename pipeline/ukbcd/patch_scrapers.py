@@ -29,9 +29,101 @@ logger = logging.getLogger(__name__)
 
 
 def is_selenium_scraper(file_path: Path) -> bool:
-    """Check if a scraper file uses selenium."""
-    content = file_path.read_text().lower()
-    return "selenium" in content or "webdriver" in content
+    """Check if a scraper file actually uses selenium (not just imports it).
+
+    Uses ruff F401 to detect unused selenium/webdriver imports. If every
+    selenium-related import is flagged unused, the scraper doesn't truly
+    depend on selenium and can be processed as a normal requests scraper.
+    """
+    import subprocess
+
+    content = file_path.read_text()
+    if "selenium" not in content.lower() and "webdriver" not in content.lower():
+        return False
+
+    # Count lines that are selenium/webdriver imports
+    selenium_import_lines = [
+        i + 1
+        for i, line in enumerate(content.splitlines())
+        if re.match(r"^\s*(?:from|import)\s+", line)
+        and ("selenium" in line.lower() or "webdriver" in line.lower())
+    ]
+    if not selenium_import_lines:
+        # Mentioned only in comments/docstrings, not imported
+        return False
+
+    try:
+        result = subprocess.run(
+            ["ruff", "check", "--select=F401", "--output-format=text", str(file_path)],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        # ruff output lines look like: "path.py:3:1: F401 `selenium.webdriver` imported but unused"
+        unused_line_nums = set()
+        for line in result.stdout.splitlines():
+            if "selenium" in line.lower() or "webdriver" in line.lower():
+                parts = line.split(":")
+                if len(parts) >= 2 and parts[1].strip().isdigit():
+                    unused_line_nums.add(int(parts[1].strip()))
+
+        if unused_line_nums and set(selenium_import_lines) <= unused_line_nums:
+            logger.info(f"Selenium imports unused in {file_path.name}, treating as non-selenium")
+            return False
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        pass  # ruff not available, fall through to conservative check
+
+    return True
+
+
+def _process_selenium_council(
+    council_name: str,
+    data: dict,
+    source_file: Path,
+    target_dir: Path,
+) -> str | None:
+    """Transpile a Selenium scraper to async Playwright. Returns sanitized filename or None."""
+    from pipeline.ukbcd.patch_selenium_scrapers import transpile
+
+    source_code = source_file.read_text()
+
+    # Get class name from original source
+    try:
+        tree = ast.parse(source_code)
+        class_name = get_class_name(tree)
+    except SyntaxError:
+        class_name = None
+
+    if not class_name:
+        logger.warning(f"Could not find class in {council_name} (Selenium), skipping.")
+        return None
+
+    # Rewrite UKBCD imports, convert any requests usage to httpx
+    source_code = rewrite_imports(source_code)
+    source_code = convert_requests_to_httpx_sync(source_code)
+
+    # Transpile Selenium → async Playwright
+    try:
+        transpiled = transpile(source_code)
+    except Exception as e:
+        logger.warning(f"Transpilation failed for {council_name}: {e}")
+        return None
+
+    # Generate adapter
+    params = detect_init_params(data)
+    title = data.get("wiki_name", "")
+    if not title:
+        title = re.sub(r"(?<!^)(?=[A-Z])", " ", council_name)
+    url = _resolve_url(data) or ""
+    adapter = generate_playwright_adapter_code(class_name, params, url, title)
+
+    final_source = transpiled + adapter
+    sanitized_name = "ukbcd_" + re.sub(r"(?<!^)(?=[A-Z])", "_", council_name).lower()
+    target_file = target_dir / f"{sanitized_name}.py"
+    target_file.write_text(final_source)
+
+    logger.info(f"Transpiled Selenium → Playwright: {council_name}")
+    return sanitized_name
 
 
 def get_class_name(tree: ast.AST) -> str | None:
@@ -235,10 +327,67 @@ def detect_init_params(data: dict) -> list[str]:
     return params
 
 
+def generate_playwright_adapter_code(
+    original_class_name: str, params: list[str], url: str, title: str
+) -> str:
+    """Generate the Source adapter class for async Playwright scrapers."""
+    init_args = ", ".join([f"{p}: str | None = None" for p in params])
+    init_body = "\n".join([f"        self.{p} = {p}" for p in params])
+
+    kwargs_lines = []
+    for p in params:
+        ukbcd_key = "paon" if p == "house_number" else p
+        kwargs_lines.append(f"        if self.{p}: kwargs['{ukbcd_key}'] = self.{p}")
+    kwargs_block = "\n".join(kwargs_lines)
+
+    return f'''
+
+# --- Adapter for Project API ---
+from api.compat.hacs import Collection  # type: ignore[attr-defined]
+
+TITLE = "{title}"
+URL = "{url}"
+TEST_CASES = {{}}
+
+
+class Source:
+    def __init__(self, {init_args}):
+{init_body}
+        self._scraper = {original_class_name}()
+
+    async def fetch(self) -> list[Collection]:
+        from datetime import datetime
+
+        kwargs = {{}}
+{kwargs_block}
+
+        data = await self._scraper.parse_data("", **kwargs)
+
+        entries = []
+        if isinstance(data, dict) and "bins" in data:
+            for item in data["bins"]:
+                bin_type = item.get("type")
+                date_str = item.get("collectionDate")
+                if not bin_type or not date_str:
+                    continue
+                try:
+                    if "-" in date_str:
+                        dt = datetime.strptime(date_str, "%Y-%m-%d").date()
+                    elif "/" in date_str:
+                        dt = datetime.strptime(date_str, "%d/%m/%Y").date()
+                    else:
+                        continue
+                    entries.append(Collection(date=dt, t=bin_type, icon=None))
+                except ValueError:
+                    continue
+        return entries
+'''
+
+
 def generate_adapter_code(
     original_class_name: str, params: list[str], url: str, title: str
 ) -> str:
-    """Generate the Source adapter class."""
+    """Generate the Source adapter class for requests-based scrapers."""
     init_args = ", ".join([f"{p}: str | None = None" for p in params])
     init_body = "\n".join([f"        self.{p} = {p}" for p in params])
 
@@ -326,7 +475,7 @@ def _process_council(
         return None
 
     if is_selenium_scraper(source_file):
-        return None
+        return _process_selenium_council(council_name, data, source_file, target_dir)
 
     source_code = source_file.read_text()
     new_source = rewrite_imports(source_code)
@@ -361,15 +510,17 @@ def _process_council(
 @dataclass
 class _PatchStats:
     added: int = 0
+    added_playwright: int = 0
     skipped_selenium: int = 0
     skipped_existing: int = 0
     lad_mappings: dict = field(default_factory=dict)
 
     def log_summary(self) -> None:
         logger.info("Summary:")
-        logger.info(f"  Added: {self.added}")
+        logger.info(f"  Added (requests): {self.added}")
+        logger.info(f"  Added (Playwright): {self.added_playwright}")
         logger.info(f"  Skipped (Existing/Mampfes): {self.skipped_existing}")
-        logger.info(f"  Skipped (Selenium): {self.skipped_selenium}")
+        logger.info(f"  Skipped (Selenium failures): {self.skipped_selenium}")
         logger.info(f"  LAD mappings: {len(self.lad_mappings)}")
 
 
@@ -464,16 +615,21 @@ def _patch_councils(
             continue
 
         # No HACS match -- create UKBCD scraper
+        source_file = councils_dir / f"{council_name}.py"
+        is_selenium = source_file.exists() and is_selenium_scraper(source_file)
+
         logger.info(f"Adding new scraper: {council_name} ({domain})")
         sanitized_name = _process_council(council_name, data, councils_dir, target_dir)
 
         if sanitized_name is None:
-            source_file = councils_dir / f"{council_name}.py"
-            if source_file.exists() and is_selenium_scraper(source_file):
+            if is_selenium:
                 stats.skipped_selenium += 1
             continue
 
-        stats.added += 1
+        if is_selenium:
+            stats.added_playwright += 1
+        else:
+            stats.added += 1
         # Update with actual sanitized name (should match ukbcd_name, but use
         # the real value from _process_council to be safe)
         for lad in lad_codes:

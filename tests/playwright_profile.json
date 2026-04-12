@@ -1,0 +1,438 @@
+{
+  "timing": {
+    "startup_s": 0.94,
+    "test_batch_s": 93.28,
+    "shutdown_s": 0.03,
+    "total_s": 94.6,
+    "per_test_min_s": 0.0,
+    "per_test_median_s": 10.1,
+    "per_test_p95_s": 32.4,
+    "per_test_max_s": 60.03
+  },
+  "memory": {
+    "baseline_mb": 28.4,
+    "after_startup_mb": 348.3,
+    "during_tests_mb": 986.2,
+    "peak_mb": 4173.2,
+    "after_shutdown_mb": 208.9,
+    "peak_children_count": 17,
+    "peak_snapshot": {
+      "python_rss_mb": 144.4,
+      "children_rss_mb": 4028.8,
+      "total_rss_mb": 4173.2,
+      "child_count": 17,
+      "children": [
+        {
+          "pid": 14811,
+          "name": "chrome-headless-shell",
+          "rss_mb": 554.9
+        },
+        {
+          "pid": 14827,
+          "name": "chrome-headless-shell",
+          "rss_mb": 477.0
+        },
+        {
+          "pid": 14802,
+          "name": "chrome-headless-shell",
+          "rss_mb": 422.7
+        },
+        {
+          "pid": 14825,
+          "name": "chrome-headless-shell",
+          "rss_mb": 403.8
+        },
+        {
+          "pid": 14797,
+          "name": "node",
+          "rss_mb": 237.8
+        },
+        {
+          "pid": 14819,
+          "name": "chrome-headless-shell",
+          "rss_mb": 231.2
+        },
+        {
+          "pid": 14831,
+          "name": "chrome-headless-shell",
+          "rss_mb": 217.4
+        },
+        {
+          "pid": 14824,
+          "name": "chrome-headless-shell",
+          "rss_mb": 213.5
+        },
+        {
+          "pid": 14818,
+          "name": "chrome-headless-shell",
+          "rss_mb": 207.8
+        },
+        {
+          "pid": 14813,
+          "name": "chrome-headless-shell",
+          "rss_mb": 156.8
+        }
+      ],
+      "timestamp": 6421.915336208
+    }
+  },
+  "results_summary": {
+    "total": 44,
+    "passed": 4,
+    "failed": 40
+  },
+  "results": [
+    {
+      "council": "ukbcd_argylland_bute_council",
+      "label": "Argyll and Bute",
+      "elapsed_s": 10.1,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_babergh_district_council",
+      "label": "Babergh",
+      "elapsed_s": 7.5,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_barnet_council",
+      "label": "Barnet",
+      "elapsed_s": 30.03,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_basildon_council",
+      "label": "Basildon",
+      "elapsed_s": 1.72,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_blaenau_gwent_county_borough_council",
+      "label": "Blaenau Gwent",
+      "elapsed_s": 7.59,
+      "status": 200,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_boston_borough_council",
+      "label": "Boston",
+      "elapsed_s": 30.6,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_brightonand_hove_city_council",
+      "label": "Brighton and Hove",
+      "elapsed_s": 4.62,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_ceredigion_county_council",
+      "label": "Ceredigion",
+      "elapsed_s": 30.63,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_cotswold_district_council",
+      "label": "Cotswold",
+      "elapsed_s": 30.63,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_dumfriesand_galloway_council",
+      "label": "Dumfries and Galloway Council",
+      "elapsed_s": 1.72,
+      "status": 200,
+      "collections": 8,
+      "passed": true
+    },
+    {
+      "council": "ukbcd_east_lindsey_district_council",
+      "label": "East Lindsey",
+      "elapsed_s": 30.03,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_east_suffolk_council",
+      "label": "East Suffolk",
+      "elapsed_s": 30.05,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_edinburgh_city_council",
+      "label": "City of Edinburgh",
+      "elapsed_s": 0.07,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_enfield_council",
+      "label": "Enfield",
+      "elapsed_s": 60.03,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_epping_forest_district_council",
+      "label": "Epping Forest",
+      "elapsed_s": 30.02,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_epsomand_ewell_borough_council",
+      "label": "Epsom and Ewell",
+      "elapsed_s": 0.94,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_forest_of_dean_district_council",
+      "label": "Forest of Dean",
+      "elapsed_s": 30.02,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_gloucester_city_council",
+      "label": "Gloucester",
+      "elapsed_s": 6.5,
+      "status": 200,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_great_yarmouth_borough_council",
+      "label": "Great Yarmouth",
+      "elapsed_s": 0.11,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_halton_borough_council",
+      "label": "Halton",
+      "elapsed_s": 30.01,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_hertsmere_borough_council",
+      "label": "Hertsmere",
+      "elapsed_s": 30.01,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_hillingdon",
+      "label": "Hillingdon",
+      "elapsed_s": 0.13,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_hyndburn_borough_council",
+      "label": "Hyndburn",
+      "elapsed_s": 0.87,
+      "status": 200,
+      "collections": 3,
+      "passed": true
+    },
+    {
+      "council": "ukbcd_knowsley_m_b_council",
+      "label": "Knowsley",
+      "elapsed_s": 37.3,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_london_borough_of_richmond_upon_thames",
+      "label": "Richmond upon Thames",
+      "elapsed_s": 0.0,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_mid_suffolk_district_council",
+      "label": "Mid Suffolk",
+      "elapsed_s": 1.44,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_mid_ulster_district_council",
+      "label": "Mid Ulster",
+      "elapsed_s": 30.04,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_new_forest_council",
+      "label": "New Forest",
+      "elapsed_s": 0.5,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_north_devon_county_council",
+      "label": "North Devon",
+      "elapsed_s": 30.01,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_north_east_derbyshire_district_council",
+      "label": "North East Derbyshire",
+      "elapsed_s": 30.01,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_northumberland_council",
+      "label": "Northumberland",
+      "elapsed_s": 3.06,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_powys_council",
+      "label": "Powys",
+      "elapsed_s": 30.02,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_sevenoaks_district_council",
+      "label": "Sevenoaks",
+      "elapsed_s": 0.42,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_slough_borough_council",
+      "label": "Slough",
+      "elapsed_s": 30.01,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_somerset_council",
+      "label": "Somerset",
+      "elapsed_s": 1.81,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_staffordshire_moorlands_district_council",
+      "label": "Staffordshire Moorlands",
+      "elapsed_s": 4.64,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_stirling_council",
+      "label": "Stirling",
+      "elapsed_s": 0.14,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_teignbridge_council",
+      "label": "Teignbridge",
+      "elapsed_s": 2.36,
+      "status": 200,
+      "collections": 15,
+      "passed": true
+    },
+    {
+      "council": "ukbcd_tendring_district_council",
+      "label": "Tendring",
+      "elapsed_s": 10.85,
+      "status": 200,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_test_valley_borough_council",
+      "label": "Test Valley",
+      "elapsed_s": 30.02,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_three_rivers_district_council",
+      "label": "Three Rivers",
+      "elapsed_s": 1.54,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_torbay_council",
+      "label": "Torbay",
+      "elapsed_s": 1.77,
+      "status": 503,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_winchester_city_council",
+      "label": "Winchester",
+      "elapsed_s": 30.02,
+      "status": 504,
+      "collections": 0,
+      "passed": false
+    },
+    {
+      "council": "ukbcd_wychavon_district_council",
+      "label": "Wychavon",
+      "elapsed_s": 32.4,
+      "status": 200,
+      "collections": 2,
+      "passed": true
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 """
-Full integration test — launches the API and runs ALL test cases from test_cases.json.
+Integration tests — launches the API and runs test cases for requests-based scrapers.
+
+Playwright-based scrapers are tested separately in test_playwright.py (they each
+spawn a Chromium instance, so they need lower concurrency and separate resource
+management).
 
 Produces extremely detailed output per scraper: timing, status codes, error types,
 response shapes, and network-level diagnostics. Results are written to
@@ -30,11 +34,32 @@ MAX_CONCURRENCY = 40
 REQUEST_TIMEOUT = 120
 
 
+SCRAPERS_DIR = Path(__file__).resolve().parent.parent / "api" / "scrapers"
+
+
+def _playwright_scraper_ids() -> set[str]:
+    """Return the set of scraper IDs that use Playwright."""
+    ids = set()
+    for p in SCRAPERS_DIR.glob("*.py"):
+        if p.name == "__init__.py":
+            continue
+        try:
+            source = p.read_text()
+        except OSError:
+            continue
+        if "async_playwright" in source:
+            ids.add(p.stem)
+    return ids
+
+
 def _load_all_test_cases() -> list[tuple[str, str, dict]]:
-    """Load ALL test cases (every entry, not just the first per scraper)."""
+    """Load test cases for non-Playwright scrapers only."""
     data = json.loads(TEST_CASES_PATH.read_text())
+    pw_ids = _playwright_scraper_ids()
     cases = []
     for council, entries in sorted(data.items()):
+        if council in pw_ids:
+            continue
         for entry in entries:
             cases.append((council, entry["label"], entry["params"]))
     return cases

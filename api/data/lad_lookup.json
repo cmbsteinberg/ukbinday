@@ -36,7 +36,7 @@
   },
   "S12000035": {
     "name": "Argyll and Bute",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_argylland_bute_council",
     "url": "https://www.argyll-bute.gov.uk/rubbish-and-recycling/household-waste/bin-collection"
   },
   "N09000002": {
@@ -66,7 +66,7 @@
   },
   "E07000200": {
     "name": "Babergh",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_babergh_district_council",
     "url": "https://www.babergh.gov.uk"
   },
   "E09000002": {
@@ -76,7 +76,7 @@
   },
   "E09000003": {
     "name": "Barnet",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_barnet_council",
     "url": "https://www.barnet.gov.uk/recycling-and-waste/bin-collections/find-your-bin-collection-day"
   },
   "E08000016": {
@@ -86,7 +86,7 @@
   },
   "E07000066": {
     "name": "Basildon",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_basildon_council",
     "url": "https://mybasildon.powerappsportals.com/check/where_i_live/"
   },
   "E07000084": {
@@ -141,7 +141,7 @@
   },
   "W06000019": {
     "name": "Blaenau Gwent",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_blaenau_gwent_county_borough_council",
     "url": "https://www.blaenau-gwent.gov.uk"
   },
   "E07000033": {
@@ -156,7 +156,7 @@
   },
   "E07000136": {
     "name": "Boston",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_boston_borough_council",
     "url": "https://www.boston.gov.uk/findwastecollections"
   },
   "E06000036": {
@@ -186,7 +186,7 @@
   },
   "E06000043": {
     "name": "Brighton and Hove",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_brightonand_hove_city_council",
     "url": "https://enviroservices.brighton-hove.gov.uk/link/collections"
   },
   "E06000023": {
@@ -271,7 +271,7 @@
   },
   "W06000008": {
     "name": "Ceredigion",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_ceredigion_county_council",
     "url": "https://www.ceredigion.gov.uk/resident/bins-recycling/"
   },
   "E07000130": {
@@ -336,7 +336,7 @@
   },
   "E07000079": {
     "name": "Cotswold",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_cotswold_district_council",
     "url": "https://community.cotswold.gov.uk/s/waste-collection-enquiry"
   },
   "E08000026": {
@@ -411,7 +411,7 @@
   },
   "S12000006": {
     "name": "Dumfries and Galloway Council",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_dumfriesand_galloway_council",
     "url": "https://www.dumfriesandgalloway.gov.uk"
   },
   "S12000042": {
@@ -461,7 +461,7 @@
   },
   "E07000137": {
     "name": "East Lindsey",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_east_lindsey_district_council",
     "url": "https://www.e-lindsey.gov.uk/"
   },
   "S12000010": {
@@ -481,12 +481,12 @@
   },
   "E07000193": {
     "name": "East Staffordshire",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_east_staffordshire_borough_council",
     "url": "https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates/68382"
   },
   "E07000244": {
     "name": "East Suffolk",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_east_suffolk_council",
     "url": "https://my.eastsuffolk.gov.uk/service/Bin_collection_dates_finder"
   },
   "E07000086": {
@@ -501,7 +501,7 @@
   },
   "S12000036": {
     "name": "City of Edinburgh",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_edinburgh_city_council",
     "url": "https://www.edinburgh.gov.uk"
   },
   "E07000207": {
@@ -511,17 +511,17 @@
   },
   "E09000010": {
     "name": "Enfield",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_enfield_council",
     "url": "https://www.enfield.gov.uk/services/rubbish-and-recycling/find-my-collection-day"
   },
   "E07000072": {
     "name": "Epping Forest",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_epping_forest_district_council",
     "url": "https://eppingforestdc.maps.arcgis.com/apps/instant/lookup/index.html?appid=bfca32b46e2a47cd9c0a84f2d8cdde17&find=IG9%206EP"
   },
   "E07000208": {
     "name": "Epsom and Ewell",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_epsomand_ewell_borough_council",
     "url": "https://www.epsom-ewell.gov.uk"
   },
   "E07000036": {
@@ -571,7 +571,7 @@
   },
   "E07000080": {
     "name": "Forest of Dean",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_forest_of_dean_district_council",
     "url": "https://community.fdean.gov.uk/s/waste-collection-enquiry"
   },
   "E07000119": {
@@ -596,7 +596,7 @@
   },
   "E07000081": {
     "name": "Gloucester",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_gloucester_city_council",
     "url": "https://gloucester-self.achieveservice.com/service/Bins___Check_your_bin_day"
   },
   "E07000082": {
@@ -686,7 +686,7 @@
   },
   "E07000145": {
     "name": "Great Yarmouth",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_great_yarmouth_borough_council",
     "url": "https://myaccount.great-yarmouth.gov.uk/article/6456/Find-my-waste-collection-days"
   },
   "E07000209": {
@@ -706,7 +706,7 @@
   },
   "E06000006": {
     "name": "Halton",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_halton_borough_council",
     "url": "https://webapp.halton.gov.uk/PublicWebForms/WasteServiceSearchv1.aspx#collections"
   },
   "E07000131": {
@@ -751,7 +751,7 @@
   },
   "E07000098": {
     "name": "Hertsmere",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_hertsmere_borough_council",
     "url": "https://www.hertsmere.gov.uk"
   },
   "E07000037": {
@@ -766,7 +766,7 @@
   },
   "E09000017": {
     "name": "Hillingdon",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_hillingdon",
     "url": "https://www.hillingdon.gov.uk/collection-day"
   },
   "E07000132": {
@@ -791,7 +791,7 @@
   },
   "E07000120": {
     "name": "Hyndburn",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_hyndburn_borough_council",
     "url": "https://iapp.itouchvision.com/iappcollectionday/collection-day/?uuid=FEBA68993831481FD81B2E605364D00A8DC017A4"
   },
   "E07000202": {
@@ -816,7 +816,7 @@
   },
   "E09000021": {
     "name": "Kingston upon Thames",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_kingston_upon_thames_council",
     "url": "https://waste-services.kingston.gov.uk/waste/2701097"
   },
   "E08000034": {
@@ -826,7 +826,7 @@
   },
   "E08000011": {
     "name": "Knowsley",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_knowsley_m_b_council",
     "url": "https://knowsleytransaction.mendixcloud.com/link/youarebeingredirected?target=bincollectioninformation"
   },
   "E07000121": {
@@ -906,7 +906,7 @@
   },
   "E09000027": {
     "name": "Richmond upon Thames",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_london_borough_of_richmond_upon_thames",
     "url": "https://www.richmond.gov.uk/services/waste_and_recycling/collection_days/"
   },
   "E09000026": {
@@ -976,7 +976,7 @@
   },
   "E07000203": {
     "name": "Mid Suffolk",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_mid_suffolk_district_council",
     "url": "https://www.midsuffolk.gov.uk"
   },
   "E07000228": {
@@ -996,7 +996,7 @@
   },
   "N09000009": {
     "name": "Mid Ulster",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_mid_ulster_district_council",
     "url": "https://www.midulstercouncil.org"
   },
   "E06000042": {
@@ -1026,7 +1026,7 @@
   },
   "E07000091": {
     "name": "New Forest",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_new_forest_council",
     "url": "https://forms.newforest.gov.uk/ufs/FIND_MY_BIN_BAR.eb"
   },
   "E07000175": {
@@ -1061,12 +1061,12 @@
   },
   "E07000043": {
     "name": "North Devon",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_north_devon_county_council",
     "url": "https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar"
   },
   "E07000038": {
     "name": "North East Derbyshire",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_north_east_derbyshire_district_council",
     "url": "https://myselfservice.ne-derbyshire.gov.uk/service/Check_your_Bin_Day"
   },
   "E06000012": {
@@ -1126,7 +1126,7 @@
   },
   "E06000057": {
     "name": "Northumberland",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_northumberland_council",
     "url": "https://bincollection.northumberland.gov.uk/postcode"
   },
   "E07000220": {
@@ -1191,7 +1191,7 @@
   },
   "W06000023": {
     "name": "Powys",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_powys_council",
     "url": "https://www.powys.gov.uk"
   },
   "E07000123": {
@@ -1286,7 +1286,7 @@
   },
   "E07000111": {
     "name": "Sevenoaks",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_sevenoaks_district_council",
     "url": "https://sevenoaks-dc-host01.oncreate.app/w/webpage/waste-collection-day"
   },
   "E08000019": {
@@ -1301,7 +1301,7 @@
   },
   "E06000039": {
     "name": "Slough",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_slough_borough_council",
     "url": "https://www.slough.gov.uk/bin-collections"
   },
   "E08000029": {
@@ -1311,7 +1311,7 @@
   },
   "E06000066": {
     "name": "Somerset",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_somerset_council",
     "url": "https://www.somerset.gov.uk/"
   },
   "S12000028": {
@@ -1411,7 +1411,7 @@
   },
   "E07000198": {
     "name": "Staffordshire Moorlands",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_staffordshire_moorlands_district_council",
     "url": "https://www.staffsmoorlands.gov.uk/"
   },
   "E07000243": {
@@ -1421,7 +1421,7 @@
   },
   "S12000030": {
     "name": "Stirling",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_stirling_council",
     "url": "https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/"
   },
   "E08000007": {
@@ -1481,7 +1481,7 @@
   },
   "E07000045": {
     "name": "Teignbridge",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_teignbridge_council",
     "url": "https://www.google.co.uk"
   },
   "E06000020": {
@@ -1496,12 +1496,12 @@
   },
   "E07000076": {
     "name": "Tendring",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_tendring_district_council",
     "url": "https://tendring-self.achieveservice.com/en/service/Rubbish_and_recycling_collection_days"
   },
   "E07000093": {
     "name": "Test Valley",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_test_valley_borough_council",
     "url": "https://testvalley.gov.uk/wasteandrecycling/when-are-my-bins-collected/when-are-my-bins-collected"
   },
   "E07000114": {
@@ -1511,7 +1511,7 @@
   },
   "E07000102": {
     "name": "Three Rivers",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_three_rivers_district_council",
     "url": "https://my.threerivers.gov.uk/en/AchieveForms/?mode=fill&consentMessage=yes&form_uri=sandbox-publish://AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b/AF-Stage-01ee28aa-1584-442c-8d1f-119b6e27114a/definition.json&process=1&process_uri=sandbox-processes://AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b&process_id=AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b&noLoginPrompt=1"
   },
   "E06000034": {
@@ -1526,7 +1526,7 @@
   },
   "E06000027": {
     "name": "Torbay",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_torbay_council",
     "url": "https://www.torbay.gov.uk/recycling/bin-collections/"
   },
   "E07000046": {
@@ -1656,7 +1656,7 @@
   },
   "E07000094": {
     "name": "Winchester",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_winchester_city_council",
     "url": "https://iportal.itouchvision.com/icollectionday/collection-day"
   },
   "E06000040": {
@@ -1696,7 +1696,7 @@
   },
   "E07000238": {
     "name": "Wychavon",
-    "scraper_id": null,
+    "scraper_id": "ukbcd_wychavon_district_council",
     "url": "https://selfservice.wychavon.gov.uk/wdcroundlookup/wdc_search.jsp"
   },
   "E07000128": {

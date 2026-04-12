@@ -21,8 +21,11 @@ uv run pytest tests/test_ci.py -v
 # Frontend/API surface tests (fast, no external calls)
 uv run pytest tests/test_frontend.py -v
 
-# Integration tests (hits live council sites, slow)
+# Integration tests (requests-based scrapers, hits live council sites, slow)
 uv run pytest tests/test_integration.py -v
+
+# Playwright integration tests (browser-based scrapers, very heavy)
+uv run pytest tests/test_playwright.py -v
 
 # Run a single scraper test by keyword
 uv run pytest tests/test_integration.py -v -k "aberdeen"
@@ -99,7 +102,8 @@ docker compose up --build
 **Tests** (`tests/`):
 - `test_ci.py` -- Smoke tests (about 720): syntax, imports, app boot, registry loading. Runs as pre-commit hook
 - `test_frontend.py` -- API surface tests (7): landing page, routes, CORS, error cases
-- `test_integration.py` -- Full integration tests (about 680): hits live council sites with up to 40 concurrent requests. Uses `test_cases.json` generated from scraper `TEST_CASES`
+- `test_integration.py` -- Integration tests for requests-based scrapers (about 680): hits live council sites with up to 40 concurrent requests. Uses `test_cases.json` generated from scraper `TEST_CASES`
+- `test_playwright.py` -- Integration tests for Playwright-based scrapers (about 44): hits live council sites with up to 10 concurrent requests (lower concurrency because each spawns Chromium). Writes results to `playwright_output.json`
 - `test_deploy.py` -- Docker stack tests (3): compose boot, scraper loading, static files
 - `conftest.py` -- Custom pytest plugin that writes structured results to `test_output.json` and `integration_output.json`
 - Tests use `pytest-asyncio` with `loop_scope="session"` and `asgi-lifespan` for managing the FastAPI app
