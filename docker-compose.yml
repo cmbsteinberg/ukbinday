@@ -3,6 +3,7 @@ services:
     build: .
     ports:
       - "8000:8000"
+    mem_limit: 4g
     depends_on:
       redis:
         condition: service_healthy
@@ -25,6 +26,7 @@ services:
 
   redis:
     image: redis:7-alpine
+    mem_limit: 512m
     volumes:
       - redis_data:/data
     command: redis-server --save 60 1 --loglevel warning --maxmemory 512mb --maxmemory-policy allkeys-lru
@@ -37,19 +39,38 @@ services:
 
   caddy:
     image: caddy:2-alpine
+    mem_limit: 512m
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
+      - caddy_logs:/var/log/caddy
+      - goaccess_report:/srv/goaccess:ro
+    environment:
+      - GOACCESS_USER=${GOACCESS_USER:-admin}
+      - GOACCESS_HASH=${GOACCESS_HASH}
     depends_on:
       api:
         condition: service_healthy
     restart: always
 
+  goaccess:
+    image: allinurl/goaccess:latest
+    mem_limit: 256m
+    volumes:
+      - caddy_logs:/var/log/caddy:ro
+      - goaccess_report:/srv/goaccess
+      - ./goaccess.conf:/etc/goaccess/goaccess.conf:ro
+    command: ["--config-file=/etc/goaccess/goaccess.conf", "--log-file=/var/log/caddy/access.log"]
+    depends_on:
+      - caddy
+    restart: always
+
   uptime-kuma:
     image: louislam/uptime-kuma:1
+    mem_limit: 512m
     ports:
       - "127.0.0.1:3001:3001"
     volumes:
@@ -59,4 +80,6 @@ services:
 volumes:
   redis_data:
   caddy_data:
+  caddy_logs:
+  goaccess_report:
   uptime_data:

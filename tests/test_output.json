@@ -1,128 +1,4197 @@
 {
-  "total": 17,
-  "passed": 17,
-  "failed": 0,
+  "total": 596,
+  "passed": 595,
+  "failed": 1,
   "skipped": 0,
-  "failure_categories": {},
+  "failure_categories": {
+    "api/scrapers/ukbcd_cardiff_council.py:17: NameError": {
+      "count": 1,
+      "councils": [
+        {
+          "council": "ukbcd_cardiff_council",
+          "label": "",
+          "uprn": "",
+          "status_code": "",
+          "error_summary": "",
+          "duration": 0.0
+        }
+      ]
+    }
+  },
   "results": [
     {
-      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.curl_cffi_fallback]",
-      "council": "api.compat.curl_cffi_fallback",
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_aberdeenshire_gov_uk]",
+      "council": "hacs_aberdeenshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_adur_worthing_gov_uk]",
+      "council": "hacs_adur_worthing_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_ambervalley_gov_uk]",
+      "council": "hacs_ambervalley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_angus_gov_uk]",
+      "council": "hacs_angus_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_antrimandnewtownabbey_gov_uk]",
+      "council": "hacs_antrimandnewtownabbey_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_ardsandnorthdown_gov_uk]",
+      "council": "hacs_ardsandnorthdown_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_armaghbanbridgecraigavon_gov_uk]",
+      "council": "hacs_armaghbanbridgecraigavon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_arun_gov_uk]",
+      "council": "hacs_arun_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_ashfield_gov_uk]",
+      "council": "hacs_ashfield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_ashford_gov_uk]",
+      "council": "hacs_ashford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_barnsley_gov_uk]",
+      "council": "hacs_barnsley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_basildon_gov_uk]",
+      "council": "hacs_basildon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_basingstoke_gov_uk]",
+      "council": "hacs_basingstoke_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bathnes_gov_uk]",
+      "council": "hacs_bathnes_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bcp_gov_uk]",
+      "council": "hacs_bcp_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bedford_gov_uk]",
+      "council": "hacs_bedford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_belfast_city_gov_uk]",
+      "council": "hacs_belfast_city_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bexley_gov_uk]",
+      "council": "hacs_bexley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_birmingham_gov_uk]",
+      "council": "hacs_birmingham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_blaby_gov_uk]",
+      "council": "hacs_blaby_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_blackburn_gov_uk]",
+      "council": "hacs_blackburn_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_blackpool_gov_uk]",
+      "council": "hacs_blackpool_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bolsover_gov_uk]",
+      "council": "hacs_bolsover_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bolton_gov_uk]",
+      "council": "hacs_bolton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bracknell_forest_gov_uk]",
+      "council": "hacs_bracknell_forest_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bradford_gov_uk]",
+      "council": "hacs_bradford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_braintree_gov_uk]",
+      "council": "hacs_braintree_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_breckland_gov_uk]",
+      "council": "hacs_breckland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bristol_gov_uk]",
+      "council": "hacs_bristol_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bromley_gov_uk]",
+      "council": "hacs_bromley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bromsgrove_gov_uk]",
+      "council": "hacs_bromsgrove_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_broxbourne_gov_uk]",
+      "council": "hacs_broxbourne_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_broxtowe_gov_uk]",
+      "council": "hacs_broxtowe_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_burnley_gov_uk]",
+      "council": "hacs_burnley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_bury_gov_uk]",
+      "council": "hacs_bury_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_calderdale_gov_uk]",
+      "council": "hacs_calderdale_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_cambridge_gov_uk]",
+      "council": "hacs_cambridge_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_camden_gov_uk]",
+      "council": "hacs_camden_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_cannock_chase_dc_gov_uk]",
+      "council": "hacs_cannock_chase_dc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_canterbury_gov_uk]",
+      "council": "hacs_canterbury_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_cardiff_gov_uk]",
+      "council": "hacs_cardiff_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_centralbedfordshire_gov_uk]",
+      "council": "hacs_centralbedfordshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_charnwood_gov_uk]",
+      "council": "hacs_charnwood_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_chelmsford_gov_uk]",
+      "council": "hacs_chelmsford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_cherwell_gov_uk]",
+      "council": "hacs_cherwell_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_cheshire_west_and_chester_gov_uk]",
+      "council": "hacs_cheshire_west_and_chester_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_chesterfield_gov_uk]",
+      "council": "hacs_chesterfield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_chichester_gov_uk]",
+      "council": "hacs_chichester_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_chorley_gov_uk]",
+      "council": "hacs_chorley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_colchester_gov_uk]",
+      "council": "hacs_colchester_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_conwy_gov_uk]",
+      "council": "hacs_conwy_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_cornwall_gov_uk]",
+      "council": "hacs_cornwall_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_coventry_gov_uk]",
+      "council": "hacs_coventry_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_crawley_gov_uk]",
+      "council": "hacs_crawley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_croydon_gov_uk]",
+      "council": "hacs_croydon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_cumberland_gov_uk]",
+      "council": "hacs_cumberland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_dacorum_gov_uk]",
+      "council": "hacs_dacorum_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_darlington_gov_uk]",
+      "council": "hacs_darlington_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_dartford_gov_uk]",
+      "council": "hacs_dartford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_denbighshire_gov_uk]",
+      "council": "hacs_denbighshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_derby_gov_uk]",
+      "council": "hacs_derby_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_doncaster_gov_uk]",
+      "council": "hacs_doncaster_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_dorset_gov_uk]",
+      "council": "hacs_dorset_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_dover_gov_uk]",
+      "council": "hacs_dover_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_dundeecity_gov_uk]",
+      "council": "hacs_dundeecity_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_durham_gov_uk]",
+      "council": "hacs_durham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_ealing_gov_uk]",
+      "council": "hacs_ealing_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_east_ayrshire_gov_uk]",
+      "council": "hacs_east_ayrshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_east_renfrewshire_gov_uk]",
+      "council": "hacs_east_renfrewshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_eastcambs_gov_uk]",
+      "council": "hacs_eastcambs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_eastdevon_gov_uk]",
+      "council": "hacs_eastdevon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_eastdunbarton_gov_uk]",
+      "council": "hacs_eastdunbarton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_eastherts_gov_uk]",
+      "council": "hacs_eastherts_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_eastleigh_gov_uk]",
+      "council": "hacs_eastleigh_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_eastlothian_gov_uk]",
+      "council": "hacs_eastlothian_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_eastriding_gov_uk]",
+      "council": "hacs_eastriding_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_elmbridge_gov_uk]",
+      "council": "hacs_elmbridge_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_erewash_gov_uk]",
+      "council": "hacs_erewash_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_exeter_gov_uk]",
+      "council": "hacs_exeter_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_fareham_gov_uk]",
+      "council": "hacs_fareham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_fenland_gov_uk]",
+      "council": "hacs_fenland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_fife_gov_uk]",
+      "council": "hacs_fife_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_flintshire_gov_uk]",
+      "council": "hacs_flintshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_folkestone_hythe_gov_uk]",
+      "council": "hacs_folkestone_hythe_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_fylde_gov_uk]",
+      "council": "hacs_fylde_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_gateshead_gov_uk]",
+      "council": "hacs_gateshead_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_glasgow_gov_uk]",
+      "council": "hacs_glasgow_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_guildford_gov_uk]",
+      "council": "hacs_guildford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_gwynedd_gov_uk]",
+      "council": "hacs_gwynedd_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_haringey_gov_uk]",
+      "council": "hacs_haringey_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_harlow_gov_uk]",
+      "council": "hacs_harlow_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_harrow_gov_uk]",
+      "council": "hacs_harrow_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_hart_gov_uk]",
+      "council": "hacs_hart_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_hartlepool_gov_uk]",
+      "council": "hacs_hartlepool_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_hastings_gov_uk]",
+      "council": "hacs_hastings_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_havering_gov_uk]",
+      "council": "hacs_havering_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_herefordshire_gov_uk]",
+      "council": "hacs_herefordshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_highland_gov_uk]",
+      "council": "hacs_highland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_highpeak_gov_uk]",
+      "council": "hacs_highpeak_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_horsham_gov_uk]",
+      "council": "hacs_horsham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_hull_gov_uk]",
+      "council": "hacs_hull_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_huntingdonshire_gov_uk]",
+      "council": "hacs_huntingdonshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_islington_gov_uk]",
+      "council": "hacs_islington_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_kirklees_gov_uk]",
+      "council": "hacs_kirklees_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_knowsley_gov_uk]",
+      "council": "hacs_knowsley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_lancaster_gov_uk]",
+      "council": "hacs_lancaster_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_lbbd_gov_uk]",
+      "council": "hacs_lbbd_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_lewisham_gov_uk]",
+      "council": "hacs_lewisham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_lichfielddc_gov_uk]",
+      "council": "hacs_lichfielddc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_lincoln_gov_uk]",
+      "council": "hacs_lincoln_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_lisburn_castlereagh_gov_uk]",
+      "council": "hacs_lisburn_castlereagh_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_liverpool_gov_uk]",
+      "council": "hacs_liverpool_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_maidstone_gov_uk]",
+      "council": "hacs_maidstone_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_maldon_gov_uk]",
+      "council": "hacs_maldon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_mansfield_gov_uk]",
+      "council": "hacs_mansfield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_medway_gov_uk]",
+      "council": "hacs_medway_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_melton_gov_uk]",
+      "council": "hacs_melton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_mid_devon_gov_uk]",
+      "council": "hacs_mid_devon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_midandeastantrim_gov_uk]",
+      "council": "hacs_midandeastantrim_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_midlothian_gov_uk]",
+      "council": "hacs_midlothian_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_midsussex_gov_uk]",
+      "council": "hacs_midsussex_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_mole_valley_gov_uk]",
+      "council": "hacs_mole_valley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_monmouthshire_gov_uk]",
+      "council": "hacs_monmouthshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_moray_gov_uk]",
+      "council": "hacs_moray_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_neath_port_talbot_gov_uk]",
+      "council": "hacs_neath_port_talbot_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_nelincs_gov_uk]",
+      "council": "hacs_nelincs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_newark_sherwooddc_gov_uk]",
+      "council": "hacs_newark_sherwooddc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_newcastle_gov_uk]",
+      "council": "hacs_newcastle_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_newcastle_staffs_gov_uk]",
+      "council": "hacs_newcastle_staffs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_newham_gov_uk]",
+      "council": "hacs_newham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_north_ayrshire_gov_uk]",
+      "council": "hacs_north_ayrshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_north_norfolk_gov_uk]",
+      "council": "hacs_north_norfolk_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_northlanarkshire_gov_uk]",
+      "council": "hacs_northlanarkshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_northlincs_gov_uk]",
+      "council": "hacs_northlincs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_northnorthants_gov_uk]",
+      "council": "hacs_northnorthants_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_northyorks_craven_gov_uk]",
+      "council": "hacs_northyorks_craven_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_northyorks_hambleton_gov_uk]",
+      "council": "hacs_northyorks_hambleton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_northyorks_harrogate_gov_uk]",
+      "council": "hacs_northyorks_harrogate_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_northyorks_ryedale_gov_uk]",
+      "council": "hacs_northyorks_ryedale_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_northyorks_scarborough_gov_uk]",
+      "council": "hacs_northyorks_scarborough_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_northyorks_selby_gov_uk]",
+      "council": "hacs_northyorks_selby_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_norwich_gov_uk]",
+      "council": "hacs_norwich_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_nottingham_city_gov_uk]",
+      "council": "hacs_nottingham_city_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_nsomerset_gov_uk]",
+      "council": "hacs_nsomerset_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_nwleics_gov_uk]",
+      "council": "hacs_nwleics_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_oadby_wigston_gov_uk]",
+      "council": "hacs_oadby_wigston_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_oldham_gov_uk]",
+      "council": "hacs_oldham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_oxford_gov_uk]",
+      "council": "hacs_oxford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_pembrokeshire_gov_uk]",
+      "council": "hacs_pembrokeshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_peterborough_gov_uk]",
+      "council": "hacs_peterborough_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_plymouth_gov_uk]",
+      "council": "hacs_plymouth_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_portsmouth_gov_uk]",
+      "council": "hacs_portsmouth_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_preston_gov_uk]",
+      "council": "hacs_preston_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_rbwm_gov_uk]",
+      "council": "hacs_rbwm_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_rctcbc_gov_uk]",
+      "council": "hacs_rctcbc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_reading_gov_uk]",
+      "council": "hacs_reading_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_redbridge_gov_uk]",
+      "council": "hacs_redbridge_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_reigatebanstead_gov_uk]",
+      "council": "hacs_reigatebanstead_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_renfrewshire_gov_uk]",
+      "council": "hacs_renfrewshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_rochdale_gov_uk]",
+      "council": "hacs_rochdale_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_rother_gov_uk]",
+      "council": "hacs_rother_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_rotherham_gov_uk]",
+      "council": "hacs_rotherham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_royalgreenwich_gov_uk]",
+      "council": "hacs_royalgreenwich_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_rugby_gov_uk]",
+      "council": "hacs_rugby_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_runnymede_gov_uk]",
+      "council": "hacs_runnymede_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_rushcliffe_gov_uk]",
+      "council": "hacs_rushcliffe_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_rushmoor_gov_uk]",
+      "council": "hacs_rushmoor_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_salford_gov_uk]",
+      "council": "hacs_salford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_sandwell_gov_uk]",
+      "council": "hacs_sandwell_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_scambs_gov_uk]",
+      "council": "hacs_scambs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_sefton_gov_uk]",
+      "council": "hacs_sefton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_sheffield_gov_uk]",
+      "council": "hacs_sheffield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_sholland_gov_uk]",
+      "council": "hacs_sholland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_shropshire_gov_uk]",
+      "council": "hacs_shropshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_solihull_gov_uk]",
+      "council": "hacs_solihull_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_south_norfolk_and_broadland_gov_uk]",
+      "council": "hacs_south_norfolk_and_broadland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_southampton_gov_uk]",
+      "council": "hacs_southampton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_southderbyshire_gov_uk]",
+      "council": "hacs_southderbyshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_southglos_gov_uk]",
+      "council": "hacs_southglos_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_southkesteven_gov_uk]",
+      "council": "hacs_southkesteven_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_southtyneside_gov_uk]",
+      "council": "hacs_southtyneside_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_sstaffs_gov_uk]",
+      "council": "hacs_sstaffs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_st_helens_gov_uk]",
+      "council": "hacs_st_helens_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_staffordbc_gov_uk]",
+      "council": "hacs_staffordbc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_stalbans_gov_uk]",
+      "council": "hacs_stalbans_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_stevenage_gov_uk]",
+      "council": "hacs_stevenage_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_stockport_gov_uk]",
+      "council": "hacs_stockport_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_stockton_gov_uk]",
+      "council": "hacs_stockton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_stoke_gov_uk]",
+      "council": "hacs_stoke_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_stratford_gov_uk]",
+      "council": "hacs_stratford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_stroud_gov_uk]",
+      "council": "hacs_stroud_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_sunderland_gov_uk]",
+      "council": "hacs_sunderland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_swale_gov_uk]",
+      "council": "hacs_swale_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_swindon_gov_uk]",
+      "council": "hacs_swindon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_tameside_gov_uk]",
+      "council": "hacs_tameside_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_teignbridge_gov_uk]",
+      "council": "hacs_teignbridge_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_telford_gov_uk]",
+      "council": "hacs_telford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_tewkesbury_gov_uk]",
+      "council": "hacs_tewkesbury_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_thanet_gov_uk]",
+      "council": "hacs_thanet_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_thurrock_gov_uk]",
+      "council": "hacs_thurrock_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_tmbc_gov_uk]",
+      "council": "hacs_tmbc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_tunbridgewells_gov_uk]",
+      "council": "hacs_tunbridgewells_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_uttlesford_gov_uk]",
+      "council": "hacs_uttlesford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_valeofglamorgan_gov_uk]",
+      "council": "hacs_valeofglamorgan_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wakefield_gov_uk]",
+      "council": "hacs_wakefield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_walsall_gov_uk]",
+      "council": "hacs_walsall_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_walthamforest_gov_uk]",
+      "council": "hacs_walthamforest_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wandsworth_gov_uk]",
+      "council": "hacs_wandsworth_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_warrington_gov_uk]",
+      "council": "hacs_warrington_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_warwickdc_gov_uk]",
+      "council": "hacs_warwickdc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_watford_gov_uk]",
+      "council": "hacs_watford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_waverley_gov_uk]",
+      "council": "hacs_waverley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wealden_gov_uk]",
+      "council": "hacs_wealden_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_welhat_gov_uk]",
+      "council": "hacs_welhat_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_west_dunbartonshire_gov_uk]",
+      "council": "hacs_west_dunbartonshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_west_lindsey_gov_uk]",
+      "council": "hacs_west_lindsey_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_west_norfolk_gov_uk]",
+      "council": "hacs_west_norfolk_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_westberks_gov_uk]",
+      "council": "hacs_westberks_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_westlancs_gov_uk]",
+      "council": "hacs_westlancs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_westlothian_gov_uk]",
+      "council": "hacs_westlothian_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_westnorthants_gov_uk]",
+      "council": "hacs_westnorthants_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_westoxon_gov_uk]",
+      "council": "hacs_westoxon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wigan_gov_uk]",
+      "council": "hacs_wigan_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wiltshire_gov_uk]",
+      "council": "hacs_wiltshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wirral_gov_uk]",
+      "council": "hacs_wirral_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wokingham_gov_uk]",
+      "council": "hacs_wokingham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wolverhampton_gov_uk]",
+      "council": "hacs_wolverhampton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wrexham_gov_uk]",
+      "council": "hacs_wrexham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wyre_gov_uk]",
+      "council": "hacs_wyre_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_wyreforestdc_gov_uk]",
+      "council": "hacs_wyreforestdc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_york_gov_uk]",
+      "council": "hacs_york_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_aberdeen_city_council]",
+      "council": "ukbcd_aberdeen_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_argylland_bute_council]",
+      "council": "ukbcd_argylland_bute_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_babergh_district_council]",
+      "council": "ukbcd_babergh_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_barnet_council]",
+      "council": "ukbcd_barnet_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_basildon_council]",
+      "council": "ukbcd_basildon_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_blaenau_gwent_county_borough_council]",
+      "council": "ukbcd_blaenau_gwent_county_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_boston_borough_council]",
+      "council": "ukbcd_boston_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_brent_council]",
+      "council": "ukbcd_brent_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_brightonand_hove_city_council]",
+      "council": "ukbcd_brightonand_hove_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_bristol_city_council]",
+      "council": "ukbcd_bristol_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_buckinghamshire_council]",
+      "council": "ukbcd_buckinghamshire_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_cardiff_council]",
+      "council": "ukbcd_cardiff_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_carmarthenshire_county_council]",
+      "council": "ukbcd_carmarthenshire_county_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_ceredigion_county_council]",
+      "council": "ukbcd_ceredigion_county_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_cheltenham_borough_council]",
+      "council": "ukbcd_cheltenham_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_cheshire_east_council]",
+      "council": "ukbcd_cheshire_east_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_cheshire_west_and_chester_council]",
+      "council": "ukbcd_cheshire_west_and_chester_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_chorley_council]",
+      "council": "ukbcd_chorley_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_cotswold_district_council]",
+      "council": "ukbcd_cotswold_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_derbyshire_dales_district_council]",
+      "council": "ukbcd_derbyshire_dales_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_dudley_council]",
+      "council": "ukbcd_dudley_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_dumfriesand_galloway_council]",
+      "council": "ukbcd_dumfriesand_galloway_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_east_herts_council]",
+      "council": "ukbcd_east_herts_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_east_lindsey_district_council]",
+      "council": "ukbcd_east_lindsey_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_east_staffordshire_borough_council]",
+      "council": "ukbcd_east_staffordshire_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_east_suffolk_council]",
+      "council": "ukbcd_east_suffolk_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_eastbourne_borough_council]",
+      "council": "ukbcd_eastbourne_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_eden_district_council]",
+      "council": "ukbcd_eden_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_edinburgh_city_council]",
+      "council": "ukbcd_edinburgh_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_enfield_council]",
+      "council": "ukbcd_enfield_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_environment_first]",
+      "council": "ukbcd_environment_first",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_epping_forest_district_council]",
+      "council": "ukbcd_epping_forest_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_epsomand_ewell_borough_council]",
+      "council": "ukbcd_epsomand_ewell_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_falkirk_council]",
+      "council": "ukbcd_falkirk_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_fermanagh_omagh_district_council]",
+      "council": "ukbcd_fermanagh_omagh_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_forest_of_dean_district_council]",
+      "council": "ukbcd_forest_of_dean_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_gedling_borough_council]",
+      "council": "ukbcd_gedling_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_gloucester_city_council]",
+      "council": "ukbcd_gloucester_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_google_public_calendar_council]",
+      "council": "ukbcd_google_public_calendar_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_gosport_borough_council]",
+      "council": "ukbcd_gosport_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_gravesham_borough_council]",
+      "council": "ukbcd_gravesham_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_great_yarmouth_borough_council]",
+      "council": "ukbcd_great_yarmouth_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_gwynedd_council]",
+      "council": "ukbcd_gwynedd_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_hackney_council]",
+      "council": "ukbcd_hackney_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_halton_borough_council]",
+      "council": "ukbcd_halton_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_harborough_district_council]",
+      "council": "ukbcd_harborough_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_hertsmere_borough_council]",
+      "council": "ukbcd_hertsmere_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_hillingdon]",
+      "council": "ukbcd_hillingdon",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_hinckleyand_bosworth_borough_council]",
+      "council": "ukbcd_hinckleyand_bosworth_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_hyndburn_borough_council]",
+      "council": "ukbcd_hyndburn_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_ipswich_borough_council]",
+      "council": "ukbcd_ipswich_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_isle_of_anglesey_council]",
+      "council": "ukbcd_isle_of_anglesey_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_kingston_upon_thames_council]",
+      "council": "ukbcd_kingston_upon_thames_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_knowsley_m_b_council]",
+      "council": "ukbcd_knowsley_m_b_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_lancaster_city_council]",
+      "council": "ukbcd_lancaster_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_leeds_city_council]",
+      "council": "ukbcd_leeds_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_leicester_city_council]",
+      "council": "ukbcd_leicester_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_lewes_district_council]",
+      "council": "ukbcd_lewes_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_lisburn_castlereagh_city_council]",
+      "council": "ukbcd_lisburn_castlereagh_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_london_borough_hammersmithand_fulham]",
+      "council": "ukbcd_london_borough_hammersmithand_fulham",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_london_borough_hounslow]",
+      "council": "ukbcd_london_borough_hounslow",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_london_borough_lambeth]",
+      "council": "ukbcd_london_borough_lambeth",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_london_borough_of_richmond_upon_thames]",
+      "council": "ukbcd_london_borough_of_richmond_upon_thames",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_luton_borough_council]",
+      "council": "ukbcd_luton_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_maldon_district_council]",
+      "council": "ukbcd_maldon_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_malvern_hills_d_c]",
+      "council": "ukbcd_malvern_hills_d_c",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_manchester_city_council]",
+      "council": "ukbcd_manchester_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_merton_council]",
+      "council": "ukbcd_merton_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_mid_suffolk_district_council]",
+      "council": "ukbcd_mid_suffolk_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_mid_ulster_district_council]",
+      "council": "ukbcd_mid_ulster_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_middlesbrough_council]",
+      "council": "ukbcd_middlesbrough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_milton_keynes_city_council]",
+      "council": "ukbcd_milton_keynes_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_mole_valley_district_council]",
+      "council": "ukbcd_mole_valley_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_new_forest_council]",
+      "council": "ukbcd_new_forest_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_newport_city_council]",
+      "council": "ukbcd_newport_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_north_devon_county_council]",
+      "council": "ukbcd_north_devon_county_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_north_east_derbyshire_district_council]",
+      "council": "ukbcd_north_east_derbyshire_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_north_hertfordshire_district_council]",
+      "council": "ukbcd_north_hertfordshire_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_north_kesteven_district_council]",
+      "council": "ukbcd_north_kesteven_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_north_somerset_council]",
+      "council": "ukbcd_north_somerset_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_north_tyneside_council]",
+      "council": "ukbcd_north_tyneside_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_north_warwickshire_borough_council]",
+      "council": "ukbcd_north_warwickshire_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_northumberland_council]",
+      "council": "ukbcd_northumberland_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_norwich_city_council]",
+      "council": "ukbcd_norwich_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_nottingham_city_council]",
+      "council": "ukbcd_nottingham_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_nuneaton_bedworth_borough_council]",
+      "council": "ukbcd_nuneaton_bedworth_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_perth_and_kinross_council]",
+      "council": "ukbcd_perth_and_kinross_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_powys_council]",
+      "council": "ukbcd_powys_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_redcarand_cleveland_council]",
+      "council": "ukbcd_redcarand_cleveland_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_redditch_borough_council]",
+      "council": "ukbcd_redditch_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_rochford_council]",
+      "council": "ukbcd_rochford_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_sevenoaks_district_council]",
+      "council": "ukbcd_sevenoaks_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_slough_borough_council]",
+      "council": "ukbcd_slough_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_solihull_council]",
+      "council": "ukbcd_solihull_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_somerset_council]",
+      "council": "ukbcd_somerset_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_south_ayrshire_council]",
+      "council": "ukbcd_south_ayrshire_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_south_hams_district_council]",
+      "council": "ukbcd_south_hams_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_south_lanarkshire_council]",
+      "council": "ukbcd_south_lanarkshire_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_south_oxfordshire_council]",
+      "council": "ukbcd_south_oxfordshire_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_south_ribble_council]",
+      "council": "ukbcd_south_ribble_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_southwark_council]",
+      "council": "ukbcd_southwark_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_spelthorne_borough_council]",
+      "council": "ukbcd_spelthorne_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_staffordshire_moorlands_district_council]",
+      "council": "ukbcd_staffordshire_moorlands_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_stirling_council]",
+      "council": "ukbcd_stirling_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_surrey_heath_borough_council]",
+      "council": "ukbcd_surrey_heath_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_swansea_council]",
+      "council": "ukbcd_swansea_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_tandridge_district_council]",
+      "council": "ukbcd_tandridge_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_teignbridge_council]",
+      "council": "ukbcd_teignbridge_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_tendring_district_council]",
+      "council": "ukbcd_tendring_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_test_valley_borough_council]",
+      "council": "ukbcd_test_valley_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_three_rivers_district_council]",
+      "council": "ukbcd_three_rivers_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_torbay_council]",
+      "council": "ukbcd_torbay_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_torridge_district_council]",
+      "council": "ukbcd_torridge_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_valeof_white_horse_council]",
+      "council": "ukbcd_valeof_white_horse_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_waverley_borough_council]",
+      "council": "ukbcd_waverley_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_west_morland_and_furness]",
+      "council": "ukbcd_west_morland_and_furness",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_west_suffolk_council]",
+      "council": "ukbcd_west_suffolk_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_wiltshire_council]",
+      "council": "ukbcd_wiltshire_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_winchester_city_council]",
+      "council": "ukbcd_winchester_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_woking_borough_council]",
+      "council": "ukbcd_woking_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_worcester_city_council]",
+      "council": "ukbcd_worcester_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_wychavon_district_council]",
+      "council": "ukbcd_wychavon_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_aberdeenshire_gov_uk]",
+      "council": "hacs_aberdeenshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.08
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_adur_worthing_gov_uk]",
+      "council": "hacs_adur_worthing_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_ambervalley_gov_uk]",
+      "council": "hacs_ambervalley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_angus_gov_uk]",
+      "council": "hacs_angus_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_antrimandnewtownabbey_gov_uk]",
+      "council": "hacs_antrimandnewtownabbey_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_ardsandnorthdown_gov_uk]",
+      "council": "hacs_ardsandnorthdown_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_armaghbanbridgecraigavon_gov_uk]",
+      "council": "hacs_armaghbanbridgecraigavon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_arun_gov_uk]",
+      "council": "hacs_arun_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_ashfield_gov_uk]",
+      "council": "hacs_ashfield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_ashford_gov_uk]",
+      "council": "hacs_ashford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_barnsley_gov_uk]",
+      "council": "hacs_barnsley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_basildon_gov_uk]",
+      "council": "hacs_basildon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_basingstoke_gov_uk]",
+      "council": "hacs_basingstoke_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.03
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bathnes_gov_uk]",
+      "council": "hacs_bathnes_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bcp_gov_uk]",
+      "council": "hacs_bcp_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bedford_gov_uk]",
+      "council": "hacs_bedford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_belfast_city_gov_uk]",
+      "council": "hacs_belfast_city_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bexley_gov_uk]",
+      "council": "hacs_bexley_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.01
     },
     {
-      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.collection]",
-      "council": "api.compat.hacs.collection",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_birmingham_gov_uk]",
+      "council": "hacs_birmingham_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.exceptions]",
-      "council": "api.compat.hacs.exceptions",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_blaby_gov_uk]",
+      "council": "hacs_blaby_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.ICS]",
-      "council": "api.compat.hacs.service.ICS",
-      "label": "",
-      "status": "passed",
-      "duration": 0.01
-    },
-    {
-      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.SSLError]",
-      "council": "api.compat.hacs.service.SSLError",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_blackburn_gov_uk]",
+      "council": "hacs_blackburn_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.uk_cloud9_apps]",
-      "council": "api.compat.hacs.service.uk_cloud9_apps",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_blackpool_gov_uk]",
+      "council": "hacs_blackpool_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.requests_fallback]",
-      "council": "api.compat.requests_fallback",
-      "label": "",
-      "status": "passed",
-      "duration": 0.02
-    },
-    {
-      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.ukbcd.common]",
-      "council": "api.compat.ukbcd.common",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bolsover_gov_uk]",
+      "council": "hacs_bolsover_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.ukbcd.get_bin_data]",
-      "council": "api.compat.ukbcd.get_bin_data",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bolton_gov_uk]",
+      "council": "hacs_bolton_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_hacs_compat_types",
-      "council": "",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bracknell_forest_gov_uk]",
+      "council": "hacs_bracknell_forest_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_ukbcd_compat_types",
-      "council": "",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bradford_gov_uk]",
+      "council": "hacs_bradford_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_script_parses[generate_coverage_map.py]",
-      "council": "generate_coverage_map.py",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_braintree_gov_uk]",
+      "council": "hacs_braintree_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_script_parses[create_lookup_table.py]",
-      "council": "create_lookup_table.py",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_breckland_gov_uk]",
+      "council": "hacs_breckland_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_script_parses[test_lookup.py]",
-      "council": "test_lookup.py",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bristol_gov_uk]",
+      "council": "hacs_bristol_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_app_starts",
-      "council": "",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bromley_gov_uk]",
+      "council": "hacs_bromley_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_registry_loads_all_scrapers",
-      "council": "",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bromsgrove_gov_uk]",
+      "council": "hacs_bromsgrove_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
     },
     {
-      "node_id": "tests/test_ci.py::test_health_endpoint_returns_all",
-      "council": "",
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_broxbourne_gov_uk]",
+      "council": "hacs_broxbourne_gov_uk",
       "label": "",
       "status": "passed",
       "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_broxtowe_gov_uk]",
+      "council": "hacs_broxtowe_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_burnley_gov_uk]",
+      "council": "hacs_burnley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bury_gov_uk]",
+      "council": "hacs_bury_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_calderdale_gov_uk]",
+      "council": "hacs_calderdale_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_cambridge_gov_uk]",
+      "council": "hacs_cambridge_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_camden_gov_uk]",
+      "council": "hacs_camden_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_cannock_chase_dc_gov_uk]",
+      "council": "hacs_cannock_chase_dc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_canterbury_gov_uk]",
+      "council": "hacs_canterbury_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_cardiff_gov_uk]",
+      "council": "hacs_cardiff_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_centralbedfordshire_gov_uk]",
+      "council": "hacs_centralbedfordshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_charnwood_gov_uk]",
+      "council": "hacs_charnwood_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_chelmsford_gov_uk]",
+      "council": "hacs_chelmsford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_cherwell_gov_uk]",
+      "council": "hacs_cherwell_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_cheshire_west_and_chester_gov_uk]",
+      "council": "hacs_cheshire_west_and_chester_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_chesterfield_gov_uk]",
+      "council": "hacs_chesterfield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_chichester_gov_uk]",
+      "council": "hacs_chichester_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.03
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_chorley_gov_uk]",
+      "council": "hacs_chorley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_colchester_gov_uk]",
+      "council": "hacs_colchester_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_conwy_gov_uk]",
+      "council": "hacs_conwy_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_cornwall_gov_uk]",
+      "council": "hacs_cornwall_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_coventry_gov_uk]",
+      "council": "hacs_coventry_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_crawley_gov_uk]",
+      "council": "hacs_crawley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_croydon_gov_uk]",
+      "council": "hacs_croydon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_cumberland_gov_uk]",
+      "council": "hacs_cumberland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_dacorum_gov_uk]",
+      "council": "hacs_dacorum_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_darlington_gov_uk]",
+      "council": "hacs_darlington_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_dartford_gov_uk]",
+      "council": "hacs_dartford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_denbighshire_gov_uk]",
+      "council": "hacs_denbighshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_derby_gov_uk]",
+      "council": "hacs_derby_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_doncaster_gov_uk]",
+      "council": "hacs_doncaster_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_dorset_gov_uk]",
+      "council": "hacs_dorset_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_dover_gov_uk]",
+      "council": "hacs_dover_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_dundeecity_gov_uk]",
+      "council": "hacs_dundeecity_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_durham_gov_uk]",
+      "council": "hacs_durham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_ealing_gov_uk]",
+      "council": "hacs_ealing_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_east_ayrshire_gov_uk]",
+      "council": "hacs_east_ayrshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_east_renfrewshire_gov_uk]",
+      "council": "hacs_east_renfrewshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_eastcambs_gov_uk]",
+      "council": "hacs_eastcambs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_eastdevon_gov_uk]",
+      "council": "hacs_eastdevon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_eastdunbarton_gov_uk]",
+      "council": "hacs_eastdunbarton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_eastherts_gov_uk]",
+      "council": "hacs_eastherts_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_eastleigh_gov_uk]",
+      "council": "hacs_eastleigh_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_eastlothian_gov_uk]",
+      "council": "hacs_eastlothian_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_eastriding_gov_uk]",
+      "council": "hacs_eastriding_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_elmbridge_gov_uk]",
+      "council": "hacs_elmbridge_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_erewash_gov_uk]",
+      "council": "hacs_erewash_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_exeter_gov_uk]",
+      "council": "hacs_exeter_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_fareham_gov_uk]",
+      "council": "hacs_fareham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_fenland_gov_uk]",
+      "council": "hacs_fenland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_fife_gov_uk]",
+      "council": "hacs_fife_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_flintshire_gov_uk]",
+      "council": "hacs_flintshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_folkestone_hythe_gov_uk]",
+      "council": "hacs_folkestone_hythe_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_fylde_gov_uk]",
+      "council": "hacs_fylde_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_gateshead_gov_uk]",
+      "council": "hacs_gateshead_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_glasgow_gov_uk]",
+      "council": "hacs_glasgow_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_guildford_gov_uk]",
+      "council": "hacs_guildford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_gwynedd_gov_uk]",
+      "council": "hacs_gwynedd_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_haringey_gov_uk]",
+      "council": "hacs_haringey_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_harlow_gov_uk]",
+      "council": "hacs_harlow_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_harrow_gov_uk]",
+      "council": "hacs_harrow_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_hart_gov_uk]",
+      "council": "hacs_hart_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_hartlepool_gov_uk]",
+      "council": "hacs_hartlepool_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_hastings_gov_uk]",
+      "council": "hacs_hastings_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_havering_gov_uk]",
+      "council": "hacs_havering_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_herefordshire_gov_uk]",
+      "council": "hacs_herefordshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_highland_gov_uk]",
+      "council": "hacs_highland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_highpeak_gov_uk]",
+      "council": "hacs_highpeak_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_horsham_gov_uk]",
+      "council": "hacs_horsham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_hull_gov_uk]",
+      "council": "hacs_hull_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_huntingdonshire_gov_uk]",
+      "council": "hacs_huntingdonshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_islington_gov_uk]",
+      "council": "hacs_islington_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_kirklees_gov_uk]",
+      "council": "hacs_kirklees_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_knowsley_gov_uk]",
+      "council": "hacs_knowsley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_lancaster_gov_uk]",
+      "council": "hacs_lancaster_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_lbbd_gov_uk]",
+      "council": "hacs_lbbd_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_lewisham_gov_uk]",
+      "council": "hacs_lewisham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_lichfielddc_gov_uk]",
+      "council": "hacs_lichfielddc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_lincoln_gov_uk]",
+      "council": "hacs_lincoln_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_lisburn_castlereagh_gov_uk]",
+      "council": "hacs_lisburn_castlereagh_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_liverpool_gov_uk]",
+      "council": "hacs_liverpool_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_maidstone_gov_uk]",
+      "council": "hacs_maidstone_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_maldon_gov_uk]",
+      "council": "hacs_maldon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_mansfield_gov_uk]",
+      "council": "hacs_mansfield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_medway_gov_uk]",
+      "council": "hacs_medway_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_melton_gov_uk]",
+      "council": "hacs_melton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_mid_devon_gov_uk]",
+      "council": "hacs_mid_devon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_midandeastantrim_gov_uk]",
+      "council": "hacs_midandeastantrim_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_midlothian_gov_uk]",
+      "council": "hacs_midlothian_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_midsussex_gov_uk]",
+      "council": "hacs_midsussex_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_mole_valley_gov_uk]",
+      "council": "hacs_mole_valley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_monmouthshire_gov_uk]",
+      "council": "hacs_monmouthshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_moray_gov_uk]",
+      "council": "hacs_moray_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_neath_port_talbot_gov_uk]",
+      "council": "hacs_neath_port_talbot_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_nelincs_gov_uk]",
+      "council": "hacs_nelincs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_newark_sherwooddc_gov_uk]",
+      "council": "hacs_newark_sherwooddc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_newcastle_gov_uk]",
+      "council": "hacs_newcastle_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_newcastle_staffs_gov_uk]",
+      "council": "hacs_newcastle_staffs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_newham_gov_uk]",
+      "council": "hacs_newham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_north_ayrshire_gov_uk]",
+      "council": "hacs_north_ayrshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_north_norfolk_gov_uk]",
+      "council": "hacs_north_norfolk_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_northlanarkshire_gov_uk]",
+      "council": "hacs_northlanarkshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_northlincs_gov_uk]",
+      "council": "hacs_northlincs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_northnorthants_gov_uk]",
+      "council": "hacs_northnorthants_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_northyorks_craven_gov_uk]",
+      "council": "hacs_northyorks_craven_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_northyorks_hambleton_gov_uk]",
+      "council": "hacs_northyorks_hambleton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_northyorks_harrogate_gov_uk]",
+      "council": "hacs_northyorks_harrogate_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_northyorks_ryedale_gov_uk]",
+      "council": "hacs_northyorks_ryedale_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_northyorks_scarborough_gov_uk]",
+      "council": "hacs_northyorks_scarborough_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_northyorks_selby_gov_uk]",
+      "council": "hacs_northyorks_selby_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_norwich_gov_uk]",
+      "council": "hacs_norwich_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_nottingham_city_gov_uk]",
+      "council": "hacs_nottingham_city_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_nsomerset_gov_uk]",
+      "council": "hacs_nsomerset_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_nwleics_gov_uk]",
+      "council": "hacs_nwleics_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_oadby_wigston_gov_uk]",
+      "council": "hacs_oadby_wigston_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_oldham_gov_uk]",
+      "council": "hacs_oldham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_oxford_gov_uk]",
+      "council": "hacs_oxford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_pembrokeshire_gov_uk]",
+      "council": "hacs_pembrokeshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_peterborough_gov_uk]",
+      "council": "hacs_peterborough_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_plymouth_gov_uk]",
+      "council": "hacs_plymouth_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_portsmouth_gov_uk]",
+      "council": "hacs_portsmouth_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_preston_gov_uk]",
+      "council": "hacs_preston_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_rbwm_gov_uk]",
+      "council": "hacs_rbwm_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_rctcbc_gov_uk]",
+      "council": "hacs_rctcbc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_reading_gov_uk]",
+      "council": "hacs_reading_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_redbridge_gov_uk]",
+      "council": "hacs_redbridge_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.06
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_reigatebanstead_gov_uk]",
+      "council": "hacs_reigatebanstead_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_renfrewshire_gov_uk]",
+      "council": "hacs_renfrewshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_rochdale_gov_uk]",
+      "council": "hacs_rochdale_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_rother_gov_uk]",
+      "council": "hacs_rother_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_rotherham_gov_uk]",
+      "council": "hacs_rotherham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_royalgreenwich_gov_uk]",
+      "council": "hacs_royalgreenwich_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_rugby_gov_uk]",
+      "council": "hacs_rugby_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_runnymede_gov_uk]",
+      "council": "hacs_runnymede_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_rushcliffe_gov_uk]",
+      "council": "hacs_rushcliffe_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_rushmoor_gov_uk]",
+      "council": "hacs_rushmoor_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_salford_gov_uk]",
+      "council": "hacs_salford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_sandwell_gov_uk]",
+      "council": "hacs_sandwell_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_scambs_gov_uk]",
+      "council": "hacs_scambs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_sefton_gov_uk]",
+      "council": "hacs_sefton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_sheffield_gov_uk]",
+      "council": "hacs_sheffield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_sholland_gov_uk]",
+      "council": "hacs_sholland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_shropshire_gov_uk]",
+      "council": "hacs_shropshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_solihull_gov_uk]",
+      "council": "hacs_solihull_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_south_norfolk_and_broadland_gov_uk]",
+      "council": "hacs_south_norfolk_and_broadland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_southampton_gov_uk]",
+      "council": "hacs_southampton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_southderbyshire_gov_uk]",
+      "council": "hacs_southderbyshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_southglos_gov_uk]",
+      "council": "hacs_southglos_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_southkesteven_gov_uk]",
+      "council": "hacs_southkesteven_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_southtyneside_gov_uk]",
+      "council": "hacs_southtyneside_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_sstaffs_gov_uk]",
+      "council": "hacs_sstaffs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_st_helens_gov_uk]",
+      "council": "hacs_st_helens_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_staffordbc_gov_uk]",
+      "council": "hacs_staffordbc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_stalbans_gov_uk]",
+      "council": "hacs_stalbans_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_stevenage_gov_uk]",
+      "council": "hacs_stevenage_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_stockport_gov_uk]",
+      "council": "hacs_stockport_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_stockton_gov_uk]",
+      "council": "hacs_stockton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_stoke_gov_uk]",
+      "council": "hacs_stoke_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_stratford_gov_uk]",
+      "council": "hacs_stratford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_stroud_gov_uk]",
+      "council": "hacs_stroud_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_sunderland_gov_uk]",
+      "council": "hacs_sunderland_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_swale_gov_uk]",
+      "council": "hacs_swale_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_swindon_gov_uk]",
+      "council": "hacs_swindon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_tameside_gov_uk]",
+      "council": "hacs_tameside_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_teignbridge_gov_uk]",
+      "council": "hacs_teignbridge_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_telford_gov_uk]",
+      "council": "hacs_telford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_tewkesbury_gov_uk]",
+      "council": "hacs_tewkesbury_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_thanet_gov_uk]",
+      "council": "hacs_thanet_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_thurrock_gov_uk]",
+      "council": "hacs_thurrock_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_tmbc_gov_uk]",
+      "council": "hacs_tmbc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_tunbridgewells_gov_uk]",
+      "council": "hacs_tunbridgewells_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_uttlesford_gov_uk]",
+      "council": "hacs_uttlesford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_valeofglamorgan_gov_uk]",
+      "council": "hacs_valeofglamorgan_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wakefield_gov_uk]",
+      "council": "hacs_wakefield_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_walsall_gov_uk]",
+      "council": "hacs_walsall_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_walthamforest_gov_uk]",
+      "council": "hacs_walthamforest_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wandsworth_gov_uk]",
+      "council": "hacs_wandsworth_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_warrington_gov_uk]",
+      "council": "hacs_warrington_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_warwickdc_gov_uk]",
+      "council": "hacs_warwickdc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_watford_gov_uk]",
+      "council": "hacs_watford_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_waverley_gov_uk]",
+      "council": "hacs_waverley_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wealden_gov_uk]",
+      "council": "hacs_wealden_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_welhat_gov_uk]",
+      "council": "hacs_welhat_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_west_dunbartonshire_gov_uk]",
+      "council": "hacs_west_dunbartonshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_west_lindsey_gov_uk]",
+      "council": "hacs_west_lindsey_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_west_norfolk_gov_uk]",
+      "council": "hacs_west_norfolk_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_westberks_gov_uk]",
+      "council": "hacs_westberks_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_westlancs_gov_uk]",
+      "council": "hacs_westlancs_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_westlothian_gov_uk]",
+      "council": "hacs_westlothian_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_westnorthants_gov_uk]",
+      "council": "hacs_westnorthants_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_westoxon_gov_uk]",
+      "council": "hacs_westoxon_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wigan_gov_uk]",
+      "council": "hacs_wigan_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wiltshire_gov_uk]",
+      "council": "hacs_wiltshire_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wirral_gov_uk]",
+      "council": "hacs_wirral_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wokingham_gov_uk]",
+      "council": "hacs_wokingham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wolverhampton_gov_uk]",
+      "council": "hacs_wolverhampton_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wrexham_gov_uk]",
+      "council": "hacs_wrexham_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wyre_gov_uk]",
+      "council": "hacs_wyre_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_wyreforestdc_gov_uk]",
+      "council": "hacs_wyreforestdc_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_york_gov_uk]",
+      "council": "hacs_york_gov_uk",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_aberdeen_city_council]",
+      "council": "ukbcd_aberdeen_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_argylland_bute_council]",
+      "council": "ukbcd_argylland_bute_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.03
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_babergh_district_council]",
+      "council": "ukbcd_babergh_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_barnet_council]",
+      "council": "ukbcd_barnet_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_basildon_council]",
+      "council": "ukbcd_basildon_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_blaenau_gwent_county_borough_council]",
+      "council": "ukbcd_blaenau_gwent_county_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_boston_borough_council]",
+      "council": "ukbcd_boston_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_brent_council]",
+      "council": "ukbcd_brent_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_brightonand_hove_city_council]",
+      "council": "ukbcd_brightonand_hove_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_bristol_city_council]",
+      "council": "ukbcd_bristol_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_buckinghamshire_council]",
+      "council": "ukbcd_buckinghamshire_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[ukbcd_cardiff_council]",
+      "council": "ukbcd_cardiff_council",
+      "label": "",
+      "status": "failed",
+      "duration": 0.0,
+      "full_message": "path = PosixPath('/Users/christophersteinberg/Documents/GitHub/bins/api/scrapers/ukbcd_cardiff_council.py')\n\n    @pytest.mark.parametrize(\n        \"path\",\n        SCRAPER_FILES,\n        ids=[p.stem for p in SCRAPER_FILES],\n    )\n    def test_scraper_imports(path: Path):\n        \"\"\"Each scraper should import without error and define Source, TITLE, URL, TEST_CASES.\"\"\"\n        mod_name = _module_name(path)\n>       mod = importlib.import_module(mod_name)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\ntests/test_ci.py:76: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n../../../.local/share/uv/python/cpython-3.13.5-macos-aarch64-none/lib/python3.13/importlib/__init__.py:88: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1387: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1360: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1331: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:935: in _load_unlocked\n    ???\n<frozen importlib._bootstrap_external>:1026: in exec_module\n    ???\n<frozen importlib._bootstrap>:488: in _call_with_frames_removed\n    ???\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    # So this script is a little different to the others...\n    # Essentially, it uses Cardiff Council's waste collection API to return collections for a UPRN by pretending\n    # to be Google Chrome\n    \n    import datetime\n    import json\n    from datetime import datetime\n    \n    import httpx\n    import httpx\n    from api.compat.ukbcd.common import *\n    from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass\n    \n    \n    # Taken from\n    # https://stackoverflow.com/questions/29931671/making-an-api-call-in-python-with-an-api-that-requires-a-bearer-token\n>   class BearerAuth(requests.auth.AuthBase):\n                     ^^^^^^^^\nE   NameError: name 'requests' is not defined\n\napi/scrapers/ukbcd_cardiff_council.py:17: NameError",
+      "failure_category": "api/scrapers/ukbcd_cardiff_council.py:17: NameError"
     }
   ]
 }

@@ -1,4 +1,28 @@
 bincollection.co.uk {
+    log {
+        output file /var/log/caddy/access.log {
+            roll_size 100mb
+            roll_keep 5
+        }
+        format json
+    }
+
+    handle /goaccess/ws {
+        basic_auth {
+            {$GOACCESS_USER:admin} {$GOACCESS_HASH}
+        }
+        reverse_proxy goaccess:7890
+    }
+
+    handle /goaccess* {
+        basic_auth {
+            {$GOACCESS_USER:admin} {$GOACCESS_HASH}
+        }
+        uri strip_prefix /goaccess
+        root * /srv/goaccess
+        file_server
+    }
+
     reverse_proxy api:8000 {
         header_up X-Forwarded-For {remote_host}
     }

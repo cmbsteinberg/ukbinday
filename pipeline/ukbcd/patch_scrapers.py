@@ -475,7 +475,10 @@ def _process_council(
         return None
 
     if is_selenium_scraper(source_file):
-        return _process_selenium_council(council_name, data, source_file, target_dir)
+        # Selenium→Playwright transpilation disabled; skip selenium scrapers
+        # return _process_selenium_council(council_name, data, source_file, target_dir)
+        logger.info(f"Skipping Selenium scraper: {council_name}")
+        return None
 
     source_code = source_file.read_text()
     new_source = rewrite_imports(source_code)
