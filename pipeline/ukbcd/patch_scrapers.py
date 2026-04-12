@@ -180,8 +180,10 @@ def _replace_requests_imports(source: str) -> str:
 def _replace_requests_api_calls(source: str) -> str:
     """Replace requests.get/post/etc and Session() with httpx equivalents."""
     source = re.sub(
-        r"\brequests\.(get|post|put|delete|patch|head|request)\b", r"httpx.\1", source
+        r"\brequests\.(get|post|put|delete|patch|head|options|request)\b", r"httpx.\1", source
     )
+    # requests.auth.AuthBase → plain object (httpx uses a different auth interface)
+    source = source.replace("requests.auth.AuthBase", "object")
     source = source.replace("requests.Session()", "httpx.Client(follow_redirects=True)")
     source = source.replace("requests.session()", "httpx.Client(follow_redirects=True)")
     source = source.replace("requests.Response", "httpx.Response")

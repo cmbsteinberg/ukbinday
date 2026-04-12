@@ -14,7 +14,7 @@ from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 # Taken from
 # https://stackoverflow.com/questions/29931671/making-an-api-call-in-python-with-an-api-that-requires-a-bearer-token
-class BearerAuth(requests.auth.AuthBase):
+class BearerAuth(object):
     def __init__(self, token):
         self.token = token
 
@@ -73,7 +73,7 @@ def get_jwt() -> str:
     request_headers = parse_header(request_headers_str)
     try:
         pass  # urllib3 warnings disabled
-        options = requests.options(auth_url, headers=options_headers)
+        options = httpx.options(auth_url, headers=options_headers)
         response = httpx.post(auth_url, headers=request_headers, data=payload)
         if not options.is_success or not response.is_success:
             raise ValueError("Invalid server response code getting JWT!")
@@ -136,7 +136,7 @@ class CouncilClass(AbstractGetBinDataClass):
         # payload, then add here
         try:
             pass  # urllib3 warnings disabled
-            options = requests.options(api_url, headers=options_header)
+            options = httpx.options(api_url, headers=options_header)
             response = httpx.post(
                 api_url, headers=response_header, auth=BearerAuth(token), data=payload
             )
