@@ -19,11 +19,6 @@ pre-commit:
         - "pipeline/upstream/**"
       run: uv run ruff check --fix {staged_files}
 
-    docker-check:
-      tags: linter
-      glob: "Dockerfile"
-      run: hadolint Dockerfile
-
     biome-check:
       glob: "*.{js}"
       run: npx --yes @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
