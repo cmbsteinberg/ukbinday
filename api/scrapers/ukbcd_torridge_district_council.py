@@ -15,7 +15,7 @@ class CouncilClass(AbstractGetBinDataClass):
     operations with a default implementation.
     """
 
-    def parse_data(self, page, **kwargs) -> dict:
+    async def parse_data(self, page, **kwargs) -> dict:
         """This method makes the request to the council
 
         Keyword arguments:
@@ -46,7 +46,7 @@ class CouncilClass(AbstractGetBinDataClass):
             + "</UPRN><PW>wax01653</PW></getRoundCalendarForUPRN></soap:Body></soap:Envelope>"
         )
         pass  # urllib3 warnings disabled
-        page = httpx.post(url, headers=headers, data=post_data)
+        page = await httpx.AsyncClient(follow_redirects=True).post(url, headers=headers, data=post_data)
 
         # Remove the soap wrapper
         namespaces = {
@@ -135,19 +135,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

@@ -18,7 +18,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
     base_url = "https://fermanaghomagh.isl-fusion.com"
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         """
         This function will make a request to the search endpoint with the postcode, extract the
         house numbers from the responses, then retrieve the ID of the entry with the house number that matches,
@@ -38,8 +38,8 @@ class CouncilClass(AbstractGetBinDataClass):
         search_url = f"{self.base_url}/address/{postcode}"
 
         pass  # urllib3 warnings disabled
-        s = httpx.Client(follow_redirects=True)
-        response = s.get(search_url)
+        s = httpx.AsyncClient(follow_redirects=True)
+        response = await s.get(search_url)
         response.raise_for_status()
 
         address_data = response.json()
@@ -79,7 +79,7 @@ class CouncilClass(AbstractGetBinDataClass):
         calendar_url = (
             f"{self.base_url}/calendar/{property_id}/{today.strftime('%Y-%m-%d')}"
         )
-        response = s.get(calendar_url)
+        response = await s.get(calendar_url)
         response.raise_for_status()
         calendar_data = response.json()
         next_collections = calendar_data["nextCollections"]
@@ -117,20 +117,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.postcode: kwargs['postcode'] = self.postcode
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

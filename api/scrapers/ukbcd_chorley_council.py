@@ -8,7 +8,7 @@ from api.compat.ukbcd.common import check_uprn, check_postcode
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 class CouncilClass(AbstractGetBinDataClass):
-    def get_and_parse_data(self, url: str, **kwargs: Any) -> Dict[str, List[Dict[str, str]]]:
+    async def get_and_parse_data(self, url: str, **kwargs: Any) -> Dict[str, List[Dict[str, str]]]:
         # Bot Request: Validate upfront for network fetching
         user_postcode = kwargs.get("postcode")
         user_uprn = kwargs.get("uprn")
@@ -20,11 +20,11 @@ class CouncilClass(AbstractGetBinDataClass):
             page = kwargs.get("page", "")
             return self.parse_data(page, **kwargs)
 
-        session = httpx.Client(follow_redirects=True)
+        session = httpx.AsyncClient(follow_redirects=True)
         session.headers.update({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"})
         
         # --- STEP 1: INITIAL LOAD ---
-        res = session.get(url, timeout=30)
+        res = await session.get(url, timeout=30)
         res.raise_for_status()
         soup = BeautifulSoup(res.text, "html.parser")
         
@@ -50,7 +50,7 @@ class CouncilClass(AbstractGetBinDataClass):
         lookup_value = lookup_btn.get("value")
 
         # --- STEP 2: SUBMIT POSTCODE ---
-        res = session.post(url, data={
+        res = await session.post(url, data={
             "__token": token,
             "page": page_id,
             "locale": "en_GB",
@@ -77,7 +77,7 @@ class CouncilClass(AbstractGetBinDataClass):
         if not address_el or not address_el.get("name"):
             raise ValueError("Missing address dropdown name")
 
-        res = session.post(url, data={
+        res = await session.post(url, data={
             "__token": token,
             "page": page_id,
             "locale": "en_GB",
@@ -90,7 +90,7 @@ class CouncilClass(AbstractGetBinDataClass):
         # Pass the final HTML into the offline parser
         return self.parse_data(res.text, **kwargs)
 
-    def parse_data(self, page: str, **kwargs: Any) -> Dict[str, List[Dict[str, str]]]:
+    async def parse_data(self, page: str, **kwargs: Any) -> Dict[str, List[Dict[str, str]]]:
         # Bot Request: parse_data ONLY consumes provided HTML and validates kwargs locally
         user_postcode = kwargs.get("postcode")
         user_uprn = kwargs.get("uprn")
@@ -158,20 +158,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
         if self.postcode: kwargs['postcode'] = self.postcode
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

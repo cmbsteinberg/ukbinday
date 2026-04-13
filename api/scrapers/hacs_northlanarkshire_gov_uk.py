@@ -2,8 +2,8 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 TITLE = "North Lanarkshire Council"
 DESCRIPTION = "Source for waste collection services for North Lanarkshire Council"
@@ -57,7 +57,7 @@ class Source:
         self._usrn = str(usrn)
 
     async def fetch(self):
-        s = _FallbackClient(follow_redirects=True)
+        s = _CurlCffiClient(follow_redirects=True)
 
         r = await s.get(
             f"https://www.northlanarkshire.gov.uk/bin-collection-dates/{self._uprn}/{self._usrn}"

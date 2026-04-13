@@ -3,8 +3,8 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 TITLE = "Oxford City Council"
 DESCRIPTION = "Source for oxford.gov.uk services for Oxford, UK."
@@ -31,7 +31,7 @@ class Source:
 
     async def fetch(self):
         entries: list[Collection] = []
-        session = _FallbackClient(follow_redirects=True)
+        session = _CurlCffiClient(follow_redirects=True)
 
         form_landing_response = await session.get(API_URL, headers=HEADERS)
         soup = BeautifulSoup(form_landing_response.text, "html.parser")

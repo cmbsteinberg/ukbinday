@@ -1,7 +1,7 @@
-import httpx
 from bs4 import BeautifulSoup
 from dateutil import parser as dateparser
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "London Borough of Newham"
@@ -21,7 +21,7 @@ class Source:
         self._property = str(property).zfill(12)
 
     async def fetch(self):
-        s = httpx.AsyncClient(verify=False, follow_redirects=True)
+        s = _CurlCffiClient(verify=False, follow_redirects=True)
         r = await s.get(
             f"https://bincollection.newham.gov.uk/Details/Index/{self._property}",
         )

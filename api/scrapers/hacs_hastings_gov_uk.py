@@ -1,8 +1,8 @@
 from datetime import datetime
 
-import httpx
 import urllib3
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
@@ -16,7 +16,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 TITLE = "Hastings Borough Council"
 DESCRIPTION = "Source for hastings.gov.uk services for Hastings Borough Council, UK."
 URL = "https://www.hastings.gov.uk/"
-API_URL = "https://el.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService"
+API_URL = "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService"
 TEST_CASES = {
     "Test_001": {"postcode": "TN34 1QF", "house_number": 36, "uprn": 100060038877},
     "Test_002": {"postcode": "TN34 2DL", "house_number": "28A", "uprn": "10070609836"},
@@ -61,7 +61,7 @@ class Source:
     async def fetch(self):
         payload = {"Uprn": self._uprn}
 
-        r = await httpx.AsyncClient(verify=False, follow_redirects=True).post(API_URL, json=payload)
+        r = await _CurlCffiClient(verify=False, follow_redirects=True).post(API_URL, json=payload)
         r.raise_for_status()
 
         data = r.json()["d"]

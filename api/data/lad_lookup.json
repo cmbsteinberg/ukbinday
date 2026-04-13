@@ -801,7 +801,7 @@
   },
   "W06000001": {
     "name": "Isle of Anglesey",
-    "scraper_id": "ukbcd_isle_of_anglesey_council",
+    "scraper_id": null,
     "url": "https://www.anglesey.gov.wales/en/Residents/Bins-and-recycling/Waste-Collection-Day.aspx"
   },
   "E09000019": {
@@ -906,7 +906,7 @@
   },
   "E09000027": {
     "name": "Richmond upon Thames",
-    "scraper_id": "ukbcd_london_borough_of_richmond_upon_thames",
+    "scraper_id": null,
     "url": "https://www.richmond.gov.uk/services/waste_and_recycling/collection_days/"
   },
   "E09000026": {
@@ -1096,7 +1096,7 @@
   },
   "E07000147": {
     "name": "North Norfolk",
-    "scraper_id": "hacs_north_norfolk_gov_uk",
+    "scraper_id": null,
     "url": "https://www.north-norfolk.gov.uk/"
   },
   "E06000061": {
@@ -1146,7 +1146,7 @@
   },
   "E07000219": {
     "name": "Nuneaton and Bedworth",
-    "scraper_id": "ukbcd_nuneaton_bedworth_borough_council",
+    "scraper_id": null,
     "url": "https://www.nuneatonandbedworth.gov.uk"
   },
   "E07000135": {

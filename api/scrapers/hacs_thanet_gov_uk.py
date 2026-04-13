@@ -1,8 +1,7 @@
 from datetime import datetime
 from typing import List
 
-import httpx
-
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
@@ -59,7 +58,7 @@ class Source:
             self._uprn = await self.get_uprn()
 
         url = "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
-        collections_json = (await httpx.AsyncClient(follow_redirects=True).get(
+        collections_json = (await _CurlCffiClient(follow_redirects=True).get(
             url, headers=self.header_text, params={"pAddress": self._uprn}
         )).json()
 
@@ -95,7 +94,7 @@ class Source:
                 "A postcode is required if no UPRN has been used. This allows the script to obtain the UPRN for you.",
             )
         url = "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
-        addresses_json = (await httpx.AsyncClient(follow_redirects=True).get(
+        addresses_json = (await _CurlCffiClient(follow_redirects=True).get(
             url, headers=self.header_text, params={"searchAddress": self._postcode}
         )).json()
         uprn = next(

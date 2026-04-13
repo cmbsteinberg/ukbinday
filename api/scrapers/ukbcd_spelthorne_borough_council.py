@@ -15,7 +15,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
 
         user_postcode = kwargs.get("postcode")
         check_postcode(user_postcode)
@@ -34,8 +34,8 @@ class CouncilClass(AbstractGetBinDataClass):
             "X-Requested-With": "XMLHttpRequest",
             "Referer": "https://spelthorne-self.achieveservice.com/fillform/?iframe_id=fillform-frame-1&db_id=",
         }
-        s = httpx.Client(follow_redirects=True)
-        r = s.get(SESSION_URL)
+        s = httpx.AsyncClient(follow_redirects=True)
+        r = await s.get(SESSION_URL)
         r.raise_for_status()
         session_data = r.json()
         sid = session_data["auth-session"]
@@ -58,7 +58,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "sid": sid,
         }
 
-        r = s.post(API_URL, json=data, headers=headers, params=params)
+        r = await s.post(API_URL, json=data, headers=headers, params=params)
         r.raise_for_status()
 
         data = r.json()
@@ -85,7 +85,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "sid": sid,
         }
 
-        r = s.post(API_URL, headers=headers, params=params)
+        r = await s.post(API_URL, headers=headers, params=params)
         r.raise_for_status()
 
         data = r.json()
@@ -124,7 +124,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "sid": sid,
         }
 
-        r = s.post(API_URL, json=data, headers=headers, params=params)
+        r = await s.post(API_URL, json=data, headers=headers, params=params)
         r.raise_for_status()
 
         data = r.json()
@@ -176,20 +176,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.postcode: kwargs['postcode'] = self.postcode
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

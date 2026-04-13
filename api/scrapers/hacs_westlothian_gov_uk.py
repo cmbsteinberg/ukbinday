@@ -6,9 +6,9 @@ import re
 from datetime import datetime
 from urllib.parse import parse_qs, urlparse
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs.collection import (
     Collection,  # type: ignore[attr-defined]
 )
@@ -39,7 +39,7 @@ class Source:
         self._ics = ICS()
 
     async def fetch(self):
-        session = httpx.AsyncClient(follow_redirects=True)
+        session = _CurlCffiClient(follow_redirects=True)
         session.headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",

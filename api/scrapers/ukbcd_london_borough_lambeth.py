@@ -13,7 +13,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
 
         """
         Parse bin collection data for a given UPRN from the Lambeth waste service API.
@@ -44,7 +44,7 @@ class CouncilClass(AbstractGetBinDataClass):
         body = {"uprn": user_uprn, "includeEventTypes": False, "includeFlags": True}
         json_data = json.dumps(body)
 
-        res = httpx.post(url, headers=headers, data=json_data)
+        res = await httpx.AsyncClient(follow_redirects=True).post(url, headers=headers, data=json_data)
 
         if res.status_code != 200:
             raise ConnectionRefusedError("Cannot connect to API!")
@@ -91,19 +91,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

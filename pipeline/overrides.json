@@ -1,80 +1,112 @@
 {
-	"hacs_to_ukbcd": {
-		"dudley.gov.uk": {
-			"hacs_scraper": "hacs_dudley_gov_uk",
-			"ukbcd_scraper": "ukbcd_dudley_council",
-			"reason": "unreachable"
-		},
-		"westsuffolk.gov.uk": {
-			"hacs_scraper": "hacs_westsuffolk_gov_uk",
-			"ukbcd_scraper": "ukbcd_west_suffolk_council",
-			"reason": "unreachable"
-		},
-		"hounslow.gov.uk": {
-			"hacs_scraper": "hacs_hounslow_gov_uk",
-			"ukbcd_scraper": "ukbcd_london_borough_hounslow",
-			"reason": "404_not_found"
-		},
-		"merton.gov.uk": {
-			"hacs_scraper": "hacs_merton_gov_uk",
-			"ukbcd_scraper": "ukbcd_merton_council",
-			"reason": "404_not_found"
-		},
-		"sutton.gov.uk": {
-			"hacs_scraper": "hacs_sutton_gov_uk",
-			"ukbcd_scraper": "ukbcd_london_borough_sutton",
-			"reason": "503_unavailable"
-		},
-		"swansea.gov.uk": {
-			"hacs_scraper": "hacs_swansea_gov_uk",
-			"ukbcd_scraper": "ukbcd_swansea_council",
-			"reason": "500_server_error"
-		},
-		"cheshireeast.gov.uk": {
-			"hacs_scraper": "hacs_cheshire_east_gov_uk",
-			"ukbcd_scraper": "ukbcd_cheshire_east_council",
-			"reason": "scraper_error_file_not_found"
-		},
-		"milton-keynes.gov.uk": {
-			"hacs_scraper": "hacs_milton_keynes_gov_uk",
-			"ukbcd_scraper": "ukbcd_milton_keynes_city_council",
-			"reason": "scraper_error_value_error"
-		},
-		"torridge.gov.uk": {
-			"hacs_scraper": "hacs_torridge_gov_uk",
-			"ukbcd_scraper": "ukbcd_torridge_district_council",
-			"reason": "scraper_error_value_error"
-		}
-	},
-	"requests_fallback": [
-		"basingstoke_gov_uk",
-		"braintree_gov_uk",
-		"calderdale_gov_uk",
-		"harrow_gov_uk",
-		"north_norfolk_gov_uk",
-		"northlanarkshire_gov_uk",
-		"northyorks_harrogate_gov_uk",
-		"oxford_gov_uk",
-		"stratford_gov_uk",
-		"sunderland_gov_uk",
-		"swale_gov_uk",
-		"thurrock_gov_uk",
-		"wealden_gov_uk"
-	],
-	"curl_cffi_fallback": [
-		"chichester_gov_uk",
-		"east_renfrewshire_gov_uk",
-		"eastleigh_gov_uk",
-		"gateshead_gov_uk",
-		"islington_gov_uk",
-		"stockton_gov_uk"
-	],
-	"ssl_verify_disabled": [
-		"aberdeenshire_gov_uk",
-		"ashford_gov_uk",
-		"blackburn_gov_uk",
-		"bradford_gov_uk",
-		"newham_gov_uk",
-		"richmondshire_gov_uk"
-	]
+  "hacs_to_ukbcd": {
+    "dudley.gov.uk": {
+      "hacs_scraper": "hacs_dudley_gov_uk",
+      "ukbcd_scraper": "ukbcd_dudley_council",
+      "reason": "unreachable"
+    },
+    "westsuffolk.gov.uk": {
+      "hacs_scraper": "hacs_westsuffolk_gov_uk",
+      "ukbcd_scraper": "ukbcd_west_suffolk_council",
+      "reason": "unreachable"
+    },
+    "hounslow.gov.uk": {
+      "hacs_scraper": "hacs_hounslow_gov_uk",
+      "ukbcd_scraper": "ukbcd_london_borough_hounslow",
+      "reason": "404_not_found"
+    },
+    "merton.gov.uk": {
+      "hacs_scraper": "hacs_merton_gov_uk",
+      "ukbcd_scraper": "ukbcd_merton_council",
+      "reason": "404_not_found"
+    },
+    "sutton.gov.uk": {
+      "hacs_scraper": "hacs_sutton_gov_uk",
+      "ukbcd_scraper": "ukbcd_london_borough_sutton",
+      "reason": "503_unavailable"
+    },
+    "swansea.gov.uk": {
+      "hacs_scraper": "hacs_swansea_gov_uk",
+      "ukbcd_scraper": "ukbcd_swansea_council",
+      "reason": "500_server_error"
+    },
+    "cheshireeast.gov.uk": {
+      "hacs_scraper": "hacs_cheshire_east_gov_uk",
+      "ukbcd_scraper": "ukbcd_cheshire_east_council",
+      "reason": "scraper_error_file_not_found"
+    },
+    "milton-keynes.gov.uk": {
+      "hacs_scraper": "hacs_milton_keynes_gov_uk",
+      "ukbcd_scraper": "ukbcd_milton_keynes_city_council",
+      "reason": "scraper_error_value_error"
+    },
+    "torridge.gov.uk": {
+      "hacs_scraper": "hacs_torridge_gov_uk",
+      "ukbcd_scraper": "ukbcd_torridge_district_council",
+      "reason": "scraper_error_value_error"
+    },
+    "cardiff.gov.uk": {
+      "hacs_scraper": "hacs_cardiff_gov_uk",
+      "ukbcd_scraper": "ukbcd_cardiff_council",
+      "reason": "503_unavailable"
+    },
+    "lisburncastlereagh.gov.uk": {
+      "hacs_scraper": "hacs_lisburn_castlereagh_gov_uk",
+      "ukbcd_scraper": "ukbcd_lisburn_castlereagh_city_council",
+      "reason": "503_unavailable"
+    }
+  },
+  "requests_fallback": [],
+  "curl_cffi_fallback": [
+    "basingstoke_gov_uk",
+    "braintree_gov_uk",
+    "calderdale_gov_uk",
+    "northlanarkshire_gov_uk",
+    "northyorks_harrogate_gov_uk",
+    "oxford_gov_uk",
+    "stratford_gov_uk",
+    "sunderland_gov_uk",
+    "wealden_gov_uk",
+    "chichester_gov_uk",
+    "east_renfrewshire_gov_uk",
+    "eastleigh_gov_uk",
+    "gateshead_gov_uk",
+    "islington_gov_uk",
+    "stockton_gov_uk",
+    "harrow_gov_uk",
+    "swale_gov_uk",
+    "thurrock_gov_uk",
+    "ashfield_gov_uk",
+    "bedford_gov_uk",
+    "birmingham_gov_uk",
+    "blackpool_gov_uk",
+    "bolsover_gov_uk",
+    "broxtowe_gov_uk",
+    "conwy_gov_uk",
+    "cornwall_gov_uk",
+    "dacorum_gov_uk",
+    "eastlothian_gov_uk",
+    "folkestone_hythe_gov_uk",
+    "fylde_gov_uk",
+    "hastings_gov_uk",
+    "kirklees_gov_uk",
+    "newham_gov_uk",
+    "rotherham_gov_uk",
+    "south_norfolk_and_broadland_gov_uk",
+    "st_helens_gov_uk",
+    "teignbridge_gov_uk",
+    "thanet_gov_uk",
+    "westlothian_gov_uk",
+    "westnorthants_gov_uk",
+    "wigan_gov_uk"
+  ],
+  "ssl_verify_disabled": [
+    "aberdeenshire_gov_uk",
+    "ashford_gov_uk",
+    "blackburn_gov_uk",
+    "bradford_gov_uk",
+    "newham_gov_uk",
+    "richmondshire_gov_uk"
+  ],
+  "broken": ["north_norfolk_gov_uk"]
 }

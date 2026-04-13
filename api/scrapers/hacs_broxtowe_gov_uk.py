@@ -4,6 +4,7 @@ import logging
 import httpx
 from bs4 import BeautifulSoup, NavigableString, Tag
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentException
 
@@ -79,7 +80,7 @@ class Source:
             to_update[key] = value
 
     async def fetch(self):
-        s = httpx.AsyncClient(follow_redirects=True)
+        s = _CurlCffiClient(follow_redirects=True)
         headers = {"User-Agent": "Mozilla/5.0"}
         s.headers.update(headers)
 

@@ -14,10 +14,10 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         data = {"bins": []}
 
-        # response = httpx.get('https://www.rochford.gov.uk/online-bin-collections-calendar', headers=headers)
+        # response = await httpx.AsyncClient(follow_redirects=True).get('https://www.rochford.gov.uk/online-bin-collections-calendar', headers=headers)
         soup = BeautifulSoup(page.text, features="html.parser")
         soup.prettify()
         year = soup.find_all("table", {"class": "responsive-enabled govuk-table"})
@@ -74,19 +74,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

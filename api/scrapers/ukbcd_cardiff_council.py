@@ -35,7 +35,7 @@ def parse_token(text: str) -> str:
     return bearer_token
 
 
-def get_jwt() -> str:
+async def get_jwt() -> str:
     """
     Gets a JSON web token from the authentication server
         :return: A JWT token as a string
@@ -73,14 +73,13 @@ def get_jwt() -> str:
     request_headers = parse_header(request_headers_str)
     try:
         pass  # urllib3 warnings disabled
-        options = httpx.options(auth_url, headers=options_headers)
-        response = httpx.post(auth_url, headers=request_headers, data=payload)
+        options = await httpx.AsyncClient(follow_redirects=True).options(auth_url, headers=options_headers)
+        response = await httpx.AsyncClient(follow_redirects=True).post(auth_url, headers=request_headers, data=payload)
         if not options.is_success or not response.is_success:
             raise ValueError("Invalid server response code getting JWT!")
 
     except Exception as ex:
-        print(f"Exception encountered: {ex}")
-        exit(1)
+        raise ValueError(f"Failed to get JWT: {ex}") from ex
     token = parse_token(response.text)
     options.close()
     response.close()
@@ -95,7 +94,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         """
         Parse council provided CSVs to get the latest bin collections for address
         """
@@ -104,7 +103,7 @@ class CouncilClass(AbstractGetBinDataClass):
         check_uprn(uprn)
 
         data = {"bins": []}
-        token = get_jwt()
+        token = await get_jwt()
 
         api_url = "https://api.cardiff.gov.uk/WasteManagement/api/WasteCollection"
         options_header_str = (
@@ -136,16 +135,15 @@ class CouncilClass(AbstractGetBinDataClass):
         # payload, then add here
         try:
             pass  # urllib3 warnings disabled
-            options = httpx.options(api_url, headers=options_header)
-            response = httpx.post(
+            options = await httpx.AsyncClient(follow_redirects=True).options(api_url, headers=options_header)
+            response = await httpx.AsyncClient(follow_redirects=True).post(
                 api_url, headers=response_header, auth=BearerAuth(token), data=payload
             )
             if not options.is_success or not response.is_success:
                 raise ValueError("Invalid server response code finding UPRN!")
 
         except Exception as ex:
-            print(f"Exception encountered: {ex}")
-            exit(1)
+            raise ValueError(f"Failed to fetch collections: {ex}") from ex
 
         result = json.loads(response.text)
 
@@ -186,19 +184,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

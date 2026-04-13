@@ -1,3 +1,4 @@
+import asyncio
 # This script pulls (in one hit) the data from Merton Council Bins Data
 import time
 from datetime import datetime
@@ -31,7 +32,7 @@ class CouncilClass(AbstractGetBinDataClass):
     MAX_POLLING_ATTEMPTS = 10
     POLLING_SLEEP_SECONDS = 2
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         """
         Parse bin collection data from Merton Council's FixMyStreet website.
 
@@ -87,13 +88,13 @@ class CouncilClass(AbstractGetBinDataClass):
         # Poll until data is loaded
         soup = None
         for attempt in range(1, self.MAX_POLLING_ATTEMPTS + 1):
-            response = httpx.get(url, headers=headers, timeout=10)
+            response = await httpx.AsyncClient(follow_redirects=True).get(url, headers=headers, timeout=10)
             soup = BeautifulSoup(response.text, features="html.parser")
 
             # Check if still loading
             if soup.find(id="loading-indicator"):
                 if attempt < self.MAX_POLLING_ATTEMPTS:
-                    time.sleep(self.POLLING_SLEEP_SECONDS)
+                    await asyncio.sleep(self.POLLING_SLEEP_SECONDS)
                     continue
                 else:
                     raise Exception("Timeout waiting for bin collection data to load")
@@ -189,19 +190,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

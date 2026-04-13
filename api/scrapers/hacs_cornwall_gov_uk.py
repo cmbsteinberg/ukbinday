@@ -1,8 +1,8 @@
 from datetime import date, datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
@@ -40,7 +40,7 @@ class Source:
 
     async def fetch(self):
         entries = []
-        session = httpx.AsyncClient(follow_redirects=True)
+        session = _CurlCffiClient(follow_redirects=True)
 
         # Find the UPRN based on the postcode and the property name/number
         if self._uprn is None:

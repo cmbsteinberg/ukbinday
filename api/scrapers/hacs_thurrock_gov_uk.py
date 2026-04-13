@@ -5,12 +5,12 @@ from bs4 import BeautifulSoup
 # import rrule
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, weekday
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
 )
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 WEEKDAYS = {
     "monday": MO,
@@ -61,7 +61,7 @@ class Source:
                 "street",
                 "Please provide a street name",
             )
-        r = await _FallbackClient(follow_redirects=True).get(
+        r = await _CurlCffiClient(follow_redirects=True).get(
             STREETS_URL.format(start=self._street[0].lower())
         )
         r.raise_for_status()
@@ -154,7 +154,7 @@ class Source:
             assert self._round is not None
 
         # get json file
-        r = await _FallbackClient(verify=False, follow_redirects=True).get(API_URL)
+        r = await _CurlCffiClient(verify=False, follow_redirects=True).get(API_URL)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text.replace("\xa0", " "), "html.parser")

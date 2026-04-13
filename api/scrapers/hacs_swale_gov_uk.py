@@ -4,8 +4,8 @@ from datetime import date, datetime, timedelta
 
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ class Source:
         return dt
 
     async def fetch(self) -> list[Collection]:
-        s = _FallbackClient(follow_redirects=True)
+        s = _CurlCffiClient(follow_redirects=True)
 
         # mimic postcode search
         payload: dict = {

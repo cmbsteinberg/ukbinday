@@ -4,11 +4,11 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
 )
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -44,7 +44,7 @@ class Source:
             "find": "Show me my collection days",
         }
 
-        response = await _FallbackClient(follow_redirects=True).post(API_URL, data=data)
+        response = await _CurlCffiClient(follow_redirects=True).post(API_URL, data=data)
         response.raise_for_status()
 
         # Parse HTML response

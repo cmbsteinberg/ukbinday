@@ -1,7 +1,6 @@
 import datetime
 
-import httpx
-
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
@@ -58,7 +57,7 @@ class Source:
                 )
             # look up the UPRN for the address
             q = str(API_URLS["address_search"]).format(postcode=self._post_code)
-            r = await httpx.AsyncClient(follow_redirects=True).get(q, timeout=30)
+            r = await _CurlCffiClient(follow_redirects=True).get(q, timeout=30)
             r.raise_for_status()
             addresses = r.json()["results"]
 
@@ -104,7 +103,7 @@ class Source:
 
         q = str(API_URLS["collection"]).format(uprn=self._uprn)
 
-        r = await httpx.AsyncClient(follow_redirects=True).get(q, timeout=30)
+        r = await _CurlCffiClient(follow_redirects=True).get(q, timeout=30)
         r.raise_for_status()
 
         collections = r.json()["collections"]

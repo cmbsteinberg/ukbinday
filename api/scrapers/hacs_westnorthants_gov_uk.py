@@ -1,7 +1,6 @@
 from datetime import datetime
 
-import httpx
-
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "West Northamptonshire council"
@@ -34,7 +33,7 @@ class Source:
 
     async def fetch(self):
         # Get variables for workings
-        response = await httpx.AsyncClient(follow_redirects=True).get(
+        response = await _CurlCffiClient(follow_redirects=True).get(
             API_URL.format(uprn=self._uprn),
         )
         response.raise_for_status()

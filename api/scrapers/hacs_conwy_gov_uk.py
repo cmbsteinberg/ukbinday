@@ -1,8 +1,8 @@
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Conwy County Borough Council"
@@ -33,7 +33,7 @@ class Source:
         self._uprn: str | int = uprn
 
     async def fetch(self):
-        r = await httpx.AsyncClient(follow_redirects=True).get(API_URL, params={"uprn": self._uprn, "ilangid": 1})
+        r = await _CurlCffiClient(follow_redirects=True).get(API_URL, params={"uprn": self._uprn, "ilangid": 1})
         r.raise_for_status()
 
         entries = []

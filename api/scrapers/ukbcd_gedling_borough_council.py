@@ -14,7 +14,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         data = {"bins": []}
         collections = []
         selected_collections = kwargs.get("paon").split(",")
@@ -36,7 +36,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
         # Parse each URL and load future data
         for url in calendar_urls:
-            response = httpx.get(url)
+            response = await httpx.AsyncClient(follow_redirects=True).get(url)
             if response.status_code != 200:
                 raise ConnectionError(f"Could not get response from: {url}")
             json_data = response.json()["collectionDates"]
@@ -75,19 +75,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

@@ -12,14 +12,14 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         user_uprn = kwargs.get("uprn")
         check_uprn(user_uprn)
 
         api_url = f"https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/{user_uprn}"
 
         pass  # urllib3 warnings disabled
-        response = httpx.get(api_url)
+        response = await httpx.AsyncClient(follow_redirects=True).get(api_url)
         json_data = json.loads(response.text)
         data = {"bins": []}
 
@@ -52,19 +52,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

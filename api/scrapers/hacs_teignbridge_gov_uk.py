@@ -1,8 +1,8 @@
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Teignbridge District Council"
@@ -45,7 +45,7 @@ class Source:
 
     async def fetch(self) -> list[Collection]:
         # Fetch collection schedule
-        r = await httpx.AsyncClient(follow_redirects=True).get(BIN_URL, params={"uprn": self._uprn})
+        r = await _CurlCffiClient(follow_redirects=True).get(BIN_URL, params={"uprn": self._uprn})
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")

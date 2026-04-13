@@ -1,5 +1,6 @@
 pipeline/upstream
 .claude
+CLAUDE.md
 
 # Test output (generated, not source)
 tests/test_output.json

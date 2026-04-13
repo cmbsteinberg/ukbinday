@@ -1,9 +1,9 @@
 import re
 from datetime import date
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import SourceArgumentNotFoundWithSuggestions
 
@@ -88,7 +88,7 @@ class Source:
             )
 
     async def fetch(self) -> list[Collection]:
-        r = await httpx.AsyncClient(follow_redirects=True).get(
+        r = await _CurlCffiClient(follow_redirects=True).get(
             f"https://www.bolsover.gov.uk/waste-bins-recycling/bin-calendar-{self._calendar}",
             timeout=30,
         )

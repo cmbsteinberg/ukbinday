@@ -5,9 +5,9 @@
 import re
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wigan Council"
@@ -42,7 +42,7 @@ class Source:
     async def fetch(self):
 
         # Initiate a session to generate required ASP variables
-        s = httpx.AsyncClient(follow_redirects=True)
+        s = _CurlCffiClient(follow_redirects=True)
         r0 = await s.get("https://apps.wigan.gov.uk/MyNeighbourhood/")
         r0.raise_for_status()
         soup = BeautifulSoup(r0.text, "html.parser")

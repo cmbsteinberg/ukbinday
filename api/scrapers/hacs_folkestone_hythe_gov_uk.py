@@ -1,9 +1,9 @@
 import re
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Folkestone and Hythe District Councol"
@@ -25,7 +25,7 @@ class Source:
         self._uprn = str(uprn)
 
     async def fetch(self):
-        s = httpx.AsyncClient(follow_redirects=True)
+        s = _CurlCffiClient(follow_redirects=True)
         r = await s.get(
             f"https://service.folkestone-hythe.gov.uk/webapp/myarea/index.php?uprn={self._uprn}"
         )

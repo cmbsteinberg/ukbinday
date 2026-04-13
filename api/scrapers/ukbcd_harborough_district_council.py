@@ -17,7 +17,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
 
         user_uprn = kwargs.get("uprn")
         check_uprn(user_uprn)
@@ -27,14 +27,14 @@ class CouncilClass(AbstractGetBinDataClass):
         URI2 = "https://harborough.fccenvironment.co.uk/detail-address"
 
         # Make the GET request
-        session = httpx.Client(verify=False, follow_redirects=True)
-        response = session.get(
+        session = httpx.AsyncClient(verify=False, follow_redirects=True)
+        response = await session.get(
             URI1
         )  # Initialize session state (cookies) required by URI2
         response.raise_for_status()  # Validate session initialization
 
         params = {"Uprn": user_uprn}
-        response = session.post(URI2, data=params)
+        response = await session.post(URI2, data=params)
 
         # Check for service errors
         if response.status_code == 502:
@@ -107,19 +107,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

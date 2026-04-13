@@ -10,13 +10,13 @@ import httpx
 
 class CouncilClass(AbstractGetBinDataClass):
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         data = {"bins": []}
         user_uprn = kwargs.get("uprn")
 
         api_url = f"https://maps.westsuffolk.gov.uk/MyWestSuffolk.aspx?action=SetAddress&UniqueId={user_uprn}"
 
-        response = httpx.get(api_url)
+        response = await httpx.AsyncClient(follow_redirects=True).get(api_url)
 
         soup = BeautifulSoup(response.text, features="html.parser")
         soup.prettify()
@@ -102,20 +102,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
         if self.postcode: kwargs['postcode'] = self.postcode
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

@@ -14,7 +14,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         pass  # urllib3 warnings disabled
         root_url = "https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/"
         # Get the house number and postcode from the commandline
@@ -23,8 +23,8 @@ class CouncilClass(AbstractGetBinDataClass):
         check_postcode(user_postcode)
 
         # Start a new session for the form, and get the chosen URL from the commandline
-        session = httpx.Client(follow_redirects=True)
-        req = session.get(root_url)
+        session = httpx.AsyncClient(follow_redirects=True)
+        req = await session.get(root_url)
 
         # Parse the requested URL to get a link to the "View My Collections" portal with a unique service ID
         start = BeautifulSoup(req.text, features="html.parser")
@@ -67,7 +67,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "street_town": "",
             "address_postcode": user_postcode,
         }
-        addr_page = session.post(addr_link, headers=headers, data=data)
+        addr_page = await session.post(addr_link, headers=headers, data=data)
         addr = BeautifulSoup(addr_page.text, features="html.parser")
         addr.prettify()
 
@@ -76,7 +76,7 @@ class CouncilClass(AbstractGetBinDataClass):
         cal_link = root_url + addr.select("#property_list > ul > li > a")[0].attrs.get(
             "href"
         )
-        cal_page = session.get(cal_link)
+        cal_page = await session.get(cal_link)
 
         # Parse the calendar page
         soup = BeautifulSoup(cal_page.text, features="html.parser")
@@ -132,20 +132,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.postcode: kwargs['postcode'] = self.postcode
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

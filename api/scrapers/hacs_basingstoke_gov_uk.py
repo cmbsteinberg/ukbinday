@@ -4,8 +4,8 @@ from datetime import datetime
 import urllib3
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -45,7 +45,7 @@ class Source:
             "cookie_control_popup": "N",
             "WhenAreMyBinsCollected": self._uprn,
         }
-        r = await _FallbackClient(verify=False, follow_redirects=True).get(
+        r = await _CurlCffiClient(verify=False, follow_redirects=True).get(
             "https://www.basingstoke.gov.uk/bincollections",
             headers=HEADERS,
             cookies=REQUEST_COOKIES,

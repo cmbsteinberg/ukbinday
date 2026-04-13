@@ -2,9 +2,9 @@ import json
 import re
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentRequired
 
@@ -76,7 +76,7 @@ class Source:
         self._password: str = password
         self._uprn: str | int | None = uprn
 
-    async def _login(self, session: httpx.AsyncClient) -> None:
+    async def _login(self, session: _CurlCffiClient) -> None:
         """Authenticate with the waste portal and establish a session."""
         # Get the login page to retrieve the anti-forgery token
         response = await session.get(LOGIN_URL)
@@ -134,7 +134,7 @@ class Source:
 
     async def fetch(self) -> list[Collection]:
         """Fetch waste collection schedule from the Fylde waste portal."""
-        session = httpx.AsyncClient(follow_redirects=True)
+        session = _CurlCffiClient(follow_redirects=True)
 
         # Authenticate with the portal
         await self._login(session)

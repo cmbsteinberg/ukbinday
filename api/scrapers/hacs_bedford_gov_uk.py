@@ -1,8 +1,7 @@
 import json
 from datetime import datetime
 
-import httpx
-
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Bedford Borough Council"
@@ -31,7 +30,7 @@ class Source:
 
     async def fetch(self):
 
-        s = httpx.AsyncClient(follow_redirects=True)
+        s = _CurlCffiClient(follow_redirects=True)
         r = await s.get(
             f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35",
             headers=HEADERS,

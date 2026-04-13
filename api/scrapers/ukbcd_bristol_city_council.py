@@ -15,12 +15,12 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         user_uprn = kwargs.get("uprn")
         check_uprn(user_uprn)
 
         pass  # urllib3 warnings disabled
-        s = httpx.Client(follow_redirects=True)
+        s = httpx.AsyncClient(follow_redirects=True)
 
         service_type_headers = {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,"
@@ -41,7 +41,7 @@ class CouncilClass(AbstractGetBinDataClass):
         service_type_params = {
             "servicetypeid": "7dce896c-b3ba-ea11-a812-000d3a7f1cdc",
         }
-        response = s.get(
+        response = await s.get(
             "https://bristolcouncil.powerappsportals.com/completedynamicformunauth/",
             params=service_type_params,
             headers=service_type_headers,
@@ -66,7 +66,7 @@ class CouncilClass(AbstractGetBinDataClass):
         llpg_json_data = {
             "Uprn": llpg_uprn,
         }
-        response = s.post(
+        response = await s.post(
             "https://bcprdapidyna002.azure-api.net/bcprdfundyna001-llpg/DetailedLLPG",
             headers=llpg_headers,
             json=llpg_json_data,
@@ -91,7 +91,7 @@ class CouncilClass(AbstractGetBinDataClass):
         json_data = {
             "uprn": user_uprn,
         }
-        response = s.post(
+        response = await s.post(
             "https://bcprdapidyna002.azure-api.net/bcprdfundyna001-alloy/NextCollectionDates",
             headers=headers,
             json=json_data,
@@ -159,19 +159,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

@@ -11,7 +11,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         api_url = "https://forms.n-somerset.gov.uk/Waste/CollectionSchedule"
         uprn = kwargs.get("uprn")
         postcode = kwargs.get("postcode")
@@ -27,7 +27,7 @@ class CouncilClass(AbstractGetBinDataClass):
         }
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)"}
         pass  # urllib3 warnings disabled
-        response = httpx.request("POST", api_url, headers=headers, data=values)
+        response = await httpx.AsyncClient(follow_redirects=True).request("POST", api_url, headers=headers, data=values)
 
         soup = BeautifulSoup(response.text, features="html.parser")
 
@@ -97,20 +97,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
         if self.postcode: kwargs['postcode'] = self.postcode
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

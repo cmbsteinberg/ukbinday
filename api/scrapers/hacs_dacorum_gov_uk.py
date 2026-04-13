@@ -2,9 +2,9 @@ import logging
 from datetime import datetime
 from typing import Dict
 
-import httpx
 from bs4 import BeautifulSoup, Tag
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
@@ -91,7 +91,7 @@ class Source:
 
     async def fetch(self) -> list[Collection]:
         # Start a session and fetch state args
-        session = httpx.AsyncClient(follow_redirects=True)
+        session = _CurlCffiClient(follow_redirects=True)
         r = await session.get(API_URL)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")

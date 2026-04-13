@@ -20,7 +20,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs: str) -> dict[str, list[dict[str, str]]]:
+    async def parse_data(self, page: str, **kwargs: str) -> dict[str, list[dict[str, str]]]:
         if (postcode := kwargs.get("postcode")) is None:
             raise KeyError("Missing: postcode")
         if (uprn := kwargs.get("uprn")) is None:
@@ -33,7 +33,7 @@ class CouncilClass(AbstractGetBinDataClass):
         location_usrn: str = ""
 
         # Ensure any cookies set are maintained in a requests session
-        s = httpx.Client(follow_redirects=True)
+        s = httpx.AsyncClient(follow_redirects=True)
 
         # Ask for a new SessionId from the server
         session_id_url = (
@@ -41,7 +41,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "RequestSession?userName=guest+CBC&password=&"
             "script=%5CAurora%5CCBC+Waste+Streets.AuroraScript%24"
         )
-        session_id_response = s.get(session_id_url)
+        session_id_response = await s.get(session_id_url)
         session_id_response.raise_for_status()
         session_id = session_id_response.json().get("Session").get("SessionId")
 
@@ -50,7 +50,7 @@ class CouncilClass(AbstractGetBinDataClass):
             f"https://maps.cheltenham.gov.uk/map/Aurora.svc/"
             f"GetWorkflow?sessionId={session_id}&workflowId=wastestreet"
         )
-        tasks_response = s.get(tasks_url)
+        tasks_response = await s.get(tasks_url)
         tasks_response.raise_for_status()
         # JSON response contained a BOM marker
         tasks = json.loads(tasks_response.text[1:])
@@ -77,7 +77,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "https://maps.cheltenham.gov.uk/map/Aurora.svc/FindLocation?"
             f"sessionId={session_id}&address={postcode}&limit=1000"
         )
-        postcode_search_response = s.get(postcode_search_url)
+        postcode_search_response = await s.get(postcode_search_url)
         postcode_search_response.raise_for_status()
         if len(locations_list := postcode_search_response.json().get("Locations")) == 0:
             raise ValueError("Address locations empty")
@@ -86,7 +86,7 @@ class CouncilClass(AbstractGetBinDataClass):
                 "https://maps.cheltenham.gov.uk/map/Aurora.svc/FindLocation?"
                 f"sessionId={session_id}&locationId={location.get('Id')}"
             )
-            location_search_response = s.get(location_search_url)
+            location_search_response = await s.get(location_search_url)
             location_search_response.raise_for_status()
             if not (location_list := location_search_response.json().get("Locations")):
                 raise KeyError("Locations wasn't present in results")
@@ -114,7 +114,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "https://maps.cheltenham.gov.uk/map/Aurora.svc/OpenScriptMap?"
             f"sessionId={session_id}"
         )
-        if res := s.get(open_map_url):
+        if res := await s.get(open_map_url):
             res.raise_for_status()
 
         # Needed to initialise the server to allow follow on call
@@ -124,7 +124,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "%7BTask%3A+%7B+%24type%3A+%27StatMap.Aurora.SaveStateTask%2C"
             "+StatMapService%27+%7D%7D"
         )
-        if res := s.get(save_state_map_url):
+        if res := await s.get(save_state_map_url):
             res.raise_for_status()
 
         # Start search for address given by x / y coord
@@ -135,7 +135,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "Task%22%3A%7B%22Type%22%3A%22StatMap.Aurora.DrillDownTask%2C"
             "+StatMapService%22%7D%7D"
         )
-        if res := s.get(drilldown_map_url):
+        if res := await s.get(drilldown_map_url):
             res.raise_for_status()
 
         # Get results from search for address given by x / y coord
@@ -147,7 +147,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "StatMap.Aurora.FetchResultSetTask%2C+StatMapService"
             "%22%2C%22ResultSetName%22%3A%22inspection%22%7D%7D"
         )
-        address_details_response = s.get(address_details_url)
+        address_details_response = await s.get(address_details_url)
         address_details_response.raise_for_status()
         # JSON response contained a BOM marker, skip first character
         address_details = json.loads(address_details_response.text[1:])
@@ -234,7 +234,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
         # Build a dictionary of bank holiday changes
         bank_holiday_bins_url = "https://www.cheltenham.gov.uk/bank-holiday-collections"
-        response = httpx.get(bank_holiday_bins_url)
+        response = await httpx.AsyncClient(follow_redirects=True).get(bank_holiday_bins_url)
         soup = BeautifulSoup(response.content, "html.parser")
         response.close()
         tables = soup.find_all("table")
@@ -416,20 +416,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
         if self.postcode: kwargs['postcode'] = self.postcode
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

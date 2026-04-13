@@ -8,6 +8,7 @@ from urllib.parse import quote
 import httpx
 from bs4 import BeautifulSoup as soup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import (
     SourceArgumentExceptionMultiple,
@@ -114,7 +115,7 @@ class Source:
                 "Either (address_payload) or (postcode and address) must be provided",
             )
 
-        session = httpx.AsyncClient(follow_redirects=True)
+        session = _CurlCffiClient(follow_redirects=True)
         r = await session.get(URL + "FindAddress")
         r.raise_for_status()
         page = soup(r.text, "html.parser")
@@ -161,7 +162,7 @@ class Source:
         return self.__get_data(r)
 
     async def __fetch_by_payload(self) -> List[Collection]:
-        r = await httpx.AsyncClient(follow_redirects=True).get(
+        r = await _CurlCffiClient(follow_redirects=True).get(
             URL,
             headers={
                 "Cookie": f"MyArea.Data={quote(json.dumps(self._address_payload))}"

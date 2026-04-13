@@ -63,7 +63,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
         return json.loads(plaintext)
 
-    def parse_data(self, _: str, **kwargs) -> dict:
+    async def parse_data(self, _: str, **kwargs) -> dict:
         try:
             user_uprn: str = kwargs.get("uprn") or ""
             check_uprn(user_uprn)
@@ -73,12 +73,12 @@ class CouncilClass(AbstractGetBinDataClass):
 
             encoded_input = self.encode_body(bucks_input)
 
-            session = httpx.Client(follow_redirects=True)
+            session = httpx.AsyncClient(follow_redirects=True)
             headers = {
                 "P_PARAMETER": encoded_input,
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
             }
-            response = session.get(
+            response = await session.get(
                 "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
                 headers=headers,
             )
@@ -131,19 +131,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

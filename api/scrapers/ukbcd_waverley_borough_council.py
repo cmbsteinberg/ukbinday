@@ -15,7 +15,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         # pindex isn't actually paon, it's a url parameter that I'm guessing the council use as a property id
         data = {"bins": []}
         user_paon = kwargs.get("paon")
@@ -25,8 +25,8 @@ class CouncilClass(AbstractGetBinDataClass):
         # WBC use a url parameter called "Track" that's generated when you start a form session.
         # So first off, open the page, find the page link and copy it with the Track
         start_url = "https://wav-wrp.whitespacews.com/"
-        s = httpx.Client(follow_redirects=True)
-        response = s.get(start_url)
+        s = httpx.AsyncClient(follow_redirects=True)
+        response = await s.get(start_url)
         soup = BeautifulSoup(response.content, features="html.parser")
         soup.prettify()
         collection_page_link = soup.find_all(
@@ -60,7 +60,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "street_town": "",
             "address_postcode": user_postcode,
         }
-        response = s.post(
+        response = await s.post(
             "https://wav-wrp.whitespacews.com/mop.php?serviceID=A&"
             + track_id
             + "&seq=2",
@@ -116,7 +116,7 @@ class CouncilClass(AbstractGetBinDataClass):
             "like Gecko) Chrome/134.0.0.0 Safari/537.36",
         }
 
-        response = s.get(request_url, headers=headers)
+        response = await s.get(request_url, headers=headers)
         soup = BeautifulSoup(response.content, features="html.parser")
         soup.prettify()
 
@@ -159,20 +159,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.postcode: kwargs['postcode'] = self.postcode
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

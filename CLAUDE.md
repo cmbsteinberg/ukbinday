@@ -56,6 +56,9 @@ uv run python -m scripts.lookup.create_lookup_table
 # Regenerate coverage map
 uv run python -m scripts.coverage.generate_coverage_map
 
+# Regenerate README sankey diagram from lad_lookup.json + integration_output.json
+uv run python -m scripts.generate_sankey
+
 # Docker
 docker compose up --build
 ```

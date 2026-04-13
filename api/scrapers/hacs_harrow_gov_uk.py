@@ -1,8 +1,8 @@
 import datetime
 import json
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 TITLE = "London Borough of Harrow"
 DESCRIPTION = "Source for London Borough of Harrow."
@@ -39,7 +39,7 @@ class Source:
         self._uprn: str = str(uprn).zfill(12)
 
     async def fetch(self):
-        r = await _FallbackClient(follow_redirects=True).get(API_URL.format(uprn=self._uprn))
+        r = await _CurlCffiClient(follow_redirects=True).get(API_URL.format(uprn=self._uprn))
         rubbish_data = json.loads(r.content)
 
         entries = []

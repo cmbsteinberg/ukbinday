@@ -37,14 +37,14 @@ class CouncilClass(AbstractGetBinDataClass):
         date_obj = datetime.strptime(date_str, "%A %d %B %Y")
         return date_obj.strftime(date_format)
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
 
         user_paon = kwargs.get("paon")
         check_paon(user_paon)
 
         # Make the request
         form_data = {"street-input": user_paon}
-        response = httpx.post(self.IBC_ENDPOINT, data=form_data, timeout=10)
+        response = await httpx.AsyncClient(follow_redirects=True).post(self.IBC_ENDPOINT, data=form_data, timeout=10)
         soup = BeautifulSoup(response.content, features="html.parser")
 
         data = {"bins": []}
@@ -96,19 +96,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

@@ -3,8 +3,8 @@ import logging
 import dateutil.parser as dparser
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 TITLE = "North Yorkshire Council - Harrogate"
 DESCRIPTION = "Source for North Yorkshire Council - Harrogate."
@@ -34,7 +34,7 @@ class Source:
         self._uprn = str(uprn)
 
     async def fetch(self):
-        s = _FallbackClient(follow_redirects=True)
+        s = _CurlCffiClient(follow_redirects=True)
         r = await s.get(
             f"https://secure.harrogate.gov.uk/inmyarea/property/?uprn={self._uprn}",
             headers=HEADERS,

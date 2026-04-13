@@ -13,7 +13,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
 
         """
         Parse scheduled bin collections for a given address and return structured bin data.
@@ -40,10 +40,10 @@ class CouncilClass(AbstractGetBinDataClass):
 
         URI = "https://bnr-wrp.whitespacews.com/"
 
-        session = httpx.Client(follow_redirects=True)
+        session = httpx.AsyncClient(follow_redirects=True)
 
         # get link from first page as has some kind of unique hash
-        r = session.get(
+        r = await session.get(
             URI,
         )
         r.raise_for_status()
@@ -63,7 +63,7 @@ class CouncilClass(AbstractGetBinDataClass):
         }
 
         # get list of addresses
-        r = session.post(nextpageurl, data=data)
+        r = await session.post(nextpageurl, data=data)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
@@ -77,7 +77,7 @@ class CouncilClass(AbstractGetBinDataClass):
         nextpageurl = URI + alink["href"]
 
         # get collection page
-        r = session.get(
+        r = await session.get(
             nextpageurl,
         )
         r.raise_for_status()
@@ -128,20 +128,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.postcode: kwargs['postcode'] = self.postcode
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

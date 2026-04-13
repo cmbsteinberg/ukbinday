@@ -935,20 +935,6 @@
       }
     }
   ],
-  "hacs_cardiff_gov_uk": [
-    {
-      "label": "Glass",
-      "params": {
-        "uprn": "100100124569"
-      }
-    },
-    {
-      "label": "NoGlass",
-      "params": {
-        "uprn": "100100127440"
-      }
-    }
-  ],
   "hacs_centralbedfordshire_gov_uk": [
     {
       "label": "postcode has space",
@@ -2315,41 +2301,6 @@
       }
     }
   ],
-  "hacs_lisburn_castlereagh_gov_uk": [
-    {
-      "label": "Test_001",
-      "params": {
-        "house_number": "19A",
-        "postcode": "BT28 1AG"
-      }
-    },
-    {
-      "label": "Test_002",
-      "params": {
-        "house_number": "31",
-        "postcode": "BT26 6AB"
-      }
-    },
-    {
-      "label": "Test_003",
-      "params": {
-        "house_number": "15",
-        "postcode": "BT26 6AB"
-      }
-    },
-    {
-      "label": "Test_004",
-      "params": {
-        "property_id": "DYYSm8Ls8XxGi3Nq"
-      }
-    },
-    {
-      "label": "Test_005",
-      "params": {
-        "property_id": "ZJat6DWG1Lp95xp1"
-      }
-    }
-  ],
   "hacs_liverpool_gov_uk": [
     {
       "label": "52 Swallowhurst Crescent Liverpool L11 2UZ",
@@ -2731,26 +2682,6 @@
       "label": "Test_004",
       "params": {
         "uprn": "126000270"
-      }
-    }
-  ],
-  "hacs_north_norfolk_gov_uk": [
-    {
-      "label": "Test_001",
-      "params": {
-        "uprn": "100090878875"
-      }
-    },
-    {
-      "label": "Test_002",
-      "params": {
-        "uprn": "100090883974"
-      }
-    },
-    {
-      "label": "Test_003",
-      "params": {
-        "uprn": "100090880632"
       }
     }
   ],
@@ -4847,14 +4778,6 @@
       }
     }
   ],
-  "ukbcd_isle_of_anglesey_council": [
-    {
-      "label": "Isle of Anglesey",
-      "params": {
-        "uprn": "200002649711"
-      }
-    }
-  ],
   "ukbcd_lancaster_city_council": [
     {
       "label": "Lancaster",
@@ -4918,14 +4841,6 @@
       "label": "Lambeth",
       "params": {
         "uprn": "100021881738"
-      }
-    }
-  ],
-  "ukbcd_london_borough_of_richmond_upon_thames": [
-    {
-      "label": "Richmond upon Thames",
-      "params": {
-        "house_number": "March Road"
       }
     }
   ],
@@ -5049,14 +4964,6 @@
       "label": "Nottingham",
       "params": {
         "uprn": "100031540180"
-      }
-    }
-  ],
-  "ukbcd_nuneaton_bedworth_borough_council": [
-    {
-      "label": "Nuneaton and Bedworth",
-      "params": {
-        "house_number": "Newdigate Road"
       }
     }
   ],

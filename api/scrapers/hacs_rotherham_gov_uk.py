@@ -1,8 +1,8 @@
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Rotherham Metropolitan Borough Council"
@@ -35,7 +35,7 @@ class Source:
         args = {"address": self._uprn}
 
         # get json file
-        r = await httpx.AsyncClient(follow_redirects=True).get(API_URL, params=args, headers=HEADERS)
+        r = await _CurlCffiClient(follow_redirects=True).get(API_URL, params=args, headers=HEADERS)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")

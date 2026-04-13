@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 from dateutil import parser
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 TITLE = "Braintree District Council"
 DESCRIPTION = "Braintree District Council, UK - Waste Collection"
@@ -36,7 +36,7 @@ class Source:
 
     async def fetch(self):
         self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetches fail
-        address_lookup = await _FallbackClient(follow_redirects=True).post(str(self.url), data=self.form_data)
+        address_lookup = await _CurlCffiClient(follow_redirects=True).post(str(self.url), data=self.form_data)
         address_lookup.raise_for_status()
         addresses = {}
         for address in BeautifulSoup(address_lookup.text, "html.parser").find_all(
@@ -51,7 +51,7 @@ class Source:
         )
         self.form_data["qe15dda0155d237d1ea161004d1839e3369ed4831_1_0"] = (None, id)
         self.form_data["next"] = (None, "Next")
-        collection_lookup = await _FallbackClient(follow_redirects=True).post(str(self.url), data=self.form_data)
+        collection_lookup = await _CurlCffiClient(follow_redirects=True).post(str(self.url), data=self.form_data)
         collection_lookup.raise_for_status()
         entries = []
         for results in BeautifulSoup(collection_lookup.text, "html.parser").find_all(

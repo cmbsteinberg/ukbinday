@@ -2,9 +2,9 @@ import logging
 import re
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup, Tag
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
@@ -91,7 +91,7 @@ class Source:
             "postcode": self._postcode,
         }
 
-        r = await httpx.AsyncClient(follow_redirects=True).get(self._streets_url, params=params)
+        r = await _CurlCffiClient(follow_redirects=True).get(self._streets_url, params=params)
 
         try:
             r.raise_for_status()
@@ -120,7 +120,7 @@ class Source:
         if not self._address_id:
             raise ValueError("Address ID required")
         params = {"id": self._address_id}
-        r = await httpx.AsyncClient(follow_redirects=True).get(self._collection_url, params=params)
+        r = await _CurlCffiClient(follow_redirects=True).get(self._collection_url, params=params)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
         calendar_item = soup.find_all("div", class_="calendar-item")
@@ -146,7 +146,7 @@ class Source:
         return entries
 
     async def _retrieve_api_url(self) -> None:
-        r = await httpx.AsyncClient(follow_redirects=True).get(START_URL)
+        r = await _CurlCffiClient(follow_redirects=True).get(START_URL)
         r.raise_for_status()
         collection_match = COLLECTION_URL_REGEX.search(r.text)
         streets_match = STREETS_URL_REGEX.search(r.text)

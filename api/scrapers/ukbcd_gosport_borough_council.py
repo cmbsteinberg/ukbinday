@@ -10,7 +10,7 @@ class CouncilClass(AbstractGetBinDataClass):
     Uses the Supatrak API to fetch collection schedules by postcode.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         """
         Fetch bin collection data for Gosport Borough Council using postcode.
 
@@ -49,7 +49,7 @@ class CouncilClass(AbstractGetBinDataClass):
         params = {"postcode": postcode}
 
         try:
-            response = httpx.get(api_url, headers=headers, params=params, timeout=30)
+            response = await httpx.AsyncClient(follow_redirects=True).get(api_url, headers=headers, params=params, timeout=30)
             response.raise_for_status()
             data = response.json()
         except httpx.HTTPError as e:
@@ -96,19 +96,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.postcode: kwargs['postcode'] = self.postcode
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

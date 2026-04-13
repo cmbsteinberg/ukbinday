@@ -30,7 +30,7 @@ MOBILE_API_HEADERS = {
 MOBILE_API_NUM_CONTAINERS = 8
 
 
-def lookup_uprn(postcode: str, paon: str) -> str:
+async def lookup_uprn(postcode: str, paon: str) -> str:
     """
     Resolve the UPRN for an address given a postcode and house number/name using the Cloud9 addresses API.
     
@@ -59,7 +59,7 @@ def lookup_uprn(postcode: str, paon: str) -> str:
     url = f"{MOBILE_API_BASE}/addresses"
 
     try:
-        response = httpx.get(url, headers=MOBILE_API_HEADERS, timeout=30, params={"postcode": postcode})
+        response = await httpx.AsyncClient(follow_redirects=True).get(url, headers=MOBILE_API_HEADERS, timeout=30, params={"postcode": postcode})
     except httpx.HTTPError as exc:
         raise ValueError("Addresses API request failed") from exc
 
@@ -116,7 +116,7 @@ def lookup_uprn(postcode: str, paon: str) -> str:
     return matching_addresses[0]["uprn"]
 
 
-def fetch_mobile_api(uprn: str) -> dict:
+async def fetch_mobile_api(uprn: str) -> dict:
     """
     Retrieve waste collection data for a property UPRN from the Cloud9 mobile API.
     
@@ -133,7 +133,7 @@ def fetch_mobile_api(uprn: str) -> dict:
 
     # Perform the HTTP request and surface network-layer errors clearly
     try:
-        response = httpx.get(url, headers=MOBILE_API_HEADERS, timeout=30)
+        response = await httpx.AsyncClient(follow_redirects=True).get(url, headers=MOBILE_API_HEADERS, timeout=30)
     except httpx.HTTPError as exc:
         raise ValueError("Mobile API request failed") from exc
 
@@ -156,7 +156,7 @@ class CouncilClass(AbstractGetBinDataClass):
     Uses the Cloud9 mobile API to fetch bin collection data.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         """
         Parse and return sorted bin collection entries for an address using the Cloud9 mobile API.
         
@@ -193,11 +193,11 @@ class CouncilClass(AbstractGetBinDataClass):
             check_paon(paon)
 
             # Attempt UPRN lookup using postcode and paon
-            uprn = lookup_uprn(postcode=postcode, paon=paon)
+            uprn = await lookup_uprn(postcode=postcode, paon=paon)
 
 
         # Fetch data from mobile API
-        api_response = fetch_mobile_api(uprn)
+        api_response = await fetch_mobile_api(uprn)
 
         # Parse the API response - Cloud9 API returns WasteCollectionDates with 8 containers
         # Response structure: {"wasteCollectionDates": {"container1CollectionDetails": {...}, ...}}
@@ -270,19 +270,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

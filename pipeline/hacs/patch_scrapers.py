@@ -1386,16 +1386,17 @@ def _is_deprecated_scraper(source: str) -> bool:
 # --- Requests fallback for Cloudflare-blocked scrapers ---
 
 
-def _load_override_sets() -> tuple[set[str], set[str], set[str]]:
+def _load_override_sets() -> tuple[set[str], set[str], set[str], set[str]]:
     """Load all override sets from overrides.json.
 
-    Returns (requests_fallback, curl_cffi_fallback, ssl_verify_disabled).
+    Returns (requests_fallback, curl_cffi_fallback, ssl_verify_disabled, broken).
     """
     overrides = load_overrides()
     return (
         set(overrides.get("requests_fallback", [])),
         set(overrides.get("curl_cffi_fallback", [])),
         set(overrides.get("ssl_verify_disabled", [])),
+        set(overrides.get("broken", [])),
     )
 
 
@@ -1406,6 +1407,8 @@ def _apply_requests_fallback(source: str) -> str:
         "from api.compat.requests_fallback import AsyncClient as _FallbackClient",
     )
     source = source.replace("httpx.AsyncClient", "_FallbackClient")
+    if "httpx." in source:
+        source = "import httpx\n" + source
     return source
 
 
@@ -1416,6 +1419,8 @@ def _apply_curl_cffi_fallback(source: str) -> str:
         "from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient",
     )
     source = source.replace("httpx.AsyncClient", "_CurlCffiClient")
+    if "httpx." in source:
+        source = "import httpx\n" + source
     return source
 
 
@@ -1516,6 +1521,7 @@ def _patch_single_file(
     fallback_list: set[str],
     curl_cffi_list: set[str],
     ssl_disabled_list: set[str],
+    broken_list: set[str],
 ) -> tuple[str | None, list[str]]:
     """Patch a single scraper file.
 
@@ -1524,6 +1530,10 @@ def _patch_single_file(
     out = output_dir / f"hacs_{src.name}"
     raw = src.read_text()
     if _is_deprecated_scraper(raw):
+        if out.exists():
+            out.unlink()
+        return src.name, []
+    if src.stem in broken_list:
         if out.exists():
             out.unlink()
         return src.name, []
@@ -1541,6 +1551,7 @@ def _log_override_info(
     fallback_list: set[str],
     curl_cffi_list: set[str],
     ssl_disabled_list: set[str],
+    broken_list: set[str],
 ) -> None:
     """Print info about active overrides."""
     if fallback_list:
@@ -1549,6 +1560,8 @@ def _log_override_info(
         print(f"curl_cffi fallback enabled for {len(curl_cffi_list)} scrapers.")
     if ssl_disabled_list:
         print(f"SSL verify disabled for {len(ssl_disabled_list)} scrapers.")
+    if broken_list:
+        print(f"Broken (skipped): {len(broken_list)} scrapers.")
 
 
 def _print_results(
@@ -1577,8 +1590,8 @@ def _patch_directory(input_dir: Path, output_dir: Path) -> None:
         print(f"No *_gov_uk.py files found in {input_dir}", file=sys.stderr)
         sys.exit(1)
 
-    fallback_list, curl_cffi_list, ssl_disabled_list = _load_override_sets()
-    _log_override_info(fallback_list, curl_cffi_list, ssl_disabled_list)
+    fallback_list, curl_cffi_list, ssl_disabled_list, broken_list = _load_override_sets()
+    _log_override_info(fallback_list, curl_cffi_list, ssl_disabled_list, broken_list)
 
     print(f"Patching {len(source_files)} files...")
 
@@ -1591,6 +1604,7 @@ def _patch_directory(input_dir: Path, output_dir: Path) -> None:
             fallback_list,
             curl_cffi_list,
             ssl_disabled_list,
+            broken_list,
         )
         if dep_name:
             deprecated.append(dep_name)

@@ -15,7 +15,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         data = {"bins": []}
         user_postcode = kwargs.get("postcode")
         user_paon = kwargs.get("paon")
@@ -26,10 +26,10 @@ class CouncilClass(AbstractGetBinDataClass):
 
         payload = {"postcode": user_postcode}
 
-        s = httpx.Client(follow_redirects=True)
+        s = httpx.AsyncClient(follow_redirects=True)
 
         # Make the POST request
-        response = s.post(URI, data=payload)
+        response = await s.post(URI, data=payload)
 
         # Make a BS4 object
         soup = BeautifulSoup(response.content, features="html.parser")
@@ -45,13 +45,13 @@ class CouncilClass(AbstractGetBinDataClass):
                 URI = f"https://recyclingservices.brent.gov.uk/waste/{address_id}"
 
                 counter = 0
-                r = s.get(URI)
+                r = await s.get(URI)
                 while "Loading your bin days..." in r.text:
                     counter = counter + 1
                     if counter == 20:
                         return data
                     sleep(2)
-                    r = s.get(URI)
+                    r = await s.get(URI)
 
                 r.raise_for_status()
 
@@ -144,20 +144,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.postcode: kwargs['postcode'] = self.postcode
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

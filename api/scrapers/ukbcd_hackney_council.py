@@ -13,7 +13,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
 
         user_paon = kwargs.get("paon")
         user_postcode = kwargs.get("postcode")
@@ -29,7 +29,7 @@ class CouncilClass(AbstractGetBinDataClass):
         headers = {"Content-Type": "application/json"}
 
         # Make the GET request
-        response = httpx.post(URI, json=data, headers=headers)
+        response = await httpx.AsyncClient(follow_redirects=True).post(URI, json=data, headers=headers)
 
         addresses = response.json()
 
@@ -40,7 +40,7 @@ class CouncilClass(AbstractGetBinDataClass):
         if systemId:
             URI = f"https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getproperty/{systemId}"
 
-            response = httpx.get(URI)
+            response = await httpx.AsyncClient(follow_redirects=True).get(URI)
 
             address = response.json()
 
@@ -49,19 +49,19 @@ class CouncilClass(AbstractGetBinDataClass):
             ]
             for binID in binIDs.split(","):
                 URI = f"https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getbin/{binID}"
-                response = httpx.get(URI)
+                response = await httpx.AsyncClient(follow_redirects=True).get(URI)
                 getBin = response.json()
 
                 bin_type = getBin["subTitle"]
 
                 URI = f"https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getcollection/{binID}"
-                response = httpx.get(URI)
+                response = await httpx.AsyncClient(follow_redirects=True).get(URI)
                 getcollection = response.json()
 
                 collectionID = getcollection["scheduleCodeWorkflowIDs"][0]
 
                 URI = f"https://waste-api-hackney-live.ieg4.net/f806d91c-e133-43a6-ba9a-c0ae4f4cccf6/alloywastepages/getworkflow/{collectionID}"
-                response = httpx.get(URI)
+                response = await httpx.AsyncClient(follow_redirects=True).get(URI)
                 collection_dates = response.json()
 
                 dates = collection_dates["trigger"]["dates"]
@@ -99,20 +99,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.postcode: kwargs['postcode'] = self.postcode
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

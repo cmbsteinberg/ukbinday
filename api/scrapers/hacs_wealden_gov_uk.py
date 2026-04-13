@@ -1,8 +1,8 @@
 import json
 from datetime import datetime
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
-from api.compat.requests_fallback import AsyncClient as _FallbackClient
 
 TITLE = "Wealden District Council"
 DESCRIPTION = "Source for Wealden City services for Wealden District Council, UK."
@@ -47,9 +47,9 @@ class Source:
         self._uprn = str(uprn)
 
     async def fetch(self):
-        # s = _FallbackClient()
+        # s = _CurlCffiClient()
         params = {"action": "wealden_get_collections_for_uprn", "uprn": self._uprn}
-        r = await _FallbackClient(follow_redirects=True).post(API_URL, headers=HEADERS, data=params)
+        r = await _CurlCffiClient(follow_redirects=True).post(API_URL, headers=HEADERS, data=params)
         json_data = json.loads(r.text)["collection"]
         entries = []
 

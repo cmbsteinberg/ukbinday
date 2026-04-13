@@ -1,8 +1,8 @@
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Birmingham City Council"
@@ -38,7 +38,7 @@ class Source:
     async def fetch(self):
         entries: list[Collection] = []
 
-        session = httpx.AsyncClient(follow_redirects=True)
+        session = _CurlCffiClient(follow_redirects=True)
         session.headers.update(HEADERS)
 
         token_response = await session.get(API_URLS["get_session"])

@@ -1,8 +1,7 @@
 import re
 from datetime import datetime
 
-import httpx
-
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Blackpool Council"
@@ -39,7 +38,7 @@ class Source:
 
     async def fetch(self):
         # GET request returns token
-        s = httpx.AsyncClient(follow_redirects=True)
+        s = _CurlCffiClient(follow_redirects=True)
         r0 = await s.get(f"{API_URL}/security/token")
         r0.raise_for_status()
 

@@ -13,7 +13,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         driver = None
         try:
             uri = "https://selfserve.derbyshiredales.gov.uk/renderform.aspx?t=103&k=9644C066D2168A4C21BCDA351DA2642526359DFF"
@@ -26,9 +26,9 @@ class CouncilClass(AbstractGetBinDataClass):
             check_postcode(user_postcode)
 
             # Start a session
-            session = httpx.Client(follow_redirects=True)
+            session = httpx.AsyncClient(follow_redirects=True)
 
-            response = session.get(uri)
+            response = await session.get(uri)
 
             soup = BeautifulSoup(response.content, features="html.parser")
 
@@ -65,7 +65,7 @@ class CouncilClass(AbstractGetBinDataClass):
             URI = "https://selfserve.derbyshiredales.gov.uk/renderform/Form"
 
             # Make the POST request
-            post_response = session.post(URI, data=data, headers=headers)
+            post_response = await session.post(URI, data=data, headers=headers)
 
             soup = BeautifulSoup(post_response.content, features="html.parser")
 
@@ -119,20 +119,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
         if self.postcode: kwargs['postcode'] = self.postcode
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

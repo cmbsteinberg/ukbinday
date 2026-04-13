@@ -27,15 +27,15 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         # data to return
         data = {"bins": []}
 
         # start session
         # note: this ignores the given url
         base_url = "https://lcc-wrp.whitespacews.com"
-        session = httpx.Client(follow_redirects=True)
-        response = session.get(base_url + "/#!")
+        session = httpx.AsyncClient(follow_redirects=True)
+        response = await session.get(base_url + "/#!")
         links = [
             a["href"]
             for a in BeautifulSoup(response.text, features="html.parser").select("a")
@@ -46,7 +46,7 @@ class CouncilClass(AbstractGetBinDataClass):
                 portal_link = l
 
         # fill address form
-        response = session.get(portal_link)
+        response = await session.get(portal_link)
         form = BeautifulSoup(response.text, features="html.parser").find("form")
         form_url = dict(form.attrs).get("action")
         payload = {
@@ -56,7 +56,7 @@ class CouncilClass(AbstractGetBinDataClass):
         }
 
         # get (first) found address
-        response = session.post(form_url, data=payload)
+        response = await session.post(form_url, data=payload)
         links = [
             a["href"]
             for a in BeautifulSoup(response.text, features="html.parser").select("a")
@@ -67,7 +67,7 @@ class CouncilClass(AbstractGetBinDataClass):
                 addr_link = base_url + "/" + l
 
         # get json formatted bin data for addr
-        response = session.get(addr_link)
+        response = await session.get(addr_link)
         new_soup = BeautifulSoup(response.text, features="html.parser")
         services = new_soup.find("section", {"id": "scheduled-collections"})
 
@@ -140,20 +140,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.postcode: kwargs['postcode'] = self.postcode
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

@@ -15,7 +15,7 @@ class CouncilClass(AbstractGetBinDataClass):
     A class to fetch and parse bin collection data for Cheshire East Council.
     """
 
-    def parse_data(self, page: Any, **kwargs: Any) -> Dict[str, Any]:
+    async def parse_data(self, page: Any, **kwargs: Any) -> Dict[str, Any]:
 
         try:
             user_uprn = kwargs.get("uprn")
@@ -33,7 +33,7 @@ class CouncilClass(AbstractGetBinDataClass):
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
         # Make request with SSL verification disabled
-        page = httpx.get(url)
+        page = await httpx.AsyncClient(verify=False, follow_redirects=True).get(url, verify=False)
 
         soup = BeautifulSoup(page.text, features="html.parser")
 
@@ -84,19 +84,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

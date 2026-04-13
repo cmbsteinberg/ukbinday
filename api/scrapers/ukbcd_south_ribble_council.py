@@ -14,7 +14,7 @@ class CouncilClass(AbstractGetBinDataClass):
         # This method is not used in the current implementation
         return ""
 
-    def parse_data(self, page: str, **kwargs: Any) -> Dict[str, List[Dict[str, str]]]:
+    async def parse_data(self, page: str, **kwargs: Any) -> Dict[str, List[Dict[str, str]]]:
         postcode: Optional[str] = kwargs.get("postcode")
         uprn: Optional[str] = kwargs.get("uprn")
 
@@ -24,7 +24,7 @@ class CouncilClass(AbstractGetBinDataClass):
         check_postcode(postcode)
         check_uprn(uprn)
 
-        session = httpx.Client(follow_redirects=True)
+        session = httpx.AsyncClient(follow_redirects=True)
         headers = {
             "User-Agent": (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -35,7 +35,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
         # Step 1: Load form and get token + field names
         initial_url = "https://forms.chorleysouthribble.gov.uk/xfp/form/70"
-        get_resp = session.get(initial_url)
+        get_resp = await session.get(initial_url)
         soup = BeautifulSoup(get_resp.text, "html.parser")
 
         token = soup.find("input", {"name": "__token"})["value"]
@@ -43,7 +43,7 @@ class CouncilClass(AbstractGetBinDataClass):
         postcode_field = soup.find("input", {"type": "text", "name": re.compile(".*_0_0")})["name"]
 
         # Step 2: Submit postcode
-        post_resp = session.post(
+        post_resp = await session.post(
             initial_url,
             data={
                 "__token": token,
@@ -63,7 +63,7 @@ class CouncilClass(AbstractGetBinDataClass):
         address_field = address_field_el["name"]
 
         # Step 3: Submit UPRN and retrieve bin data
-        final_resp = session.post(
+        final_resp = await session.post(
             initial_url,
             data={
                 "__token": token,
@@ -144,20 +144,13 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
         if self.postcode: kwargs['postcode'] = self.postcode
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

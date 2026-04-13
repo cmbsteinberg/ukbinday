@@ -3,9 +3,9 @@ import re
 from datetime import datetime
 from typing import Any
 
-import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ class Source:
         self._door_num = door_num
         self._postcode = postcode
         self._uprn = uprn
-        self._session = httpx.AsyncClient(follow_redirects=True)
+        self._session = _CurlCffiClient(follow_redirects=True)
         self._params: dict[str, Any] = PARAMS
 
     def _update_params(self, soup: BeautifulSoup) -> None:

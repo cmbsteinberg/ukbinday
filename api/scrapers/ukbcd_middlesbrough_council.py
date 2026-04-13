@@ -8,7 +8,7 @@ from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 
 
 class CouncilClass(AbstractGetBinDataClass):
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         """
         Retrieve upcoming bin collection types and the next collection date for the provided address (paon) within the Middlesbrough service.
         
@@ -46,7 +46,7 @@ class CouncilClass(AbstractGetBinDataClass):
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
             }
 
-            response = httpx.get(url, headers=headers, params=params)
+            response = await httpx.AsyncClient(follow_redirects=True).get(url, headers=headers, params=params)
 
             addresses = response.json()
             for address in addresses:
@@ -68,7 +68,7 @@ class CouncilClass(AbstractGetBinDataClass):
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
                 "x-recollect-place": place_id + ":50005",
             }
-            response = httpx.get(url, headers=headers, params=params)
+            response = await httpx.AsyncClient(follow_redirects=True).get(url, headers=headers, params=params)
             # response = response.json()
 
             def extract_next_collection(payload: dict):
@@ -152,19 +152,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.house_number: kwargs['paon'] = self.house_number
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:

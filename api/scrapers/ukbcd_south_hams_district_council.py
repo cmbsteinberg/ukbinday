@@ -15,7 +15,7 @@ class CouncilClass(AbstractGetBinDataClass):
     implementation.
     """
 
-    def parse_data(self, page: str, **kwargs) -> dict:
+    async def parse_data(self, page: str, **kwargs) -> dict:
         # Get and check UPRN
         user_uprn = kwargs.get("uprn")
         check_uprn(user_uprn)
@@ -23,8 +23,8 @@ class CouncilClass(AbstractGetBinDataClass):
 
         uri = "https://waste.southhams.gov.uk/mycollections"
 
-        s = httpx.Client(follow_redirects=True)
-        r = s.get(uri)
+        s = httpx.AsyncClient(follow_redirects=True)
+        r = await s.get(uri)
         for cookie in r.cookies.jar:
             if cookie.name == "fcc_session_cookie":
                 fcc_session_token = cookie.value
@@ -44,7 +44,7 @@ class CouncilClass(AbstractGetBinDataClass):
         }
 
         # Send a POST request with form data and headers
-        r = s.post(uri, data=params, headers=headers)
+        r = await s.post(uri, data=params, headers=headers)
 
         result = r.json()
 
@@ -104,19 +104,12 @@ class Source:
         self._scraper = CouncilClass()
 
     async def fetch(self) -> list[Collection]:
-        import asyncio
         from datetime import datetime
 
         kwargs = {}
         if self.uprn: kwargs['uprn'] = self.uprn
 
-        def _run():
-            page = ""
-            if hasattr(self._scraper, "parse_data"):
-                return self._scraper.parse_data(page, **kwargs)
-            raise NotImplementedError("Could not find parse_data on scraper")
-
-        data = await asyncio.to_thread(_run)
+        data = await self._scraper.parse_data("", **kwargs)
 
         entries = []
         if isinstance(data, dict) and "bins" in data:
