@@ -10,7 +10,7 @@ import { check, sleep } from "k6";
 import http from "k6/http";
 import { Rate, Trend } from "k6/metrics";
 
-const BASE = __ENV.BASE_URL || "https://ukbindays.co.uk";
+const BASE = __ENV.BASE_URL || "https://ukbinday.co.uk";
 
 const errorRate = new Rate("errors");
 const scraperDuration = new Trend("scraper_duration", true);

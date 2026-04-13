@@ -1,4 +1,4 @@
-ukbindays.co.uk {
+ukbinday.co.uk {
     log {
         output file /var/log/caddy/access.log {
             roll_size 100mb

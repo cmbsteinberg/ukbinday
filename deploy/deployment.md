@@ -40,11 +40,11 @@ uv run python deploy/deployment.py ssh "tail -f /var/log/cloud-init-deploy.log"
 
 Once you have the server IP (shown after provision, or check with `status`):
 
-1. Go to your DNS provider for `ukbindays.co.uk`
+1. Go to your DNS provider for `ukbinday.co.uk`
 2. Create/update records:
-   - `A` record: `ukbindays.co.uk` → `<server-ipv4>`
-   - `AAAA` record (optional): `ukbindays.co.uk` → `<server-ipv6>`
-3. Wait for propagation: `dig ukbindays.co.uk`
+   - `A` record: `ukbinday.co.uk` → `<server-ipv4>`
+   - `AAAA` record (optional): `ukbinday.co.uk` → `<server-ipv6>`
+3. Wait for propagation: `dig ukbinday.co.uk`
 
 > Caddy auto-provisions Let's Encrypt certs, but the domain must resolve to your server **before** HTTPS will work.
 
@@ -55,7 +55,7 @@ Once you have the server IP (shown after provision, or check with `status`):
 uv run python deploy/deployment.py status
 
 # Test the API
-curl https://ukbindays.co.uk/api/v1/health
+curl https://ukbinday.co.uk/api/v1/health
 
 # Check container logs
 uv run python deploy/deployment.py ssh "cd ~/bins && docker compose ps"
