@@ -9,7 +9,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Smoke tests
+        run: uv run pytest tests/test_ci.py -v
+
   deploy:
+    needs: smoke-test
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to server
@@ -22,3 +37,25 @@ jobs:
             cd /home/deploy/bins
             git pull origin main
             docker compose up -d --build --remove-orphans
+
+  integration-test:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Integration tests
+        run: uv run pytest tests/test_integration.py -v --tb=short || true
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-results
+          path: tests/integration_output.json
