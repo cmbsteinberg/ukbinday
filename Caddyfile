@@ -7,22 +7,6 @@ ukbinday.co.uk {
         format json
     }
 
-    handle /goaccess/ws {
-        basic_auth {
-            {$GOACCESS_USER:admin} {$GOACCESS_HASH}
-        }
-        reverse_proxy goaccess:7890
-    }
-
-    handle /goaccess* {
-        basic_auth {
-            {$GOACCESS_USER:admin} {$GOACCESS_HASH}
-        }
-        uri strip_prefix /goaccess
-        root * /srv/goaccess
-        file_server
-    }
-
     reverse_proxy api:8000 {
         header_up X-Forwarded-For {remote_host}
     }
