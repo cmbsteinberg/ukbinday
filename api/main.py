@@ -37,11 +37,12 @@ async def lifespan(app: FastAPI):
 
     # Shared Playwright browser (lazy — only starts if a Playwright scraper is invoked,
     # but we pre-start here so the first request isn't slow)
-    from api.services import browser_pool
-
     try:
+        from api.services import browser_pool
+
         await browser_pool.start()
     except Exception:
+        browser_pool = None
         logger.warning(
             "BrowserPool failed to start — Playwright scrapers will be unavailable",
             exc_info=True,
@@ -78,7 +79,8 @@ async def lifespan(app: FastAPI):
     yield
 
     # Shutdown
-    await browser_pool.stop()
+    if browser_pool is not None:
+        await browser_pool.stop()
     from api.compat.curl_cffi_fallback import close_shared_session
     await close_shared_session()
     if getattr(app.state, "council_lookup", None):

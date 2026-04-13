@@ -37,9 +37,9 @@ from hcloud.servers.domain import ServerCreatePublicNetwork
 # Config — edit these to taste
 # ---------------------------------------------------------------------------
 SERVER_NAME = "bins-api"
-SERVER_TYPE = "cx32"  # 4 vCPU, 8 GB RAM — handles ~1000 concurrent requests
+SERVER_TYPE = "cx33"  # 4 vCPU, 8 GB RAM — handles ~1000 concurrent requests
 IMAGE = "ubuntu-24.04"
-LOCATION = "fsn1"  # Falkenstein, DE — closest to UK
+LOCATION = "nbg1"  # Nuremberg, DE — closest to UK
 SSH_KEY_NAME = "bins-deploy"
 FIREWALL_NAME = "bins-firewall"
 DOMAIN = "bincollection.co.uk"
@@ -89,7 +89,7 @@ def build_cloud_init(repo_url: str, deploy_user: str) -> str:
 
         echo ">>> Disabling root SSH login"
         sed -i 's/^#\\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
-        systemctl restart sshd
+        systemctl restart ssh || systemctl restart sshd
 
         echo ">>> Cloning repository"
         su - {deploy_user} -c "git clone {repo_url} /home/{deploy_user}/bins"
@@ -362,9 +362,7 @@ def main() -> None:
     if args.command == "provision":
         cmd_provision(client, args.ssh_key_file)
     elif args.command == "destroy":
-        cmd_destroy(
-            client, args.ssh_key_file if hasattr(args, "ssh_key_file") else None
-        )
+        cmd_destroy(client)
     elif args.command == "deploy":
         cmd_deploy(client, args.ssh_key_file)
     elif args.command == "status":
