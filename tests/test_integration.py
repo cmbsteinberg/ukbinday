@@ -279,18 +279,11 @@ async def all_results(client: httpx.AsyncClient):
     _run_summary.update(summary)
     OUTPUT_PATH.write_text(json.dumps(summary, indent=2, default=str) + "\n")
 
-    # Regenerate coverage map from fresh results
+    # Regenerate derived data from fresh results
     import subprocess
 
     cwd = Path(__file__).parent.parent
-    subprocess.run(
-        ["uv", "run", "python", "-m", "scripts.coverage.generate_coverage_map"],
-        cwd=cwd,
-    )
-    subprocess.run(
-        ["uv", "run", "python", "-m", "scripts.generate_sankey"],
-        cwd=cwd,
-    )
+    subprocess.run(["./scripts/post_integration.sh"], cwd=cwd)
 
     return _results_cache
 

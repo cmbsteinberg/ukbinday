@@ -16,8 +16,11 @@ from api.compat.hacs.exceptions import (
     SourceArgumentExceptionMultiple,
 )
 from api.config import CACHE_TTL, RATE_LIMIT_DAILY, SCRAPER_TIMEOUT
+from api.services import address_lookup
 from api.services.council_lookup import LookupDatabaseError, PostcodeNotFoundError
 from api.services.models import (
+    AddressLookupResponse,
+    AddressResult,
     CollectionItem,
     CouncilInfo,
     CouncilLookupResponse,
@@ -52,15 +55,38 @@ async def _cache_get(redis_client, key: str) -> dict | None:
     return None
 
 
+def _dynamic_ttl(collections: list[dict], now: datetime) -> int:
+    # Expire at midnight after the next upcoming bin day, capped at CACHE_TTL (72h).
+    today = now.date()
+    upcoming = []
+    for c in collections:
+        d = c.get("date")
+        if not d:
+            continue
+        try:
+            parsed = date.fromisoformat(d) if isinstance(d, str) else d
+        except ValueError:
+            continue
+        if parsed >= today:
+            upcoming.append(parsed)
+    if not upcoming:
+        return CACHE_TTL
+    expires_at = datetime.combine(
+        min(upcoming) + timedelta(days=1), datetime.min.time()
+    )
+    ttl = int((expires_at - now).total_seconds())
+    return max(300, min(ttl, CACHE_TTL))
+
+
 async def _cache_set(redis_client, key: str, collections: list[dict]) -> None:
-    """Write scraper result to Redis with TTL."""
+    """Write scraper result to Redis with a dynamic TTL tied to the next bin day."""
     if not redis_client:
         return
     try:
-        payload = json.dumps(
-            {"collections": collections, "cached_at": datetime.now().isoformat()}
-        )
-        await redis_client.set(key, payload, ex=CACHE_TTL)
+        now = datetime.now()
+        ttl = _dynamic_ttl(collections, now)
+        payload = json.dumps({"collections": collections, "cached_at": now.isoformat()})
+        await redis_client.set(key, payload, ex=ttl)
     except Exception:
         logger.warning("Redis cache write failed for key %s", key, exc_info=True)
 
@@ -95,6 +121,40 @@ async def _resolve_council(lookup, postcode: str) -> tuple[str | None, str | Non
         return council_id, council_name
 
     return None, None
+
+
+@router.get("/addresses/{postcode}", response_model=AddressLookupResponse)
+async def addresses(
+    postcode: str,
+    _rate_limit: None = Depends(rate_limit),
+):
+    try:
+        results = await address_lookup.search_addresses(postcode)
+    except httpx.TimeoutException:
+        raise HTTPException(
+            status_code=504,
+            detail="The address lookup service is taking too long to respond. "
+            "Please try again later.",
+        )
+    except httpx.HTTPStatusError as e:
+        logger.warning("Address lookup HTTP error: %s", e, exc_info=True)
+        raise HTTPException(
+            status_code=503,
+            detail="The address lookup service is temporarily unavailable. "
+            "Please try again later.",
+        )
+    except Exception:
+        logger.exception("Address lookup failed")
+        raise HTTPException(
+            status_code=503,
+            detail="Something went wrong during the address lookup. "
+            "Please try again later.",
+        )
+
+    return AddressLookupResponse(
+        postcode=postcode.strip().upper(),
+        addresses=[AddressResult(**r) for r in results],
+    )
 
 
 @router.get("/council/{postcode}", response_model=CouncilLookupResponse)

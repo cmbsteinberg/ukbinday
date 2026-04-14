@@ -1,7 +1,4 @@
-import { AddressLookup } from "/static/address_lookup.js";
-
 const API = "/api/v1";
-const addressLookup = new AddressLookup();
 let currentData = null;
 
 const $ = (sel) => document.querySelector(sel);
@@ -31,11 +28,18 @@ $("#postcode-form").addEventListener("submit", async (e) => {
 	btn.setAttribute("aria-busy", "true");
 
 	try {
-		// Address search (client-side) and council lookup (server-side) in parallel
-		const [addresses, councilResp] = await Promise.all([
-			addressLookup.searchAddresses(postcode),
+		const [addressResp, councilResp] = await Promise.all([
+			fetch(`${API}/addresses/${encodeURIComponent(postcode)}`),
 			fetch(`${API}/council/${encodeURIComponent(postcode)}`),
 		]);
+
+		if (!addressResp.ok) {
+			const err = await addressResp.json().catch(() => ({}));
+			throw new Error(
+				err.detail || `Address lookup failed (${addressResp.status})`,
+			);
+		}
+		const { addresses } = await addressResp.json();
 
 		let council_id = null;
 		let council_name = null;

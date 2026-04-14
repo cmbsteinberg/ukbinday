@@ -17,6 +17,17 @@ class LookupResponse(BaseModel):
     collections: list[CollectionItem]
 
 
+class AddressResult(BaseModel):
+    uprn: str
+    full_address: str
+    postcode: str
+
+
+class AddressLookupResponse(BaseModel):
+    postcode: str
+    addresses: list[AddressResult]
+
+
 class CouncilInfo(BaseModel):
     id: str
     name: str

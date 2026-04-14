@@ -2,10 +2,7 @@ pipeline/upstream
 .claude
 CLAUDE.md
 
-# Test output (generated, not source)
-tests/test_output.json
-tests/integration_output.json
-
+*.DS_Store
 .psycn
 # Byte-compiled / optimized / DLL files
 __pycache__/

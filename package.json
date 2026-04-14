@@ -3,6 +3,7 @@
     "@biomejs/biome": "^2.4.10"
   },
   "dependencies": {
+    "@mariozechner/pi-coding-agent": "^0.67.1",
     "pi-web-access": "^0.10.6"
   }
 }
