@@ -1,11 +1,15 @@
 import datetime
-import json
 import re
 
 import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentNotFound
+from api.compat.hacs.service.FirmstepSelfService import (
+    get_verification_token,
+    lookup_addresses,
+)
 
 TITLE = "Rushcliffe Brough Council"
 DESCRIPTION = "Source for Rushcliffe Brough Council."
@@ -60,57 +64,22 @@ class Source:
         header = {"User-Agent": "Mozilla/5.0", "Host": "selfservice.rushcliffe.gov.uk"}
         s.headers.update(header)
 
-        r = await s.get(API_URL)
-        r.raise_for_status()
-
         args: dict[str, str] = POST_ARGS.copy()
+        args["__RequestVerificationToken"] = get_verification_token(s, API_URL)
 
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        request_verification_token = soup.find(
-            "input", {"name": "__RequestVerificationToken"}
-        )
-
-        if request_verification_token is None or not request_verification_token.get(
-            "value"
-        ):
-            raise Exception("Invalid response")
-
-        args["__RequestVerificationToken"] = request_verification_token.get("value")
-
-        r = await s.post(
-            ADDRESS_LOOKUP,
-            data=dict(query=self._postcode, searchNlpg="True", classification=""),
-        )
-
-        addresses_raw = json.loads(r.text)
-
-        if isinstance(addresses_raw, dict):
-            # Dict (old) format
-            iterator = addresses_raw.items()
-        elif isinstance(addresses_raw, list):
-            # List (new) format
-            iterator = (
-                (item.get("Key"), item.get("Value"))
-                for item in addresses_raw
-                if isinstance(item, dict)
-            )
-        else:
-            iterator = []
+        addresses = lookup_addresses(s, ADDRESS_LOOKUP, self._postcode)
 
         args[POST_POST_UPRN_KEY] = next(
             (
                 key
-                for key, value in iterator
-                if key is not None
-                and value is not None
-                and self.__compare(value, self._address)
+                for key, value in addresses.items()
+                if self.__compare(value, self._address)
             ),
             None,
         )
 
         if args[POST_POST_UPRN_KEY] is None:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         args[POST_POST_UPRN_KEY + "lbltxt"] = self._address
         args[POST_POST_UPRN_KEY + "FF3518-text"] = self._postcode

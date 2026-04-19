@@ -4,6 +4,7 @@ import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "North Yorkshire Council - Selby"
 DESCRIPTION = "Source for North Yorkshire Council - Selby."
@@ -38,7 +39,7 @@ class Source:
                 html = res["data"]
                 break
         if not html or "Unfortunately we were unable to find your property" in html:
-            raise Exception("No data found, invalid UPRN?")
+            raise SourceArgumentNotFound("uprn", self._uprn)
         soup = BeautifulSoup(html, "html.parser")
 
         rows = (

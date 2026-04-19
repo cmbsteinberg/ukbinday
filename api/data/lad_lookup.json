@@ -461,7 +461,7 @@
   },
   "E07000137": {
     "name": "East Lindsey",
-    "scraper_id": null,
+    "scraper_id": "hacs_e_lindsey_gov_uk",
     "url": "https://www.e-lindsey.gov.uk/"
   },
   "S12000010": {
@@ -481,7 +481,7 @@
   },
   "E07000193": {
     "name": "East Staffordshire",
-    "scraper_id": null,
+    "scraper_id": "hacs_eaststaffsbc_gov_uk",
     "url": "https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates/68382"
   },
   "E07000244": {
@@ -896,7 +896,7 @@
   },
   "E09000022": {
     "name": "Lambeth",
-    "scraper_id": "ukbcd_london_borough_lambeth",
+    "scraper_id": "hacs_lambeth_gov_uk",
     "url": "https://wasteservice.lambeth.gov.uk/WhitespaceComms/GetServicesByUprn"
   },
   "E09000023": {

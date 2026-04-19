@@ -1,10 +1,10 @@
-from datetime import datetime
 from typing import TypedDict
 
 import httpx
 from dateutil.parser import parse
 
 from api.compat.hacs import Collection
+from api.compat.hacs.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Elmbridge Borough Council"
 DESCRIPTION = "Source for waste collection services for Elmbridge Borough Council"
@@ -43,56 +43,27 @@ class CollectionResult(TypedDict):
 class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn).strip()
-        self._session = httpx.AsyncClient(follow_redirects=True)
 
-    async def _init_session(self) -> str:
-        self._session = httpx.AsyncClient(follow_redirects=True)
-        r = await self._session.get(INTIAL_URL)
-        r.raise_for_status()
-        params: dict[str, str | int] = {
-            "uri": str(r.url),
-            "hostname": "elmbridge-self.achieveservice.com",
-            "withCredentials": "true",
-        }
-        r = await self._session.get(AUTH_URL, params=params)
-        r.raise_for_status()
-        data = r.json()
-        session_key = data["auth-session"]
-
-        params = {
-            "sid": session_key,
-            "_": int(datetime.now().timestamp() * 1000),
-        }
-        r = await self._session.get(AUTH_TEST, params=params)
-        r.raise_for_status()
-
-        return session_key
-
-    async def get_collections(self, session_key: str) -> list[Collection]:
-        params: dict[str, int | str] = {
-            "id": "663b557cdaece",
-            "repeat_against": "",
-            "noRetry": "false",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": int(datetime.now().timestamp() * 1000),
-            "sid": session_key,
-        }
-        payload = {
-            "formValues": {
-                "Section 1": {
-                    "UPRN": {"value": self._uprn},
-                }
-            }
-        }
-        r = await self._session.post(API_URL, params=params, json=payload)
-        r.raise_for_status()
-        return list(r.json()["integration"]["transformed"]["rows_data"].values())
+    async def get_collections(self, session_key: str, session: httpx.AsyncClient) -> list[Collection]:
+        result = run_lookup(
+            session,
+            API_URL,
+            session_key,
+            "663b557cdaece",
+            {"Section 1": {"UPRN": {"value": self._uprn}}},
+        )
+        return list(result["integration"]["transformed"]["rows_data"].values())
 
     async def fetch(self) -> list[Collection]:
-        session_key = await self._init_session()
-        collections = await self.get_collections(session_key)
+        session = httpx.AsyncClient(follow_redirects=True)
+        session_key = init_session(
+            session,
+            INTIAL_URL,
+            AUTH_URL,
+            "elmbridge-self.achieveservice.com",
+            auth_test_url=AUTH_TEST,
+        )
+        collections = await self.get_collections(session_key, session)
 
         entries = []
         for collection in collections:

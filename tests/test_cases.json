@@ -1439,6 +1439,14 @@
       }
     }
   ],
+  "hacs_e_lindsey_gov_uk": [
+    {
+      "label": "13 Firbeck Avenue, Skegness",
+      "params": {
+        "uprn": "100030786099"
+      }
+    }
+  ],
   "hacs_ealing_gov_uk": [
     {
       "label": "11 LOTHAIR ROAD, EALING, LONDON, W5 4TA",
@@ -1634,6 +1642,20 @@
       }
     }
   ],
+  "hacs_eaststaffsbc_gov_uk": [
+    {
+      "label": "Marlpit Lane",
+      "params": {
+        "uid": "103368"
+      }
+    },
+    {
+      "label": "Church Lane",
+      "params": {
+        "uid": "103281"
+      }
+    }
+  ],
   "hacs_elmbridge_gov_uk": [
     {
       "label": "Test_001",
@@ -1677,6 +1699,20 @@
       "label": "address",
       "params": {
         "address": "127 Palmerston Rd, London N22 8QX"
+      }
+    }
+  ],
+  "hacs_eppingforestdc_gov_uk": [
+    {
+      "label": "51 Crows Road Epping",
+      "params": {
+        "uprn": "100090495060"
+      }
+    },
+    {
+      "label": "47 Crows Road Epping",
+      "params": {
+        "uprn": "100090495056"
       }
     }
   ],
@@ -2242,6 +2278,26 @@
       "params": {
         "postcode": "L34 0HZ",
         "uprn": "40029195"
+      }
+    }
+  ],
+  "hacs_lambeth_gov_uk": [
+    {
+      "label": "Sternhold Avenue",
+      "params": {
+        "uprn": "100021893293"
+      }
+    },
+    {
+      "label": "Sibella Road",
+      "params": {
+        "uprn": "100021889496"
+      }
+    },
+    {
+      "label": "Hoadly Road",
+      "params": {
+        "uprn": "100021852695"
       }
     }
   ],
@@ -4923,14 +4979,6 @@
       "label": "Hounslow",
       "params": {
         "uprn": "100021577765"
-      }
-    }
-  ],
-  "ukbcd_london_borough_lambeth": [
-    {
-      "label": "Lambeth",
-      "params": {
-        "uprn": "100021881738"
       }
     }
   ],

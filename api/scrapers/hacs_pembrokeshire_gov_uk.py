@@ -4,6 +4,7 @@ from datetime import datetime
 import httpx
 
 from api.compat.hacs import Collection
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Pembrokeshire County Council"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for pembrokeshire.gov.uk"  # Describe your source
@@ -66,7 +67,7 @@ class Source:
         collection_response = await session.post(API_URL, params=form_data)
 
         if ast.literal_eval(collection_response.text)["error"] == "true":
-            raise Exception("No collections found for the given UPRN.")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         entries = []  # List that holds collection schedule
 

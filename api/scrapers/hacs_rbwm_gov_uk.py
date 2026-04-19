@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from dateutil.parser import parse
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Windsor and Maidenhead"
 DESCRIPTION = "Source for Windsor and Maidenhead."
@@ -61,7 +62,7 @@ class Source:
 
         table = soup.find("table")
         if table is None:
-            raise Exception("No results found. UPRN may be incorrect.")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         entries = []
         for tr in table.find_all("tr"):

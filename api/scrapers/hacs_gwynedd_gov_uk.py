@@ -4,6 +4,7 @@ import httpx
 from bs4 import BeautifulSoup, Tag
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Gwynedd"
 DESCRIPTION = "Source for Gwynedd."
@@ -36,7 +37,7 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
         collections_headline = soup.find("h6", text="Next collection dates:")
         if not isinstance(collections_headline, Tag):
-            raise Exception("Could not find collections")
+            raise SourceArgumentNotFound("uprn", self._uprn)
         collections = collections_headline.find_next("ul").find_all("li")
 
         entries = []

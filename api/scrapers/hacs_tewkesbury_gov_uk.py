@@ -5,6 +5,7 @@ from urllib.parse import quote as urlquote
 import httpx
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentRequired
 
 TITLE = "Tewkesbury Borough Council"
 DESCRIPTION = "Home waste collection schedule for Tewkesbury Borough Council"
@@ -43,7 +44,7 @@ class Source:
 
     async def get_data(self, uprn, api_url=API_URL):
         if uprn is None:
-            raise Exception("UPRN not set")
+            raise SourceArgumentRequired("uprn", "UPRN is required to fetch collection data")
 
         encoded_uprn = urlquote(uprn)
         request_url = api_url % encoded_uprn

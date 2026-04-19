@@ -8,6 +8,7 @@ import httpx
 from dateutil.parser import parse
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Crawley Borough Council (myCrawley)"
 DESCRIPTION = "Source for Crawley Borough Council (myCrawley)."
@@ -44,65 +45,41 @@ class Source:
     def _get_payload(self) -> dict[str, dict]:
         now = datetime.now()
         return {
-            "formValues": {
-                "Address": {
-                    "address": {
-                        "value": {
-                            "Address": {
-                                "usrn": {"value": self._usrn or "0000"},
-                                "uprn": {"value": self._uprn},
-                            }
+            "Address": {
+                "address": {
+                    "value": {
+                        "Address": {
+                            "usrn": {"value": self._usrn or "0000"},
+                            "uprn": {"value": self._uprn},
                         }
-                    },
-                    "dayConverted": {"value": now.strftime("%d/%m/%Y")},
-                    "getCollection": {"value": "true"},
-                    "getWorksheets": {"value": "false"},
-                }
+                    }
+                },
+                "dayConverted": {"value": now.strftime("%d/%m/%Y")},
+                "getCollection": {"value": "true"},
+                "getWorksheets": {"value": "false"},
             }
         }
 
-    async def _init_session(self) -> str:
-        self._session = httpx.AsyncClient(follow_redirects=True)
-        r = await self._session.get(INTIAL_URL)
-        r.raise_for_status()
-        params: dict[str, str | int] = {
-            "uri": str(r.url),
-            "hostname": "elmbridge-self.achieveservice.com",
-            "withCredentials": "true",
-        }
-        r = await self._session.get(AUTH_URL, params=params)
-        r.raise_for_status()
-        data = r.json()
-        session_key = data["auth-session"]
-
-        params = {
-            "sid": session_key,
-            "_": int(datetime.now().timestamp() * 1000),
-        }
-        r = await self._session.get(AUTH_TEST, params=params)
-        r.raise_for_status()
-
-        return session_key
-
-    async def get_collections(self, session_key: str) -> list[Collection]:
-        params: dict[str, int | str] = {
-            "id": LOOKUP_ID,
-            "repeat_against": "",
-            "noRetry": "false",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": int(datetime.now().timestamp() * 1000),
-            "sid": session_key,
-        }
-        payload = self._get_payload()
-        r = await self._session.post(API_URL, params=params, json=payload)
-        r.raise_for_status()
-        return list(r.json()["integration"]["transformed"]["rows_data"].values())
+    async def get_collections(self, session_key: str, session: httpx.AsyncClient) -> list[Collection]:
+        result = run_lookup(
+            session,
+            API_URL,
+            session_key,
+            LOOKUP_ID,
+            self._get_payload(),
+        )
+        return list(result["integration"]["transformed"]["rows_data"].values())
 
     async def fetch(self) -> list[Collection]:
-        session_key = await self._init_session()
-        collections = await self.get_collections(session_key)
+        session = httpx.AsyncClient(follow_redirects=True)
+        session_key = init_session(
+            session,
+            INTIAL_URL,
+            AUTH_URL,
+            "elmbridge-self.achieveservice.com",
+            auth_test_url=AUTH_TEST,
+        )
+        collections = await self.get_collections(session_key, session)
         date_parse_failed = []
         entries = []
         for collection in collections:

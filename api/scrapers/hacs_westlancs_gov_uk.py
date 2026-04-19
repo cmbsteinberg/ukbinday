@@ -5,6 +5,7 @@ import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "West Lancashire Council"
 DESCRIPTION = "Source for West Lancashire Council waste collection schedule."
@@ -38,14 +39,14 @@ class Source:
         r.raise_for_status()
 
         if "no properties found" in r.text.lower():
-            raise Exception(f"No properties found for postcode {self._postcode}")
+            raise SourceArgumentNotFound("postcode", self._postcode)
 
         soup = BeautifulSoup(r.text, "html.parser")
 
         # Find the GridView table
         gridview = soup.find("table", {"id": re.compile("GridView")})
         if not gridview:
-            raise Exception(f"No address table found for postcode {self._postcode}")
+            raise SourceArgumentNotFound("postcode", self._postcode)
 
         # Find all rows in the table
         rows = gridview.find_all("tr")

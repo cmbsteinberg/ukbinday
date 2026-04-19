@@ -5,6 +5,7 @@ import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "South Derbyshire District Council"
 DESCRIPTION = "Source for www.southderbyshire.gov.uk services for South Derbyshire "
@@ -46,7 +47,7 @@ class Source:
         collections = soup.find_all("div", recursive=False)
 
         if not collections:
-            raise Exception("No collections found for given UPRN")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         for collection in collections:
             bintypes = re.findall(

@@ -5,6 +5,7 @@ import httpx
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Flintshire"
 DESCRIPTION = "Source for Flintshire, United Kingdom."
@@ -29,12 +30,13 @@ API_URL = "https://digital.flintshire.gov.uk/FCC_BinDay/Home/Details2/{UPRN}"
 
 class Source:
     def __init__(self, uprn: str | int):
+        self._uprn = uprn
         self._url = API_URL.format(UPRN=uprn)
 
     async def fetch(self):
         r = await httpx.AsyncClient(follow_redirects=True).post(self._url)
         if r.status_code == 500:
-            raise Exception("web request failed: probably caused by an invalid UPRN")
+            raise SourceArgumentNotFound("uprn", self._uprn, "web request failed: probably caused by an invalid UPRN")
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")

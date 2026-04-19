@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Conwy County Borough Council"
 DESCRIPTION = "Source for Conwy County Borough Council."
@@ -42,7 +43,7 @@ class Source:
         collection_dates = soup.select(".containererf")
 
         if not collection_dates:
-            raise Exception("Could not find collections")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         for collection in collection_dates:
             date_str = collection.select_one("#main #content").text.strip()
