@@ -29,14 +29,23 @@ jobs:
     steps:
       - name: Deploy to server
         uses: appleboy/ssh-action@v1
+        env:
+          TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
+          TURNSTILE_SECRET: ${{ secrets.TURNSTILE_SECRET }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: deploy
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: TURNSTILE_SITE_KEY,TURNSTILE_SECRET
+          script_stop: true
           script: |
             cd /home/deploy/bins
             git fetch origin main
             git reset --hard origin/main
+            grep -v '^TURNSTILE_' .env > .env.tmp 2>/dev/null || true
+            echo "TURNSTILE_SITE_KEY=$TURNSTILE_SITE_KEY" >> .env.tmp
+            echo "TURNSTILE_SECRET=$TURNSTILE_SECRET" >> .env.tmp
+            mv .env.tmp .env
             docker compose up -d --build --remove-orphans
 
   integration-test:
