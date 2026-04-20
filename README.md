@@ -23,11 +23,11 @@ sankey-beta
 "LAD Codes","UKBCD",84
 "LAD Codes","Not Supported",46
 
-"HACS","Passing",197
-"HACS","Failing",16
+"HACS","Passing",185
+"HACS","Failing",28
 
-"UKBCD","UKBCD Passing",52
-"UKBCD","UKBCD Failing",32
+"UKBCD","UKBCD Passing",20
+"UKBCD","UKBCD Failing",64
 ```
 
 HACS scrapers (~240) are the primary source. UKBinCollectionData scrapers (~110) fill gaps where HACS has no coverage or where a HACS scraper is broken. The [coverage map](https://bins.09steic.com/coverage) shows which councils are supported.
