@@ -132,17 +132,23 @@ async def _get_or_scrape(request, uprn: str, council: str, params: dict[str, str
         if lock_acquired:
             await _release_scrape_lock(redis_client, uprn)
 
-async def _resolve_council(lookup, postcode: str) -> tuple[str | None, str | None]:
-    """Resolve postcode to council, raising HTTPException on distinct failures."""
+async def _resolve_council(
+    request: Request, lookup, postcode: str
+) -> tuple[str, str]:
+    """Resolve postcode to a single council, raising HTTPException otherwise."""
+    request_id = getattr(request.state, "request_id", None)
+    log_extra = {"request_id": request_id, "postcode": postcode}
     try:
         authorities = await lookup.get_local_authority(postcode)
     except LookupDatabaseError:
+        logger.warning("Postcode lookup DB unavailable", extra=log_extra)
         raise HTTPException(
             status_code=503,
             detail="Our postcode lookup service is temporarily unavailable. "
             "Please try again later.",
         )
     except PostcodeNotFoundError:
+        logger.info("Postcode not found", extra=log_extra)
         raise HTTPException(
             status_code=404,
             detail="We couldn't find that postcode in our database. "
@@ -151,17 +157,38 @@ async def _resolve_council(lookup, postcode: str) -> tuple[str | None, str | Non
         )
 
     if len(authorities) == 1:
-        council_name = authorities[0].name
-        council_id = authorities[0].slug or None
-        if not council_id:
+        authority = authorities[0]
+        if not authority.slug:
+            logger.info(
+                "Postcode resolved to unsupported council %s",
+                authority.name,
+                extra=log_extra,
+            )
             raise HTTPException(
                 status_code=404,
-                detail=f"We found your council ({council_name}) but don't have "
+                detail=f"We found your council ({authority.name}) but don't have "
                 "a scraper for it yet. Check /api/v1/councils for supported councils.",
             )
-        return council_id, council_name
+        return authority.slug, authority.name
 
-    return None, None
+    logger.info(
+        "Ambiguous postcode: %d candidate councils",
+        len(authorities),
+        extra=log_extra,
+    )
+    candidates = [
+        {"slug": a.slug, "name": a.name, "homepage_url": a.homepage_url}
+        for a in authorities
+        if a.slug
+    ]
+    raise HTTPException(
+        status_code=300,
+        detail={
+            "message": "This postcode straddles multiple councils. "
+            "Please pick the one that covers your address.",
+            "candidates": candidates,
+        },
+    )
 
 
 @router.get("/addresses/{postcode}", response_model=AddressLookupResponse)
@@ -205,7 +232,7 @@ async def council_lookup(
     _rate_limit: None = Depends(rate_limit),
 ):
     lookup = request.app.state.council_lookup
-    council_id, council_name = await _resolve_council(lookup, postcode)
+    council_id, council_name = await _resolve_council(request, lookup, postcode)
 
     return CouncilLookupResponse(
         postcode=postcode.strip().upper(),

@@ -35,10 +35,17 @@ class CouncilInfo(BaseModel):
     params: list[str]
 
 
+class CouncilCandidate(BaseModel):
+    slug: str
+    name: str
+    homepage_url: str
+
+
 class CouncilLookupResponse(BaseModel):
     postcode: str
     council_id: str | None = None
     council_name: str | None = None
+    candidates: list[CouncilCandidate] = []
 
 
 class HealthEntry(BaseModel):
