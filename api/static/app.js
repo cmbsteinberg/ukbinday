@@ -224,7 +224,8 @@ function renderResults(addr, data) {
 		council: councilId,
 		postcode: addr.postcode,
 	});
-	const calUrl = `${API}/calendar/${encodeURIComponent(addr.uprn)}?${calParams}`;
+	const calPath = `${API}/calendar/${encodeURIComponent(addr.uprn)}?${calParams}`;
+	const calUrl = `webcal://${window.location.host}${calPath}`;
 
 	const PASSTHROUGH_ICS = {
 		ukbcd_google_public_calendar_council:
