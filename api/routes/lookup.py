@@ -16,7 +16,7 @@ from api.services.models import (
     CouncilLookupResponse,
     LookupResponse,
 )
-from api.services.rate_limiting import rate_limit
+from api.services.rate_limiting import _get_client_ip, rate_limit
 from api.services.scrape_orchestrator import (
     build_scrape_params,
     get_or_scrape,
@@ -48,7 +48,7 @@ async def verify_turnstile(request: Request) -> None:
                 data={
                     "secret": config.TURNSTILE_SECRET,
                     "response": token,
-                    "remoteip": request.client.host if request.client else "",
+                    "remoteip": _get_client_ip(request),
                 },
             )
         data = resp.json()

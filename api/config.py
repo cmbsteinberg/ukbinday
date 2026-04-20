@@ -33,7 +33,7 @@ SCRAPE_LOCK_MAX_WAIT_S: float = float(
 )
 
 # Rate limiting
-RATE_LIMIT_HOURLY: int = _int_env("RATE_LIMIT_HOURLY", 50)
+RATE_LIMIT_HOURLY: int = _int_env("RATE_LIMIT_HOURLY", 200)
 
 # Logging
 LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO").upper()
