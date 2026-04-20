@@ -5,7 +5,7 @@ import logging
 from fastapi import APIRouter, Request
 
 from api import config
-from api.config import RATE_LIMIT_DAILY, SCRAPER_TIMEOUT
+from api.config import RATE_LIMIT_HOURLY, SCRAPER_TIMEOUT
 from api.services.models import CouncilInfo, HealthEntry, SystemHealth
 
 logger = logging.getLogger(__name__)
@@ -128,7 +128,7 @@ async def metrics(request: Request):
         "ics_cache": ics_info,
         "config": {
             "scraper_timeout": SCRAPER_TIMEOUT,
-            "rate_limit_daily": RATE_LIMIT_DAILY,
+            "rate_limit_hourly": RATE_LIMIT_HOURLY,
             "ics_retention_days": config.ICS_RETENTION_DAYS,
         },
     }

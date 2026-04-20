@@ -3,6 +3,7 @@ from datetime import date, datetime
 from typing import Any, Optional, Sequence, cast
 
 import httpx
+
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import (
     SourceArgAmbiguousWithSuggestions,

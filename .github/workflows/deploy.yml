@@ -47,6 +47,7 @@ jobs:
             echo "TURNSTILE_SECRET=$TURNSTILE_SECRET" >> .env.tmp
             mv .env.tmp .env
             docker compose up -d --build --remove-orphans
+            docker compose exec -T redis redis-cli --scan --pattern 'ratelimit:*' | xargs -r docker compose exec -T redis redis-cli del || true
 
   integration-test:
     needs: deploy

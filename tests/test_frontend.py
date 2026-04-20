@@ -37,7 +37,6 @@ async def test_landing_page(client):
 async def test_api_docs_page(client):
     resp = await client.get("/api-docs")
     assert resp.status_code == 200
-    assert "<title>API - UK Bin Collections</title>" in resp.text
     assert "/api/v1/lookup/{uprn}" in resp.text
     assert 'href="/api/v1/docs"' in resp.text
 

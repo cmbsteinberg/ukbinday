@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import logging
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
 from fastapi import HTTPException, Request
 
-from api.config import RATE_LIMIT_DAILY
+from api.config import RATE_LIMIT_HOURLY
 
 logger = logging.getLogger(__name__)
 
@@ -18,12 +18,10 @@ def _get_client_ip(request: Request) -> str:
     )
 
 
-def _seconds_until_midnight() -> int:
+def _seconds_until_next_hour() -> int:
     now = datetime.now()
-    tomorrow = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(
-        days=1
-    )
-    return int((tomorrow - now).total_seconds())
+    next_hour = now.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+    return int((next_hour - now).total_seconds())
 
 
 async def rate_limit(request: Request) -> None:
@@ -32,22 +30,23 @@ async def rate_limit(request: Request) -> None:
         return
 
     ip = _get_client_ip(request)
-    key = f"ratelimit:{ip}:{date.today().isoformat()}"
+    now = datetime.now()
+    key = f"ratelimit:{ip}:{now.strftime('%Y%m%d%H')}"
 
     try:
         count = await redis_client.incr(key)
         if count == 1:
-            await redis_client.expire(key, 86400)
+            await redis_client.expire(key, 3600)
 
-        request.state.rate_limit_remaining = max(0, RATE_LIMIT_DAILY - count)
+        request.state.rate_limit_remaining = max(0, RATE_LIMIT_HOURLY - count)
 
-        if count > RATE_LIMIT_DAILY:
+        if count > RATE_LIMIT_HOURLY:
             raise HTTPException(
                 status_code=429,
-                detail="Rate limit exceeded. Try again tomorrow.",
+                detail="Rate limit exceeded. Try again in a few minutes.",
                 headers={
-                    "Retry-After": str(_seconds_until_midnight()),
-                    "X-RateLimit-Limit": str(RATE_LIMIT_DAILY),
+                    "Retry-After": str(_seconds_until_next_hour()),
+                    "X-RateLimit-Limit": str(RATE_LIMIT_HOURLY),
                     "X-RateLimit-Remaining": "0",
                 },
             )
