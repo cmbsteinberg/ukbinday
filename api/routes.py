@@ -1,14 +1,11 @@
 from __future__ import annotations
 
-import json
+import asyncio
 import logging
-import uuid
-from datetime import date, datetime, timedelta
 
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import Response
-from icalendar import Calendar, Event
 from pydantic import BaseModel
 
 from api.compat.hacs.exceptions import (
@@ -36,59 +33,52 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-def _cache_key(council: str, params: dict) -> str:
-    """Build a deterministic Redis key from council + sorted params."""
-    parts = ":".join(f"{k}={v}" for k, v in sorted(params.items()))
-    return f"cache:{council}:{parts}"
-
-
-async def _cache_get(redis_client, key: str) -> dict | None:
-    """Try to read cached scraper result from Redis."""
-    if not redis_client:
-        return None
+async def _acquire_scrape_lock(redis_client, uprn: str) -> bool:
+    if redis_client is None:
+        return True
     try:
-        raw = await redis_client.get(key)
-        if raw:
-            return json.loads(raw)
+        return bool(
+            await redis_client.set(f"scrape-lock:{uprn}", "1", nx=True, ex=30)
+        )
     except Exception:
-        logger.warning("Redis cache read failed for key %s", key, exc_info=True)
-    return None
+        logger.warning("Scrape lock acquire failed", exc_info=True)
+        return True
 
 
-def _dynamic_ttl(collections: list[dict], now: datetime) -> int:
-    # Expire at midnight after the next upcoming bin day, capped at CACHE_TTL (72h).
-    today = now.date()
-    upcoming = []
-    for c in collections:
-        d = c.get("date")
-        if not d:
-            continue
-        try:
-            parsed = date.fromisoformat(d) if isinstance(d, str) else d
-        except ValueError:
-            continue
-        if parsed >= today:
-            upcoming.append(parsed)
-    if not upcoming:
-        return CACHE_TTL
-    expires_at = datetime.combine(
-        min(upcoming) + timedelta(days=1), datetime.min.time()
-    )
-    ttl = int((expires_at - now).total_seconds())
-    return max(300, min(ttl, CACHE_TTL))
-
-
-async def _cache_set(redis_client, key: str, collections: list[dict]) -> None:
-    """Write scraper result to Redis with a dynamic TTL tied to the next bin day."""
-    if not redis_client:
+async def _release_scrape_lock(redis_client, uprn: str) -> None:
+    if redis_client is None:
         return
     try:
-        now = datetime.now()
-        ttl = _dynamic_ttl(collections, now)
-        payload = json.dumps({"collections": collections, "cached_at": now.isoformat()})
-        await redis_client.set(key, payload, ex=ttl)
+        await redis_client.delete(f"scrape-lock:{uprn}")
     except Exception:
-        logger.warning("Redis cache write failed for key %s", key, exc_info=True)
+        pass
+
+
+def _map_scrape_exception(council: str, exc: Exception) -> HTTPException:
+    if isinstance(exc, (SourceArgumentException, SourceArgumentExceptionMultiple)):
+        return HTTPException(
+            status_code=422,
+            detail="The details provided don't match what this council's system expects. "
+            "Please check your UPRN and postcode are correct.",
+        )
+    if isinstance(exc, ScraperTimeoutError):
+        return HTTPException(
+            status_code=504,
+            detail="Your council's website is taking too long to respond. "
+            "Please try again later.",
+        )
+    if isinstance(exc, (httpx.HTTPError, TimeoutError)):
+        return HTTPException(
+            status_code=503,
+            detail="We couldn't reach your council's website. "
+            "The site may be temporarily down \u2014 please try again later.",
+        )
+    logger.exception("Scraper %s failed", council)
+    return HTTPException(
+        status_code=503,
+        detail="Something went wrong while fetching your collection schedule. "
+        "Please try again later.",
+    )
 
 
 async def _resolve_council(lookup, postcode: str) -> tuple[str | None, str | None]:
@@ -208,61 +198,50 @@ async def lookup(
             f"Required: {meta.required_params}, Optional: {meta.optional_params}",
         )
 
-    # Check cache
+    cache = request.app.state.ics_cache
     redis_client = getattr(request.app.state, "redis", None)
-    key = _cache_key(council, params)
-    cached = await _cache_get(redis_client, key)
-    if cached:
+
+    entry = await cache.read(uprn)
+    if entry is not None and entry.last_success is not None:
         return LookupResponse(
             uprn=uprn,
             council=council,
             cached=True,
-            cached_at=datetime.fromisoformat(cached["cached_at"]),
-            collections=[CollectionItem(**c) for c in cached["collections"]],
+            cached_at=entry.last_success,
+            collections=[CollectionItem(**c) for c in entry.collections],
         )
+
+    lock_acquired = await _acquire_scrape_lock(redis_client, uprn)
+    if not lock_acquired:
+        await asyncio.sleep(0.5)
+        entry = await cache.read(uprn)
+        if entry is not None and entry.last_success is not None:
+            return LookupResponse(
+                uprn=uprn,
+                council=council,
+                cached=True,
+                cached_at=entry.last_success,
+                collections=[CollectionItem(**c) for c in entry.collections],
+            )
 
     try:
-        collections = await registry.invoke(council, params)
-        registry.record_success(council)
-    except (SourceArgumentException, SourceArgumentExceptionMultiple) as e:
-        registry.record_failure(council, str(e))
-        raise HTTPException(
-            status_code=422,
-            detail="The details provided don't match what this council's system expects. "
-            "Please check your UPRN and postcode are correct.",
-        )
-    except ScraperTimeoutError as e:
-        registry.record_failure(council, str(e))
-        raise HTTPException(
-            status_code=504,
-            detail="Your council's website is taking too long to respond. "
-            "Please try again later.",
-        )
-    except (httpx.HTTPError, TimeoutError) as e:
-        registry.record_failure(council, str(e))
-        raise HTTPException(
-            status_code=503,
-            detail="We couldn't reach your council's website. "
-            "The site may be temporarily down — please try again later.",
-        )
-    except Exception as e:
-        registry.record_failure(council, str(e))
-        logger.exception("Scraper %s failed", council)
-        raise HTTPException(
-            status_code=503,
-            detail="Something went wrong while fetching your collection schedule. "
-            "Please try again later.",
-        )
+        try:
+            collections = await registry.invoke(council, params)
+            registry.record_success(council)
+        except Exception as exc:
+            registry.record_failure(council, str(exc))
+            await cache.record_failure(uprn, str(exc))
+            raise _map_scrape_exception(council, exc) from exc
 
-    items = [CollectionItem(date=c.date, type=c.type, icon=c.icon) for c in collections]
-
-    # Write to cache
-    await _cache_set(redis_client, key, [i.model_dump(mode="json") for i in items])
+        entry = await cache.write(uprn, council, params, collections)
+    finally:
+        if lock_acquired:
+            await _release_scrape_lock(redis_client, uprn)
 
     return LookupResponse(
         uprn=uprn,
         council=council,
-        collections=items,
+        collections=[CollectionItem(**c) for c in entry.collections],
     )
 
 
@@ -298,68 +277,33 @@ async def calendar(
             detail=f"Missing required parameters for {council}: {missing}",
         )
 
-    # Check cache — reuse same cache as /lookup
+    cache = request.app.state.ics_cache
     redis_client = getattr(request.app.state, "redis", None)
-    key = _cache_key(council, params)
-    cached = await _cache_get(redis_client, key)
-    if cached:
-        collections_data = cached["collections"]
-    else:
+
+    entry = await cache.read(uprn)
+    if entry is None or entry.last_success is None:
+        lock_acquired = await _acquire_scrape_lock(redis_client, uprn)
         try:
-            raw_collections = await registry.invoke(council, params)
-            registry.record_success(council)
-        except (SourceArgumentException, SourceArgumentExceptionMultiple) as e:
-            registry.record_failure(council, str(e))
-            raise HTTPException(
-                status_code=422,
-                detail="The details provided don't match what this council's system expects. "
-                "Please check your UPRN and postcode are correct.",
-            )
-        except ScraperTimeoutError as e:
-            registry.record_failure(council, str(e))
-            raise HTTPException(
-                status_code=504,
-                detail="Your council's website is taking too long to respond. "
-                "Please try again later.",
-            )
-        except (httpx.HTTPError, TimeoutError) as e:
-            registry.record_failure(council, str(e))
-            raise HTTPException(
-                status_code=503,
-                detail="We couldn't reach your council's website. "
-                "The site may be temporarily down — please try again later.",
-            )
-        except Exception as e:
-            registry.record_failure(council, str(e))
-            logger.exception("Scraper %s failed", council)
-            raise HTTPException(
-                status_code=503,
-                detail="Something went wrong while fetching your collection schedule. "
-                "Please try again later.",
-            )
-        collections_data = [
-            {"date": str(c.date), "type": c.type, "icon": c.icon}
-            for c in raw_collections
-        ]
-        await _cache_set(redis_client, key, collections_data)
+            try:
+                collections = await registry.invoke(council, params)
+                registry.record_success(council)
+            except Exception as exc:
+                registry.record_failure(council, str(exc))
+                await cache.record_failure(uprn, str(exc))
+                raise _map_scrape_exception(council, exc) from exc
+            await cache.write(uprn, council, params, collections)
+        finally:
+            if lock_acquired:
+                await _release_scrape_lock(redis_client, uprn)
 
-    cal = Calendar()
-    cal.add("prodid", "-//UK Bin Collections//bins//EN")
-    cal.add("version", "2.0")
-    cal.add("x-wr-calname", f"Bin Collections ({uprn})")
-
-    for c in collections_data:
-        event = Event()
-        event.add("summary", c["type"])
-        event.add("dtstart", date.fromisoformat(c["date"]))
-        event.add("dtend", date.fromisoformat(c["date"]) + timedelta(days=1))
-        event.add("uid", str(uuid.uuid4()))
-        if c.get("icon"):
-            event.add("description", c["icon"])
-        cal.add_component(event)
-
+    ics_bytes = await cache.read_ics_bytes(uprn)
+    if ics_bytes is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Calendar temporarily unavailable. Please try again later.",
+        )
     return Response(
-        content=cal.to_ical(),
+        content=ics_bytes,
         media_type="text/calendar",
         headers={"Content-Disposition": f'attachment; filename="bins-{uprn}.ics"'},
     )
@@ -450,6 +394,22 @@ async def metrics(request: Request):
             "error_count": h.error_count,
         }
 
+    ics_cache = getattr(request.app.state, "ics_cache", None)
+    refresh_job = getattr(request.app.state, "refresh_job", None)
+    ics_info = None
+    if ics_cache is not None:
+        ics_info = {
+            "entries": sum(1 for _ in ics_cache.iter_entries()),
+            "last_refresh": refresh_job.last_run.isoformat()
+            if refresh_job and refresh_job.last_run
+            else None,
+            "last_refresh_stats": (
+                refresh_job.last_stats.__dict__
+                if refresh_job and refresh_job.last_stats
+                else None
+            ),
+        }
+
     return {
         "request_counts": request_counts,
         "scraper_count": len(registry.list_all()),
@@ -461,6 +421,7 @@ async def metrics(request: Request):
                 1 for v in scraper_health.values() if v["status"] != "healthy"
             ),
         },
+        "ics_cache": ics_info,
         "config": {
             "cache_ttl": CACHE_TTL,
             "scraper_timeout": SCRAPER_TIMEOUT,

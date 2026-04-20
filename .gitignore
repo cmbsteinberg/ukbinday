@@ -1,5 +1,7 @@
 pipeline/upstream
 .claude
+data/calendars/
+data/.worker_heartbeat
 
 *.DS_Store
 .psycn

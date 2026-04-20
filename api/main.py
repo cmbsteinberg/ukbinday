@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import asyncio
+import contextlib
 import logging
 import os
 import time
@@ -17,6 +19,8 @@ from api import config
 from api.logging_config import setup_logging
 from api.routes import router as api_router
 from api.services.council_lookup import CouncilLookup
+from api.services.ics_cache import IcsCache
+from api.services.refresh_job import RefreshJob
 from api.services.scraper_registry import ScraperRegistry
 
 setup_logging()
@@ -76,9 +80,32 @@ async def lifespan(app: FastAPI):
         app.state.redis = None
         logger.info("No REDIS_URL set, rate limiting disabled")
 
+    cache_root = Path(config.DATA_DIR) / config.ICS_CACHE_SUBDIR
+    cache_root.mkdir(parents=True, exist_ok=True)
+    app.state.ics_cache = IcsCache(cache_root)
+
+    app.state.refresh_job = None
+    app.state.refresh_task = None
+    if config.RUN_REFRESH_JOB:
+        job = RefreshJob(
+            app.state.ics_cache,
+            app.state.registry,
+            app.state.redis,
+            concurrency=config.ICS_REFRESH_CONCURRENCY,
+            failure_threshold=config.ICS_FAILURE_THRESHOLD,
+        )
+        app.state.refresh_job = job
+        app.state.refresh_task = asyncio.create_task(
+            job.run_forever(hour_utc=config.ICS_REFRESH_HOUR_UTC)
+        )
+
     yield
 
     # Shutdown
+    if getattr(app.state, "refresh_task", None):
+        app.state.refresh_task.cancel()
+        with contextlib.suppress(asyncio.CancelledError):
+            await app.state.refresh_task
     if browser_pool is not None:
         await browser_pool.stop()
     from api.compat.curl_cffi_fallback import close_shared_session

@@ -1,10 +1,15 @@
 """Pytest plugin to write structured test results to tests/test_output.json."""
 
 import os
+import tempfile
 
 # Set test-time defaults before any app code is imported
 os.environ.setdefault("CORS_ORIGINS", "https://bins.lovesguinness.com")
 os.environ.setdefault("LOG_FORMAT", "text")
+os.environ.setdefault("RUN_REFRESH_JOB", "0")
+os.environ.setdefault(
+    "DATA_DIR", tempfile.mkdtemp(prefix="bins-test-data-")
+)
 
 import json
 from pathlib import Path
