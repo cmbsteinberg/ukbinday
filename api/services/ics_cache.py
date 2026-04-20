@@ -9,6 +9,7 @@ from collections.abc import Iterator
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
+from weakref import WeakValueDictionary
 
 from icalendar import Calendar, Event
 
@@ -82,7 +83,7 @@ class IcsCache:
     def __init__(self, root: Path) -> None:
         self.root = Path(root)
         self.root.mkdir(parents=True, exist_ok=True)
-        self._locks: dict[str, asyncio.Lock] = {}
+        self._locks: WeakValueDictionary[str, asyncio.Lock] = WeakValueDictionary()
 
     def _lock_for(self, uprn: str) -> asyncio.Lock:
         lock = self._locks.get(uprn)
