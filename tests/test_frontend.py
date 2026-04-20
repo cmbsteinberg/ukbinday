@@ -67,10 +67,9 @@ async def test_councils_and_health(client):
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_both_api_prefixes(client):
-    assert (await client.get("/api/councils")).status_code == 200
+async def test_v1_prefix(client):
     assert (await client.get("/api/v1/councils")).status_code == 200
-
+    assert (await client.get("/api/councils")).status_code == 404
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_lookup_error_cases(client):
