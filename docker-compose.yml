@@ -25,7 +25,6 @@ services:
       - ICS_REFRESH_HOUR_UTC=${ICS_REFRESH_HOUR_UTC:-3}
       - ICS_REFRESH_CONCURRENCY=${ICS_REFRESH_CONCURRENCY:-4}
       - ICS_FAILURE_THRESHOLD=${ICS_FAILURE_THRESHOLD:-14}
-      - RUN_REFRESH_JOB=0
     volumes:
       - bins_data:/app/data
     healthcheck:

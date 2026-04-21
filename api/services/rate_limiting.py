@@ -12,8 +12,7 @@ logger = logging.getLogger(__name__)
 
 def _get_client_ip(request: Request) -> str:
     return (
-        request.headers.get("CF-Connecting-IP")
-        or request.headers.get("X-Forwarded-For", "").split(",")[0].strip()
+        request.headers.get("X-Forwarded-For", "").split(",")[0].strip()
         or (request.client.host if request.client else "unknown")
     )
 

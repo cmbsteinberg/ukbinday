@@ -24,9 +24,6 @@ uv run pytest tests/test_frontend.py -v
 # Integration tests (requests-based scrapers, hits live council sites, slow)
 uv run pytest tests/test_integration.py -v
 
-# Playwright integration tests (browser-based scrapers, very heavy)
-uv run pytest tests/test_playwright.py -v
-
 # Run a single scraper test by keyword
 uv run pytest tests/test_integration.py -v -k "aberdeen"
 
@@ -79,7 +76,6 @@ docker compose up --build
 - `services/scraper_registry.py` -- Dynamically imports all `api/scrapers/*.py` at startup, introspects `Source.__init__` signatures for required/optional params, and dispatches `await source.fetch()` calls
 - `services/council_lookup.py` -- Resolves postcodes to local authorities via local parquet lookup with ibis/duckdb. Provides `CouncilLookup` class with `get_local_authority()` and `get_authority_by_slug()`
 - `services/address_lookup.py` -- Resolves postcodes to addresses via external address API (configured via `ADDRESS_API_URL` and `ADDRESS_API_COMPANY_ID`)
-- `services/browser_pool.py` -- Shared Playwright browser pool for browser-based scrapers
 - `services/models.py` -- Pydantic response models
 - `services/rate_limiting.py` -- Redis-backed rate limiter (disabled when no `REDIS_URL`)
 - `services/ics_cache.py` -- Persistent on-disk ICS cache keyed by UPRN. Writes `data/calendars/{uprn}.ics` + `{uprn}.json` sidecar atomically. The ICS file is the source of truth served by `/calendar`; the sidecar holds scraper params, `last_success`, `consecutive_failures`, and an upcoming-collections slice for `/lookup`
@@ -125,7 +121,6 @@ docker compose up --build
 - `test_ci.py` -- Smoke tests (9 test functions, parametrized over ~310 scrapers): syntax, imports, app boot, registry loading. Runs as pre-commit hook
 - `test_frontend.py` -- API surface tests (8): landing page, routes, CORS, error cases
 - `test_integration.py` -- Integration tests for requests-based scrapers: hits live council sites with up to 40 concurrent requests. Uses `test_cases.json` generated from scraper `TEST_CASES`
-- `test_playwright.py` -- Integration tests for Playwright-based scrapers: hits live council sites with up to 10 concurrent requests (lower concurrency because each spawns Chromium)
 - `test_deploy.py` -- Docker stack tests (3): compose boot, scraper loading, static files
 - `conftest.py` -- Custom pytest plugin that writes structured results to `test_output.json` and `integration_output.json`
 - Tests use `pytest-asyncio` with `loop_scope="session"` and `asgi-lifespan` for managing the FastAPI app
