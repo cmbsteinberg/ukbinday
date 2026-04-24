@@ -83,7 +83,7 @@ def _process_selenium_council(
     target_dir: Path,
 ) -> str | None:
     """Transpile a Selenium scraper to async Playwright. Returns sanitized filename or None."""
-    from pipeline.ukbcd.patch_selenium_scrapers import transpile
+    from scripts.ukbcd_selenium_port.patch_selenium_scrapers import transpile
 
     source_code = source_file.read_text()
 

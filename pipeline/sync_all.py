@@ -36,6 +36,10 @@ from pipeline.shared import (
     normalise_domain,
 )
 
+LAD_LOOKUP_PATH = PROJECT_ROOT / "api" / "data" / "lad_lookup.json"
+PORTS_DIR = PIPELINE_DIR / "ports"
+PORT_PREFIX = "port_"
+
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -117,10 +121,11 @@ def filter_hacs_scrapers(needed_ids: set[str]) -> list[str]:
     override_hacs = {
         entry["hacs_scraper"] for entry in overrides.get("hacs_to_ukbcd", {}).values()
     }
+    preserved = set(overrides.get("preserved_scrapers", {}))
 
     removed = []
     for path in sorted(SCRAPERS_DIR.glob("hacs_*.py")):
-        if path.stem in override_hacs:
+        if path.stem in override_hacs or path.stem in preserved:
             continue
 
         # Strategy 1: gov.uk prefix from scraper URL
@@ -180,6 +185,70 @@ def save_needed_councils(needed_ids: set[str]) -> None:
     NEEDED_COUNCILS_PATH.write_text(json.dumps(sorted(needed_ids), indent=2))
 
 
+def _copy_ports() -> list[str]:
+    """Copy hand-written scraper ports from pipeline/ports/ into api/scrapers/.
+
+    Each pipeline/ports/<name>.py lands at api/scrapers/port_<name>.py so the
+    registry picks them up and they're distinguishable from hacs_/ukbcd_ files.
+    Source of truth lives in pipeline/ports/; api/scrapers/ copies are rebuilt
+    every sync and must never be edited directly.
+    """
+    if not PORTS_DIR.is_dir():
+        return []
+    copied: list[str] = []
+    for src in sorted(PORTS_DIR.glob("*.py")):
+        if src.name == "__init__.py":
+            continue
+        dest = SCRAPERS_DIR / src.name
+        dest.write_text(src.read_text())
+        copied.append(dest.stem)
+    return copied
+
+
+def _merge_preserved_scrapers() -> None:
+    """Wire preserved scrapers and ports into lad_lookup.json.
+
+    Reads the preserved_scrapers and ports maps from overrides.json
+    (scraper_id → [LAD codes]), imports TITLE and URL from each scraper module,
+    and patches the corresponding lad_lookup entries.
+    """
+    import importlib
+
+    overrides = load_overrides()
+    combined: dict[str, list[str]] = {}
+    combined.update(overrides.get("preserved_scrapers", {}))
+    combined.update(overrides.get("ports", {}))
+    if not combined:
+        return
+
+    lad_data = json.loads(LAD_LOOKUP_PATH.read_text())
+    patched = 0
+
+    for scraper_id, lad_codes in combined.items():
+        try:
+            mod = importlib.import_module(f"api.scrapers.{scraper_id}")
+            title = getattr(mod, "TITLE", scraper_id)
+            url = getattr(mod, "URL", "")
+        except Exception:
+            logger.warning("Could not import preserved scraper %s", scraper_id)
+            continue
+
+        for lad in lad_codes:
+            if lad in lad_data:
+                lad_data[lad]["scraper_id"] = scraper_id
+                lad_data[lad]["url"] = url
+            else:
+                lad_data[lad] = {
+                    "name": title,
+                    "scraper_id": scraper_id,
+                    "url": url,
+                }
+            patched += 1
+
+    LAD_LOOKUP_PATH.write_text(json.dumps(lad_data, indent=2))
+    logger.info("Merged %d preserved/port scraper entries into lad_lookup.json", patched)
+
+
 def main():
     args = sys.argv[1:]
     include_unmerged = "--include-unmerged" in args
@@ -190,16 +259,26 @@ def main():
     save_needed_councils(needed_ids)
 
     # 2. Wipe all scrapers so stale files never linger across syncs
+    #    (preserved scrapers from overrides.json are kept)
     print("\n" + "=" * 50)
     print("=== Cleaning scrapers directory ===")
     print("=" * 50)
+    overrides = load_overrides()
+    preserved = set(overrides.get("preserved_scrapers", {}))
     removed_count = 0
     for path in SCRAPERS_DIR.glob("*.py"):
         if path.name == "__init__.py":
             continue
+        if path.stem in preserved:
+            continue
+        if PORTS_DIR.is_dir() and (PORTS_DIR / path.name).exists():
+            # ports are copied fresh from pipeline/ports/ below
+            continue
         path.unlink()
         removed_count += 1
-    logger.info("Removed %d scraper files.", removed_count)
+    logger.info("Removed %d scraper files (preserved %d).", removed_count, len(preserved))
+
+    # ports are copied after HACS+UKBCD syncs (step 5b) so their files always win
 
     # 3. Run HACS sync (clone, patch, copy)
     # Clear version file so HACS sync always runs after a full wipe
@@ -234,6 +313,14 @@ def main():
     if include_unmerged:
         ukbcd_cmd.append("--include-unmerged")
     run_shell(ukbcd_cmd, "UKBCD sync")
+
+    # 5b. Copy hand-written ports into api/scrapers/ (source of truth: pipeline/ports/)
+    # Done after HACS+UKBCD so their wipes can't clobber port files.
+    copied_ports = _copy_ports()
+    logger.info("Copied %d ports from pipeline/ports/ into api/scrapers/.", len(copied_ports))
+
+    # 5b. Wire preserved scrapers into lad_lookup.json
+    _merge_preserved_scrapers()
 
     # 6. Regenerate test cases (after filtering, so stale scrapers are excluded)
     print("\n" + "=" * 50)

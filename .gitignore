@@ -2,6 +2,7 @@ pipeline/upstream
 .claude
 data/calendars/
 data/.worker_heartbeat
+scripts/ukbcd_selenium_port/xhr_captures
 
 *.DS_Store
 .psycn
