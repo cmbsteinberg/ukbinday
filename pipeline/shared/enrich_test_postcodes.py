@@ -15,7 +15,7 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 OUTPUT_PATH = PROJECT_ROOT / "tests" / "test_cases.json"
 PARQUET_PATH = PROJECT_ROOT / "pipeline" / "data" / "onsud_uprn_postcode.parquet"
 
