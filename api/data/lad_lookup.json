@@ -3,7 +3,7 @@
     "name": "Aberdeen City",
     "scraper_id": "ukbcd_aberdeen_city_council",
     "url": "https://www.aberdeencity.gov.uk",
-    "working": true
+    "working": false
   },
   "S12000034": {
     "name": "Aberdeenshire",
@@ -39,13 +39,13 @@
     "name": "Ards and North Down",
     "scraper_id": "hacs_ardsandnorthdown_gov_uk",
     "url": "https://www.ardsandnorthdown.gov.uk",
-    "working": true
+    "working": false
   },
   "S12000035": {
     "name": "Argyll and Bute",
     "scraper_id": "port_argyll_and_bute_council",
     "url": "https://www.argyll-bute.gov.uk",
-    "working": true
+    "working": false
   },
   "N09000002": {
     "name": "Armagh City, Banbridge and Craigavon",
@@ -201,7 +201,7 @@
     "name": "Bradford",
     "scraper_id": "hacs_bradford_gov_uk",
     "url": "https://onlineforms.bradford.gov.uk/ufs/collectiondates.eb",
-    "working": true
+    "working": false
   },
   "E07000067": {
     "name": "Braintree",
@@ -219,7 +219,7 @@
     "name": "Brent",
     "scraper_id": "ukbcd_brent_council",
     "url": "https://recyclingservices.brent.gov.uk/waste",
-    "working": true
+    "working": false
   },
   "E06000043": {
     "name": "Brighton and Hove",
@@ -231,7 +231,7 @@
     "name": "City of Bristol",
     "scraper_id": "ukbcd_bristol_city_council",
     "url": "https://bristolcouncil.powerappsportals.com/completedynamicformunauth/?servicetypeid=7dce896c-b3ba-ea11-a812-000d3a7f1cdc",
-    "working": true
+    "working": false
   },
   "E07000144": {
     "name": "Broadland",
@@ -267,7 +267,7 @@
     "name": "Buckinghamshire",
     "scraper_id": "ukbcd_buckinghamshire_council",
     "url": "https://www.buckinghamshire.gov.uk/waste-and-recycling/find-out-when-its-your-bin-collection/",
-    "working": true
+    "working": false
   },
   "E07000117": {
     "name": "Burnley",
@@ -315,7 +315,7 @@
     "name": "Carmarthenshire",
     "scraper_id": "ukbcd_carmarthenshire_county_council",
     "url": "https://www.carmarthenshire.gov.wales",
-    "working": true
+    "working": false
   },
   "E07000069": {
     "name": "Castle Point",
@@ -357,13 +357,13 @@
     "name": "Cheshire East",
     "scraper_id": "ukbcd_cheshire_east_council",
     "url": "https://online.cheshireeast.gov.uk/mycollectionday",
-    "working": true
+    "working": false
   },
   "E06000050": {
     "name": "Cheshire West and Chester",
     "scraper_id": "ukbcd_cheshire_west_and_chester_council",
     "url": "https://my.cheshirewestandchester.gov.uk",
-    "working": true
+    "working": false
   },
   "E07000034": {
     "name": "Chesterfield",
@@ -465,7 +465,7 @@
     "name": "Derbyshire Dales",
     "scraper_id": "ukbcd_derbyshire_dales_district_council",
     "url": "https://www.derbyshiredales.gov.uk/",
-    "working": true
+    "working": false
   },
   "E08000017": {
     "name": "Doncaster",
@@ -489,7 +489,7 @@
     "name": "Dudley",
     "scraper_id": "ukbcd_dudley_council",
     "url": "https://my.dudley.gov.uk",
-    "working": true
+    "working": false
   },
   "S12000006": {
     "name": "Dumfries and Galloway Council",
@@ -549,7 +549,7 @@
     "name": "East Herts Council",
     "scraper_id": "ukbcd_east_herts_council",
     "url": "https://east-herts.co.uk/api/services/",
-    "working": true
+    "working": false
   },
   "E07000137": {
     "name": "East Lindsey",
@@ -597,7 +597,7 @@
     "name": "Eden District (Westmorland and Furness)",
     "scraper_id": "ukbcd_west_morland_and_furness",
     "url": "https://my.eden.gov.uk/myeden.aspx",
-    "working": true
+    "working": false
   },
   "S12000036": {
     "name": "City of Edinburgh",
@@ -633,7 +633,7 @@
     "name": "Erewash",
     "scraper_id": "hacs_erewash_gov_uk",
     "url": "https://www.erewash.gov.uk",
-    "working": true
+    "working": false
   },
   "E07000041": {
     "name": "Exeter",
@@ -645,7 +645,7 @@
     "name": "Falkirk",
     "scraper_id": "ukbcd_falkirk_council",
     "url": "https://www.falkirk.gov.uk",
-    "working": true
+    "working": false
   },
   "E07000087": {
     "name": "Fareham",
@@ -663,7 +663,7 @@
     "name": "Fermanagh and Omagh",
     "scraper_id": "ukbcd_fermanagh_omagh_district_council",
     "url": "https://www.fermanaghomagh.com/services/environment-and-waste/waste-collection-calendar/",
-    "working": true
+    "working": false
   },
   "S12000047": {
     "name": "Fife",
@@ -705,7 +705,7 @@
     "name": "Gedling",
     "scraper_id": "ukbcd_gedling_borough_council",
     "url": "https://www.gedling.gov.uk/",
-    "working": true
+    "working": false
   },
   "S12000049": {
     "name": "Glasgow City",
@@ -819,7 +819,7 @@
     "name": "Gravesham",
     "scraper_id": "ukbcd_gravesham_borough_council",
     "url": "https://www.gravesham.gov.uk",
-    "working": true
+    "working": false
   },
   "E07000145": {
     "name": "Great Yarmouth",
@@ -837,13 +837,13 @@
     "name": "Gwynedd",
     "scraper_id": "ukbcd_gwynedd_council",
     "url": "https://diogel.gwynedd.llyw.cymru",
-    "working": true
+    "working": false
   },
   "E09000012": {
     "name": "Hackney",
     "scraper_id": "ukbcd_hackney_council",
     "url": "https://www.hackney.gov.uk",
-    "working": true
+    "working": false
   },
   "E06000006": {
     "name": "Halton",
@@ -855,7 +855,7 @@
     "name": "Harborough",
     "scraper_id": "ukbcd_harborough_district_council",
     "url": "https://www.harborough.gov.uk",
-    "working": true
+    "working": false
   },
   "E09000014": {
     "name": "Haringey",
@@ -957,7 +957,7 @@
     "name": "Ipswich",
     "scraper_id": "ukbcd_ipswich_borough_council",
     "url": "https://app.ipswich.gov.uk/bin-collection/",
-    "working": true
+    "working": false
   },
   "W06000001": {
     "name": "Isle of Anglesey",
@@ -999,19 +999,19 @@
     "name": "Lancaster",
     "scraper_id": "ukbcd_lancaster_city_council",
     "url": "https://lcc-wrp.whitespacews.com",
-    "working": true
+    "working": false
   },
   "E08000035": {
     "name": "Leeds",
     "scraper_id": "ukbcd_leeds_city_council",
     "url": "https://www.leeds.gov.uk/residents/bins-and-recycling/check-your-bin-day",
-    "working": true
+    "working": false
   },
   "E06000016": {
     "name": "Leicester",
     "scraper_id": "ukbcd_leicester_city_council",
     "url": "https://biffaleicester.co.uk",
-    "working": true
+    "working": false
   },
   "E07000063": {
     "name": "Lewes",
@@ -1029,13 +1029,13 @@
     "name": "City of Lincoln",
     "scraper_id": "hacs_lincoln_gov_uk",
     "url": "https://lincoln.gov.uk",
-    "working": true
+    "working": false
   },
   "N09000007": {
     "name": "Lisburn and Castlereagh",
     "scraper_id": "ukbcd_lisburn_castlereagh_city_council",
     "url": "https://lisburn.isl-fusion.com",
-    "working": true
+    "working": false
   },
   "E08000012": {
     "name": "Liverpool",
@@ -1053,7 +1053,7 @@
     "name": "Hammersmith & Fulham",
     "scraper_id": "ukbcd_london_borough_hammersmithand_fulham",
     "url": "https://www.lbhf.gov.uk/",
-    "working": true
+    "working": false
   },
   "E09000015": {
     "name": "Harrow",
@@ -1071,7 +1071,7 @@
     "name": "Hounslow",
     "scraper_id": "ukbcd_london_borough_hounslow",
     "url": "https://my.hounslow.gov.uk/service/Waste_and_recycling_collections",
-    "working": true
+    "working": false
   },
   "E09000022": {
     "name": "Lambeth",
@@ -1107,7 +1107,7 @@
     "name": "Luton",
     "scraper_id": "ukbcd_luton_borough_council",
     "url": "https://myforms.luton.gov.uk",
-    "working": true
+    "working": false
   },
   "E07000110": {
     "name": "Maidstone",
@@ -1119,19 +1119,19 @@
     "name": "Maldon",
     "scraper_id": "ukbcd_maldon_district_council",
     "url": "https://maldon.suez.co.uk/maldon/ServiceSummary",
-    "working": true
+    "working": false
   },
   "E07000235": {
     "name": "Malvern Hills",
     "scraper_id": "ukbcd_malvern_hills_d_c",
     "url": "https://swict.malvernhills.gov.uk/mhdcroundlookup/HandleSearchScreen",
-    "working": true
+    "working": false
   },
   "E08000003": {
     "name": "Manchester",
     "scraper_id": "ukbcd_manchester_city_council",
     "url": "https://www.manchester.gov.uk/bincollections",
-    "working": true
+    "working": false
   },
   "E07000174": {
     "name": "Mansfield",
@@ -1185,7 +1185,7 @@
     "name": "Middlesbrough",
     "scraper_id": "ukbcd_middlesbrough_council",
     "url": "https://www.middlesbrough.gov.uk/recycling-and-rubbish/bin-collection-dates/",
-    "working": true
+    "working": false
   },
   "S12000019": {
     "name": "Midlothian",
@@ -1197,13 +1197,13 @@
     "name": "Mid Ulster",
     "scraper_id": "port_mid_ulster_district_council",
     "url": "https://www.midulstercouncil.org",
-    "working": false
+    "working": true
   },
   "E06000042": {
     "name": "Milton Keynes",
     "scraper_id": "ukbcd_milton_keynes_city_council",
     "url": "https://mycouncil.milton-keynes.gov.uk/en/service/Waste_Collection_Round_Checker",
-    "working": true
+    "working": false
   },
   "E07000210": {
     "name": "Mole Valley",
@@ -1263,13 +1263,13 @@
     "name": "Newport",
     "scraper_id": "ukbcd_newport_city_council",
     "url": "https://www.newport.gov.uk/",
-    "working": true
+    "working": false
   },
   "S12000021": {
     "name": "North Ayrshire",
     "scraper_id": "hacs_north_ayrshire_gov_uk",
     "url": "https://www.north-ayrshire.gov.uk/",
-    "working": false
+    "working": true
   },
   "E07000043": {
     "name": "North Devon",
@@ -1329,7 +1329,7 @@
     "name": "North Somerset",
     "scraper_id": "ukbcd_north_somerset_council",
     "url": "https://forms.n-somerset.gov.uk/Waste/CollectionSchedule",
-    "working": true
+    "working": false
   },
   "E08000022": {
     "name": "North Tyneside",
@@ -1365,13 +1365,13 @@
     "name": "Norwich",
     "scraper_id": "ukbcd_norwich_city_council",
     "url": "https://bnr-wrp.whitespacews.com",
-    "working": true
+    "working": false
   },
   "E06000018": {
     "name": "Nottingham",
     "scraper_id": "ukbcd_nottingham_city_council",
     "url": "https://geoserver.nottinghamcity.gov.uk/bincollections2/api/collection/100031540180",
-    "working": true
+    "working": false
   },
   "E07000219": {
     "name": "Nuneaton and Bedworth",
@@ -1413,7 +1413,7 @@
     "name": "Perth and Kinross",
     "scraper_id": "ukbcd_perth_and_kinross_council",
     "url": "https://www.pkc.gov.uk",
-    "working": true
+    "working": false
   },
   "E06000026": {
     "name": "Plymouth",
@@ -1449,7 +1449,7 @@
     "name": "Redcar and Cleveland",
     "scraper_id": "ukbcd_redcarand_cleveland_council",
     "url": "https://www.redcar-cleveland.gov.uk",
-    "working": true
+    "working": false
   },
   "E07000236": {
     "name": "Redditch",
@@ -1581,7 +1581,7 @@
     "name": "South Ayrshire",
     "scraper_id": "ukbcd_south_ayrshire_council",
     "url": "https://www.south-ayrshire.gov.uk/",
-    "working": true
+    "working": false
   },
   "E07000012": {
     "name": "South Cambridgeshire",
@@ -1605,7 +1605,7 @@
     "name": "South Hams",
     "scraper_id": "ukbcd_south_hams_district_council",
     "url": "https://www.southhams.gov.uk",
-    "working": true
+    "working": false
   },
   "E07000140": {
     "name": "South Holland",
@@ -1635,13 +1635,13 @@
     "name": "South Oxfordshire",
     "scraper_id": "ukbcd_south_oxfordshire_council",
     "url": "https://www.southoxon.gov.uk/south-oxfordshire-district-council/recycling-rubbish-and-waste/when-is-your-collection-day/",
-    "working": true
+    "working": false
   },
   "E07000126": {
     "name": "South Ribble",
     "scraper_id": "ukbcd_south_ribble_council",
     "url": "https://forms.chorleysouthribble.gov.uk/xfp/form/70",
-    "working": true
+    "working": false
   },
   "E07000196": {
     "name": "South Staffordshire",
@@ -1743,7 +1743,7 @@
     "name": "Surrey Heath",
     "scraper_id": "ukbcd_surrey_heath_borough_council",
     "url": "https://asjwsw-wrpsurreyheathmunicipal-live.whitespacews.com/",
-    "working": true
+    "working": false
   },
   "E07000113": {
     "name": "Swale",
@@ -1755,7 +1755,7 @@
     "name": "Swansea",
     "scraper_id": "ukbcd_swansea_council",
     "url": "https://www1.swansea.gov.uk/recyclingsearch/",
-    "working": true
+    "working": false
   },
   "E06000030": {
     "name": "Swindon",
@@ -1839,7 +1839,7 @@
     "name": "Torridge",
     "scraper_id": "ukbcd_torridge_district_council",
     "url": "https://collections-torridge.azurewebsites.net/WebService2.asmx",
-    "working": true
+    "working": false
   },
   "E07000116": {
     "name": "Tunbridge Wells",
@@ -1863,13 +1863,13 @@
     "name": "Vale of White Horse",
     "scraper_id": "ukbcd_valeof_white_horse_council",
     "url": "https://eform.whitehorsedc.gov.uk/ebase/BINZONE_DESKTOP.eb",
-    "working": true
+    "working": false
   },
   "E08000036": {
     "name": "Wakefield",
     "scraper_id": "hacs_wakefield_gov_uk",
     "url": "https://www.wakefield.gov.uk/where-i-live/?uprn=63035490&a=115%20Elizabeth%20Drive%20Castleford%20WF10%203RR&usrn=41801243&e=445418&n=426091&p=WF10%203RR",
-    "working": false
+    "working": true
   },
   "E08000030": {
     "name": "Walsall",
@@ -1911,7 +1911,7 @@
     "name": "Waverley",
     "scraper_id": "ukbcd_waverley_borough_council",
     "url": "https://wav-wrp.whitespacews.com/",
-    "working": true
+    "working": false
   },
   "E07000065": {
     "name": "Wealden",
@@ -1983,7 +1983,7 @@
     "name": "Wiltshire",
     "scraper_id": "ukbcd_wiltshire_council",
     "url": "https://ilambassadorformsprod.azurewebsites.net/wastecollectiondays/index",
-    "working": true
+    "working": false
   },
   "E07000094": {
     "name": "Winchester",
@@ -2007,7 +2007,7 @@
     "name": "Woking",
     "scraper_id": "ukbcd_woking_borough_council",
     "url": "https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/",
-    "working": true
+    "working": false
   },
   "E06000041": {
     "name": "Wokingham",
@@ -2025,7 +2025,7 @@
     "name": "Worcester",
     "scraper_id": "ukbcd_worcester_city_council",
     "url": "https://www.Worcester.gov.uk",
-    "working": true
+    "working": false
   },
   "W06000006": {
     "name": "Wrexham",
