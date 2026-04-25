@@ -3,7 +3,6 @@ import logging
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Borough of Broxbourne Council"

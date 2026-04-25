@@ -7,7 +7,6 @@ from datetime import date, datetime
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Barnsley Metropolitan Borough Council"

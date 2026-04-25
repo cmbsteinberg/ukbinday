@@ -6,9 +6,8 @@ import re
 from datetime import datetime
 from urllib.parse import parse_qs, urlparse
 
-from bs4 import BeautifulSoup
-
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
+from bs4 import BeautifulSoup
 from api.compat.hacs.collection import (
     Collection,  # type: ignore[attr-defined]
 )

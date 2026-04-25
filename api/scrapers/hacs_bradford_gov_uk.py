@@ -2,8 +2,8 @@ import ssl
 from datetime import datetime
 
 import httpx
+import urllib3
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Bradford Metropolitan District Council"

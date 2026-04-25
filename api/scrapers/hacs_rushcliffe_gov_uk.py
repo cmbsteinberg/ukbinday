@@ -3,7 +3,6 @@ import re
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 from api.compat.hacs.service.FirmstepSelfService import (

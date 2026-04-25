@@ -5,7 +5,6 @@ from time import time_ns
 
 import bs4
 import httpx
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Reigate & Banstead Borough Council"

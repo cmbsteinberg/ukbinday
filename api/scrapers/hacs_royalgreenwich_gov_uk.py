@@ -4,7 +4,6 @@ from typing import Mapping, Optional
 import httpx
 from bs4 import BeautifulSoup, Tag
 from dateutil import parser
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgAmbiguousWithSuggestions,

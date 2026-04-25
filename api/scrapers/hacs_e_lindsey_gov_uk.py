@@ -4,7 +4,6 @@ import json
 import re
 
 import httpx
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 

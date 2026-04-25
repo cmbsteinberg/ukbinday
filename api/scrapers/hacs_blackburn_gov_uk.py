@@ -1,8 +1,7 @@
+import httpx
 from datetime import datetime
 
-import httpx
 import urllib3
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Blackburn with Darwen Borough Council"

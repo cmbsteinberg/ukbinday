@@ -3,7 +3,6 @@ import time
 from datetime import date, datetime
 
 import httpx
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "West Berkshire Council"

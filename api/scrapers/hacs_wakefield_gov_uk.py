@@ -3,7 +3,6 @@ from typing import List
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection
 
 TITLE = "Wakefield Council"

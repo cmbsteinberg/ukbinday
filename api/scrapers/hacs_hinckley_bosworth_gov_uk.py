@@ -5,7 +5,6 @@ from urllib.parse import quote
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection
 
 TITLE = "Hinckley & Bosworth Borough Council"

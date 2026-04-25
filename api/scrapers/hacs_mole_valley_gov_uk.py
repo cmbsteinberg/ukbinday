@@ -4,7 +4,6 @@ from datetime import datetime
 import httpx
 import urllib3
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFoundWithSuggestions,  # type: ignore[attr-defined]

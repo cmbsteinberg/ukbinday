@@ -4,17 +4,16 @@ from datetime import datetime
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Croydon Council"
 DESCRIPTION = "Source for croydon.gov.uk services for Croydon Council, UK."
 URL = "https://croydon.gov.uk"
 TEST_CASES = {
-    "Test_001": {"postcode": "CR0 6LN", "houseID": "64 Coniston Road"},
-    "Test_002": {"postcode": "SE25 5BU", "houseID": "23B Howard Road"},
-    "Test_003": {"postcode": "CR0 6EG", "houseID": "48 Exeter Road"},
-    "Test_004": {"postcode": "CR5 2BG", "houseID": "18 South Drive"},
+    "Test_001": {"postcode": "CR0 6LN", "address": "64 Coniston Road"},
+    "Test_002": {"postcode": "SE25 5BU", "address": "23B Howard Road"},
+    "Test_003": {"postcode": "CR0 6EG", "address": "48 Exeter Road"},
+    "Test_004": {"postcode": "CR5 2BG", "address": "18 South Drive"},
 }
 ICON_MAP = {
     "Food waste": "mdi:food",
@@ -75,9 +74,9 @@ SESSION_STORAGE = {
 
 
 class Source:
-    def __init__(self, postcode, houseID):
+    def __init__(self, postcode, address):
         self._postcode = str(postcode).upper()
-        self._houseID = str(houseID)
+        self._address = str(address)
 
     async def fetch(self):
         s = httpx.AsyncClient(follow_redirects=True)
@@ -131,7 +130,7 @@ class Source:
             "value"
         ]
 
-        # Use postcode and houseID to find address
+        # Use postcode and address to find address
         addressID = "0"
         url = API_URLS["BASE"] + API_URLS["SEARCH"]
         headers = {
@@ -159,7 +158,7 @@ class Source:
 
         addresses = json.loads(r2.text)["response"]["items"]
         for address in addresses:
-            if self._houseID in str(address["address_single_line"]):
+            if self._address in str(address["address_single_line"]):
                 addressID = str(address["id"])
 
         # Use addressID to get schedule

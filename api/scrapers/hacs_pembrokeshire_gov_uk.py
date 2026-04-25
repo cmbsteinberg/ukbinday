@@ -2,7 +2,6 @@ import ast
 from datetime import datetime
 
 import httpx
-
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 

@@ -4,7 +4,6 @@ from typing import Any, Dict, List
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection
 
 # Metadata used by the Waste Collection Schedule integration

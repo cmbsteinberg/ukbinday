@@ -1,9 +1,8 @@
 import logging
-
 import httpx
+
 from bs4 import BeautifulSoup
 from dateutil import parser
-
 from api.compat.hacs import Collection
 
 TITLE = "Sheffield City Council"

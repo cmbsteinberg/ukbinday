@@ -1,7 +1,6 @@
 import datetime
 
 import httpx
-
 from api.compat.hacs import Collection
 
 TITLE = "South Gloucestershire Council"  # Title will show up in README.md and info.md

@@ -1567,6 +1567,7 @@ PARAM_NAME_NORMALISATIONS: dict[str, str] = {
     "road_name": "street",
     "address_street": "street",
     "street_town": "town",
+    "houseID": "address",
 }
 
 

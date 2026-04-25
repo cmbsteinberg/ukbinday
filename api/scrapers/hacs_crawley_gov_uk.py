@@ -6,7 +6,6 @@ from datetime import datetime
 
 import httpx
 from dateutil.parser import parse
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.service.AchieveForms import init_session, run_lookup
 

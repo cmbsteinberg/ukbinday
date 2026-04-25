@@ -4,7 +4,6 @@ from datetime import datetime
 
 import httpx
 import urllib3
-
 from api.compat.hacs import Collection
 
 # With verify=True the POST fails due to a SSLCertVerificationError.

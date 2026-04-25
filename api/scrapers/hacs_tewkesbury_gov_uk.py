@@ -3,7 +3,6 @@ from datetime import datetime
 from urllib.parse import quote as urlquote
 
 import httpx
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentRequired
 

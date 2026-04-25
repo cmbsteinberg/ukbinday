@@ -1,5 +1,4 @@
 import httpx
-
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 from api.compat.hacs.service.ICS import ICS

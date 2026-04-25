@@ -1,11 +1,10 @@
 from datetime import date, datetime
 
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from bs4 import BeautifulSoup
 
 # import rrule
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, weekday
-
-from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFoundWithSuggestions,

@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
-from dateutil.parser import parse
-
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
+from dateutil.parser import parse
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Islington Council"

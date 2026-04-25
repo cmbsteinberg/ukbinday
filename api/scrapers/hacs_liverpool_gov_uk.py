@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection
 
 TITLE = "Liverpool City Council"

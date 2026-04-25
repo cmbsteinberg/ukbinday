@@ -2,7 +2,6 @@ import datetime
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection
 
 TITLE = "Harlow Council"

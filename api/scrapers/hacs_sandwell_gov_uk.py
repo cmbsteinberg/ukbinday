@@ -5,7 +5,6 @@ from datetime import date, datetime
 from typing import Any
 
 import httpx
-
 from api.compat.hacs import Collection
 
 TITLE = "Sandwell Council"

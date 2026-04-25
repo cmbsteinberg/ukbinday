@@ -4,7 +4,6 @@ from datetime import date, datetime, timedelta
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wyre Forest District Council"

@@ -40,11 +40,35 @@
       "ukbcd_scraper": "ukbcd_milton_keynes_city_council",
       "reason": "scraper_error_value_error"
     },
-
     "lisburncastlereagh.gov.uk": {
       "hacs_scraper": "hacs_lisburn_castlereagh_gov_uk",
       "ukbcd_scraper": "ukbcd_lisburn_castlereagh_city_council",
       "reason": "503_unavailable"
+    },
+    "fylde.gov.uk": {
+      "hacs_scraper": "hacs_fylde_gov_uk",
+      "ukbcd_scraper": "ukbcd_fylde_council",
+      "reason": "requires_account_credentials"
+    },
+    "west-lindsey.gov.uk": {
+      "hacs_scraper": "hacs_west_lindsey_gov_uk",
+      "ukbcd_scraper": "ukbcd_west_lindsey_district_council",
+      "reason": "requires_map_xy_id"
+    },
+    "uttlesford.gov.uk": {
+      "hacs_scraper": "hacs_uttlesford_gov_uk",
+      "ukbcd_scraper": "ukbcd_uttlesford_district_council",
+      "reason": "requires_composite_house_token"
+    },
+    "chelmsford.gov.uk": {
+      "hacs_scraper": "hacs_chelmsford_gov_uk",
+      "ukbcd_scraper": "ukbcd_chelmsford_city_council",
+      "reason": "requires_precomputed_collection_round"
+    },
+    "bolsover.gov.uk": {
+      "hacs_scraper": "hacs_bolsover_gov_uk",
+      "ukbcd_scraper": "ukbcd_bolsover_council",
+      "reason": "requires_precomputed_calendar_day"
     }
   },
   "requests_fallback": [],
@@ -99,31 +123,84 @@
     "newham_gov_uk",
     "richmondshire_gov_uk"
   ],
-  "broken": ["north_norfolk_gov_uk"],
+  "broken": [
+    "bolsover_gov_uk",
+    "chelmsford_gov_uk",
+    "fylde_gov_uk",
+    "north_norfolk_gov_uk",
+    "uttlesford_gov_uk",
+    "west_lindsey_gov_uk"
+  ],
   "preserved_scrapers": {},
   "ports": {
-    "hacs_itv_blaenau_gwent": ["W06000019"],
-    "hacs_itv_epsom_ewell": ["E07000208"],
-    "hacs_itv_hyndburn": ["E07000120"],
-    "hacs_itv_winchester": ["E07000094"],
-    "hacs_itv_somerset": ["E06000066"],
-    "hacs_itv_test_valley": ["E07000093"],
-    "port_argyll_and_bute_council": ["S12000035"],
-    "port_ceredigion_county_council": ["W06000008"],
-    "port_dumfries_and_galloway_council": ["S12000006"],
-    "port_east_staffordshire_borough_council": ["E07000193"],
-    "port_edinburgh_city_council": ["S12000036"],
-    "port_gloucester_city_council": ["E07000081"],
-    "port_hillingdon_council": ["E09000017"],
-    "port_kingston_upon_thames_council": ["E09000021"],
-    "port_mid_ulster_district_council": ["N09000009"],
-    "port_new_forest_council": ["E07000091"],
-    "port_north_devon_council": ["E07000043"],
-    "port_northumberland_council": ["E06000057"],
-    "port_stirling_council": ["S12000030"],
-    "port_tendring_district_council": ["E07000076"],
-    "port_three_rivers_district_council": ["E07000102"],
-    "port_torbay_council": ["E06000027"],
-    "port_wychavon_district_council": ["E07000238"]
+    "hacs_itv_blaenau_gwent": [
+      "W06000019"
+    ],
+    "hacs_itv_epsom_ewell": [
+      "E07000208"
+    ],
+    "hacs_itv_hyndburn": [
+      "E07000120"
+    ],
+    "hacs_itv_winchester": [
+      "E07000094"
+    ],
+    "hacs_itv_somerset": [
+      "E06000066"
+    ],
+    "hacs_itv_test_valley": [
+      "E07000093"
+    ],
+    "port_argyll_and_bute_council": [
+      "S12000035"
+    ],
+    "port_ceredigion_county_council": [
+      "W06000008"
+    ],
+    "port_dumfries_and_galloway_council": [
+      "S12000006"
+    ],
+    "port_east_staffordshire_borough_council": [
+      "E07000193"
+    ],
+    "port_edinburgh_city_council": [
+      "S12000036"
+    ],
+    "port_gloucester_city_council": [
+      "E07000081"
+    ],
+    "port_hillingdon_council": [
+      "E09000017"
+    ],
+    "port_kingston_upon_thames_council": [
+      "E09000021"
+    ],
+    "port_mid_ulster_district_council": [
+      "N09000009"
+    ],
+    "port_new_forest_council": [
+      "E07000091"
+    ],
+    "port_north_devon_council": [
+      "E07000043"
+    ],
+    "port_northumberland_council": [
+      "E06000057"
+    ],
+    "port_stirling_council": [
+      "S12000030"
+    ],
+    "port_tendring_district_council": [
+      "E07000076"
+    ],
+    "port_three_rivers_district_council": [
+      "E07000102"
+    ],
+    "port_torbay_council": [
+      "E06000027"
+    ],
+    "port_wychavon_district_council": [
+      "E07000238"
+    ]
   }
 }

@@ -2,7 +2,6 @@ from datetime import datetime
 
 import httpx
 from bs4 import BeautifulSoup, Tag
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Ards and North Down Borough Council"

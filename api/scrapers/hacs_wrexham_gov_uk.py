@@ -4,7 +4,6 @@ from time import time_ns
 
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wrexham County Borough Council"

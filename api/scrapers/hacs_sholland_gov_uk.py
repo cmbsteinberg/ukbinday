@@ -2,7 +2,6 @@ import datetime
 import re
 
 import httpx
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "South Holland District Council"

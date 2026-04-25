@@ -4,7 +4,6 @@ from io import BytesIO
 
 import httpx
 from pypdf import PdfReader
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Redbridge Council"

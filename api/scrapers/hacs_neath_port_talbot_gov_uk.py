@@ -7,7 +7,6 @@ from dataclasses import dataclass
 import httpx
 from bs4 import BeautifulSoup
 from dateutil import parser
-
 from api.compat.hacs import Collection
 
 TITLE = "Neath Port Talbot Council"

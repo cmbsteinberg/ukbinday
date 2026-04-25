@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from bs4 import BeautifulSoup
-
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 

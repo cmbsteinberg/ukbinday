@@ -1,8 +1,7 @@
+import httpx
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 # Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error

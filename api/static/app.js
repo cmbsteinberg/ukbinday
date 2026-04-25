@@ -170,7 +170,11 @@ $("#address-btn").addEventListener("click", async () => {
 		const params = new URLSearchParams({
 			council: councilId,
 			postcode: addr.postcode,
+			address: addr.full_address,
 		});
+		if (addr.house_number_or_name)
+			params.set("house_number", addr.house_number_or_name);
+		if (addr.street) params.set("street", addr.street);
 		const resp = await fetch(
 			`${API}/lookup/${encodeURIComponent(addr.uprn)}?${params}`,
 		);
@@ -295,7 +299,11 @@ function subscribeUrlFor(councilId, addr) {
 	const params = new URLSearchParams({
 		council: councilId,
 		postcode: addr.postcode,
+		address: addr.full_address,
 	});
+	if (addr.house_number_or_name)
+		params.set("house_number", addr.house_number_or_name);
+	if (addr.street) params.set("street", addr.street);
 	const path = `${API}/calendar/${encodeURIComponent(addr.uprn)}?${params}`;
 	return `webcal://${window.location.host}${path}`;
 }

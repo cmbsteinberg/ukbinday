@@ -2,7 +2,6 @@ import datetime
 import xml.etree.ElementTree as ET
 
 import httpx
-
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import SourceArgumentException
 

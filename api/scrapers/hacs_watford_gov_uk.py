@@ -4,7 +4,6 @@ from datetime import date
 from html import unescape
 
 import httpx
-
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import (
     SourceArgumentException,

@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 import bs4
 import httpx
 from dateutil import parser
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentExceptionMultiple,

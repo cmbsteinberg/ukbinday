@@ -3,7 +3,6 @@ import re
 from typing import Any
 
 import httpx
-
 from api.compat.hacs import Collection
 from api.compat.hacs.exceptions import (
     SourceArgAmbiguousWithSuggestions,

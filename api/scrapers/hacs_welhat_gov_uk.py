@@ -1,7 +1,6 @@
 import dateutil.parser as parser
 import httpx
 from bs4 import BeautifulSoup
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Welwyn Hatfield Borough Council"

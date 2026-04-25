@@ -2,7 +2,6 @@ import time
 from datetime import datetime
 
 import httpx
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Portsmouth City Council"

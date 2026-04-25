@@ -3,7 +3,6 @@ from typing import Optional
 import httpx
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 

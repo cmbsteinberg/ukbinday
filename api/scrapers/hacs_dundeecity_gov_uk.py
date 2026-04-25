@@ -2,7 +2,6 @@ import json
 from datetime import datetime
 
 import httpx
-
 from api.compat.hacs import Collection
 
 TITLE = "Dundee City Council"

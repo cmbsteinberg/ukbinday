@@ -1,7 +1,6 @@
 import datetime
 
 import httpx
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "London Borough of Havering"

@@ -1,6 +1,5 @@
 import httpx
 from dateutil import parser
-
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "North Ayrshire Council"
