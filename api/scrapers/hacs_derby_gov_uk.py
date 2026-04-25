@@ -17,10 +17,10 @@ TEST_CASES = {
     # be business addresses. Hopefully these are suitably generic..
     "22A Wood Road, Chaddesden, Derby, DE21 4LU": {
         # The flat above Bargain Hut on Wood Road
-        "premises_id": "10010688168"
+        "uprn": "10010688168"
     },
     "Allestree Home Improvements, 512 Duffield Road, Derby, DE22 2DL": {
-        "premises_id": "100030310335"
+        "uprn": "100030310335"
     },
 }
 
@@ -35,7 +35,7 @@ _LOGGER = logging.getLogger(__name__)
 
 PARAM_TRANSLATIONS = {
     "en": {
-        "premises_id": "premises_id",
+        "uprn": "uprn",
         "postcode": "DEPRECATED: postcode",
         "house_number": "DEPRECATED: house_number",
     }
@@ -56,22 +56,22 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 class Source:
     def __init__(
         self,
-        premises_id: int | None = None,
+        uprn: int | None = None,
         postcode: str | None = None,
         house_number: str | None = None,
     ):
-        self._premises_id = premises_id
-        if not self._premises_id:
+        self._uprn = uprn
+        if not self._uprn:
             raise SourceArgumentExceptionMultiple(
-                ["premises_id"],
-                "premises_id must be provided in config",
+                ["uprn"],
+                "uprn must be provided in config",
             )
         self._session = httpx.AsyncClient(follow_redirects=True)
 
     async def fetch(self):
         entries = []
         r = await self._session.get(
-            f"https://secure.derby.gov.uk/binday/Bindays/{self._premises_id}"
+            f"https://secure.derby.gov.uk/binday/Bindays/{self._uprn}"
         )
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")

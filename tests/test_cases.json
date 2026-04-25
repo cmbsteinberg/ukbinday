@@ -1311,13 +1311,13 @@
     {
       "label": "22A Wood Road, Chaddesden, Derby, DE21 4LU",
       "params": {
-        "premises_id": "10010688168"
+        "uprn": "10010688168"
       }
     },
     {
       "label": "Allestree Home Improvements, 512 Duffield Road, Derby, DE22 2DL",
       "params": {
-        "premises_id": "100030310335"
+        "uprn": "100030310335"
       }
     }
   ],
@@ -2752,19 +2752,19 @@
     {
       "label": "Test_001",
       "params": {
-        "property": "000046029461"
+        "uprn": "000046029461"
       }
     },
     {
       "label": "Test_002",
       "params": {
-        "property": "000046250697"
+        "uprn": "000046250697"
       }
     },
     {
       "label": "Test_003",
       "params": {
-        "property": "46012509"
+        "uprn": "46012509"
       }
     }
   ],
@@ -4607,8 +4607,8 @@
     {
       "label": "Elm Avenue, Upton",
       "params": {
-        "address_value": "000042037487",
-        "postcode": "CH49 4NP"
+        "postcode": "CH49 4NP",
+        "uprn": "000042037487"
       }
     }
   ],

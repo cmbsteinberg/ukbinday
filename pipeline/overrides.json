@@ -131,6 +131,11 @@
     "uttlesford_gov_uk",
     "west_lindsey_gov_uk"
   ],
+  "uprn_alias": {
+    "newham_gov_uk": "property",
+    "derby_gov_uk": "premises_id",
+    "wirral_gov_uk": "address_value"
+  },
   "preserved_scrapers": {},
   "ports": {
     "hacs_itv_blaenau_gwent": [

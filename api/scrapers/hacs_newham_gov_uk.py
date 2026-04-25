@@ -8,22 +8,22 @@ TITLE = "London Borough of Newham"
 DESCRIPTION = "Source for newham.gov.uk services for London Borough of Newham, UK."
 URL = "https://www.newham.gov.uk"
 TEST_CASES = {
-    "Test_001": {"property": "000046029461"},
-    "Test_002": {"property": "000046250697"},
-    "Test_003": {"property": 46012509},
+    "Test_001": {"uprn": "000046029461"},
+    "Test_002": {"uprn": "000046250697"},
+    "Test_003": {"uprn": 46012509},
 }
 
 ICON_MAP = {"DOMESTIC": "mdi:trash-can", "RECYCLING": "mdi:glass-fragile"}
 
 
 class Source:
-    def __init__(self, property):
-        self._property = str(property).zfill(12)
+    def __init__(self, uprn):
+        self._uprn = str(uprn).zfill(12)
 
     async def fetch(self):
         s = _CurlCffiClient(verify=False, follow_redirects=True)
         r = await s.get(
-            f"https://bincollection.newham.gov.uk/Details/Index/{self._property}",
+            f"https://bincollection.newham.gov.uk/Details/Index/{self._uprn}",
         )
 
         # Make a BS4 object

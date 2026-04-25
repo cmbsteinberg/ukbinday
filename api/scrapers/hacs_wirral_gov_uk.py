@@ -12,7 +12,7 @@ URL = "https://wirral.gov.uk"
 TEST_CASES = {
     "Elm Avenue, Upton": {
         "postcode": "CH49 4NP",
-        "address_value": "000042037487",
+        "uprn": "000042037487",
     },
 }
 ICON_MAP = {
@@ -26,14 +26,14 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
         "Go to https://www.wirral.gov.uk/bincal_dev/ and enter "
         "your postcode. Right-click on your address in the dropdown "
         "and select 'Inspect' to find the 12-digit option value. "
-        "Use that as the address_value parameter."
+        "Use that as the uprn parameter."
     ),
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
         "postcode": "Your postcode, e.g. CH49 4NP.",
-        "address_value": (
+        "uprn": (
             "The 12-digit address value from the dropdown "
             "on the Wirral bin calendar page."
         ),
@@ -43,7 +43,7 @@ PARAM_DESCRIPTIONS = {
 PARAM_TRANSLATIONS = {
     "en": {
         "postcode": "Postcode",
-        "address_value": "Address Value",
+        "uprn": "Address Value",
     }
 }
 
@@ -52,9 +52,9 @@ DATE_REGEX = r"(\w+ \d{1,2} \w+ \d{4})"
 
 
 class Source:
-    def __init__(self, postcode: str, address_value: str):
+    def __init__(self, postcode: str, uprn: str):
         self._postcode = postcode.strip()
-        self._address_value = address_value.strip()
+        self._uprn = uprn.strip()
 
     async def fetch(self) -> list[Collection]:
         session = httpx.AsyncClient(follow_redirects=True)
@@ -77,7 +77,7 @@ class Source:
         # Step 3: Select address and find rounds
         data = self._extract_inputs(soup)
         data.pop("ctl00$MainContent$LookupPostcode", None)
-        data["ctl00$MainContent$addressDropDown"] = self._address_value
+        data["ctl00$MainContent$addressDropDown"] = self._uprn
         data["ctl00$MainContent$FindRounds"] = "Find collection rounds"
 
         r = await session.post(BIN_URL, data=data)

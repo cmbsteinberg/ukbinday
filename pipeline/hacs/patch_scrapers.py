@@ -1440,10 +1440,10 @@ def _is_deprecated_scraper(source: str) -> bool:
 # --- Requests fallback for Cloudflare-blocked scrapers ---
 
 
-def _load_override_sets() -> tuple[set[str], set[str], set[str], set[str]]:
+def _load_override_sets() -> tuple[set[str], set[str], set[str], set[str], dict[str, str]]:
     """Load all override sets from overrides.json.
 
-    Returns (requests_fallback, curl_cffi_fallback, ssl_verify_disabled, broken).
+    Returns (requests_fallback, curl_cffi_fallback, ssl_verify_disabled, broken, uprn_alias).
     """
     overrides = load_overrides()
     return (
@@ -1451,6 +1451,7 @@ def _load_override_sets() -> tuple[set[str], set[str], set[str], set[str]]:
         set(overrides.get("curl_cffi_fallback", [])),
         set(overrides.get("ssl_verify_disabled", [])),
         set(overrides.get("broken", [])),
+        dict(overrides.get("uprn_alias", {})),
     )
 
 
@@ -1571,6 +1572,20 @@ PARAM_NAME_NORMALISATIONS: dict[str, str] = {
 }
 
 
+def _alias_uprn(source: str, alias_param: str) -> str:
+    """Rename a per-scraper opaque-ID param to ``uprn`` so the registry can drive it.
+
+    Used for councils whose required ID is documented as equivalent to the UPRN
+    (e.g. newham ``property``, derby ``premises_id``, wirral ``address_value``).
+    Whole-word rename of the param name and its ``self._<name>`` attribute.
+    """
+    if not alias_param or alias_param == "uprn":
+        return source
+    source = re.sub(rf"\b{re.escape(alias_param)}\b", "uprn", source)
+    source = re.sub(rf"\b_{re.escape(alias_param)}\b", "_uprn", source)
+    return source
+
+
 def _normalise_init_params(source: str) -> str:
     """Rename idiosyncratic Source.__init__ params to canonical names."""
     try:
@@ -1623,10 +1638,13 @@ def transform_file(
     use_requests_fallback: bool = False,
     use_curl_cffi_fallback: bool = False,
     disable_ssl_verify: bool = False,
+    uprn_alias_param: str | None = None,
 ) -> list[str]:
     source = source_path.read_text()
     transformed, warnings = transform_source(source)
     transformed = _normalise_init_params(transformed)
+    if uprn_alias_param:
+        transformed = _alias_uprn(transformed, uprn_alias_param)
     if use_curl_cffi_fallback:
         transformed = _apply_curl_cffi_fallback(transformed)
     elif use_requests_fallback:
@@ -1644,6 +1662,7 @@ def _patch_single_file(
     curl_cffi_list: set[str],
     ssl_disabled_list: set[str],
     broken_list: set[str],
+    uprn_alias_map: dict[str, str],
 ) -> tuple[str | None, list[str]]:
     """Patch a single scraper file.
 
@@ -1665,6 +1684,7 @@ def _patch_single_file(
         use_requests_fallback=src.stem in fallback_list,
         use_curl_cffi_fallback=src.stem in curl_cffi_list,
         disable_ssl_verify=src.stem in ssl_disabled_list,
+        uprn_alias_param=uprn_alias_map.get(src.stem),
     )
     return None, warns
 
@@ -1674,6 +1694,7 @@ def _log_override_info(
     curl_cffi_list: set[str],
     ssl_disabled_list: set[str],
     broken_list: set[str],
+    uprn_alias_map: dict[str, str],
 ) -> None:
     """Print info about active overrides."""
     if fallback_list:
@@ -1684,6 +1705,8 @@ def _log_override_info(
         print(f"SSL verify disabled for {len(ssl_disabled_list)} scrapers.")
     if broken_list:
         print(f"Broken (skipped): {len(broken_list)} scrapers.")
+    if uprn_alias_map:
+        print(f"UPRN alias rewrites: {len(uprn_alias_map)} scrapers.")
 
 
 def _print_results(
@@ -1712,8 +1735,8 @@ def _patch_directory(input_dir: Path, output_dir: Path) -> None:
         print(f"No *_gov_uk.py files found in {input_dir}", file=sys.stderr)
         sys.exit(1)
 
-    fallback_list, curl_cffi_list, ssl_disabled_list, broken_list = _load_override_sets()
-    _log_override_info(fallback_list, curl_cffi_list, ssl_disabled_list, broken_list)
+    fallback_list, curl_cffi_list, ssl_disabled_list, broken_list, uprn_alias_map = _load_override_sets()
+    _log_override_info(fallback_list, curl_cffi_list, ssl_disabled_list, broken_list, uprn_alias_map)
 
     print(f"Patching {len(source_files)} files...")
 
@@ -1727,6 +1750,7 @@ def _patch_directory(input_dir: Path, output_dir: Path) -> None:
             curl_cffi_list,
             ssl_disabled_list,
             broken_list,
+            uprn_alias_map,
         )
         if dep_name:
             deprecated.append(dep_name)
