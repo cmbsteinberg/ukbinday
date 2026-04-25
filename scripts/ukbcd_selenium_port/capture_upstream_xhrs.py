@@ -43,26 +43,19 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent.parent
 PIPELINE_DIR = PROJECT_ROOT / "pipeline"
 UPSTREAM_DIR = PIPELINE_DIR / "upstream" / "ukbcd_selenium_clone"
-MANIFEST_PATH = SCRIPT_DIR / "handport_manifest.json"
-INPUT_JSON = UPSTREAM_DIR / "uk_bin_collection" / "tests" / "input.json"
+MANIFEST_PATH = SCRIPT_DIR / "selenium_manifest.json"
 COUNCILS_DIR = UPSTREAM_DIR / "uk_bin_collection" / "uk_bin_collection" / "councils"
 CAPTURES_DIR = SCRIPT_DIR / "xhr_captures"
 SUMMARY_PATH = SCRIPT_DIR / "xhr_capture_summary.json"
+
+REPO = "robbrad/UKBinCollectionData"
+BRANCH = "master"
 
 PER_COUNCIL_TIMEOUT_S = 300
 READY_TIMEOUT_S = 120
 QUIT_TIMEOUT_S = 120
 MAX_PARALLEL = 4
 MAX_BODY_BYTES = 64 * 1024
-
-CAPTURE_STATUSES = {
-    "pending",
-    "blocked_on_lightpanda_iframes",
-    "blocked_on_lightpanda_canvas",
-    "blocked_on_lightpanda_waf",
-    "blocked_on_lightpanda_interactions",
-    "blocked_on_lightpanda_rendering",
-}
 
 STATIC_RESOURCE_TYPES = {"stylesheet", "image", "font", "media"}
 STATIC_URL_RE = re.compile(
@@ -207,12 +200,36 @@ def is_static_asset(url: str, resource_type: str, content_type: str) -> bool:
     return False
 
 
+def ensure_upstream_clone() -> Path:
+    """Shallow-clone upstream into a stable path so re-runs are cheap."""
+    import subprocess
+    if UPSTREAM_DIR.exists() and (UPSTREAM_DIR / ".git").exists():
+        logger.info("Reusing existing upstream clone at %s", UPSTREAM_DIR)
+        subprocess.run(
+            ["git", "-C", str(UPSTREAM_DIR), "fetch", "--depth", "1", "origin", BRANCH],
+            check=True, capture_output=True,
+        )
+        subprocess.run(
+            ["git", "-C", str(UPSTREAM_DIR), "reset", "--hard", f"origin/{BRANCH}"],
+            check=True, capture_output=True,
+        )
+        return UPSTREAM_DIR
+    UPSTREAM_DIR.parent.mkdir(parents=True, exist_ok=True)
+    logger.info("Cloning %s into %s", REPO, UPSTREAM_DIR)
+    subprocess.run(
+        ["git", "clone", "--depth", "1", "--branch", BRANCH,
+         f"https://github.com/{REPO}.git", str(UPSTREAM_DIR)],
+        check=True,
+    )
+    return UPSTREAM_DIR
+
+
 def load_manifest() -> dict[str, dict]:
+    """Load selenium_manifest.json written by the sync pipeline."""
+    if not MANIFEST_PATH.exists():
+        logger.error("Manifest not found at %s -- run pipeline/ukbcd/sync.sh first", MANIFEST_PATH)
+        sys.exit(1)
     return json.loads(MANIFEST_PATH.read_text())
-
-
-def load_input_cases() -> dict[str, dict]:
-    return json.loads(INPUT_JSON.read_text())
 
 
 def build_payload(data: dict) -> dict:
@@ -231,7 +248,6 @@ def build_payload(data: dict) -> dict:
         payload["postcode"] = data["postcode"]
     if data.get("usrn") is not None:
         payload["usrn"] = str(data["usrn"])
-    # Upstream CLI: -n/--number -> paon. input.json: house_number.
     paon = (
         data.get("paon") if data.get("paon") is not None else data.get("house_number")
     )
@@ -248,17 +264,15 @@ def build_payload(data: dict) -> dict:
 
 
 def eligible_councils(
-    manifest: dict, input_cases: dict, only: set[str] | None
+    manifest: dict, only: set[str] | None
 ) -> list[tuple[str, dict]]:
     out: list[tuple[str, dict]] = []
     for council, entry in manifest.items():
         if only and council not in only:
             continue
-        if entry.get("status") not in CAPTURE_STATUSES:
-            continue
-        data = input_cases.get(council)
+        data = entry.get("input_data")
         if not isinstance(data, dict):
-            logger.warning("[%s] no input.json entry, skipping", council)
+            logger.warning("[%s] no input_data in manifest, skipping", council)
             continue
         if not (COUNCILS_DIR / f"{council}.py").exists():
             logger.warning("[%s] upstream file missing, skipping", council)
@@ -841,17 +855,11 @@ def main():
     )
     args = ap.parse_args()
 
-    if not UPSTREAM_DIR.exists():
-        logger.error(
-            "Upstream clone missing at %s -- run pipeline/ukbcd/sync.sh first",
-            UPSTREAM_DIR,
-        )
-        sys.exit(1)
+    ensure_upstream_clone()
 
     manifest = load_manifest()
-    input_cases = load_input_cases()
     only = {n.strip() for n in args.council.split(",") if n.strip()} or None
-    councils = eligible_councils(manifest, input_cases, only)
+    councils = eligible_councils(manifest, only)
 
     if args.list:
         for name, _ in councils:

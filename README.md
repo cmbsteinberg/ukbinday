@@ -63,11 +63,11 @@ Rate limiting needs Redis — set `REDIS_URL` or just leave it off and the API w
 ## Tests
 
 ```bash
-uv run pytest tests/test_ci.py -v          # smoke tests: syntax, imports, registry (~1s)
-uv run pytest tests/test_frontend.py -v    # API routes, CORS, error cases (~1s)
-uv run pytest tests/test_integration.py -v # hits live council sites (~40s)
-uv run pytest tests/test_playwright.py -v  # browser-based scrapers, needs Chromium (~5min)
-uv run pytest tests/test_deploy.py -v      # Docker compose stack (~60s)
+uv run pytest -m ci -v                    # smoke tests: syntax, imports, registry (~1s)
+uv run pytest -m api -v                   # API routes, CORS, error cases (~1s)
+uv run pytest -m live -v                  # hits live council sites (~40s)
+uv run pytest -m docker -v                # Docker compose stack (~60s)
+uv run pytest -m "not live and not docker" -v  # all fast tests
 ```
 
 Run a single council with `-k`:

@@ -12,23 +12,15 @@ UK Bin Collection API -- a FastAPI service that scrapes UK council websites to r
 # Run dev server
 uv run uvicorn api.main:app --reload
 
-# Run all tests
-uv run pytest tests/ -v
-
-# Fast smoke tests (syntax, imports, app boot, registry -- runs as pre-commit hook)
-uv run pytest tests/test_ci.py -v
-
-# Frontend/API surface tests (fast, no external calls)
-uv run pytest tests/test_frontend.py -v
-
-# Integration tests (requests-based scrapers, hits live council sites, slow)
-uv run pytest tests/test_integration.py -v
+# Run tests by marker
+uv run pytest -m ci -v                    # smoke tests (syntax, imports, registry)
+uv run pytest -m api -v                   # API routes, CORS, error cases
+uv run pytest -m live -v                  # hits live council sites, slow
+uv run pytest -m docker -v                # Docker compose stack
+uv run pytest -m "not live and not docker" -v  # all fast tests
 
 # Run a single scraper test by keyword
 uv run pytest tests/test_integration.py -v -k "aberdeen"
-
-# Docker stack tests
-uv run pytest tests/test_deploy.py -v
 
 # Lint Python (ruff -- excludes api/scrapers/)
 uv run ruff check --fix
@@ -54,14 +46,14 @@ uv run python -m scripts.lookup.create_lookup_table
 # Regenerate coverage map
 uv run python -m scripts.coverage.generate_coverage_map
 
-# Regenerate README sankey diagram from lad_lookup.json + integration_output.json
+# Regenerate README sankey diagram from lad_lookup.json + tests/output/integration_output.json
 uv run python -m scripts.generate_sankey
 
 # Annotate lad_lookup.json with working/broken status from test results
 uv run python -m scripts.annotate_lad_working
 
 # Run all post-integration regeneration scripts (coverage map, sankey, lad annotations)
-./scripts/post_integration.sh
+./pipeline/ci/post_integration.sh
 
 # Docker
 docker compose up --build
@@ -111,19 +103,24 @@ docker compose up --build
 
 **Scripts** (`scripts/`):
 - `generate_admin_lookup.py` -- Builds `admin_scraper_lookup.json` from all scrapers
-- `generate_sankey.py` -- Generates Mermaid sankey diagram in README.md from `lad_lookup.json` and `integration_output.json`
+- `generate_sankey.py` -- Generates Mermaid sankey diagram in README.md from `lad_lookup.json` and `tests/output/integration_output.json`
 - `annotate_lad_working.py` -- Annotates `lad_lookup.json` with working/broken status based on integration test results
-- `post_integration.sh` -- Runs all post-integration regeneration scripts (coverage map, sankey, lad annotations)
+- `pipeline/ci/post_integration.sh` -- Runs all post-integration regeneration scripts (coverage map, sankey, lad annotations)
 - `lookup/create_lookup_table.py` -- Downloads ONS ONSPD data and builds `postcode_lookup.parquet` and `lad_lookup.json`
 - `coverage/generate_coverage_map.py` -- Fetches UK LAD boundaries from ArcGIS and generates `coverage.geojson` and `coverage_map.html`
 
 **Tests** (`tests/`):
-- `test_ci.py` -- Smoke tests (9 test functions, parametrized over ~310 scrapers): syntax, imports, app boot, registry loading. Runs as pre-commit hook
-- `test_frontend.py` -- API surface tests (8): landing page, routes, CORS, error cases
-- `test_integration.py` -- Integration tests for requests-based scrapers: hits live council sites with up to 40 concurrent requests. Uses `test_cases.json` generated from scraper `TEST_CASES`
-- `test_deploy.py` -- Docker stack tests (3): compose boot, scraper loading, static files
-- `conftest.py` -- Custom pytest plugin that writes structured results to `test_output.json` and `integration_output.json`
+- `test_ci.py` (marker: `ci`) -- Smoke tests (9 test functions, parametrized over ~310 scrapers): syntax, imports, app boot, registry loading. Runs as pre-commit hook
+- `test_frontend.py` (marker: `api`) -- API surface tests (8): landing page, routes, CORS, error cases
+- `test_integration.py` (marker: `live`) -- Integration tests for requests-based scrapers: hits live council sites with up to 40 concurrent requests. Uses `test_cases.json` generated from scraper `TEST_CASES`
+- `test_frontend_flow.py` (marker: `live`) -- End-to-end frontend flow tests: mimics the real user journey (postcode → address pick → lookup)
+- `test_deploy.py` (marker: `docker`) -- Docker stack tests (3): compose boot, scraper loading, static files
+- `test_deploy_docker.sh` -- Bash-based Docker deployment test (curl assertions, standalone)
+- `conftest.py` -- Custom pytest plugin that writes structured results to `output/test_output.json` and `output/integration_output.json`
+- `output/` -- Generated test result JSON files (test_output, integration_output, frontend_flow_output)
+- `battletest/` -- Ad-hoc shell scripts for load testing, chaos testing, and security checks
 - Tests use `pytest-asyncio` with `loop_scope="session"` and `asgi-lifespan` for managing the FastAPI app
+- Pytest markers registered in `pyproject.toml`: `ci`, `api`, `live`, `docker`
 
 **CI/CD** (`.github/workflows/deploy.yml`):
 - On push to `main`: runs smoke tests → deploys to Hetzner via SSH (git pull + docker compose) → runs integration tests (non-blocking) → regenerates coverage badge and sankey diagram → auto-commits results

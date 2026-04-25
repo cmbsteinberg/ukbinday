@@ -3,7 +3,7 @@
 # constant in api/scrapers/ukbcd_google_public_calendar_council.py.
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 SCRAPER="$ROOT/api/scrapers/ukbcd_google_public_calendar_council.py"
 APP_JS="$ROOT/api/static/app.js"
 KEY="ukbcd_google_public_calendar_council"

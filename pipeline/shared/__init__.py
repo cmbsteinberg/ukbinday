@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 # Paths
-PIPELINE_DIR = Path(__file__).resolve().parent
+PIPELINE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = PIPELINE_DIR.parent
 API_DIR = PROJECT_ROOT / "api"
 SCRAPERS_DIR = API_DIR / "scrapers"

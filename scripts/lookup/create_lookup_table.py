@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 ROOT_DIR = Path(__file__).parent.parent.parent
 DATA_DIR = ROOT_DIR / "api" / "data"
 POSTCODE_PARQUET_PATH = DATA_DIR / "postcode_lookup.parquet"
-ONSPD_SOURCE = ROOT_DIR / "pipeline" / "onspd_postcode_lad.parquet"
+ONSPD_SOURCE = ROOT_DIR / "pipeline" / "data" / "onspd_postcode_lad.parquet"
 
 
 async def main():
@@ -22,7 +22,7 @@ async def main():
             "COPY (SELECT DISTINCT upper(replace(pcds,' ','')) AS postcode, "
             "oslaua AS lad_code FROM read_csv('ONSPD_*/Data/multi_csv/*.csv', "
             "union_by_name=true, all_varchar=true) WHERE oslaua IS NOT NULL "
-            "AND oslaua != '') TO 'pipeline/onspd_postcode_lad.parquet' "
+            "AND oslaua != '') TO 'pipeline/data/onspd_postcode_lad.parquet' "
             "(FORMAT PARQUET)\\\")\"",
             ONSPD_SOURCE,
         )

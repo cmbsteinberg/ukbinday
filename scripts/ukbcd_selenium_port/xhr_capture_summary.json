@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-04-24T16:34:24.392916+00:00",
-  "total": 29,
-  "successful": 29,
+  "generated_at": "2026-04-25T10:58:39.379026+00:00",
+  "total": 32,
+  "successful": 31,
   "httpx_convertible": 9,
   "councils": [
     {
@@ -45,6 +45,18 @@
       "errors": []
     },
     {
+      "council": "BromleyBoroughCouncil",
+      "success": false,
+      "xhr_count": 2,
+      "static_asset_count": 4,
+      "httpx_convertible": false,
+      "candidate_payload_url": null,
+      "duration_s": 37.39,
+      "errors": [
+        "harness: Traceback (most recent call last):\n  File \"<string>\", line 77, in <module>\n    result_obj = CouncilClass().get_and_parse_data(address_url, **payload)\n  File \"/Users/christophersteinberg/Documents/GitHub/bins/pipeline/upstream/ukbcd_selenium_clone/uk_bin_collection/uk_bin_collection/get_bin_data.py\", line 82, in get_and_parse_data\n    bin_data_dict = self.parse_data(page, url=address_url, **kwargs)\n  File \"/Users/christophersteinberg/Documents/GitHub/bins/pipeline/upstream/ukbcd_selenium_clone/uk_bin_collection/uk_bin_collection/councils/BromleyBoroughCouncil.py\", line 39, in parse_data\n    wait.until(\n    ~~~~~~~~~~^\n        EC.presence_of_element_located((By.CLASS_NAME, \"waste-service-image\"))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/christophersteinberg/.cache/uv/archive-v0/g7y82-ocfSGKTRggTRVyT/lib/python3.13/site-packages/selenium/webdriver/support/wait.py\", line 121, in until\n    raise TimeoutException(message, screen, stacktrace)\nselenium.common.exceptions.TimeoutException: Message: \nStacktrace:\n0   chromedriver                        0x0000000104cd8b38 cxxbridge1$str$ptr + 2722088\n1   chromedriver                        0x0000000104cd0aa8 cxxbridge1$str$ptr + 2689176\n2   chromedriver                        0x000000010482233c cxxbridge1$string$len + 90648\n3   chromedriver                        0x0000000104869494 cxxbridge1$string$len + 381808\n4   chromedriver                        0x00000001048aa880 cxxbridge1$string$len + 649052\n5   chromedriver                        0x000000010485d784 cxxbridge1$string$len + 333408\n6   chromedriver                        0x0000000104c9beb4 cxxbridge1$str$ptr + 2473124\n7   chromedriver                        0x0000000104c9f120 cxxbridge1$str$ptr + 2486032\n8   chromedriver                        0x0000000104c7d6b4 cxxbridge1$str$ptr + 2348196\n9   chromedriver                        0x0000000104c9f9dc cxxbridge1$str$ptr + 2488268\n10  chromedriver                        0x0000000104c6e730 cxxbridge1$str$ptr + 2286880\n11  chromedriver                        0x0000000104cbf5f8 cxxbridge1$str$ptr + 2618344\n12  chromedriver                        0x0000000104cbf784 cxxbridge1$str$ptr + 2618740\n13  chromedriver                        0x0000000104cd06e4 cxxbridge1$str$ptr + 2688212\n14  libsystem_pthread.dylib             0x0000000187fd1c08 _pthread_start + 136\n15  libsystem_pthread.dylib             0x0000000187fccba8 thread_start + 8\n\n"
+      ]
+    },
+    {
       "council": "CeredigionCountyCouncil",
       "success": true,
       "xhr_count": 68,
@@ -55,6 +67,16 @@
       "errors": []
     },
     {
+      "council": "ColchesterCityCouncil",
+      "success": true,
+      "xhr_count": 49,
+      "static_asset_count": 27,
+      "httpx_convertible": false,
+      "candidate_payload_url": "https://www.colchester.gov.uk/your-recycling-calendar/?start=true",
+      "duration_s": 10.01,
+      "errors": []
+    },
+    {
       "council": "DumfriesandGallowayCouncil",
       "success": true,
       "xhr_count": 0,
@@ -62,6 +84,16 @@
       "httpx_convertible": false,
       "candidate_payload_url": null,
       "duration_s": 1.48,
+      "errors": []
+    },
+    {
+      "council": "EastStaffordshireBoroughCouncil",
+      "success": true,
+      "xhr_count": 0,
+      "static_asset_count": 0,
+      "httpx_convertible": false,
+      "candidate_payload_url": null,
+      "duration_s": 2.26,
       "errors": []
     },
     {

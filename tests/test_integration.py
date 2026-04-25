@@ -7,7 +7,7 @@ management).
 
 Produces extremely detailed output per scraper: timing, status codes, error types,
 response shapes, and network-level diagnostics. Results are written to
-tests/integration_output.json.
+tests/output/integration_output.json.
 
 Usage:
     uv run pytest tests/test_integration.py -v -k "aberdeen"
@@ -26,8 +26,11 @@ from asgi_lifespan import LifespanManager
 
 from api.main import app
 
+pytestmark = pytest.mark.live
+
+
 TEST_CASES_PATH = Path(__file__).parent / "test_cases.json"
-OUTPUT_PATH = Path(__file__).parent / "integration_output.json"
+OUTPUT_PATH = Path(__file__).parent / "output" / "integration_output.json"
 BASE_URL = "http://testserver/api/v1"
 
 MAX_CONCURRENCY = 40
@@ -283,7 +286,7 @@ async def all_results(client: httpx.AsyncClient):
     import subprocess
 
     cwd = Path(__file__).parent.parent
-    subprocess.run(["./scripts/post_integration.sh"], cwd=cwd)
+    subprocess.run(["./pipeline/ci/post_integration.sh"], cwd=cwd)
 
     return _results_cache
 

@@ -105,4 +105,7 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    rc = main()
+    from pipeline.shared.enrich_test_postcodes import enrich
+    enrich()
+    sys.exit(rc)

@@ -15,6 +15,7 @@ dependencies = [
     "icalevents>=0.1.27",
     "jinja2>=3.1.6",
     "lxml>=6.0.2",
+    "playwright>=1.58.0",
     "pypdf>=6.9.2",
     "pytest>=9.0.2",
     "pytest-asyncio>=1.3.0",
@@ -46,3 +47,11 @@ exclude = ["api/scrapers"]
 [tool.ruff.lint]
 select = ["E", "F", "W", "I"]
 ignore = ["E501"]
+
+[tool.pytest.ini_options]
+markers = [
+    "ci: Pre-commit smoke tests (syntax, imports, app boot, registry)",
+    "api: Fast API surface tests (no external calls)",
+    "live: Integration tests that hit live council websites",
+    "docker: Tests that require Docker running",
+]

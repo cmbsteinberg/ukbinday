@@ -8,7 +8,7 @@ pre-commit:
       glob:
         - "api/scrapers/ukbcd_google_public_calendar_council.py"
         - "api/static/app.js"
-      run: scripts/sync_passthrough_urls.sh
+      run: pipeline/ci/sync_passthrough_urls.sh
       stage_fixed: true
     # 1. Sync dependencies with uv
     # This ensures your lockfile is up to date before any code is committed.
@@ -41,5 +41,5 @@ pre-commit:
       tags: integration
       only:
         - run: test "${RUN_INTEGRATION:-0}" = "1"
-      run: uv run pytest tests/test_integration.py -v --tb=short; ./scripts/post_integration.sh
+      run: uv run pytest tests/test_integration.py -v --tb=short; ./pipeline/ci/post_integration.sh
       stage_fixed: true

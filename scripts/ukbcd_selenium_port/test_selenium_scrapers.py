@@ -2,11 +2,10 @@
 """
 Probe UKBCD Selenium scrapers headlessly to see which still work upstream.
 
-We only care about councils that aren't already covered by a HACS or
-non-selenium UKBCD scraper (per api/data/lad_lookup.json). For each of
-those, we invoke the upstream collect_data.py CLI in a disposable venv
-with a local headless Chrome, capture the JSON output, and validate it
-against UKBCD's own output.schema.
+Reads selenium_manifest.json (written by pipeline/ukbcd/patch_scrapers.py during
+sync) to know which councils are selenium-only and uncovered. Uses the existing
+upstream clone at pipeline/upstream/ukbcd_selenium_clone/ (shallow-cloned on first
+run, re-fetched on subsequent runs).
 
 Writes scripts/ukbcd_selenium_port/selenium_test_results.json.
 
@@ -29,10 +28,6 @@ import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
-from pipeline.shared import LAD_LOOKUP_PATH
-from pipeline.ukbcd.patch_scrapers import is_selenium_scraper
-
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -40,6 +35,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent.parent
 PIPELINE_DIR = PROJECT_ROOT / "pipeline"
 UPSTREAM_DIR = PIPELINE_DIR / "upstream" / "ukbcd_selenium_clone"
+MANIFEST_PATH = SCRIPT_DIR / "selenium_manifest.json"
 RESULTS_PATH = SCRIPT_DIR / "selenium_test_results.json"
 
 REPO = "robbrad/UKBinCollectionData"
@@ -90,7 +86,7 @@ class Result:
 # ---------------------------------------------------------------------------
 
 
-def clone_upstream() -> Path:
+def ensure_upstream_clone() -> Path:
     """Shallow-clone upstream into a stable path so re-runs are cheap."""
     if UPSTREAM_DIR.exists() and (UPSTREAM_DIR / ".git").exists():
         logger.info("Reusing existing upstream clone at %s", UPSTREAM_DIR)
@@ -110,12 +106,8 @@ def clone_upstream() -> Path:
     logger.info("Cloning %s into %s", REPO, UPSTREAM_DIR)
     subprocess.run(
         [
-            "git",
-            "clone",
-            "--depth",
-            "1",
-            "--branch",
-            BRANCH,
+            "git", "clone", "--depth", "1",
+            "--branch", BRANCH,
             f"https://github.com/{REPO}.git",
             str(UPSTREAM_DIR),
         ],
@@ -124,49 +116,18 @@ def clone_upstream() -> Path:
     return UPSTREAM_DIR
 
 
-def load_uncovered_selenium(clone_dir: Path) -> list[tuple[str, dict]]:
-    """Return (council_name, input_data) for selenium scrapers not covered elsewhere.
+def load_manifest() -> list[tuple[str, dict]]:
+    """Load selenium_manifest.json written by the sync pipeline.
 
-    Covered = any LAD code maps to a scraper_id in api/data/lad_lookup.json that
-    either starts with 'hacs_' or points to an existing non-selenium 'ukbcd_' file
-    (selenium ukbcd files are skipped during sync, so they won't have a file on disk).
-    """
-    councils_dir = clone_dir / "uk_bin_collection" / "uk_bin_collection" / "councils"
-    input_json = clone_dir / "uk_bin_collection" / "tests" / "input.json"
-    input_data = json.loads(input_json.read_text())
-    lad_lookup = json.loads(LAD_LOOKUP_PATH.read_text())
-    scrapers_dir = PROJECT_ROOT / "api" / "scrapers"
-
-    uncovered: list[tuple[str, dict]] = []
-    for name, data in input_data.items():
-        if not isinstance(data, dict):
-            continue
-        src = councils_dir / f"{name}.py"
-        if not src.exists() or not is_selenium_scraper(src):
-            continue
-
-        lads: list[str] = []
-        if "LAD24CD" in data:
-            lads.append(data["LAD24CD"])
-        lads.extend(data.get("supported_councils_LAD24CD", []))
-
-        covered = False
-        for lad in lads:
-            entry = lad_lookup.get(lad)
-            if not entry:
-                continue
-            sid = entry.get("scraper_id")
-            if not sid:
-                continue
-            # Scraper_id may point to a non-existent file if skipped; require file present.
-            if (scrapers_dir / f"{sid}.py").exists():
-                covered = True
-                break
-
-        if not covered:
-            uncovered.append((name, data))
-
-    return uncovered
+    Returns (council_name, input_data) pairs ready for execution."""
+    if not MANIFEST_PATH.exists():
+        logger.error(
+            "Manifest not found at %s -- run pipeline/ukbcd/sync.sh first",
+            MANIFEST_PATH,
+        )
+        sys.exit(1)
+    manifest = json.loads(MANIFEST_PATH.read_text())
+    return [(name, entry["input_data"]) for name, entry in manifest.items()]
 
 
 # ---------------------------------------------------------------------------
@@ -335,9 +296,9 @@ def main():
     ap.add_argument("--parallel", type=int, default=MAX_PARALLEL)
     args = ap.parse_args()
 
-    clone_dir = clone_upstream()
+    clone_dir = ensure_upstream_clone()
     schema = json.loads((clone_dir / "uk_bin_collection" / "tests" / "output.schema").read_text())
-    uncovered = load_uncovered_selenium(clone_dir)
+    uncovered = load_manifest()
 
     if args.only:
         wanted = {s.strip() for s in args.only.split(",") if s.strip()}

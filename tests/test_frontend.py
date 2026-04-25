@@ -12,6 +12,8 @@ from asgi_lifespan import LifespanManager
 
 from api.main import app
 
+pytestmark = pytest.mark.api
+
 BASE_URL = "http://testserver"
 
 

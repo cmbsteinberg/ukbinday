@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LAD_PATH = ROOT / "api" / "data" / "lad_lookup.json"
-INTEGRATION_PATH = ROOT / "tests" / "integration_output.json"
+INTEGRATION_PATH = ROOT / "tests" / "output" / "integration_output.json"
 README_PATH = ROOT / "README.md"
 
 

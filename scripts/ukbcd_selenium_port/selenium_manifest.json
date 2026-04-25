@@ -1,0 +1,712 @@
+{
+  "ArgyllandButeCouncil": {
+    "url": "https://www.argyll-bute.gov.uk/rubbish-and-recycling/household-waste/bin-collection",
+    "lad_codes": [
+      "S12000035"
+    ],
+    "input_data": {
+      "skip_get_url": true,
+      "postcode": "PA286LJ",
+      "uprn": "000125011723",
+      "url": "https://www.argyll-bute.gov.uk/rubbish-and-recycling/household-waste/bin-collection",
+      "wiki_name": "Argyll and Bute",
+      "wiki_note": "Pass the UPRN. You will need to use [FindMyAddress](https://www.findmyaddress.co.uk/search).",
+      "LAD24CD": "S12000035"
+    }
+  },
+  "BaberghDistrictCouncil": {
+    "url": "https://www.babergh.gov.uk",
+    "lad_codes": [
+      "E07000200"
+    ],
+    "input_data": {
+      "house_number": "Little Changes",
+      "postcode": "CO6 4RA",
+      "skip_get_url": true,
+      "url": "https://www.babergh.gov.uk",
+      "wiki_name": "Babergh",
+      "wiki_note": "Pass the house number and postcode in their respective parameters. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000200"
+    }
+  },
+  "BasildonCouncil": {
+    "url": "https://mybasildon.powerappsportals.com/check/where_i_live/",
+    "lad_codes": [
+      "E07000066"
+    ],
+    "input_data": {
+      "skip_get_url": true,
+      "uprn": "10013350430",
+      "url": "https://mybasildon.powerappsportals.com/check/where_i_live/",
+      "wiki_name": "Basildon",
+      "wiki_note": "To get the UPRN, you will need to use [FindMyAddress](https://www.findmyaddress.co.uk/search).",
+      "LAD24CD": "E07000066"
+    }
+  },
+  "BlaenauGwentCountyBoroughCouncil": {
+    "url": "https://www.blaenau-gwent.gov.uk",
+    "lad_codes": [
+      "W06000019"
+    ],
+    "input_data": {
+      "postcode": "NP23 7TE",
+      "skip_get_url": false,
+      "uprn": "100100471367",
+      "url": "https://www.blaenau-gwent.gov.uk",
+      "wiki_name": "Blaenau Gwent",
+      "wiki_note": "You will need to use [FindMyAddress](https://www.findmyaddress.co.uk/search) to find the UPRN.",
+      "LAD24CD": "W06000019"
+    }
+  },
+  "BostonBoroughCouncil": {
+    "url": "https://www.boston.gov.uk/findwastecollections",
+    "lad_codes": [
+      "E07000136"
+    ],
+    "input_data": {
+      "house_number": "CEDAR",
+      "postcode": "PE20 1AY",
+      "skip_get_url": true,
+      "url": "https://www.boston.gov.uk/findwastecollections",
+      "wiki_name": "Boston",
+      "wiki_note": "Provide your house number in the `house_number` parameter and postcode in the `postcode` parameter.",
+      "LAD24CD": "E07000136"
+    }
+  },
+  "BrightonandHoveCityCouncil": {
+    "url": "https://enviroservices.brighton-hove.gov.uk/link/collections",
+    "lad_codes": [
+      "E06000043"
+    ],
+    "input_data": {
+      "house_number": "44",
+      "postcode": "BN1 8NE",
+      "skip_get_url": true,
+      "url": "https://enviroservices.brighton-hove.gov.uk/link/collections",
+      "wiki_name": "Brighton and Hove",
+      "wiki_note": "Use house number and postcode. Requires Selenium",
+      "LAD24CD": "E06000043"
+    }
+  },
+  "BromleyBoroughCouncil": {
+    "url": "https://recyclingservices.bromley.gov.uk/waste/6087017",
+    "lad_codes": [
+      "E09000006"
+    ],
+    "input_data": {
+      "url": "https://recyclingservices.bromley.gov.uk/waste/6087017",
+      "wiki_command_url_override": "https://recyclingservices.bromley.gov.uk/waste/XXXXXXX",
+      "wiki_name": "Bromley",
+      "wiki_note": "Follow the instructions [here](https://recyclingservices.bromley.gov.uk/waste) until the \"Your bin days\" page then copy the URL and replace the URL in the command.",
+      "LAD24CD": "E09000006"
+    }
+  },
+  "CeredigionCountyCouncil": {
+    "url": "https://www.ceredigion.gov.uk/resident/bins-recycling/",
+    "lad_codes": [
+      "W06000008"
+    ],
+    "input_data": {
+      "house_number": "BLAEN CWMMAGWR, TRISANT, CEREDIGION, SY23 4RQ",
+      "postcode": "SY23 4RQ",
+      "url": "https://www.ceredigion.gov.uk/resident/bins-recycling/",
+      "wiki_name": "Ceredigion",
+      "wiki_note": "House Number is the full address as it appears on the drop-down on the site when you search by postcode. This parser requires a Selenium webdriver.",
+      "LAD24CD": "W06000008"
+    }
+  },
+  "ChelmsfordCityCouncil": {
+    "url": "https://www.chelmsford.gov.uk/myhome/",
+    "lad_codes": [
+      "E07000070"
+    ],
+    "input_data": {
+      "house_number": "1 Celeborn Street, South Woodham Ferrers, Chelmsford, CM3 7AE",
+      "postcode": "CM3 7AE",
+      "url": "https://www.chelmsford.gov.uk/myhome/",
+      "wiki_name": "Chelmsford",
+      "wiki_note": "Follow the instructions [here](https://www.chelmsford.gov.uk/myhome/) until you get the page listing your address, then copy the entire address text and use that in the house number field.",
+      "LAD24CD": "E07000070"
+    }
+  },
+  "ColchesterCityCouncil": {
+    "url": "https://www.colchester.gov.uk/your-recycling-calendar",
+    "lad_codes": [
+      "E07000071"
+    ],
+    "input_data": {
+      "house_number": "29",
+      "paon": "29",
+      "postcode": "CO2 8UN",
+      "skip_get_url": false,
+      "url": "https://www.colchester.gov.uk/your-recycling-calendar",
+      "wiki_name": "Colchester",
+      "wiki_note": "Pass the house name/number in the house number parameter, wrapped in double quotes.",
+      "LAD24CD": "E07000071"
+    }
+  },
+  "CotswoldDistrictCouncil": {
+    "url": "https://community.cotswold.gov.uk/s/waste-collection-enquiry",
+    "lad_codes": [
+      "E07000079"
+    ],
+    "input_data": {
+      "house_number": "19 SUMMERS WAY, MORETON-IN-MARSH, GL56 0GB",
+      "postcode": "GL56 0GB",
+      "skip_get_url": true,
+      "url": "https://community.cotswold.gov.uk/s/waste-collection-enquiry",
+      "wiki_name": "Cotswold",
+      "wiki_note": "Pass the full address in the house number and postcode in",
+      "LAD24CD": "E07000079"
+    }
+  },
+  "DumfriesandGallowayCouncil": {
+    "url": "https://www.dumfriesandgalloway.gov.uk",
+    "lad_codes": [
+      "S12000006"
+    ],
+    "input_data": {
+      "uprn": "137034556",
+      "skip_get_url": true,
+      "url": "https://www.dumfriesandgalloway.gov.uk",
+      "wiki_name": "Dumfries and Galloway Council",
+      "wiki_note": "You will need to use [FindMyAddress](https://www.findmyaddress.co.uk/search) to find the UPRN.",
+      "LAD24CD": "S12000006"
+    }
+  },
+  "EastStaffordshireBoroughCouncil": {
+    "url": "https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates/68382",
+    "lad_codes": [
+      "E07000193"
+    ],
+    "input_data": {
+      "url": "https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates/68382",
+      "wiki_command_url_override": "https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates/XXXXX",
+      "wiki_name": "East Staffordshire",
+      "wiki_note": "Replace `XXXXX` with your property's ID when selecting from https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates.",
+      "LAD24CD": "E07000193"
+    }
+  },
+  "EastSuffolkCouncil": {
+    "url": "https://my.eastsuffolk.gov.uk/service/Bin_collection_dates_finder",
+    "lad_codes": [
+      "E07000244"
+    ],
+    "input_data": {
+      "postcode": "IP11 9FJ",
+      "skip_get_url": true,
+      "uprn": "10093544720",
+      "url": "https://my.eastsuffolk.gov.uk/service/Bin_collection_dates_finder",
+      "wiki_name": "East Suffolk",
+      "wiki_note": "To get the UPRN, you can use [FindMyAddress](https://www.findmyaddress.co.uk/search). This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000244"
+    }
+  },
+  "EdinburghCityCouncil": {
+    "url": "https://www.edinburgh.gov.uk",
+    "lad_codes": [
+      "S12000036"
+    ],
+    "input_data": {
+      "LAD24CD": "S12000036",
+      "house_number": "Tuesday",
+      "postcode": "Week 1",
+      "skip_get_url": true,
+      "url": "https://www.edinburgh.gov.uk",
+      "wiki_name": "City of Edinburgh",
+      "wiki_note": "Use the House Number field to pass the DAY of the week for your collections. Monday/Tuesday/Wednesday/Thursday/Friday. Use the 'postcode' field to pass the WEEK for your collection. [Week 1/Week 2]"
+    }
+  },
+  "EppingForestDistrictCouncil": {
+    "url": "https://eppingforestdc.maps.arcgis.com/apps/instant/lookup/index.html?appid=bfca32b46e2a47cd9c0a84f2d8cdde17&find=IG9%206EP",
+    "lad_codes": [
+      "E07000072"
+    ],
+    "input_data": {
+      "postcode": "IG9 6EP",
+      "url": "https://eppingforestdc.maps.arcgis.com/apps/instant/lookup/index.html?appid=bfca32b46e2a47cd9c0a84f2d8cdde17&find=IG9%206EP",
+      "skip_get_url": true,
+      "wiki_name": "Epping Forest",
+      "wiki_note": "Add your postcode.",
+      "LAD24CD": "E07000072"
+    }
+  },
+  "EpsomandEwellBoroughCouncil": {
+    "url": "https://www.epsom-ewell.gov.uk",
+    "lad_codes": [
+      "E07000208"
+    ],
+    "input_data": {
+      "uprn": "100061349083",
+      "postcode": "KT17 2RG",
+      "skip_get_url": true,
+      "url": "https://www.epsom-ewell.gov.uk",
+      "wiki_name": "Epsom and Ewell",
+      "wiki_note": "Use [FindMyAddress](https://www.findmyaddress.co.uk/search) to find your UPRN. Requires Selenium.",
+      "LAD24CD": "E07000208"
+    }
+  },
+  "ForestOfDeanDistrictCouncil": {
+    "url": "https://community.fdean.gov.uk/s/waste-collection-enquiry",
+    "lad_codes": [
+      "E07000080"
+    ],
+    "input_data": {
+      "house_number": "ELMOGAL, PARKEND ROAD, BREAM, LYDNEY",
+      "postcode": "GL15 6JT",
+      "skip_get_url": true,
+      "url": "https://community.fdean.gov.uk/s/waste-collection-enquiry",
+      "wiki_name": "Forest of Dean",
+      "wiki_note": "Pass the full address in the house number and postcode parameters. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000080"
+    }
+  },
+  "GloucesterCityCouncil": {
+    "url": "https://gloucester-self.achieveservice.com/service/Bins___Check_your_bin_day",
+    "lad_codes": [
+      "E07000081"
+    ],
+    "input_data": {
+      "house_number": "111",
+      "postcode": "GL2 0RR",
+      "skip_get_url": true,
+      "uprn": "100120479507",
+      "url": "https://gloucester-self.achieveservice.com/service/Bins___Check_your_bin_day",
+      "wiki_name": "Gloucester",
+      "wiki_note": "Pass the house number, postcode, and UPRN in their respective parameters. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000081"
+    }
+  },
+  "GreatYarmouthBoroughCouncil": {
+    "url": "https://myaccount.great-yarmouth.gov.uk/article/6456/Find-my-waste-collection-days",
+    "lad_codes": [
+      "E07000145"
+    ],
+    "input_data": {
+      "postcode": "NR31 7EB",
+      "skip_get_url": true,
+      "uprn": "100090834792",
+      "url": "https://myaccount.great-yarmouth.gov.uk/article/6456/Find-my-waste-collection-days",
+      "wiki_name": "Great Yarmouth",
+      "wiki_note": "Pass the postcode, and UPRN in their respective parameters. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000145"
+    }
+  },
+  "HaltonBoroughCouncil": {
+    "url": "https://webapp.halton.gov.uk/PublicWebForms/WasteServiceSearchv1.aspx#collections",
+    "lad_codes": [
+      "E06000006"
+    ],
+    "input_data": {
+      "house_number": "12",
+      "postcode": "WA7 4HA",
+      "skip_get_url": true,
+      "url": "https://webapp.halton.gov.uk/PublicWebForms/WasteServiceSearchv1.aspx#collections",
+      "wiki_name": "Halton",
+      "wiki_note": "Pass the house number and postcode. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E06000006"
+    }
+  },
+  "HertsmereBoroughCouncil": {
+    "url": "https://www.hertsmere.gov.uk",
+    "lad_codes": [
+      "E07000098"
+    ],
+    "input_data": {
+      "house_number": "1",
+      "postcode": "WD7 9HZ",
+      "skip_get_url": true,
+      "url": "https://www.hertsmere.gov.uk",
+      "wiki_name": "Hertsmere",
+      "wiki_note": "Provide your house number in the `house_number` parameter and postcode in the `postcode` parameter.",
+      "LAD24CD": "E07000098"
+    }
+  },
+  "Hillingdon": {
+    "url": "https://www.hillingdon.gov.uk/collection-day",
+    "lad_codes": [
+      "E09000017"
+    ],
+    "input_data": {
+      "house_number": "1, Milverton Drive, Ickenham, UB10 8PP, Ickenham, Hillingdon",
+      "postcode": "UB10 8PP",
+      "skip_get_url": true,
+      "url": "https://www.hillingdon.gov.uk/collection-day",
+      "wiki_name": "Hillingdon",
+      "wiki_note": "Pass the postcode and the full address as it appears in the address pulldown menu.",
+      "LAD24CD": "E09000017"
+    }
+  },
+  "HyndburnBoroughCouncil": {
+    "url": "https://iapp.itouchvision.com/iappcollectionday/collection-day/?uuid=FEBA68993831481FD81B2E605364D00A8DC017A4",
+    "lad_codes": [
+      "E07000120"
+    ],
+    "input_data": {
+      "postcode": "BB1 4DJ",
+      "LAD24CD": "E07000120",
+      "uprn": "100010448773",
+      "url": "https://iapp.itouchvision.com/iappcollectionday/collection-day/?uuid=FEBA68993831481FD81B2E605364D00A8DC017A4",
+      "skip_get_url": true,
+      "wiki_name": "Hyndburn",
+      "wiki_note": "Pass the UPRN. You can find it using [FindMyAddress](https://www.findmyaddress.co.uk/search). This parser requires a Selenium webdriver."
+    }
+  },
+  "KingstonUponThamesCouncil": {
+    "url": "https://waste-services.kingston.gov.uk/waste/2701097",
+    "lad_codes": [
+      "E09000021"
+    ],
+    "input_data": {
+      "url": "https://waste-services.kingston.gov.uk/waste/2701097",
+      "wiki_command_url_override": "https://waste-services.kingston.gov.uk/waste/XXXXXXX",
+      "wiki_name": "Kingston upon Thames",
+      "wiki_note": "Follow the instructions [here](https://waste-services.kingston.gov.uk/waste) until the \"Your bin days\" page, then copy the URL and replace the URL in the command.",
+      "LAD24CD": "E09000021"
+    }
+  },
+  "KnowsleyMBCouncil": {
+    "url": "https://knowsleytransaction.mendixcloud.com/link/youarebeingredirected?target=bincollectioninformation",
+    "lad_codes": [
+      "E08000011"
+    ],
+    "input_data": {
+      "house_number": "2 ALTMOOR ROAD HUYTON L36 3UY",
+      "postcode": "L36 3UY",
+      "skip_get_url": true,
+      "url": "https://knowsleytransaction.mendixcloud.com/link/youarebeingredirected?target=bincollectioninformation",
+      "wiki_name": "Knowsley",
+      "wiki_note": "Pass the postcode in the postcode parameter, wrapped in double quotes and with a space.",
+      "LAD24CD": "E08000011"
+    }
+  },
+  "MidSuffolkDistrictCouncil": {
+    "url": "https://www.midsuffolk.gov.uk",
+    "lad_codes": [
+      "E07000203"
+    ],
+    "input_data": {
+      "house_number": "91",
+      "postcode": "IP23 8EF",
+      "skip_get_url": true,
+      "url": "https://www.midsuffolk.gov.uk",
+      "wiki_name": "Mid Suffolk",
+      "wiki_note": "Pass the house number and postcode in their respective parameters. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000203"
+    }
+  },
+  "MidUlsterDistrictCouncil": {
+    "url": "https://www.midulstercouncil.org",
+    "lad_codes": [
+      "N09000009"
+    ],
+    "input_data": {
+      "house_number": "20 HILLHEAD, STEWARTSTOWN, BT71 5HY",
+      "postcode": "BT71 5HY",
+      "skip_get_url": true,
+      "url": "https://www.midulstercouncil.org",
+      "wiki_name": "Mid Ulster",
+      "wiki_note": "Pass the full address of the house postcode as displayed on the site. This parser requires a Selenium webdriver.",
+      "LAD24CD": "N09000009"
+    }
+  },
+  "NewForestCouncil": {
+    "url": "https://forms.newforest.gov.uk/ufs/FIND_MY_BIN_BAR.eb",
+    "lad_codes": [
+      "E07000091"
+    ],
+    "input_data": {
+      "postcode": "SO41 0GJ",
+      "skip_get_url": true,
+      "uprn": "100060482345",
+      "url": "https://forms.newforest.gov.uk/ufs/FIND_MY_BIN_BAR.eb",
+      "wiki_name": "New Forest",
+      "wiki_note": "Pass the postcode and UPRN. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000091"
+    }
+  },
+  "NorthDevonCountyCouncil": {
+    "url": "https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar",
+    "lad_codes": [
+      "E07000043"
+    ],
+    "input_data": {
+      "house_number": "1",
+      "postcode": "EX31 2LE",
+      "skip_get_url": true,
+      "uprn": "100040249471",
+      "url": "https://my.northdevon.gov.uk/service/WasteRecyclingCollectionCalendar",
+      "wiki_name": "North Devon",
+      "wiki_note": "Pass the house number and postcode in their respective parameters. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000043"
+    }
+  },
+  "NorthEastDerbyshireDistrictCouncil": {
+    "url": "https://myselfservice.ne-derbyshire.gov.uk/service/Check_your_Bin_Day",
+    "lad_codes": [
+      "E07000038"
+    ],
+    "input_data": {
+      "postcode": "S42 5RB",
+      "skip_get_url": true,
+      "uprn": "010034492222",
+      "url": "https://myselfservice.ne-derbyshire.gov.uk/service/Check_your_Bin_Day",
+      "wiki_name": "North East Derbyshire",
+      "wiki_note": "Pass the postcode and UPRN. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000038"
+    }
+  },
+  "NorthNorfolkDistrictCouncil": {
+    "url": "https://www.north-norfolk.gov.uk/",
+    "lad_codes": [
+      "E07000147"
+    ],
+    "input_data": {
+      "house_number": "1 Morston Mews",
+      "postcode": "NR25 6BH",
+      "skip_get_url": true,
+      "url": "https://www.north-norfolk.gov.uk/",
+      "wiki_name": "North Norfolk",
+      "wiki_note": "Pass the name of the street with the house number parameter, wrapped in double quotes. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E07000147"
+    }
+  },
+  "NorthumberlandCouncil": {
+    "url": "https://bincollection.northumberland.gov.uk/postcode",
+    "lad_codes": [
+      "E06000057"
+    ],
+    "input_data": {
+      "uprn": "010096302588",
+      "postcode": "NE65 0ZP",
+      "skip_get_url": true,
+      "url": "https://bincollection.northumberland.gov.uk/postcode",
+      "wiki_name": "Northumberland",
+      "wiki_note": "Pass the UPRN. You can find it using [FindMyAddress](https://www.findmyaddress.co.uk/search).",
+      "LAD24CD": "E06000057"
+    }
+  },
+  "PowysCouncil": {
+    "url": "https://www.powys.gov.uk",
+    "lad_codes": [
+      "W06000023"
+    ],
+    "input_data": {
+      "house_number": "LANE COTTAGE",
+      "postcode": "HR3 5JS",
+      "skip_get_url": true,
+      "url": "https://www.powys.gov.uk",
+      "wiki_name": "Powys",
+      "LAD24CD": "W06000023"
+    }
+  },
+  "SevenoaksDistrictCouncil": {
+    "url": "https://sevenoaks-dc-host01.oncreate.app/w/webpage/waste-collection-day",
+    "lad_codes": [
+      "E07000111"
+    ],
+    "input_data": {
+      "house_number": "60 Hever Road",
+      "postcode": "TN15 6EB",
+      "skip_get_url": true,
+      "url": "https://sevenoaks-dc-host01.oncreate.app/w/webpage/waste-collection-day",
+      "wiki_name": "Sevenoaks",
+      "wiki_note": "Pass the house name/number in the `house_number` parameter, wrapped in double quotes, and the postcode in the `postcode` parameter.",
+      "LAD24CD": "E07000111"
+    }
+  },
+  "SloughBoroughCouncil": {
+    "url": "https://www.slough.gov.uk/bin-collections",
+    "lad_codes": [
+      "E06000039"
+    ],
+    "input_data": {
+      "postcode": "SL2 2EW",
+      "skip_get_url": true,
+      "url": "https://www.slough.gov.uk/bin-collections",
+      "wiki_name": "Slough",
+      "wiki_note": "Pass the UPRN and postcode in their respective parameters. This parser requires a Selenium webdriver.",
+      "LAD24CD": "E06000039"
+    }
+  },
+  "SomersetCouncil": {
+    "url": "https://www.somerset.gov.uk/",
+    "lad_codes": [
+      "E06000066"
+    ],
+    "input_data": {
+      "postcode": "TA6 4AA",
+      "skip_get_url": true,
+      "house_number": "5",
+      "url": "https://www.somerset.gov.uk/",
+      "wiki_name": "Somerset",
+      "wiki_note": "Provide your house number and postcode",
+      "LAD24CD": "E06000066"
+    }
+  },
+  "SouthKestevenDistrictCouncil": {
+    "url": "https://pre.southkesteven.gov.uk/skdcNext/tempforms/checkmybin.aspx",
+    "lad_codes": [
+      "E07000141"
+    ],
+    "input_data": {
+      "postcode": "PE68BL",
+      "skip_get_url": true,
+      "url": "https://pre.southkesteven.gov.uk/skdcNext/tempforms/checkmybin.aspx",
+      "wiki_name": "South Kesteven District Council",
+      "wiki_note": "Provide your postcode in the `postcode` parameter. The scraper uses requests-based form submission and OCR to parse calendar images for accurate bin type determination and green bin collection patterns.",
+      "LAD24CD": "E07000141"
+    }
+  },
+  "StaffordshireMoorlandsDistrictCouncil": {
+    "url": "https://www.staffsmoorlands.gov.uk/",
+    "lad_codes": [
+      "E07000198"
+    ],
+    "input_data": {
+      "postcode": "ST8 6HN",
+      "skip_get_url": true,
+      "uprn": "100031863037",
+      "url": "https://www.staffsmoorlands.gov.uk/",
+      "wiki_name": "Staffordshire Moorlands",
+      "wiki_note": "Provide your UPRN and postcode. Use [FindMyAddress](https://www.findmyaddress.co.uk/search) to find your UPRN.",
+      "LAD24CD": "E07000198"
+    }
+  },
+  "StirlingCouncil": {
+    "url": "https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/",
+    "lad_codes": [
+      "S12000030"
+    ],
+    "input_data": {
+      "house_number": "5, SUNNYLAW ROAD, BRIDGE OF ALLAN, STIRLING, FK9 4QA",
+      "postcode": "FK9 4QA",
+      "skip_get_url": true,
+      "url": "https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/",
+      "wiki_name": "Stirling",
+      "wiki_note": "Use the full address as it appears on the drop-down on the site when you search by postcode.",
+      "LAD24CD": "S12000030"
+    }
+  },
+  "TeignbridgeCouncil": {
+    "url": "https://www.google.co.uk",
+    "lad_codes": [
+      "E07000045"
+    ],
+    "input_data": {
+      "uprn": "100040338776",
+      "url": "https://www.google.co.uk",
+      "wiki_command_url_override": "https://www.google.co.uk",
+      "wiki_name": "Teignbridge",
+      "wiki_note": "Provide Google as the URL as the real URL breaks the integration. You will need to use [FindMyAddress](https://www.findmyaddress.co.uk/search) to find the UPRN.",
+      "LAD24CD": "E07000045"
+    }
+  },
+  "TendringDistrictCouncil": {
+    "url": "https://tendring-self.achieveservice.com/en/service/Rubbish_and_recycling_collection_days",
+    "lad_codes": [
+      "E07000076"
+    ],
+    "input_data": {
+      "postcode": "CO15 4EU",
+      "skip_get_url": true,
+      "uprn": "100090604247",
+      "url": "https://tendring-self.achieveservice.com/en/service/Rubbish_and_recycling_collection_days",
+      "wiki_name": "Tendring",
+      "wiki_note": "Provide your UPRN and postcode. Find your UPRN using [FindMyAddress](https://www.findmyaddress.co.uk/search).",
+      "LAD24CD": "E07000076"
+    }
+  },
+  "TestValleyBoroughCouncil": {
+    "url": "https://testvalley.gov.uk/wasteandrecycling/when-are-my-bins-collected/when-are-my-bins-collected",
+    "lad_codes": [
+      "E07000093"
+    ],
+    "input_data": {
+      "postcode": "SO51 0BY",
+      "skip_get_url": true,
+      "house_number": "2",
+      "url": "https://testvalley.gov.uk/wasteandrecycling/when-are-my-bins-collected/when-are-my-bins-collected",
+      "wiki_name": "Test Valley",
+      "wiki_note": "Provide your house number and postcode",
+      "LAD24CD": "E07000093"
+    }
+  },
+  "ThreeRiversDistrictCouncil": {
+    "url": "https://my.threerivers.gov.uk/en/AchieveForms/?mode=fill&consentMessage=yes&form_uri=sandbox-publish://AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b/AF-Stage-01ee28aa-1584-442c-8d1f-119b6e27114a/definition.json&process=1&process_uri=sandbox-processes://AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b&process_id=AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b&noLoginPrompt=1",
+    "lad_codes": [
+      "E07000102"
+    ],
+    "input_data": {
+      "postcode": "WD3 7AZ",
+      "skip_get_url": true,
+      "uprn": "100080913662",
+      "url": "https://my.threerivers.gov.uk/en/AchieveForms/?mode=fill&consentMessage=yes&form_uri=sandbox-publish://AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b/AF-Stage-01ee28aa-1584-442c-8d1f-119b6e27114a/definition.json&process=1&process_uri=sandbox-processes://AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b&process_id=AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b&noLoginPrompt=1",
+      "wiki_name": "Three Rivers",
+      "wiki_note": "Provide your UPRN and postcode. Find your UPRN using [FindMyAddress](https://www.findmyaddress.co.uk/search).",
+      "LAD24CD": "E07000102"
+    }
+  },
+  "TorbayCouncil": {
+    "url": "https://www.torbay.gov.uk/recycling/bin-collections/",
+    "lad_codes": [
+      "E06000027"
+    ],
+    "input_data": {
+      "skip_get_url": true,
+      "uprn": "10000016984",
+      "postcode": "TQ1 1AG",
+      "url": "https://www.torbay.gov.uk/recycling/bin-collections/",
+      "wiki_name": "Torbay",
+      "wiki_note": "Provide your UPRN. Use [FindMyAddress](https://www.findmyaddress.co.uk/search) to find it.",
+      "LAD24CD": "E06000027"
+    }
+  },
+  "UttlesfordDistrictCouncil": {
+    "url": "https://bins.uttlesford.gov.uk/",
+    "lad_codes": [
+      "E07000077"
+    ],
+    "input_data": {
+      "house_number": "72, Birchanger Lane",
+      "postcode": "CM23 5QF",
+      "skip_get_url": true,
+      "uprn": "100090643434",
+      "url": "https://bins.uttlesford.gov.uk/",
+      "wiki_name": "Uttlesford",
+      "wiki_note": "Provide your full address in the `house_number` parameter and your postcode in the `postcode` parameter.",
+      "LAD24CD": "E07000077"
+    }
+  },
+  "WinchesterCityCouncil": {
+    "url": "https://iportal.itouchvision.com/icollectionday/collection-day",
+    "lad_codes": [
+      "E07000094"
+    ],
+    "input_data": {
+      "house_number": "12",
+      "paon": "12",
+      "postcode": "SO23 7GA",
+      "skip_get_url": false,
+      "url": "https://iportal.itouchvision.com/icollectionday/collection-day",
+      "wiki_name": "Winchester",
+      "wiki_note": "Provide your house name/number in the `house_number` parameter (wrapped in double quotes) and your postcode in the `postcode` parameter.",
+      "LAD24CD": "E07000094"
+    }
+  },
+  "WychavonDistrictCouncil": {
+    "url": "https://selfservice.wychavon.gov.uk/wdcroundlookup/wdc_search.jsp",
+    "lad_codes": [
+      "E07000238"
+    ],
+    "input_data": {
+      "postcode": "WR3 7RU",
+      "skip_get_url": true,
+      "uprn": "100120716273",
+      "url": "https://selfservice.wychavon.gov.uk/wdcroundlookup/wdc_search.jsp",
+      "wiki_name": "Wychavon",
+      "wiki_note": "Provide your UPRN and postcode. Find your UPRN using [FindMyAddress](https://www.findmyaddress.co.uk/search).",
+      "LAD24CD": "E07000238"
+    }
+  }
+}

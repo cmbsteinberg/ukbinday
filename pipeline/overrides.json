@@ -69,6 +69,16 @@
       "hacs_scraper": "hacs_bolsover_gov_uk",
       "ukbcd_scraper": "ukbcd_bolsover_council",
       "reason": "requires_precomputed_calendar_day"
+    },
+    "moray.gov.uk": {
+      "hacs_scraper": "hacs_moray_gov_uk",
+      "ukbcd_scraper": "ukbcd_moray_council",
+      "reason": "hacs_uses_opaque_id_ukbcd_uses_uprn"
+    },
+    "armaghbanbridgecraigavon.gov.uk": {
+      "hacs_scraper": "hacs_armaghbanbridgecraigavon_gov_uk",
+      "ukbcd_scraper": "ukbcd_armagh_banbridge_craigavon_council",
+      "reason": "hacs_uses_opaque_address_id_ukbcd_uses_uprn"
     }
   },
   "requests_fallback": [],
@@ -124,10 +134,15 @@
     "richmondshire_gov_uk"
   ],
   "broken": [
+    "antrimandnewtownabbey_gov_uk",
     "bolsover_gov_uk",
+    "bromley_gov_uk",
     "chelmsford_gov_uk",
+    "colchester_gov_uk",
+    "eaststaffsbc_gov_uk",
     "fylde_gov_uk",
     "north_norfolk_gov_uk",
+    "southkesteven_gov_uk",
     "uttlesford_gov_uk",
     "west_lindsey_gov_uk"
   ],

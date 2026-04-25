@@ -654,15 +654,15 @@ class _PatchStats:
     skipped_selenium: int = 0
     skipped_existing: int = 0
     lad_mappings: dict = field(default_factory=dict)
+    selenium_councils: dict = field(default_factory=dict)
 
     def log_summary(self) -> None:
         logger.info("Summary:")
         logger.info(f"  Added (requests): {self.added}")
         logger.info(f"  Added (Playwright): {self.added_playwright}")
         logger.info(f"  Skipped (Existing/Mampfes): {self.skipped_existing}")
-        logger.info(f"  Skipped (Selenium failures): {self.skipped_selenium}")
+        logger.info(f"  Skipped (Selenium): {self.skipped_selenium}")
         logger.info(f"  LAD mappings: {len(self.lad_mappings)}")
-
 
 def _council_to_ukbcd_name(council_name: str) -> str:
     """Compute the UKBCD scraper filename from a council name (deterministic)."""
@@ -764,6 +764,11 @@ def _patch_councils(
         if sanitized_name is None:
             if is_selenium:
                 stats.skipped_selenium += 1
+                stats.selenium_councils[council_name] = {
+                    "url": url,
+                    "lad_codes": lad_codes,
+                    "input_data": {k: v for k, v in data.items() if k != "web_driver"},
+                }
             continue
 
         if is_selenium:
@@ -844,6 +849,14 @@ def main():
         LAD_LOOKUP_PATH.write_text(json.dumps(stats.lad_mappings, indent=2))
 
     stats.log_summary()
+
+    # Write selenium manifest for the port pipeline
+    if stats.selenium_councils:
+        manifest_dir = Path(__file__).resolve().parent.parent.parent / "scripts" / "ukbcd_selenium_port"
+        manifest_dir.mkdir(parents=True, exist_ok=True)
+        manifest_path = manifest_dir / "selenium_manifest.json"
+        manifest_path.write_text(json.dumps(stats.selenium_councils, indent=2))
+        logger.info(f"Wrote selenium manifest ({len(stats.selenium_councils)} councils) to {manifest_path}")
 
 
 if __name__ == "__main__":

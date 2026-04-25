@@ -19,6 +19,8 @@ from asgi_lifespan import LifespanManager
 
 from api.main import app
 
+pytestmark = pytest.mark.ci
+
 SCRAPERS_DIR = Path(__file__).resolve().parent.parent / "api" / "scrapers"
 COMPAT_DIR = Path(__file__).resolve().parent.parent / "api" / "compat"
 

@@ -14,6 +14,8 @@ import time
 import httpx
 import pytest
 
+pytestmark = pytest.mark.docker
+
 BASE_URL = "http://localhost:8000"
 MAX_WAIT = 60  # seconds
 

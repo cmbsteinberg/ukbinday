@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Post-integration-test regeneration scripts.
 # Called automatically after integration tests, or run manually:
-#   ./scripts/post_integration.sh
+#   ./pipeline/ci/post_integration.sh
 
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 echo "Regenerating coverage map..."
 uv run python -m scripts.coverage.generate_coverage_map

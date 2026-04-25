@@ -6,7 +6,7 @@ import duckdb
 import httpx
 
 LAD_LOOKUP_PATH = "api/data/lad_lookup.json"
-INTEGRATION_OUTPUT_PATH = "tests/integration_output.json"
+INTEGRATION_OUTPUT_PATH = "tests/output/integration_output.json"
 GEOJSON_URL = "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LAD_MAY_2025_UK_BUC/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson"
 POPULATION_URL = "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationestimatesforukenglandandwalesscotlandandnorthernireland/mid2024/mye24tablesuk.xlsx"
 OUTPUT_DIR = pathlib.Path("api/static")

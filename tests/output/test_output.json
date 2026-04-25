@@ -1,0 +1,520 @@
+{
+  "total": 73,
+  "passed": 73,
+  "failed": 0,
+  "skipped": 0,
+  "failure_categories": {},
+  "results": [
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_itv_blaenau_gwent]",
+      "council": "hacs_itv_blaenau_gwent",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_itv_epsom_ewell]",
+      "council": "hacs_itv_epsom_ewell",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_itv_hyndburn]",
+      "council": "hacs_itv_hyndburn",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_itv_somerset]",
+      "council": "hacs_itv_somerset",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_itv_test_valley]",
+      "council": "hacs_itv_test_valley",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[hacs_itv_winchester]",
+      "council": "hacs_itv_winchester",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_argyll_and_bute_council]",
+      "council": "port_argyll_and_bute_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_ceredigion_county_council]",
+      "council": "port_ceredigion_county_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_dumfries_and_galloway_council]",
+      "council": "port_dumfries_and_galloway_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_east_staffordshire_borough_council]",
+      "council": "port_east_staffordshire_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_edinburgh_city_council]",
+      "council": "port_edinburgh_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_gloucester_city_council]",
+      "council": "port_gloucester_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_hillingdon_council]",
+      "council": "port_hillingdon_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_kingston_upon_thames_council]",
+      "council": "port_kingston_upon_thames_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_mid_ulster_district_council]",
+      "council": "port_mid_ulster_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_new_forest_council]",
+      "council": "port_new_forest_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_north_devon_council]",
+      "council": "port_north_devon_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_northumberland_council]",
+      "council": "port_northumberland_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_stirling_council]",
+      "council": "port_stirling_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_tendring_district_council]",
+      "council": "port_tendring_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_three_rivers_district_council]",
+      "council": "port_three_rivers_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_torbay_council]",
+      "council": "port_torbay_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_parses[port_wychavon_district_council]",
+      "council": "port_wychavon_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_itv_blaenau_gwent]",
+      "council": "hacs_itv_blaenau_gwent",
+      "label": "",
+      "status": "passed",
+      "duration": 0.01
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_itv_epsom_ewell]",
+      "council": "hacs_itv_epsom_ewell",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_itv_hyndburn]",
+      "council": "hacs_itv_hyndburn",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_itv_somerset]",
+      "council": "hacs_itv_somerset",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_itv_test_valley]",
+      "council": "hacs_itv_test_valley",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[hacs_itv_winchester]",
+      "council": "hacs_itv_winchester",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_argyll_and_bute_council]",
+      "council": "port_argyll_and_bute_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.05
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_ceredigion_county_council]",
+      "council": "port_ceredigion_county_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_dumfries_and_galloway_council]",
+      "council": "port_dumfries_and_galloway_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_east_staffordshire_borough_council]",
+      "council": "port_east_staffordshire_borough_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_edinburgh_city_council]",
+      "council": "port_edinburgh_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_gloucester_city_council]",
+      "council": "port_gloucester_city_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_hillingdon_council]",
+      "council": "port_hillingdon_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_kingston_upon_thames_council]",
+      "council": "port_kingston_upon_thames_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.02
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_mid_ulster_district_council]",
+      "council": "port_mid_ulster_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_new_forest_council]",
+      "council": "port_new_forest_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_north_devon_council]",
+      "council": "port_north_devon_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_northumberland_council]",
+      "council": "port_northumberland_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_stirling_council]",
+      "council": "port_stirling_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_tendring_district_council]",
+      "council": "port_tendring_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_three_rivers_district_council]",
+      "council": "port_three_rivers_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_torbay_council]",
+      "council": "port_torbay_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_scraper_imports[port_wychavon_district_council]",
+      "council": "port_wychavon_district_council",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.curl_cffi_fallback]",
+      "council": "api.compat.curl_cffi_fallback",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.collection]",
+      "council": "api.compat.hacs.collection",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.exceptions]",
+      "council": "api.compat.hacs.exceptions",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.itouchvision]",
+      "council": "api.compat.hacs.itouchvision",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.AchieveForms]",
+      "council": "api.compat.hacs.service.AchieveForms",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.FirmstepSelfService]",
+      "council": "api.compat.hacs.service.FirmstepSelfService",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.ICS]",
+      "council": "api.compat.hacs.service.ICS",
+      "label": "",
+      "status": "passed",
+      "duration": 0.02
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.SSLError]",
+      "council": "api.compat.hacs.service.SSLError",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.WhitespaceWRP]",
+      "council": "api.compat.hacs.service.WhitespaceWRP",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.hacs.service.uk_cloud9_apps]",
+      "council": "api.compat.hacs.service.uk_cloud9_apps",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.httpx_helpers]",
+      "council": "api.compat.httpx_helpers",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.requests_fallback]",
+      "council": "api.compat.requests_fallback",
+      "label": "",
+      "status": "passed",
+      "duration": 0.01
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.ukbcd.common]",
+      "council": "api.compat.ukbcd.common",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_compat_imports[api.compat.ukbcd.get_bin_data]",
+      "council": "api.compat.ukbcd.get_bin_data",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_hacs_compat_types",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_ukbcd_compat_types",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_script_parses[annotate_lad_working.py]",
+      "council": "annotate_lad_working.py",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_script_parses[generate_coverage_map.py]",
+      "council": "generate_coverage_map.py",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_script_parses[deployment.py]",
+      "council": "deployment.py",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_script_parses[generate_sankey.py]",
+      "council": "generate_sankey.py",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_script_parses[create_lookup_table.py]",
+      "council": "create_lookup_table.py",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_script_parses[test_lookup.py]",
+      "council": "test_lookup.py",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_script_parses[capture_upstream_xhrs.py]",
+      "council": "capture_upstream_xhrs.py",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_script_parses[test_selenium_scrapers.py]",
+      "council": "test_selenium_scrapers.py",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_app_starts",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_registry_loads_all_scrapers",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    },
+    {
+      "node_id": "tests/test_ci.py::test_health_endpoint_returns_all",
+      "council": "",
+      "label": "",
+      "status": "passed",
+      "duration": 0.0
+    }
+  ]
+}

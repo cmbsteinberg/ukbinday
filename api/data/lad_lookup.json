@@ -26,7 +26,7 @@
   },
   "N09000001": {
     "name": "Antrim and Newtownabbey",
-    "scraper_id": "hacs_antrimandnewtownabbey_gov_uk",
+    "scraper_id": "ukbcd_antrim_and_newtonabbey_council",
     "url": "https://antrimandnewtownabbey.gov.uk/residents/bins-recycling/bins-schedule/?Id=643"
   },
   "N09000011": {
@@ -41,7 +41,7 @@
   },
   "N09000002": {
     "name": "Armagh City, Banbridge and Craigavon",
-    "scraper_id": "hacs_armaghbanbridgecraigavon_gov_uk",
+    "scraper_id": "ukbcd_armagh_banbridge_craigavon_council",
     "url": "https://www.armaghbanbridgecraigavon.gov.uk/"
   },
   "E07000224": {
@@ -201,7 +201,7 @@
   },
   "E09000006": {
     "name": "Bromley",
-    "scraper_id": "hacs_bromley_gov_uk",
+    "scraper_id": null,
     "url": "https://recyclingservices.bromley.gov.uk/waste/6087017"
   },
   "E07000234": {
@@ -321,7 +321,7 @@
   },
   "E07000071": {
     "name": "Colchester",
-    "scraper_id": "hacs_colchester_gov_uk",
+    "scraper_id": null,
     "url": "https://www.colchester.gov.uk/your-recycling-calendar"
   },
   "W06000003": {
@@ -1016,7 +1016,7 @@
   },
   "S12000020": {
     "name": "Moray",
-    "scraper_id": "hacs_moray_gov_uk",
+    "scraper_id": "ukbcd_moray_council",
     "url": "https://bindayfinder.moray.gov.uk/"
   },
   "W06000012": {
@@ -1346,7 +1346,7 @@
   },
   "E07000141": {
     "name": "South Kesteven District Council",
-    "scraper_id": "hacs_southkesteven_gov_uk",
+    "scraper_id": null,
     "url": "https://pre.southkesteven.gov.uk/skdcNext/tempforms/checkmybin.aspx"
   },
   "S12000029": {
