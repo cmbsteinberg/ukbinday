@@ -36,8 +36,10 @@ pre-commit:
       tags: test
       glob: "*.py"
       run: uv run pytest tests/test_ci.py -x -q --tb=short
-
-pre-push:
-  commands:
+    # Opt-in: RUN_INTEGRATION=1 git commit ...
     integration-tests:
+      tags: integration
+      only:
+        - run: test "${RUN_INTEGRATION:-0}" = "1"
       run: uv run pytest tests/test_integration.py -v --tb=short; ./scripts/post_integration.sh
+      stage_fixed: true
