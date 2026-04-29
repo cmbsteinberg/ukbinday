@@ -285,8 +285,10 @@ function renderActions(icsUrl) {
 	const frag = tpl("tpl-actions");
 	const webcalUrl = icsUrl.replace(/^https:/, "webcal:");
 	const googleUrl = `https://calendar.google.com/calendar/render?cid=${webcalUrl}`;
+	const outlookUrl = `https://outlook.live.com/calendar/0/addcalendar?url=${encodeURIComponent(icsUrl)}&name=${encodeURIComponent("Bin collections")}`;
 	frag.querySelector('[data-slot="apple"]').href = webcalUrl;
 	frag.querySelector('[data-slot="google"]').href = googleUrl;
+	frag.querySelector('[data-slot="outlook"]').href = outlookUrl;
 	frag.querySelector('[data-slot="other"]').href = webcalUrl;
 	return frag;
 }
@@ -376,4 +378,3 @@ function renderResults(addr, data) {
 
 	attachCopyHandler(icsUrl);
 }
-
