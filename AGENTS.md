@@ -62,7 +62,7 @@ docker compose up --build
 ## Architecture
 
 **API layer** (`api/`):
-- `main.py` -- FastAPI app with lifespan managing `ScraperRegistry`, `CouncilLookup`, optional Redis, and `BrowserPool`
+- `main.py` -- FastAPI app with lifespan managing `ScraperRegistry`, `CouncilLookup`, and optional Redis
 - `config.py` -- Centralised configuration from environment variables (timeouts, rate limits, address API, CORS, logging)
 - `routes.py` -- All endpoints: `/api/v1/addresses/{postcode}`, `/api/v1/council/{postcode}`, `/api/v1/lookup/{uprn}`, `/api/v1/calendar/{uprn}`, `/api/v1/councils`, `/api/v1/health`, `/api/v1/status`, `/api/v1/metrics`. Routes are mounted under `/api/v1` only
 - `services/scraper_registry.py` -- Dynamically imports all `api/scrapers/*.py` at startup, introspects `Source.__init__` signatures for required/optional params, and dispatches `await source.fetch()` calls

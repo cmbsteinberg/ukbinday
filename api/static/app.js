@@ -289,7 +289,6 @@ function renderActions(icsUrl) {
 	frag.querySelector('[data-slot="apple"]').href = webcalUrl;
 	frag.querySelector('[data-slot="google"]').href = googleUrl;
 	frag.querySelector('[data-slot="outlook"]').href = outlookUrl;
-	frag.querySelector('[data-slot="other"]').href = webcalUrl;
 	return frag;
 }
 
@@ -317,7 +316,7 @@ function attachCopyHandler(icsUrl) {
 			ta.remove();
 		}
 		setTimeout(() => {
-			label.textContent = "Copy ICS";
+			label.textContent = "ICS";
 		}, 2000);
 	});
 }

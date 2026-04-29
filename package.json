@@ -1,6 +1,7 @@
 {
   "devDependencies": {
-    "@biomejs/biome": "^2.4.10"
+    "@biomejs/biome": "^2.4.10",
+    "playwright": "^1.59.1"
   },
   "dependencies": {
     "@mariozechner/pi-coding-agent": "^0.67.1",

@@ -39,20 +39,6 @@ async def lifespan(app: FastAPI):
     app.state.registry = ScraperRegistry.build()
     logger.info("Registry ready: %d scrapers", len(app.state.registry.list_all()))
 
-    # Shared Playwright browser (lazy — only starts if a Playwright scraper is invoked,
-    # but we pre-start here so the first request isn't slow)
-    app.state.browser_pool = None
-    try:
-        from api.services import browser_pool
-
-        await browser_pool.start()
-        app.state.browser_pool = browser_pool
-    except Exception:
-        logger.warning(
-            "BrowserPool failed to start — Playwright scrapers will be unavailable",
-            exc_info=True,
-        )
-
     app.state.council_lookup = CouncilLookup()
     if not app.state.council_lookup.parquet_loaded:
         logger.error(
@@ -107,8 +93,7 @@ async def lifespan(app: FastAPI):
         app.state.refresh_task.cancel()
         with contextlib.suppress(asyncio.CancelledError):
             await app.state.refresh_task
-    if getattr(app.state, "browser_pool", None) is not None:
-        await app.state.browser_pool.stop()
+
     from api.compat.curl_cffi_fallback import close_shared_session
     await close_shared_session()
     if getattr(app.state, "council_lookup", None):

@@ -1,8 +1,11 @@
 :root {
     --bin-muted: #546e7a;
-    --colour-grey: #a0a0a0;
-    --colour-brown: #a67c52;
-    --colour-green: #93c47d;
+    --colour-grey: #e0e3e6;
+    --colour-brown: #ead8c0;
+    --colour-green: #d6e9c2;
+    --colour-grey-strong: #6b7378;
+    --colour-brown-strong: #8a5a32;
+    --colour-green-strong: #4f8a3a;
 }
 body {
     max-width: 900px;
@@ -151,7 +154,7 @@ fieldset input {
     border-radius: 8px;
     padding: 0.75rem 1rem;
     margin-bottom: 0.75rem;
-    opacity: 0.85;
+    border-left: 6px solid transparent;
 }
 .bin-next {
     display: flex;
@@ -198,12 +201,15 @@ fieldset input {
 /* Bin colour backgrounds */
 .bin-group[data-bin-colour="grey"] {
     background: var(--colour-grey);
+    border-left-color: var(--colour-grey-strong);
 }
 .bin-group[data-bin-colour="brown"] {
     background: var(--colour-brown);
+    border-left-color: var(--colour-brown-strong);
 }
 .bin-group[data-bin-colour="green"] {
     background: var(--colour-green);
+    border-left-color: var(--colour-green-strong);
 }
 
 /* All-dates accordion at the bottom */

@@ -1942,7 +1942,7 @@
       "council": "ukbcd_gwynedd_council",
       "label": "",
       "status": "passed",
-      "duration": 0.0
+      "duration": 0.01
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_parses[ukbcd_hackney_council]",
@@ -2313,7 +2313,7 @@
       "council": "hacs_aberdeenshire_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.08
+      "duration": 0.05
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[hacs_adur_worthing_gov_uk]",
@@ -2355,7 +2355,7 @@
       "council": "hacs_ashfield_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.02
+      "duration": 0.01
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[hacs_ashford_gov_uk]",
@@ -2390,7 +2390,7 @@
       "council": "hacs_basingstoke_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.02
+      "duration": 0.01
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[hacs_bathnes_gov_uk]",
@@ -2425,7 +2425,7 @@
       "council": "hacs_bexley_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.01
+      "duration": 0.0
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[hacs_birmingham_gov_uk]",
@@ -3405,7 +3405,7 @@
       "council": "hacs_redbridge_gov_uk",
       "label": "",
       "status": "passed",
-      "duration": 0.03
+      "duration": 0.02
     },
     {
       "node_id": "tests/test_ci.py::test_scraper_imports[hacs_reigatebanstead_gov_uk]",
@@ -4770,7 +4770,7 @@
       "council": "capture_upstream_xhrs.py",
       "label": "",
       "status": "passed",
-      "duration": 0.0
+      "duration": 0.02
     },
     {
       "node_id": "tests/test_ci.py::test_script_parses[test_selenium_scrapers.py]",
