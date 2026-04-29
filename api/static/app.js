@@ -281,19 +281,13 @@ function renderAccordion(items) {
 	return frag;
 }
 
-function pickCalendarUrl(httpsIcsUrl) {
-	const webcalUrl = httpsIcsUrl.replace(/^https:/, "webcal:");
-	const googleUrl = `https://calendar.google.com/calendar/render?cid=${webcalUrl}`;
-	const ua = navigator.userAgent || "";
-	const isApple = /iPhone|iPad|iPod|Macintosh|Mac OS X/.test(ua);
-	const isAndroid = /Android/.test(ua);
-	if (isApple || isAndroid) return webcalUrl;
-	return googleUrl;
-}
-
 function renderActions(icsUrl) {
 	const frag = tpl("tpl-actions");
-	frag.querySelector('[data-slot="add"]').href = pickCalendarUrl(icsUrl);
+	const webcalUrl = icsUrl.replace(/^https:/, "webcal:");
+	const googleUrl = `https://calendar.google.com/calendar/render?cid=${webcalUrl}`;
+	frag.querySelector('[data-slot="apple"]').href = webcalUrl;
+	frag.querySelector('[data-slot="google"]').href = googleUrl;
+	frag.querySelector('[data-slot="other"]').href = webcalUrl;
 	return frag;
 }
 
@@ -370,11 +364,11 @@ function attachReportHandler(addr, data, councilId) {
 				status.textContent = "Failed to send report.";
 				status.style.color = "#e53935";
 				reportBtn.disabled = false;
-				reportBtn.textContent = "Report incorrect";
+				reportBtn.textContent = "Report wrong answer";
 			}
 		} catch {
 			reportBtn.disabled = false;
-			reportBtn.textContent = "Report incorrect";
+			reportBtn.textContent = "Report wrong answer";
 		}
 	});
 }
