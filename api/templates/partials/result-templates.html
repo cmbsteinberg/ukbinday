@@ -50,23 +50,24 @@
 
 <template id="tpl-actions">
     <div class="results-actions">
-        <a data-slot="apple" class="action-btn">
-            <img class="action-btn-icon" src="/static/apple-mark.svg" alt="" aria-hidden="true">
-            <span>Add to Apple Calendar</span>
-        </a>
-        <a data-slot="google" class="action-btn" target="_blank" rel="noopener">
-            <img class="action-btn-icon" src="/static/google-mark.svg" alt="" aria-hidden="true">
-            <span>Add to Google Calendar</span>
-        </a>
-        <a data-slot="other" class="action-btn">
-            <img class="action-btn-icon" src="/static/calendar-mark.svg" alt="" aria-hidden="true">
-            <span>Add to other calendar</span>
-        </a>
-        <button class="action-btn" id="copy-btn" type="button">
-            <img class="action-btn-icon" src="/static/clipboard-mark.svg" alt="" aria-hidden="true">
-            <span id="copy-btn-label">Copy ICS</span>
-        </button>
-        <button class="action-btn outline" id="report-btn" type="button">Report wrong answer</button>
-        <span id="report-status" role="status" aria-live="polite"></span>
+        <p class="results-actions-heading">Subscribe to live calendar</p>
+        <div class="calendar-buttons">
+            <a data-slot="apple" class="action-btn">
+                <img class="action-btn-icon" src="/static/apple-mark.svg" alt="" aria-hidden="true">
+                <span>Apple</span>
+            </a>
+            <a data-slot="google" class="action-btn" target="_blank" rel="noopener">
+                <img class="action-btn-icon" src="/static/google-mark.svg" alt="" aria-hidden="true">
+                <span>Google</span>
+            </a>
+            <a data-slot="other" class="action-btn">
+                <img class="action-btn-icon" src="/static/calendar-mark.svg" alt="" aria-hidden="true">
+                <span>Other</span>
+            </a>
+            <button class="action-btn" id="copy-btn" type="button">
+                <img class="action-btn-icon" src="/static/clipboard-mark.svg" alt="" aria-hidden="true">
+                <span id="copy-btn-label">Copy ICS</span>
+            </button>
+        </div>
     </div>
 </template>

@@ -97,13 +97,22 @@ fieldset input {
     outline-offset: 2px;
 }
 
-/* Results actions — bottom, centered, full-size buttons */
+/* Results actions — heading + row of calendar/copy buttons */
 .results-actions {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+.results-actions-heading {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    color: var(--text);
+    opacity: 0.75;
+}
+.calendar-buttons {
     display: flex;
     justify-content: center;
-    gap: 0.75rem;
     align-items: center;
-    margin-top: 1.5rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
 }
 .action-btn {
@@ -135,21 +144,7 @@ fieldset input {
 .action-btn:hover {
     opacity: 0.85;
 }
-.action-btn.outline {
-    background: none;
-    border-color: #c62828;
-    color: #c62828;
-}
-.action-btn.outline:hover {
-    background: #fbe9e7;
-    opacity: 1;
-}
-.report-sent {
-    color: #444;
-    font-size: 1rem;
-    display: inline-block;
-    padding: 0.5rem 0;
-}
+
 
 /* Bin group card */
 .bin-group {

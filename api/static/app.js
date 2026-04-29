@@ -338,41 +338,6 @@ function icsUrlFor(councilId, addr) {
 	return `${window.location.origin}${API}/calendar/${encodeURIComponent(addr.uprn)}?${params}`;
 }
 
-function attachReportHandler(addr, data, councilId) {
-	const reportBtn = $("#report-btn");
-	if (!reportBtn) return;
-	reportBtn.addEventListener("click", async () => {
-		reportBtn.disabled = true;
-		reportBtn.textContent = "Sending...";
-		try {
-			const resp = await fetch(`${API}/report`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					postcode: addr.postcode,
-					address: addr.full_address,
-					uprn: addr.uprn,
-					council: councilId,
-					collections: data.collections,
-				}),
-			});
-			const status = $("#report-status");
-			if (resp.ok) {
-				status.textContent = "Thanks, report sent.";
-				status.className = "report-sent";
-			} else {
-				status.textContent = "Failed to send report.";
-				status.style.color = "#e53935";
-				reportBtn.disabled = false;
-				reportBtn.textContent = "Report wrong answer";
-			}
-		} catch {
-			reportBtn.disabled = false;
-			reportBtn.textContent = "Report wrong answer";
-		}
-	});
-}
-
 function renderResults(addr, data) {
 	const section = $("#results");
 	const council = currentData.council_name || data.council;
@@ -410,5 +375,5 @@ function renderResults(addr, data) {
 	section.focus();
 
 	attachCopyHandler(icsUrl);
-	attachReportHandler(addr, data, councilId);
 }
+
