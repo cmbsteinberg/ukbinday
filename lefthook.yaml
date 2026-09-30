@@ -1,9 +1,13 @@
-pre-commit:
-  parallel: true
+# Manual only: `uv run lefthook run sync`. The full upstream re-sync rewrites
+# api/scrapers/ and the generated JSONs, so it must never run on someone's commit.
+sync:
   commands:
     sync-gov-uk-sources:
       run: pipeline/sync.sh
 
+pre-commit:
+  parallel: true
+  commands:
     sync-passthrough-urls:
       glob:
         - "api/scrapers/ukbcd_google_public_calendar_council.py"
@@ -35,7 +39,7 @@ pre-commit:
     ci-tests:
       tags: test
       glob: "*.py"
-      run: uv run pytest tests/test_ci.py -x -q --tb=short
+      run: uv run pytest tests/test_ci.py tests/test_councils.py -x -q --tb=short
     # Opt-in: RUN_INTEGRATION=1 git commit ...
     integration-tests:
       tags: integration
