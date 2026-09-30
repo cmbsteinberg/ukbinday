@@ -35,6 +35,7 @@ BASE_URL = "http://testserver/api/v1"
 
 MAX_CONCURRENCY = 40
 REQUEST_TIMEOUT = 10
+HARD_TIMEOUT = REQUEST_TIMEOUT + 30
 
 
 SCRAPERS_DIR = Path(__file__).resolve().parent.parent / "api" / "scrapers"
@@ -105,7 +106,19 @@ async def _run_lookup(
     async with semaphore:
         start = time.monotonic()
         try:
-            resp = await client.get(f"/lookup/{uprn}", params=query)
+            # Hard limit covers the request only, not time queued on the semaphore
+            resp = await asyncio.wait_for(
+                client.get(f"/lookup/{uprn}", params=query),
+                timeout=HARD_TIMEOUT,
+            )
+        except asyncio.TimeoutError:
+            result.update(
+                elapsed_s=round(time.monotonic() - start, 3),
+                error_type="hard_timeout",
+                error_class="TimeoutError",
+                error_message=f"Request exceeded {HARD_TIMEOUT}s hard limit",
+            )
+            return result
         except httpx.TimeoutException as exc:
             elapsed = time.monotonic() - start
             result.update(
@@ -185,28 +198,9 @@ async def all_results(client: httpx.AsyncClient):
     semaphore = asyncio.Semaphore(MAX_CONCURRENCY)
     batch_start = time.monotonic()
 
-    async def _guarded(council, label, params):
-        try:
-            return await asyncio.wait_for(
-                _run_lookup(client, semaphore, council, label, params),
-                timeout=REQUEST_TIMEOUT + 30,
-            )
-        except asyncio.TimeoutError:
-            return {
-                "council": council,
-                "label": label,
-                "uprn": str(params.get("uprn", "0")),
-                "query_params": {"council": council, **params},
-                "endpoint": f"/lookup/{params.get('uprn', '0')}",
-                "passed": False,
-                "error_type": "hard_timeout",
-                "error_class": "TimeoutError",
-                "error_message": f"Task exceeded {REQUEST_TIMEOUT + 30}s hard limit",
-            }
-
     results = await asyncio.gather(
         *[
-            _guarded(council, label, params)
+            _run_lookup(client, semaphore, council, label, params)
             for council, label, params in TEST_DATA
         ]
     )

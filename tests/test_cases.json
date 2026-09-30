@@ -5782,6 +5782,45 @@
       }
     }
   ],
+  "port_bassetlaw_district_council": [
+    {
+      "label": "Albert Road, Retford",
+      "params": {
+        "address": "10 Albert Road",
+        "postcode": "DN22 6JB"
+      }
+    },
+    {
+      "label": "Albert Street, Worksop",
+      "params": {
+        "address": "10 Albert Street",
+        "postcode": "S80 1QR"
+      }
+    }
+  ],
+  "port_brentwood_borough_council": [
+    {
+      "label": "127 Greenshaw, Brentwood CM14 4YP (Thursday, Route 9)",
+      "params": {
+        "postcode": "CM14 4YP",
+        "uprn": "100090336817"
+      }
+    },
+    {
+      "label": "Route 1 (Monday)",
+      "params": {
+        "postcode": "CM15 8RQ",
+        "uprn": "10093276507"
+      }
+    },
+    {
+      "label": "Route 8 (Friday)",
+      "params": {
+        "postcode": "CM14 4QN",
+        "uprn": "10093274131"
+      }
+    }
+  ],
   "port_bromley_borough_council": [
     {
       "label": "Test_001",
@@ -5870,6 +5909,27 @@
       }
     }
   ],
+  "port_kensington_and_chelsea_council": [
+    {
+      "label": "Portobello Road 100",
+      "params": {
+        "house_number": "100",
+        "street": "Portobello Road"
+      }
+    },
+    {
+      "label": "Sloane Street",
+      "params": {
+        "street": "Sloane Street"
+      }
+    },
+    {
+      "label": "Address string",
+      "params": {
+        "address": "12 Abingdon Road, London"
+      }
+    }
+  ],
   "port_kingston_upon_thames_council": [
     {
       "label": "Test_001",
@@ -5906,6 +5966,29 @@
       }
     }
   ],
+  "port_newry_mourne_and_down_council": [
+    {
+      "label": "1 John Mitchel Street, Newry (Fri Z-V2)",
+      "params": {
+        "address": "1 John Mitchel Street",
+        "postcode": "BT34 2AP"
+      }
+    },
+    {
+      "label": "9 Kildare Street, Newry (Tue Z1)",
+      "params": {
+        "address": "9 Kildare Street",
+        "postcode": "BT34 1DQ"
+      }
+    },
+    {
+      "label": "44 Glenmore Road, Belleek (Tue Z1)",
+      "params": {
+        "address": "44 Glenmore Road",
+        "postcode": "BT35 7PU"
+      }
+    }
+  ],
   "port_north_devon_council": [
     {
       "label": "Test_001",
@@ -5930,6 +6013,45 @@
       "params": {
         "postcode": "HR3 5JS",
         "uprn": "10011757177"
+      }
+    }
+  ],
+  "port_ribble_valley_borough_council": [
+    {
+      "label": "Test_001",
+      "params": {
+        "address": "5 Pimlico Road",
+        "postcode": "BB7 2AG"
+      }
+    },
+    {
+      "label": "Test_002",
+      "params": {
+        "address": "28 Towneley Road",
+        "postcode": "PR3 3EA"
+      }
+    }
+  ],
+  "port_rossendale_borough_council": [
+    {
+      "label": "Test_001",
+      "params": {
+        "address": "13 Spring Lane",
+        "postcode": "BB4 5AA"
+      }
+    },
+    {
+      "label": "Test_002",
+      "params": {
+        "address": "Flat 2, 14 Bury Road",
+        "postcode": "BB4 6AA"
+      }
+    },
+    {
+      "label": "Test_003",
+      "params": {
+        "address": "9a Union Street",
+        "postcode": "OL13 0AA"
       }
     }
   ],
@@ -5966,6 +6088,61 @@
       "params": {
         "postcode": "TQ1 1AG",
         "uprn": "10000016984"
+      }
+    }
+  ],
+  "port_torfaen_county_borough_council": [
+    {
+      "label": "NP4 6LU",
+      "params": {
+        "postcode": "NP4 6LU ",
+        "uprn": "100100800320"
+      }
+    },
+    {
+      "label": "NP44 3DN",
+      "params": {
+        "postcode": "NP44 3DN",
+        "uprn": "100100789478"
+      }
+    },
+    {
+      "label": "NP4 8HQ",
+      "params": {
+        "postcode": "NP4 8HQ ",
+        "uprn": "100100798047"
+      }
+    }
+  ],
+  "port_trafford_council": [
+    {
+      "label": "33 Tatton Road, Sale M33 7EE",
+      "params": {
+        "postcode": "M33 7EE",
+        "uprn": "100011699343"
+      }
+    },
+    {
+      "label": "35 Tatton Road, Sale M33 7EE",
+      "params": {
+        "postcode": "M33 7EE",
+        "uprn": "100011699344"
+      }
+    }
+  ],
+  "port_west_devon_borough_council": [
+    {
+      "label": "Test_001",
+      "params": {
+        "postcode": "EX20 1AU",
+        "uprn": "100040391940"
+      }
+    },
+    {
+      "label": "Test_002",
+      "params": {
+        "postcode": "PL20 7RS",
+        "uprn": "100040403601"
       }
     }
   ],

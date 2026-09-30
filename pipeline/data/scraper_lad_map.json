@@ -151,10 +151,6 @@
     "scraper_id": "ukbcd_milton_keynes_city_council",
     "url": "https://mycouncil.milton-keynes.gov.uk/en/service/Waste_Collection_Round_Checker"
   },
-  "E06000043": {
-    "scraper_id": null,
-    "url": "https://enviroservices.brighton-hove.gov.uk/link/collections"
-  },
   "E06000044": {
     "scraper_id": "hacs_portsmouth_gov_uk",
     "url": "https://my.portsmouth.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-26e27e70-f771-47b1-a34d-af276075cede/AF-Stage-cd7cc291-2e59-42cc-8c3f-1f93e132a2c9/definition.json&redirectlink=%2F&cancelRedirectLink=%2F"
@@ -275,10 +271,6 @@
     "scraper_id": "hacs_highpeak_gov_uk",
     "url": "https://bins.highpeak.gov.uk/PublicDashboard"
   },
-  "E07000038": {
-    "scraper_id": null,
-    "url": "https://myselfservice.ne-derbyshire.gov.uk/service/Check_your_Bin_Day"
-  },
   "E07000039": {
     "scraper_id": "hacs_southderbyshire_gov_uk",
     "url": "https://maps.southderbyshire.gov.uk/iShareLIVE.web//getdata.aspx"
@@ -312,7 +304,7 @@
     "url": "https://torridge.gov.uk"
   },
   "E07000047": {
-    "scraper_id": null,
+    "scraper_id": "port_west_devon_borough_council",
     "url": "https://westdevon.fccenvironment.co.uk"
   },
   "E07000061": {
@@ -342,6 +334,10 @@
   "E07000067": {
     "scraper_id": "hacs_braintree_gov_uk",
     "url": "https://www.braintree.gov.uk/"
+  },
+  "E07000068": {
+    "scraper_id": "port_brentwood_borough_council",
+    "url": "https://www.brentwood.gov.uk/collection-day"
   },
   "E07000069": {
     "scraper_id": "hacs_castlepoint_gov_uk",
@@ -547,6 +543,14 @@
     "scraper_id": "hacs_preston_gov_uk",
     "url": "https://selfservice.preston.gov.uk/service/Forms/FindMyNearest.aspx?Service=bins"
   },
+  "E07000124": {
+    "scraper_id": "port_ribble_valley_borough_council",
+    "url": "https://www.ribblevalley.gov.uk/directory/1/find-your-bin-collection-day"
+  },
+  "E07000125": {
+    "scraper_id": "port_rossendale_borough_council",
+    "url": "https://www.rossendale.gov.uk/directory/10094/bin-collection-days"
+  },
   "E07000126": {
     "scraper_id": "hacs_southribble_gov_uk",
     "url": "https://www.southribble.gov.uk"
@@ -650,6 +654,10 @@
   "E07000170": {
     "scraper_id": "hacs_ashfield_gov_uk",
     "url": "https://www.ashfield.gov.uk"
+  },
+  "E07000171": {
+    "scraper_id": "port_bassetlaw_district_council",
+    "url": "https://www.bassetlaw.gov.uk/waste-and-recycling/bin-collections/"
   },
   "E07000172": {
     "scraper_id": "hacs_broxtowe_gov_uk",
@@ -907,6 +915,10 @@
     "scraper_id": "hacs_tameside_gov_uk",
     "url": "http://lite.tameside.gov.uk/BinCollections/CollectionService.svc/GetBinCollection"
   },
+  "E08000009": {
+    "scraper_id": "port_trafford_council",
+    "url": "https://www.trafford.gov.uk"
+  },
   "E08000010": {
     "scraper_id": "hacs_wigan_gov_uk",
     "url": "https://apps.wigan.gov.uk/MyNeighbourhood/"
@@ -1087,6 +1099,10 @@
     "scraper_id": "hacs_islington_gov_uk",
     "url": "https://www.islington.gov.uk/your-area"
   },
+  "E09000020": {
+    "scraper_id": "port_kensington_and_chelsea_council",
+    "url": "https://www.rbkc.gov.uk/bins-and-recycling"
+  },
   "E09000021": {
     "scraper_id": "port_kingston_upon_thames_council",
     "url": "https://www.kingston.gov.uk"
@@ -1166,6 +1182,10 @@
   "N09000009": {
     "scraper_id": "port_mid_ulster_district_council",
     "url": "https://www.midulstercouncil.org"
+  },
+  "N09000010": {
+    "scraper_id": "port_newry_mourne_and_down_council",
+    "url": "https://www.newrymournedown.org/weekly-bin-collection-and-calendar"
   },
   "N09000011": {
     "scraper_id": "hacs_ardsandnorthdown_gov_uk",
@@ -1366,6 +1386,10 @@
   "W06000019": {
     "scraper_id": "hacs_itv_blaenau_gwent",
     "url": "https://www.blaenau-gwent.gov.uk/"
+  },
+  "W06000020": {
+    "scraper_id": "port_torfaen_county_borough_council",
+    "url": "https://www.torfaen.gov.uk/"
   },
   "W06000021": {
     "scraper_id": "hacs_monmouthshire_gov_uk",

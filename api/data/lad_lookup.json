@@ -127,10 +127,9 @@
   },
   "E07000171": {
     "name": "Bassetlaw",
-    "scraper_id": null,
-    "url": null,
+    "scraper_id": "port_bassetlaw_district_council",
+    "url": "https://www.bassetlaw.gov.uk/waste-and-recycling/bin-collections/",
     "govuk_url": "https://www.bassetlaw.gov.uk/recycling-and-waste/bin-collection-days",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Bassetlaw data",
     "working": false
   },
   "E06000022": {
@@ -261,10 +260,9 @@
   },
   "E07000068": {
     "name": "Brentwood",
-    "scraper_id": null,
-    "url": null,
+    "scraper_id": "port_brentwood_borough_council",
+    "url": "https://www.brentwood.gov.uk/collection-day",
     "govuk_url": "http://www.brentwood.gov.uk/index.php?cid=2715",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Brentwood data",
     "working": false
   },
   "W06000013": {
@@ -411,9 +409,9 @@
   "N09000004": {
     "name": "Causeway Coast and Glens",
     "scraper_id": null,
-    "url": null,
+    "url": "https://causewaycoastandglens.gov.uk/live/bins-and-recycling/bin-collections/collection-calendars",
     "govuk_url": "https://www.causewaycoastandglens.gov.uk/live/bins-and-recycling/recycling/blue-bin-recycling-calendars-1",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Causeway Coast and Glens data",
+    "status": "deeplink-unwired: no address lookup exists, only 4 area calendar PDFs with colour-only week marking and no address-to-area mapping",
     "working": false
   },
   "E06000056": {
@@ -623,9 +621,9 @@
   "N09000005": {
     "name": "Derry City and Strabane",
     "scraper_id": null,
-    "url": null,
+    "url": "https://recycling.derrystrabane.com/services/bin-collections/",
     "govuk_url": "https://www.derrystrabane.com/recycling",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Derry City and Strabane data",
+    "status": "deeplink-unwired: no address lookup exists, one generic calendar image; the Sentireal app backend is not publicly reachable",
     "working": false
   },
   "E08000017": {
@@ -1152,8 +1150,8 @@
   },
   "E09000020": {
     "name": "Kensington and Chelsea",
-    "scraper_id": null,
-    "url": null,
+    "scraper_id": "port_kensington_and_chelsea_council",
+    "url": "https://www.rbkc.gov.uk/bins-and-recycling",
     "govuk_url": "https://www.rbkc.gov.uk/bins-and-recycling",
     "working": false
   },
@@ -1467,10 +1465,9 @@
   },
   "N09000010": {
     "name": "Newry, Mourne and Down",
-    "scraper_id": null,
-    "url": null,
+    "scraper_id": "port_newry_mourne_and_down_council",
+    "url": "https://www.newrymournedown.org/weekly-bin-collection-and-calendar",
     "govuk_url": "http://www.newrymournedown.org/bin-collection-information-and-calendar",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Newry, Mourne and Down data",
     "working": false
   },
   "S12000021": {
@@ -1742,10 +1739,9 @@
   },
   "E07000124": {
     "name": "Ribble Valley",
-    "scraper_id": null,
-    "url": null,
+    "scraper_id": "port_ribble_valley_borough_council",
+    "url": "https://www.ribblevalley.gov.uk/directory/1/find-your-bin-collection-day",
     "govuk_url": "https://www.ribblevalley.gov.uk/directory/15/find_your_bin_collection_day/search",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Ribble Valley data",
     "working": false
   },
   "E09000027": {
@@ -1771,10 +1767,9 @@
   },
   "E07000125": {
     "name": "Rossendale",
-    "scraper_id": null,
-    "url": null,
+    "scraper_id": "port_rossendale_borough_council",
+    "url": "https://www.rossendale.gov.uk/directory/10094/bin-collection-days",
     "govuk_url": "https://www.rossendale.gov.uk/info/210192/find_your_bin_collection_day",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Rossendale data",
     "working": false
   },
   "E07000064": {
@@ -2236,10 +2231,9 @@
   },
   "W06000020": {
     "name": "Torfaen",
-    "scraper_id": null,
-    "url": null,
+    "scraper_id": "port_torfaen_county_borough_council",
+    "url": "https://www.torfaen.gov.uk/",
     "govuk_url": "http://www.torfaen.gov.uk/en/RubbishAndRecycling/Householdwaste-rubbishcollections/Bin-Collection-Days.aspx",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Torfaen data",
     "working": false
   },
   "E07000046": {
@@ -2258,10 +2252,9 @@
   },
   "E08000009": {
     "name": "Trafford",
-    "scraper_id": null,
-    "url": null,
+    "scraper_id": "port_trafford_council",
+    "url": "https://www.trafford.gov.uk",
     "govuk_url": "http://www.trafford.gov.uk/bincollections/",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Trafford data",
     "working": false
   },
   "E07000116": {
@@ -2371,7 +2364,7 @@
   },
   "E07000047": {
     "name": "West Devon",
-    "scraper_id": null,
+    "scraper_id": "port_west_devon_borough_council",
     "url": "https://westdevon.fccenvironment.co.uk",
     "govuk_url": "https://www.westdevon.gov.uk/article/4526/Find-your-Recycling-Waste-collection-day",
     "working": false

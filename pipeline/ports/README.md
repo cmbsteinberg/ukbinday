@@ -48,6 +48,19 @@ Each file follows the HACS scraper pattern (`Source` class, `TITLE`, `URL`, `TES
 | `port_babergh_district_council.py` | Babergh | CSRF seed → portlet POST with UPRN → HTML table. Split per-LAD because the upstream HACS source's required `council` selector collides with the API's reserved `council` query key |
 | `port_mid_suffolk_district_council.py` | Mid Suffolk | Same, hardcoded to the Mid Suffolk backend |
 
+### Ported 2026-09-30 (former test-fixture placeholders + probe backlog)
+| File | Council | Pattern |
+|------|---------|---------|
+| `port_west_devon_borough_council.py` | West Devon | FCC CodeIgniter (`fcc_session_token` → `getcollectiondetails` JSON), sibling of South Hams |
+| `port_kensington_and_chelsea_council.py` | Kensington & Chelsea | ASP.NET Core street form → weekday table (weekday-only projections) |
+| `port_bassetlaw_district_council.py` | Bassetlaw | ReCollect EU (`api.eu.recollect.net`, area `BassetlawUK`, svc 50015) — address text, not UPRN |
+| `port_brentwood_borough_council.py` | Brentwood | GeoServer WFS (UPRN → route + calendar link) → route PDF (filled/outlined boxes) |
+| `port_ribble_valley_borough_council.py` | Ribble Valley | Jadu directory → weekday PDF (cell hue = blue/green week) |
+| `port_rossendale_borough_council.py` | Rossendale | Jadu directory → zone PDF with printed dates |
+| `port_trafford_council.py` | Trafford | POST postcode → inline JSON → A/B PDF (curl_cffi; vector-shape colour = bin) |
+| `port_newry_mourne_and_down_council.py` | Newry, Mourne & Down | POST postcode → zone PDF box layout (digits are outlines, not text) |
+| `port_torfaen_county_borough_council.py` | Torfaen | Shared iTouchVision helper (client 80, council 397) |
+
 ## Triage rule: port vs deeplink
 
 For scopeless LADs, deeplink (serve the GOV.UK/council URL, no scraper) only if **all three** hold; otherwise port it:

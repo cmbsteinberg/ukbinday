@@ -147,19 +147,39 @@
     ],
     "ukbcd_tamworth_borough_council": [
       "E07000199"
+    ],
+    "port_west_devon_borough_council": [
+      "E07000047"
+    ],
+    "port_kensington_and_chelsea_council": [
+      "E09000020"
+    ],
+    "port_bassetlaw_district_council": [
+      "E07000171"
+    ],
+    "port_brentwood_borough_council": [
+      "E07000068"
+    ],
+    "port_ribble_valley_borough_council": [
+      "E07000124"
+    ],
+    "port_rossendale_borough_council": [
+      "E07000125"
+    ],
+    "port_trafford_council": [
+      "E08000009"
+    ],
+    "port_newry_mourne_and_down_council": [
+      "N09000010"
+    ],
+    "port_torfaen_county_borough_council": [
+      "W06000020"
     ]
   },
   "unwired_lads": {
-    "E07000171": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Bassetlaw data",
-    "E07000068": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Brentwood data",
-    "E07000124": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Ribble Valley data",
-    "E07000125": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Rossendale data",
-    "E08000009": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Trafford data",
-    "N09000004": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Causeway Coast and Glens data",
-    "N09000005": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Derry City and Strabane data",
-    "N09000010": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Newry, Mourne and Down data",
+    "N09000004": "deeplink-unwired: no address lookup exists, only 4 area calendar PDFs with colour-only week marking and no address-to-area mapping",
+    "N09000005": "deeplink-unwired: no address lookup exists, one generic calendar image; the Sentireal app backend is not publicly reachable",
     "E06000046": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Isle of Wight data",
-    "W06000020": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Torfaen data",
     "E07000119": "deeplink-unwired: Bartec portal behind mandatory login, no guest lookup (dead by redesign)",
     "E06000045": "deeplink-unwired: whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API",
     "E06000043": "deeplink-unwired: Mendix platform, no plain-HTTP path (reference case)",
@@ -170,6 +190,8 @@
     "E07000038": "deeplink-unwired: Firmstep Check_your_Bin_Day retired (302, button commented out), static Calendar A/B only; apibroker 403"
   },
   "deeplink_urls": {
-    "E07000119": "https://new.fylde.gov.uk/wasteportal/"
+    "E07000119": "https://new.fylde.gov.uk/wasteportal/",
+    "N09000004": "https://causewaycoastandglens.gov.uk/live/bins-and-recycling/bin-collections/collection-calendars",
+    "N09000005": "https://recycling.derrystrabane.com/services/bin-collections/"
   }
 }

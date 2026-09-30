@@ -130,32 +130,37 @@ lookup, every blocklist reason ships as `status`).
   per-council feeds; the generic calendar adapter needs a `?url=`
   allowlist design first (SSRF surface). Selenium-backed councils with
   real entries (Halton, Brighton, etc.) are build backlog, not settled.
-  Probe 2026-09-04: shared ICS is literally `UKBCD Test Calendar` dummy;
-  none of the 10 publish a real council ICS (6 of the 16 Google-listed
-  LADs already have real working scrapers: E Hants, Havant, N Warks,
-  Clacks, E Dunbarts, Pendle):
-  | Council | Mechanism | ICS? | Path |
-  |---|---|---|---|
-  | Bassetlaw | ReCollect widget (svc 50015) | per-address via PLACE_UUID | port: address→UUID→ICS |
-  | Brentwood | MapStore GIS + route PDFs, no public UPRN→route | none | blocked |
-  | Ribble Valley | Jadu search → weekday + PDF | none | Jadu port + PDF rotation |
-  | Rossendale | Jadu search → zone-PDF link only | none | Jadu port + zone-PDF parse |
-  | Trafford | POST apps.trafford → weekday + A/B PDF | none | weekday+A/B computation |
-  | Causeway | 4 static PDFs, no lookup | none | static table or unsupported |
-  | Derry | 1 static PDF + app | none | static table or unsupported |
-  | Newry | POST postcode → 1 of 10 zone PDFs | none | POST+zone port (zone only) |
-  | Isle of Wight | Blazor/SignalR only | none | browser-only, weekday-only, defer |
-  | Torfaen | iTouchVision AES JSON, dated per-address | client-side only (use JSON) | bespoke httpx port, no Selenium |
+  Resolved 2026-09-30 — of the original 10, 7 ported, 2 settled as
+  deeplinks, 1 open:
+  | Council | Outcome | Mechanism |
+  |---|---|---|
+  | Bassetlaw | port (address) | ReCollect EU `address-suggest` → place UUID → events |
+  | Brentwood | port (UPRN) | open GeoServer WFS UPRN → route PDF calendar (ends Nov 2026) |
+  | Ribble Valley | port (postcode+address) | Jadu directory → weekday PDF, cell colour = bin (to Mar 2027) |
+  | Rossendale | port (postcode+address) | Jadu directory → zone PDF with printed dates (to Mar 2027) |
+  | Trafford | port (UPRN+postcode) | POST apps.trafford → A/B PDF via curl_cffi, shape colour = bin |
+  | Newry | port (postcode+address) | POST postcode → zone PDF box layout (to Apr 2027, bank-holiday swaps skipped) |
+  | Torfaen | port (UPRN) | shared iTouchVision helper, client 80 / council 397 |
+  | Causeway | deeplink, settled | 4 area PDFs, colour-only week marking, no address→area mapping |
+  | Derry | deeplink, settled | one generic calendar image; Sentireal app backend not public |
+  | Isle of Wight | **open** | `digitalservices.iow.gov.uk` refuses TCP from our dev egress — re-probe from the Hetzner box (Blazor negotiate + GOSS `pubKey` forms) |
+  PDF-backed ports stop returning dates when the council's calendar ends;
+  expect yearly breakage until the council republishes.
 - **Broken-but-wired triage:** one retry, then classify — slow-503 (site
   down, wait), fast-503 (block, consider `curl_cffi` flag), partial
   (stale UPRN — resample via `_sample_uprns_for_lad`), 422 (site-side
   validation or a dead finder like Calderdale's notice page — read the
   council page before resampling).
 - **Port debt (our code, fix first):** North Devon, Three Rivers.
-- **Probed, port confirmed, not built:** Kensington and Chelsea `E09000020`
-  (ASP.NET street form), West Devon `E07000047` (FCC JSON backend, sibling
-  template exists). Both still serve deeplink-shaped from their existing
-  `url`/`govuk_url` until ported.
+- **Probed, port confirmed, not built:** none. Kensington and Chelsea
+  `E09000020` (street form, weekday-only) and West Devon `E07000047` (FCC
+  JSON, next date per service) ported 2026-09-30.
+- **Integration harness — UPRN-0 cache collision (open):** cases without a
+  `uprn` hit `/lookup/0`, and `get_or_scrape` caches on UPRN alone, so every
+  address-only case after the first is served the first one's cached data —
+  false passes (~77 cases). Production is unaffected (real UPRNs from the
+  address picker). Fixed 2026-09-30: the 40s hard limit no longer counts
+  semaphore queue time (it was timing out ~250 cases on slower links).
 - **Zero-signal (wired, zero test rows):** Antrim, Dartford, South Staffs
   — probe before building (Bridgend pattern: upstream fixtures beat
   resampling; ONS samples can return councils-unknown UPRNs).
