@@ -1,0 +1,8 @@
+# Stricter than the repo default: these rules catch the scraper failure
+# families (blocking calls in async code, swallowed exceptions).
+extend = "../../pyproject.toml"
+
+[lint]
+extend-select = ["ASYNC", "BLE", "B", "UP", "RUF"]
+# ASYNC109: Http takes a per-request timeout on purpose.
+ignore = ["ASYNC109", "RUF001", "RUF002", "RUF003", "RUF012"]

@@ -34,7 +34,9 @@ uv run ruff check --fix
 # Lint JS/JSON (biome)
 npx @biomejs/biome check --write
 
-# Sync and patch all scrapers from upstream repos
+# Sync and patch all scrapers from upstream repos (manual only; never a commit hook,
+# since it rewrites api/scrapers/ and the generated JSONs)
+uv run lefthook run sync             # same as pipeline/sync.sh
 pipeline/sync.sh                     # orchestrates both HACS + UKBCD
 pipeline/hacs/sync.sh                # hacs_waste_collection_schedule only
 pipeline/ukbcd/sync.sh               # UKBinCollectionData only
@@ -68,6 +70,12 @@ uv run python -m scripts.generate_sankey
 # After a live run: annotate, then coverage map, then sankey/badge. Tests never run this.
 ./pipeline/ci/post_integration.sh
 
+# New scraper contract (api/councils/): run modules on their cases, vs the old scraper
+uv run python -m scripts.councils.check hartlepool --compare -v
+uv run python -m scripts.councils.check --all --compare --json /tmp/check.json
+uv run python -m scripts.councils.convert --plan      # old scraper id -> module name + LADs
+uv run basedpyright                                   # type-checks api/councils/
+
 # Docker
 docker compose up --build
 ```
@@ -98,6 +106,11 @@ docker compose up --build
 - About 310 files (flat directory), one per council. Each defines `TITLE`, `URL`, `TEST_CASES`, and a `Source` class with `async def fetch() -> list[Collection]`
 - About 235 from hacs (named `hacs_*_gov_uk.py`), about 73 from ukbcd (named `ukbcd_*.py`)
 - Excluded from ruff linting (configured in `pyproject.toml`)
+
+**Councils, new contract** (`api/councils/`, design in `scraper_contract.md`; migration in progress, not yet wired into the registry):
+- `_base/` -- the framework: `Scraper` (stateless; `meta`, `requires`, `headers`, `transport`, `verify_tls`, `icons`, `async fetch(address, http)`), `Meta` (title, url, LAD codes, cases), `Address` (built once from query params; `need()` for required fields), `Http`/`Response` (harness-owned httpx or curl_cffi session; 4xx/5xx and transport failures raise `UpstreamError` unless `check=False`), `Collection` (frozen dataclass: date, type, icon), errors (`InputError`, `AddressNotFound`, `UpstreamError`, `NeedsBrowser`), `match_address`, `parse_date`, `soup`/`text_of`, `parse_ics`, and `run()` which builds the address, checks `requires`, opens `Http`, fetches and tidies (dedupe, sort, icons)
+- `_platforms/` -- shared council platforms (Whitespace, ...) as `Scraper` subclasses configured per council
+- `<council>.py` -- one module per scraper, named after its LADs, exposing `SCRAPER`. Stricter lint via `api/councils/ruff.toml` (ASYNC, BLE, B)
 
 **Compat shims** (`api/compat/`):
 - `hacs/` -- Minimal types/helpers synced from hacs upstream: `Collection`, `CollectionBase`, `CollectionGroup`, `ICS`, `SSLError`. Avoids pulling full Home Assistant dependencies
@@ -147,7 +160,7 @@ docker compose up --build
 **CI/CD** (`.github/workflows/deploy.yml`):
 - On push to `main`: runs `tests/test_ci.py` only → deploys to Hetzner via SSH (git pull + docker compose). Live tests do not run in CI; run `tests/test_lad_integration.py` then `./pipeline/ci/post_integration.sh` locally and commit the output, flags, badge and sankey
 
-**Infrastructure**: Docker Compose runs the API + refresh worker + Redis + Caddy (reverse proxy) + GoAccess (log analytics) + Uptime Kuma (monitoring). API and worker share a named volume (`bins_data`) mounted at `/app/data` for the ICS cache. Pre-commit hooks via lefthook run the unified sync script, ruff, biome, and CI smoke tests. Deployment to Hetzner is automated via GitHub Actions and `deploy/deployment.py`.
+**Infrastructure**: Docker Compose runs the API + refresh worker + Redis + Caddy (reverse proxy) + GoAccess (log analytics) + Uptime Kuma (monitoring). API and worker share a named volume (`bins_data`) mounted at `/app/data` for the ICS cache. Pre-commit hooks via lefthook run ruff, biome, and CI smoke tests; the upstream sync is a manual `lefthook run sync`. Deployment to Hetzner is automated via GitHub Actions and `deploy/deployment.py`.
 
 ## Key Patterns
 
