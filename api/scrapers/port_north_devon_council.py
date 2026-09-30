@@ -1,9 +1,9 @@
-import asyncio
-from datetime import datetime
+import re
+from datetime import date, datetime, timedelta
 from time import time_ns
+from xml.etree import ElementTree
 
 import httpx
-from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
@@ -21,7 +21,7 @@ API_URL = f"{HOST}/apibroker/runLookup"
 USRN_LOOKUP_ID = "65141c7c38bd0"
 TOKEN_LOOKUP_ID = "59e606ee95b7a"
 DATE_RANGE_LOOKUP_ID = "6255925ca44cb"
-SCHEDULE_LOOKUP_ID = "610943652e64f"
+SERVICE_DETAILS_LOOKUP_ID = "61091d927cd81"
 
 HEADERS = {
     "Content-Type": "application/json",
@@ -33,18 +33,23 @@ HEADERS = {
 
 ICON_MAP = {
     "Black Bin": "mdi:trash-can",
+    "Clinical": "mdi:trash-can",
     "Green Bin": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Caddy": "mdi:food-apple",
     "Food": "mdi:food-apple",
     "Brown Bag": "mdi:recycle",
+    "Blue Box": "mdi:recycle",
+    "Black Box": "mdi:recycle",
+    "Green Bag": "mdi:recycle",
+    "Recycling": "mdi:recycle",
 }
 
 
-def _params(lookup_id: str, sid: str, **extra) -> dict:
+def _params(lookup_id: str, sid: str, no_retry: str = "true") -> dict:
     return {
         "id": lookup_id,
         "repeat_against": "",
-        "noRetry": extra.get("noRetry", "true"),
+        "noRetry": no_retry,
         "getOnlyTokens": "undefined",
         "log_id": "",
         "app_name": "AF-Renderer::Self",
@@ -54,131 +59,146 @@ def _params(lookup_id: str, sid: str, **extra) -> dict:
 
 
 def _rows(resp_json: dict) -> dict:
-    return resp_json.get("integration", {}).get("transformed", {}).get("rows_data", {})
+    rows = resp_json.get("integration", {}).get("transformed", {}).get("rows_data", {})
+    return rows if isinstance(rows, dict) else {}
 
 
-def _parse_schedule_html(html: str) -> list[Collection]:
-    soup = BeautifulSoup(html, "html.parser")
-    entries = []
-    current_month = None
-    current_year = None
+def _service_details(resp_json: dict) -> list[str]:
+    """Extract ServiceDetail strings (e.g. 'Empty Bin Green Bin/05/09/2026')
+    from the service-details lookup's raw XML payload."""
+    details: list[str] = []
+    try:
+        root = ElementTree.fromstring(resp_json.get("data") or "<Responses/>")
+    except ElementTree.ParseError:
+        root = None
+    if root is not None:
+        for result in root.iter("result"):
+            if result.get("column") == "ServiceDetail" and result.text:
+                details.append(result.text.strip())
+        if details:
+            return details
+    # Fallback: regex over the raw payload.
+    data = resp_json.get("data") or ""
+    return [
+        m.strip()
+        for m in re.findall(r'column="ServiceDetail"[^>]*>(.*?)</result>', data)
+        if m.strip()
+    ]
 
-    for li in soup.find_all("li"):
-        if "MonthLabel" in li.get("class", []):
-            h4 = li.find("h4")
-            if h4 and h4.text.strip() != "Key":
-                parts = h4.text.strip().split()
-                if len(parts) == 2:
-                    current_month = parts[0]
-                    current_year = int(parts[1])
-            continue
 
-        if not current_month or not current_year:
-            continue
+def _icon_for(bin_type: str) -> str | None:
+    lowered = bin_type.lower()
+    for key, icon in ICON_MAP.items():
+        if key.lower() in lowered:
+            return icon
+    return None
 
-        day_span = li.find("span", class_="wasteDay")
-        type_span = li.find("span", class_="wasteType")
-        if not day_span or not type_span:
-            continue
 
-        day = day_span.text.strip()
-        bin_type = type_span.text.strip()
-        try:
-            dt = datetime.strptime(f"{day} {current_month} {current_year}", "%d %B %Y").date()
-        except ValueError:
-            continue
-
-        icon = None
-        for key, val in ICON_MAP.items():
-            if key.lower() in bin_type.lower():
-                icon = val
-                break
-
-        entries.append(Collection(date=dt, t=bin_type, icon=icon))
-
-    return entries
+def _parse_service_detail(text: str) -> Collection | None:
+    detail = text.strip()
+    if detail.lower().startswith("empty bin "):
+        detail = detail[len("empty bin ") :]
+    try:
+        bin_type, day, month, year = detail.rsplit("/", 3)
+    except ValueError:
+        return None
+    bin_type = bin_type.strip()
+    if not bin_type:
+        return None
+    try:
+        dt = datetime(int(year), int(month), int(day)).date()
+    except ValueError:
+        return None
+    return Collection(date=dt, t=bin_type, icon=_icon_for(bin_type))
 
 
 class Source:
     def __init__(self, uprn: str | int, postcode: str | None = None):
         self._uprn = str(uprn)
-        self._postcode = postcode or ""
+        self._postcode = (postcode or "").replace(" ", "")
 
     async def fetch(self) -> list[Collection]:
+        today = date.today()
+        form = {
+            "Your address": {
+                "qsUPRN": {"value": self._uprn},
+                "postcode_search": {"value": self._postcode},
+                "chooseAddress": {"value": self._uprn},
+                "uprnfromlookup": {"value": self._uprn},
+                "UPRNMF": {"value": self._uprn},
+                "FULLADDR2": {"value": ""},
+            },
+            "Calendar": {
+                "FULLADDR": {"value": ""},
+                "token": {"value": ""},
+                "uPRN": {"value": self._uprn},
+                "calstartDate": {"value": ""},
+                "calendDate": {"value": ""},
+                "UPRN": {"value": self._uprn},
+                "liveToken": {"value": ""},
+                "USRN": {"value": ""},
+                "StartDate": {"value": (today - timedelta(days=31)).isoformat()},
+                "EndDate": {"value": (today + timedelta(days=1)).isoformat()},
+            },
+            "Print version": {"OutText2": {"value": ""}},
+        }
+        address = form["Your address"]
+        calendar = form["Calendar"]
+
         async with httpx.AsyncClient(follow_redirects=True, timeout=30.0) as s:
             r = await s.get(AUTH_URL, headers=HEADERS)
             r.raise_for_status()
             sid = r.json()["auth-session"]
 
-            base_form = {
-                "Your address": {
-                    "qsUPRN": {"value": self._uprn},
-                    "selectedUPRN": {"value": self._uprn},
-                }
-            }
-
-            # Step 1: get USRN
-            r = await s.post(
-                API_URL,
-                headers=HEADERS,
-                params=_params(USRN_LOOKUP_ID, sid),
-                json={"formValues": base_form},
-            )
-            r.raise_for_status()
-            usrn_row = _rows(r.json()).get("0", {})
-            usrn = usrn_row.get("USRN", "")
-
-            # Step 2: get live token
-            r = await s.post(
-                API_URL,
-                headers=HEADERS,
-                params=_params(TOKEN_LOOKUP_ID, sid),
-                json={"formValues": base_form},
-            )
-            r.raise_for_status()
-            token_row = _rows(r.json()).get("0", {})
-            token = token_row.get("liveToken", "")
-
-            # Step 3: get date range
-            r = await s.post(
-                API_URL,
-                headers=HEADERS,
-                params=_params(DATE_RANGE_LOOKUP_ID, sid),
-                json={"formValues": base_form},
-            )
-            r.raise_for_status()
-            date_row = _rows(r.json()).get("0", {})
-            cal_start = date_row.get("calstartDate", "")
-            cal_end = date_row.get("calendDate", "")
-
-            # Step 4: get schedule HTML (may need two calls — first triggers, second retrieves)
-            schedule_form = {
-                "Your address": {
-                    "qsUPRN": {"value": self._uprn},
-                    "selectedUPRN": {"value": self._uprn},
-                    "USRN": {"value": usrn},
-                    "liveToken": {"value": token},
-                    "calstartDate": {"value": cal_start},
-                    "calendDate": {"value": cal_end},
-                }
-            }
-
-            for _ in range(3):
-                r = await s.post(
+            async def call(lookup_id: str, no_retry: str = "true") -> dict:
+                resp = await s.post(
                     API_URL,
                     headers=HEADERS,
-                    params=_params(SCHEDULE_LOOKUP_ID, sid, noRetry="true"),
-                    json={"formValues": schedule_form},
+                    params=_params(lookup_id, sid, no_retry),
+                    json={"formValues": form},
                 )
-                r.raise_for_status()
-                row = _rows(r.json()).get("0", {})
-                results_html = row.get("Results2", "")
-                if results_html and "<h3>" in results_html:
-                    break
-                await asyncio.sleep(2)
+                resp.raise_for_status()
+                return resp.json()
 
-        if not results_html or "<h3>" not in results_html:
-            return []
+            # Step 1: resolve UPRN -> USRN + full address. The lookup keys off
+            # the chooseAddress/uprnfromlookup/UPRNMF fields, not qsUPRN.
+            usrn_row = _rows(await call(USRN_LOOKUP_ID)).get("0", {})
+            usrn = usrn_row.get("USRN", "")
+            if not usrn:
+                return []
+            address["FULLADDR2"] = {"value": usrn_row.get("FULLADDR2", "")}
+            calendar["USRN"] = {"value": usrn}
 
-        entries = _parse_schedule_html(results_html)
+            # Step 2: get live token.
+            token = _rows(await call(TOKEN_LOOKUP_ID)).get("0", {}).get("liveToken", "")
+            if not token:
+                return []
+            calendar["liveToken"] = {"value": token}
+            calendar["token"] = {"value": token}
+
+            # Step 3: get calendar date range. Calling this lookup is required
+            # before the service-details lookup returns rows.
+            date_row = _rows(await call(DATE_RANGE_LOOKUP_ID)).get("0", {})
+            calendar["calstartDate"] = {"value": date_row.get("calstartDate", "")}
+            calendar["calendDate"] = {"value": date_row.get("calendDate", "")}
+
+            # Step 4: get per-service collection rows and parse them directly.
+            # (The old schedule-HTML lookup only ever returns a "Loading..."
+            # placeholder over httpx; the service-details lookup holds the
+            # same data in structured form.)
+            details = _service_details(
+                await call(SERVICE_DETAILS_LOOKUP_ID, no_retry="false")
+            )
+
+        seen: set[tuple[date, str]] = set()
+        entries: list[Collection] = []
+        for text in details:
+            entry = _parse_service_detail(text)
+            if entry is None:
+                continue
+            key = (entry.date, entry["type"])
+            if key in seen:
+                continue
+            seen.add(key)
+            entries.append(entry)
         return sorted(entries, key=lambda c: c.date)

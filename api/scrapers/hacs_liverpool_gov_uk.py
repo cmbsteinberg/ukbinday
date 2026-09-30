@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Liverpool City Council"
 DESCRIPTION = "Source for liverpool.gov.uk services for Liverpool City"
@@ -18,9 +18,9 @@ TEST_CASES = {
 API_URL = "https://liverpool.gov.uk/Bins/BinDatesTable?UPRN={uprn}&HideGreenBin=False&ShowTable=True"
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green": Icons.ORGANIC,
 }
 
 

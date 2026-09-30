@@ -3,7 +3,7 @@ import time
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 from api.compat.hacs.service.AchieveForms import init_session
 
@@ -38,9 +38,9 @@ TOKEN_LOOKUP_ID = "5f97e6e09fedd"
 COLLECTION_LOOKUP_ID = "66042a164c9a5"
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
 }
 
 _WASTE_FIELDS = [

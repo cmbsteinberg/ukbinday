@@ -13,7 +13,6 @@ class CouncilClass(AbstractGetBinDataClass):
         uprn = kwargs.get("uprn")
         check_uprn(uprn)
 
-        # Figure bin data URL from UPRN
         url = "https://www.northyorks.gov.uk/bin-calendar/lookup"
         payload = {
             "selected_address": uprn,
@@ -22,23 +21,24 @@ class CouncilClass(AbstractGetBinDataClass):
         }
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
-        # This endpoint redirects to the data url.
         response = await _http.request("POST", url, headers=headers, data=payload)
         bin_data_url = f"{response.url}/ajax"
 
-        # Get bin data
         response = await _http.request("GET", bin_data_url)
         bin_data = response.json()
 
-        # Parse bin data
-        html = next(
-            cmd["data"]
-            for cmd in bin_data
-            if isinstance(cmd, dict) and isinstance(cmd.get("data"), str)
-        )
-        soup = BeautifulSoup(html, "html.parser")
+        # Find the item containing HTML data (the index shifted from 1 to 2)
+        html_data = None
+        for item in bin_data:
+            if isinstance(item, dict) and isinstance(item.get("data"), str) and "<div" in item["data"]:
+                html_data = item["data"]
+                break
 
-        # All collection info is in the table
+        if not html_data:
+            raise ValueError("No HTML bin data found in API response")
+
+        soup = BeautifulSoup(html_data, "html.parser")
+
         table = (
             soup.find("div", {"id": "upcoming-collection"}).find("table").find("tbody")
         )
@@ -48,11 +48,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
         for row in rows:
             cols = row.find_all("td")
-            # First column is date
             bin_date = datetime.strptime(cols[0].text.strip(), "%d %B %Y")
-
-            # Third column may contain multiple bin types separated by line breaks
-            # .stripped_strings yields a generator over all non-whitespace text segments
             bin_types = [
                 br.next_sibling.strip()
                 for br in cols[2].find_all("i")

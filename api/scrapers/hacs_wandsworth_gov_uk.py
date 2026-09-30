@@ -4,8 +4,11 @@ import logging
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection
-from api.compat.hacs.exceptions import SourceArgumentException, SourceArgumentNotFound
+from api.compat.hacs import Collection, Icons
+from api.compat.hacs.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -24,11 +27,11 @@ TEST_CASES = {
 API_URL = "https://www.wandsworth.gov.uk/my-property/"
 
 ICON_MAP = {
-    "Food waste": "mdi:food",
-    "Recycling": "mdi:recycling",
-    "Rubbish": "mdi:trash-can",
-    "Rubbish/Garden waste": "mdi:trash-can",
-    "Small electrical items": "mdi:blender",
+    "Food waste": Icons.BIO_KITCHEN,
+    "Recycling": Icons.RECYCLING,
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Rubbish/Garden waste": Icons.GARDEN,
+    "Small electrical items": Icons.ELECTRONICS,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

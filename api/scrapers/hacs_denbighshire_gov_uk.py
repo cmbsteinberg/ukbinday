@@ -2,7 +2,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Denbighshire County Council"
 DESCRIPTION = "Source for Denbighshire County Council."
@@ -14,10 +14,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "garden": "mdi:leaf",
-    "food": "mdi:food",
-    "refuse": "mdi:trash-can",
-    "recycling": "mdi:recycle",
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
+    "refuse": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
 }
 
 API_URL = "https://refusecalendarapi.denbighshire.gov.uk/Calendar/{uprn}"

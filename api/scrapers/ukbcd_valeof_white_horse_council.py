@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 
 from api.compat.ukbcd.common import *
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
-from api.compat import httpx_helpers as _http
 
 
 # import the wonderful Beautiful Soup and the URL grabber
@@ -19,9 +18,6 @@ class CouncilClass(AbstractGetBinDataClass):
         check_uprn(user_uprn)
 
         # UPRN is passed in via a cookie. Set cookies/params and GET the page
-        cookies = {
-            "SVBINZONE": f"VALE%3AUPRN%40{user_uprn}",
-        }
         headers = {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
             "Accept-Language": "en-GB,en;q=0.7",
@@ -41,11 +37,23 @@ class CouncilClass(AbstractGetBinDataClass):
             "ebd": "0",
         }
         pass  # urllib3 warnings disabled
-        response = await _http.get(
+        # Azure App Gateway intermittently returns 403 on direct requests.
+        # Establishing a JSESSIONID by visiting the page first (without the
+        # SVBINZONE cookie) avoids this.
+        session = httpx.AsyncClient(verify=False, follow_redirects=True)
+        session.headers.update(headers)
+        await session.get(
+            "https://eform.whitehorsedc.gov.uk/ebase/BINZONE_DESKTOP.eb?SOVA_TAG=VALE&ebd=0&ebz=1_1780529431339",
+            
+            timeout=15,
+        )
+        session.cookies.set("SVBINZONE", f"VALE%3AUPRN%40{user_uprn}")
+        response = await session.get(
             "https://eform.whitehorsedc.gov.uk/ebase/BINZONE_DESKTOP.eb",
             params=params,
             headers=headers,
-            cookies=cookies,
+            
+            timeout=15,
         )
 
         # Parse response text for super speedy finding
@@ -54,20 +62,17 @@ class CouncilClass(AbstractGetBinDataClass):
 
         data = {"bins": []}
 
-        current_year = datetime.now().year
-        next_year = current_year + 1
+        today = datetime.now().date()
 
         # Page has slider info side by side, which are two instances of this class
         for bin in soup.find_all("div", {"class": "bintxt"}):
             try:
-                # Check bin type heading and make that bin type and colour
+                # Check bin type heading and make that bin type
                 bin_type_info = list(bin.stripped_strings)
                 if "rubbish" in bin_type_info[0]:
                     bin_type = "Rubbish"
-                    bin_colour = "Black"
                 elif "recycling" in bin_type_info[0]:
                     bin_type = "Recycling"
-                    bin_colour = "Green"
                 else:
                     raise ValueError(f"No bin info found in {bin_type_info[0]}")
 
@@ -76,27 +81,24 @@ class CouncilClass(AbstractGetBinDataClass):
                 )
                 # On standard collection schedule, date will be contained in the first string
                 if contains_date(bin_date_info[0]):
-                    bin_date = get_next_occurrence_from_day_month(
-                        datetime.strptime(
-                            bin_date_info[0],
-                            "%A %d %B -",
-                        )
-                    )
+                    raw_date = bin_date_info[0]
                 # On exceptional collection schedule (e.g. around English Bank Holidays), date will be contained in the second stripped string
                 else:
-                    bin_date = get_next_occurrence_from_day_month(
-                        datetime.strptime(
-                            bin_date_info[1],
-                            "%A %d %B -",
-                        )
-                    )
+                    raw_date = bin_date_info[1]
+
+                bin_date = datetime.strptime(
+                    f"{raw_date} {today.year}", "%A %d %B - %Y"
+                ).date()
             except Exception as ex:
                 raise ValueError(f"Error parsing bin data: {ex}")
 
-            if (datetime.now().month == 12) and (bin_date.month == 1):
-                bin_date = bin_date.replace(year=next_year)
-            else:
-                bin_date = bin_date.replace(year=current_year)
+            # The page publishes the current fortnight's pair rather than the
+            # next occurrence of each bin, so a bin collected earlier in this
+            # fortnight parses to a date already in the past - roll it
+            # forward by the fortnightly cycle (day-based, so it naturally
+            # crosses a year boundary too) until it's genuinely upcoming.
+            while bin_date < today:
+                bin_date += timedelta(days=14)
 
             # Build data dict for each entry
             dict_data = {

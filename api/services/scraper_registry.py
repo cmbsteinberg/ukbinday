@@ -15,9 +15,13 @@ logger = logging.getLogger(__name__)
 
 SCRAPERS_DIR = Path(__file__).parent.parent / "scrapers"
 
-_PASSTHROUGH_SCRAPER_IDS: set[str] = {
-    "ukbcd_google_public_calendar_council",
-}
+# Scraper IDs whose module-level URL is served directly instead of scraped.
+# Empty: ukbcd_google_public_calendar_council was the only member and was
+# removed 2026-09-03 — its URL is the shared UKBCD *test* fixture, so every
+# wired LAD got identical dummy bins on /calendar while /lookup 503d. The
+# mechanism stays for future deeplink-shaped responses; re-add an ID here
+# only with a per-council real target URL.
+_PASSTHROUGH_SCRAPER_IDS: set[str] = set()
 
 
 class ScraperTimeoutError(Exception):

@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 
 from api.compat.ukbcd.common import *
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
-from api.compat import httpx_helpers as _http
 
 
 # import the wonderful Beautiful Soup and the URL grabber
@@ -19,10 +18,6 @@ class CouncilClass(AbstractGetBinDataClass):
         check_uprn(user_uprn)
 
         # UPRN is passed in via a cookie. Set cookies/params and GET the page
-        cookies = {
-            # 'JSESSIONID': '96F2A15C14569B2ED2BBEB140FE86532',
-            "SVBINZONE": f"SOUTH%3AUPRN%40{user_uprn}",
-        }
         headers = {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
             "Accept-Language": "en-GB,en;q=0.7",
@@ -43,11 +38,23 @@ class CouncilClass(AbstractGetBinDataClass):
             # 'ebz':      '1_1668467255368',
         }
         pass  # urllib3 warnings disabled
-        response = await _http.get(
+        # Azure App Gateway intermittently returns 403 on direct requests.
+        # Establishing a JSESSIONID by visiting the page first (without the
+        # SVBINZONE cookie) avoids this.
+        session = httpx.AsyncClient(verify=False, follow_redirects=True)
+        session.headers.update(headers)
+        await session.get(
+            "https://eform.southoxon.gov.uk/ebase/BINZONE_DESKTOP.eb?SOVA_TAG=SOUTH&ebd=0&ebz=1_1668467255368",
+            
+            timeout=15,
+        )
+        session.cookies.set("SVBINZONE", f"SOUTH%3AUPRN%40{user_uprn}")
+        response = await session.get(
             "https://eform.southoxon.gov.uk/ebase/BINZONE_DESKTOP.eb",
             params=params,
             headers=headers,
-            cookies=cookies,
+            
+            timeout=15,
         )
 
         # Parse response text for super speedy finding
@@ -56,8 +63,7 @@ class CouncilClass(AbstractGetBinDataClass):
 
         data = {"bins": []}
 
-        current_year = datetime.now().year
-        next_year = current_year + 1
+        today = datetime.now().date()
 
         # Page has slider info side by side, which are two instances of this class
         for bin in soup.find_all("div", {"class": "binextra"}):
@@ -65,36 +71,49 @@ class CouncilClass(AbstractGetBinDataClass):
             try:
                 # On standard collection schedule, date will be contained in the first stripped string
                 if contains_date(bin_info[0]):
-                    bin_date = get_next_occurrence_from_day_month(
-                        datetime.strptime(
-                            bin_info[0],
-                            "%A %d %B -",
-                        )
-                    )
-                    bin_type = str.capitalize(" ".join(bin_info[1:]))
+                    raw_date = bin_info[0]
+                    type_start = 1
                 # On exceptional collection schedule (e.g. around English Bank Holidays), date will be contained in the second stripped string
                 else:
-                    bin_date = get_next_occurrence_from_day_month(
-                        datetime.strptime(
-                            bin_info[1],
-                            "%A %d %B -",
-                        )
-                    )
-                    bin_type = str.capitalize(" ".join(bin_info[2:]))
-            except:
+                    raw_date = bin_info[1]
+                    type_start = 2
+
+                bin_date = datetime.strptime(
+                    f"{raw_date} {today.year}", "%A %d %B - %Y"
+                ).date()
+
+                # Strip supplementary notes (e.g. "Don't forget...", "Extra garden waste...")
+                # that follow the bin-type description.
+                type_parts = []
+                for part in bin_info[type_start:]:
+                    if "don't" in part.lower() or part.startswith("Extra"):
+                        break
+                    type_parts.append(part)
+                combined_type = " ".join(type_parts)
+            except Exception:
                 continue
 
-            if (datetime.now().month == 12) and (bin_date.month == 1):
-                bin_date = bin_date.replace(year=next_year)
-            else:
-                bin_date = bin_date.replace(year=current_year)
+            # This is a fortnightly rota, published as the current fortnight's
+            # combined collection rather than the next occurrence, so a date
+            # earlier in the same fortnight parses to the past - roll it
+            # forward (day-based, so it naturally crosses a year boundary).
+            while bin_date < today:
+                bin_date += timedelta(days=14)
 
-            # Build data dict for each entry
-            dict_data = {
-                "type": bin_type,
-                "collectionDate": bin_date.strftime(date_format),
-            }
-            data["bins"].append(dict_data)
+            # The council describes each visit as one combined sentence (e.g.
+            # "Grey bin, small electrical items and food bin") covering
+            # everything collected that day - split it into its individual
+            # bins rather than one long, uncolour-mappable type string.
+            for bin_type in combined_type.replace(" and ", ", ").split(","):
+                bin_type = bin_type.strip().capitalize()
+                if not bin_type:
+                    continue
+                data["bins"].append(
+                    {
+                        "type": bin_type,
+                        "collectionDate": bin_date.strftime(date_format),
+                    }
+                )
 
         data["bins"].sort(
             key=lambda x: datetime.strptime(x.get("collectionDate"), date_format)

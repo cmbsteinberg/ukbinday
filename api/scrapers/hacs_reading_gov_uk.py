@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 import httpx
 
@@ -61,7 +60,7 @@ class Source:
                 "Must provide either a UPRN or both the Postcode and House Name or Number",
             )
 
-    async def fetch(self) -> List[Collection]:
+    async def fetch(self) -> list[Collection]:
         if self._uprn is None:
             self._uprn = await self.get_uprn()
         resp = await httpx.AsyncClient(follow_redirects=True).get(f"{SEARCH_URLS['COLLECTION']}/{self._uprn}")

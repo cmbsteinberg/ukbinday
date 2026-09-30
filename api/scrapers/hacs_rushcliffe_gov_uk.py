@@ -4,7 +4,7 @@ import re
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 from api.compat.hacs.service.FirmstepSelfService import (
     get_verification_token,
@@ -23,10 +23,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "grey": "mdi:trash-can",
-    "garden waste": "mdi:leaf",
-    "blue": "mdi:package-variant",
-    "glass": "mdi:glass-fragile",
+    "grey": Icons.GENERAL_WASTE,
+    "garden waste": Icons.GARDEN,
+    "blue": Icons.PAPER,
+    "glass": Icons.GLASS,
 }
 
 

@@ -5,7 +5,7 @@ from io import BytesIO
 import httpx
 from pypdf import PdfReader
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Redbridge Council"
 DESCRIPTION = "Source for redbridge.gov.uk services for Redbridge Council, UK."
@@ -16,10 +16,10 @@ TEST_CASES = {
     "a church vicarage, garden, recycling, refuse": {"uprn": 10034912354},
 }
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
-    "FOOD": "mdi:food-apple",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
+    "FOOD": Icons.BIO_KITCHEN,
 }
 
 KNOWN_SERVICES = {"REFUSE", "RECYCLING", "GARDEN", "FOOD"}

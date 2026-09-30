@@ -4,7 +4,7 @@ from urllib.parse import quote as urlquote
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentRequired
 
 TITLE = "Tewkesbury Borough Council"
@@ -20,10 +20,10 @@ DEPRECATED_API_URL = "https://api-2.tewkesbury.gov.uk/general/rounds/%s/nextColl
 API_URL = "https://api-2.tewkesbury.gov.uk/incab/rounds/%s/next-collection"
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food": "mdi:silverware-fork-knife",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
+    "Food": Icons.BIO_KITCHEN,
 }
 
 LOGGER = logging.getLogger(__name__)
@@ -44,7 +44,9 @@ class Source:
 
     async def get_data(self, uprn, api_url=API_URL):
         if uprn is None:
-            raise SourceArgumentRequired("uprn", "UPRN is required to fetch collection data")
+            raise SourceArgumentRequired(
+                "uprn", "UPRN is required to fetch collection data"
+            )
 
         encoded_uprn = urlquote(uprn)
         request_url = api_url % encoded_uprn

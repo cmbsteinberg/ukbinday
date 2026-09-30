@@ -4,7 +4,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -17,9 +17,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "general_waste": "mdi:trash-can",
-    "recycling_waste": "mdi:recycle",
-    "garden_waste": "mdi:leaf",
+    "general_waste": Icons.GENERAL_WASTE,
+    "recycling_waste": Icons.RECYCLING,
+    "garden_waste": Icons.GARDEN,
 }
 
 HEADERS = {
@@ -48,7 +48,9 @@ class Source:
             r = await session.get(url, follow_redirects=True, timeout=30)
             r.raise_for_status()
         except httpx.HTTPError as e:
-            raise Exception(f"Error fetching data from Wolverhampton Council: {e}")
+            raise Exception(
+                f"Error fetching data from Wolverhampton Council: {e}"
+            ) from e
 
         soup = BeautifulSoup(r.text, "html.parser")
         entries = []

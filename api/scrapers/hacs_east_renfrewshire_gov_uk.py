@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from dateutil import parser
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Renfrewshire Council"
 DESCRIPTION = "Source for eastrenfrewshire.gov.uk services for East Renfrewshire"
@@ -18,10 +18,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Grey": "mdi:trash-can",
-    "Brown": "mdi:leaf",
-    "Green": "mdi:glass-fragile",
-    "Blue": "mdi:note",
+    "Grey": Icons.GENERAL_WASTE,
+    "Brown": Icons.ORGANIC,
+    "Green": Icons.GLASS,
+    "Blue": Icons.EVENT,
 }
 
 

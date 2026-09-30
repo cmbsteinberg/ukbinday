@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of York Council"
 DESCRIPTION = "Source for York.gov.uk services for the city of York, UK."
@@ -14,9 +14,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
 }
 
 

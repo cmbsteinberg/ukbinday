@@ -5,7 +5,7 @@ from datetime import date, datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
@@ -25,12 +25,12 @@ TEST_CASES = {
 API_URL = "https://maps.monmouthshire.gov.uk/localinfo.aspx"
 
 ICON_MAP = {
-    "Blue food bin": "mdi:food",
-    "Garden Waste Bins": "mdi:leaf",
-    "Green Glass Box": "mdi:glass-fragile",
-    "Household rubbish bag": "mdi:trash-can",
-    "Red & purple recycling bags": "mdi:recycling",
-    "Yellow nappy & hygiene waste bag": "mdi:diaper-outline",
+    "Blue food bin": Icons.BIO_KITCHEN,
+    "Garden Waste Bins": Icons.GARDEN,
+    "Green Glass Box": Icons.GLASS,
+    "Household rubbish bag": Icons.GENERAL_WASTE,
+    "Red & purple recycling bags": Icons.RECYCLING,
+    "Yellow nappy & hygiene waste bag": Icons.GENERAL_WASTE,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -144,7 +144,6 @@ class Source:
             waste_blocks = waste_div.find_all("div", class_="waste")
 
             for waste_block in waste_blocks:
-
                 # Get location of <h4> for Waste Type and <strong> for Collection Date
                 waste_h4 = waste_block.find("h4")
                 collection_strong = waste_block.find("strong")

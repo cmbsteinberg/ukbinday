@@ -3,7 +3,7 @@ from datetime import date, datetime
 from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -24,9 +24,9 @@ SEARCH_URLS = {
     "collection_search": "https://www.cornwall.gov.uk/umbraco/Surface/Waste/MyCollectionDays?subscribe=False",
 }
 ICON_MAP = {
-    "Rubbish": "mdi:delete",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:flower",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
 }
 
 

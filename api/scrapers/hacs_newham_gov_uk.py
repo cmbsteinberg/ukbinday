@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from dateutil import parser as dateparser
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "London Borough of Newham"
 DESCRIPTION = "Source for newham.gov.uk services for London Borough of Newham, UK."
@@ -13,7 +13,10 @@ TEST_CASES = {
     "Test_003": {"uprn": 46012509},
 }
 
-ICON_MAP = {"DOMESTIC": "mdi:trash-can", "RECYCLING": "mdi:glass-fragile"}
+ICON_MAP = {
+    "DOMESTIC": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.GLASS,
+}
 
 
 class Source:

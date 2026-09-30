@@ -120,7 +120,7 @@ async def live_scrape(request: Request, council: str, params: dict[str, str]):
 
 async def resolve_council(
     request: Request, lookup, postcode: str
-) -> tuple[str | None, str | None, list[CouncilCandidate]]:
+) -> tuple[str | None, str | None, list[CouncilCandidate], str | None]:
     request_id = getattr(request.state, "request_id", None)
     log_extra = {"request_id": request_id, "postcode": postcode}
     try:
@@ -145,16 +145,13 @@ async def resolve_council(
         authority = authorities[0]
         if not authority.slug:
             logger.info(
-                "Postcode resolved to unsupported council %s",
+                "Postcode resolved to unwired council %s (%s) — deeplink",
                 authority.name,
+                authority.lad_code,
                 extra=log_extra,
             )
-            raise HTTPException(
-                status_code=404,
-                detail=f"We found your council ({authority.name}) but don't have "
-                "a scraper for it yet. Check /api/v1/councils for supported councils.",
-            )
-        return authority.slug, authority.name, []
+            return None, authority.name, [], authority.lad_code
+        return authority.slug, authority.name, [], authority.lad_code
 
     logger.info(
         "Ambiguous postcode: %d candidate councils",
@@ -166,4 +163,4 @@ async def resolve_council(
         for a in authorities
         if a.slug
     ]
-    return None, None, candidates
+    return None, None, candidates, None

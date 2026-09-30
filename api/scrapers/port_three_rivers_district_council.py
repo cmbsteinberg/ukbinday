@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import time_ns
 
 import httpx
@@ -54,6 +54,7 @@ class Source:
 
     async def fetch(self) -> list[Collection]:
         now = datetime.now()
+        two_weeks = now + timedelta(days=14)
         async with httpx.AsyncClient(follow_redirects=True) as s:
             r = await s.get(AUTH_URL, headers=HEADERS)
             r.raise_for_status()
@@ -83,11 +84,13 @@ class Source:
                 .get("token", "")
             )
 
-            # Step 2: get schedule
+            # Step 2: get schedule (requires the twoweeks date-range bound
+            # alongside UPRN/todaysdate/token, else apibroker returns empty 200)
             schedule_form = {
                 "Your address details": {
                     "UPRN": {"value": self._uprn},
                     "todaysdate": {"value": now.strftime("%Y-%m-%dT00:00:00")},
+                    "twoweeks": {"value": two_weeks.strftime("%Y-%m-%dT00:00:00")},
                 },
                 "Your collection dates": {
                     "token": {"value": token},

@@ -3,7 +3,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup, Tag
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Ards and North Down Borough Council"
 DESCRIPTION = "Source for Ards and North Down Borough Council."
@@ -16,59 +16,36 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "grey": "mdi:trash-can",
-    "glass": "mdi:bottle-soda",
-    "green": "mdi:leaf",
-    "blue": "mdi:recycle",
+    "grey": Icons.GENERAL_WASTE,
+    "glass": Icons.GLASS,
+    "green": Icons.ORGANIC,
+    "blue": Icons.RECYCLING,
 }
 
 
-API_URL = "https://collections-ardsandnorthdown.azurewebsites.net/WSCollExternal.asmx"
-
-# council seems to always be ARD no matter what the old council was
-PAYLOAD = """<?xml version="1.0" encoding="utf-8" ?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-    <soap:Body>
-        <getRoundCalendarForUPRN  xmlns="http://webaspx-collections.azurewebsites.net/">
-            <council>ARD</council>
-            <UPRN>{uprn}</UPRN>
-            <from>Chtml</from>
-        </getRoundCalendarForUPRN >
-    </soap:Body>
-</soap:Envelope>
-"""
+API_URL = (
+    "https://ardsandnorthdownbincalendar.azurewebsites.net/api/calendarhtml/{uprn}"
+)
 
 
 class Source:
     def __init__(self, uprn: str | int):
-        self._payload = PAYLOAD.format(uprn=str(uprn).strip())
+        self._uprn = str(uprn).strip()
 
     async def fetch(self) -> list[Collection]:
-        # get json file
-        r = await httpx.AsyncClient(follow_redirects=True).post(
-            API_URL,
-            data=self._payload,
-            headers={"Content-Type": "text/xml; charset=utf-8"},
-        )
+        r = await httpx.AsyncClient(follow_redirects=True).get(API_URL.format(uprn=self._uprn))
         r.raise_for_status()
 
-        # xml parser
-        entries: list[Collection] = []
-        # html unescape text
-        text = (
-            (r.text.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&"))
-            .split("<getRoundCalendarForUPRNResult>")[-1]
-            .split("</getRoundCalendarForUPRNResult>")[0]
-        )
+        html = r.json().get("calendarHTML", "")
 
-        soup = BeautifulSoup(text, "html.parser")
-        # find b where text start with Key:
+        entries: list[Collection] = []
+
+        soup = BeautifulSoup(html, "html.parser")
+        # find b/strong tag where text starts with "Key:"
 
         self._bin_type_translation: dict[str, str] = {}
 
-        keys = soup.find_all("b")
+        keys = soup.find_all(["b", "strong"])
 
         key = None
         for k in keys:

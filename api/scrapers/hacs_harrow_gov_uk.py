@@ -1,5 +1,4 @@
 import datetime
-import json
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
@@ -33,19 +32,32 @@ COLLECTION_MAP = {
 
 API_URL = "https://www.harrow.gov.uk/ajax/bins?u={uprn}"
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+}
+
 
 class Source:
     def __init__(self, uprn: str | int):
         self._uprn: str = str(uprn).zfill(12)
 
     async def fetch(self):
-        r = await _CurlCffiClient(follow_redirects=True).get(API_URL.format(uprn=self._uprn))
-        rubbish_data = json.loads(r.content)
+        r = await _CurlCffiClient(follow_redirects=True).get(API_URL.format(uprn=self._uprn), headers=HEADERS)
+        r.raise_for_status()
+
+        if not r.content:
+            raise ValueError(
+                f"No data returned for UPRN {self._uprn} — the service may be temporarily unavailable"
+            )
+
+        rubbish_data = r.json()
 
         entries = []
 
         for next_collection in rubbish_data["results"]["collections"]["next"]:
-            collection_type = COLLECTION_MAP[next_collection["binType"]]
+            collection_type = COLLECTION_MAP.get(next_collection["binType"])
+            if collection_type is None:
+                continue
             collection_date = next_collection["eventTime"]
             entries.append(
                 Collection(

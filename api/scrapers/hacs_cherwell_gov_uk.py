@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Cherwell District Council"
 DESCRIPTION = "Cherwell District Council North Oxfordshire, UK"
@@ -23,9 +23,9 @@ REGEX = {
     "ORDINALS": r"(st|nd|rd|th) ",
 }
 ICON_MAP = {
-    "GREEN BIN": "mdi:trash-can",
-    "BLUE BIN": "mdi:recycle",
-    "BROWN BIN": "mdi:leaf",
+    "GREEN BIN": Icons.GENERAL_WASTE,
+    "BLUE BIN": Icons.RECYCLING,
+    "BROWN BIN": Icons.BIO_KITCHEN,
 }
 
 

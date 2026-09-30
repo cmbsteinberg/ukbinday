@@ -4,7 +4,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "West Lancashire Council"
@@ -16,9 +16,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "garden": "mdi:leaf",
+    "refuse": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
 }
 
 API_URL = "https://your.westlancs.gov.uk/yourwestlancs.aspx"

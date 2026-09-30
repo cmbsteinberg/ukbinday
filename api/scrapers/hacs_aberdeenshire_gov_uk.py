@@ -3,7 +3,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 # Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
 
@@ -17,8 +17,8 @@ TEST_CASES = {
     "Test_004": {"uprn": 151170625},
 }
 ICON_MAP = {
-    "Mixed recycling and food waste": "mdi:recycle",
-    "Refuse and food waste": "mdi:trash-can",
+    "Mixed recycling and food waste": Icons.BIO_KITCHEN,
+    "Refuse and food waste": Icons.BIO_KITCHEN,
 }
 
 PARAM_DESCRIPTIONS = {

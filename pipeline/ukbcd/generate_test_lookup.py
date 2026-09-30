@@ -89,6 +89,20 @@ def main():
         existing[scraper_stem] = [{"label": label, "params": params}]
         added += 1
 
+    # Fallback: scrapers wired by the unindexed sweep have no input.json
+    # entry. Their sampled test params were persisted by patch_scrapers.py.
+    unindexed_path = PROJECT_ROOT / "pipeline" / "data" / "unindexed_test_params.json"
+    added_unindexed = 0
+    if unindexed_path.exists():
+        for scraper_stem, case in json.loads(unindexed_path.read_text()).items():
+            if scraper_stem in existing or scraper_stem not in our_scrapers:
+                continue
+            params = {k: v for k, v in case.get("params", {}).items() if k in TEST_PARAMS}
+            if not params:
+                continue
+            existing[scraper_stem] = [{"label": case.get("label", scraper_stem), "params": params}]
+            added_unindexed += 1
+
     OUTPUT_PATH.write_text(json.dumps(existing, indent=2, sort_keys=True))
     logger.info("Wrote %d total scrapers to %s", len(existing), OUTPUT_PATH)
 
@@ -97,6 +111,7 @@ def main():
     print(f"{'=' * 50}")
     print(f"Total in input.json:     {len(input_data)}")
     print(f"Added (in our subset):   {added}")
+    print(f"Added (unindexed sweep): {added_unindexed}")
     print(f"Skipped (not our scraper): {skipped_not_ours}")
     print(f"Skipped (no test params):  {skipped_no_params}")
     print(f"Total in test_cases.json:  {len(existing)}")

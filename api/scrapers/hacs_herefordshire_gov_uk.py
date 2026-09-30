@@ -4,7 +4,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -15,6 +15,27 @@ DESCRIPTION = "Source for herefordshire.gov.uk services for hereford"
 URL = "https://herefordshire.gov.uk"
 TEST_CASES = {
     "houseNumber": {"postcode": "hr49js", "house_number": "52"},
+    "uprn": {"postcode": "hr49js", "house_number": "200002607460"},
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "postcode": "Postcode of the property, e.g. HR4 9JS",
+        "house_number": (
+            "House house_number, house name, or UPRN (Unique Property Reference "
+            "Number) of the property. If your property only has a name and "
+            "no house_number, enter the name; if it is still not found, the error "
+            "message will list the full addresses found for your postcode "
+            "so you can copy the UPRN or exact wording from there."
+        ),
+    },
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "postcode": "Postcode",
+        "house_number": "House Number / Name / UPRN",
+    },
 }
 
 API_URLS = {
@@ -23,8 +44,9 @@ API_URLS = {
 }
 HEADER = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
-    "General": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+    "General": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -33,8 +55,10 @@ _LOGGER = logging.getLogger(__name__)
 class Source:
     def __init__(self, postcode: str, house_number: str):
         self._postcode = postcode
-        # keep original behaviour, but normalise for comparisons later
-        self._house_number = str(house_number).capitalize()
+        # keep the value exactly as entered (only trim whitespace) so error
+        # messages show the user's own input; all matching below is done
+        # case-insensitively.
+        self._house_number = str(house_number).strip()
 
     async def fetch(self):
         # fetch location id
@@ -46,34 +70,55 @@ class Source:
         r.raise_for_status()
         addresses = r.json()
         if (
-            ("error" in addresses and addresses["error"])
+            (addresses.get("error"))
             or "results" not in addresses
             or len(addresses["results"]) == 0
         ):
             raise SourceArgumentNotFound("postcode", self._postcode)
 
-        # cast PAO fields to str to avoid .lower() on non-strings (some APIs return ints)
+        results = addresses["results"]
+
+        # `house_number` may be a classic house house_number (PAO_START_NUMBER), a house
+        # name (PAO_TEXT for named properties, or SAO_TEXT for named
+        # sub-units such as flats), or the property's UPRN directly -
+        # accepting the UPRN lets users bypass name/house_number matching entirely
+        # when they already know it (e.g. from findmyaddress.co.uk).
         target = self._house_number.lower()
-        address_ids = [
-            x
-            for x in addresses["results"]
-            if (
-                x["LPI"].get("PAO_TEXT") is not None
-                and str(x["LPI"]["PAO_TEXT"]).lower() == target
-            )
-            or (
-                x["LPI"].get("PAO_START_NUMBER") is not None
-                and str(x["LPI"]["PAO_START_NUMBER"]).lower() == target
-            )
-        ]
+
+        def matches_exact(lpi: dict) -> bool:
+            for field in ("UPRN", "PAO_TEXT", "PAO_START_NUMBER", "SAO_TEXT"):
+                value = lpi.get(field)
+                if value is not None and str(value).strip().lower() == target:
+                    return True
+            return False
+
+        address_ids = [x for x in results if matches_exact(x["LPI"])]
+
+        # Fall back to a substring match against the full address string.
+        # This helps house-name-only properties whose name is not cleanly
+        # isolated into PAO_TEXT/SAO_TEXT (e.g. extra punctuation/spacing).
+        if not address_ids and len(target) >= 3:
+            address_ids = [
+                x
+                for x in results
+                if x["LPI"].get("ADDRESS")
+                and target in str(x["LPI"]["ADDRESS"]).lower()
+            ]
 
         if len(address_ids) == 0:
-            numbers = {x["LPI"].get("PAO_TEXT") for x in addresses["results"]}
-            numbers.update(
-                {x["LPI"].get("PAO_START_NUMBER") for x in addresses["results"]}
+            # Show the full address strings (rather than bare fragments) so
+            # users without a house house_number can identify their property and
+            # either enter its house name verbatim or its UPRN instead.
+            suggestions = sorted(
+                {
+                    x["LPI"]["ADDRESS"]
+                    for x in results
+                    if x["LPI"].get("ADDRESS") is not None
+                }
             )
-            numbers -= {None}
-            raise SourceArgumentNotFoundWithSuggestions("house_number", self._house_number, numbers)
+            raise SourceArgumentNotFoundWithSuggestions(
+                "house_number", self._house_number, suggestions
+            )
 
         q = str(API_URLS["collection"])
         r = await httpx.AsyncClient(follow_redirects=True).get(
@@ -112,26 +157,32 @@ class Source:
                             )
             return resulsts
 
-        waste_date_strs = first_li_after_heading("general rubbish")
-        recycling_date_strs = first_li_after_heading("recycling")
+        sections = (
+            ("General", "General rubbish", first_li_after_heading("general rubbish")),
+            ("Recycling", "Recycling", first_li_after_heading("recycling")),
+            ("Garden", "Garden", first_li_after_heading("garden waste")),
+        )
 
         entries = []
-        for waste_date_str in waste_date_strs:
-            entries.append(
-                Collection(
-                    date=datetime.strptime(waste_date_str, "%A %d %B %Y").date(),
-                    t="General rubbish",
-                    icon="mdi:trash-can",
-                ),
-            )
-        for recycling_date_str in recycling_date_strs:
-            entries.append(
-                Collection(
-                    date=datetime.strptime(recycling_date_str, "%A %d %B %Y").date(),
-                    t="Recycling",
-                    icon="mdi:recycle",
-                ),
-            )
+        for icon_key, waste_type, date_strs in sections:
+            for date_str in date_strs:
+                try:
+                    date = datetime.strptime(date_str, "%A %d %B %Y").date()
+                except ValueError:
+                    # Not every heading lists dates. Properties without a garden
+                    # waste subscription get a link to the calendar instead, so
+                    # skip anything that is not a date rather than failing.
+                    _LOGGER.debug(
+                        "Skipping non-date entry under %s: %r", waste_type, date_str
+                    )
+                    continue
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=waste_type,
+                        icon=ICON_MAP[icon_key],
+                    ),
+                )
         if not entries:
             raise Exception(
                 "No collection dates found for this address, make sure there are any concrete collection dates listed on the website for this address."

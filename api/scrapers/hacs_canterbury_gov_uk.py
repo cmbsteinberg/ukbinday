@@ -4,7 +4,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -31,10 +31,10 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "General": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food": "mdi:food-apple",
-    "Garden": "mdi:shovel",
+    "General": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
 }
 
 _LOGGER = logging.getLogger(__name__)

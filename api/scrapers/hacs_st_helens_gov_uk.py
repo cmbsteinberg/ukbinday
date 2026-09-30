@@ -4,7 +4,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
@@ -20,19 +20,20 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "BROWN BIN": "mdi:delete",
-    "GREEN BIN": "mdi:recycle",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
 }
 
 WASTE_TYPE_MAP = {
-    "General non-recyclable waste": "General Waste",
-    "Recycling": "Recycling",
+    "general non-recyclable waste": "General Waste",
+    "recycling": "Recycling",
+    "garden waste": "Garden Waste",
 }
 
 
 class Source:
     def __init__(self, postcode: str, uprn: str):
-
         if not postcode:
             raise SourceArgumentException("postcode", "Postcode is required")
         if not uprn.isdigit():
@@ -60,7 +61,7 @@ class Source:
                 timeout=30,
             )
         except Exception as err:
-            raise RuntimeError("Failed to get initial form", err)
+            raise RuntimeError("Failed to get initial form", err) from err
 
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
@@ -188,7 +189,9 @@ class Source:
                     waste_types = [w.strip() for w in waste_description.split("&")]
 
                     for waste_type in waste_types:
-                        bin_type = WASTE_TYPE_MAP.get(waste_type)
+                        bin_type = WASTE_TYPE_MAP.get(
+                            " ".join(waste_type.split()).casefold()
+                        )
                         if bin_type:
                             entries.append(
                                 Collection(

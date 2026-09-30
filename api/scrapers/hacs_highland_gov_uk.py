@@ -2,7 +2,7 @@ import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Highland"
@@ -17,11 +17,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food",
-    "containers": "mdi:package",
+    "refuse": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
+    "containers": Icons.PAPER,
 }
 
 BASE_URL = "https://highland-self.achieveservice.com"
@@ -58,7 +58,7 @@ class Source:
 
         entries = []
         for key, value in rows_data.items():
-            if not (key.endswith("NextDate") or key.endswith(next_date_key)):
+            if not (key.endswith(("NextDate", next_date_key))):
                 continue
 
             bin_type = key.split("NextDate")[0]

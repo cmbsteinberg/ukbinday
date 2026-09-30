@@ -4,7 +4,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Borough Council of King's Lynn & West Norfolk"
 DESCRIPTION = "Source for www.west-norfolk.gov.uk services for Borough Council of King's Lynn & West Norfolk, UK."
@@ -18,7 +18,11 @@ TEST_CASES = {
     "Test_003": {"uprn": "10000021270"},
     "Test_004": {"uprn": 100090969937},
 }
-ICON_MAP = {"REFUSE": "mdi:trash-can", "RECYCLING": "mdi:recycle", "GARDEN": "mdi:leaf"}
+ICON_MAP = {
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
+}
 
 
 class Source:

@@ -7,7 +7,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Gateshead Council"
 DESCRIPTION = "Source for gateshead.gov.uk services for Gateshead"
@@ -20,9 +20,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Household": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
+    "Household": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
 }
 
 
@@ -95,9 +95,9 @@ class Source:
             decoded_data = base64.b64decode(response_data)
             data = json.loads(decoded_data)
         except (binascii.Error, ValueError) as e:
-            raise ValueError(f"Failed to decode base64 data: {e}")
+            raise ValueError(f"Failed to decode base64 data: {e}") from e
         except json.JSONDecodeError as e:
-            raise ValueError(f"Failed to parse JSON data: {e}")
+            raise ValueError(f"Failed to parse JSON data: {e}") from e
 
         if "HOUSEHOLDCOLLECTIONS_1" not in data:
             raise ValueError("HOUSEHOLDCOLLECTIONS_1 not found in response data")

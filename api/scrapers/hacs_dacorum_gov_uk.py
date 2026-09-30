@@ -1,11 +1,10 @@
 import logging
 from datetime import datetime
-from typing import Dict
 
 from bs4 import BeautifulSoup, Tag
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,12 +21,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "grey bin": "mdi:trash-can",
-    "grey bin and kerbside caddy": "mdi:trash-can",
-    "kerbside caddy": "mdi:food",
-    "blue bin": "mdi:recycle",
-    "blue bin and kerbside caddy": "mdi:recycle",
-    "green bin": "mdi:leaf",
+    "grey bin": Icons.GENERAL_WASTE,
+    "grey bin and kerbside caddy": Icons.GENERAL_WASTE,
+    "kerbside caddy": Icons.BIO_KITCHEN,
+    "blue bin": Icons.RECYCLING,
+    "blue bin and kerbside caddy": Icons.RECYCLING,
+    "green bin": Icons.ORGANIC,
 }
 
 API_URL = "https://webapps.dacorum.gov.uk/bincollections/"
@@ -46,14 +45,14 @@ class Source:
         self._postcode: str = postcode.strip()
         self._uprn: str = str(uprn)
 
-    def _get_form_args(self, soup: BeautifulSoup) -> Dict[str, str]:
+    def _get_form_args(self, soup: BeautifulSoup) -> dict[str, str]:
         return {
             i.get("name"): i.get("value")
             for i in soup.find_all(["input", "select"])
             if i.get("id") in FORM_ARG_IDS
         }
 
-    def _parse_address_list(self, select_element: Tag) -> Dict[str, str]:
+    def _parse_address_list(self, select_element: Tag) -> dict[str, str]:
         uprn_addresses = {}
         for row in select_element.children:
             # Ensure child element is a Tag

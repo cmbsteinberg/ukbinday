@@ -9,11 +9,13 @@ from fastapi.responses import RedirectResponse, Response
 
 from api import config
 from api.services import address_lookup
+from api.services import deeplinks as deeplink_service
 from api.services.models import (
     AddressLookupResponse,
     AddressResult,
     CollectionItem,
     CouncilLookupResponse,
+    DeeplinkInfo,
     LookupResponse,
 )
 from api.services.rate_limiting import _get_client_ip, rate_limit
@@ -103,15 +105,24 @@ async def council_lookup(
     _rate_limit: None = Depends(rate_limit),
 ):
     lookup = request.app.state.council_lookup
-    council_id, council_name, candidates = await resolve_council(
+    council_id, council_name, candidates, lad_code = await resolve_council(
         request, lookup, postcode
     )
+
+    deeplink = None
+    if lad_code and not council_id:
+        target = deeplink_service.resolve(lad_code)
+        if target:
+            deeplink = DeeplinkInfo(
+                url=target.url, reason=target.reason, council_name=target.council_name
+            )
 
     return CouncilLookupResponse(
         postcode=postcode.strip().upper(),
         council_id=council_id,
         council_name=council_name,
         candidates=candidates,
+        deeplink=deeplink,
     )
 
 
@@ -127,6 +138,18 @@ async def lookup(
     registry = request.app.state.registry
     meta = registry.get(council)
     if meta is None:
+        target = deeplink_service.resolve_by_council_param(council)
+        if target:
+            return LookupResponse(
+                uprn=uprn,
+                council=council,
+                collections=[],
+                deeplink=DeeplinkInfo(
+                    url=target.url,
+                    reason=target.reason,
+                    council_name=target.council_name,
+                ),
+            )
         raise HTTPException(
             status_code=404,
             detail="We don't have a scraper for this council yet. "
@@ -170,6 +193,9 @@ async def calendar(
     registry = request.app.state.registry
     meta = registry.get(council)
     if meta is None:
+        target = deeplink_service.resolve_by_council_param(council)
+        if target:
+            return RedirectResponse(url=target.url, status_code=302)
         raise HTTPException(
             status_code=404,
             detail="We don't have a scraper for this council yet. "

@@ -3,7 +3,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Conwy County Borough Council"
@@ -17,10 +17,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "garden": "mdi:leaf",
-    "electrical": "mdi:battery",
-    "refuse": "mdi:trash-can",
-    "recycle": "mdi:recycle",
+    "garden": Icons.GARDEN,
+    "electrical": Icons.ELECTRONICS,
+    "refuse": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
 }
 
 

@@ -41,7 +41,9 @@
     "thanet_gov_uk",
     "westlothian_gov_uk",
     "westnorthants_gov_uk",
-    "wigan_gov_uk"
+    "wigan_gov_uk",
+    "enfield_gov_uk",
+    "great_yarmouth_gov_uk"
   ],
   "ssl_verify_disabled": [
     "aberdeenshire_gov_uk",
@@ -56,9 +58,6 @@
     "bolsover_gov_uk",
     "chelmsford_gov_uk",
     "fylde_gov_uk",
-    "north_norfolk_gov_uk",
-    "southkesteven_gov_uk",
-    "uttlesford_gov_uk",
     "west_lindsey_gov_uk"
   ],
   "uprn_alias": {

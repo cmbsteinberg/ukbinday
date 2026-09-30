@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -26,11 +26,11 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "Grey Bin": "mdi:trash-can",
-    "Beige Bin": "mdi:newspaper-variant",
-    "Burgundy Bin": "mdi:bottle-soda",
-    "Green Bin": "mdi:leaf",
-    "Food container": "mdi:food",
+    "Grey Bin": Icons.GENERAL_WASTE,
+    "Beige Bin": Icons.NEWSPAPER,
+    "Burgundy Bin": Icons.GLASS,
+    "Green Bin": Icons.ORGANIC,
+    "Food container": Icons.BIO_KITCHEN,
 }
 
 TEST_CASES = {
@@ -136,10 +136,8 @@ class Source:
 
         for address in data["data"]:
             label = address["label"]
-            if (
-                label == self._house_number
-                or label.startswith(f"{self._house_number} ")
-                or label.startswith(f"{self._house_number},")
+            if label == self._house_number or label.startswith(
+                (f"{self._house_number} ", f"{self._house_number},")
             ):
                 return address["value"], auth_token
 

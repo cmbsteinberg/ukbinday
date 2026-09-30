@@ -18,11 +18,21 @@ from pathlib import Path
 
 from pipeline.shared import (
     BLOCKED_DOMAINS,
-    LAD_LOOKUP_PATH,
+    PIPELINE_DIR,
+    PROJECT_ROOT,
+    SCRAPER_LAD_MAP_PATH,
     extract_gov_uk_prefix,
+    extract_url_from_scraper,
     load_routing,
+    normalise_council_name,
     normalise_domain,
 )
+
+LAD_BASE_PATH = PIPELINE_DIR / "data" / "lad_base.json"
+# Committed ONS extracts used to sample real test addresses for unindexed
+# councils (same sources the postcode lookup is built from).
+POSTCODE_LOOKUP_PARQUET = Path(__file__).resolve().parent.parent.parent / "api" / "data" / "postcode_lookup.parquet"
+ONSUD_PARQUET = PIPELINE_DIR / "data" / "onsud_uprn_postcode.parquet"
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -202,6 +212,10 @@ def _replace_requests_api_calls(source: str) -> str:
     source = source.replace("requests.Session()", "httpx.AsyncClient(follow_redirects=True)")
     source = source.replace("requests.session()", "httpx.AsyncClient(follow_redirects=True)")
     source = source.replace("requests.Response", "httpx.Response")
+    # Type annotations outlive the import rewrite (`import requests` is gone,
+    # so any remaining `requests.X` is a NameError). Post-transform sessions
+    # are httpx clients, so retarget the annotation.
+    source = re.sub(r"\brequests\.Session\b(?!\()", "httpx.AsyncClient", source)
     return source
 
 
@@ -309,12 +323,24 @@ def _ensure_httpx_import(source: str) -> str:
     """Ensure import httpx and _http helper are present if referenced."""
     lines = source.split("\n")
     last_import_idx = 0
+    depth = 0
     for i, line in enumerate(lines):
-        stripped = line.strip()
-        if stripped.startswith(("import ", "from ")) and not line.startswith(
-            (" ", "\t")
-        ):
+        if depth == 0:
+            stripped = line.strip()
+            if stripped.startswith(("import ", "from ")) and not line.startswith(
+                (" ", "\t")
+            ):
+                last_import_idx = i
+                depth = line.count("(") - line.count(")")
+                if depth < 0:
+                    depth = 0
+        else:
+            # Inside a parenthesised multi-line import — the insert point is
+            # the closing line, never the middle of the block.
+            depth += line.count("(") - line.count(")")
             last_import_idx = i
+            if depth <= 0:
+                depth = 0
     inserts = []
     if "httpx." in source and "import httpx" not in source:
         inserts.append("import httpx")
@@ -341,10 +367,17 @@ def _make_async(source: str) -> str:
     for m in re.finditer(r"async with httpx\.AsyncClient\([^)]*\) as (\w+):", source):
         session_vars.add(m.group(1))
     # Add await to session.get(), session.post(), etc.
-    for var in session_vars:
+    # Attribute receivers (self.session.get() or self._session.get()) need the
+    # await before the receiver — naive insertion yields `self.await ...`.
+    for var in sorted(session_vars, key=len, reverse=True):
         escaped = re.escape(var)
         source = re.sub(
-            rf"(?<!await )\b{escaped}\.(get|post|put|delete|patch|head)\(",
+            rf"(?<!await )\bself\.{escaped}\.(get|post|put|delete|patch|head)\(",
+            rf"await self.{var}.\1(",
+            source,
+        )
+        source = re.sub(
+            rf"(?<!await )(?<!\.)\b{escaped}\.(get|post|put|delete|patch|head)\(",
             rf"await {var}.\1(",
             source,
         )
@@ -389,8 +422,19 @@ def _fix_non_async_awaits(source: str) -> str:
             m = re.match(r"^(\s*)def (\w+)\(", line)
             if m and "async def" not in line:
                 indent = len(m.group(1))
+                # Skip multi-line signatures: the body starts after the
+                # parens balance and the line ends with ':'. Without this,
+                # a closing `) -> dict:` at def indent ends the scan early
+                # and the function is never converted.
+                depth = 0
+                k = i
+                while k < len(lines):
+                    depth += lines[k].count("(") - lines[k].count(")")
+                    if depth <= 0 and lines[k].rstrip().endswith(":"):
+                        break
+                    k += 1
                 # Scan body for await
-                for j in range(i + 1, len(lines)):
+                for j in range(k + 1, len(lines)):
                     body_line = lines[j]
                     if body_line.strip() == "":
                         continue
@@ -404,10 +448,18 @@ def _fix_non_async_awaits(source: str) -> str:
                         break
             new_lines.append(line)
         source = "\n".join(new_lines)
-        # Add await to call sites of newly-async functions
+        # Add await to call sites of newly-async functions.
+        # Attribute calls (self.fn()/obj.fn()) need the await before the
+        # receiver, not the method name — naive insertion yields
+        # `self.await fn(`, a SyntaxError that silently drops the scraper.
         for fn in async_funcs:
             source = re.sub(
-                rf"(?<!await )(?<!def )(?<!async def )\b{fn}\(",
+                rf"(?<!await )self\.{fn}\(",
+                rf"await self.{fn}(",
+                source,
+            )
+            source = re.sub(
+                rf"(?<!await )(?<!def )(?<!async def )(?<!\.)\b{fn}\(",
                 rf"await {fn}(",
                 source,
             )
@@ -644,6 +696,23 @@ def _apply_per_scraper_transforms(council_name: str, source: str) -> str:
                 '            ]'
             ),
         )
+    if council_name == "EastHampshireDC":
+        # Upstream hardcodes a PDF cache dir in the author's home directory,
+        # which fails everywhere else (including containers). Retarget to the
+        # system temp dir; the 7-day max-age logic is unchanged.
+        source = source.replace(
+            'PDF_CACHE_DIR = "/home/mark/pdf-scrapers/easthants"',
+            'PDF_CACHE_DIR = os.path.join(tempfile.gettempdir(), "easthants-pdf-cache")',
+        )
+        if "import tempfile" not in source:
+            source = "import tempfile\n" + source
+    if council_name == "SocietyWorks":
+        # The Source adapter passes postcode/paon, never a page URL, so the
+        # Bromley/Kingston ID-in-URL branch must tolerate user_url=None.
+        source = source.replace(
+            'if m := re.search("waste/([0-9]+)", user_url):',
+            'if user_url and (m := re.search("waste/([0-9]+)", user_url)):',
+        )
     return source
 
 
@@ -701,17 +770,27 @@ def _process_council(
 class _PatchStats:
     added: int = 0
     added_playwright: int = 0
+    added_unindexed: int = 0
     skipped_selenium: int = 0
     skipped_existing: int = 0
+    unindexed_selenium: list = field(default_factory=list)
     lad_mappings: dict = field(default_factory=dict)
     selenium_councils: dict = field(default_factory=dict)
+    # scraper stem -> {"label": ..., "params": {...}} for councils with no
+    # input.json entry, consumed by generate_test_lookup.py as a fallback.
+    unindexed_test_params: dict = field(default_factory=dict)
 
     def log_summary(self) -> None:
         logger.info("Summary:")
         logger.info(f"  Added (requests): {self.added}")
         logger.info(f"  Added (Playwright): {self.added_playwright}")
+        logger.info(f"  Added (unindexed sweep): {self.added_unindexed}")
         logger.info(f"  Skipped (Existing/Mampfes): {self.skipped_existing}")
         logger.info(f"  Skipped (Selenium): {self.skipped_selenium}")
+        if self.unindexed_selenium:
+            logger.info(
+                f"  Unindexed Selenium (port backlog): {', '.join(self.unindexed_selenium)}"
+            )
         logger.info(f"  LAD mappings: {len(self.lad_mappings)}")
 
 def _council_to_ukbcd_name(council_name: str) -> str:
@@ -747,6 +826,332 @@ def _find_hacs_scraper(
     return None
 
 
+# Upstream council stems whose normalised name matches no LAD (foreign-language
+# names, abbreviations). Values are LAD codes verified against lad_base.json.
+UNINDEXED_LAD_ALIASES = {
+    "cnesiar": "S12000013",  # Na h-Eileanan Siar (Comhairle nan Eilean Siar)
+}
+
+# Upstream council stems to skip in the unindexed sweep even when patchable,
+# with reasons. These keep their current wiring until a proper port exists.
+UNINDEXED_EXCLUDE = {
+    # Portal returns "no active services" for sampled UPRNs (matches the
+    # April HACS retirement as broken); the HACS re-test track owns this one.
+    "BridgendCountyBoroughCouncil",
+    # Recollect area returns qualifiers but no parcels area-wide (DN22/S80/
+    # S81 all probed); the place_calendar flow works but this scraper doesn't
+    # use it — port opportunity, not a wire.
+    "BassetlawDistrictCouncil",
+}
+
+# Extra test params for unindexed councils, keyed by upstream council stem.
+# The ONS join yields uprn+postcode; scrapers needing more (e.g. a house
+# number to disambiguate a postcode) get it here. Values are real,
+# live-verified test data in the same spirit as input.json entries.
+UNINDEXED_EXTRA_PARAMS = {
+    # CF81 9LE resolves via the Recollect qualifier flow; "1" is
+    # "1 Coronation Crescent, Fochriw" from the live address picker.
+    "CaerphillyCountyBoroughCouncil": {"paon": "1"},
+    # S81 9RS likewise; "1" is "1 Chestnut Road, Langold".
+    "BassetlawDistrictCouncil": {"paon": "1"},
+    # Static schedule pages are matched by village name; HS2 9HB is in the
+    # Lewis/Harris region and its pages list Uig.
+    "CneSiarCouncil": {"paon": "Uig"},
+    # Area pages are matched by street/area name; KW16 3NJ is Kirkwall.
+    "OrkneyIslandsCouncil": {"paon": "Kirkwall"},
+    # Street table is matched by street name; PA15 4ST is Greenock.
+    "InverclydeCouncil": {"paon": "Largs Road"},
+    # Dense-postcode sampling landed on result-less properties here
+    # (industrial estate-type postcodes); pin the live-verified pairs.
+    "MerthyrTydfilCountyBoroughCouncil": {
+        "uprn": "43004899",
+        "postcode": "CF46 5BS",
+    },
+    "TamworthBoroughCouncil": {"uprn": "394000003", "postcode": "B79 7JN"},
+}
+
+
+def _is_helper_module(path: Path) -> bool:
+    """True for shared base-class files (no CouncilClass) rather than councils."""
+    try:
+        tree = ast.parse(path.read_text())
+    except SyntaxError:
+        return False
+    return not any(
+        isinstance(node, ast.ClassDef) and node.name == "CouncilClass"
+        for node in ast.walk(tree)
+    )
+
+
+def _generated_imports_ok(path: Path) -> str | None:
+    """Check a patched file's third-party imports resolve in this env.
+
+    Returns the first unresolvable module name, or None if all resolve.
+    CI imports every scraper, so a file needing an undeclared dependency
+    (e.g. pdfplumber) must be skipped, not wired.
+    """
+    import importlib.util
+    import sys
+
+    try:
+        tree = ast.parse(path.read_text())
+    except SyntaxError as e:
+        return f"<syntax error: {e}>"
+    roots = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            roots.update(a.name.split(".")[0] for a in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+            roots.add(node.module.split(".")[0])
+    stdlib = set(sys.stdlib_module_names) | {"api"}
+    for root in sorted(roots):
+        if root in stdlib:
+            continue
+        try:
+            if importlib.util.find_spec(root) is None:
+                return root
+        except (ImportError, ValueError):
+            return root
+    return None
+
+
+def _sample_test_address(lad: str) -> dict | None:
+    """Sample a deterministic real {uprn, postcode} pair for a LAD.
+
+    Joins the committed ONSUD (uprn -> postcode) against the postcode lookup
+    (postcode -> LAD) so unindexed councils get working test params without
+    an input.json entry. Picks the LAD's most-populous postcode (densest =
+    most likely residential street) and its lowest UPRN, so the sample is
+    stable across syncs and rarely a commercial oddity.
+    """
+    try:
+        import duckdb
+    except ImportError:
+        logger.warning("duckdb unavailable — cannot sample test address for %s", lad)
+        return None
+    if not ONSUD_PARQUET.exists() or not POSTCODE_LOOKUP_PARQUET.exists():
+        logger.warning("ONS parquets missing — cannot sample test address for %s", lad)
+        return None
+    try:
+        con = duckdb.connect()
+        try:
+            row = con.execute(
+                "WITH ranked AS ("
+                "  SELECT o.uprn, o.postcode, "
+                "         COUNT(*) OVER (PARTITION BY o.postcode) AS pc_count "
+                "  FROM read_parquet(?) o "
+                "  JOIN read_parquet(?) l "
+                "    ON REPLACE(l.postcode, ' ', '') = REPLACE(o.postcode, ' ', '') "
+                "  WHERE l.lad_code = ?"
+                ") SELECT uprn, postcode FROM ranked "
+                "ORDER BY pc_count DESC, uprn LIMIT 1",
+                [str(ONSUD_PARQUET), str(POSTCODE_LOOKUP_PARQUET), lad],
+            ).fetchone()
+        finally:
+            con.close()
+    except Exception as e:
+        logger.warning("Test-address sampling failed for %s: %s", lad, e)
+        return None
+    if not row:
+        return None
+    # ONS values can carry stray whitespace (e.g. 'ZE2 9JU '), which breaks
+    # strict council search forms. Strip at the source.
+    return {"uprn": str(row[0]).strip(), "postcode": row[1].strip()}
+
+
+def _match_unindexed_lad(
+    identifiers: set[str], lad_data: dict[str, dict]
+) -> list[str]:
+    """Match a council's identifier set against lad_base entries.
+
+    Mirrors the HACS wiring match in sync_all: a LAD matches when the
+    normalised council name or the gov.uk URL prefix agrees. Returns all
+    matching codes so callers can require an unambiguous single hit.
+    """
+    matches = []
+    for code, entry in lad_data.items():
+        if not isinstance(entry, dict):
+            continue
+        lad_ids = {normalise_council_name(entry.get("name", ""))}
+        if entry.get("govuk_url"):
+            lad_ids.add(extract_gov_uk_prefix(entry["govuk_url"]))
+        lad_ids.discard(None)
+        lad_ids.discard("")
+        if identifiers & lad_ids:
+            matches.append(code)
+    return matches
+
+
+def _sweep_unindexed_councils(
+    councils_dir: Path,
+    target_dir: Path,
+    processed: set[str],
+    stats: _PatchStats,
+) -> None:
+    """Patch and wire upstream councils missing from input.json (Phase 1b)."""
+    if not LAD_BASE_PATH.exists():
+        logger.warning("%s not found — skipping unindexed sweep.", LAD_BASE_PATH)
+        return
+    lad_data = json.loads(LAD_BASE_PATH.read_text())
+
+    for path in sorted(councils_dir.glob("*.py")):
+        council_name = path.stem
+        if council_name.startswith("_") or council_name in processed:
+            continue
+
+        if is_selenium_scraper(path):
+            stats.unindexed_selenium.append(council_name)
+            logger.info("Unindexed Selenium scraper (port backlog): %s", council_name)
+            continue
+
+        if _is_helper_module(path):
+            logger.debug("Skipping helper module: %s", council_name)
+            continue
+
+        if council_name in UNINDEXED_EXCLUDE:
+            logger.info("Skipping excluded unindexed scraper: %s", council_name)
+            continue
+
+        url = extract_url_from_scraper(path)
+        identifiers = {normalise_council_name(council_name)}
+        if url:
+            identifiers.add(extract_gov_uk_prefix(url))
+        identifiers.discard(None)
+        identifiers.discard("")
+
+        matches = _match_unindexed_lad(identifiers, lad_data)
+        if not matches:
+            aliased = [UNINDEXED_LAD_ALIASES[i] for i in identifiers if i in UNINDEXED_LAD_ALIASES]
+            matches = [a for a in aliased if a in lad_data]
+        if len(matches) != 1:
+            logger.warning(
+                "Unindexed scraper %s matches %d LADs (%s) — add a "
+                "lad_overrides.json entry to wire it.",
+                council_name,
+                len(matches),
+                ", ".join(matches) or "-",
+            )
+            continue
+        lad = matches[0]
+
+        existing = stats.lad_mappings.get(lad, {}).get("scraper_id")
+        if existing:
+            # HACS (or an indexed UKBCD scraper) already covers this LAD.
+            logger.info(
+                "Unindexed scraper %s matches %s but %s is already wired — skipping.",
+                council_name,
+                lad,
+                existing,
+            )
+            continue
+
+        sample = _sample_test_address(lad)
+        if not sample:
+            logger.warning(
+                "Unindexed scraper %s (%s): no ONS test address — skipping.",
+                council_name,
+                lad,
+            )
+            continue
+
+        entry = lad_data[lad]
+        data = {
+            "wiki_name": entry["name"],
+            "url": url or entry.get("govuk_url") or "",
+            **sample,
+            **UNINDEXED_EXTRA_PARAMS.get(council_name, {}),
+        }
+        logger.info(
+            "Wiring unindexed scraper: %s -> %s (%s) with test %s %s",
+            council_name,
+            lad,
+            entry["name"],
+            sample["uprn"],
+            sample["postcode"],
+        )
+        sanitized_name = _process_council(council_name, data, councils_dir, target_dir)
+        if sanitized_name is None:
+            continue
+        bad_import = _generated_imports_ok(target_dir / f"{sanitized_name}.py")
+        if bad_import:
+            logger.warning(
+                "Unindexed scraper %s needs unavailable module %s — skipping "
+                "(not wired). Declare the dependency or port it by hand.",
+                council_name,
+                bad_import,
+            )
+            (target_dir / f"{sanitized_name}.py").unlink(missing_ok=True)
+            continue
+        stats.lad_mappings[lad] = {
+            "scraper_id": sanitized_name,
+            "url": data["url"],
+        }
+        params = {k: str(v) for k, v in sample.items()}
+        if "uprn" in data:
+            params["uprn"] = str(data["uprn"])
+        if "postcode" in data:
+            params["postcode"] = str(data["postcode"])
+        if "paon" in data:
+            params["house_number"] = str(data["paon"])
+        stats.unindexed_test_params[sanitized_name] = {
+            "label": entry["name"],
+            "params": params,
+        }
+        stats.added_unindexed += 1
+
+
+def _sync_council_helpers(councils_dir: Path, target_dir: Path) -> None:
+    """Copy upstream shared base classes referenced by generated scrapers.
+
+    Some councils subclass a shared helper (e.g. SocietyWorks) instead of
+    implementing CouncilClass directly. The generated scrapers import these as
+    api.compat.ukbcd.councils.<Helper>, so mirror them into
+    api/compat/ukbcd/councils/ through the same patch chain (minus the Source
+    adapter — they are libraries, not scrapers).
+    """
+    compat_dir = PROJECT_ROOT / "api" / "compat" / "ukbcd" / "councils"
+    needed: set[str] = set()
+    for path in target_dir.glob("ukbcd_*.py"):
+        try:
+            text = path.read_text()
+        except OSError:
+            continue
+        needed.update(
+            re.findall(r"from api\.compat\.ukbcd\.councils\.(\w+) import", text)
+        )
+    if not needed:
+        return
+    compat_dir.mkdir(parents=True, exist_ok=True)
+    init_file = compat_dir / "__init__.py"
+    if not init_file.exists():
+        init_file.write_text("")
+    for helper in sorted(needed):
+        src_file = councils_dir / f"{helper}.py"
+        if not src_file.exists():
+            logger.warning(
+                "Helper %s referenced but not upstream — skipping.", helper
+            )
+            continue
+        patched = _apply_per_scraper_transforms(
+            helper, convert_requests_to_async_httpx(rewrite_imports(src_file.read_text()))
+        )
+        try:
+            ast.parse(patched)
+        except SyntaxError as e:
+            logger.warning(
+                "Helper %s patch produced invalid syntax (%s) — skipping.",
+                helper,
+                e,
+            )
+            continue
+        (compat_dir / f"{helper}.py").write_text(patched)
+        logger.info("Synced helper: %s", helper)
+    for stale in compat_dir.glob("*.py"):
+        if stale.name != "__init__.py" and stale.stem not in needed:
+            stale.unlink()
+            logger.info("Removed stale helper: %s", stale.stem)
+
+
 def _patch_councils(
     input_data: dict,
     councils_dir: Path,
@@ -765,6 +1170,7 @@ def _patch_councils(
                validate that every recorded scraper_id actually exists on disk.
     """
     stats = _PatchStats()
+    processed: set[str] = set()
 
     # Phase 1: Process councils and record baseline LAD mappings
     for council_name, data in input_data.items():
@@ -775,17 +1181,18 @@ def _patch_councils(
         if not url:
             continue
 
+        processed.add(council_name)
         domain = normalise_domain(url)
 
         ukbcd_name = _council_to_ukbcd_name(council_name)
         lad_codes = _get_lad_codes(data)
-        name = data.get("wiki_name") or ""
 
-        # Record baseline: every council gets its UKBCD scraper name
+        # Record baseline: every council gets its UKBCD scraper name.
+        # Council names deliberately aren't recorded here — input.json's
+        # wiki_name isn't ground truth; lad_base.json owns the ONS name.
         for lad in lad_codes:
             if lad not in stats.lad_mappings:
                 stats.lad_mappings[lad] = {
-                    "name": name,
                     "scraper_id": ukbcd_name,
                     "url": url,
                 }
@@ -829,6 +1236,15 @@ def _patch_councils(
         # the real value from _process_council to be safe)
         for lad in lad_codes:
             stats.lad_mappings[lad]["scraper_id"] = sanitized_name
+
+    # Phase 1b: Sweep councils_dir for files with no input.json entry.
+    # Upstream adds scrapers without always indexing them, so the loop above
+    # never visits them. Unambiguous single-LAD matches are auto-wired with
+    # synthetic test params sampled from the committed ONS parquets.
+    # Sync shared base classes (SocietyWorks etc.) into api/compat/ukbcd/councils/
+    # before Phase 2 validation so helper-backed scrapers resolve on import.
+    _sync_council_helpers(councils_dir, target_dir)
+    _sweep_unindexed_councils(councils_dir, target_dir, processed, stats)
 
     # Phase 2: Validate that every recorded scraper_id exists on disk
     for lad, entry in stats.lad_mappings.items():
@@ -890,15 +1306,30 @@ def main():
         ukbcd_override_domains,
     )
 
-    # Write lad_lookup.json directly
+    # Write the scraper wiring. api/data/lad_lookup.json is composed from this
+    # plus pipeline/data/lad_base.json by scripts/lookup/build_lad_lookup.py,
+    # which sync_all.py runs next — input.json must not decide which councils
+    # exist, only which of them have a scraper.
     if stats.lad_mappings:
         logger.info(
-            f"Writing {len(stats.lad_mappings)} LAD mappings to lad_lookup.json"
+            f"Writing {len(stats.lad_mappings)} LAD mappings to scraper_lad_map.json"
         )
-        LAD_LOOKUP_PATH.parent.mkdir(parents=True, exist_ok=True)
-        LAD_LOOKUP_PATH.write_text(json.dumps(stats.lad_mappings, indent=2))
+        SCRAPER_LAD_MAP_PATH.parent.mkdir(parents=True, exist_ok=True)
+        SCRAPER_LAD_MAP_PATH.write_text(
+            json.dumps(dict(sorted(stats.lad_mappings.items())), indent=2) + "\n"
+        )
 
     stats.log_summary()
+
+    # Persist test params for councils with no input.json entry so
+    # generate_test_lookup.py can cover them (same shape as test_cases.json).
+    unindexed_path = PIPELINE_DIR / "data" / "unindexed_test_params.json"
+    unindexed_path.write_text(json.dumps(stats.unindexed_test_params, indent=2) + "\n")
+    logger.info(
+        "Wrote %d unindexed test-param entries to %s",
+        len(stats.unindexed_test_params),
+        unindexed_path.name,
+    )
 
     # Write selenium manifest for the port pipeline
     if stats.selenium_councils:

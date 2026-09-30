@@ -1,6 +1,6 @@
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 from api.compat.hacs.service.ICS import ICS
 
@@ -16,9 +16,9 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "Empty Bin 240L Black": "mdi:trash-can",
-    "Empty Bin 240L Green": "mdi:recycle",
-    "Empty Bin 240L Brown": "mdi:leaf",
+    "Empty Bin 240L Black": Icons.GENERAL_WASTE,
+    "Empty Bin 240L Green": Icons.RECYCLING,
+    "Empty Bin 240L Brown": Icons.ORGANIC,
 }
 
 

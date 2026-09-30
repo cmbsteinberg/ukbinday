@@ -2,7 +2,7 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil import parser
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Wyre Borough Council"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for wyre.gov.uk"  # Describe your source
@@ -10,10 +10,10 @@ URL = "https://www.wyre.gov.uk"  # Insert url to service homepage. URL will show
 TEST_CASES = {"Test_001": {"uprn": "10094000847"}, "Test_002": {"uprn": "100010727065"}}
 HEADERS = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
-    "Grey Bin": "mdi:trash-can",
-    "Blue Bin": "mdi:recycle",
-    "Red Bin": "mdi:recycle",
-    "Green Bin": "mdi:leaf",
+    "Grey Bin": Icons.GENERAL_WASTE,
+    "Blue Bin": Icons.RECYCLING,
+    "Red Bin": Icons.RECYCLING,
+    "Green Bin": Icons.ORGANIC,
 }
 
 
@@ -36,7 +36,7 @@ class Source:
 
         bins = soup.find_all("h3", class_="bin-collection-tasks__heading")
         dates = soup.find_all("p", class_="bin-collection-tasks__date")
-        for date_tag, bin_tag in zip(dates, bins):
+        for date_tag, bin_tag in zip(dates, bins, strict=False):
             bint = " ".join(bin_tag.text.split()[2:4])
             date = parser.parse(date_tag.text).date()
 

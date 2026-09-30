@@ -1,0 +1,1406 @@
+{
+  "E06000001": {
+    "scraper_id": "hacs_hartlepool_gov_uk",
+    "url": "https://www.hartlepool.gov.uk"
+  },
+  "E06000002": {
+    "scraper_id": "ukbcd_middlesbrough_council",
+    "url": "https://www.middlesbrough.gov.uk/recycling-and-rubbish/bin-collection-dates/"
+  },
+  "E06000003": {
+    "scraper_id": "ukbcd_redcarand_cleveland_council",
+    "url": "https://www.redcar-cleveland.gov.uk"
+  },
+  "E06000004": {
+    "scraper_id": "hacs_stockton_gov_uk",
+    "url": "https://www.stockton.gov.uk/bin-collection-days"
+  },
+  "E06000005": {
+    "scraper_id": "hacs_darlington_gov_uk",
+    "url": "https://www.darlington.gov.uk/bins-waste-and-recycling/collection-day-lookup/"
+  },
+  "E06000007": {
+    "scraper_id": "hacs_warrington_gov_uk",
+    "url": "https://www.warrington.gov.uk"
+  },
+  "E06000008": {
+    "scraper_id": "hacs_blackburn_gov_uk",
+    "url": "https://blackburn.gov.uk/"
+  },
+  "E06000009": {
+    "scraper_id": "hacs_blackpool_gov_uk",
+    "url": "https://www.blackpool.gov.uk/"
+  },
+  "E06000010": {
+    "scraper_id": "hacs_hull_gov_uk",
+    "url": "https://www.hull.gov.uk/bins-and-recycling/bin-collections/bin-collection-day-checker"
+  },
+  "E06000011": {
+    "scraper_id": "hacs_eastriding_gov_uk",
+    "url": "https://www.eastriding.gov.uk"
+  },
+  "E06000012": {
+    "scraper_id": "hacs_nelincs_gov_uk",
+    "url": "https://www.nelincs.gov.uk/refuse-collection-schedule/?view=timeline&uprn=11062649"
+  },
+  "E06000013": {
+    "scraper_id": "hacs_northlincs_gov_uk",
+    "url": "https://www.northlincs.gov.uk/bins-waste-and-recycling/bin-and-box-collection-dates/"
+  },
+  "E06000014": {
+    "scraper_id": "hacs_york_gov_uk",
+    "url": "https://waste-api.york.gov.uk/api/Collections/GetBinCollectionDataForUprn/"
+  },
+  "E06000015": {
+    "scraper_id": "hacs_derby_gov_uk",
+    "url": "https://www.derby.gov.uk"
+  },
+  "E06000016": {
+    "scraper_id": "ukbcd_leicester_city_council",
+    "url": "https://biffaleicester.co.uk"
+  },
+  "E06000018": {
+    "scraper_id": "hacs_nottingham_city_gov_uk",
+    "url": "https://nottinghamcity.gov.uk"
+  },
+  "E06000019": {
+    "scraper_id": "hacs_herefordshire_gov_uk",
+    "url": "https://www.herefordshire.gov.uk/rubbish-recycling/check-bin-collection-day"
+  },
+  "E06000020": {
+    "scraper_id": "hacs_telford_gov_uk",
+    "url": "https://dac.telford.gov.uk/bindayfinder/"
+  },
+  "E06000021": {
+    "scraper_id": "hacs_stoke_gov_uk",
+    "url": "https://www.stoke.gov.uk/jadu/custom/webserviceLookUps/BarTecWebServices_missed_bin_calendar.php?UPRN=3455121482"
+  },
+  "E06000022": {
+    "scraper_id": "hacs_bathnes_gov_uk",
+    "url": "https://www.bathnes.gov.uk/webforms/waste/collectionday/"
+  },
+  "E06000023": {
+    "scraper_id": "hacs_bristol_gov_uk",
+    "url": "https://bristol.gov.uk"
+  },
+  "E06000024": {
+    "scraper_id": "hacs_nsomerset_gov_uk",
+    "url": "n-somerset.gov.uk"
+  },
+  "E06000025": {
+    "scraper_id": "hacs_southglos_gov_uk",
+    "url": "https://api.southglos.gov.uk/wastecomp/GetCollectionDetails"
+  },
+  "E06000026": {
+    "scraper_id": "hacs_plymouth_gov_uk",
+    "url": "https://www.plymouth.gov.uk"
+  },
+  "E06000027": {
+    "scraper_id": "port_torbay_council",
+    "url": "https://www.torbay.gov.uk"
+  },
+  "E06000030": {
+    "scraper_id": "hacs_swindon_gov_uk",
+    "url": "https://www.swindon.gov.uk"
+  },
+  "E06000031": {
+    "scraper_id": "hacs_peterborough_gov_uk",
+    "url": "https://report.peterborough.gov.uk/waste"
+  },
+  "E06000032": {
+    "scraper_id": "ukbcd_luton_borough_council",
+    "url": "https://myforms.luton.gov.uk"
+  },
+  "E06000033": {
+    "scraper_id": "hacs_southend_gov_uk",
+    "url": "https://www.southend.gov.uk"
+  },
+  "E06000034": {
+    "scraper_id": "hacs_thurrock_gov_uk",
+    "url": "https://www.thurrock.gov.uk"
+  },
+  "E06000035": {
+    "scraper_id": "hacs_medway_gov_uk",
+    "url": "https://www.medway.gov.uk/homepage/45/check_your_waste_collection_day"
+  },
+  "E06000036": {
+    "scraper_id": "hacs_bracknell_forest_gov_uk",
+    "url": "https://selfservice.mybfc.bracknell-forest.gov.uk/w/webpage/waste-collection-days"
+  },
+  "E06000037": {
+    "scraper_id": "hacs_westberks_gov_uk",
+    "url": "https://www.westberks.gov.uk/binday"
+  },
+  "E06000038": {
+    "scraper_id": "hacs_reading_gov_uk",
+    "url": "https://api.reading.gov.uk/api/collections/310056735"
+  },
+  "E06000039": {
+    "scraper_id": "hacs_slough_gov_uk",
+    "url": "https://waste.slough.gov.uk/PublicDashboard"
+  },
+  "E06000040": {
+    "scraper_id": "hacs_rbwm_gov_uk",
+    "url": "https://forms.rbwm.gov.uk/bincollections?uprn="
+  },
+  "E06000041": {
+    "scraper_id": "hacs_wokingham_gov_uk",
+    "url": "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/find-your-bin-collection-day"
+  },
+  "E06000042": {
+    "scraper_id": "ukbcd_milton_keynes_city_council",
+    "url": "https://mycouncil.milton-keynes.gov.uk/en/service/Waste_Collection_Round_Checker"
+  },
+  "E06000044": {
+    "scraper_id": "hacs_portsmouth_gov_uk",
+    "url": "https://my.portsmouth.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-26e27e70-f771-47b1-a34d-af276075cede/AF-Stage-cd7cc291-2e59-42cc-8c3f-1f93e132a2c9/definition.json&redirectlink=%2F&cancelRedirectLink=%2F"
+  },
+  "E06000047": {
+    "scraper_id": "hacs_durham_gov_uk",
+    "url": "https://www.durham.gov.uk/bincollections?uprn="
+  },
+  "E06000049": {
+    "scraper_id": "ukbcd_cheshire_east_council",
+    "url": "https://online.cheshireeast.gov.uk/mycollectionday"
+  },
+  "E06000050": {
+    "scraper_id": "hacs_cheshire_west_and_chester_gov_uk",
+    "url": "https://www.cheshirewestandchester.gov.uk"
+  },
+  "E06000051": {
+    "scraper_id": "hacs_shropshire_gov_uk",
+    "url": "https://bins.shropshire.gov.uk/property/100070034731"
+  },
+  "E06000052": {
+    "scraper_id": "hacs_cornwall_gov_uk",
+    "url": "https://www.cornwall.gov.uk/my-area/"
+  },
+  "E06000054": {
+    "scraper_id": "hacs_wiltshire_gov_uk",
+    "url": "https://wiltshire.gov.uk"
+  },
+  "E06000055": {
+    "scraper_id": "hacs_bedford_gov_uk",
+    "url": "https://www.bedford.gov.uk/bins-and-recycling/household-bins-and-recycling/check-your-bin-day"
+  },
+  "E06000056": {
+    "scraper_id": "hacs_centralbedfordshire_gov_uk",
+    "url": "https://www.centralbedfordshire.gov.uk/info/163/bins_and_waste_collections_-_check_bin_collection_day"
+  },
+  "E06000057": {
+    "scraper_id": "port_northumberland_council",
+    "url": "https://www.northumberland.gov.uk"
+  },
+  "E06000058": {
+    "scraper_id": "hacs_bcp_gov_uk",
+    "url": "https://bcpportal.bcpcouncil.gov.uk/checkyourbincollection"
+  },
+  "E06000059": {
+    "scraper_id": "hacs_dorset_gov_uk",
+    "url": "https://www.dorsetcouncil.gov.uk/"
+  },
+  "E06000061": {
+    "scraper_id": "hacs_northnorthants_gov_uk",
+    "url": "https://cms.northnorthants.gov.uk/bin-collection-search/calendarevents/100031021318/2023-10-17/2023-10-01"
+  },
+  "E06000062": {
+    "scraper_id": "hacs_westnorthants_gov_uk",
+    "url": "https://www.westnorthants.gov.uk"
+  },
+  "E06000063": {
+    "scraper_id": "hacs_cumberland_gov_uk",
+    "url": "https://www.cumberland.gov.uk/bins-recycling-and-street-cleaning/waste-collections/bin-collection-schedule"
+  },
+  "E06000064": {
+    "scraper_id": "ukbcd_west_morland_and_furness",
+    "url": "https://my.eden.gov.uk/myeden.aspx"
+  },
+  "E06000065": {
+    "scraper_id": "ukbcd_north_yorkshire",
+    "url": "https://www.northyorks.gov.uk/bin-calendar/lookup"
+  },
+  "E06000066": {
+    "scraper_id": "hacs_itv_somerset",
+    "url": "https://www.somerset.gov.uk/"
+  },
+  "E07000008": {
+    "scraper_id": "hacs_cambridge_gov_uk",
+    "url": "https://www.cambridge.gov.uk/"
+  },
+  "E07000009": {
+    "scraper_id": "hacs_eastcambs_gov_uk",
+    "url": "https://www.eastcambs.gov.uk/"
+  },
+  "E07000010": {
+    "scraper_id": "hacs_fenland_gov_uk",
+    "url": "https://www.fenland.gov.uk/article/13114/"
+  },
+  "E07000011": {
+    "scraper_id": "hacs_huntingdonshire_gov_uk",
+    "url": "http://www.huntingdonshire.gov.uk/refuse-calendar/"
+  },
+  "E07000012": {
+    "scraper_id": "hacs_scambs_gov_uk",
+    "url": "https://www.scambs.gov.uk/recycling-and-bins/find-your-household-bin-collection-day/"
+  },
+  "E07000032": {
+    "scraper_id": "hacs_ambervalley_gov_uk",
+    "url": "https://ambervalley.gov.uk"
+  },
+  "E07000033": {
+    "scraper_id": "ukbcd_bolsover_council",
+    "url": "https://bolsover.gov.uk"
+  },
+  "E07000034": {
+    "scraper_id": "hacs_chesterfield_gov_uk",
+    "url": "https://www.chesterfield.gov.uk"
+  },
+  "E07000035": {
+    "scraper_id": "hacs_derbyshiredales_gov_uk",
+    "url": "https://www.derbyshiredales.gov.uk/"
+  },
+  "E07000036": {
+    "scraper_id": "hacs_erewash_gov_uk",
+    "url": "https://www.erewash.gov.uk"
+  },
+  "E07000037": {
+    "scraper_id": "hacs_highpeak_gov_uk",
+    "url": "https://bins.highpeak.gov.uk/PublicDashboard"
+  },
+  "E07000039": {
+    "scraper_id": "hacs_southderbyshire_gov_uk",
+    "url": "https://maps.southderbyshire.gov.uk/iShareLIVE.web//getdata.aspx"
+  },
+  "E07000040": {
+    "scraper_id": "hacs_eastdevon_gov_uk",
+    "url": "https://eastdevon.gov.uk/recycling-and-waste/recycling-waste-information/when-is-my-bin-collected/"
+  },
+  "E07000041": {
+    "scraper_id": "hacs_exeter_gov_uk",
+    "url": "https://www.exeter.gov.uk"
+  },
+  "E07000042": {
+    "scraper_id": "hacs_mid_devon_gov_uk",
+    "url": "https://www.middevon.gov.uk"
+  },
+  "E07000043": {
+    "scraper_id": "port_north_devon_council",
+    "url": "https://www.northdevon.gov.uk"
+  },
+  "E07000044": {
+    "scraper_id": "ukbcd_south_hams_district_council",
+    "url": "https://www.southhams.gov.uk"
+  },
+  "E07000045": {
+    "scraper_id": "hacs_teignbridge_gov_uk",
+    "url": "https://www.teignbridge.gov.uk"
+  },
+  "E07000046": {
+    "scraper_id": "hacs_torridge_gov_uk",
+    "url": "https://torridge.gov.uk"
+  },
+  "E07000047": {
+    "scraper_id": "port_west_devon_borough_council",
+    "url": "https://westdevon.fccenvironment.co.uk"
+  },
+  "E07000061": {
+    "scraper_id": "ukbcd_eastbourne_borough_council",
+    "url": "https://www.lewes-eastbourne.gov.uk/article/1158/When-is-my-bin-collection-day"
+  },
+  "E07000062": {
+    "scraper_id": "hacs_hastings_gov_uk",
+    "url": "https://www.hastings.gov.uk"
+  },
+  "E07000063": {
+    "scraper_id": "ukbcd_lewes_district_council",
+    "url": "https://www.lewes-eastbourne.gov.uk/article/1158/When-is-my-bin-collection-day"
+  },
+  "E07000064": {
+    "scraper_id": "hacs_rother_gov_uk",
+    "url": "https://www.rother.gov.uk"
+  },
+  "E07000065": {
+    "scraper_id": "hacs_wealden_gov_uk",
+    "url": "https://www.wealden.gov.uk/recycling-and-waste/bin-search/"
+  },
+  "E07000066": {
+    "scraper_id": "hacs_basildon_gov_uk",
+    "url": "https://basildon.gov.uk"
+  },
+  "E07000067": {
+    "scraper_id": "hacs_braintree_gov_uk",
+    "url": "https://www.braintree.gov.uk/"
+  },
+  "E07000068": {
+    "scraper_id": "port_brentwood_borough_council",
+    "url": "https://www.brentwood.gov.uk/collection-day"
+  },
+  "E07000069": {
+    "scraper_id": "hacs_castlepoint_gov_uk",
+    "url": "https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=wastecalendar"
+  },
+  "E07000070": {
+    "scraper_id": "ukbcd_chelmsford_city_council",
+    "url": "https://www.chelmsford.gov.uk/myhome/"
+  },
+  "E07000071": {
+    "scraper_id": "port_colchester_city_council",
+    "url": "https://www.colchester.gov.uk"
+  },
+  "E07000072": {
+    "scraper_id": "hacs_eppingforestdc_gov_uk",
+    "url": "https://www.eppingforestdc.gov.uk"
+  },
+  "E07000073": {
+    "scraper_id": "hacs_harlow_gov_uk",
+    "url": "https://harlow.gov.uk"
+  },
+  "E07000074": {
+    "scraper_id": "hacs_maldon_gov_uk",
+    "url": "https://www.maldon.gov.uk/"
+  },
+  "E07000075": {
+    "scraper_id": "hacs_rochford_gov_uk",
+    "url": "https://www.rochford.gov.uk/online-bin-collections-calendar"
+  },
+  "E07000076": {
+    "scraper_id": "port_tendring_district_council",
+    "url": "https://www.tendring.gov.uk"
+  },
+  "E07000077": {
+    "scraper_id": "hacs_uttlesford_gov_uk",
+    "url": "https://www.uttlesford.gov.uk"
+  },
+  "E07000078": {
+    "scraper_id": "hacs_cheltenham_gov_uk",
+    "url": "https://www.cheltenham.gov.uk"
+  },
+  "E07000079": {
+    "scraper_id": "hacs_cotswold_gov_uk",
+    "url": "https://community.cotswold.gov.uk/s/waste-collection-enquiry"
+  },
+  "E07000080": {
+    "scraper_id": "hacs_forest_of_dean_gov_uk",
+    "url": "https://www.fdean.gov.uk/"
+  },
+  "E07000081": {
+    "scraper_id": "port_gloucester_city_council",
+    "url": "https://www.gloucester.gov.uk"
+  },
+  "E07000082": {
+    "scraper_id": "hacs_stroud_gov_uk",
+    "url": "https://stroud.gov.uk"
+  },
+  "E07000083": {
+    "scraper_id": "hacs_tewkesbury_gov_uk",
+    "url": "https://tewkesbury.gov.uk/services/waste-and-recycling/"
+  },
+  "E07000084": {
+    "scraper_id": "hacs_basingstoke_gov_uk",
+    "url": "https://www.basingstoke.gov.uk/bincollection"
+  },
+  "E07000085": {
+    "scraper_id": "hacs_easthants_gov_uk",
+    "url": "https://www.easthants.gov.uk"
+  },
+  "E07000086": {
+    "scraper_id": "hacs_eastleigh_gov_uk",
+    "url": "https://www.eastleigh.gov.uk/waste-bins-and-recycling/collection-dates/your-waste-bin-and-recycling-collections?uprn="
+  },
+  "E07000087": {
+    "scraper_id": "hacs_fareham_gov_uk",
+    "url": "https://www.fareham.gov.uk/bincalendar/intro.aspx"
+  },
+  "E07000088": {
+    "scraper_id": "hacs_gosport_gov_uk",
+    "url": "https://www.gosport.gov.uk"
+  },
+  "E07000089": {
+    "scraper_id": "hacs_hart_gov_uk",
+    "url": "https://www.hart.gov.uk/"
+  },
+  "E07000090": {
+    "scraper_id": "hacs_waste_havant_gov_uk",
+    "url": "https://waste.havant.gov.uk"
+  },
+  "E07000091": {
+    "scraper_id": "port_new_forest_council",
+    "url": "https://www.newforest.gov.uk"
+  },
+  "E07000092": {
+    "scraper_id": "hacs_rushmoor_gov_uk",
+    "url": "https://www.rushmoor.gov.uk"
+  },
+  "E07000093": {
+    "scraper_id": "hacs_itv_test_valley",
+    "url": "https://www.testvalley.gov.uk/"
+  },
+  "E07000094": {
+    "scraper_id": "hacs_itv_winchester",
+    "url": "https://www.winchester.gov.uk"
+  },
+  "E07000095": {
+    "scraper_id": "hacs_broxbourne_gov_uk",
+    "url": "https://www.broxbourne.gov.uk"
+  },
+  "E07000096": {
+    "scraper_id": "hacs_dacorum_gov_uk",
+    "url": "https://webapps.dacorum.gov.uk/bincollections/"
+  },
+  "E07000097": {
+    "scraper_id": "ukbcd_east_herts_council",
+    "url": "https://east-herts.co.uk/api/services/"
+  },
+  "E07000098": {
+    "scraper_id": "port_hertsmere_borough_council",
+    "url": "https://www.hertsmere.gov.uk"
+  },
+  "E07000099": {
+    "scraper_id": "hacs_northherts_gov_uk",
+    "url": "https://www.north-herts.gov.uk/"
+  },
+  "E07000102": {
+    "scraper_id": "port_three_rivers_district_council",
+    "url": "https://www.threerivers.gov.uk"
+  },
+  "E07000103": {
+    "scraper_id": "hacs_watford_gov_uk",
+    "url": "https://www.watford.gov.uk"
+  },
+  "E07000105": {
+    "scraper_id": "hacs_ashford_gov_uk",
+    "url": "https://ashford.gov.uk"
+  },
+  "E07000106": {
+    "scraper_id": "hacs_canterbury_gov_uk",
+    "url": "https://www.canterbury.gov.uk"
+  },
+  "E07000107": {
+    "scraper_id": "hacs_dartford_gov_uk",
+    "url": "https://www.dartford.gov.uk/waste-recycling/collection-day"
+  },
+  "E07000108": {
+    "scraper_id": "hacs_dover_gov_uk",
+    "url": "https://portal.waste.dover.gov.uk"
+  },
+  "E07000109": {
+    "scraper_id": "ukbcd_gravesham_borough_council",
+    "url": "https://my.gravesham.gov.uk"
+  },
+  "E07000110": {
+    "scraper_id": "hacs_maidstone_gov_uk",
+    "url": "https://my.maidstone.gov.uk/service/Find-your-bin-day"
+  },
+  "E07000111": {
+    "scraper_id": "hacs_sevenoaks_gov_uk",
+    "url": "https://www.sevenoaks.gov.uk"
+  },
+  "E07000112": {
+    "scraper_id": "hacs_folkestone_hythe_gov_uk",
+    "url": "https://www.folkestone-hythe.gov.uk"
+  },
+  "E07000113": {
+    "scraper_id": "hacs_swale_gov_uk",
+    "url": "https://swale.gov.uk/bins-littering-and-the-environment/bins/collection-days"
+  },
+  "E07000114": {
+    "scraper_id": "hacs_thanet_gov_uk",
+    "url": "https://www.thanet.gov.uk"
+  },
+  "E07000115": {
+    "scraper_id": "hacs_tmbc_gov_uk",
+    "url": "https://www.tmbc.gov.uk/"
+  },
+  "E07000116": {
+    "scraper_id": "hacs_tunbridgewells_gov_uk",
+    "url": "https://tunbridgewells.gov.uk"
+  },
+  "E07000117": {
+    "scraper_id": "hacs_burnley_gov_uk",
+    "url": "https://www.burnley.gov.uk"
+  },
+  "E07000118": {
+    "scraper_id": "hacs_chorley_gov_uk",
+    "url": "https://www.chorley.gov.uk"
+  },
+  "E07000120": {
+    "scraper_id": "hacs_itv_hyndburn",
+    "url": "https://www.hyndburnbc.gov.uk/"
+  },
+  "E07000121": {
+    "scraper_id": "hacs_lancaster_gov_uk",
+    "url": "https://lancaster.gov.uk"
+  },
+  "E07000122": {
+    "scraper_id": "hacs_pendle_gov_uk",
+    "url": "https://www.pendle.gov.uk/binday"
+  },
+  "E07000123": {
+    "scraper_id": "hacs_preston_gov_uk",
+    "url": "https://selfservice.preston.gov.uk/service/Forms/FindMyNearest.aspx?Service=bins"
+  },
+  "E07000124": {
+    "scraper_id": "port_ribble_valley_borough_council",
+    "url": "https://www.ribblevalley.gov.uk/directory/1/find-your-bin-collection-day"
+  },
+  "E07000125": {
+    "scraper_id": "port_rossendale_borough_council",
+    "url": "https://www.rossendale.gov.uk/directory/10094/bin-collection-days"
+  },
+  "E07000126": {
+    "scraper_id": "hacs_southribble_gov_uk",
+    "url": "https://www.southribble.gov.uk"
+  },
+  "E07000127": {
+    "scraper_id": "hacs_westlancs_gov_uk",
+    "url": "https://www.westlancs.gov.uk"
+  },
+  "E07000128": {
+    "scraper_id": "hacs_wyre_gov_uk",
+    "url": "https://www.wyre.gov.uk/bins-rubbish-recycling"
+  },
+  "E07000129": {
+    "scraper_id": "hacs_blaby_gov_uk",
+    "url": "https://www.blaby.gov.uk"
+  },
+  "E07000130": {
+    "scraper_id": "hacs_charnwood_gov_uk",
+    "url": "https://www.charnwood.gov.uk/pages/waste_collections_calendars"
+  },
+  "E07000131": {
+    "scraper_id": "ukbcd_harborough_district_council",
+    "url": "https://www.harborough.gov.uk"
+  },
+  "E07000132": {
+    "scraper_id": "hacs_hinckley_bosworth_gov_uk",
+    "url": "https://www.hinckley-bosworth.gov.uk"
+  },
+  "E07000133": {
+    "scraper_id": "hacs_melton_gov_uk",
+    "url": "https://my.melton.gov.uk/collections"
+  },
+  "E07000134": {
+    "scraper_id": "hacs_nwleics_gov_uk",
+    "url": "https://www.nwleics.gov.uk/pages/collection_information"
+  },
+  "E07000135": {
+    "scraper_id": "hacs_oadby_wigston_gov_uk",
+    "url": "https://my.oadby-wigston.gov.uk"
+  },
+  "E07000136": {
+    "scraper_id": "hacs_boston_gov_uk",
+    "url": "https://www.boston.gov.uk/findwastecollections"
+  },
+  "E07000137": {
+    "scraper_id": "hacs_e_lindsey_gov_uk",
+    "url": "https://www.e-lindsey.gov.uk/"
+  },
+  "E07000138": {
+    "scraper_id": "hacs_lincoln_gov_uk",
+    "url": "https://lincoln.gov.uk"
+  },
+  "E07000139": {
+    "scraper_id": "ukbcd_north_kesteven_district_council",
+    "url": "https://www.n-kesteven.org.uk/bins/display"
+  },
+  "E07000140": {
+    "scraper_id": "hacs_sholland_gov_uk",
+    "url": "https://www.sholland.gov.uk/mycollections"
+  },
+  "E07000141": {
+    "scraper_id": "hacs_southkesteven_gov_uk",
+    "url": "https://southkesteven.gov.uk"
+  },
+  "E07000142": {
+    "scraper_id": "ukbcd_west_lindsey_district_council",
+    "url": "https://www.west-lindsey.gov.uk/"
+  },
+  "E07000143": {
+    "scraper_id": "hacs_breckland_gov_uk",
+    "url": "https://www.breckland.gov.uk"
+  },
+  "E07000144": {
+    "scraper_id": "hacs_south_norfolk_and_broadland_gov_uk",
+    "url": "https://area.southnorfolkandbroadland.gov.uk/FindAddress"
+  },
+  "E07000145": {
+    "scraper_id": "hacs_great_yarmouth_gov_uk",
+    "url": "https://myaccount.great-yarmouth.gov.uk/article/6456/Find-my-waste-collection-days"
+  },
+  "E07000146": {
+    "scraper_id": "hacs_west_norfolk_gov_uk",
+    "url": "https://www.west-norfolk.gov.uk/"
+  },
+  "E07000147": {
+    "scraper_id": "hacs_north_norfolk_gov_uk",
+    "url": "https://www.north-norfolk.gov.uk/"
+  },
+  "E07000148": {
+    "scraper_id": "hacs_norwich_gov_uk",
+    "url": "https://www.norwich.gov.uk/bins-and-recycling"
+  },
+  "E07000149": {
+    "scraper_id": "hacs_south_norfolk_and_broadland_gov_uk",
+    "url": "https://area.southnorfolkandbroadland.gov.uk/FindAddress"
+  },
+  "E07000165": {
+    "scraper_id": "ukbcd_harrogate_borough_council",
+    "url": "https://secure.harrogate.gov.uk/inmyarea"
+  },
+  "E07000170": {
+    "scraper_id": "hacs_ashfield_gov_uk",
+    "url": "https://www.ashfield.gov.uk"
+  },
+  "E07000171": {
+    "scraper_id": "port_bassetlaw_district_council",
+    "url": "https://www.bassetlaw.gov.uk/waste-and-recycling/bin-collections/"
+  },
+  "E07000172": {
+    "scraper_id": "hacs_broxtowe_gov_uk",
+    "url": "https://www.broxtowe.gov.uk/"
+  },
+  "E07000173": {
+    "scraper_id": "ukbcd_gedling_borough_council",
+    "url": "https://www.gedling.gov.uk/"
+  },
+  "E07000174": {
+    "scraper_id": "hacs_mansfield_gov_uk",
+    "url": "https://www.mansfield.gov.uk/xfp/form/1327"
+  },
+  "E07000175": {
+    "scraper_id": "hacs_newark_sherwooddc_gov_uk",
+    "url": "https://app.newark-sherwooddc.gov.uk/bincollection/"
+  },
+  "E07000176": {
+    "scraper_id": "hacs_rushcliffe_gov_uk",
+    "url": "https://www.rushcliffe.gov.uk/"
+  },
+  "E07000177": {
+    "scraper_id": "hacs_cherwell_gov_uk",
+    "url": "https://www.cherwell.gov.uk"
+  },
+  "E07000178": {
+    "scraper_id": "hacs_oxford_gov_uk",
+    "url": "https://www.oxford.gov.uk/xfp/form/142"
+  },
+  "E07000179": {
+    "scraper_id": "ukbcd_south_oxfordshire_council",
+    "url": "https://www.southoxon.gov.uk/south-oxfordshire-district-council/recycling-rubbish-and-waste/when-is-your-collection-day/"
+  },
+  "E07000180": {
+    "scraper_id": "ukbcd_valeof_white_horse_council",
+    "url": "https://eform.whitehorsedc.gov.uk/ebase/BINZONE_DESKTOP.eb"
+  },
+  "E07000181": {
+    "scraper_id": "hacs_westoxon_gov_uk",
+    "url": "https://community.westoxon.gov.uk/s/waste-collection-enquiry"
+  },
+  "E07000192": {
+    "scraper_id": "hacs_cannock_chase_dc_gov_uk",
+    "url": "https://www.cannockchasedc.gov.uk/"
+  },
+  "E07000193": {
+    "scraper_id": "port_east_staffordshire_borough_council",
+    "url": "https://www.eaststaffsbc.gov.uk"
+  },
+  "E07000194": {
+    "scraper_id": "hacs_lichfielddc_gov_uk",
+    "url": "https://www.lichfielddc.gov.uk"
+  },
+  "E07000195": {
+    "scraper_id": "hacs_newcastle_staffs_gov_uk",
+    "url": "https://www.newcastle-staffs.gov.uk"
+  },
+  "E07000196": {
+    "scraper_id": "hacs_sstaffs_gov_uk",
+    "url": "https://www.sstaffs.gov.uk/where-i-live?objectId=100031802117"
+  },
+  "E07000197": {
+    "scraper_id": "hacs_staffordbc_gov_uk",
+    "url": "https://www.staffordbc.gov.uk/address/100032203010"
+  },
+  "E07000198": {
+    "scraper_id": "hacs_staffsmoorlands_gov_uk",
+    "url": "https://www.staffsmoorlands.gov.uk/"
+  },
+  "E07000199": {
+    "scraper_id": "ukbcd_tamworth_borough_council",
+    "url": "https://www.tamworth.gov.uk"
+  },
+  "E07000200": {
+    "scraper_id": "port_babergh_district_council",
+    "url": "https://babergh.gov.uk/check-your-collection-day"
+  },
+  "E07000202": {
+    "scraper_id": "hacs_ipswich_gov_uk",
+    "url": "https://app.ipswich.gov.uk/bin-collection/"
+  },
+  "E07000203": {
+    "scraper_id": "port_mid_suffolk_district_council",
+    "url": "https://www.midsuffolk.gov.uk/check-your-collection-day"
+  },
+  "E07000207": {
+    "scraper_id": "hacs_elmbridge_gov_uk",
+    "url": "https://www.elmbridge.gov.uk"
+  },
+  "E07000208": {
+    "scraper_id": "hacs_itv_epsom_ewell",
+    "url": "https://www.epsom-ewell.gov.uk/"
+  },
+  "E07000209": {
+    "scraper_id": "hacs_guildford_gov_uk",
+    "url": "https://my.guildford.gov.uk/customers/s/view-bin-collections"
+  },
+  "E07000210": {
+    "scraper_id": "hacs_mole_valley_gov_uk",
+    "url": "https://www.molevalley.gov.uk"
+  },
+  "E07000211": {
+    "scraper_id": "hacs_reigatebanstead_gov_uk",
+    "url": "https://www.reigate-banstead.gov.uk/"
+  },
+  "E07000212": {
+    "scraper_id": "hacs_runnymede_gov_uk",
+    "url": "https://www.runnymede.gov.uk/"
+  },
+  "E07000213": {
+    "scraper_id": "hacs_spelthorne_gov_uk",
+    "url": "https://www.spelthorne.gov.uk"
+  },
+  "E07000214": {
+    "scraper_id": "ukbcd_surrey_heath_borough_council",
+    "url": "https://asjwsw-wrpsurreyheathmunicipal-live.whitespacews.com/"
+  },
+  "E07000215": {
+    "scraper_id": "hacs_tandridge_gov_uk",
+    "url": "https://tdcws01.tandridge.gov.uk/TDCWebAppsPublic/tfaBranded/408?utm_source=pressrelease&utm_medium=smposts&utm_campaign=check_my_bin_day"
+  },
+  "E07000216": {
+    "scraper_id": "hacs_waverley_gov_uk",
+    "url": "https://waverley.gov.uk"
+  },
+  "E07000217": {
+    "scraper_id": "ukbcd_woking_borough_council",
+    "url": "https://asjwsw-wrpwokingmunicipal-live.whitespacews.com/"
+  },
+  "E07000218": {
+    "scraper_id": "ukbcd_north_warwickshire_borough_council",
+    "url": "https://www.northwarks.gov.uk"
+  },
+  "E07000219": {
+    "scraper_id": "ukbcd_nuneaton_bedworth_borough_council",
+    "url": "https://www.nuneatonandbedworth.gov.uk"
+  },
+  "E07000220": {
+    "scraper_id": "hacs_rugby_gov_uk",
+    "url": "https://www.rugby.gov.uk/"
+  },
+  "E07000221": {
+    "scraper_id": "hacs_stratford_gov_uk",
+    "url": "https://www.stratford.gov.uk/waste-recycling/when-we-collect.cfm/part/calendar"
+  },
+  "E07000222": {
+    "scraper_id": "hacs_warwickdc_gov_uk",
+    "url": "https://estates7.warwickdc.gov.uk/PropertyPortal/Property/Recycling/100070263793"
+  },
+  "E07000223": {
+    "scraper_id": "hacs_adur_worthing_gov_uk",
+    "url": "https://www.adur-worthing.gov.uk/bin-day/?brlu-selected-address=100061878829"
+  },
+  "E07000224": {
+    "scraper_id": "hacs_arun_gov_uk",
+    "url": "https://www1.arun.gov.uk/when-are-my-bins-collected"
+  },
+  "E07000225": {
+    "scraper_id": "hacs_chichester_gov_uk",
+    "url": "https://www.chichester.gov.uk/checkyourbinday"
+  },
+  "E07000226": {
+    "scraper_id": "hacs_crawley_gov_uk",
+    "url": "https://my.crawley.gov.uk/"
+  },
+  "E07000227": {
+    "scraper_id": "hacs_horsham_gov_uk",
+    "url": "https://satellite.horsham.gov.uk"
+  },
+  "E07000228": {
+    "scraper_id": "hacs_midsussex_gov_uk",
+    "url": "https://www.midsussex.gov.uk"
+  },
+  "E07000229": {
+    "scraper_id": "hacs_adur_worthing_gov_uk",
+    "url": "https://adur-worthing.gov.uk"
+  },
+  "E07000234": {
+    "scraper_id": "hacs_bromsgrove_gov_uk",
+    "url": "https://www.bromsgrove.gov.uk"
+  },
+  "E07000235": {
+    "scraper_id": "ukbcd_malvern_hills_d_c",
+    "url": "https://swict.malvernhills.gov.uk/mhdcroundlookup/HandleSearchScreen"
+  },
+  "E07000236": {
+    "scraper_id": "ukbcd_redditch_borough_council",
+    "url": "https://redditchbc.gov.uk"
+  },
+  "E07000237": {
+    "scraper_id": "ukbcd_worcester_city_council",
+    "url": "https://www.Worcester.gov.uk"
+  },
+  "E07000238": {
+    "scraper_id": "port_wychavon_district_council",
+    "url": "https://www.wychavon.gov.uk"
+  },
+  "E07000239": {
+    "scraper_id": "hacs_wyreforestdc_gov_uk",
+    "url": "https://www.wyreforestdc.gov.uk"
+  },
+  "E07000240": {
+    "scraper_id": "hacs_stalbans_gov_uk",
+    "url": "https://gis.stalbans.gov.uk/NoticeBoard9/VeoliaProxy.NoticeBoard.asmx/GetServicesByUprnAndNoticeBoard"
+  },
+  "E07000241": {
+    "scraper_id": "hacs_welhat_gov_uk",
+    "url": "https://www.welhat.gov.uk/xfp/form/214"
+  },
+  "E07000242": {
+    "scraper_id": "hacs_eastherts_gov_uk",
+    "url": "https://www.eastherts.gov.uk"
+  },
+  "E07000243": {
+    "scraper_id": "hacs_stevenage_gov_uk",
+    "url": "https://www.stevenage.gov.uk"
+  },
+  "E07000244": {
+    "scraper_id": "hacs_eastsuffolk_gov_uk",
+    "url": "https://my.eastsuffolk.gov.uk/service/Bin_collection_dates_finder"
+  },
+  "E07000245": {
+    "scraper_id": "ukbcd_west_suffolk_council",
+    "url": "https://maps.westsuffolk.gov.uk/MyWestSuffolk.aspx"
+  },
+  "E08000001": {
+    "scraper_id": "hacs_bolton_gov_uk",
+    "url": "https://bolton.gov.uk"
+  },
+  "E08000002": {
+    "scraper_id": "hacs_bury_gov_uk",
+    "url": "https://www.bury.gov.uk/waste-and-recycling/bin-collection-days-and-alerts"
+  },
+  "E08000003": {
+    "scraper_id": "ukbcd_manchester_city_council",
+    "url": "https://www.manchester.gov.uk/bincollections"
+  },
+  "E08000004": {
+    "scraper_id": "hacs_oldham_gov_uk",
+    "url": "https://portal.oldham.gov.uk/bincollectiondates/details?uprn=422000033556"
+  },
+  "E08000005": {
+    "scraper_id": "hacs_rochdale_gov_uk",
+    "url": "https://webforms.rochdale.gov.uk/BinCalendar"
+  },
+  "E08000006": {
+    "scraper_id": "hacs_salford_gov_uk",
+    "url": "https://www.salford.gov.uk/bins-and-recycling/bin-collection-days/your-bin-collections"
+  },
+  "E08000007": {
+    "scraper_id": "hacs_stockport_gov_uk",
+    "url": "https://myaccount.stockport.gov.uk/bin-collections/show/100011434401"
+  },
+  "E08000008": {
+    "scraper_id": "hacs_tameside_gov_uk",
+    "url": "http://lite.tameside.gov.uk/BinCollections/CollectionService.svc/GetBinCollection"
+  },
+  "E08000009": {
+    "scraper_id": "port_trafford_council",
+    "url": "https://www.trafford.gov.uk"
+  },
+  "E08000010": {
+    "scraper_id": "hacs_wigan_gov_uk",
+    "url": "https://apps.wigan.gov.uk/MyNeighbourhood/"
+  },
+  "E08000011": {
+    "scraper_id": "hacs_knowsley_gov_uk",
+    "url": "https://www.knowsley.gov.uk/"
+  },
+  "E08000012": {
+    "scraper_id": "hacs_liverpool_gov_uk",
+    "url": "https://liverpool.gov.uk/bins-and-recycling/bin-collections/"
+  },
+  "E08000013": {
+    "scraper_id": "hacs_st_helens_gov_uk",
+    "url": "https://www.sthelens.gov.uk/"
+  },
+  "E08000014": {
+    "scraper_id": "hacs_sefton_gov_uk",
+    "url": "https://www.sefton.gov.uk"
+  },
+  "E08000015": {
+    "scraper_id": "hacs_wirral_gov_uk",
+    "url": "https://www.wirral.gov.uk"
+  },
+  "E08000016": {
+    "scraper_id": "hacs_barnsley_gov_uk",
+    "url": "https://waste.barnsley.gov.uk/ViewCollection/Collections"
+  },
+  "E08000017": {
+    "scraper_id": "hacs_doncaster_gov_uk",
+    "url": "https://www.doncaster.gov.uk/Compass/Entity/Launch/D3/"
+  },
+  "E08000018": {
+    "scraper_id": "ukbcd_rotherham_council",
+    "url": "https://www.rotherham.gov.uk/"
+  },
+  "E08000019": {
+    "scraper_id": "hacs_sheffield_gov_uk",
+    "url": "https://wasteservices.sheffield.gov.uk"
+  },
+  "E08000021": {
+    "scraper_id": "port_newcastle_city_council",
+    "url": "https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day"
+  },
+  "E08000022": {
+    "scraper_id": "ukbcd_north_tyneside_council",
+    "url": "https://www.northtyneside.gov.uk/waste-collection-schedule"
+  },
+  "E08000023": {
+    "scraper_id": "hacs_southtyneside_gov_uk",
+    "url": "https://www.southtyneside.gov.uk/article/33352/Bin-collection-dates"
+  },
+  "E08000024": {
+    "scraper_id": "hacs_sunderland_gov_uk",
+    "url": "https://www.sunderland.gov.uk/article/12142/Find-your-bin-collection-day"
+  },
+  "E08000025": {
+    "scraper_id": "hacs_birmingham_gov_uk",
+    "url": "https://www.birmingham.gov.uk/info/50388/check_your_collection_day"
+  },
+  "E08000026": {
+    "scraper_id": "hacs_coventry_gov_uk",
+    "url": "https://www.coventry.gov.uk/directory-record/62310/abberton-way-"
+  },
+  "E08000027": {
+    "scraper_id": "ukbcd_dudley_council",
+    "url": "https://my.dudley.gov.uk"
+  },
+  "E08000028": {
+    "scraper_id": "hacs_sandwell_gov_uk",
+    "url": "https://www.sandwell.gov.uk"
+  },
+  "E08000029": {
+    "scraper_id": "hacs_solihull_gov_uk",
+    "url": "https://www.solihull.gov.uk/"
+  },
+  "E08000030": {
+    "scraper_id": "hacs_walsall_gov_uk",
+    "url": "https://cag.walsall.gov.uk/"
+  },
+  "E08000031": {
+    "scraper_id": "hacs_wolverhampton_gov_uk",
+    "url": "https://www.wolverhampton.gov.uk"
+  },
+  "E08000032": {
+    "scraper_id": "hacs_bradford_gov_uk",
+    "url": "https://onlineforms.bradford.gov.uk/ufs/collectiondates.eb"
+  },
+  "E08000033": {
+    "scraper_id": "hacs_calderdale_gov_uk",
+    "url": "https://www.calderdale.gov.uk/environment/waste/household-collections/collectiondayfinder.jsp"
+  },
+  "E08000034": {
+    "scraper_id": "hacs_kirklees_gov_uk",
+    "url": "https://www.kirklees.gov.uk/beta/your-property-bins-recycling/your-bins"
+  },
+  "E08000035": {
+    "scraper_id": "ukbcd_leeds_city_council",
+    "url": "https://www.leeds.gov.uk/residents/bins-and-recycling/check-your-bin-day"
+  },
+  "E08000036": {
+    "scraper_id": "hacs_wakefield_gov_uk",
+    "url": "https://www.wakefield.gov.uk/where-i-live/?uprn=63035490&a=115%20Elizabeth%20Drive%20Castleford%20WF10%203RR&usrn=41801243&e=445418&n=426091&p=WF10%203RR"
+  },
+  "E08000037": {
+    "scraper_id": "hacs_gateshead_gov_uk",
+    "url": "https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker"
+  },
+  "E09000002": {
+    "scraper_id": "hacs_lbbd_gov_uk",
+    "url": "https://www.lbbd.gov.uk/rubbish-recycling/household-bin-collection/check-your-bin-collection-days"
+  },
+  "E09000003": {
+    "scraper_id": "hacs_barnet_gov_uk",
+    "url": "https://www.barnet.gov.uk/recycling-and-waste/bin-collections/find-your-bin-collection-day"
+  },
+  "E09000004": {
+    "scraper_id": "hacs_bexley_gov_uk",
+    "url": "https://waste.bexley.gov.uk/waste"
+  },
+  "E09000005": {
+    "scraper_id": "ukbcd_brent_council",
+    "url": "https://recyclingservices.brent.gov.uk/waste"
+  },
+  "E09000006": {
+    "scraper_id": "port_bromley_borough_council",
+    "url": "https://recyclingservices.bromley.gov.uk"
+  },
+  "E09000007": {
+    "scraper_id": "hacs_camden_gov_uk",
+    "url": "https://recyclingandrubbishcollections.camden.gov.uk"
+  },
+  "E09000008": {
+    "scraper_id": "hacs_croydon_gov_uk",
+    "url": "https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address"
+  },
+  "E09000009": {
+    "scraper_id": "hacs_ealing_gov_uk",
+    "url": "https://www.ealing.gov.uk/site/custom_scripts/WasteCollectionWS/home/FindCollection"
+  },
+  "E09000010": {
+    "scraper_id": "hacs_enfield_gov_uk",
+    "url": "https://www.enfield.gov.uk/services/rubbish-and-recycling/find-my-collection-day"
+  },
+  "E09000011": {
+    "scraper_id": "hacs_royalgreenwich_gov_uk",
+    "url": "https://www.royalgreenwich.gov.uk"
+  },
+  "E09000012": {
+    "scraper_id": "hacs_hackney_gov_uk",
+    "url": "https://www.hackney.gov.uk"
+  },
+  "E09000013": {
+    "scraper_id": "ukbcd_london_borough_hammersmithand_fulham",
+    "url": "https://www.lbhf.gov.uk/"
+  },
+  "E09000014": {
+    "scraper_id": "hacs_haringey_gov_uk",
+    "url": "https://wastecollections.haringey.gov.uk/property"
+  },
+  "E09000015": {
+    "scraper_id": "hacs_harrow_gov_uk",
+    "url": "https://www.harrow.gov.uk"
+  },
+  "E09000016": {
+    "scraper_id": "hacs_havering_gov_uk",
+    "url": "https://www.havering.gov.uk"
+  },
+  "E09000017": {
+    "scraper_id": "port_hillingdon_council",
+    "url": "https://www.hillingdon.gov.uk"
+  },
+  "E09000018": {
+    "scraper_id": "ukbcd_london_borough_hounslow",
+    "url": "https://my.hounslow.gov.uk/service/Waste_and_recycling_collections"
+  },
+  "E09000019": {
+    "scraper_id": "hacs_islington_gov_uk",
+    "url": "https://www.islington.gov.uk/your-area"
+  },
+  "E09000020": {
+    "scraper_id": "port_kensington_and_chelsea_council",
+    "url": "https://www.rbkc.gov.uk/bins-and-recycling"
+  },
+  "E09000021": {
+    "scraper_id": "port_kingston_upon_thames_council",
+    "url": "https://www.kingston.gov.uk"
+  },
+  "E09000022": {
+    "scraper_id": "hacs_lambeth_gov_uk",
+    "url": "https://wasteservice.lambeth.gov.uk/WhitespaceComms/GetServicesByUprn"
+  },
+  "E09000023": {
+    "scraper_id": "hacs_lewisham_gov_uk",
+    "url": "https://www.lewisham.gov.uk"
+  },
+  "E09000024": {
+    "scraper_id": "ukbcd_merton_council",
+    "url": "https://fixmystreet.merton.gov.uk/waste/"
+  },
+  "E09000025": {
+    "scraper_id": "hacs_newham_gov_uk",
+    "url": "https://bincollection.newham.gov.uk/"
+  },
+  "E09000026": {
+    "scraper_id": "hacs_redbridge_gov_uk",
+    "url": "https://my.redbridge.gov.uk/RecycleRefuse"
+  },
+  "E09000027": {
+    "scraper_id": "hacs_richmond_gov_uk",
+    "url": "https://www.richmond.gov.uk/my_richmond"
+  },
+  "E09000028": {
+    "scraper_id": "hacs_southwark_gov_uk",
+    "url": "https://services.southwark.gov.uk/bins/lookup/"
+  },
+  "E09000029": {
+    "scraper_id": "ukbcd_london_borough_sutton",
+    "url": "https://waste-services.sutton.gov.uk/waste"
+  },
+  "E09000030": {
+    "scraper_id": "hacs_tower_hamlets_gov_uk",
+    "url": "https://www.towerhamlets.gov.uk/"
+  },
+  "E09000031": {
+    "scraper_id": "hacs_walthamforest_gov_uk",
+    "url": "https://portal.walthamforest.gov.uk/AchieveForms/?mode=fill&consentMessage=yes&form_uri=sandbox-publish://AF-Process-d62ccdd2-3de9-48eb-a229-8e20cbdd6393/AF-Stage-8bf39bf9-5391-4c24-857f-0dc2025c67f4/definition.json&process=1&process_uri=sandbox-processes://AF-Process-d62ccdd2-3de9-48eb-a229-8e20cbdd6393&process_id=AF-Process-d62ccdd2-3de9-48eb-a229-8e20cbdd6393"
+  },
+  "E09000032": {
+    "scraper_id": "hacs_wandsworth_gov_uk",
+    "url": "https://www.wandsworth.gov.uk"
+  },
+  "E09000033": {
+    "scraper_id": "hacs_westminster_gov_uk",
+    "url": "https://www.westminster.gov.uk"
+  },
+  "N09000001": {
+    "scraper_id": "port_antrim_and_newtownabbey_council",
+    "url": "https://antrimandnewtownabbey.gov.uk/residents/bins-recycling/bins-schedule/"
+  },
+  "N09000002": {
+    "scraper_id": "ukbcd_armagh_banbridge_craigavon_council",
+    "url": "https://www.armaghbanbridgecraigavon.gov.uk/"
+  },
+  "N09000003": {
+    "scraper_id": "hacs_belfast_city_gov_uk",
+    "url": "https://online.belfastcity.gov.uk/find-bin-collection-day/Default.aspx"
+  },
+  "N09000006": {
+    "scraper_id": "hacs_fermanaghomagh_gov_uk",
+    "url": "https://www.fermanaghomagh.com/services/environment-and-waste/waste-collection-calendar/"
+  },
+  "N09000007": {
+    "scraper_id": "ukbcd_lisburn_castlereagh_city_council",
+    "url": "https://lisburn.isl-fusion.com"
+  },
+  "N09000008": {
+    "scraper_id": "hacs_midandeastantrim_gov_uk",
+    "url": "https://www.midandeastantrim.gov.uk/resident/waste-recycling/collection-dates/"
+  },
+  "N09000009": {
+    "scraper_id": "port_mid_ulster_district_council",
+    "url": "https://www.midulstercouncil.org"
+  },
+  "N09000010": {
+    "scraper_id": "port_newry_mourne_and_down_council",
+    "url": "https://www.newrymournedown.org/weekly-bin-collection-and-calendar"
+  },
+  "N09000011": {
+    "scraper_id": "hacs_ardsandnorthdown_gov_uk",
+    "url": "https://www.ardsandnorthdown.gov.uk"
+  },
+  "S12000005": {
+    "scraper_id": "hacs_clackmannanshire_gov_uk",
+    "url": "https://www.clacks.gov.uk"
+  },
+  "S12000006": {
+    "scraper_id": "port_dumfries_and_galloway_council",
+    "url": "https://www.dumfriesandgalloway.gov.uk"
+  },
+  "S12000008": {
+    "scraper_id": "hacs_east_ayrshire_gov_uk",
+    "url": "https://www.east-ayrshire.gov.uk"
+  },
+  "S12000010": {
+    "scraper_id": "hacs_eastlothian_gov_uk",
+    "url": "https://eastlothian.gov.uk"
+  },
+  "S12000011": {
+    "scraper_id": "hacs_east_renfrewshire_gov_uk",
+    "url": "https://eastrenfrewshire.gov.uk/"
+  },
+  "S12000013": {
+    "scraper_id": "ukbcd_cne_siar_council",
+    "url": "https://www.cne-siar.gov.uk"
+  },
+  "S12000014": {
+    "scraper_id": "ukbcd_falkirk_council",
+    "url": "https://www.falkirk.gov.uk"
+  },
+  "S12000017": {
+    "scraper_id": "hacs_highland_gov_uk",
+    "url": "https://www.highland.gov.uk"
+  },
+  "S12000018": {
+    "scraper_id": "hacs_inverclyde_gov_uk",
+    "url": "https://www.inverclyde.gov.uk"
+  },
+  "S12000019": {
+    "scraper_id": "hacs_midlothian_gov_uk",
+    "url": "https://www.midlothian.gov.uk/info/1054/bins_and_recycling/343/bin_collection_days"
+  },
+  "S12000020": {
+    "scraper_id": "ukbcd_moray_council",
+    "url": "https://bindayfinder.moray.gov.uk/"
+  },
+  "S12000021": {
+    "scraper_id": "hacs_north_ayrshire_gov_uk",
+    "url": "https://www.north-ayrshire.gov.uk/"
+  },
+  "S12000023": {
+    "scraper_id": "ukbcd_orkney_islands_council",
+    "url": "https://www.orkney.gov.uk"
+  },
+  "S12000026": {
+    "scraper_id": "hacs_scotborders_gov_uk",
+    "url": "https://scotborders-live-portal.bartecmunicipal.com/Embeddable/CollectionCalendar"
+  },
+  "S12000027": {
+    "scraper_id": "ukbcd_shetland_islands_council",
+    "url": "https://www.shetland.gov.uk"
+  },
+  "S12000028": {
+    "scraper_id": "hacs_south_ayrshire_gov_uk",
+    "url": "https://www.south-ayrshire.gov.uk/"
+  },
+  "S12000029": {
+    "scraper_id": "hacs_southlanarkshire_gov_uk",
+    "url": "https://www.southlanarkshire.gov.uk/directory_record/579973/abbeyhill_crescent_lesmahagow"
+  },
+  "S12000030": {
+    "scraper_id": "port_stirling_council",
+    "url": "https://www.stirling.gov.uk"
+  },
+  "S12000033": {
+    "scraper_id": "hacs_aberdeencity_gov_uk",
+    "url": "https://www.aberdeencity.gov.uk"
+  },
+  "S12000034": {
+    "scraper_id": "hacs_aberdeenshire_gov_uk",
+    "url": "https://online.aberdeenshire.gov.uk"
+  },
+  "S12000035": {
+    "scraper_id": "port_argyll_and_bute_council",
+    "url": "https://www.argyll-bute.gov.uk"
+  },
+  "S12000036": {
+    "scraper_id": "port_edinburgh_city_council",
+    "url": "https://www.edinburgh.gov.uk"
+  },
+  "S12000038": {
+    "scraper_id": "hacs_renfrewshire_gov_uk",
+    "url": "https://www.renfrewshire.gov.uk"
+  },
+  "S12000039": {
+    "scraper_id": "hacs_west_dunbartonshire_gov_uk",
+    "url": "https://www.west-dunbarton.gov.uk/"
+  },
+  "S12000040": {
+    "scraper_id": "hacs_westlothian_gov_uk",
+    "url": "https://www.westlothian.gov.uk/"
+  },
+  "S12000041": {
+    "scraper_id": "hacs_angus_gov_uk",
+    "url": "https://www.angus.gov.uk/bins_litter_and_recycling/bin_collection_days"
+  },
+  "S12000042": {
+    "scraper_id": "hacs_dundeecity_gov_uk",
+    "url": "https://www.dundeecity.gov.uk/"
+  },
+  "S12000045": {
+    "scraper_id": "hacs_eastdunbarton_gov_uk",
+    "url": "https://eastdunbarton.gov.uk"
+  },
+  "S12000047": {
+    "scraper_id": "hacs_fife_gov_uk",
+    "url": "https://www.fife.gov.uk"
+  },
+  "S12000048": {
+    "scraper_id": "hacs_pkc_gov_uk",
+    "url": "https://www.pkc.gov.uk"
+  },
+  "S12000049": {
+    "scraper_id": "hacs_glasgow_gov_uk",
+    "url": "https://onlineservices.glasgow.gov.uk/forms/refuseandrecyclingcalendar/AddressSearch.aspx"
+  },
+  "S12000050": {
+    "scraper_id": "hacs_northlanarkshire_gov_uk",
+    "url": "https://www.northlanarkshire.gov.uk/bin-collection-dates/000118016164/48402118"
+  },
+  "W06000001": {
+    "scraper_id": "ukbcd_isle_of_anglesey_council",
+    "url": "https://www.anglesey.gov.wales/en/Residents/Bins-and-recycling/Waste-Collection-Day.aspx"
+  },
+  "W06000002": {
+    "scraper_id": "hacs_gwynedd_gov_uk",
+    "url": "https://www.gwynedd.gov.uk/"
+  },
+  "W06000003": {
+    "scraper_id": "hacs_conwy_gov_uk",
+    "url": "https://www.conwy.gov.uk"
+  },
+  "W06000004": {
+    "scraper_id": "hacs_denbighshire_gov_uk",
+    "url": "https://www.denbighshire.gov.uk/"
+  },
+  "W06000005": {
+    "scraper_id": "hacs_flintshire_gov_uk",
+    "url": "https://digital.flintshire.gov.uk"
+  },
+  "W06000006": {
+    "scraper_id": "hacs_wrexham_gov_uk",
+    "url": "https://www.wrexham.gov.uk/service/when-are-my-bins-collected"
+  },
+  "W06000008": {
+    "scraper_id": "port_ceredigion_county_council",
+    "url": "https://www.ceredigion.gov.uk"
+  },
+  "W06000009": {
+    "scraper_id": "hacs_pembrokeshire_gov_uk",
+    "url": "https://nearest.pembrokeshire.gov.uk/property/100100278790"
+  },
+  "W06000010": {
+    "scraper_id": "ukbcd_carmarthenshire_county_council",
+    "url": "https://www.carmarthenshire.gov.wales"
+  },
+  "W06000011": {
+    "scraper_id": "ukbcd_swansea_council",
+    "url": "https://www1.swansea.gov.uk/recyclingsearch/"
+  },
+  "W06000012": {
+    "scraper_id": "hacs_neath_port_talbot_gov_uk",
+    "url": "https://www.npt.gov.uk"
+  },
+  "W06000013": {
+    "scraper_id": "hacs_bridgend_gov_uk",
+    "url": "https://www.bridgend.gov.uk/"
+  },
+  "W06000014": {
+    "scraper_id": "hacs_valeofglamorgan_gov_uk",
+    "url": "https://www.valeofglamorgan.gov.uk/en/living/Recycling-and-Waste/"
+  },
+  "W06000015": {
+    "scraper_id": "hacs_cardiff_gov_uk",
+    "url": "https://www.cardiff.gov.uk"
+  },
+  "W06000016": {
+    "scraper_id": "hacs_rctcbc_gov_uk",
+    "url": "https://www.rctcbc.gov.uk/EN/Resident/RecyclingandWaste/RecyclingandWasteCollectionDays.aspx"
+  },
+  "W06000018": {
+    "scraper_id": "ukbcd_caerphilly_county_borough_council",
+    "url": "https://www.caerphilly.gov.uk"
+  },
+  "W06000019": {
+    "scraper_id": "hacs_itv_blaenau_gwent",
+    "url": "https://www.blaenau-gwent.gov.uk/"
+  },
+  "W06000020": {
+    "scraper_id": "port_torfaen_county_borough_council",
+    "url": "https://www.torfaen.gov.uk/"
+  },
+  "W06000021": {
+    "scraper_id": "hacs_monmouthshire_gov_uk",
+    "url": "https://maps.monmouthshire.gov.uk"
+  },
+  "W06000022": {
+    "scraper_id": "ukbcd_newport_city_council",
+    "url": "https://www.newport.gov.uk/"
+  },
+  "W06000023": {
+    "scraper_id": "port_powys_council",
+    "url": "https://en.powys.gov.uk/binday"
+  },
+  "W06000024": {
+    "scraper_id": "ukbcd_merthyr_tydfil_county_borough_council",
+    "url": "https://www.merthyr.gov.uk"
+  }
+}

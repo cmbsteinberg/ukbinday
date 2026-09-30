@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wealden District Council"
 DESCRIPTION = "Source for Wealden City services for Wealden District Council, UK."
@@ -16,10 +16,10 @@ TEST_CASES = {
 
 API_URL = "https://www.wealden.gov.uk/wp-admin/admin-ajax.php"
 ICON_MAP = {
-    "refuseCollectionDate": "mdi:trash-can",
-    "recyclingCollectionDate": "mdi:recycle",
-    "gardenCollectionDate": "mdi:leaf",
-    "foodCollectionDate": "mdi:food-apple",
+    "refuseCollectionDate": Icons.GENERAL_WASTE,
+    "recyclingCollectionDate": Icons.RECYCLING,
+    "gardenCollectionDate": Icons.GARDEN,
+    "foodCollectionDate": Icons.BIO_KITCHEN,
 }
 
 COLLECTIONS = {
@@ -53,7 +53,7 @@ class Source:
         json_data = json.loads(r.text)["collection"]
         entries = []
 
-        for collection in ICON_MAP.keys():
+        for collection in ICON_MAP:
             try:
                 entries.append(
                     Collection(

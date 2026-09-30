@@ -4,7 +4,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentExceptionMultiple,
 )
@@ -25,9 +25,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Black bin": "mdi:trash-can",
-    "Blue bin": "mdi:recycle",
-    "Brown bin": "mdi:leaf",
+    "Black bin": Icons.GENERAL_WASTE,
+    "Blue bin": Icons.RECYCLING,
+    "Brown bin": Icons.BIO_KITCHEN,
 }
 
 _LOGGER = logging.getLogger(__name__)

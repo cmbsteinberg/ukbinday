@@ -3,13 +3,18 @@
 Orchestrator for the full scraper sync pipeline.
 
 Flow:
-  1. Fetch input.json from UKBCD (source of truth for needed councils)
+  1. Build council identifiers from UKBCD aliases and the authoritative LAD list
   2. Wipe all scrapers so stale files never linger across syncs
   3. Run HACS sync (clone, patch, copy scrapers)
-  4. Filter HACS scrapers: remove any whose gov.uk prefix isn't in input.json
-  5. Run UKBCD sync (fills gaps + builds lad_lookup.json with scraper IDs)
+  4. Filter HACS scrapers against those council identifiers
+  5. Run UKBCD sync (fills gaps + writes scraper_lad_map.json)
+  5c. Wire retained HACS gaps and preserved scrapers, then compose
+      api/data/lad_lookup.json from the LAD ground truth + that map
   6. Regenerate test cases (HACS + UKBCD)
   7. Regenerate postcode lookup (postcode -> LAD code parquet)
+
+input.json supplies scraper aliases; lad_base.json decides which councils exist.
+Nothing in this flow may add or drop a council.
 
 Usage:
     uv run python -m pipeline.sync_all
@@ -22,22 +27,26 @@ import json
 import logging
 import subprocess
 import sys
+from pathlib import Path
 
 import httpx
 
 from pipeline.shared import (
     PIPELINE_DIR,
     PROJECT_ROOT,
+    SCRAPER_LAD_MAP_PATH,
     SCRAPERS_DIR,
     extract_gov_uk_prefix,
     extract_url_from_scraper,
     load_lad_overrides,
     load_routing,
+    load_unwired_lads,
     normalise_council_name,
     normalise_domain,
 )
 
 LAD_LOOKUP_PATH = PROJECT_ROOT / "api" / "data" / "lad_lookup.json"
+LAD_BASE_PATH = PIPELINE_DIR / "data" / "lad_base.json"
 PORTS_DIR = PIPELINE_DIR / "ports"
 PORT_PREFIX = "port_"
 
@@ -106,8 +115,59 @@ def build_needed_identifiers(input_data: dict) -> set[str]:
     return ids
 
 
+def build_lad_identifiers(lad_data: dict) -> set[str]:
+    """Build HACS matching identifiers from the authoritative council list."""
+    ids: set[str] = set()
+    for entry in lad_data.values():
+        if not isinstance(entry, dict):
+            continue
+        ids.update(_lad_entry_identifiers(entry))
+
+    logger.info(
+        "Built %d council identifiers from %d LAD entries",
+        len(ids),
+        sum(1 for v in lad_data.values() if isinstance(v, dict)),
+    )
+    return ids
+
+
+def _lad_entry_identifiers(entry: dict) -> set[str]:
+    identifiers = {normalise_council_name(entry.get("name", ""))}
+    govuk_url = entry.get("govuk_url", "")
+    if govuk_url:
+        identifiers.add(extract_gov_uk_prefix(govuk_url))
+    return {identifier for identifier in identifiers if identifier}
+
+
+def _hacs_scraper_details(path: Path) -> tuple[set[str], str | None]:
+    """Return the identifiers and URL used to match one HACS scraper."""
+    import ast
+
+    url = extract_url_from_scraper(path)
+    identifiers = {
+        extract_gov_uk_prefix(url) if url else None,
+        normalise_council_name(path.stem.removeprefix("hacs_")),
+    }
+    try:
+        tree = ast.parse(path.read_text())
+        for node in ast.walk(tree):
+            if (
+                isinstance(node, ast.Assign)
+                and len(node.targets) == 1
+                and isinstance(node.targets[0], ast.Name)
+                and node.targets[0].id == "TITLE"
+                and isinstance(node.value, ast.Constant)
+                and isinstance(node.value.value, str)
+            ):
+                identifiers.add(normalise_council_name(node.value.value))
+                break
+    except SyntaxError:
+        pass
+    return {identifier for identifier in identifiers if identifier}, url
+
+
 def filter_hacs_scrapers(needed_ids: set[str]) -> list[str]:
-    """Remove HACS scrapers whose council isn't needed by input.json.
+    """Remove HACS scrapers not recognised by either council catalogue.
 
     Uses multiple matching strategies:
       1. gov.uk prefix from scraper URL
@@ -116,8 +176,6 @@ def filter_hacs_scrapers(needed_ids: set[str]) -> list[str]:
 
     Returns list of removed scraper names.
     """
-    import ast
-
     override_hacs = set(load_routing().get("hacs_to_ukbcd", {}).keys())
     preserved = set(load_lad_overrides().get("preserved_scrapers", {}))
 
@@ -126,44 +184,17 @@ def filter_hacs_scrapers(needed_ids: set[str]) -> list[str]:
         if path.stem in override_hacs or path.stem in preserved:
             continue
 
-        # Strategy 1: gov.uk prefix from scraper URL
-        url = extract_url_from_scraper(path)
-        url_prefix = extract_gov_uk_prefix(url) if url else None
-
-        # Strategy 2: normalised filename (strip hacs_ prefix + domain suffix)
-        fname_norm = normalise_council_name(path.stem.removeprefix("hacs_"))
-
-        # Strategy 3: TITLE from scraper source
-        title_norm = None
-        try:
-            tree = ast.parse(path.read_text())
-            for node in ast.walk(tree):
-                if (
-                    isinstance(node, ast.Assign)
-                    and len(node.targets) == 1
-                    and isinstance(node.targets[0], ast.Name)
-                    and node.targets[0].id == "TITLE"
-                    and isinstance(node.value, ast.Constant)
-                    and isinstance(node.value.value, str)
-                ):
-                    title_norm = normalise_council_name(node.value.value)
-                    break
-        except SyntaxError:
-            pass
-
-        candidates = [c for c in (url_prefix, fname_norm, title_norm) if c]
-        matched = any(c in needed_ids for c in candidates)
+        candidates, _ = _hacs_scraper_details(path)
+        matched = bool(candidates & needed_ids)
 
         if not matched:
             path.unlink()
             removed.append(path.stem)
             logger.info(
-                "Removed unneeded HACS scraper: %s (no match in input.json; "
-                "url_prefix=%s, fname=%s, title=%s)",
+                "Removed unneeded HACS scraper: %s (no council match; "
+                "identifiers=%s)",
                 path.stem,
-                url_prefix,
-                fname_norm,
-                title_norm,
+                ",".join(sorted(candidates)),
             )
 
     return removed
@@ -203,12 +234,60 @@ def _copy_ports() -> list[str]:
     return copied
 
 
+def _wire_lad_hacs_scrapers() -> None:
+    """Attach retained HACS scrapers to their authoritative LAD entries.
+
+    HACS has normal priority over UKBCD. Scrapers explicitly routed to UKBCD
+    have already been removed, and LAD overrides run after this function.
+    Ambiguous matches are skipped so multi-scraper authorities still require
+    explicit routing.
+    """
+    lad_data = json.loads(LAD_BASE_PATH.read_text())
+    scraper_map = (
+        json.loads(SCRAPER_LAD_MAP_PATH.read_text())
+        if SCRAPER_LAD_MAP_PATH.exists()
+        else {}
+    )
+    hacs_scrapers = {}
+    for path in sorted(SCRAPERS_DIR.glob("hacs_*.py")):
+        identifiers, url = _hacs_scraper_details(path)
+        hacs_scrapers[path.stem] = (identifiers, url)
+
+    wired = 0
+    for lad, entry in lad_data.items():
+        lad_ids = _lad_entry_identifiers(entry)
+        matches = [
+            (scraper_id, url)
+            for scraper_id, (identifiers, url) in hacs_scrapers.items()
+            if identifiers & lad_ids
+        ]
+        if len(matches) == 1:
+            scraper_id, url = matches[0]
+            if scraper_map.get(lad, {}).get("scraper_id") != scraper_id:
+                scraper_map[lad] = {"scraper_id": scraper_id, "url": url}
+                wired += 1
+        elif len(matches) > 1:
+            logger.warning(
+                "Multiple HACS scrapers match %s (%s): %s",
+                lad,
+                entry.get("name"),
+                ", ".join(scraper_id for scraper_id, _ in matches),
+            )
+
+    if wired:
+        SCRAPER_LAD_MAP_PATH.write_text(
+            json.dumps(dict(sorted(scraper_map.items())), indent=2) + "\n"
+        )
+    logger.info("Wired %d LAD entries to retained HACS scrapers", wired)
+
+
 def _merge_preserved_scrapers() -> None:
-    """Wire preserved scrapers and ports into lad_lookup.json.
+    """Wire preserved scrapers and ports into the scraper LAD map.
 
     Reads the preserved_scrapers and lad_overrides maps from lad_overrides.json
-    (scraper_id → [LAD codes]), imports TITLE and URL from each scraper module,
-    and patches the corresponding lad_lookup entries.
+    (scraper_id → [LAD codes]), imports URL from each scraper module, and
+    patches the corresponding scraper_lad_map entries. Council names come from
+    lad_base.json, not from scraper TITLE constants, so they aren't touched here.
     """
     import importlib
 
@@ -219,33 +298,54 @@ def _merge_preserved_scrapers() -> None:
     if not combined:
         return
 
-    lad_data = json.loads(LAD_LOOKUP_PATH.read_text())
+    scraper_map = (
+        json.loads(SCRAPER_LAD_MAP_PATH.read_text())
+        if SCRAPER_LAD_MAP_PATH.exists()
+        else {}
+    )
     patched = 0
 
     for scraper_id, lad_codes in combined.items():
         try:
             mod = importlib.import_module(f"api.scrapers.{scraper_id}")
-            title = getattr(mod, "TITLE", scraper_id)
             url = getattr(mod, "URL", "")
         except Exception:
             logger.warning("Could not import preserved scraper %s", scraper_id)
             continue
 
         for lad in lad_codes:
-            if lad in lad_data:
-                lad_data[lad]["name"] = title
-                lad_data[lad]["scraper_id"] = scraper_id
-                lad_data[lad]["url"] = url
-            else:
-                lad_data[lad] = {
-                    "name": title,
-                    "scraper_id": scraper_id,
-                    "url": url,
-                }
+            scraper_map[lad] = {"scraper_id": scraper_id, "url": url}
             patched += 1
 
-    LAD_LOOKUP_PATH.write_text(json.dumps(lad_data, indent=2))
-    logger.info("Merged %d preserved/port scraper entries into lad_lookup.json", patched)
+    SCRAPER_LAD_MAP_PATH.write_text(
+        json.dumps(dict(sorted(scraper_map.items())), indent=2) + "\n"
+    )
+    logger.info(
+        "Merged %d preserved/port scraper entries into scraper_lad_map.json", patched
+    )
+
+
+def _drop_unwired_lads() -> None:
+    """Strip blocklisted LADs from scraper_lad_map.json so re-syncs can't
+    re-wire placeholders that can never return real data. See
+    load_unwired_lads() and the "unwired_lads" map in lad_overrides.json."""
+    unwired = load_unwired_lads()
+    if not unwired or not SCRAPER_LAD_MAP_PATH.exists():
+        return
+    scraper_map = json.loads(SCRAPER_LAD_MAP_PATH.read_text())
+    dropped = sorted(set(scraper_map) & set(unwired))
+    if not dropped:
+        return
+    for lad in dropped:
+        del scraper_map[lad]
+    SCRAPER_LAD_MAP_PATH.write_text(
+        json.dumps(dict(sorted(scraper_map.items())), indent=2) + "\n"
+    )
+    logger.info(
+        "Dropped %d blocklisted LAD mapping(s): %s",
+        len(dropped),
+        ", ".join(dropped),
+    )
 
 
 def _check_lad_lookup_consistency() -> None:
@@ -268,9 +368,11 @@ def main():
     args = sys.argv[1:]
     include_unmerged = "--include-unmerged" in args
 
-    # 1. Fetch input.json and build needed set
+    # 1. Build matching identifiers from both scraper aliases and the complete,
+    #    authoritative council list. UKBCD coverage must not cap HACS coverage.
     input_data = fetch_input_json()
-    needed_ids = build_needed_identifiers(input_data)
+    lad_data = json.loads(LAD_BASE_PATH.read_text())
+    needed_ids = build_needed_identifiers(input_data) | build_lad_identifiers(lad_data)
     save_needed_councils(needed_ids)
 
     # 2. Wipe all scrapers so stale files never linger across syncs
@@ -307,9 +409,9 @@ def main():
         "HACS sync",
     )
 
-    # 4. Filter HACS scrapers against input.json
+    # 4. Filter HACS scrapers against known councils and scraper aliases
     print("\n" + "=" * 50)
-    print("=== Filtering HACS scrapers against input.json ===")
+    print("=== Filtering HACS scrapers against council catalogues ===")
     print("=" * 50)
     removed = filter_hacs_scrapers(needed_ids)
     if removed:
@@ -333,8 +435,17 @@ def main():
     copied_ports = _copy_ports()
     logger.info("Copied %d ports from pipeline/ports/ into api/scrapers/.", len(copied_ports))
 
-    # 5b. Wire preserved scrapers into lad_lookup.json
+    # 5c. Wire HACS councils absent from UKBCD, apply explicit mappings, then compose
+    #     api/data/lad_lookup.json from lad_base.json (ONS/GOV.UK ground truth)
+    #     + that map. lad_base.json only changes when upstream does
+    #     (scripts/lookup/fetch_latest.sh).
+    _wire_lad_hacs_scrapers()
     _merge_preserved_scrapers()
+    _drop_unwired_lads()
+    run_shell(
+        ["uv", "run", "python", "-m", "scripts.lookup.build_lad_lookup", "--compose"],
+        "lad_lookup composition",
+    )
 
     # 6. Regenerate test cases (after filtering, so stale scrapers are excluded)
     print("\n" + "=" * 50)

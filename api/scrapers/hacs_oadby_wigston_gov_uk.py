@@ -6,7 +6,7 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Oadby and Wigston Council"
 DESCRIPTION = "Source for Oadby and Wigston Council."
@@ -22,9 +22,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Garden Waste": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

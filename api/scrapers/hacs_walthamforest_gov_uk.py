@@ -4,7 +4,7 @@ from time import time_ns
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 LOGGER = logging.getLogger(__name__)
 TITLE = "Waltham Forest"
@@ -17,10 +17,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "DOMESTIC WASTE COLLECTION SERVICE": "mdi:trash-can",
-    "FOOD WASTE COLLECTION SERVICE": "mdi:food",
-    "ORGANIC COLLECTION SERVICE": "mdi:leaf",
-    "RECYCLING COLLECTION SERVICE": "mdi:recycle",
+    "DOMESTIC WASTE COLLECTION SERVICE": Icons.GENERAL_WASTE,
+    "FOOD WASTE COLLECTION SERVICE": Icons.BIO_KITCHEN,
+    "ORGANIC COLLECTION SERVICE": Icons.ORGANIC,
+    "RECYCLING COLLECTION SERVICE": Icons.RECYCLING,
 }
 
 

@@ -1,9 +1,9 @@
 from datetime import datetime
 
 import httpx
-from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Haringey Council"
 DESCRIPTION = "Source for haringey.gov.uk services for Haringey Council, UK."
@@ -15,11 +15,16 @@ TEST_CASES = {
     "Test_004": {"uprn": 100021202131},
 }
 ICON_MAP = {
-    "Non-Recyclable Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food Waste": "mdi:food-apple",
-    "Garden Waste": "mdi:leaf",
+    "Non-Recyclable Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Garden Waste": Icons.GARDEN,
 }
+
+SOURCE_CODEOWNERS = ["@marcjay"]
+
+API = "https://wastecollections.haringey.gov.uk/api"
+COUNCIL_ID = "45"
 
 
 class Source:
@@ -27,34 +32,52 @@ class Source:
         self._uprn = str(uprn).zfill(12)
 
     async def fetch(self):
-        api_url = f"https://wastecollections.haringey.gov.uk/property/{self._uprn}"
-        response = await httpx.AsyncClient(follow_redirects=True).get(api_url)
+        session = httpx.AsyncClient(follow_redirects=True)
 
-        soup = BeautifulSoup(response.text, features="html.parser")
-        soup.prettify()
+        # Step 1: resolve the UPRN to the internal point id.
+        address_response = await session.post(
+            f"{API}/getAddressByPointId",
+            json={
+                "pointId": self._uprn,
+                "councilId": COUNCIL_ID,
+                "pointType": "PointAddress",
+            },
+            timeout=30,
+        )
+        address_response.raise_for_status()
+        addresses = address_response.json().get("data", [])
+        if not addresses:
+            raise SourceArgumentNotFound("uprn", self._uprn)
+        point_id = addresses[0]["id"]
+
+        # Step 2: fetch the collection schedule for that point id.
+        collection_response = await session.post(
+            f"{API}/getCollectionDays",
+            json={
+                "pointId": point_id,
+                "pointType": "PointAddress",
+                "councilId": COUNCIL_ID,
+            },
+            timeout=30,
+        )
+        collection_response.raise_for_status()
+        services = collection_response.json().get("activeServices", [])
 
         entries = []
-
-        service_elements = soup.select(".service-wrapper")
-
-        for service_element in service_elements:
-            service_name = service_element.select(".service-name")[0].text.strip()
-
-            next_service_dates = service_element.select("td.next-service")
-            if len(next_service_dates) == 0:
-                continue
-            next_service_date = next_service_dates[0]
-
-            next_service_date.span.extract()
-
-            entries.append(
-                Collection(
-                    date=datetime.strptime(
-                        next_service_date.text.strip(), "%d/%m/%Y"
-                    ).date(),
-                    t=service_name,
-                    icon=ICON_MAP.get(service_name),
+        for service in services:
+            waste_type = service.get("taskTypeName") or service.get("serviceName")
+            for schedule in service.get("serviceSchedules", []):
+                date_str = schedule.get("currentScheduledDate")
+                if not date_str:
+                    continue
+                entries.append(
+                    Collection(
+                        date=datetime.fromisoformat(
+                            date_str.replace("Z", "+00:00")
+                        ).date(),
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type),
+                    )
                 )
-            )
 
         return entries

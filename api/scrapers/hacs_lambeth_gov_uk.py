@@ -2,7 +2,7 @@ import datetime
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "London Borough of Lambeth"
@@ -18,10 +18,10 @@ TEST_CASES = {
 API_URL = "https://wasteservice.lambeth.gov.uk/WhitespaceComms/GetServicesByUprn"
 
 ICON_MAP = {
-    "Domestic Food Collection Service": "mdi:food",
-    "Domestic Recycling Collection Service": "mdi:recycle",
-    "Domestic Refuse Collection Service": "mdi:trash-can",
-    "Domestic Garden Collection Service": "mdi:leaf",
+    "Domestic Food Collection Service": Icons.BIO_KITCHEN,
+    "Domestic Recycling Collection Service": Icons.GENERAL_WASTE,
+    "Domestic Refuse Collection Service": Icons.GENERAL_WASTE,
+    "Domestic Garden Collection Service": Icons.GARDEN,
 }
 
 PARAM_TRANSLATIONS = {
@@ -83,14 +83,14 @@ class Source:
             )
             response.raise_for_status()
         except requests.Timeout:
-            raise Exception("API request timed out")
+            raise Exception("API request timed out") from None
         except httpx.HTTPError as e:
-            raise Exception(f"API request failed: {e}")
+            raise Exception(f"API request failed: {e}") from e
 
         try:
             data = response.json()
         except ValueError:
-            raise Exception("Invalid JSON response")
+            raise Exception("Invalid JSON response") from None
 
         services = data.get("SiteServices")
         if not services:

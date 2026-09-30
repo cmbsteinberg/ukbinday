@@ -40,8 +40,15 @@ uv run python -m pipeline.ukbcd.generate_test_lookup   # ukbcd scrapers (merges 
 # Regenerate admin_scraper_lookup.json (council domain to scraper ID mapping)
 uv run python -m scripts.generate_admin_lookup
 
-# Regenerate postcode/LAD lookup data
+# Publish the committed ONSPD parquet to api/data/postcode_lookup.parquet
 uv run python -m scripts.lookup.create_lookup_table
+
+# Check for new ONS/GOV.UK editions (downloads nothing); drop --check to fetch
+./scripts/lookup/fetch_latest.sh --check
+
+# Rebuild the council mapping: lad_base.json from upstream, then lad_lookup.json
+uv run python -m scripts.lookup.build_lad_lookup
+uv run python -m scripts.lookup.build_lad_lookup --compose  # committed files only
 
 # Regenerate coverage map
 uv run python -m scripts.coverage.generate_coverage_map
@@ -74,7 +81,7 @@ docker compose up --build
 - `services/refresh_job.py` -- Nightly worker that re-scrapes stale UPRNs. Scans sidecars, skips UPRNs successfully refreshed within `ICS_REFRESH_MIN_AGE_HOURS`, fans out via bounded queue, deletes entries after `ICS_FAILURE_THRESHOLD` consecutive failures. Runs in a dedicated `worker` container (API sets `RUN_REFRESH_JOB=0`)
 - `services/scrape_lock.py` -- Redis `SET NX` lock keyed by UPRN, shared by API and worker so the same UPRN isn't scraped twice concurrently
 - `data/admin_scraper_lookup.json` -- Council domain to scraper ID mapping
-- `data/lad_lookup.json` -- LAD code to council name, URL, scraper ID, and working status
+- `data/lad_lookup.json` -- LAD code to council name, scraper URL, scraper ID, GOV.UK waste-service URL, and working status. Generated -- never edit by hand. Keys are exactly the LAD codes `postcode_lookup.parquet` can return (361), so every council a postcode resolves to has an entry even when no scraper exists yet
 - `badge_coverage.json` (repo root) -- Coverage stats for README badge
 - `data/postcode_lookup.parquet` -- 1.6M postcodes mapped to LAD codes for fast local lookup
 - `data/calendars/` -- On-disk ICS cache (`{uprn}.ics` + `{uprn}.json` sidecar), gitignored
@@ -94,9 +101,13 @@ docker compose up --build
 - `httpx_helpers.py` -- Helpers for one-shot httpx requests that properly close the client
 
 **Pipeline** (`pipeline/`):
-- `sync.sh` -- Top-level sync orchestrator: runs `sync_all.py` which fetches input.json (source of truth for needed councils), syncs HACS scrapers, fills gaps with UKBCD, and regenerates lookups
+- `sync.sh` -- Top-level sync orchestrator: runs `sync_all.py` which fetches input.json (source of truth for which councils have a *scraper*, not for which councils exist), syncs HACS scrapers, fills gaps with UKBCD, and regenerates lookups
+- `data/lad_base.json` -- Ground-truth LAD code to `{name, govuk_url}` for all 361 councils, from ONS + GOV.UK. Only changes when upstream does (`scripts/lookup/fetch_latest.sh`)
+- `data/scraper_lad_map.json` -- LAD code to `{scraper_id, url}`, written by `ukbcd/patch_scrapers.py` and patched by `sync_all._merge_preserved_scrapers`. Composed with `lad_base.json` into `api/data/lad_lookup.json`
+- `data/onspd_postcode_lad.parquet`, `data/onsud_uprn_postcode.parquet` -- Committed ONS extracts (15MB/88MB) so a checkout, test run or deploy never needs the multi-hundred-MB upstream zips
 - `shared.py` -- Common utilities: path constants, blocked domains list, domain normalization, lookup loaders
 - `overrides.json` -- Central config for HACS-to-UKBCD fallbacks, curl_cffi backends, SSL overrides, requests fallback scrapers
+- `lad_overrides.json` -- `scraper_id` to LAD codes, applied after the sync's own wiring wins. Needed wherever input.json can't wire a scraper itself: the council's listed URL is a third-party portal (`mybasildon.powerappsportals.com`) or plain wrong (Teignbridge's is `google.co.uk`), its `LAD24CD` is wrong (Gosport's said `E07000082`, which is Stroud), or the code was recoded (East Herts `E07000097` to `E07000242`). `build_lad_lookup.check_scraper_matches_council` warns when a LAD's scraper matches neither the council name nor its GOV.UK domain, which is how the next such case gets caught
 - `hacs/` -- Scripts to sync and patch hacs_waste_collection_schedule scrapers (AST-based `requests` to async `httpx`)
 - `ukbcd/` -- Scripts to sync and patch UKBinCollectionData scrapers (import rewrite, sync httpx, Source adapter generation)
 - `upstream/` -- Downloaded originals from both repos (gitignored, populated by sync scripts)
@@ -106,7 +117,9 @@ docker compose up --build
 - `generate_sankey.py` -- Generates Mermaid sankey diagram in README.md from `lad_lookup.json` and `tests/output/integration_output.json`
 - `annotate_lad_working.py` -- Annotates `lad_lookup.json` with working/broken status based on integration test results
 - `pipeline/ci/post_integration.sh` -- Runs all post-integration regeneration scripts (coverage map, sankey, lad annotations)
-- `lookup/create_lookup_table.py` -- Downloads ONS ONSPD data and builds `postcode_lookup.parquet` and `lad_lookup.json`
+- `lookup/fetch_latest.sh` -- Version-checked fetch of the four upstream sources (ONSPD, ONSUD, ONS LAD boundaries, GOV.UK Local Links Manager) into `$BINS_DATA_CACHE` (default `~/.cache/bins-data`). ONSPD/ONSUD are ArcGIS items that mint a new id per edition and ignore conditional GETs, so freshness comes from the item's `modified` stamp in `.upstream_version`, not `curl -z`; the small sources do use ETag/`If-Modified-Since`. `--check` reports staleness without downloading, `--small-only` skips the multi-hundred-MB zips
+- `lookup/create_lookup_table.py` -- Publishes the committed ONSPD parquet to `postcode_lookup.parquet`. `--from-onspd`/`--from-onsud` rebuild the pipeline parquets from an unpacked ONS release and stamp the edition into parquet key-value metadata (`SELECT * FROM parquet_kv_metadata(...)`); `--stamp-edition` labels an existing parquet in place
+- `lookup/build_lad_lookup.py` -- Rebuilds the council mapping from ground truth. Stage 1 joins ONS boundary names and GOV.UK waste URLs onto the distinct LAD codes in `onspd_postcode_lad.parquet` and writes `pipeline/data/lad_base.json`; stage 2 (`--compose`) merges that with `pipeline/data/scraper_lad_map.json` into `api/data/lad_lookup.json`. Where sources disagree on a code after a reorganisation (ONS boundaries lead ONSPD on `E08000038/39` vs `E08000016/19`; GOV.UK lags on the 2023 unitaries), `CODE_ALIASES` re-keys the row onto the code ONSPD actually returns -- an unnamed code is a hard error, not a null name
 - `coverage/generate_coverage_map.py` -- Fetches UK LAD boundaries from ArcGIS and generates `coverage.geojson` and `coverage_map.html`
 
 **Tests** (`tests/`):

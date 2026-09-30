@@ -1,35 +1,202 @@
 {
   "preserved_scrapers": {},
   "lad_overrides": {
-    "hacs_itv_blaenau_gwent": ["W06000019"],
-    "hacs_itv_epsom_ewell": ["E07000208"],
-    "hacs_itv_hyndburn": ["E07000120"],
-    "hacs_itv_winchester": ["E07000094"],
-    "hacs_itv_somerset": ["E06000066"],
-    "hacs_itv_test_valley": ["E07000093"],
-    "port_argyll_and_bute_council": ["S12000035"],
-    "port_ceredigion_county_council": ["W06000008"],
-    "port_dumfries_and_galloway_council": ["S12000006"],
-    "port_east_staffordshire_borough_council": ["E07000193"],
-    "port_edinburgh_city_council": ["S12000036"],
-    "port_gloucester_city_council": ["E07000081"],
-    "port_hillingdon_council": ["E09000017"],
-    "port_kingston_upon_thames_council": ["E09000021"],
-    "port_mid_ulster_district_council": ["N09000009"],
-    "port_new_forest_council": ["E07000091"],
-    "port_north_devon_council": ["E07000043"],
-    "port_northumberland_council": ["E06000057"],
-    "port_stirling_council": ["S12000030"],
-    "port_tendring_district_council": ["E07000076"],
-    "port_three_rivers_district_council": ["E07000102"],
-    "port_torbay_council": ["E06000027"],
-    "port_wychavon_district_council": ["E07000238"],
-    "port_bromley_borough_council": ["E09000006"],
-    "port_colchester_city_council": ["E07000071"],
-    "hacs_solihull_gov_uk": ["E08000029"],
-    "hacs_eastdunbarton_gov_uk": ["S12000045"],
-    "ukbcd_north_warwickshire_borough_council": ["E07000218"],
-    "hacs_rugby_gov_uk": ["E07000220"],
-    "ukbcd_north_yorkshire": ["E06000065"]
+    "hacs_basildon_gov_uk": [
+      "E07000066"
+    ],
+    "hacs_knowsley_gov_uk": [
+      "E08000011"
+    ],
+    "hacs_teignbridge_gov_uk": [
+      "E07000045"
+    ],
+    "hacs_eppingforestdc_gov_uk": [
+      "E07000072"
+    ],
+    "hacs_eastherts_gov_uk": [
+      "E07000242"
+    ],
+    "hacs_blackburn_gov_uk": [
+      "E06000008"
+    ],
+    "hacs_gosport_gov_uk": [
+      "E07000088"
+    ],
+    "hacs_stroud_gov_uk": [
+      "E07000082"
+    ],
+    "hacs_itv_blaenau_gwent": [
+      "W06000019"
+    ],
+    "hacs_itv_epsom_ewell": [
+      "E07000208"
+    ],
+    "hacs_itv_hyndburn": [
+      "E07000120"
+    ],
+    "hacs_itv_winchester": [
+      "E07000094"
+    ],
+    "hacs_itv_somerset": [
+      "E06000066"
+    ],
+    "hacs_itv_test_valley": [
+      "E07000093"
+    ],
+    "port_antrim_and_newtownabbey_council": [
+      "N09000001"
+    ],
+    "port_argyll_and_bute_council": [
+      "S12000035"
+    ],
+    "port_ceredigion_county_council": [
+      "W06000008"
+    ],
+    "port_dumfries_and_galloway_council": [
+      "S12000006"
+    ],
+    "port_east_staffordshire_borough_council": [
+      "E07000193"
+    ],
+    "port_edinburgh_city_council": [
+      "S12000036"
+    ],
+    "port_gloucester_city_council": [
+      "E07000081"
+    ],
+    "port_hillingdon_council": [
+      "E09000017"
+    ],
+    "port_hertsmere_borough_council": [
+      "E07000098"
+    ],
+    "port_kingston_upon_thames_council": [
+      "E09000021"
+    ],
+    "port_mid_ulster_district_council": [
+      "N09000009"
+    ],
+    "port_new_forest_council": [
+      "E07000091"
+    ],
+    "port_north_devon_council": [
+      "E07000043"
+    ],
+    "port_northumberland_council": [
+      "E06000057"
+    ],
+    "port_stirling_council": [
+      "S12000030"
+    ],
+    "port_tendring_district_council": [
+      "E07000076"
+    ],
+    "port_three_rivers_district_council": [
+      "E07000102"
+    ],
+    "port_torbay_council": [
+      "E06000027"
+    ],
+    "port_wychavon_district_council": [
+      "E07000238"
+    ],
+    "port_bromley_borough_council": [
+      "E09000006"
+    ],
+    "port_colchester_city_council": [
+      "E07000071"
+    ],
+    "hacs_solihull_gov_uk": [
+      "E08000029"
+    ],
+    "hacs_eastdunbarton_gov_uk": [
+      "S12000045"
+    ],
+    "ukbcd_north_warwickshire_borough_council": [
+      "E07000218"
+    ],
+    "hacs_rugby_gov_uk": [
+      "E07000220"
+    ],
+    "ukbcd_north_yorkshire": [
+      "E06000065"
+    ],
+    "port_babergh_district_council": [
+      "E07000200"
+    ],
+    "port_mid_suffolk_district_council": [
+      "E07000203"
+    ],
+    "port_powys_council": [
+      "W06000023"
+    ],
+    "ukbcd_caerphilly_county_borough_council": [
+      "W06000018"
+    ],
+    "ukbcd_cne_siar_council": [
+      "S12000013"
+    ],
+    "ukbcd_merthyr_tydfil_county_borough_council": [
+      "W06000024"
+    ],
+    "ukbcd_orkney_islands_council": [
+      "S12000023"
+    ],
+    "ukbcd_shetland_islands_council": [
+      "S12000027"
+    ],
+    "ukbcd_tamworth_borough_council": [
+      "E07000199"
+    ],
+    "port_west_devon_borough_council": [
+      "E07000047"
+    ],
+    "port_kensington_and_chelsea_council": [
+      "E09000020"
+    ],
+    "port_bassetlaw_district_council": [
+      "E07000171"
+    ],
+    "port_brentwood_borough_council": [
+      "E07000068"
+    ],
+    "port_ribble_valley_borough_council": [
+      "E07000124"
+    ],
+    "port_rossendale_borough_council": [
+      "E07000125"
+    ],
+    "port_trafford_council": [
+      "E08000009"
+    ],
+    "port_newry_mourne_and_down_council": [
+      "N09000010"
+    ],
+    "port_torfaen_county_borough_council": [
+      "W06000020"
+    ],
+    "port_newcastle_city_council": [
+      "E08000021"
+    ]
+  },
+  "unwired_lads": {
+    "N09000004": "deeplink-unwired: no address lookup exists, only 4 area calendar PDFs with colour-only week marking and no address-to-area mapping",
+    "N09000005": "deeplink-unwired: no address lookup exists, one generic calendar image; the Sentireal app backend is not publicly reachable",
+    "E06000046": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Isle of Wight data",
+    "E07000119": "deeplink-unwired: Bartec portal behind mandatory login, no guest lookup (dead by redesign)",
+    "E06000045": "deeplink-unwired: whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API",
+    "E06000043": "deeplink-unwired: Mendix platform, no plain-HTTP path (reference case)",
+    "E06000006": "deeplink-unwired: ASP.NET WebForms behind reCAPTCHA v2, server-side validator rejects guest POSTs with no data endpoint",
+    "E06000017": "deeplink-unwired: bin lookup behind Salesforce MyAccount login wall, no guest flow",
+    "E09000001": "deeplink-unwired: no address lookup feed exists, estate-based collections via Veolia with static pages only",
+    "E06000053": "deeplink-unwired: no address lookup exists, static round map + area table only (no kerbside off St Mary's/St Martins)",
+    "E07000038": "deeplink-unwired: Firmstep Check_your_Bin_Day retired (302, button commented out), static Calendar A/B only; apibroker 403",
+    "E06000060": "deeplink-unwired: iTouchVision kmbd/collectionDay returns null for all UPRNs and the replacement iappcustomer WSR endpoint errors server-side (2026-09-30); re-probe after the Oct 2026 calendar switch"
+  },
+  "deeplink_urls": {
+    "E07000119": "https://new.fylde.gov.uk/wasteportal/",
+    "N09000004": "https://causewaycoastandglens.gov.uk/live/bins-and-recycling/bin-collections/collection-calendars",
+    "N09000005": "https://recycling.derrystrabane.com/services/bin-collections/",
+    "E06000060": "https://www.buckinghamshire.gov.uk/waste-and-recycling/bin-collections/find-out-when-its-your-bin-collection/"
   }
 }

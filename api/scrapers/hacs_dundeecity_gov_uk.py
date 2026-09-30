@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Dundee City Council"
 DESCRIPTION = "Source script for dundeecity.gov.uk"
@@ -19,11 +19,11 @@ TEST_CASES = {
     },
 }
 ICON_MAP = {
-    "GREY BIN": "mdi:trash-can",
-    "BROWN BIN": "mdi:leaf",
-    "GREEN BIN": "mdi:bottle-wine",
-    "BURGUNDY BIN": "mdi:recycle",
-    "BLUE BIN": "mdi:newspaper",
+    "GREY BIN": Icons.GENERAL_WASTE,
+    "BROWN BIN": Icons.BIO_KITCHEN,
+    "GREEN BIN": Icons.GLASS_COLORED,
+    "BURGUNDY BIN": Icons.RECYCLING,
+    "BLUE BIN": Icons.NEWSPAPER,
 }
 
 

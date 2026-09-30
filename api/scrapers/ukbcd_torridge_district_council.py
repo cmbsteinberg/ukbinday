@@ -1,118 +1,137 @@
-from xml.etree import ElementTree
+from datetime import timedelta
 
 from bs4 import BeautifulSoup
 
 from api.compat.ukbcd.common import *
 from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
-from api.compat import httpx_helpers as _http
+import httpx
 
 
-# import the wonderful Beautiful Soup and the URL grabber
 class CouncilClass(AbstractGetBinDataClass):
     """
-    Concrete classes have to implement all abstract operations of the
-    baseclass. They can also override some
-    operations with a default implementation.
+    Torridge District Council — the old direct SOAP API at
+    collections-torridge.azurewebsites.net/WebService2.asmx was retired
+    (that host now only serves a staff "Digital Depot" login). The same
+    underlying getRoundCalendarForUPRN webservice is now reached through
+    the council's Granicus/AchieveForms self-service broker instead.
+
+    Response changed from explicit "Mon 14 Apr" dates to relative phrases
+    ("Tomorrow then every Mon", "Today then every Tue", etc.) plus an embedded
+    calendar table. This parser handles the relative summary lines and falls
+    back to the old explicit date format if it ever reappears.
     """
 
+    WEEKDAYS = {
+        "mon": 0,
+        "tue": 1,
+        "wed": 2,
+        "thu": 3,
+        "fri": 4,
+        "sat": 5,
+        "sun": 6,
+    }
+
+    HOSTNAME = "torridgedc-self.achieveservice.com"
+    PROCESS_ID = "bb925b16-12f7-4233-9b77-c644617535f6"
+    STAGE_ID = "a963b8c5-2715-4d5d-805c-18e16c033612"
+    CALENDAR_LOOKUP_ID = "65956fdb70ea4"
+
     async def parse_data(self, page, **kwargs) -> dict:
-        """This method makes the request to the council
-
-        Keyword arguments:
-        url -- the url to get the data from
-        """
-        # Set a user agent so we look like a browser ;-)
-        user_agent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64)"
-        headers = {"User-Agent": user_agent, "Content-Type": "text/xml"}
-
         uprn = kwargs.get("uprn")
-        try:
-            if uprn is None or uprn == "":
-                raise ValueError("Invalid UPRN")
-        except Exception as ex:
-            print(f"Exception encountered: {ex}")
-            print(
-                "Please check the provided UPRN. If this error continues, please first trying setting the "
-                "UPRN manually on line 115 before raising an issue."
+        if not uprn:
+            raise ValueError("UPRN is required")
+
+        api_url = f"https://{self.HOSTNAME}/apibroker/runLookup"
+        initial_url = f"https://{self.HOSTNAME}/AchieveForms/"
+
+        s = httpx.AsyncClient(follow_redirects=True)
+        s.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+            }
+        )
+
+        # Step 1 - session priming
+        r = await s.get(
+            initial_url,
+            params={
+                "mode": "fill",
+                "consentMessage": "yes",
+                "form_uri": f"sandbox-publish://AF-Process-{self.PROCESS_ID}/AF-Stage-{self.STAGE_ID}/definition.json",
+                "process": "1",
+                "process_uri": f"sandbox-processes://AF-Process-{self.PROCESS_ID}",
+                "process_id": f"AF-Process-{self.PROCESS_ID}",
+            },
+            timeout=30,
+        )
+        sid_match = re.search(r'"auth-session":"([^"]+)"', r.text)
+        if not sid_match:
+            raise ValueError("Torridge: could not obtain AchieveForms auth session")
+        sid = sid_match.group(1)
+
+        # Step 2 - calendar lookup by UPRN
+        r2 = await s.post(
+            api_url,
+            params={
+                "id": self.CALENDAR_LOOKUP_ID,
+                "repeat_against": "",
+                "noRetry": "true",
+                "getOnlyTokens": "undefined",
+                "log_id": "",
+                "app_name": "AF-Renderer::Self",
+                "sid": sid,
+            },
+            json={"formValues": {"Section 1": {"uprn": {"value": str(uprn)}}}},
+            timeout=30,
+        )
+        r2.raise_for_status()
+        lookup_data = r2.json()
+
+        rows_data = (
+            lookup_data.get("integration", {}).get("transformed", {}).get("rows_data")
+            or {}
+        )
+        inner_html = rows_data.get("0", {}).get("getRoundCalendarForUPRNResponse", "")
+        if not inner_html:
+            raise ValueError(
+                f"Torridge: no calendar data returned for UPRN {uprn}: {lookup_data}"
             )
 
-        # Make the Request - change the URL - find out your property number
-        # URL
-        url = "https://collections-torridge.azurewebsites.net/WebService2.asmx"
-        # Post data
-        post_data = (
-            '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><getRoundCalendarForUPRN xmlns="http://tempuri2.org/"><council>TOR</council><UPRN>'
-            + uprn
-            + "</UPRN><PW>wax01653</PW></getRoundCalendarForUPRN></soap:Body></soap:Envelope>"
-        )
-        pass  # urllib3 warnings disabled
-        page = await _http.post(url, headers=headers, data=post_data)
-
-        # Remove the soap wrapper
-        namespaces = {
-            "soap": "http://schemas.xmlsoap.org/soap/envelope/",
-            "a": "http://tempuri2.org/",
-        }
-        dom = ElementTree.fromstring(page.text)
-        page = dom.find(
-            "./soap:Body"
-            "/a:getRoundCalendarForUPRNResponse"
-            "/a:getRoundCalendarForUPRNResult",
-            namespaces,
-        )
-        # Make a BS4 object
-        soup = BeautifulSoup(page.text, features="html.parser")
-        soup.prettify()
-
+        soup = BeautifulSoup(inner_html, features="html.parser")
         data = {"bins": []}
 
-        b_el = soup.find("b", string="GardenBin")
-        if b_el:
-            results = re.search(
-                "([A-Za-z]+ \\d\\d? [A-Za-z]+) (.*?)", b_el.next_sibling.split(": ")[1]
-            )
-            if results and results.groups()[0]:
-                date = results.groups()[0] + " " + datetime.today().strftime("%Y")
-                data["bins"].append(
-                    {
-                        "type": "GardenBin",
-                        "collectionDate": get_next_occurrence_from_day_month(
-                            datetime.strptime(date, "%a %d %b %Y")
-                        ).strftime(date_format),
-                    }
-                )
+        today = datetime.today().date()
 
-        b_el = soup.find("b", string="Refuse")
-        if b_el:
-            results = re.search(
-                "([A-Za-z]+ \\d\\d? [A-Za-z]+) (.*?)", b_el.next_sibling.split(": ")[1]
-            )
-            if results and results.groups()[0]:
-                date = results.groups()[0] + " " + datetime.today().strftime("%Y")
-                data["bins"].append(
-                    {
-                        "type": "Refuse",
-                        "collectionDate": get_next_occurrence_from_day_month(
-                            datetime.strptime(date, "%a %d %b %Y")
-                        ).strftime(date_format),
-                    }
-                )
+        for b in soup.find_all(["b", "B"]):
+            bin_type = b.get_text(strip=True)
+            if not bin_type:
+                continue
+            if bin_type.lower().startswith("key"):
+                break
+            if re.match(r"^[A-Za-z]+\s+\d{4}$", bin_type):
+                continue
 
-        b_el = soup.find("b", string="Recycling")
-        if b_el:
-            results = re.search(
-                "([A-Za-z]+ \\d\\d? [A-Za-z]+) (.*?)", b_el.next_sibling.split(": ")[1]
+            nxt = b.next_sibling
+            if not isinstance(nxt, str):
+                continue
+            raw = nxt.strip()
+            if not raw.startswith(":"):
+                continue
+            value = raw.lstrip(":").strip()
+
+            if re.search(r"\bNo\b.*collection", value, re.IGNORECASE):
+                continue
+
+            base_date = self._extract_base_date(value, today)
+            if base_date is None:
+                continue
+
+            data["bins"].append(
+                {
+                    "type": bin_type,
+                    "collectionDate": base_date.strftime(date_format),
+                }
             )
-            if results and results.groups()[0]:
-                date = results.groups()[0] + " " + datetime.today().strftime("%Y")
-                data["bins"].append(
-                    {
-                        "type": "Recycling",
-                        "collectionDate": get_next_occurrence_from_day_month(
-                            datetime.strptime(date, "%a %d %b %Y")
-                        ).strftime(date_format),
-                    }
-                )
 
         data["bins"].sort(
             key=lambda x: datetime.strptime(x.get("collectionDate"), date_format)
@@ -120,12 +139,44 @@ class CouncilClass(AbstractGetBinDataClass):
 
         return data
 
+    def _extract_base_date(self, value, today):
+        vl = value.lower()
+
+        if vl.startswith("today"):
+            return today
+        if vl.startswith("tomorrow"):
+            return today + timedelta(days=1)
+
+        explicit = re.match(r"([A-Za-z]+)\s+(\d{1,2})\s+([A-Za-z]+)", value)
+        if explicit:
+            day_num = explicit.group(2)
+            month = explicit.group(3)
+            for year in (today.year, today.year + 1):
+                try:
+                    parsed = datetime.strptime(
+                        f"{day_num} {month} {year}", "%d %b %Y"
+                    ).date()
+                except ValueError:
+                    continue
+                if parsed >= today:
+                    return parsed
+
+        wm = re.search(r"\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)", value, re.IGNORECASE)
+        if wm:
+            target = self.WEEKDAYS[wm.group(1).lower()]
+            days_ahead = (target - today.weekday()) % 7
+            if days_ahead == 0:
+                days_ahead = 7
+            return today + timedelta(days=days_ahead)
+
+        return None
+
 
 # --- Adapter for Project API ---
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Torridge"
-URL = "https://collections-torridge.azurewebsites.net/WebService2.asmx"
+URL = "https://torridgedc-self.achieveservice.com"
 TEST_CASES = {}
 
 

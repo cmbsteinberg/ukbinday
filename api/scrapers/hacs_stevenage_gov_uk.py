@@ -3,7 +3,7 @@ import time
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Stevenage Borough Council"
@@ -16,8 +16,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "general waste": "mdi:trash-can",
-    "recycling": "mdi:recycle",
+    "general waste": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
 }
 
 BASE_URL = "https://stevenage-self.achieveservice.com"
@@ -48,7 +48,8 @@ class Source:
                 "LLPGUPRN": {"value": self._uprn},
                 "MinimumDateLookAhead": {"value": time.strftime("%Y-%m-%d")},
                 "MaximumDateLookAhead": {
-                    "value": str(int(time.strftime("%Y")) + 1) + time.strftime("-%m-%d"),
+                    "value": str(int(time.strftime("%Y")) + 1)
+                    + time.strftime("-%m-%d"),
                 },
             }
         }

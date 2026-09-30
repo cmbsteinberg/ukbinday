@@ -33,15 +33,23 @@ def extract_test_cases(path: Path) -> dict | None:
         return None
 
     for node in ast.walk(tree):
+        if isinstance(node, ast.Assign):
+            targets = node.targets
+            value = node.value
+        elif isinstance(node, ast.AnnAssign):
+            # TEST_CASES: dict = {...} annotated form (dartford, sstaffs, bridgend)
+            targets = [node.target]
+            value = node.value
+        else:
+            continue
         if (
-            isinstance(node, ast.Assign)
-            and len(node.targets) == 1
-            and isinstance(node.targets[0], ast.Name)
-            and node.targets[0].id == "TEST_CASES"
-            and isinstance(node.value, ast.Dict)
+            len(targets) == 1
+            and isinstance(targets[0], ast.Name)
+            and targets[0].id == "TEST_CASES"
+            and isinstance(value, ast.Dict)
         ):
             try:
-                return ast.literal_eval(node.value)
+                return ast.literal_eval(value)
             except (ValueError, TypeError):
                 logger.warning("Could not evaluate TEST_CASES in %s", path.name)
                 return None

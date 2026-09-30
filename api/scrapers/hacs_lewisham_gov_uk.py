@@ -5,7 +5,7 @@ import re
 import httpx
 from bs4 import BeautifulSoup, Tag
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -27,10 +27,10 @@ DATE_REGEX = r"(\d{2}/\d{2}/\d{4})"
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "food": "mdi:food-apple",
-    "garden": "mdi:leaf",
+    "refuse": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
+    "garden": Icons.GARDEN,
 }
 
 ID_SEPERATOR = "-----------------------------{rand_id}"
@@ -66,17 +66,17 @@ class Source:
             addresses = r.json()
 
             if self._name:
-                self._uprn = [
+                self._uprn = next(
                     x["Uprn"]
                     for x in addresses
                     if (x["Title"]).upper().startswith(self._name.upper())
-                ][0]
+                )
             elif self._house_number:
-                self._uprn = [
+                self._uprn = next(
                     x["Uprn"]
                     for x in addresses
                     if (x["Title"]).startswith(str(self._house_number))
-                ][0]
+                )
 
             if not self._uprn:
                 raise Exception(

@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import httpx
 from bs4 import BeautifulSoup, Tag
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,10 +16,10 @@ TEST_CASES = {"GL6+9BW 100120517945": {"postcode": "GL6 9BW", "uprn": 1001205179
 
 
 ICON_MAP = {
-    "rubbish": "mdi:trash-can",
-    "food": "mdi:food",
-    "recycling": "mdi:recycle",
-    "garden": "mdi:leaf",
+    "rubbish": Icons.GENERAL_WASTE,
+    "food": Icons.BIO_KITCHEN,
+    "recycling": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
 }
 
 

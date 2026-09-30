@@ -6,7 +6,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 # Source code based on gateshead_gov_uk
 
@@ -22,9 +22,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Waste": "mdi:trash-can",
-    "Garden Waste": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Waste": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

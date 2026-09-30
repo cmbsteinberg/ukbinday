@@ -5,7 +5,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Horsham District Council"
 DESCRIPTION = "Source script for Horsham District Council"
@@ -17,10 +17,10 @@ TEST_CASES = {
 API_URL = "https://satellite.horsham.gov.uk/environment/refuse/cal_details.asp"
 # Updated 1st April 2026 as Food Waste was added, and the names for the refuse bins had been updated
 ICON_MAP = {
-    "Green Bin for Refuse and Non-Recycling": "mdi:trash-can",
-    "Blue-Top Bin for Recycling": "mdi:recycle",
-    "Brown-Top Bin for Garden Waste": "mdi:leaf",
-    "Orange-Top Bin for Food Waste": "mdi:food",
+    "Green Bin for Refuse and Non-Recycling": Icons.GENERAL_WASTE,
+    "Blue-Top Bin for Recycling": Icons.RECYCLING,
+    "Brown-Top Bin for Garden Waste": Icons.GARDEN,
+    "Orange-Top Bin for Food Waste": Icons.BIO_KITCHEN,
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -58,23 +58,22 @@ class Source:
                 len(result_row) == 0
             ):  # This removes the first header row, or any rows with no data
                 continue
-            else:
-                date = datetime.strptime(
-                    result_row[1].text, "%d/%m/%Y"
-                ).date()  # Pull out the rows date
+            date = datetime.strptime(
+                result_row[1].text, "%d/%m/%Y"
+            ).date()  # Pull out the rows date
 
-                # The website now uses <li> elements for each bin type
-                list_items = result_row[2].find_all("li")
-                collection_items = [li.get_text(strip=True) for li in list_items]
-                for collection_type in collection_items:
-                    if not collection_type:
-                        continue
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=collection_type,
-                            icon=ICON_MAP.get(collection_type),
-                        )
+            # The website now uses <li> elements for each bin type
+            list_items = result_row[2].find_all("li")
+            collection_items = [li.get_text(strip=True) for li in list_items]
+            for collection_type in collection_items:
+                if not collection_type:
+                    continue
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=collection_type,
+                        icon=ICON_MAP.get(collection_type),
                     )
+                )
 
         return entries

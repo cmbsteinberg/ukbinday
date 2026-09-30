@@ -9,6 +9,14 @@
     <p>No upcoming collections found.</p>
 </template>
 
+<template id="tpl-deeplink">
+    <div class="deeplink-card" role="group">
+        <p><strong data-slot="council"></strong> isn't supported for automatic lookups yet.</p>
+        <p data-slot="reason"></p>
+        <a data-slot="link" class="action-btn" target="_blank" rel="noopener">Check on council website →</a>
+    </div>
+</template>
+
 <template id="tpl-bin-card">
     <div class="bin-group" role="group">
         <div class="bin-next">

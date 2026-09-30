@@ -3,12 +3,13 @@ from __future__ import annotations
 import datetime
 import re
 from dataclasses import dataclass
+from typing import ClassVar
 
 import httpx
 from bs4 import BeautifulSoup
 from dateutil import parser
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Neath Port Talbot Council"
 DESCRIPTION = "Source for waste collection services for Neath Port Talbot Council"
@@ -53,20 +54,20 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Plastic / Tins / Cans": "mdi:bottle-soda",
-    "Cardboard, Cartons and Paper": "mdi:package-variant",
-    "Glass": "mdi:glass-fragile",
-    "Food Waste": "mdi:leaf",
-    "Batteries": "mdi:battery",
-    "General Household Rubbish": "mdi:trash-can",
-    "Garden Waste": "mdi:flower",
+    "Plastic / Tins / Cans": Icons.PLASTIC_PACKAGING,
+    "Cardboard, Cartons and Paper": Icons.PAPER,
+    "Glass": Icons.GLASS,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Batteries": Icons.BATTERY,
+    "General Household Rubbish": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
 }
 
 
-class FailedToFindTokensError(Exception): ...  # noqa: E701
+class FailedToFindTokensError(Exception): ...
 
 
-class FailedToFindCollections(Exception): ...  # noqa: E701
+class FailedToFindCollections(Exception): ...
 
 
 _DAY_MONTH_RE = re.compile(
@@ -99,7 +100,7 @@ class Source:
     """
 
     _BASE_URL = f"{URL}bins-and-recycling/equipment-and-collections/bin-day-finder/"
-    _HEADERS = {
+    _HEADERS: ClassVar = {
         "User-Agent": "Mozilla/5.0",
         "Referer": _BASE_URL,
         "Origin": URL,
@@ -185,7 +186,9 @@ def _parse_collections_from_page_source(raw_html: str) -> list[Collection]:
 
     # Find all date headers (they are <h2> containing e.g. "Thursday, 23 October").
     headers = [
-        h for h in root.find_all("h2") if _DAY_MONTH_RE.match(_clean_text(h.get_text()))  # type: ignore[union-attr]
+        h
+        for h in root.find_all("h2")
+        if _DAY_MONTH_RE.match(_clean_text(h.get_text()))  # type: ignore[union-attr]
     ]
 
     collections: list = []

@@ -55,11 +55,6 @@
       "ukbcd_scraper": "ukbcd_west_lindsey_district_council",
       "reason": "requires_map_xy_id"
     },
-    "hacs_uttlesford_gov_uk": {
-      "domain": "uttlesford.gov.uk",
-      "ukbcd_scraper": "ukbcd_uttlesford_district_council",
-      "reason": "requires_composite_house_token"
-    },
     "hacs_chelmsford_gov_uk": {
       "domain": "chelmsford.gov.uk",
       "ukbcd_scraper": "ukbcd_chelmsford_city_council",
@@ -114,6 +109,11 @@
       "domain": "northyorks.gov.uk",
       "ukbcd_scraper": "ukbcd_north_yorkshire",
       "reason": "superseded_by_unified_north_yorkshire_scraper"
+    },
+    "hacs_babergh_midsuffolk_gov_uk": {
+      "domain": "midsuffolk.gov.uk",
+      "ukbcd_scraper": "port_mid_suffolk_district_council",
+      "reason": "required council selector param collides with API reserved council query key; served by per-LAD ports (Babergh + Mid Suffolk)"
     }
   }
 }

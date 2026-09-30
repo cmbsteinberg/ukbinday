@@ -4,7 +4,7 @@ import bs4
 import httpx
 from dateutil import parser
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
@@ -22,9 +22,9 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "Refuse": "mdi:trash-can",
-    "Garden": "mdi:leaf",
+    "Recycling": Icons.RECYCLING,
+    "Refuse": Icons.GENERAL_WASTE,
+    "Garden": Icons.GARDEN,
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",

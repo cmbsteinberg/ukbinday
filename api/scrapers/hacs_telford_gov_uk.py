@@ -4,7 +4,7 @@ import re
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -28,10 +28,10 @@ API_URLS = {
 
 # Map the names to icons
 ICON_MAP = {
-    "Red Top Container": "mdi:trash-can",
-    "Purple / Blue Containers": "mdi:recycle",
-    "Green Container": "mdi:leaf",
-    "Silver Containers": "mdi:food",
+    "Red Top Container": Icons.GENERAL_WASTE,
+    "Purple / Blue Containers": Icons.RECYCLING,
+    "Green Container": Icons.ORGANIC,
+    "Silver Containers": Icons.BIO_KITCHEN,
 }
 
 # Path to the images provided by the council for the containers

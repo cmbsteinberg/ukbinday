@@ -72,6 +72,7 @@ echo "=== Syncing compat/hacs package ==="
 COMPAT_FILES=(
     "collection.py"
     "exceptions.py"
+    "icons.py"
 )
 COMPAT_SERVICE_FILES=(
     "ICS.py"
@@ -101,6 +102,7 @@ python3 "$PATCH_COMPAT_SCRIPT" "$COMPAT_DIR"
 # Write __init__.py (imports only what our scrapers need)
 cat > "${COMPAT_DIR}/__init__.py" << 'PYEOF'
 from .collection import Collection, CollectionBase, CollectionGroup  # noqa: F401
+from .icons import Icons  # noqa: F401
 PYEOF
 
 # Empty service __init__.py

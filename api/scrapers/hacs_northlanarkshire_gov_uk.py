@@ -3,7 +3,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North Lanarkshire Council"
 DESCRIPTION = "Source for waste collection services for North Lanarkshire Council"
@@ -44,10 +44,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Blue-lidded Recycling Bin": "mdi:recycle",
-    "Food and Garden": "mdi:leaf",
-    "Glass, Metals, Plastics and Cartons": "mdi:glass-fragile",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Blue-lidded Recycling Bin": Icons.RECYCLING,
+    "Food and Garden": Icons.BIO_KITCHEN,
+    "Glass, Metals, Plastics and Cartons": Icons.PLASTIC_PACKAGING,
 }
 
 
@@ -68,7 +68,7 @@ class Source:
         containers = soup.findAll("div", {"class": "waste-type-container"})
 
         entries = []
-        for idx, container in enumerate(containers):
+        for _idx, container in enumerate(containers):
             waste_type = container.find("h3").text
             waste_days = container.findAll("p")
             for day in waste_days:

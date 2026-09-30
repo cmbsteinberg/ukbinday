@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Warrington Borough Council"
 DESCRIPTION = (
@@ -21,9 +21,9 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "BLACK BIN": "mdi:trash-can",
-    "BLUE BIN": "mdi:recycle",
-    "GREEN BIN": "mdi:leaf",
+    "BLACK BIN": Icons.GENERAL_WASTE,
+    "BLUE BIN": Icons.RECYCLING,
+    "GREEN BIN": Icons.ORGANIC,
 }
 
 
@@ -55,9 +55,13 @@ class Source:
             # List contains duplicates, so skip if already added.
             if self.contains(
                 entries,
-                lambda x: x.date
-                == datetime.strptime(job["ScheduledStart"], "%Y-%m-%dT%H:00:00").date()
-                and x.type == bin_type,
+                lambda x, job=job, bin_type=bin_type: (
+                    x.date
+                    == datetime.strptime(
+                        job["ScheduledStart"], "%Y-%m-%dT%H:00:00"
+                    ).date()
+                    and x.type == bin_type
+                ),
             ):
                 continue
 

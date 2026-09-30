@@ -3,7 +3,8 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
+from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "South Tyneside Council"
 DESCRIPTION = "Source for southtyneside.gov.uk services for South Tyneside Council, UK."
@@ -18,18 +19,19 @@ TEST_CASES = {
     "Test_001": {"postcode": "NE34 8RY", "uprn": "100000342955"},
     "Test_002": {"postcode": "SR6 7AJ", "uprn": "100000359535"},
     "Test_003": {"postcode": "NE31 1LY", "uprn": 100000304486},
+    "Test_004": {"postcode": "NE35 9BP", "uprn": 103009511},
 }
 ICON_MAP = {
-    "HOUSEHOLD": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
+    "HOUSEHOLD": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
 }
 
 
 class Source:
     def __init__(self, postcode, uprn):
         self._postcode = str(postcode).replace(" ", "")
-        self._uprn = str(uprn).zfill(12)
+        self._uprn = str(uprn)
 
     async def fetch(self):
 
@@ -47,9 +49,12 @@ class Source:
         r1 = await s.post(API, headers=HEADERS, data=payload)
         json_data = json.loads(r1.text)["result"]["ReturnedList"]
         for item in json_data:
-            if self._uprn in item["UPRN"]:
+            if self._uprn == item["UPRN"].lstrip("S"):
                 self._uprn = item["UPRN"]
                 self._address = item["Address"]
+                break
+        else:
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         # get collection schedule
         payload = json.dumps(

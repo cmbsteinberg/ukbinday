@@ -5,7 +5,7 @@ import httpx
 import urllib3
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFoundWithSuggestions,  # type: ignore[attr-defined]
 )
@@ -53,10 +53,10 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    "Refuse (black bin)": "mdi:trash-can",
-    "Recycling (green bin)": "mdi:recycle",
-    "Garden Waste (brown lid)": "mdi:leaf",
-    "Food Waste": "mdi:food-apple",
+    "Refuse (black bin)": Icons.GENERAL_WASTE,
+    "Recycling (green bin)": Icons.RECYCLING,
+    "Garden Waste (brown lid)": Icons.GARDEN,
+    "Food Waste": Icons.BIO_KITCHEN,
 }
 
 API_URL = "https://myproperty.molevalley.gov.uk/molevalley/api/live_addresses/"

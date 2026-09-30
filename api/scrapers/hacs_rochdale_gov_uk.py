@@ -3,7 +3,7 @@ from time import time_ns
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Rochdale Borough Council"
 DESCRIPTION = "Source for Rochdale Borough Council, UK."
@@ -16,10 +16,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Paper and Cardboard": "mdi:recycle",
-    "Glass and Bottles": "mdi:glass-fragile",
-    "Food and Garden": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Paper and Cardboard": Icons.PAPER,
+    "Glass and Bottles": Icons.GLASS,
+    "Food and Garden": Icons.BIO_KITCHEN,
 }
 
 
@@ -76,7 +76,7 @@ class Source:
         except KeyError:
             raise ValueError(
                 f"Rochdale API: Failed to retrieve bartecToken for UPRN {self._uprn}."
-            )
+            ) from None
 
         # 3. STEP 2: Fetch the Calendar
         # Lookup 68b58a1364572 returns the annual calendar using the token and date bounds

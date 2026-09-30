@@ -4,7 +4,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Flintshire"
@@ -17,11 +17,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bio": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Recycle": "mdi:recycle",
+    "Trash": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bio": Icons.ORGANIC,
+    "Paper": Icons.PAPER,
+    "Recycle": Icons.RECYCLING,
 }
 
 
@@ -36,7 +36,11 @@ class Source:
     async def fetch(self):
         r = await httpx.AsyncClient(follow_redirects=True).post(self._url)
         if r.status_code == 500:
-            raise SourceArgumentNotFound("uprn", self._uprn, "web request failed: probably caused by an invalid UPRN")
+            raise SourceArgumentNotFound(
+                "uprn",
+                self._uprn,
+                "web request failed: probably caused by an invalid UPRN",
+            )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
@@ -46,7 +50,7 @@ class Source:
 
         for row in rows:
             cols = row.find_all("div")
-            cols = list(map(lambda x: x.text.strip(), cols))
+            cols = [x.text.strip() for x in cols]
             if len(cols) == 0 or not re.match(r"\d{2}/\d{2}/\d{4}", cols[0]):
                 continue
 

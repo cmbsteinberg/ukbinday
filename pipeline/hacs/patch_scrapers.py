@@ -1632,6 +1632,331 @@ def _normalise_init_params(source: str) -> str:
 # --- File-level entry points ---
 
 
+def _defer_init_awaits(source: str) -> str:
+    """Move `await self._x(...)` calls out of sync `__init__` into `fetch`.
+
+    `__init__` must stay sync, so an awaited resolver call assigned to
+    `self._attr` becomes lazy: store None in `__init__`, resolve at the top
+    of `fetch`. Resolver args that were stashed as attributes are re-read
+    from `self`. Returns source unchanged when the shape is unexpected.
+    """
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return source
+    cls = next(
+        (
+            n
+            for n in ast.walk(tree)
+            if isinstance(n, ast.ClassDef) and n.name == "Source"
+        ),
+        None,
+    )
+    if cls is None:
+        return source
+    init = next(
+        (
+            f
+            for f in cls.body
+            if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and f.name == "__init__"
+        ),
+        None,
+    )
+    fetch = next(
+        (
+            f
+            for f in cls.body
+            if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and f.name == "fetch"
+        ),
+        None,
+    )
+    if init is None or fetch is None:
+        return source
+    parent: dict[ast.AST, ast.AST] = {}
+    for node in ast.walk(init):
+        for child in ast.iter_child_nodes(node):
+            parent[child] = node
+    awaits = [n for n in ast.walk(init) if isinstance(n, ast.Await)]
+    if not awaits:
+        return source
+    # Map __init__ params stashed as attributes: self._x = param
+    stored: dict[str, str] = {}
+    for node in ast.walk(init):
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Attribute)
+            and isinstance(node.targets[0].value, ast.Name)
+            and node.targets[0].value.id == "self"
+            and isinstance(node.value, ast.Name)
+        ):
+            stored[node.value.id] = f"self.{node.targets[0].attr}"
+    lines = source.split("\n")
+    resolvers: list[tuple[tuple[int, int, int, int], str, str]] = []
+    for aw in awaits:
+        call = aw.value
+        if not (
+            isinstance(call, ast.Call)
+            and isinstance(call.func, ast.Attribute)
+            and isinstance(call.func.value, ast.Name)
+            and call.func.value.id == "self"
+        ):
+            return source
+        node: ast.AST | None = aw
+        assign = None
+        while node in parent:
+            node = parent[node]
+            if isinstance(node, ast.Assign):
+                assign = node
+                break
+            if isinstance(node, ast.FunctionDef):
+                break
+        if (
+            assign is None
+            or len(assign.targets) != 1
+            or not isinstance(assign.targets[0], ast.Attribute)
+        ):
+            return source
+        attr = f"self.{assign.targets[0].attr}"
+        arg_srcs = []
+        for a in call.args:
+            seg = ast.get_source_segment(source, a)
+            if seg is None:
+                return source
+            arg_srcs.append(stored.get(seg.strip(), seg.strip()))
+        for kw in call.keywords:
+            seg = ast.get_source_segment(source, kw.value)
+            if seg is None or not kw.arg:
+                return source
+            arg_srcs.append(f"{kw.arg}={stored.get(seg.strip(), seg.strip())}")
+        method = f"self.{call.func.attr}"
+        resolvers.append(
+            (
+                (aw.lineno, aw.col_offset, aw.end_lineno, aw.end_col_offset),
+                attr,
+                f"{attr} = await {method}({', '.join(arg_srcs)})",
+            )
+        )
+    # Replace awaited calls with None (reverse order keeps offsets valid)
+    for (sl, sc, el, ec), _attr, _resolver in sorted(
+        resolvers, key=lambda r: (r[0][0], r[0][1]), reverse=True
+    ):
+        if sl == el:
+            lines[sl - 1] = lines[sl - 1][:sc] + "None" + lines[sl - 1][ec:]
+        else:
+            lines[sl - 1] = lines[sl - 1][:sc] + "None"
+            for i in range(sl, el - 1):
+                lines[i] = ""
+            lines[el - 1] = lines[el - 1][ec:]
+    # Insert resolvers at top of fetch body (after docstring, if any)
+    body_start = 0
+    if fetch.body and isinstance(fetch.body[0], ast.Expr) and isinstance(
+        fetch.body[0].value, ast.Constant
+    ):
+        body_start = fetch.body[0].end_lineno
+    else:
+        body_start = fetch.body[0].lineno - 1
+    indent = " " * fetch.body[0].col_offset
+    insert = []
+    seen = set()
+    for _span, attr, resolver in resolvers:
+        if attr in seen:
+            continue
+        seen.add(attr)
+        insert.append(f"{indent}if {attr} is None:")
+        insert.append(f"{indent}    {resolver}")
+    lines[body_start:body_start] = insert
+    fixed = "\n".join(lines)
+    try:
+        compile(fixed, "<defer_init_awaits>", "exec")
+    except SyntaxError:
+        return source
+    return fixed
+
+
+HTTP_METHODS = ("get", "post", "put", "delete", "patch", "head")
+
+
+def _fix_module_session_helpers(source: str) -> str:
+    """Make module-level helpers using s/session HTTP calls async and awaited.
+
+    The main transform only marks methods needing async via session analysis
+    on the Source class; module-level ``def _helper(s, ...)`` functions that
+    call ``s.get/post(...)`` keep a sync ``def`` with a bare (un-awaited)
+    call, which fails instantly at runtime (e.g. kirklees ``_run_lookup``).
+    """
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return source
+    lines = source.split("\n")
+    # Module-level function name -> (def node, session param names)
+    for node in ast.iter_child_nodes(tree):
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        session_params = {
+            a.arg for a in node.args.args if a.arg in ("s", "session")
+        }
+        if not session_params:
+            continue
+        calls: list[ast.Call] = [
+            n
+            for n in ast.walk(node)
+            if isinstance(n, ast.Call)
+            and isinstance(n.func, ast.Attribute)
+            and n.func.attr in HTTP_METHODS
+            and isinstance(n.func.value, ast.Name)
+            and n.func.value.id in session_params
+        ]
+        if not calls:
+            continue
+        if not isinstance(node, ast.AsyncFunctionDef):
+            line = lines[node.lineno - 1]
+            if "async def" not in line:
+                lines[node.lineno - 1] = line.replace(
+                    f"def {node.name}(", f"async def {node.name}(", 1
+                )
+        for call in sorted(calls, key=lambda c: (c.lineno, c.col_offset), reverse=True):
+            line = lines[call.lineno - 1]
+            before = line[: call.col_offset]
+            if before.rstrip().endswith("await"):
+                continue
+            lines[call.lineno - 1] = line[: call.col_offset] + "await " + line[call.col_offset :]
+    fixed = "\n".join(lines)
+    # Await call sites of the now-async module helpers inside async methods.
+    try:
+        tree = ast.parse(fixed)
+    except SyntaxError:
+        return fixed
+    async_helpers = {
+        n.name
+        for n in ast.iter_child_nodes(tree)
+        if isinstance(n, ast.AsyncFunctionDef)
+    }
+    if not async_helpers:
+        return fixed
+    lines = fixed.split("\n")
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call) or not isinstance(node.func, ast.Name):
+            continue
+        if node.func.id not in async_helpers:
+            continue
+        line = lines[node.lineno - 1]
+        before = line[: node.col_offset]
+        if before.rstrip().endswith("await"):
+            continue
+        lines[node.lineno - 1] = line[: node.col_offset] + "await " + line[node.col_offset :]
+    return "\n".join(lines)
+
+
+def _fix_await_precedence(source: str) -> str:
+    """Parenthesise ``await s.get(...).raise_for_status()`` chains.
+
+    Inserting ``await`` before a call that is itself the receiver of an
+    attribute call (``s.get(...).raise_for_status()``) changes meaning:
+    ``await s.get(...).raise_for_status()`` awaits the wrong object.
+    Rewrite to ``(await s.get(...)).raise_for_status()``.
+    """
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return source
+    lines = source.split("\n")
+    edits: list[tuple[int, int, int, int]] = []  # inner call span
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        func = node.func
+        if not (
+            isinstance(func, ast.Attribute)
+            and isinstance(func.value, ast.Call)
+            and isinstance(func.value.func, ast.Attribute)
+            and func.value.func.attr in HTTP_METHODS
+        ):
+            continue
+        inner = func.value
+        seg_line = lines[inner.lineno - 1]
+        if not seg_line[: inner.col_offset].rstrip().endswith("await"):
+            continue
+        assert inner.end_lineno is not None and inner.end_col_offset is not None
+        edits.append((inner.lineno, inner.col_offset, inner.end_lineno, inner.end_col_offset))
+    for sl, sc, el, ec in sorted(edits, reverse=True):
+        # Replace leading "await " with "(await " ...
+        start_line = lines[sl - 1]
+        await_idx = start_line[:sc].rfind("await")
+        lines[sl - 1] = start_line[:await_idx] + "(await " + start_line[await_idx + len("await ") :]
+        # ... and close the paren at the inner call's end. Account for the
+        # shift on same-line edits ("await " -> "(await " adds 1 char).
+        end_line = lines[el - 1]
+        shift = 1 if sl == el else 0
+        lines[el - 1] = end_line[: ec + shift] + ")" + end_line[ec + shift :]
+    return "\n".join(lines)
+
+
+def _fix_bare_request_returns(source: str) -> str:
+    """Await ``return request(...)`` inside async helpers (e.g. swale _submit)."""
+    lines = source.split("\n")
+    try:
+        tree = ast.parse(source)
+    except SyntaxError:
+        return source
+    async_ranges: list[tuple[int, int]] = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.AsyncFunctionDef) and node.end_lineno is not None:
+            async_ranges.append((node.lineno, node.end_lineno))
+    for i, line in enumerate(lines, start=1):
+        if not re.search(r"\breturn request\(", line) or "await request(" in line:
+            continue
+        if any(s <= i <= e for s, e in async_ranges):
+            lines[i - 1] = line.replace("return request(", "return await request(", 1)
+    return "\n".join(lines)
+
+
+def _apply_known_fixes(source: str, stem: str) -> str:
+    """Post-pass preserving hand-verified fixes across re-syncs."""
+    source = _fix_module_session_helpers(source)
+    source = _fix_await_precedence(source)
+    source = _fix_bare_request_returns(source)
+    if stem == "swale_gov_uk" and "Already carries a year" not in source:
+        source = source.replace(
+            "        today: date = datetime.now().date()\n"
+            "        year: int = today.year\n"
+            '        dt: date = datetime.strptime(f"{d} {year!s}", "%d %B %Y").date()',
+            "        today: date = datetime.now().date()\n"
+            "        s = d.strip()\n"
+            "        try:\n"
+            '            # Already carries a year (today/tomorrow branches, "14 April 2025").\n'
+            '            return datetime.strptime(s, "%d %B %Y").date()\n'
+            "        except ValueError:\n"
+            "            pass\n"
+            "        year: int = today.year\n"
+            '        dt: date = datetime.strptime(f"{s} {year!s}", "%d %B %Y").date()',
+        )
+    if stem == "southkesteven_gov_uk" and 'search_nlpg="False"' in source:
+        # Live-verified 2026-09-04: the address fallback lookup only returns
+        # rows with searchNlpg=True; "False" yields {} for every postcode.
+        source = source.replace('search_nlpg="False"', 'search_nlpg="True"')
+    if stem == "southkesteven_gov_uk" and '"Bourne": {"address_id": "PE10 0RX"}' in source:
+        # Upstream TEST_CASES are stale (verified 2026-09-04): PE10 0RX
+        # resolves to a key with no collection rows, NG31 6NP returns no
+        # addresses at all. Swap in postcodes/keys that return live rows.
+        source = source.replace(
+            '''TEST_CASES = {
+    "Bourne": {"address_id": "PE10 0RX"},
+    "Long Bennington": {"address_id": "NG23 5EQ"},
+    "Grantham": {"address_id": "NG31 6NP"},
+}''',
+            '''TEST_CASES = {
+    "Grantham": {"address_id": "NG31 8XG"},
+    "Long Bennington": {"address_id": "NG23 5EQ"},
+    "Grantham direct": {"address_id": "U10007272306"},
+}''',
+        )
+    return source
+
+
 def transform_file(
     source_path: Path,
     output_path: Path,
@@ -1643,6 +1968,7 @@ def transform_file(
     source = source_path.read_text()
     transformed, warnings = transform_source(source)
     transformed = _normalise_init_params(transformed)
+    transformed = _defer_init_awaits(transformed)
     if uprn_alias_param:
         transformed = _alias_uprn(transformed, uprn_alias_param)
     if use_curl_cffi_fallback:
@@ -1651,6 +1977,7 @@ def transform_file(
         transformed = _apply_requests_fallback(transformed)
     if disable_ssl_verify:
         transformed = _apply_ssl_verify_disabled(transformed)
+    transformed = _apply_known_fixes(transformed, source_path.stem)
     output_path.write_text(transformed)
     return warnings
 

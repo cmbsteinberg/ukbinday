@@ -4,7 +4,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Southampton City Council"
 DESCRIPTION = "Source for southampton.gov.uk services for Southampton City Council"
@@ -16,11 +16,11 @@ TEST_CASES = {
     "UPRN_004": {"uprn": 100060703113},
 }
 ICON_MAP = {
-    "Glass": "mdi:glass-fragile",
-    "Recycling": "mdi:recycle",
-    "General Waste": "mdi:trash-can",
-    "Garden Waste": "mdi:leaf",
-    "Food": "mdi:food-apple",
+    "Glass": Icons.GLASS,
+    "Recycling": Icons.RECYCLING,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Food": Icons.BIO_KITCHEN,
 }
 REGEX = r"(Food|Glass|Recycling|General Waste|Garden Waste).*?([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4})"
 

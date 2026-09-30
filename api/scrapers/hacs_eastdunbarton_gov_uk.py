@@ -3,7 +3,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Dunbartonshire Council"
 DESCRIPTION = "Source for East Dunbartonshire Council, UK."
@@ -14,11 +14,11 @@ TEST_CASES = {
     "Test_003": {"uprn": 132020494},
 }
 ICON_MAP = {
-    "Food caddy": "mdi:food",
-    "Green bin": "mdi:leaf",
-    "Brown bin": "mdi:bottle-wine",
-    "Blue bin": "mdi:recycle",
-    "Grey bin": "mdi:trash-can",
+    "Food caddy": Icons.BIO_KITCHEN,
+    "Green bin": Icons.ORGANIC,
+    "Brown bin": Icons.BIO_KITCHEN,
+    "Blue bin": Icons.RECYCLING,
+    "Grey bin": Icons.GENERAL_WASTE,
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
     "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",

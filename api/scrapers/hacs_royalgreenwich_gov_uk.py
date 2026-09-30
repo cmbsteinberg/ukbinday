@@ -1,11 +1,11 @@
 import datetime
-from typing import Mapping, Optional
+from collections.abc import Mapping
 
 import httpx
 from bs4 import BeautifulSoup, Tag
 from dateutil import parser
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
@@ -26,9 +26,9 @@ ADDRESS_SEARCH_URL = "https://www.royalgreenwich.gov.uk/site/custom_scripts/apps
 
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 ICON_MAP = {
-    "recycling": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food-apple",
+    "recycling": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
 }
 
 # ### Arguments affecting the configuration GUI ####
@@ -56,9 +56,9 @@ HEADERS = {
 class Source:
     def __init__(
         self,
-        postcode: Optional[str] = None,
-        house: Optional[str] = None,
-        address: Optional[str] = None,
+        postcode: str | None = None,
+        house: str | None = None,
+        address: str | None = None,
     ):
         self._postcode = postcode
         self._house = house
@@ -108,7 +108,7 @@ class Source:
             raise Exception("Could not find address form")
 
         headers = black_top_bin_schedule_table.find_all("th")
-        week_column_index = list(map(lambda h: h.text, headers)).index(week_name)
+        week_column_index = [h.text for h in headers].index(week_name)
         if week_column_index < 0:
             raise Exception("Cannot find black top bin collection weeks")
 

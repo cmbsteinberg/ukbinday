@@ -3,7 +3,7 @@ import time
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -23,12 +23,12 @@ DOMAIN_URL = "https://my.midlothian.gov.uk/apibroker/domain/my.midlothian.gov.uk
 RUN_LOOKUP_URL = "https://my.midlothian.gov.uk/apibroker/runLookup"
 
 ICON_MAP = {
-    "Food Collection Service": "mdi:food-apple",
-    "Glass Collection Service": "mdi:glass-fragile",
-    "Residual Collection Service": "mdi:trash-can",
-    "Garden Collection Service": "mdi:leaf",
-    "Recycling Collection Service": "mdi:recycle",
-    "Card Collection Service": "mdi:archive",
+    "Food Collection Service": Icons.BIO_KITCHEN,
+    "Glass Collection Service": Icons.GLASS,
+    "Residual Collection Service": Icons.GENERAL_WASTE,
+    "Garden Collection Service": Icons.GARDEN,
+    "Recycling Collection Service": Icons.RECYCLING,
+    "Card Collection Service": Icons.PAPER,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

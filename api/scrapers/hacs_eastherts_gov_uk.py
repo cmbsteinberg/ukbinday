@@ -8,7 +8,7 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Herts Council"
 DESCRIPTION = "Source for www.eastherts.gov.uk services for East Herts Council."
@@ -33,11 +33,11 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
-    "Paper": "mdi:newspaper",
-    "Food": "mdi:food",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
+    "Paper": Icons.PAPER,
+    "Food": Icons.BIO_KITCHEN,
 }
 REGEX = {
     "SID": r"sid=(.+)",

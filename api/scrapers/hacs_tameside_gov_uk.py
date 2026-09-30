@@ -4,7 +4,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Tameside Metropolitan Borough Council"
 DESCRIPTION = "Source for tameside.gov.uk, Tameside Metropolitan Borough Council, UK"
@@ -21,10 +21,10 @@ HEADERS = {
 }
 API_URL = "https://public.tameside.gov.uk/forms/bin-dates.asp"
 ICON_MAP = {
-    "GREEN BIN": "mdi:trash-can",
-    "BROWN BIN": "mdi:leaf",
-    "BLUE BIN": "mdi:newspaper",
-    "BLACK BIN": "mdi:glass-fragile",
+    "GREEN BIN": Icons.GENERAL_WASTE,
+    "BROWN BIN": Icons.BIO_KITCHEN,
+    "BLUE BIN": Icons.NEWSPAPER,
+    "BLACK BIN": Icons.GLASS,
 }
 REGEX = r"(st|nd|rd|th)"
 

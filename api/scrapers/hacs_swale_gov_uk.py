@@ -1,28 +1,27 @@
 import asyncio
 import logging
+import re
 from datetime import date, datetime, timedelta
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Swale Borough Council"
 DESCRIPTION = "Source for swale.gov.uk services for Swale, UK."
 URL = "https://swale.gov.uk"
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-}
 API_URL = (
-    "https://swale.gov.uk/bins-littering-and-the-environment/bins/my-collection-day"
+    "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day"
 )
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food": "mdi:food-apple",
-    "Garden": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
 }
 # swale.gov.uk has an aggressive limit of request frequency,
 # running test cases can result in the error: 429 Too Many Requests.
@@ -54,44 +53,135 @@ class Source:
         # Append the current year, and then check to see if the date is in the past.
         # If it is, increment the year by 1.
         today: date = datetime.now().date()
+        s = d.strip()
+        try:
+            # Already carries a year (today/tomorrow branches, "14 April 2025").
+            return datetime.strptime(s, "%d %B %Y").date()
+        except ValueError:
+            pass
         year: int = today.year
-        dt: date = datetime.strptime(f"{d} {str(year)}", "%d %B %Y").date()
+        dt: date = datetime.strptime(f"{s} {year!s}", "%d %B %Y").date()
         if (dt - today) < timedelta(days=-31):
             dt = dt.replace(year=dt.year + 1)
         return dt
 
+    @staticmethod
+    def _lookup_form(soup: BeautifulSoup):
+        """Return the council lookup form without depending on its numeric ID."""
+        for form in soup.find_all("form"):
+            if form.find("input", {"name": re.compile(r"^SQ_FORM_\d+_PAGE$")}):
+                return form
+        return None
+
+    @staticmethod
+    def _field_name(form, label_text: str, fallback_tag: str | None = None) -> str:
+        label = next(
+            (
+                item
+                for item in form.find_all("label")
+                if label_text in item.get_text(" ", strip=True).lower()
+            ),
+            None,
+        )
+        if label and (field_id := label.get("for")):
+            field = form.find(id=field_id)
+            if field and field.get("name"):
+                return field["name"]
+
+        if fallback_tag:
+            for field in form.find_all(fallback_tag, {"name": True}):
+                if field.get("type") not in {"hidden", "submit"}:
+                    return field["name"]
+
+        raise ValueError(f"Swale lookup form is missing its {label_text} control.")
+
+    @staticmethod
+    def _submit_control(form) -> tuple[str, str]:
+        control = form.find("input", {"type": "submit", "name": True, "value": True})
+        if not control:
+            raise ValueError("Swale lookup form is missing its submit control.")
+        return control["name"], control["value"]
+
+    @staticmethod
+    def _hidden_data(soup: BeautifulSoup) -> dict[str, str]:
+        # Squiz currently places its token outside the form, so collect page state.
+        return {
+            field["name"]: field.get("value", "")
+            for field in soup.select('input[type="hidden"][name]')
+        }
+
+    @staticmethod
+    def _raise_for_unexpected_page(soup: BeautifulSoup, stage: str) -> None:
+        title = soup.title.get_text(" ", strip=True).lower() if soup.title else ""
+        content = soup.get_text(" ", strip=True).lower()
+        if "just a moment" in title or "challenges.cloudflare.com" in content:
+            raise ValueError("Swale lookup was blocked by a Cloudflare challenge.")
+
+        # Only treat an error container as an error if it actually carries text:
+        # empty aria-live regions are always present on the results page.
+        errors = [
+            error
+            for error in soup.select(
+                ".sq-form-error, .sq-form-error-message, .validation-error, "
+                ".alert-danger, [role='alert']"
+            )
+            if error.get_text(" ", strip=True)
+        ]
+        if errors:
+            raise ValueError(f"Swale {stage} submission returned a validation error.")
+
+    @staticmethod
+    async def _submit(session, response, form, payload: dict[str, str]):
+        method = form.get("method", "get").lower()
+        request = getattr(session, method, None)
+        if request is None:
+            raise ValueError(f"Swale lookup form uses unsupported method {method!r}.")
+
+        action = urljoin(str(response.url), form.get("action") or str(response.url))
+        if method == "get":
+            return await request(action, params=payload)
+        return await request(action, data=payload)
+
     async def fetch(self) -> list[Collection]:
         s = _CurlCffiClient(follow_redirects=True)
 
-        # mimic postcode search
-        payload: dict = {
-            "SQ_FORM_499078_PAGE": "1",
-            "form_email_499078_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
-            "q499089:q1": self._postcode,
-            "form_email_499078_submit": "Choose Your Address &#10140;",
-        }
-        r = await s.post(
-            "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
-            headers=HEADERS,
-            data=payload,
-        )
+        # Load the form first so its token, cookies, and current field names are used.
+        r = await s.get(API_URL)
+        r.raise_for_status()
+        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
+        self._raise_for_unexpected_page(soup, "initial")
+        form = self._lookup_form(soup)
+        if not form:
+            raise ValueError("Swale lookup page did not contain an input form.")
+
+        payload = self._hidden_data(soup)
+        payload[self._field_name(form, "postcode", "input")] = self._postcode
+        submit_name, submit_value = self._submit_control(form)
+        payload[submit_name] = submit_value
+        r = await self._submit(s, r, form, payload)
         r.raise_for_status()
         await asyncio.sleep(5)
 
-        # mimic address selection
-        payload = {
-            "SQ_FORM_499078_PAGE": "2",
-            "form_email_499078_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
-            "q499093:q1": self._uprn,
-            "form_email_499078_submit": "Get Bin Days &#10140;",
-        }
-        r = await s.post(
-            "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
-            headers=HEADERS,
-            data=payload,
-        )
+        soup = BeautifulSoup(r.content, "html.parser")
+        self._raise_for_unexpected_page(soup, "postcode")
+        form = self._lookup_form(soup)
+        if not form:
+            raise ValueError(
+                "Swale postcode submission did not return an address form."
+            )
+
+        payload = self._hidden_data(soup)
+        payload[self._field_name(form, "address", "select")] = self._uprn
+        submit_name, submit_value = self._submit_control(form)
+        payload[submit_name] = submit_value
+        r = await self._submit(s, r, form, payload)
         r.raise_for_status()
-        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
+        soup = BeautifulSoup(r.content, "html.parser")
+        self._raise_for_unexpected_page(soup, "UPRN")
+        if self._lookup_form(soup):
+            raise ValueError(
+                "Swale UPRN submission returned an input form instead of results."
+            )
         temp_list: list = []
 
         # Get details of next collection

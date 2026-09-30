@@ -4,7 +4,7 @@ import logging
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Borough of Broxbourne Council"
 DESCRIPTION = "Source for broxbourne.gov.uk services for Broxbourne, UK."
@@ -26,10 +26,10 @@ API_URLS = {
 LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "Domestic": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
-    "Food": "mdi:food-apple",
+    "Domestic": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green Waste": Icons.GARDEN,
+    "Food": Icons.BIO_KITCHEN,
 }
 
 

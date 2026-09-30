@@ -4,7 +4,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wirral Council"
 DESCRIPTION = "Source for wirral.gov.uk services for Wirral Council, UK."
@@ -16,9 +16,9 @@ TEST_CASES = {
     },
 }
 ICON_MAP = {
-    "Green bin": "mdi:trash-can",
-    "Grey bin": "mdi:recycle",
-    "Brown bin": "mdi:leaf",
+    "Green bin": Icons.GENERAL_WASTE,
+    "Grey bin": Icons.RECYCLING,
+    "Brown bin": Icons.BIO_KITCHEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North Lincolnshire Council"
 DESCRIPTION = (
@@ -17,12 +17,12 @@ TEST_CASES = {
     "Test_004": {"uprn": 100050196285},
 }
 ICON_MAP = {
-    "Plastic and cardboard wheeled bin": "mdi:recycle",
-    "Blue kerbside box - paper": "mdi:package-variant",
-    "Brown garden waste wheeled bin": "mdi:leaf",
-    "Textiles Bag": "mdi:sack",
-    "Green kerbside box - cans, glass and aluminium foil": "mdi:glass-fragile",
-    "General waste wheeled bin": "mdi:trash-can",
+    "Plastic and cardboard wheeled bin": Icons.PLASTIC_PACKAGING,
+    "Blue kerbside box - paper": Icons.PAPER,
+    "Brown garden waste wheeled bin": Icons.GARDEN,
+    "Textiles Bag": Icons.TEXTILE,
+    "Green kerbside box - cans, glass and aluminium foil": Icons.GLASS,
+    "General waste wheeled bin": Icons.GENERAL_WASTE,
 }
 
 

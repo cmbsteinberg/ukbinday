@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
     SourceArgumentExceptionMultiple,
 )
@@ -18,9 +18,10 @@ TEST_CASES = {
 
 API_URL = "https://www.breckland.gov.uk/apiserver/ajaxlibrary"
 ICON_MAP = {
-    "Refuse Collection Service": "mdi:trash-can",
-    "Recycling Collection Service": "mdi:recycle",
-    "Garden Waste Service": "mdi:leaf",
+    "Refuse Collection Service": Icons.GENERAL_WASTE,
+    "Recycling Collection Service": Icons.RECYCLING,
+    "Garden Waste Service": Icons.GARDEN,
+    "Food Waste Collection Service": Icons.BIO_KITCHEN,
 }
 
 _LOGGER = logging.getLogger(__name__)

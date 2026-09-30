@@ -12,6 +12,7 @@ from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs.collection import (
     Collection,  # type: ignore[attr-defined]
 )
+from api.compat.hacs.icons import Icons
 from api.compat.hacs.service.ICS import ICS  # type: ignore[attr-defined]
 
 TITLE = "West Lothian Council"
@@ -25,10 +26,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Grey": "mdi:trash-can",
-    "Brown": "mdi:leaf",
-    "Green": "mdi:glass-fragile",
-    "Blue": "mdi:note",
+    "Grey": Icons.GENERAL_WASTE,
+    "Brown": Icons.ORGANIC,
+    "Green": Icons.GLASS,
+    "Blue": Icons.EVENT,
 }
 
 
@@ -77,14 +78,16 @@ class Source:
         if ical_content is not None:
             if ical_content.get("error") is not None:
                 raise Exception(ical_content.get("error"))
-            # iCal data returned isn't compatible with _ics.convert because it's UNTIL values
-            # don't specify a timezone, but the ICS module asks for "timezone-aware" parsing.
-            # So, change the UNTILs to be Z because they're date only and are UK-based.
+            # iCal data returned isn't compatible with _ics.convert because its UNTIL values
+            # are bare dates (UNTIL=YYYYMMDD) while DTSTART is a naive datetime.
+            # Normalise UNTIL to a naive datetime (matching DTSTART) and strip any
+            # trailing Z (a UTC UNTIL with naive DTSTART is rejected by icalevents).
             ics_data = re.sub(
-                r"UNTIL=([0-9]+)",
-                lambda m: "UNTIL=" + m.group(1) + "Z",
+                r"UNTIL=(\d{8})(?![T\d])",
+                r"UNTIL=\1T000000",
                 ical_content.get("value"),
             )
+            ics_data = re.sub(r"UNTIL=(\d{8}T\d{6})Z", r"UNTIL=\1", ics_data)
             dates = self._ics.convert(ics_data)
             entries = []
             for d in dates:
@@ -94,25 +97,22 @@ class Source:
                 entries.append(Collection(d[0], d[1], icon=icon))
 
             return entries
-        else:
-            if webpage_content is not None:
-                collections = json.loads(webpage_content["COLLECTIONS"])
-                entries = []
-                for d in collections:
-                    icon = ICON_MAP.get(d["binName"].split(" ")[0])
-                    if icon is None:
-                        icon = ICON_MAP.get(d["binType"])
-                    entries.append(
-                        Collection(
-                            datetime.strptime(
-                                d["nextCollectionISO"], "%Y-%m-%d"
-                            ).date(),
-                            d["binType"],
-                            icon=icon,
-                        )
+        if webpage_content is not None:
+            collections = json.loads(webpage_content["COLLECTIONS"])
+            entries = []
+            for d in collections:
+                icon = ICON_MAP.get(d["binName"].split(" ")[0])
+                if icon is None:
+                    icon = ICON_MAP.get(d["binType"])
+                entries.append(
+                    Collection(
+                        datetime.strptime(d["nextCollectionISO"], "%Y-%m-%d").date(),
+                        d["binType"],
+                        icon=icon,
                     )
+                )
 
-                return entries
+            return entries
         raise Exception("No entries could be parsed")
 
     def __get_ical_bin_collection_info(self, bin_collection_info_page):

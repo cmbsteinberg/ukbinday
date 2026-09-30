@@ -1,7 +1,7 @@
 import datetime
 import logging
 import re
-from typing import Any, List, NamedTuple, Optional, Tuple
+from typing import Any, NamedTuple
 
 import jinja2
 from icalevents import icalevents
@@ -12,11 +12,11 @@ _LOGGER = logging.getLogger(__name__)
 class IcsEvent(NamedTuple):
     date: datetime.date
     title: str
-    location: Optional[str] = None
-    description: Optional[str] = None
+    location: str | None = None
+    description: str | None = None
 
 
-def _event_location_description(e: Any) -> Tuple[Optional[str], Optional[str]]:
+def _event_location_description(e: Any) -> tuple[str | None, str | None]:
     raw_loc = getattr(e, "location", None)
     if isinstance(raw_loc, str):
         loc = raw_loc.strip() or None
@@ -33,9 +33,9 @@ def _event_location_description(e: Any) -> Tuple[Optional[str], Optional[str]]:
 class ICS:
     def __init__(
         self,
-        offset: Optional[int] = None,
-        regex: Optional[str] = None,
-        split_at: Optional[str] = None,
+        offset: int | None = None,
+        regex: str | None = None,
+        split_at: str | None = None,
         title_template: str = "{{date.summary}}",
     ):
         self._offset = offset
@@ -50,9 +50,9 @@ class ICS:
 
         self._title_template = title_template
 
-    def convert(self, ics_data: str) -> List[Tuple[datetime.date, str]]:
+    def convert(self, ics_data: str) -> list[tuple[datetime.date, str]]:
         # calculate start- and end-date for recurring events
-        start_date = datetime.datetime.now().replace(
+        start_date = datetime.datetime.now(datetime.timezone.utc).replace(
             hour=0, minute=0, second=0, microsecond=0
         )
         if self._offset is not None:
@@ -73,8 +73,19 @@ class ICS:
             ics_data,
         )
 
+        # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines.
+        # TZID is only valid on DATETIME values; combining it with VALUE=DATE is
+        # malformed ICS. When present, icalendar creates timezone-aware datetime
+        # objects for the recurrence rule while EXDATE lines (which lack TZID)
+        # stay naive, causing a TypeError when dateutil compares them.
+        ics_data = re.sub(
+            r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
+            r"\1;\2",
+            ics_data,
+        )
+
         # parse ics data
-        events: List[Any] = icalevents.events(
+        events: list[Any] = icalevents.events(
             start=start_date, end=end_date, string_content=ics_data.encode()
         )
 
@@ -91,11 +102,11 @@ class ICS:
                 if e.uid in uid_summaries:
                     e.summary = uid_summaries[e.uid]
 
-        entries: List[Tuple[datetime.date, str]] = []
+        entries: list[tuple[datetime.date, str]] = []
 
         for e in events:
             # calculate date
-            dtstart: Optional[datetime.date] = None
+            dtstart: datetime.date | None = None
 
             if isinstance(e.start, datetime.datetime):
                 dtstart = e.start.date()
@@ -126,9 +137,9 @@ class ICS:
 
         return entries
 
-    def convert_events(self, ics_data: str) -> List[IcsEvent]:
+    def convert_events(self, ics_data: str) -> list[IcsEvent]:
         # calculate start- and end-date for recurring events
-        start_date = datetime.datetime.now().replace(
+        start_date = datetime.datetime.now(datetime.timezone.utc).replace(
             hour=0, minute=0, second=0, microsecond=0
         )
         if self._offset is not None:
@@ -141,8 +152,23 @@ class ICS:
             ics_data,
         )
 
+        # Fix truncated DTSTART/DTEND values where the time portion is missing
+        # after the 'T' separator (e.g. "DTSTART;TZID=Europe/Berlin:20260505T").
+        ics_data = re.sub(
+            r"(DT(?:START|END)[^:]*:\d{8})T(\r?\n)",
+            r"\g<1>T000000\g<2>",
+            ics_data,
+        )
+
+        # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines — see convert().
+        ics_data = re.sub(
+            r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
+            r"\1;\2",
+            ics_data,
+        )
+
         # parse ics data
-        events: List[Any] = icalevents.events(
+        events: list[Any] = icalevents.events(
             start=start_date, end=end_date, string_content=ics_data.encode()
         )
 
@@ -159,11 +185,11 @@ class ICS:
                 if e.uid in uid_summaries:
                     e.summary = uid_summaries[e.uid]
 
-        entries: List[IcsEvent] = []
+        entries: list[IcsEvent] = []
 
         for e in events:
             # calculate date
-            dtstart: Optional[datetime.date] = None
+            dtstart: datetime.date | None = None
 
             if isinstance(e.start, datetime.datetime):
                 dtstart = e.start.date()

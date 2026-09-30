@@ -1,5 +1,6 @@
+from collections.abc import Mapping
 from datetime import datetime
-from typing import Any, List, Mapping, Optional
+from typing import Any
 
 import httpx
 
@@ -51,19 +52,19 @@ class Source:
                 ("house_number", self._house_number),
             )
 
-    def _sanitise_uprn_val(self, val: Optional[int | str]) -> Optional[int]:
+    def _sanitise_uprn_val(self, val: int | str | None) -> int | None:
         if val is None:
             return None
         message = "UPRN must be a positive integer if provided"
         try:
             uprn = int(val)
         except (ValueError, TypeError):
-            raise SourceArgumentException("uprn", message)
+            raise SourceArgumentException("uprn", message) from None
         if uprn <= 0:
             raise SourceArgumentException("uprn", message)
         return uprn
 
-    def _sanitise_search_val(self, val: Optional[str | int]) -> Optional[str]:
+    def _sanitise_search_val(self, val: str | int | None) -> str | None:
         if val is None:
             return None
         stripped = str(val).strip()
@@ -73,7 +74,7 @@ class Source:
         if missing := [name for name, val in args if not val]:
             raise SourceArgumentExceptionMultiple(missing, message)
 
-    async def fetch(self) -> List[Collection]:
+    async def fetch(self) -> list[Collection]:
         if self._uprn is None:
             self._uprn = await self._get_uprn()
 
@@ -113,7 +114,7 @@ class Source:
             and house_number.casefold() == self._house_number.casefold()
         )
 
-    def _address_housenameornumber(self, address: Mapping[str, Any]) -> Optional[str]:
+    def _address_housenameornumber(self, address: Mapping[str, Any]) -> str | None:
         parts = str(address.get("payment_Address", "")).split("|")
         if len(parts) < 2:
             return None

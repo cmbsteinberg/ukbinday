@@ -5,7 +5,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Croydon Council"
 DESCRIPTION = "Source for croydon.gov.uk services for Croydon Council, UK."
@@ -17,10 +17,10 @@ TEST_CASES = {
     "Test_004": {"postcode": "CR5 2BG", "address": "18 South Drive"},
 }
 ICON_MAP = {
-    "Food waste": "mdi:food",
-    "General rubbish": "mdi:trash-can",
-    "Paper and card recycling": "mdi:newspaper",
-    "Glass, plastics, cans and cartons recycling": "mdi:bottle-wine",
+    "Food waste": Icons.BIO_KITCHEN,
+    "General rubbish": Icons.GENERAL_WASTE,
+    "Paper and card recycling": Icons.PAPER,
+    "Glass, plastics, cans and cartons recycling": Icons.PLASTIC_PACKAGING,
 }
 API_URLS = {
     "BASE": "https://service.croydon.gov.uk",

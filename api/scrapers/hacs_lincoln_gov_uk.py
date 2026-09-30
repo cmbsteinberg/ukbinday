@@ -4,7 +4,7 @@ from time import time_ns
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City Of Lincoln Council"
 DESCRIPTION = "Source for City Of Lincoln Council."
@@ -17,9 +17,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Garden": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Garden": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

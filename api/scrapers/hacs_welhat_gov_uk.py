@@ -2,7 +2,7 @@ import dateutil.parser as parser
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Welwyn Hatfield Borough Council"
 DESCRIPTION = (
@@ -15,10 +15,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "food": "mdi:apple",
-    "garden": "mdi:tree",
-    "refuse": "mdi:trash-can",
-    "recycling": "mdi:recycle",
+    "food": Icons.BIO_KITCHEN,
+    "garden": Icons.GARDEN,
+    "refuse": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
 }
 
 

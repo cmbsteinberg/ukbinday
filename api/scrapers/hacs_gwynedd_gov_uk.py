@@ -3,7 +3,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup, Tag
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Gwynedd"
@@ -17,9 +17,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "brown": "mdi:leaf",
-    "green": "mdi:trash-can",
-    "blue": "mdi:recycle",
+    "brown": Icons.ORGANIC,
+    "green": Icons.GENERAL_WASTE,
+    "blue": Icons.RECYCLING,
 }
 
 

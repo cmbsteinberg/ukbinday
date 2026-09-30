@@ -1,10 +1,8 @@
-from typing import Optional
-
 import httpx
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 
 TITLE = "Windsor and Maidenhead"
@@ -19,9 +17,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "garden waste": "mdi:leaf",
-    "recycling": "mdi:recycle",
+    "refuse": Icons.GENERAL_WASTE,
+    "garden waste": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
 }
 
 PARAM_TRANSLATIONS = {
@@ -50,7 +48,7 @@ HEADERS = {
 
 class Source:
     # postcode was previously required by this source. This is no longer the case but argument kept for backwards compatibility
-    def __init__(self, uprn: str | int, postcode: Optional[str] = None):
+    def __init__(self, uprn: str | int, postcode: str | None = None):
         self._uprn: str = str(uprn).zfill(12)
 
     async def fetch(self):

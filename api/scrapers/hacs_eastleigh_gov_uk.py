@@ -3,7 +3,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Eastleigh Borough Council"
 DESCRIPTION = "Source for Eastleigh Borough Council."
@@ -15,12 +15,12 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Paper": "mdi:package-variant",
-    "household": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "food": "mdi:food",
-    "glass": "mdi:bottle-soda",
-    "garden": "mdi:leaf",
+    "Paper": Icons.PAPER,
+    "household": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
+    "glass": Icons.GLASS,
+    "garden": Icons.GARDEN,
 }
 
 
@@ -53,7 +53,7 @@ class Source:
 
                 try:
                     # Mon, 29 Apr 2024
-                    date = datetime.strptime(dd.text, "%a, %d %b %Y").date()
+                    date = datetime.strptime(dd.text.strip(), "%a, %d %b %Y").date()
                 except ValueError:
                     continue
 

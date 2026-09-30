@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import SourceArgumentException
 
 TITLE = "Cannock Chase Council"
@@ -18,9 +18,10 @@ TEST_CASES = {
 
 API_URL = "https://ccdc.opendata.onl/DynamicCall.dll"
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN WASTE": "mdi:leaf",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN WASTE": Icons.GARDEN,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -37,6 +38,7 @@ SERVICE_NAME_MAP = {
     "Refuse Collection Service": "Refuse",
     "Recycle Collection Service": "Recycling",
     "Garden Collection Service": "Garden waste",
+    "Food Waste Collection Service": "Food waste",
 }
 
 
@@ -76,8 +78,7 @@ class Source:
                 and error_description_element.text is not None
             ):
                 raise Exception(f"API returned error: {error_description_element.text}")
-            else:
-                raise Exception("API returned error")
+            raise Exception("API returned error")
 
         entries = []
 

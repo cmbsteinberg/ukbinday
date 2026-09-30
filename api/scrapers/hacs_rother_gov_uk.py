@@ -5,7 +5,7 @@ import httpx
 import urllib3
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -19,10 +19,10 @@ TEST_CASES = {
 }
 
 
-ICON_MAP: dict[str, str] = {
-    "refuse": "mdi:trash-can",
-    "garden": "mdi:leaf",
-    "recycling": "mdi:recycle",
+ICON_MAP = {
+    "refuse": Icons.GENERAL_WASTE,
+    "garden": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
 }
 
 

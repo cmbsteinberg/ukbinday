@@ -3,32 +3,31 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wokingham Borough Council"
 DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
 URL = "https://wokingham.gov.uk"
-API_URL = "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates"
+API_URL = "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/find-your-bin-collection-day"
 TEST_CASES = {
-    "Test_001": {"postcode": "RG40 1GE", "property": "92923"},
-    "Test_002": {"postcode": "RG413BP", "property": "111744"},
-    "Test_003": {"postcode": "rg41 1ph", "property": 108604},
+    "Test_001": {"postcode": "RG40 1GE", "property": "10032935729"},
+    "Test_002": {"postcode": "RG413BP", "property": "14007633"},
+    "Test_003": {"postcode": "rg41 1ph", "property": 14040037},
     "Test_004": {"postcode": "RG40 2LW", "address": "16 Davy Close"},
-    "Xmas_Adjustment_Test": {"postcode": "RG40 1GE", "property": "92906"},
     "No-Collection Test": {"postcode": "RG10 0EU", "address": "39 Broadwater Road"},
 }
 ICON_MAP = {
-    "HOUSEHOLD WASTE": "mdi:trash-can",
-    "GARDEN WASTE": "mdi:leaf",
-    "RECYCLING": "mdi:recycle",
-    "FOOD WASTE": "mdi:food",
+    "HOUSEHOLD WASTE": Icons.GENERAL_WASTE,
+    "GARDEN WASTE": Icons.GARDEN,
+    "RECYCLING": Icons.RECYCLING,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
 }
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0",
     "Content-Type": "application/x-www-form-urlencoded",
     "Host": "www.wokingham.gov.uk",
     "Origin": "https://www.wokingham.gov.uk",
-    "Referer": "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates",
+    "Referer": "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/find-your-bin-collection-day",
 }
 
 
@@ -53,29 +52,36 @@ class Source:
     async def fetch(self):
         s = httpx.AsyncClient(follow_redirects=True)
 
-        # Get Christmas & New Year schedule adjustments
-        r = await s.get(
-            "https://www.wokingham.gov.uk/rubbish-and-recycling/christmas-bin-day-changes"
-        )
-        soup = BeautifulSoup(r.content, "html.parser")
-
+        # Attempt to get Christmas & New Year schedule adjustments.
+        # The URL may not exist outside the holiday season; skip gracefully if unavailable.
         revised_schedules: dict = {}
-        trs: list = soup.find_all("tr")
-        for tr in trs:
-            tds: list = tr.find_all("td")
-            if tds:
-                revised_schedules.update({tds[0].text: tds[1].text.split(" (")[0]})
-        # get rid of dates where there is no adjustment
-        revised_schedules = {
-            k: v for k, v in revised_schedules.items() if v != "Normal"
-        }
-        # reformat dates to make comparison easier
-        revised_schedules = {
-            datetime.strptime(k, "%A %d %B %Y")
-            .strftime("%d/%m/%Y"): datetime.strptime(v, "%A %d %B %Y")
-            .strftime("%d/%m/%Y")
-            for k, v in revised_schedules.items()
-        }
+        try:
+            r = await s.get(
+                "https://www.wokingham.gov.uk/rubbish-and-recycling/christmas-bin-day-changes",
+                timeout=10,
+            )
+            if r.ok:
+                soup = BeautifulSoup(r.content, "html.parser")
+                trs: list = soup.find_all("tr")
+                for tr in trs:
+                    tds: list = tr.find_all("td")
+                    if tds:
+                        revised_schedules.update(
+                            {tds[0].text: tds[1].text.split(" (")[0]}
+                        )
+                # get rid of dates where there is no adjustment
+                revised_schedules = {
+                    k: v for k, v in revised_schedules.items() if v != "Normal"
+                }
+                # reformat dates to make comparison easier
+                revised_schedules = {
+                    datetime.strptime(k, "%A %d %B %Y").strftime(
+                        "%d/%m/%Y"
+                    ): datetime.strptime(v, "%A %d %B %Y").strftime("%d/%m/%Y")
+                    for k, v in revised_schedules.items()
+                }
+        except Exception:
+            pass
 
         # Now get the regular collection schedule
 
@@ -86,10 +92,10 @@ class Source:
         # Perform postcode search to generate token needed for following query
         self._postcode = str(self._postcode.upper().strip().replace(" ", ""))
         payload = {
-            "postcode_search_csv": self._postcode,
+            "postcode_search": self._postcode,
             "op": "Find Address",
             "form_build_id": form_id,
-            "form_id": "waste_recycling_information",
+            "form_id": "waste_collection_api_form",
         }
         r = await s.post(
             API_URL,
@@ -110,11 +116,11 @@ class Source:
 
         # Now get the regular collection schedule
         payload = {
-            "postcode_search_csv": self._postcode,
-            "address_options_csv": self._property,
+            "postcode_search": self._postcode,
+            "address_options": self._property,
             "op": "Show collection dates",
             "form_build_id": form_id,
-            "form_id": "waste_recycling_information",
+            "form_id": "waste_collection_api_form",
         }
         r = await s.post(
             API_URL,

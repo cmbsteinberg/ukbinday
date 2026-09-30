@@ -3,7 +3,7 @@ from datetime import datetime
 import httpx
 import urllib3
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Blackburn with Darwen Borough Council"
 DESCRIPTION = "Source for mybins.blackburn.gov.uk services for Blackburn with Darwen Borough Council, UK."
@@ -16,9 +16,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Burgundy": "mdi:trash-can",
-    "Grey": "mdi:recycle",
-    "Blue": "mdi:package-variant",
+    "Burgundy": Icons.GENERAL_WASTE,
+    "Grey": Icons.RECYCLING,
+    "Blue": Icons.PAPER,
 }
 
 API_URL = "https://mybins.blackburn.gov.uk/api/mybins/getbincollectiondays"
@@ -45,7 +45,7 @@ class Source:
         year = date.year
         month = date.month
         entries = []
-        for i in range(1, 13):
+        for _i in range(1, 13):
             PARAMS = {
                 "month": month,
                 "year": year,

@@ -7,7 +7,7 @@ import httpx
 import urllib3
 from dateutil.parser import parse
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -33,11 +33,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "bin": "mdi:leaf",
-    "refuse": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "caddy": "mdi:food",
-    "box": "mdi:recycle",
+    "bin": Icons.ORGANIC,
+    "refuse": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "caddy": Icons.BIO_KITCHEN,
+    "box": Icons.RECYCLING,
 }
 
 REGEX_AURA_CONFIG = re.compile(r"var\s+auraConfig\s*=\s*(.*?),\n")

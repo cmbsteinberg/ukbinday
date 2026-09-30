@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
@@ -22,10 +22,10 @@ TEST_CASES = {
     "Test_ID_002": {"id": "593456"},
 }
 ICON_MAP = {
-    "brown": "mdi:leaf",
-    "grey": "mdi:trash-can",
-    "green": "mdi:package-variant",
-    "blue": "mdi:bottle-soda-classic",
+    "brown": Icons.ORGANIC,
+    "grey": Icons.GENERAL_WASTE,
+    "green": Icons.PAPER,
+    "blue": Icons.GLASS,
 }
 NAME_MAP = {
     "brown": "Garden",

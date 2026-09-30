@@ -3,7 +3,7 @@ import json
 import httpx
 from dateutil import parser
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Bracknell Forest Council"
 DESCRIPTION = "Bracknell Forest Council, UK - Waste Collection"
@@ -20,10 +20,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "general waste": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food-apple",
+    "general waste": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
 }
 
 
@@ -84,7 +84,8 @@ class Source:
         for collection_entry in collections:
             try:
                 coll_day = parser.parse(collection_entry["firstDate"]["date"]).date()
-            except KeyError:
+            except (KeyError, TypeError):
+                # KeyError for missing keys, TypeError for null/None firstDate
                 continue
             entries.append(
                 Collection(

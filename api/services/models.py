@@ -9,12 +9,19 @@ class CollectionItem(BaseModel):
     icon: str | None = None
 
 
+class DeeplinkInfo(BaseModel):
+    url: str
+    reason: str
+    council_name: str
+
+
 class LookupResponse(BaseModel):
     uprn: str
     council: str
     cached: bool = False
     cached_at: datetime | None = None
-    collections: list[CollectionItem]
+    collections: list[CollectionItem] = []
+    deeplink: DeeplinkInfo | None = None
 
 
 class AddressResult(BaseModel):
@@ -49,6 +56,7 @@ class CouncilLookupResponse(BaseModel):
     council_id: str | None = None
     council_name: str | None = None
     candidates: list[CouncilCandidate] = []
+    deeplink: DeeplinkInfo | None = None
 
 
 class HealthEntry(BaseModel):

@@ -4,7 +4,7 @@ from time import time_ns
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Burnley Council"
 DESCRIPTION = "Source for burnley.gov.uk services for the Burnley, UK."
@@ -19,9 +19,9 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
 }
 MONTHS = {
     "January": 1,

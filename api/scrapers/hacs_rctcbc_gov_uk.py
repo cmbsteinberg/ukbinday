@@ -3,7 +3,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup, Tag
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Rhondda Cynon Taf County Borough Council"
 DESCRIPTION = "Source for rctcbc.gov.uk services for Rhondda Cynon Taf County Borough Council, Wales, UK"
@@ -14,10 +14,10 @@ TEST_CASES = {
     "Test_003": {"uprn": 100100733093},
 }
 ICON_MAP = {
-    "BLACK BAGS": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "FOOD WASTE": "mdi:food",
-    "GARDEN WASTE": "mdi:leaf",
+    "BLACK BAGS": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
+    "GARDEN WASTE": Icons.GARDEN,
 }
 
 
@@ -79,7 +79,7 @@ class Source:
         s = httpx.AsyncClient(follow_redirects=True)
         # website appears to display ~4 months worth of collections, so iterate through those pages
         entries: list[Collection] = []
-        for month in range(0, 4):
+        for month in range(4):
             r = await s.get(
                 f"https://www.rctcbc.gov.uk/EN/Resident/RecyclingandWaste/RecyclingandWasteCollectionDays.aspx?uprn={self._uprn}&month={month}"
             )

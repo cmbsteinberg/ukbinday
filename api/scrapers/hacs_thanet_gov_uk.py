@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from api.compat.hacs import Collection
@@ -49,7 +48,7 @@ class Source:
         self._uprn = uprn
         self._session = _CurlCffiClient(follow_redirects=True)
 
-    async def fetch(self) -> List[Collection]:
+    async def fetch(self) -> list[Collection]:
         if self._uprn is None:
             self._uprn = await self.get_uprn()
 

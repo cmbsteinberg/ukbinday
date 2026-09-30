@@ -4,7 +4,7 @@ from datetime import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Glasgow City Council"
 DESCRIPTION = "Source for www.glasgow.gov.uk services for Glasgow City Council, UK."
@@ -16,11 +16,11 @@ TEST_CASES = {
 
 API_URL = "https://onlineservices.glasgow.gov.uk/forms/refuseandrecyclingcalendar/CollectionsCalendar.aspx?UPRN="
 ICON_MAP = {
-    "purple bins": "mdi:glass-fragile",
-    "brown bins": "mdi:apple",
-    "green bins": "mdi:trash-can",
-    "blue bins": "mdi:recycle",
-    "grey bins": "mdi:apple",
+    "purple bins": Icons.GLASS,
+    "brown bins": Icons.BIO_KITCHEN,
+    "green bins": Icons.GENERAL_WASTE,
+    "blue bins": Icons.RECYCLING,
+    "grey bins": Icons.BIO_KITCHEN,
 }
 
 

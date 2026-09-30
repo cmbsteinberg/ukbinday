@@ -3,7 +3,7 @@ from datetime import date, datetime
 import httpx
 from bs4 import BeautifulSoup, Tag
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Mid and East Antrim"
 DESCRIPTION = "Source for Mid and East Antrim Borough Council."
@@ -16,9 +16,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Garden": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Garden": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 # Common waste type mappings for fallback (calendar uses different titles than key)

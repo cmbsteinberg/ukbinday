@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-25T10:58:39.379026+00:00",
+  "generated_at": "2026-09-03T09:47:32.902596+00:00",
   "total": 32,
   "successful": 31,
   "httpx_convertible": 9,
@@ -151,12 +151,13 @@
     {
       "council": "Hillingdon",
       "success": true,
-      "xhr_count": 52,
+      "xhr_count": 54,
       "static_asset_count": 25,
       "httpx_convertible": false,
-      "candidate_payload_url": "https://www.hillingdon.gov.uk/apiserver/postcode?callback=jQuery37106003304249372217_1777048363275&jsonrpc=%7B%22id%22%3A23467491%2C%22method%22%3A%22postcodeSearch%22%2C%22params%22%3A%7B%22provider%22%3A%22Postcode%22%2C%22postcode%22%3A%22UB10%208PP%22%7D%7D&_=1777048363276",
-      "duration_s": 21.09,
+      "candidate_payload_url": "https://www.hillingdon.gov.uk/apiserver/postcode?callback=jQuery37105494145671925265_1788428829824&jsonrpc=%7B%22id%22%3A36866031%2C%22method%22%3A%22postcodeSearch%22%2C%22params%22%3A%7B%22provider%22%3A%22Postcode%22%2C%22postcode%22%3A%22UB10%208PP%22%7D%7D&_=1788428829825",
+      "duration_s": 78.6,
       "errors": [
+        "request-handler: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte",
         "request-handler: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte",
         "request-handler: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte",
         "request-handler: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
@@ -205,23 +206,21 @@
     {
       "council": "NorthDevonCountyCouncil",
       "success": true,
-      "xhr_count": 92,
-      "static_asset_count": 21,
+      "xhr_count": 91,
+      "static_asset_count": 20,
       "httpx_convertible": true,
-      "candidate_payload_url": "https://my.northdevon.gov.uk/apibroker/runLookup?id=5849617f4ce25&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_=1777048379070&sid=2e0e1981811a47f37f93b4a16e8d5ee2",
-      "duration_s": 19.22,
-      "errors": [
-        "request-handler: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
-      ]
+      "candidate_payload_url": "https://my.northdevon.gov.uk/apibroker/runLookup?id=5849617f4ce25&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_=1788428831601&sid=7383ec40bc426285284fc99c34bd1945",
+      "duration_s": 70.37,
+      "errors": []
     },
     {
       "council": "NorthumberlandCouncil",
       "success": true,
-      "xhr_count": 31,
+      "xhr_count": 38,
       "static_asset_count": 50,
       "httpx_convertible": true,
       "candidate_payload_url": "https://bincollection.northumberland.gov.uk/address-select",
-      "duration_s": 7.02,
+      "duration_s": 57.89,
       "errors": []
     },
     {
@@ -328,11 +327,9 @@
       "xhr_count": 134,
       "static_asset_count": 47,
       "httpx_convertible": true,
-      "candidate_payload_url": "https://my.threerivers.gov.uk/apibroker/?api=RunLookup&id=569502c503341&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_=1777048400784&sid=c59698c0882fd420c405d75ec9b3ce5d",
-      "duration_s": 10.63,
-      "errors": [
-        "request-handler: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte"
-      ]
+      "candidate_payload_url": "https://my.threerivers.gov.uk/apibroker/?api=RunLookup&id=569502c503341&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_=1788428833516&sid=835cea8f54032c8a808f12236e03b971",
+      "duration_s": 66.76,
+      "errors": []
     },
     {
       "council": "TorbayCouncil",

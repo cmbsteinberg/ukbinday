@@ -2,7 +2,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
@@ -20,7 +20,7 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Waste Collection": "mdi:trash-can",
+    "Waste Collection": Icons.GENERAL_WASTE,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

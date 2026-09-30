@@ -5,7 +5,7 @@ from html import unescape
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
@@ -32,13 +32,13 @@ FORM_ID = "AF-Form-a139d516-46fc-4e1d-a94e-5e072681bcf0"
 REQUEST_TIMEOUT = 30
 
 ICON_MAP = {
-    "garden": "mdi:leaf",
-    "black": "mdi:trash-can",
-    "non-recyclable": "mdi:trash-can",
-    "blue-lidded": "mdi:recycle",
-    "recycling": "mdi:recycle",
-    "brown": "mdi:food",
-    "food": "mdi:food",
+    "garden": Icons.GARDEN,
+    "black": Icons.GENERAL_WASTE,
+    "non-recyclable": Icons.GENERAL_WASTE,
+    "blue-lidded": Icons.RECYCLING,
+    "recycling": Icons.RECYCLING,
+    "brown": Icons.BIO_KITCHEN,
+    "food": Icons.BIO_KITCHEN,
 }
 
 

@@ -2,7 +2,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import SourceArgumentNotFound
 from api.compat.hacs.service.AchieveForms import init_session, run_lookup
 
@@ -34,12 +34,12 @@ API_URL = f"{BASE_URL}/apibroker/runLookup"
 LOOKUP_COLLECTIONS = "6651dfb99a74d"
 
 ICON_MAP = {
-    "food": "mdi:food",
-    "garden": "mdi:leaf",
-    "recycling": "mdi:recycle",
-    "refuse": "mdi:trash-can",
-    "general": "mdi:trash-can",
-    "clinical": "mdi:medical-bag",
+    "food": Icons.BIO_KITCHEN,
+    "garden": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
+    "refuse": Icons.GENERAL_WASTE,
+    "general": Icons.GENERAL_WASTE,
+    "clinical": Icons.HAZARDOUS,
 }
 
 SERVICES = [
@@ -71,9 +71,7 @@ class Source:
             {"Address": {"LookupUPRN": {"value": self._uprn}}},
         )
 
-        rows = (
-            result.get("integration", {}).get("transformed", {}).get("rows_data", {})
-        )
+        rows = result.get("integration", {}).get("transformed", {}).get("rows_data", {})
         row = rows.get("0", {})
 
         entries = []

@@ -2,7 +2,7 @@ import httpx
 from bs4 import BeautifulSoup, Tag
 from dateutil import parser
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North East Lincolnshire Council"
 DESCRIPTION = "Source for North East Lincolnshire Council."
@@ -19,10 +19,10 @@ Another easy way to discover your Unique Property Reference Number (UPRN) is by 
 
 
 ICON_MAP = {
-    "household waste": "mdi:trash-can",
-    "garden": "mdi:leaf",
-    "paper": "mdi:package-variant",
-    "cans, plastic & glass": "mdi:recycle",
+    "household waste": Icons.GENERAL_WASTE,
+    "garden": Icons.GARDEN,
+    "paper": Icons.PAPER,
+    "cans, plastic & glass": Icons.PLASTIC_PACKAGING,
 }
 
 
@@ -50,7 +50,7 @@ class Source:
 
         entries = []
         for heading, col_list in zip(
-            collection_div.select("div.h4"), collection_div.select("ul")
+            collection_div.select("div.h4"), collection_div.select("ul"), strict=False
         ):
             bin_type = heading.text.strip()
             icon = ICON_MAP.get(bin_type.casefold())  # Collection icon

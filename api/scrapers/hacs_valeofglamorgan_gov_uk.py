@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Vale of Glamorgan Council"
 DESCRIPTION = "Source for Vale of Glamorgan Council."
@@ -17,11 +17,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Food": "mdi:food",
-    "Garden": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Recycle": "mdi:recycle",
+    "Trash": Icons.GENERAL_WASTE,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
+    "Paper": Icons.PAPER,
+    "Recycle": Icons.RECYCLING,
 }
 
 WEEKDAYS = [
@@ -41,8 +41,10 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn: str | int = uprn
 
-    async def __get_colltion(self, calendar_url: str, bin_type: str) -> list[Collection]:
-        r = await httpx.AsyncClient(follow_redirects=True).get(calendar_url)
+    async def __get_collection(
+        self, session: httpx.AsyncClient, calendar_url: str, bin_type: str
+    ) -> list[Collection]:
+        r = await session.get(calendar_url)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
         entries = []
@@ -57,13 +59,13 @@ class Source:
                 day = day.strip()
                 if not day.isdigit():
                     continue
-                date = datetime.strptime(f"{day} {months}", "%d %B %Y").date()
-                entries.append(
-                    Collection(date=date, t=bin_type, icon=ICON_MAP[bin_type])
-                )
+                dt = datetime.strptime(f"{day} {months}", "%d %B %Y").date()
+                entries.append(Collection(date=dt, t=bin_type, icon=ICON_MAP[bin_type]))
         return entries
 
     async def fetch(self) -> list[Collection]:
+        session = httpx.AsyncClient(follow_redirects=True)
+
         timestamp = str(int(datetime.now().timestamp() * 1000))
         random_callback_number = str(
             random.randint(10000000000000000000, 99999999999999999999)
@@ -80,7 +82,7 @@ class Source:
         }
 
         # get json file
-        r = await httpx.AsyncClient(follow_redirects=True).get(API_URL, params=params)
+        r = await session.get(API_URL, params=params)
         r.raise_for_status()
         text = r.text
         text = text.replace("AddressInfoCallback(", "").rstrip(");")
@@ -112,7 +114,11 @@ class Source:
             for i in range(10)
         )
 
-        entries.extend(await self.__get_colltion(data["residual_calendar_url"], "Trash"))
-        entries.extend(await self.__get_colltion(data["green_calendar_url"], "Garden"))
+        entries.extend(
+            await self.__get_collection(session, data["residual_calendar_url"], "Trash")
+        )
+        entries.extend(
+            await self.__get_collection(session, data["green_calendar_url"], "Garden")
+        )
 
         return entries

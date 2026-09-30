@@ -3,7 +3,7 @@ import datetime
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Chorley Council"
 DESCRIPTION = "Source for chorley.gov.uk services for Chorley Council, UK."
@@ -16,11 +16,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Residual Waste": "mdi:trash-can",
-    "Dry Mixed Recycling": "mdi:recycle",
-    "Food Waste": "mdi:food-apple",
-    "Garden Waste": "mdi:leaf",
-    "Paper and Card": "mdi:newspaper",
+    "Residual Waste": Icons.GENERAL_WASTE,
+    "Dry Mixed Recycling": Icons.RECYCLING,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Garden Waste": Icons.GARDEN,
+    "Paper and Card": Icons.PAPER,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

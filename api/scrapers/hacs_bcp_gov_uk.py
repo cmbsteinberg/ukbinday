@@ -4,7 +4,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -17,10 +17,10 @@ TEST_CASES = {
     "Test_003": {"uprn": "100040567667"},
 }
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "Rubbish": "mdi:trash-can",
-    "Garden Waste": "mdi:leaf",
-    "Food Waste": "mdi:food",
+    "Recycling": Icons.RECYCLING,
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Food Waste": Icons.BIO_KITCHEN,
 }
 
 API_URL = "https://bcpportal.bcpcouncil.gov.uk/checkyourbincollection/"

@@ -13,7 +13,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 from api.compat.hacs.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -30,14 +30,14 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "recycl": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food-apple",
-    "caddy": "mdi:food-apple",
-    "rubbish": "mdi:trash-can",
-    "refuse": "mdi:trash-can",
-    "domestic": "mdi:trash-can",
-    "black": "mdi:trash-can",
+    "recycl": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
+    "caddy": Icons.BIO_KITCHEN,
+    "rubbish": Icons.GENERAL_WASTE,
+    "refuse": Icons.GENERAL_WASTE,
+    "domestic": Icons.GENERAL_WASTE,
+    "black": Icons.GENERAL_WASTE,
 }
 DEFAULT_ICON = "mdi:trash-can"
 
@@ -146,7 +146,7 @@ class Source:
             raise SourceArgumentException(
                 "uprn",
                 f"Council lookup returned invalid response: {e}",
-            )
+            ) from e
         if not rows:
             raise SourceArgumentNotFound(
                 "uprn",

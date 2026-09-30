@@ -3,7 +3,7 @@ import re
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "South Holland District Council"
 DESCRIPTION = "Source for South Holland District Council."
@@ -15,9 +15,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "garden": "mdi:leaf",
-    "recycling": "mdi:recycle",
+    "refuse": Icons.GENERAL_WASTE,
+    "garden": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
 }
 
 TYPE_LABELS = {

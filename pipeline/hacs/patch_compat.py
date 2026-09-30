@@ -9,6 +9,7 @@ waste_collection_schedule imports in the remaining service files.
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -294,8 +295,17 @@ def _patch_imports(file_path: Path) -> None:
         "from waste_collection_schedule.exceptions import",
         "from api.compat.hacs.exceptions import",
     )
-    source = source.replace("import requests", "import httpx")
-    source = source.replace("requests.Session()", "httpx.Client(follow_redirects=True)")
+    # Upstream increasingly uses curl_cffi's requests-compatible API
+    # (e.g. `from curl_cffi import requests`). That must keep working as-is —
+    # only rewrite a standalone `import requests` line, never the tail of a
+    # `from ... import requests`, and leave its Session() calls alone.
+    if "curl_cffi" not in source:
+        source = re.sub(
+            r"^import requests\s*$", "import httpx", source, flags=re.MULTILINE
+        )
+        source = source.replace(
+            "requests.Session()", "httpx.Client(follow_redirects=True)"
+        )
     if source != original:
         file_path.write_text(source)
         print(f"  Patched imports in {file_path}")

@@ -5,7 +5,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
     SourceArgumentNotFound,
 )
@@ -21,9 +21,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "Waste": "mdi:trash-can",
-    "Garden waste": "mdi:leaf",
+    "Recycling": Icons.RECYCLING,
+    "Waste": Icons.GENERAL_WASTE,
+    "Garden waste": Icons.GARDEN,
 }
 
 API_URL = "https://www.calderdale.gov.uk/environment/waste/household-collections/collectiondayfinder.jsp"
@@ -56,8 +56,9 @@ class Source:
             # Check if address was found - if table is missing, likely invalid UPRN
             address_check = soup.find(
                 "p",
-                string=lambda text: text
-                and "Currently showing collection days for:" in text,
+                string=lambda text: (
+                    text and "Currently showing collection days for:" in text
+                ),
             )
             if not address_check:
                 raise SourceArgumentNotFound(
@@ -65,8 +66,7 @@ class Source:
                     self._uprn,
                     "Could not find collection information for the provided UPRN and postcode combination. Please verify both values are correct.",
                 )
-            else:
-                raise Exception("Could not find collection schedule table in response")
+            raise Exception("Could not find collection schedule table in response")
 
         entries = []
 

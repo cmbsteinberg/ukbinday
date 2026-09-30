@@ -5,7 +5,7 @@ from time import time_ns
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Torridge Council"
 DESCRIPTION = "Source for torridge.gov.uk services for Torridge, UK."
@@ -25,9 +25,9 @@ BIN_NAME = {
     "GardenBin": "Garden",
 }
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
 }
 MONTHS = {
     "January": 1,

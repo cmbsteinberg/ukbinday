@@ -2,7 +2,7 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil import parser
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "London Borough of Southwark"
 DESCRIPTION = "Source for London Borough of Southwark waste collection."
@@ -14,11 +14,11 @@ TEST_CASES = {
 }
 HEADERS = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Recycling Sack": "mdi:recycle",
-    "Food Waste": "mdi:food-apple",
-    "Communal Food": "mdi:food-apple",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Recycling Sack": Icons.RECYCLING,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Communal Food": Icons.BIO_KITCHEN,
 }
 NAME_MAP = {
     "Refuse": "General Waste",

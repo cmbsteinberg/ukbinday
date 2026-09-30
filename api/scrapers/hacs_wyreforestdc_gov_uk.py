@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wyre Forest District Council"
 DESCRIPTION = "Source for wyreforestdc.gov.uk, Wyre Forest District Council, UK"
@@ -25,9 +25,9 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "rubbish (black bin)": "mdi:trash-can",
-    "recycling (green bin)": "mdi:recycle",
-    "garden waste (brown bin)": "mdi:leaf",
+    "rubbish (black bin)": Icons.GENERAL_WASTE,
+    "recycling (green bin)": Icons.RECYCLING,
+    "garden waste (brown bin)": Icons.BIO_KITCHEN,
 }
 
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
@@ -148,7 +148,7 @@ class Source:
         headings = [td.text.strip() for td in coll_day_rows[0].find_all("td")]
         values = [td.text.strip() for td in coll_day_rows[1].find_all("td")]
 
-        for heading, value in list(zip(headings, values)):
+        for heading, value in list(zip(headings, values, strict=False)):
             if REGEX_GET_BIN_TYPE.match(heading):
                 bin_type_match = REGEX_GET_BIN_TYPE.match(heading)
                 if not bin_type_match:

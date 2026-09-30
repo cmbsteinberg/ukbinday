@@ -3,7 +3,7 @@ from datetime import datetime
 
 import httpx
 
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Dorset Council"
 DESCRIPTION = "The local authority for the non-metropolitan county of Dorset in England"
@@ -14,10 +14,10 @@ TEST_CASES = {
     "Test_003": {"uprn": "100040606071"},
 }
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "Rubbish": "mdi:trash-can",
-    "Garden Waste": "mdi:leaf",
-    "Food Waste": "mdi:food",
+    "Recycling": Icons.RECYCLING,
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Food Waste": Icons.BIO_KITCHEN,
 }
 
 API_URLS = {

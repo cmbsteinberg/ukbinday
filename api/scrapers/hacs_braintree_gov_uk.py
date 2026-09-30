@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from dateutil import parser
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Braintree District Council"
 DESCRIPTION = "Braintree District Council, UK - Waste Collection"
@@ -14,11 +14,20 @@ TEST_CASES = {
     "20 Peel Crescent": {"house_number": "20", "postcode": "CM7 2RS"},
     "Causeway House": {"house_number": "Causeway House", "postcode": "CM7 9HB"},
 }
+NAME_MAP = {
+    "Non-recyclable waste(grey bin)": "Grey Bin",
+    "Outdoorfood caddy": "Food Bin",
+    "Outdoor food caddy": "Food Bin",
+    "Mixed recycling(blue-lidded bin)": "Mixed Recycling",
+    "Paper and card recycling(red-lidded bin)": "Paper & Card",
+    "Garden bin(green bin)": "Garden Bin",
+}
 ICON_MAP = {
-    "Grey Bin": "mdi:trash-can",
-    "Clear Sack": "mdi:recycle",
-    "Garden Bin": "mdi:leaf",
-    "Food Bin": "mdi:food-apple",
+    "Grey Bin": Icons.GENERAL_WASTE,
+    "Mixed Recycling": Icons.RECYCLING,
+    "Paper & Card": Icons.PAPER,
+    "Garden Bin": Icons.GARDEN,
+    "Food Bin": Icons.BIO_KITCHEN,
 }
 
 
@@ -59,7 +68,9 @@ class Source:
         ):
             try:
                 collection_info = results.text.strip().split("\n")
-                collection_type = collection_info[0].strip()
+                collection_type = NAME_MAP.get(
+                    collection_info[0].strip(), collection_info[0].strip()
+                )
 
                 # Skip if no collection date is found
                 if len(collection_info) < 2:

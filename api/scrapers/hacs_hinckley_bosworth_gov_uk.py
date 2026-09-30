@@ -6,7 +6,7 @@ from urllib.parse import quote
 import httpx
 from bs4 import BeautifulSoup
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Hinckley & Bosworth Borough Council"
 DESCRIPTION = "Source for Hinckley & Bosworth Borough Council."
@@ -17,10 +17,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food": "mdi:food-apple",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
+    "Food": Icons.BIO_KITCHEN,
 }
 
 PARAM_TRANSLATIONS = {

@@ -2,7 +2,7 @@ import httpx
 from bs4 import BeautifulSoup
 from dateutil import parser
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 TITLE = "Swindon Borough Council"
 DESCRIPTION = "Swindon Borough Council, UK - Waste Collection"
@@ -15,10 +15,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Rubbish bin": "mdi:trash-can",
-    "Recycling boxes": "mdi:recycle",
-    "Garden waste bin": "mdi:leaf",
-    "Plastics": "mdi:sack",
+    "Rubbish bin": Icons.GENERAL_WASTE,
+    "Recycling boxes": Icons.RECYCLING,
+    "Garden waste bin": Icons.GARDEN,
+    "Plastics": Icons.PLASTIC_PACKAGING,
 }
 
 
@@ -54,7 +54,6 @@ class Source:
         for results in BeautifulSoup(r.text, "html.parser").find_all(
             "div", class_="bin-collection-content"
         ):
-
             try:
                 recyclingdate = results.find("span", class_="nextCollectionDate")
 

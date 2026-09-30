@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
-from api.compat.hacs import Collection  # type: ignore[attr-defined]
+from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Blackpool Council"
 DESCRIPTION = "Source for blackpool.gov.uk services for Blackpool Council, UK."
@@ -22,12 +22,12 @@ NAME_MAP = {
     "Food Caddy": "Food Caddy",
 }
 ICON_MAP = {
-    "Domestic Refuse": "mdi:trash-can",
-    "Dry Recycling": "mdi:recycle",
-    "Brown Sack": "mdi:newspaper",
-    "Paper & Card": "mdi:newspaper",
-    "Green Waste": "mdi:leaf",
-    "Food Caddy": "mdi:food-apple",
+    "Domestic Refuse": Icons.GENERAL_WASTE,
+    "Dry Recycling": Icons.RECYCLING,
+    "Brown Sack": Icons.NEWSPAPER,
+    "Paper & Card": Icons.PAPER,
+    "Green Waste": Icons.GARDEN,
+    "Food Caddy": Icons.BIO_KITCHEN,
 }
 
 
@@ -37,10 +37,14 @@ class Source:
         self._uprn = str(uprn)
 
     async def fetch(self):
-        # GET request returns token
+        # GET request returns token (XML: <string ...>TOKEN</string>)
         s = _CurlCffiClient(follow_redirects=True)
         r0 = await s.get(f"{API_URL}/security/token")
         r0.raise_for_status()
+        token_match = re.search(r"<string[^>]*>(.*?)</string>", r0.text, re.DOTALL)
+        token = (
+            token_match.group(1).strip() if token_match else r0.text.strip('"')
+        )
 
         # POST request returns schedule for matching postcode/uprn
         payload = {
@@ -50,15 +54,22 @@ class Source:
             "StreetNumber": "",
             "CurrentUser": {
                 "UserId": "",
-                "Token": r0.text.strip('"'),
+                "Token": token,
             },
         }
         r1 = await s.post(f"{API_URL}/collection/PremiseJobs", json=payload)
         r1.raise_for_status()
 
+        data = r1.json()
+        jobs = data.get("jobsField") or []
+        if not jobs:
+            message = (data.get("errorsField") or {}).get("messageField")
+            if message:
+                raise Exception(f"Blackpool API error: {message}")
+
         # Extract job name and date from response
         entries = []
-        for job in r1.json()["jobsField"]:
+        for job in jobs:
             # "Empty Domestic Refuse 240L" -> "Domestic Refuse"
             name_field = job["jobField"]["nameField"]
             match = re.search(REGEX_JOB_NAME, name_field)

@@ -5,7 +5,7 @@ from datetime import datetime
 import httpx
 import urllib3
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -31,10 +31,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "DOMESTIC REFUSE": "mdi:trash-can",
-    "DOMESTIC RECYCLING": "mdi:recycle",
-    "DOMESTIC ORGANIC": "mdi:leaf",
-    "DOMESTIC PAID GARDEN": "mdi:leaf",
+    "DOMESTIC REFUSE": Icons.GENERAL_WASTE,
+    "DOMESTIC RECYCLING": Icons.GENERAL_WASTE,
+    "DOMESTIC ORGANIC": Icons.ORGANIC,
+    "DOMESTIC PAID GARDEN": Icons.GARDEN,
 }
 
 API_URLS = {

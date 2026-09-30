@@ -63,10 +63,12 @@ $("#postcode-form").addEventListener("submit", async (e) => {
 
 		let council_id = null;
 		let council_name = null;
+		let councilDeeplink = null;
 		if (councilResp.ok) {
 			const councilData = await councilResp.json();
 			council_id = councilData.council_id;
 			council_name = councilData.council_name;
+			councilDeeplink = councilData.deeplink || null;
 		} else {
 			const err = await councilResp.json().catch(() => ({}));
 			showError(
@@ -77,6 +79,10 @@ $("#postcode-form").addEventListener("submit", async (e) => {
 		}
 
 		if (!council_id) {
+			if (councilDeeplink) {
+				renderDeeplink(councilDeeplink);
+				return;
+			}
 			showError(
 				council_name
 					? `${council_name} council is not supported yet.`
@@ -339,8 +345,24 @@ function icsUrlFor(councilId, addr) {
 	return `${window.location.origin}${API}/calendar/${encodeURIComponent(addr.uprn)}?${params}`;
 }
 
+function renderDeeplink(deeplink) {
+	const section = $("#results");
+	section.replaceChildren();
+	const frag = tpl("tpl-deeplink");
+	frag.querySelector('[data-slot="council"]').textContent =
+		deeplink.council_name;
+	frag.querySelector('[data-slot="reason"]').textContent = deeplink.reason;
+	frag.querySelector('[data-slot="link"]').href = deeplink.url;
+	section.appendChild(frag);
+	show("results");
+}
+
 function renderResults(addr, data) {
 	const section = $("#results");
+	if (data.deeplink) {
+		renderDeeplink(data.deeplink);
+		return;
+	}
 	const council = currentData.council_name || data.council;
 	const councilId = currentData.council_id;
 	const icsUrl = icsUrlFor(councilId, addr);

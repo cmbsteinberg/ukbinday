@@ -1,5 +1,7 @@
 # Eastbourne uses the same script.
 
+import re
+
 from bs4 import BeautifulSoup
 
 from api.compat.ukbcd.common import *
@@ -7,7 +9,6 @@ from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass
 from api.compat import httpx_helpers as _http
 
 
-# import the wonderful Beautiful Soup and the URL grabber
 class CouncilClass(AbstractGetBinDataClass):
     """
     Concrete classes have to implement all abstract operations of the
@@ -22,57 +23,62 @@ class CouncilClass(AbstractGetBinDataClass):
             check_uprn(user_uprn)
             url = f"https://environmentfirst.co.uk/house.php?uprn={user_uprn}"
             if not user_uprn:
-                # This is a fallback for if the user stored a URL in old system. Ensures backwards compatibility.
+                # Backwards compatibility for users who stored a URL.
                 url = kwargs.get("url")
         except Exception as e:
             raise ValueError(f"Error getting identifier: {str(e)}")
 
-        # Make a BS4 object
         page = await _http.get(url)
+        if "mysqli_sql_exception" in page.text or "Fatal error" in page.text:
+            # The site occasionally returns HTTP 200 with a PHP fatal error
+            # in the body instead of any markup, when EnvironmentFirst's own
+            # database is unreachable - see #2127. That's an outage on their
+            # end, not something a UPRN retry can fix, so raise a clear
+            # message rather than silently returning no bins.
+            raise ConnectionError(
+                "EnvironmentFirst's bin lookup service is returning a server "
+                "error (their database is unreachable) - this is an outage "
+                "on their end, not this scraper. Try again later."
+            )
         soup = BeautifulSoup(page.text, features="html.parser")
         soup.prettify()
 
-        # Get the paragraph lines from the page
         data = {"bins": []}
-        page_text = soup.find("div", {"class": "collect"}).find_all("p")
+        collect_div = soup.find("div", {"class": "collect"})
+        if collect_div is None:
+            return data
 
-        # Parse the correct lines (find them, remove the ordinal indicator and make them the correct format date) and
-        # then add them to the dictionary
-        rubbish_day = datetime.strptime(
-            remove_ordinal_indicator_from_date_string(
-                page_text[2].find_next("strong").text
-            ),
-            "%d %B %Y",
-        ).strftime(date_format)
-        dict_data = {
-            "type": "Rubbish",
-            "collectionDate": rubbish_day,
-        }
-        data["bins"].append(dict_data)
-        recycling_day = datetime.strptime(
-            remove_ordinal_indicator_from_date_string(
-                page_text[4].find_next("strong").text
-            ),
-            "%d %B %Y",
-        ).strftime(date_format)
-        dict_data = {
-            "type": "Recycling",
-            "collectionDate": recycling_day,
-        }
-        data["bins"].append(dict_data)
+        date_pattern = re.compile(r"(\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]+\s+\d{4})")
 
-        if len(page_text) > 5:
-            garden_day = datetime.strptime(
-                remove_ordinal_indicator_from_date_string(
-                    page_text[6].find_next("strong").text
-                ),
-                "%d %B %Y",
-            ).strftime(date_format)
-            dict_data = {
-                "type": "Garden",
-                "collectionDate": garden_day,
-            }
-            data["bins"].append(dict_data)
+        for p in collect_div.find_all("p"):
+            strong = p.find("strong")
+            if not strong:
+                continue
+            label = p.get_text(" ", strip=True).lower()
+            if "rubbish" in label:
+                bin_type = "Rubbish"
+            elif "recycling" in label:
+                bin_type = "Recycling"
+            elif "garden" in label:
+                bin_type = "Garden"
+            else:
+                continue
+            match = date_pattern.search(strong.get_text(" ", strip=True))
+            if not match:
+                continue
+            cleaned = remove_ordinal_indicator_from_date_string(match.group(1))
+            try:
+                collection_date = datetime.strptime(cleaned, "%d %B %Y").strftime(
+                    date_format
+                )
+            except ValueError:
+                continue
+            data["bins"].append(
+                {
+                    "type": bin_type,
+                    "collectionDate": collection_date,
+                }
+            )
 
         return data
 

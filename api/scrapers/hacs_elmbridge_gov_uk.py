@@ -3,7 +3,7 @@ from typing import TypedDict
 import httpx
 from dateutil.parser import parse
 
-from api.compat.hacs import Collection
+from api.compat.hacs import Collection, Icons
 from api.compat.hacs.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Elmbridge Borough Council"
@@ -26,10 +26,10 @@ API_URL = f"{BASE_URL}/apibroker/runLookup"
 
 
 ICON_MAP = {
-    "Domestic Waste": "mdi:trash-can",
-    "Domestic Recycling": "mdi:recycle",
-    "Food Waste": "mdi:food",
-    "Textiles and Small WEEE": "mdi:tshirt-crew",
+    "Domestic Waste": Icons.GENERAL_WASTE,
+    "Domestic Recycling": Icons.GENERAL_WASTE,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Textiles and Small WEEE": Icons.ELECTRONICS,
 }
 
 
@@ -44,7 +44,9 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn).strip()
 
-    async def get_collections(self, session_key: str, session: httpx.AsyncClient) -> list[Collection]:
+    async def get_collections(
+        self, session_key: str, session: httpx.AsyncClient
+    ) -> list[Collection]:
         result = await run_lookup(
             session,
             API_URL,
@@ -52,7 +54,8 @@ class Source:
             "663b557cdaece",
             {"Section 1": {"UPRN": {"value": self._uprn}}},
         )
-        return list(result["integration"]["transformed"]["rows_data"].values())
+        rows_data = result["integration"]["transformed"]["rows_data"]
+        return list(rows_data.values()) if isinstance(rows_data, dict) else rows_data
 
     async def fetch(self) -> list[Collection]:
         session = httpx.AsyncClient(follow_redirects=True)
