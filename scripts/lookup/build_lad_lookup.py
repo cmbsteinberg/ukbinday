@@ -296,6 +296,14 @@ def compose() -> dict[str, dict]:
         }
         if code in unwired:
             record["status"] = unwired[code]
+        # `working` is written by scripts.annotate_lad_working, which keeps the
+        # previous flag for LADs a live run didn't decide. Carry it across, but
+        # only for the same scraper: a flag earned by another scraper means nothing.
+        was = previous.get(code, {})
+        if "working" in was:
+            record["working"] = (
+                was["working"] if was.get("scraper_id") == record["scraper_id"] else False
+            )
         lookup[code] = record
 
     stale = sorted(set(scrapers) - set(base))

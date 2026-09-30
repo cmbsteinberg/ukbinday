@@ -16,17 +16,36 @@ HOST = "https://gloucester-self.achieveservice.com"
 AUTH_URL = f"{HOST}/authapi/isauthenticated?uri=https%253A%252F%252Fgloucester-self.achieveservice.com%252Fservice%252FBins___Check_your_bin_day&hostname=gloucester-self.achieveservice.com&withCredentials=true"
 API_URL = f"{HOST}/apibroker/runLookup"
 
-# Lookup IDs from XHR capture
-ADDRESS_LOOKUP_ID = "57fb9bf5aa4b8"
+# Per bin type the chain is: bin-ids lookup -> workflow lookup (keyed on the id)
+# -> next-date lookup (keyed on the workflow token).
 BIN_CONFIG_LOOKUP_ID = "63f72ddc8ca25"
-DATE_LOOKUP_IDS = {
-    "Household recycling (green box, brown food bin and blue sack)": "63cfcf4756b5d",
-    "Food waste (brown food bin)": "63cfcf8ac7877",
-    "Household waste (Domestic Waste Sack)": "640b1a2ad1e75",
+BIN_TYPES = {
+    "Refuse": {
+        "workflow_lookup_id": "63f731d2b50d7",
+        "next_lookup_id": "63ca72c70c3b1",
+        "label": "Household waste (black bin)",
+        "icon": "mdi:trash-can",
+    },
+    "Recycling": {
+        "workflow_lookup_id": "63f89f73018c0",
+        "next_lookup_id": "63cfcf4756b5d",
+        "label": "Recycling",
+        "icon": "mdi:recycle",
+    },
+    "Food": {
+        "workflow_lookup_id": "63f8a11714712",
+        "next_lookup_id": "63cfcf8ac7877",
+        "label": "Food waste",
+        "icon": "mdi:food-apple",
+    },
+    "Garden": {
+        "workflow_lookup_id": "63f8a15776b5d",
+        "next_lookup_id": "63cfcfc1c486c",
+        "label": "Garden waste",
+        "icon": "mdi:leaf",
+    },
 }
-DATE_LOOKUP_WEEK2 = {
-    "Household waste (Domestic Waste Sack) Week 2": "6450dee4161c8",
-}
+SECTION = "Your waste collections"
 
 HEADERS = {
     "Content-Type": "application/json",
@@ -35,14 +54,6 @@ HEADERS = {
     "X-Requested-With": "XMLHttpRequest",
     "Referer": f"{HOST}/fillform/?iframe_id=fillform-frame-1&db_id=",
 }
-
-ICON_MAP = {
-    "HOUSEHOLD RECYCLING": "mdi:recycle",
-    "FOOD WASTE": "mdi:food-apple",
-    "HOUSEHOLD WASTE": "mdi:trash-can",
-    "GARDEN WASTE": "mdi:leaf",
-}
-
 
 def _params(lookup_id: str, sid: str, **extra) -> dict:
     return {
@@ -64,7 +75,16 @@ def _rows(resp_json: dict) -> dict:
 class Source:
     def __init__(self, uprn: str | int, postcode: str | None = None):
         self._uprn = str(uprn)
-        self._postcode = postcode or ""
+
+    async def _lookup(self, s: httpx.AsyncClient, sid: str, lookup_id: str, fields: dict) -> dict:
+        r = await s.post(
+            API_URL,
+            headers=HEADERS,
+            params=_params(lookup_id, sid),
+            json={"formValues": {SECTION: fields}},
+        )
+        r.raise_for_status()
+        return _rows(r.json()).get("0", {})
 
     async def fetch(self) -> list[Collection]:
         async with httpx.AsyncClient(follow_redirects=True, timeout=30.0) as s:
@@ -72,63 +92,25 @@ class Source:
             r.raise_for_status()
             sid = r.json()["auth-session"]
 
-            form_state = {
-                "Section 1": {
-                    "chooseAddress": {"value": self._uprn},
-                    "find_postcode": {"value": self._postcode},
-                    "binUprn": {"value": self._uprn},
-                }
-            }
-
-            # Step 1: bin config — get service IDs for this property
-            r = await s.post(
-                API_URL,
-                headers=HEADERS,
-                params=_params(BIN_CONFIG_LOOKUP_ID, sid),
-                json={"formValues": form_state},
-            )
-            r.raise_for_status()
-            _rows(r.json()).get("0", {})
-
-            # Step 2: fetch next collection dates for each bin type
+            ids = await self._lookup(s, sid, BIN_CONFIG_LOOKUP_ID, {"binUprn": {"value": self._uprn}})
             entries = []
-            for bin_type, lookup_id in DATE_LOOKUP_IDS.items():
-                r = await s.post(
-                    API_URL,
-                    headers=HEADERS,
-                    params=_params(lookup_id, sid),
-                    json={"formValues": form_state},
-                )
-                r.raise_for_status()
-                row = _rows(r.json()).get("0", {})
-                for key, val in row.items():
-                    if key.endswith("ISO") and "Next" in key and val:
-                        try:
-                            dt = datetime.strptime(val, "%Y-%m-%d").date()
-                            first_words = " ".join(bin_type.split()[:2]).upper()
-                            icon = ICON_MAP.get(first_words)
-                            entries.append(Collection(date=dt, t=bin_type, icon=icon))
-                        except ValueError:
-                            continue
-
-            # Step 3: week 2 refuse sack (alternate week)
-            for bin_type, lookup_id in DATE_LOOKUP_WEEK2.items():
-                r = await s.post(
-                    API_URL,
-                    headers=HEADERS,
-                    params=_params(lookup_id, sid),
-                    json={"formValues": form_state},
-                )
-                r.raise_for_status()
-                row = _rows(r.json()).get("0", {})
-                for key, val in row.items():
-                    if key.endswith("ISO") and "Next" in key and val:
-                        try:
-                            dt = datetime.strptime(val, "%Y-%m-%d").date()
-                            entries.append(
-                                Collection(date=dt, t="Household waste (Domestic Waste Sack)", icon="mdi:trash-can")
-                            )
-                        except ValueError:
-                            continue
+            for bin_type, cfg in BIN_TYPES.items():
+                id_field = f"{bin_type}Id"
+                bin_id = ids.get(id_field)
+                if not bin_id:
+                    continue
+                wf = await self._lookup(s, sid, cfg["workflow_lookup_id"], {id_field: {"value": bin_id}})
+                token = wf.get(f"{bin_type}1")
+                if not token:
+                    continue
+                nxt = await self._lookup(s, sid, cfg["next_lookup_id"], {f"{bin_type}1": {"value": token}})
+                val = nxt.get(f"Next{bin_type}1DateISO")
+                if not val:
+                    continue
+                try:
+                    dt = datetime.strptime(val, "%Y-%m-%d").date()
+                except ValueError:
+                    continue
+                entries.append(Collection(date=dt, t=cfg["label"], icon=cfg["icon"]))
 
         return sorted(entries, key=lambda c: c.date)

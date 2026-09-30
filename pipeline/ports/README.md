@@ -9,7 +9,6 @@ Each file follows the HACS scraper pattern (`Source` class, `TITLE`, `URL`, `TES
 | File | Council | Notes |
 |------|---------|-------|
 | `dumfries_and_galloway_council.py` | Dumfries & Galloway | Downloads ICS calendar by UPRN |
-| `edinburgh_city_council.py` | City of Edinburgh | Pure calculation from rota anchors; takes `house_number`=day, `postcode`=week |
 
 ### IEG4 AchieveForms cluster
 | File | Council | Lookup chain |

@@ -36,6 +36,7 @@ from datetime import date
 import httpx
 from bs4 import BeautifulSoup
 
+from api.compat.address import first_line
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Newry, Mourne and Down District Council"
@@ -145,7 +146,10 @@ def _parse_pdf(content: bytes, weekday: int) -> list[Collection]:
     if len(ordered) != 13:
         raise ValueError(f"Expected 13 month rows in PDF, found {len(ordered)}")
 
-    out: list[Collection] = []
+    # Pass 1: read the cells of every month row and list the matching weekdays.
+    rows_cells: list[list] = []  # per row: [(types, border), ...]
+    rows_days: list[list[int]] = []
+    rows_month: list[tuple[int, int]] = []
     for idx, row in enumerate(ordered):
         month = (3 + idx) % 12 + 1
         year = start_year + (3 + idx) // 12
@@ -167,15 +171,30 @@ def _parse_pdf(content: bytes, weekday: int) -> list[Collection]:
                     f"Unexpected box layout in {year}-{month:02d} row: "
                     f"{[(round(x), k) for x, k, _ in row]}"
                 )
+        rows_cells.append(cells)
+        rows_days.append(
+            [
+                d
+                for d in range(1, calendar.monthrange(year, month)[1] + 1)
+                if date(year, month, d).weekday() == weekday
+            ]
+        )
+        rows_month.append((year, month))
 
-        days = [
-            d
-            for d in range(1, calendar.monthrange(year, month)[1] + 1)
-            if date(year, month, d).weekday() == weekday
-        ]
-        if idx == len(ordered) - 1 and len(cells) <= len(days):
-            # The leaflet stops part-way through the final April.
-            days = days[: len(cells)]
+    # The leaflet stops part-way through the final April.
+    if len(rows_cells[-1]) <= len(rows_days[-1]):
+        rows_days[-1] = rows_days[-1][: len(rows_cells[-1])]
+    # Some zones print a month's last date at the end of the next month's row
+    # (WED-Z1 lists 30 September after 28 October). Move trailing cells back
+    # only when a short row is exactly balanced by the surplus of the next.
+    for idx in range(len(rows_cells) - 1):
+        short = len(rows_days[idx]) - len(rows_cells[idx])
+        if short > 0 and len(rows_cells[idx + 1]) - len(rows_days[idx + 1]) == short:
+            rows_cells[idx].extend(rows_cells[idx + 1][-short:])
+            del rows_cells[idx + 1][-short:]
+
+    out: list[Collection] = []
+    for cells, days, (year, month) in zip(rows_cells, rows_days, rows_month):
         if len(days) != len(cells):
             raise ValueError(
                 f"{year}-{month:02d}: {len(cells)} boxes but {len(days)} matching weekdays"
@@ -198,9 +217,16 @@ def _parse_pdf(content: bytes, weekday: int) -> list[Collection]:
 
 
 class Source:
-    def __init__(self, postcode: str, address: str | None = None):
+    def __init__(
+        self,
+        postcode: str,
+        address: str | None = None,
+        house_number: str = "",
+        street: str = "",
+    ):
         self._postcode = postcode.strip().upper()
-        self._address = re.sub(r"\s+", " ", address or "").strip().upper()
+        line = first_line(address or "", house_number, street)
+        self._address = re.sub(r"\s+", " ", line).strip().upper()
 
     async def fetch(self) -> list[Collection]:
         pc = re.sub(r"\s+", "", self._postcode)

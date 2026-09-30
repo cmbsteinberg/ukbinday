@@ -15,9 +15,8 @@ TEST_CASES = {
 }
 
 BASE_URL = "https://recyclingservices.bromley.gov.uk/waste"
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
-}
+# The site's WAF answers 503 to the full Chrome-on-Linux UA string; a plain UA is served.
+HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 ICON_MAP = {
     "Mixed Recycling": "mdi:recycle",
@@ -36,10 +35,12 @@ class Source:
         self,
         postcode: str,
         house_number: str = "",
+        street: str = "",
         uprn: str | int | None = None,
     ):
         self._postcode = postcode
         self._house_number = house_number
+        self._street = street
 
     async def fetch(self) -> list[Collection]:
         async with httpx.AsyncClient(
@@ -56,13 +57,17 @@ class Source:
         if not select:
             raise ValueError(f"No address selector found for postcode {self._postcode}")
 
-        target = self._house_number.strip().lower()
+        target = " ".join(f"{self._house_number} {self._street}".lower().split())
         for opt in select.find_all("option"):
             value = opt.get("value", "").strip()
             if not value:
                 continue
-            text = opt.get_text(strip=True).lower()
-            if target in text or text.startswith(target):
+            text = " ".join(opt.get_text(" ", strip=True).lower().replace(",", " ").split())
+            if self._street:
+                # "17 College Road, Bromley, BR1 3PU" or "6, Lynn Court, 36 Southend Road, ..."
+                if text == target or text.startswith(f"{target} "):
+                    return value
+            elif target in text or text.startswith(target):
                 return value
 
         raise ValueError(

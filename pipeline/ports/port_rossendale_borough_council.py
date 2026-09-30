@@ -30,6 +30,7 @@ import httpx
 import pdfplumber
 from bs4 import BeautifulSoup
 
+from api.compat.address import first_line
 from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Rossendale Borough Council"
@@ -79,9 +80,17 @@ def _parse_pdf_text(text: str) -> list[tuple[str, date]]:
 
 
 class Source:
-    def __init__(self, postcode: str, address: str | None = None):
+    def __init__(
+        self,
+        postcode: str,
+        address: str | None = None,
+        house_number: str = "",
+        street: str = "",
+    ):
         self._postcode = postcode.strip().upper()
-        self._address = address
+        self._address = first_line(address or "", house_number, street)
+        self._house_number = house_number.strip()
+        self._street = street.strip()
 
     async def fetch(self) -> list[Collection]:
         async with httpx.AsyncClient(
@@ -115,6 +124,19 @@ class Source:
                     if _norm(rec[0]).startswith(want)
                 ]
                 hits = exact or hits
+                if not hits and self._house_number and self._street:
+                    # The directory glues some house names onto the number
+                    # ("638Gothic Villa Newchurch Road" for 638 Newchurch Road).
+                    glued = re.compile(
+                        rf"^{re.escape(self._house_number)}(?=[A-Za-z]{{2}})",
+                        re.I,
+                    )
+                    street = _norm(self._street)
+                    hits = [
+                        rec
+                        for rec in records
+                        if glued.match(rec[0]) and street in _norm(rec[0])
+                    ]
             else:
                 hits = records
             if not hits:

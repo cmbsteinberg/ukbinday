@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 SCRAPERS_DIR = PROJECT_ROOT / "api" / "scrapers"
 INPUT_JSON = PROJECT_ROOT / "pipeline" / "upstream" / "ukbcd" / "input.json"
+PORTS_DIR = PROJECT_ROOT / "pipeline" / "ports"
 OUTPUT_PATH = PROJECT_ROOT / "tests" / "test_cases.json"
 
 # Params we can use for testing (skip web_driver, skip_get_url, etc.)
@@ -53,13 +54,18 @@ def main():
 
     input_data = json.loads(INPUT_JSON.read_text())
 
+    # Local overrides in pipeline/ports/ replace the upstream code, so their own
+    # TEST_CASES (already written by the hacs generator) describe valid input,
+    # not upstream's input.json entry.
+    local_overrides = {p.stem for p in PORTS_DIR.glob("ukbcd_*.py")}
+
     # Load existing test_cases.json (hacs entries), stripping stale robbrad entries
     existing: dict[str, list[dict]] = {}
     if OUTPUT_PATH.exists():
         existing = {
             k: v
             for k, v in json.loads(OUTPUT_PATH.read_text()).items()
-            if not k.startswith("ukbcd_")
+            if not k.startswith("ukbcd_") or k in local_overrides
         }
 
     # Collect the set of robbrad scrapers we actually have
@@ -77,6 +83,8 @@ def main():
 
         if scraper_stem not in our_scrapers:
             skipped_not_ours += 1
+            continue
+        if scraper_stem in existing:
             continue
 
         params = extract_test_params(data)

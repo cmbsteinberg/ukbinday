@@ -123,14 +123,14 @@ def _find_input_ctrl(html: str, label: str) -> str | None:
 
 def _find_button_ctrl(html: str, label: str) -> str | None:
     match = re.search(
-        rf'class="CTID-(\w+)-_[^"]*eb-\w+-Button[^"]*"[^>]*value="{re.escape(label)}"',
+        rf'class="[^"]*?CTID-(\w+)-_[^"]*eb-[\w-]+-Button[^"]*"[^>]*value="{re.escape(label)}"',
         html,
     )
     return match.group(1) if match else None
 
 
 def _find_select_ctrl(html: str) -> str | None:
-    match = re.search(r'<select[^>]*class="CTID-(\w+)-', html)
+    match = re.search(r'<select[^>]*class="[^"]*?CTID-(\w+)-', html)
     return match.group(1) if match else None
 
 

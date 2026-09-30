@@ -23,6 +23,7 @@ from datetime import date, datetime, timedelta
 
 import httpx
 
+from api.compat.address import first_line
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Newcastle City Council"
@@ -64,10 +65,12 @@ class Source:
         address: str = "",
         postcode: str = "",
         house_number: str = "",
+        street: str = "",
         uprn: str | int | None = None,
     ):
-        # `house_number` is accepted as an alias of `address` (e.g. "1 Grange Road")
-        self._address = (address or house_number).strip()
+        # First line is house_number + street; a bare `address` or a whole
+        # first line in `house_number` (e.g. "1 Grange Road") also works.
+        self._address = first_line(address, house_number, street)
         self._postcode = postcode.strip()
 
     async def _place_id(self, client: httpx.AsyncClient) -> str:

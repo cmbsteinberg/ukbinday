@@ -1,3 +1,4 @@
+import asyncio
 import re
 from datetime import datetime
 
@@ -29,16 +30,27 @@ class Source:
         self,
         postcode: str,
         house_number: str = "",
+        street: str = "",
         uprn: str | int | None = None,
     ):
         self._postcode = postcode
         self._house_number = house_number
+        self._street = street
 
     async def fetch(self) -> list[Collection]:
         async with AsyncClient(impersonate="safari") as client:
             property_id = await self._resolve_property_id(client)
-            r = await client.get(f"{WASTE_URL}/{property_id}?page_loading=1")
-            r.raise_for_status()
+            # The property page is a loading stub that meta-refreshes to
+            # ?page_loading=1; that URL only returns the schedule once the
+            # property page itself has been requested in the same session.
+            page_url = f"{WASTE_URL}/{property_id}"
+            await client.get(page_url)
+            for attempt in range(4):
+                r = await client.get(f"{page_url}?page_loading=1")
+                r.raise_for_status()
+                if "waste-service-grid" in r.text:
+                    break
+                await asyncio.sleep(2)
 
         return _parse_schedule(r.text)
 
@@ -48,7 +60,7 @@ class Source:
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
 
-        target = self._house_number.lower().strip()
+        target = " ".join(f"{self._house_number} {self._street}".lower().split())
         select = soup.find("select", attrs={"name": "address"})
         if not select:
             raise ValueError(f"No address dropdown for postcode {self._postcode}")
@@ -57,8 +69,12 @@ class Source:
             val = opt.get("value", "")
             if not val:
                 continue
-            text = opt.get_text(strip=True).lower()
-            if target in text or text.startswith(target):
+            text = " ".join(opt.get_text(" ", strip=True).lower().split())
+            if self._street:
+                # "10 Arthur Road, Kingston Upon Thames, KT2 6BA"
+                if text == target or text.startswith(f"{target},"):
+                    return val
+            elif target in text or text.startswith(target):
                 return val
 
         raise ValueError(

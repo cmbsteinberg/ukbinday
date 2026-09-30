@@ -34,8 +34,14 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, house_number: str | None = None, postcode: str | None = None):
+    def __init__(
+        self,
+        house_number: str | None = None,
+        postcode: str | None = None,
+        street: str | None = None,
+    ):
         self._address = house_number or ""
+        self._street = street or ""
         self._postcode = postcode or ""
 
     async def fetch(self) -> list[Collection]:
@@ -95,7 +101,7 @@ class Source:
             if not dropdown_ctrl:
                 return []
 
-            address_idx = _find_address_index(html_parts, self._address)
+            address_idx = _find_address_index(html_parts, self._address, self._street)
 
             post_data = {
                 **base_data,
@@ -134,8 +140,10 @@ class Source:
             r.raise_for_status()
 
             # Step 5: get results page
+            # (the Next click answers {"resubmit": true}; re-requesting the
+            # form entry point in the same session serves the results page)
             r = await s.get(
-                f"{FORM_URL}?Reset=false&ebd=0&ebz={ebz}",
+                "https://forms.ceredigion.gov.uk/ebase/ufsmain?formid=REFUSE_ROUTES",
                 headers=HEADERS,
             )
             r.raise_for_status()
@@ -144,14 +152,13 @@ class Source:
 
 
 def _find_ctrl(html: str, label: str) -> str | None:
-    match = re.search(
-        rf'data-ebv-desc=["\']({re.escape(label)})["\'].*?CTID-(\w+)-',
-        html, re.DOTALL,
-    )
-    if match:
-        return match.group(2)
-    match = re.search(rf'CTID-(\w+)-_\s+eb-\w+-Field.*?{re.escape(label)}', html, re.DOTALL)
-    return match.group(1) if match else None
+    # The control id is in the same <input> tag as the data-ebv-desc label.
+    for tag in re.findall(r"<input[^>]*>", html):
+        if f'data-ebv-desc="{label}"' in tag:
+            match = re.search(r'id="CTID-(\w+)-', tag)
+            if match:
+                return match.group(1)
+    return None
 
 
 def _find_ctrl_button(html: str, label: str) -> str | None:
@@ -165,7 +172,7 @@ def _find_ctrl_button_in_html(html_parts: str, label: str) -> str | None:
 
 
 def _find_select_ctrl(html: str) -> str | None:
-    match = re.search(r'<select[^>]*class="CTID-(\w+)-', html)
+    match = re.search(r'<select[^>]*class="[^"]*?CTID-(\w+)-', html)
     return match.group(1) if match else None
 
 
@@ -178,13 +185,21 @@ def _extract_html(resp_json: dict) -> str:
     return "\n".join(parts)
 
 
-def _find_address_index(html: str, address: str) -> int:
+def _find_address_index(html: str, address: str, street: str = "") -> int:
     options = re.findall(r'<option[^>]*value="(\d+)"[^>]*>([^<]+)</option>', html)
-    address_upper = address.upper().strip()
-    for val, text in options:
-        if text.strip().upper() == address_upper:
-            return int(val)
-    return 0
+    if street:
+        # "10 MAES Y DERI, PONTRHYDYGROES, CEREDIGION, SY25 6DL"
+        target = " ".join(f"{address} {street}".upper().split())
+        for val, text in options:
+            text = " ".join(text.upper().split())
+            if text == target or text.startswith(f"{target},"):
+                return int(val)
+    else:
+        address_upper = address.upper().strip()
+        for val, text in options:
+            if text.strip().upper() == address_upper:
+                return int(val)
+    raise ValueError(f"Address '{address} {street}' not found in Ceredigion address list")
 
 
 def _parse_results(html: str) -> list[Collection]:

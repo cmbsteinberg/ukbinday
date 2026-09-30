@@ -1,7 +1,7 @@
 import re
 from datetime import datetime, timedelta
 
-import httpx
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 
 from api.compat.hacs import Collection, Icons
 from api.compat.hacs.exceptions import (
@@ -33,7 +33,7 @@ class Source:
 
     async def fetch(self):
         params = {"type": "postcodesearch", "postcode": self._postcode}
-        r = await httpx.AsyncClient(follow_redirects=True).get(
+        r = await _CurlCffiClient(follow_redirects=True).get(
             "https://www.fenland.gov.uk/find",
             params=params,
             headers={"Accept": "application/json"},
@@ -66,7 +66,7 @@ class Source:
             "lat": address_ids[0]["latitude"],
             "lng": address_ids[0]["longitude"],
         }
-        r = await httpx.AsyncClient(follow_redirects=True).get(
+        r = await _CurlCffiClient(follow_redirects=True).get(
             "https://www.fenland.gov.uk/find",
             params=params,
             headers={"Accept": "application/json"},

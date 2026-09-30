@@ -40,7 +40,8 @@ class SocietyWorksClass(AbstractGetBinDataClass):
         if resp.status_code == 404:
             # If no lookup, assume we might have been given a property ID directly
             return uprn
-        resp.raise_for_status()
+        if not resp.is_redirect:
+            resp.raise_for_status()
         location = resp.headers.get("Location")
         if not location:
             raise ValueError(

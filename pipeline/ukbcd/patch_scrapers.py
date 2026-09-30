@@ -713,6 +713,16 @@ def _apply_per_scraper_transforms(council_name: str, source: str) -> str:
             'if m := re.search("waste/([0-9]+)", user_url):',
             'if user_url and (m := re.search("waste/([0-9]+)", user_url)):',
         )
+        # /property/{uprn} answers with a 302 whose Location holds the property
+        # ID. requests' raise_for_status ignores 3xx; httpx's raises, so every
+        # UPRN lookup failed until the redirect is exempted.
+        source = source.replace(
+            "        resp.raise_for_status()\n"
+            '        location = resp.headers.get("Location")',
+            "        if not resp.is_redirect:\n"
+            "            resp.raise_for_status()\n"
+            '        location = resp.headers.get("Location")',
+        )
     return source
 
 

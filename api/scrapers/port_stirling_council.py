@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 import httpx
 
+from api.compat.address import first_line
 from api.compat.hacs import Collection  # type: ignore[attr-defined]
 
 TITLE = "Stirling Council"
@@ -32,10 +33,13 @@ class Source:
         self,
         postcode: str = "",
         house_number: str = "",
+        street: str = "",
+        address: str = "",
         uprn: str | int | None = None,
     ):
         self._postcode = postcode
-        self._house_number = house_number
+        # house_number + street, or a whole first line ("5 Sunnylaw Road")
+        self._house_number = first_line(address, house_number, street)
 
     async def fetch(self) -> list[Collection]:
         async with httpx.AsyncClient(follow_redirects=True, timeout=30.0, headers=HEADERS) as client:

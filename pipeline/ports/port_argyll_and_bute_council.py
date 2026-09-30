@@ -27,7 +27,8 @@ ICON_MAP = {
 
 class Source:
     def __init__(self, uprn: str | int, postcode: str | None = None):
-        self._uprn = str(uprn)
+        # The council's address options are 12-digit zero-padded UPRNs
+        self._uprn = str(uprn).strip().zfill(12)
         self._postcode = (postcode or "").replace(" ", "")
 
     async def fetch(self) -> list[Collection]:

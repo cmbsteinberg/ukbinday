@@ -69,7 +69,7 @@ def _parse_schedule(html: str) -> list[Collection]:
     entries = []
     now = datetime.now()
     for row in table.find_all("tr"):
-        cells = row.find_all("td")
+        cells = row.find_all(["th", "td"])
         if len(cells) < 3:
             continue
         date_text = cells[0].get_text(strip=True)

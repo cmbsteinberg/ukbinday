@@ -43,7 +43,8 @@
     "westnorthants_gov_uk",
     "wigan_gov_uk",
     "enfield_gov_uk",
-    "great_yarmouth_gov_uk"
+    "great_yarmouth_gov_uk",
+    "fenland_gov_uk"
   ],
   "ssl_verify_disabled": [
     "aberdeenshire_gov_uk",
@@ -62,7 +63,6 @@
   ],
   "uprn_alias": {
     "newham_gov_uk": "property",
-    "derby_gov_uk": "premises_id",
-    "wirral_gov_uk": "address_value"
+    "derby_gov_uk": "premises_id"
   }
 }

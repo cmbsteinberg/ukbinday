@@ -34,6 +34,7 @@ import httpx
 import pdfplumber
 from bs4 import BeautifulSoup
 
+from api.compat.address import first_line
 from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Ribble Valley Borough Council"
@@ -143,9 +144,15 @@ def parse_calendar(pdf_bytes: bytes) -> list[Collection]:
 
 
 class Source:
-    def __init__(self, postcode: str, address: str):
+    def __init__(
+        self,
+        postcode: str,
+        address: str = "",
+        house_number: str = "",
+        street: str = "",
+    ):
         self._postcode = postcode.strip().upper()
-        self._address = address.strip()
+        self._address = first_line(address, house_number, street)
 
     async def fetch(self) -> list[Collection]:
         async with httpx.AsyncClient(follow_redirects=True, headers=HEADERS, timeout=30) as s:
