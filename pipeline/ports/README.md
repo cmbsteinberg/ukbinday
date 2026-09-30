@@ -61,6 +61,9 @@ Each file follows the HACS scraper pattern (`Source` class, `TITLE`, `URL`, `TES
 | `port_newry_mourne_and_down_council.py` | Newry, Mourne & Down | POST postcode → zone PDF box layout (digits are outlines, not text) |
 | `port_torfaen_county_borough_council.py` | Torfaen | Shared iTouchVision helper (client 80, council 397) |
 
+### Whitespace WRP (shared client `api/compat/whitespace.py`)
+`hacs_{lancaster,midsussex,norwich,waverley}_gov_uk.py` and `ukbcd_{lancaster_city,norwich_city,surrey_heath_borough,waverley_borough,woking_borough}_council.py` are config-only wrappers over `fetch_collections(WhitespaceConfig, ...)`. They keep the upstream filenames so `_copy_ports` overwrites the synced originals — upstream fixes to these 9 no longer flow in.
+
 ## Triage rule: port vs deeplink
 
 For scopeless LADs, deeplink (serve the GOV.UK/council URL, no scraper) only if **all three** hold; otherwise port it:
