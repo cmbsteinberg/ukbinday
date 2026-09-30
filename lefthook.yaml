@@ -41,5 +41,5 @@ pre-commit:
       tags: integration
       only:
         - run: test "${RUN_INTEGRATION:-0}" = "1"
-      run: uv run pytest tests/test_integration.py -v --tb=short; ./pipeline/ci/post_integration.sh
+      run: uv run pytest tests/test_lad_integration.py -q --tb=line; ./pipeline/ci/post_integration.sh
       stage_fixed: true

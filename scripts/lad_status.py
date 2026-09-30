@@ -1,18 +1,24 @@
 """The one definition of whether a council works, shared by every consumer.
 
-annotate_lad_working writes `working` into api/data/lad_lookup.json from
-this; generate_sankey, the badge and the coverage map read that flag back
-instead of re-deriving it from raw results with their own rules.
+tests/test_lad_integration.py computes each LAD's status with `lad_status`
+and writes it to tests/output/lad_integration_output.json.
+scripts/annotate_lad_working turns that into the `working` flag in
+api/data/lad_lookup.json; generate_sankey, the badge and the coverage map
+read the flag back rather than re-deriving it.
 
-Source preference:
-  1. tests/output/lad_integration_output.json (test_lad_integration.py):
-     per-LAD status already computed. `unverified` LADs keep their previous
-     flag, so a run from a machine that can't reach some councils doesn't
-     unmark them.
-  2. tests/output/integration_output.json (legacy test_integration.py):
-     per-scraper, working if any case passed. A wired scraper with no rows
-     is *not* working (it used to count as passing in the sankey/coverage
-     map and failing in annotate).
+The rule:
+  working     a *sampled* case passed (200 + at least one collection). Sampled
+              cases carry exactly what the frontend sends, so this is "a real
+              user can get a schedule". For LADs the frontend cannot drive
+              (`fixture_only`: the scraper requires params such as property_id
+              or usrn that /addresses doesn't return), a fixture pass counts
+              instead.
+  broken      anything else that was actually tested. A fixture pass with every
+              sampled case failing is broken: the scraper runs, users can't
+              reach it.
+  unverified  every case was unreachable from the test machine, or there was
+              no case able to decide (no sampled address found). The previous
+              `working` flag is kept.
 """
 
 from __future__ import annotations
@@ -22,33 +28,57 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LAD_OUTPUT_PATH = ROOT / "tests" / "output" / "lad_integration_output.json"
-LEGACY_OUTPUT_PATH = ROOT / "tests" / "output" / "integration_output.json"
 
 
-def working_by_lad(lad_lookup: dict, previous: dict[str, bool] | None = None) -> dict[str, bool]:
+def deciding_cases(cases: list[dict], fixture_only: bool) -> list[dict]:
+    """The cases whose outcome decides the LAD's status."""
+    return [c for c in cases if c["source"] == ("fixture" if fixture_only else "sampled")]
+
+
+def lad_status(cases: list[dict], fixture_only: bool) -> tuple[str, str | None]:
+    """(status, reason) for one LAD's run cases, each with source + outcome."""
+    deciding = deciding_cases(cases, fixture_only)
+    if any(c["outcome"] == "pass" for c in deciding):
+        return "working", None
+    if not deciding:
+        return "unverified", "no sampled case" if not fixture_only else "no fixture case"
+    if all(c["outcome"] == "unreachable" for c in deciding):
+        return "unverified", "unreachable"
+    outcomes = sorted({c["outcome"] for c in deciding} - {"unreachable"})
+    if not fixture_only and any(c["source"] == "fixture" and c["outcome"] == "pass" for c in cases):
+        return "broken", "fixture passes, sampled fails: " + ",".join(outcomes)
+    return "broken", ",".join(outcomes)
+
+
+def _load_lads() -> dict[str, dict]:
+    if not LAD_OUTPUT_PATH.exists():
+        return {}
+    return json.loads(LAD_OUTPUT_PATH.read_text()).get("lads", {})
+
+
+def working_by_lad(lad_lookup: dict) -> dict[str, bool]:
     """LAD code -> working, for every LAD in lad_lookup."""
-    previous = previous or {code: bool(info.get("working")) for code, info in lad_lookup.items()}
-    if LAD_OUTPUT_PATH.exists():
-        lads = json.loads(LAD_OUTPUT_PATH.read_text()).get("lads", {})
-        out = {}
-        for code, info in lad_lookup.items():
-            if not info.get("scraper_id"):
-                out[code] = False
-                continue
-            r = lads.get(code)
-            # Wired to a different scraper than the one tested: result is stale
-            if r is None or r.get("scraper_id") != info["scraper_id"] or r["status"] == "unverified":
-                out[code] = previous.get(code, False)
-            else:
-                out[code] = r["status"] == "working"
-        return out
+    lads = _load_lads()
+    out = {}
+    for code, info in lad_lookup.items():
+        previous = bool(info.get("working"))
+        if not info.get("scraper_id"):
+            out[code] = False
+            continue
+        r = lads.get(code)
+        # Not in this run, or tested against a different scraper: keep the flag
+        if r is None or r.get("scraper_id") != info["scraper_id"] or r["status"] == "unverified":
+            out[code] = previous
+        else:
+            out[code] = r["status"] == "working"
+    return out
 
-    if not LEGACY_OUTPUT_PATH.exists():
-        return previous
-    passed: dict[str, bool] = {}
-    for r in json.loads(LEGACY_OUTPUT_PATH.read_text()).get("all_results", []):
-        passed[r["council"]] = passed.get(r["council"], False) or bool(r["passed"])
-    return {
-        code: bool(info.get("scraper_id")) and passed.get(info["scraper_id"], False)
-        for code, info in lad_lookup.items()
-    }
+
+def pass_rate_by_lad() -> dict[str, float]:
+    """LAD code -> share of deciding cases that passed in the last run."""
+    rates = {}
+    for code, r in _load_lads().items():
+        deciding = deciding_cases(r["cases"], r.get("fixture_only", False))
+        if deciding:
+            rates[code] = sum(c["outcome"] == "pass" for c in deciding) / len(deciding)
+    return rates

@@ -22,12 +22,21 @@ emits:
             filtering. Only useful to measure how often a raw ONS UPRN is
             unknown to the council.
 
+Refresh policy (sticky, run monthly): the existing file is the starting
+point. A sampled case is kept unless its outcome in the last
+tests/output/lad_integration_output.json was input_rejected or empty (the
+address, not the scraper, is the likely problem); dropped cases are replaced
+from postcodes the LAD hasn't used yet. LADs that are new, or whose
+scraper_id changed, are sampled afresh. Fixture rows are always re-read from
+tests/test_cases.json. --resample-all ignores the existing file.
+
 Selection is deterministic: every choice is ordered by md5(seed || key), so a
 given seed plus the same ONS edition and address API answers reproduces the
-file. Bump --seed to rotate addresses.
+file. Bump --seed with --resample-all to rotate every address.
 
 Usage:
-    uv run python -m pipeline.shared.generate_lad_test_cases
+    uv run python -m pipeline.shared.generate_lad_test_cases               # sticky refresh
+    uv run python -m pipeline.shared.generate_lad_test_cases --resample-all
     uv run python -m pipeline.shared.generate_lad_test_cases --lads E06000001,S12000036 --blind 2
 """
 
@@ -52,6 +61,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 OUTPUT_PATH = PROJECT_ROOT / "tests" / "lad_test_cases.json"
 FIXTURES_PATH = PROJECT_ROOT / "tests" / "test_cases.json"
 LAD_LOOKUP_PATH = PROJECT_ROOT / "api" / "data" / "lad_lookup.json"
+RESULTS_PATH = PROJECT_ROOT / "tests" / "output" / "lad_integration_output.json"
 ONSUD_PATH = PROJECT_ROOT / "pipeline" / "data" / "onsud_uprn_postcode.parquet"
 ONSPD_PATH = PROJECT_ROOT / "pipeline" / "data" / "onspd_postcode_lad.parquet"
 
@@ -149,8 +159,16 @@ def _sampled_case(lad: str, i: int, addr: dict) -> dict:
 
 
 async def _sample_via_address_api(
-    lad: str, candidates: list[tuple[str, list[int]]], n: int, seed: str, sem: asyncio.Semaphore
+    lad: str,
+    candidates: list[tuple[str, list[int]]],
+    n: int,
+    seed: str,
+    sem: asyncio.Semaphore,
+    avoid_postcodes: set[str] = frozenset(),
+    first_index: int = 1,
 ) -> tuple[list[dict], list[str]]:
+    """Up to n new sampled cases, one per postcode, skipping postcodes already
+    used (kept or dropped) so a resample moves to a different street."""
     from api.services.address_lookup import search_addresses
 
     cases: list[dict] = []
@@ -159,6 +177,8 @@ async def _sample_via_address_api(
     for postcode, onsud_uprns in candidates:
         if len(cases) >= n:
             break
+        if postcode in avoid_postcodes:
+            continue
         addrs = None
         for attempt in range(3):
             async with sem:
@@ -185,7 +205,7 @@ async def _sample_via_address_api(
         if not pool:
             continue
         pick = min(pool, key=lambda a: _rank(seed, a["uprn"]))
-        cases.append(_sampled_case(lad, len(cases) + 1, pick))
+        cases.append(_sampled_case(lad, first_index + len(cases), pick))
     if errors:
         notes.append(f"address API failed for {errors} postcode(s)")
     if len(cases) < n:
@@ -231,7 +251,36 @@ def _registry_required() -> dict[str, list[str]]:
     return {m.id: m.required_params for m in ScraperRegistry.build().list_all()}
 
 
-async def build(lads_filter: set[str] | None, per_lad: int, blind: int, seed: str, offline: bool) -> dict:
+# Last outcomes that mean the address itself is the likely problem (the
+# council doesn't know it, or it has no service). Any other outcome - a pass,
+# or a failure that is the scraper's or the network's fault - keeps the
+# address, so a broken scraper stays tested on the same inputs until fixed.
+RESAMPLE_OUTCOMES = {"input_rejected", "empty"}
+
+
+def _last_outcomes(results_path: Path) -> dict[tuple[str, str, str], str]:
+    """(LAD, case id, uprn) -> outcome of sampled cases in the last test run."""
+    if not results_path.exists():
+        return {}
+    lads = json.loads(results_path.read_text()).get("lads", {})
+    return {
+        (code, c["id"], str(c.get("uprn"))): c["outcome"]
+        for code, e in lads.items()
+        for c in e.get("cases", [])
+        if c.get("source") == "sampled"
+    }
+
+
+async def build(
+    lads_filter: set[str] | None,
+    per_lad: int,
+    blind: int,
+    seed: str,
+    offline: bool,
+    previous: dict,
+    last_outcomes: dict[tuple[str, str, str], str],
+) -> tuple[dict, dict[str, int]]:
+    """previous: the existing lad_test_cases.json ({} for a full resample)."""
     lad_lookup = json.loads(LAD_LOOKUP_PATH.read_text())
     fixtures = json.loads(FIXTURES_PATH.read_text()) if FIXTURES_PATH.exists() else {}
     required = _registry_required()
@@ -243,12 +292,25 @@ async def build(lads_filter: set[str] | None, per_lad: int, blind: int, seed: st
     }
     candidates = _candidate_postcodes(list(wired), seed, max(CANDIDATE_POSTCODES, blind))
     sem = asyncio.Semaphore(6)
+    stats = {"kept": 0, "dropped": 0, "new": 0, "fresh_lads": 0}
 
     async def one(code: str, info: dict) -> tuple[str, dict]:
         sid = info["scraper_id"]
         unmet = sorted(set(required.get(sid, [])) - FRONTEND_PARAMS)
         entry: dict = {"name": info.get("name"), "scraper_id": sid, "cases": [], "notes": []}
+        if unmet:
+            entry["fixture_only"] = True
         cands = candidates.get(code, [])
+
+        prev = previous.get(code)
+        same_scraper = bool(prev) and prev.get("scraper_id") == sid
+        if previous and not same_scraper:
+            stats["fresh_lads"] += 1
+        prev_sampled = [c for c in prev["cases"] if c["source"] == "sampled"] if same_scraper else []
+        kept = [c for c in prev_sampled if last_outcomes.get((code, c["id"], c["params"]["uprn"])) not in RESAMPLE_OUTCOMES]
+        stats["kept"] += len(kept)
+        stats["dropped"] += len(prev_sampled) - len(kept)
+
         if sid not in required:
             entry["notes"].append("scraper not loadable by registry")
         if unmet:
@@ -258,9 +320,17 @@ async def build(lads_filter: set[str] | None, per_lad: int, blind: int, seed: st
         elif offline:
             entry["cases"] += [dict(c, source="blind") for c in _blind_cases(code, cands, per_lad, seed)]
         else:
-            cases, notes = await _sample_via_address_api(code, cands, per_lad, seed, sem)
-            entry["cases"] += cases
-            entry["notes"] += notes
+            entry["cases"] += kept
+            need = per_lad - len(kept)
+            if need > 0:
+                used = {c["params"]["postcode"] for c in prev_sampled}
+                next_index = 1 + max((int(c["id"].rsplit("-s", 1)[1]) for c in prev_sampled), default=0)
+                cases, notes = await _sample_via_address_api(
+                    code, cands, need, seed, sem, avoid_postcodes=used, first_index=next_index
+                )
+                stats["new"] += len(cases)
+                entry["cases"] += cases
+                entry["notes"] += notes
         if blind and cands and not offline:
             taken = {c["params"]["uprn"] for c in entry["cases"]}
             entry["cases"] += _blind_cases(code, cands, blind, seed, taken)
@@ -279,7 +349,7 @@ async def build(lads_filter: set[str] | None, per_lad: int, blind: int, seed: st
             "sampling": "offline (ONSUD only)" if offline else "ONSUD postcode -> address API",
         },
         **dict(results),
-    }
+    }, stats
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -290,7 +360,17 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--seed", default=DEFAULT_SEED)
     ap.add_argument("--offline", action="store_true", help="skip the address API; raw ONSUD uprn+postcode only")
     ap.add_argument("--output", type=Path, default=OUTPUT_PATH)
-    ap.add_argument("--merge", action="store_true", help="update only the selected LADs in an existing file")
+    ap.add_argument(
+        "--resample-all",
+        action="store_true",
+        help="ignore the existing file and last results; sample every LAD afresh",
+    )
+    ap.add_argument(
+        "--results",
+        type=Path,
+        default=RESULTS_PATH,
+        help="last test_lad_integration output, read to decide what to resample",
+    )
     args = ap.parse_args(argv)
 
     # Same defaults tests/conftest.py uses; must be set before api.config loads
@@ -298,8 +378,25 @@ def main(argv: list[str] | None = None) -> int:
     os.environ.setdefault("ADDRESS_API_COMPANY_ID", "1486681")
 
     lads = set(args.lads.split(",")) if args.lads else None
-    data = asyncio.run(build(lads, args.per_lad, args.blind, args.seed, args.offline))
-    if args.merge and args.output.exists():
+    sticky = not args.resample_all and args.output.exists()
+    previous = json.loads(args.output.read_text()) if sticky else {}
+    last = _last_outcomes(args.results) if sticky else {}
+    if sticky and not last:
+        logger.warning("No results at %s: keeping every existing sampled case", args.results)
+    data, stats = asyncio.run(
+        build(lads, args.per_lad, args.blind, args.seed, args.offline, previous, last)
+    )
+    logger.info(
+        "%s: kept %d sampled cases, dropped %d (last outcome %s), sampled %d new; %d LADs new or rewired",
+        "sticky" if sticky else "full resample",
+        stats["kept"],
+        stats["dropped"],
+        "/".join(sorted(RESAMPLE_OUTCOMES)),
+        stats["new"],
+        stats["fresh_lads"],
+    )
+    if lads and args.output.exists():
+        # A --lads run only touches those LADs
         existing = json.loads(args.output.read_text())
         existing.update(data)
         data = existing

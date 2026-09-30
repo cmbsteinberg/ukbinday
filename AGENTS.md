@@ -15,12 +15,18 @@ uv run uvicorn api.main:app --reload
 # Run tests by marker
 uv run pytest -m ci -v                    # smoke tests (syntax, imports, registry)
 uv run pytest -m api -v                   # API routes, CORS, error cases
-uv run pytest -m live -v                  # hits live council sites, slow
+uv run pytest -m live -v                  # every council against live sites (~7 min)
 uv run pytest -m docker -v                # Docker compose stack
 uv run pytest -m "not live and not docker" -v  # all fast tests
 
-# Run a single scraper test by keyword
-uv run pytest tests/test_integration.py -v -k "aberdeen"
+# Run the live test for specific councils (LAD codes); a subset run merges into the output file
+LAD_CODES=S12000033,E08000035 uv run pytest tests/test_lad_integration.py -v
+
+# Refresh tests/lad_test_cases.json (monthly). Sticky by default: keeps sampled
+# addresses unless their last outcome was input_rejected/empty; new or rewired
+# LADs get fresh samples. Needs the address API (network).
+uv run python -m pipeline.shared.generate_lad_test_cases
+uv run python -m pipeline.shared.generate_lad_test_cases --resample-all   # full resample
 
 # Lint Python (ruff -- excludes api/scrapers/)
 uv run ruff check --fix
@@ -33,7 +39,7 @@ pipeline/sync.sh                     # orchestrates both HACS + UKBCD
 pipeline/hacs/sync.sh                # hacs_waste_collection_schedule only
 pipeline/ukbcd/sync.sh               # UKBinCollectionData only
 
-# Regenerate test_cases.json from scraper TEST_CASES
+# Regenerate test_cases.json (upstream fixtures, input to generate_lad_test_cases) from scraper TEST_CASES
 uv run python -m pipeline.hacs.generate_test_lookup   # hacs scrapers
 uv run python -m pipeline.ukbcd.generate_test_lookup   # ukbcd scrapers (merges into same file)
 
@@ -53,13 +59,13 @@ uv run python -m scripts.lookup.build_lad_lookup --compose  # committed files on
 # Regenerate coverage map
 uv run python -m scripts.coverage.generate_coverage_map
 
-# Regenerate README sankey diagram from lad_lookup.json + tests/output/integration_output.json
-uv run python -m scripts.generate_sankey
-
-# Annotate lad_lookup.json with working/broken status from test results
+# Annotate lad_lookup.json `working` flags from tests/output/lad_integration_output.json
 uv run python -m scripts.annotate_lad_working
 
-# Run all post-integration regeneration scripts (coverage map, sankey, lad annotations)
+# Regenerate README sankey + badge from the `working` flags (run annotate first)
+uv run python -m scripts.generate_sankey
+
+# After a live run: annotate, then coverage map, then sankey/badge. Tests never run this.
 ./pipeline/ci/post_integration.sh
 
 # Docker
@@ -114,29 +120,32 @@ docker compose up --build
 
 **Scripts** (`scripts/`):
 - `generate_admin_lookup.py` -- Builds `admin_scraper_lookup.json` from all scrapers
-- `generate_sankey.py` -- Generates Mermaid sankey diagram in README.md from `lad_lookup.json` and `tests/output/integration_output.json`
-- `annotate_lad_working.py` -- Annotates `lad_lookup.json` with working/broken status based on integration test results
-- `pipeline/ci/post_integration.sh` -- Runs all post-integration regeneration scripts (coverage map, sankey, lad annotations)
+- `lad_status.py` -- The one definition of a council's status, used by the live test and every consumer. `working`: a *sampled* case passed (200 + at least one collection); for `fixture_only` LADs (scraper requires params `/addresses` can't supply, e.g. property_id, usrn) a fixture pass counts instead. A fixture pass with all sampled cases failing is `broken`. `unverified` (every deciding case unreachable, or none) keeps the previous flag
+- `annotate_lad_working.py` -- Writes `working` into `lad_lookup.json` from `tests/output/lad_integration_output.json` via `lad_status.py`
+- `generate_sankey.py` -- Generates the Mermaid sankey in README.md and `badge_coverage.json` from the `working` flags in `lad_lookup.json`
+- `pipeline/ci/post_integration.sh` -- Explicit post-run step: annotate, then coverage map, then sankey/badge. No test calls it
 - `lookup/fetch_latest.sh` -- Version-checked fetch of the four upstream sources (ONSPD, ONSUD, ONS LAD boundaries, GOV.UK Local Links Manager) into `$BINS_DATA_CACHE` (default `~/.cache/bins-data`). ONSPD/ONSUD are ArcGIS items that mint a new id per edition and ignore conditional GETs, so freshness comes from the item's `modified` stamp in `.upstream_version`, not `curl -z`; the small sources do use ETag/`If-Modified-Since`. `--check` reports staleness without downloading, `--small-only` skips the multi-hundred-MB zips
 - `lookup/create_lookup_table.py` -- Publishes the committed ONSPD parquet to `postcode_lookup.parquet`. `--from-onspd`/`--from-onsud` rebuild the pipeline parquets from an unpacked ONS release and stamp the edition into parquet key-value metadata (`SELECT * FROM parquet_kv_metadata(...)`); `--stamp-edition` labels an existing parquet in place
 - `lookup/build_lad_lookup.py` -- Rebuilds the council mapping from ground truth. Stage 1 joins ONS boundary names and GOV.UK waste URLs onto the distinct LAD codes in `onspd_postcode_lad.parquet` and writes `pipeline/data/lad_base.json`; stage 2 (`--compose`) merges that with `pipeline/data/scraper_lad_map.json` into `api/data/lad_lookup.json`. Where sources disagree on a code after a reorganisation (ONS boundaries lead ONSPD on `E08000038/39` vs `E08000016/19`; GOV.UK lags on the 2023 unitaries), `CODE_ALIASES` re-keys the row onto the code ONSPD actually returns -- an unnamed code is a hard error, not a null name
-- `coverage/generate_coverage_map.py` -- Fetches UK LAD boundaries from ArcGIS and generates `coverage.geojson` and `coverage_map.html`
+- `coverage/generate_coverage_map.py` -- Fetches UK LAD boundaries from ArcGIS and generates `coverage.geojson`; status from the `working` flag, `pass_rate` from the last live run
 
 **Tests** (`tests/`):
 - `test_ci.py` (marker: `ci`) -- Smoke tests (9 test functions, parametrized over ~310 scrapers): syntax, imports, app boot, registry loading. Runs as pre-commit hook
 - `test_frontend.py` (marker: `api`) -- API surface tests (8): landing page, routes, CORS, error cases
-- `test_integration.py` (marker: `live`) -- Integration tests for requests-based scrapers: hits live council sites with up to 40 concurrent requests. Uses `test_cases.json` generated from scraper `TEST_CASES`
-- `test_frontend_flow.py` (marker: `live`) -- End-to-end frontend flow tests: mimics the real user journey (postcode → address pick → lookup)
+- `test_scrape_cache.py` (marker: `api`) -- ICS cache keying with stubbed scrapers: `/lookup/0` never caches, a cache entry never answers for a different scraper, `/calendar/0` is rejected
+- `test_deeplinks.py` (marker: `api`), `test_sync_pipeline.py` (marker: `ci`) -- deeplink routing and sync pipeline checks
+- `test_lad_integration.py` (marker: `live`) -- One test per wired LAD (council), not per scraper. Reads `lad_test_cases.json`, runs each case through the real `/lookup/{uprn}` route in-process with the params the frontend sends, retries failures once at low concurrency, probes scraper hosts to tell `unreachable` (this machine can't reach it) from `upstream_error`. Case outcomes: pass, empty, input_rejected, unreachable, upstream_error, scraper_error. Writes `output/lad_integration_output.json` (subset runs via `LAD_CODES` merge into it); status per LAD from `scripts/lad_status.py`. ~7 min for all 350 LADs
+- `lad_test_cases.json` -- Generated by `pipeline/shared/generate_lad_test_cases.py`, keyed by LAD code: `{name, scraper_id, fixture_only?, cases: [{id, source: sampled|fixture, label, params}]}`. Sampled cases: an ONSUD postcode in the LAD (4-60 UPRNs), resolved through the address API, keeping a plain-numbered address whose UPRN is in ONSUD. Fixture cases come from `test_cases.json` (upstream `TEST_CASES`, built by the hacs/ukbcd `generate_test_lookup` scripts)
 - `test_deploy.py` (marker: `docker`) -- Docker stack tests (3): compose boot, scraper loading, static files
 - `test_deploy_docker.sh` -- Bash-based Docker deployment test (curl assertions, standalone)
-- `conftest.py` -- Custom pytest plugin that writes structured results to `output/test_output.json` and `output/integration_output.json`
-- `output/` -- Generated test result JSON files (test_output, integration_output, frontend_flow_output)
+- `conftest.py` -- Test-time env defaults (fresh `DATA_DIR` tempdir per session, address API config)
+- `output/lad_integration_output.json` -- Last live run, committed; input to `post_integration.sh` and to the sticky test-case refresh
 - `battletest/` -- Ad-hoc shell scripts for load testing, chaos testing, and security checks
 - Tests use `pytest-asyncio` with `loop_scope="session"` and `asgi-lifespan` for managing the FastAPI app
 - Pytest markers registered in `pyproject.toml`: `ci`, `api`, `live`, `docker`
 
 **CI/CD** (`.github/workflows/deploy.yml`):
-- On push to `main`: runs smoke tests → deploys to Hetzner via SSH (git pull + docker compose) → runs integration tests (non-blocking) → regenerates coverage badge and sankey diagram → auto-commits results
+- On push to `main`: runs `tests/test_ci.py` only → deploys to Hetzner via SSH (git pull + docker compose). Live tests do not run in CI; run `tests/test_lad_integration.py` then `./pipeline/ci/post_integration.sh` locally and commit the output, flags, badge and sankey
 
 **Infrastructure**: Docker Compose runs the API + refresh worker + Redis + Caddy (reverse proxy) + GoAccess (log analytics) + Uptime Kuma (monitoring). API and worker share a named volume (`bins_data`) mounted at `/app/data` for the ICS cache. Pre-commit hooks via lefthook run the unified sync script, ruff, biome, and CI smoke tests. Deployment to Hetzner is automated via GitHub Actions and `deploy/deployment.py`.
 

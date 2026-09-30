@@ -13,10 +13,13 @@ same query params the frontend sends. Outcomes:
   upstream_error  network error/timeout/HTTP error but the host answers
   scraper_error   the scraper raised something else
 
-A LAD is `working` if any case passes, `unverified` if nothing passed and
-every failure was `unreachable` (or it had no cases), else `broken`.
-`unverified` means "this machine can't tell"; consumers keep the previous
-status rather than flipping it.
+The LAD's status (working / broken / unverified) comes from
+scripts/lad_status.py: a sampled case must pass, except for `fixture_only`
+LADs, where a fixture pass counts. Unverified LADs are skipped, not failed.
+
+This test only writes the output file. Regenerating lad_lookup.json flags,
+the README sankey, badge and coverage map is a separate explicit step:
+    ./pipeline/ci/post_integration.sh
 
 Failed cases are retried once at low concurrency before classification, so a
 burst of 40 concurrent requests tripping a council's rate limit isn't
@@ -50,6 +53,7 @@ import pytest_asyncio
 from asgi_lifespan import LifespanManager
 
 from api.main import app
+from scripts.lad_status import lad_status
 
 pytestmark = pytest.mark.live
 
@@ -161,15 +165,6 @@ async def _probe_hosts(urls: dict[str, str]) -> dict[str, str | None]:
     return results
 
 
-def _lad_status(cases: list[dict]) -> tuple[str, list[str]]:
-    passed = sorted({c["source"] for c in cases if c["outcome"] == "pass"})
-    if passed:
-        return "working", passed
-    if not cases or all(c["outcome"] == "unreachable" for c in cases):
-        return "unverified", []
-    return "broken", []
-
-
 @pytest_asyncio.fixture(scope="session", loop_scope="session")
 async def lad_results() -> dict:
     if not LADS:
@@ -237,19 +232,28 @@ async def lad_results() -> dict:
             r = results[_job_key(entry["scraper_id"], case["params"])]
             cases.append({"id": case["id"], "source": case["source"], "label": case.get("label"),
                           "uprn": case["params"].get("uprn"), **r})
-        status, evidence = _lad_status(cases)
+        fixture_only = bool(entry.get("fixture_only"))
+        status, reason = lad_status(cases, fixture_only)
         lads_out[code] = {"name": entry.get("name"), "scraper_id": entry["scraper_id"],
-                          "status": status, "evidence": evidence, "cases": cases}
+                          "fixture_only": fixture_only, "status": status, "reason": reason,
+                          "passed_sources": sorted({c["source"] for c in cases if c["outcome"] == "pass"}),
+                          "cases": cases}
 
     by_source: dict[str, Counter] = {}
     for e in lads_out.values():
         for c in e["cases"]:
             by_source.setdefault(c["source"], Counter())[c["outcome"]] += 1
+    partial = bool(os.environ.get("LAD_CODES") or os.environ.get("LAD_SOURCES"))
+    all_lads = dict(lads_out)
+    if partial and OUTPUT_PATH.exists():
+        # A subset run updates its LADs in place; the file stays the full
+        # picture that annotate_lad_working and the sticky generator read.
+        all_lads = {**json.loads(OUTPUT_PATH.read_text()).get("lads", {}), **lads_out}
     summary = {
-        "lads": len(lads_out),
-        "status": dict(Counter(e["status"] for e in lads_out.values())),
+        "lads": len(all_lads),
+        "status": dict(Counter(e["status"] for e in all_lads.values())),
         "outcomes_by_source": {s: dict(c) for s, c in by_source.items()},
-        "evidence": dict(Counter("+".join(e["evidence"]) or "-" for e in lads_out.values())),
+        "passed_sources": dict(Counter("+".join(e["passed_sources"]) or "-" for e in lads_out.values())),
     }
     out = {
         "meta": {
@@ -258,10 +262,11 @@ async def lad_results() -> dict:
             "cases_file": str(CASES_PATH.relative_to(ROOT)) if CASES_PATH.is_relative_to(ROOT) else str(CASES_PATH),
             "jobs": len(jobs),
             "canary_ok": canary_ok,
-            "partial": bool(os.environ.get("LAD_CODES") or os.environ.get("LAD_SOURCES")),
+            "partial": partial,
+            "lads_run": sorted(lads_out) if partial else "all",
         },
         "summary": summary,
-        "lads": lads_out,
+        "lads": dict(sorted(all_lads.items())),
     }
     OUTPUT_PATH.parent.mkdir(exist_ok=True)
     OUTPUT_PATH.write_text(json.dumps(out, indent=2, default=str) + "\n")
@@ -274,7 +279,7 @@ async def test_council(lad_results, lad_code: str):
     r = lad_results[lad_code]
     if r["status"] == "working":
         return
-    lines = [f"{lad_code} {r['name']} via {r['scraper_id']}: {r['status']}"]
+    lines = [f"{lad_code} {r['name']} via {r['scraper_id']}: {r['status']} ({r['reason']})"]
     for c in r["cases"]:
         lines.append(
             f"  [{c['source']}] {c['outcome']:<15} uprn={c.get('uprn')} "

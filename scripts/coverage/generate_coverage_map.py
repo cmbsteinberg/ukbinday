@@ -5,8 +5,9 @@ from collections import defaultdict
 import duckdb
 import httpx
 
+from scripts.lad_status import pass_rate_by_lad
+
 LAD_LOOKUP_PATH = "api/data/lad_lookup.json"
-INTEGRATION_OUTPUT_PATH = "tests/output/integration_output.json"
 GEOJSON_URL = "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LAD_MAY_2025_UK_BUC/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson"
 POPULATION_URL = "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationestimatesforukenglandandwalesscotlandandnorthernireland/mid2024/mye24tablesuk.xlsx"
 OUTPUT_DIR = pathlib.Path("api/static")
@@ -20,34 +21,6 @@ def _round_coords(coords):
     if isinstance(coords, list) and coords and isinstance(coords[0], (int, float)):
         return [round(c, COORD_PRECISION) for c in coords]
     return [_round_coords(c) for c in coords]
-
-
-def _load_scraper_pass_rates() -> dict[str, float]:
-    """Compute per-scraper pass rate from integration test output."""
-    path = pathlib.Path(INTEGRATION_OUTPUT_PATH)
-    if not path.exists():
-        print(f"  {INTEGRATION_OUTPUT_PATH} not found, using binary coverage only")
-        return {}
-
-    with open(path) as f:
-        data = json.load(f)
-
-    results = data.get("all_results", [])
-    if not results:
-        return {}
-
-    counts: dict[str, dict[str, int]] = defaultdict(lambda: {"passed": 0, "total": 0})
-    for r in results:
-        council = r["council"]
-        counts[council]["total"] += 1
-        if r["passed"]:
-            counts[council]["passed"] += 1
-
-    return {
-        council: c["passed"] / c["total"]
-        for council, c in counts.items()
-        if c["total"] > 0
-    }
 
 
 def _coverage_status(council_info: dict) -> str:
@@ -82,20 +55,11 @@ def main():
     with open(LAD_LOOKUP_PATH) as f:
         lad_lookup = json.load(f)
 
-    print("Loading integration test results...")
-    pass_rates = _load_scraper_pass_rates()
-    tested_working = sum(1 for r in pass_rates.values() if r > 0)
-    tested_broken = sum(1 for r in pass_rates.values() if r == 0)
-    untested = sum(
-        1
-        for info in lad_lookup.values()
-        if info.get("scraper_id") and info["scraper_id"] not in pass_rates
-    )
+    print("Loading live test results...")
+    pass_rates = pass_rate_by_lad()
+    working = sum(1 for info in lad_lookup.values() if info.get("working"))
     no_scraper = sum(1 for info in lad_lookup.values() if not info.get("scraper_id"))
-    print(
-        f"  {len(pass_rates)} scrapers tested: {tested_working} working, {tested_broken} broken"
-    )
-    print(f"  {untested} councils have a scraper but no test coverage")
+    print(f"  {working} councils working, {len(pass_rates)} with a pass rate from the last run")
     print(f"  {no_scraper} councils have no scraper (not covered)")
 
     print("Loading population data...")
@@ -116,13 +80,12 @@ def main():
     for feature in geojson_data["features"]:
         lad_cd = feature["properties"].get("LAD25CD", "")
         council_info = lad_lookup.get(lad_cd, {})
-        scraper_id = council_info.get("scraper_id")
         status = _coverage_status(council_info)
         feature["properties"]["coverage_status"] = status
         # Keep backward compat
         feature["properties"]["covered"] = status != "broken"
-        if scraper_id and scraper_id in pass_rates:
-            feature["properties"]["pass_rate"] = round(pass_rates[scraper_id] * 100)
+        if lad_cd in pass_rates:
+            feature["properties"]["pass_rate"] = round(pass_rates[lad_cd] * 100)
         lad_pop = population.get(lad_cd, 0)
         if lad_pop:
             feature["properties"]["population"] = lad_pop

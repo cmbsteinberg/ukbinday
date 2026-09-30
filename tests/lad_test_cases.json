@@ -59,18 +59,6 @@
   "E06000002": {
     "cases": [
       {
-        "id": "E06000002-s1",
-        "label": "8, Darwen Court, Hemlington, Middlesbrough, TS8 9JF",
-        "params": {
-          "address": "8, Darwen Court, Hemlington, Middlesbrough, TS8 9JF",
-          "house_number": "8",
-          "postcode": "TS8 9JF",
-          "street": "Darwen Court",
-          "uprn": "100110105446"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E06000002-s2",
         "label": "110, Park Lane, Middlesbrough, TS1 3LL",
         "params": {
@@ -79,6 +67,18 @@
           "postcode": "TS1 3LL",
           "street": "Park Lane",
           "uprn": "100110129190"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E06000002-s3",
+        "label": "10, Middleton Avenue, Middlesbrough, TS5 4JT",
+        "params": {
+          "address": "10, Middleton Avenue, Middlesbrough, TS5 4JT",
+          "house_number": "10",
+          "postcode": "TS5 4JT",
+          "street": "Middleton Avenue",
+          "uprn": "100110125003"
         },
         "source": "sampled"
       },
@@ -1231,26 +1231,26 @@
   "E06000026": {
     "cases": [
       {
-        "id": "E06000026-s1",
-        "label": "9, Research Way, Derriford, Plymouth, PL6 8BT",
+        "id": "E06000026-s3",
+        "label": "72, Shirburn Road, Plymouth, PL6 5PH",
         "params": {
-          "address": "9, Research Way, Derriford, Plymouth, PL6 8BT",
-          "house_number": "9",
-          "postcode": "PL6 8BT",
-          "street": "Research Way",
-          "uprn": "10000796025"
+          "address": "72, Shirburn Road, Plymouth, PL6 5PH",
+          "house_number": "72",
+          "postcode": "PL6 5PH",
+          "street": "Shirburn Road",
+          "uprn": "100040485598"
         },
         "source": "sampled"
       },
       {
-        "id": "E06000026-s2",
-        "label": "41, South Down Road, Plymouth, PL2 3HW",
+        "id": "E06000026-s4",
+        "label": "12, Penlee Road, Plymouth, PL3 4AU",
         "params": {
-          "address": "41, South Down Road, Plymouth, PL2 3HW",
-          "house_number": "41",
-          "postcode": "PL2 3HW",
-          "street": "South Down Road",
-          "uprn": "100040486381"
+          "address": "12, Penlee Road, Plymouth, PL3 4AU",
+          "house_number": "12",
+          "postcode": "PL3 4AU",
+          "street": "Penlee Road",
+          "uprn": "100040474243"
         },
         "source": "sampled"
       },
@@ -1423,14 +1423,14 @@
         "source": "sampled"
       },
       {
-        "id": "E06000031-s2",
-        "label": "6 Space, St. Peters Road, Peterborough, PE1 1YX",
+        "id": "E06000031-s3",
+        "label": "75, London Road, Peterborough, PE2 9BS",
         "params": {
-          "address": "6 Space, St. Peters Road, Peterborough, PE1 1YX",
-          "house_number": "6",
-          "postcode": "PE1 1YX",
-          "street": "Space",
-          "uprn": "10094544997"
+          "address": "75, London Road, Peterborough, PE2 9BS",
+          "house_number": "75",
+          "postcode": "PE2 9BS",
+          "street": "London Road",
+          "uprn": "100091524999"
         },
         "source": "sampled"
       },
@@ -1564,6 +1564,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "Thurrock",
     "notes": [
       "fixture-only: frontend cannot supply required ['town']"
@@ -1717,14 +1718,14 @@
         "source": "sampled"
       },
       {
-        "id": "E06000037-s2",
-        "label": "22, Lowbury Gardens, Compton, Newbury, RG20 6NN",
+        "id": "E06000037-s3",
+        "label": "1101, Oxford Road, Tilehurst, Reading, RG31 6YE",
         "params": {
-          "address": "22, Lowbury Gardens, Compton, Newbury, RG20 6NN",
-          "house_number": "22",
-          "postcode": "RG20 6NN",
-          "street": "Lowbury Gardens",
-          "uprn": "10023919984"
+          "address": "1101, Oxford Road, Tilehurst, Reading, RG31 6YE",
+          "house_number": "1101",
+          "postcode": "RG31 6YE",
+          "street": "Oxford Road",
+          "uprn": "200004724948"
         },
         "source": "sampled"
       },
@@ -2253,14 +2254,14 @@
         "source": "sampled"
       },
       {
-        "id": "E06000050-s2",
-        "label": "6, The Quad Mercury Court, Chester, CH1 4QP",
+        "id": "E06000050-s3",
+        "label": "23, Cowhey Close, Chester, CH4 7QT",
         "params": {
-          "address": "6, The Quad Mercury Court, Chester, CH1 4QP",
-          "house_number": "6",
-          "postcode": "CH1 4QP",
-          "street": "The Quad Mercury Court",
-          "uprn": "100012825079"
+          "address": "23, Cowhey Close, Chester, CH4 7QT",
+          "house_number": "23",
+          "postcode": "CH4 7QT",
+          "street": "Cowhey Close",
+          "uprn": "100010007699"
         },
         "source": "sampled"
       },
@@ -2438,18 +2439,6 @@
   "E06000054": {
     "cases": [
       {
-        "id": "E06000054-s1",
-        "label": "10a, Warminster Road, Westbury, BA13 3PB",
-        "params": {
-          "address": "10a, Warminster Road, Westbury, BA13 3PB",
-          "house_number": "10a",
-          "postcode": "BA13 3PB",
-          "street": "Warminster Road",
-          "uprn": "10093532793"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E06000054-s2",
         "label": "1, Houghton Close, Warminster, BA12 9QZ",
         "params": {
@@ -2458,6 +2447,18 @@
           "postcode": "BA12 9QZ",
           "street": "Houghton Close",
           "uprn": "200001306480"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E06000054-s3",
+        "label": "24, Longleaze, Royal Wootton Bassett, Swindon, SN4 8AX",
+        "params": {
+          "address": "24, Longleaze, Royal Wootton Bassett, Swindon, SN4 8AX",
+          "house_number": "24",
+          "postcode": "SN4 8AX",
+          "street": "Longleaze",
+          "uprn": "100121026562"
         },
         "source": "sampled"
       },
@@ -2570,6 +2571,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "Central Bedfordshire",
     "notes": [
       "fixture-only: frontend cannot supply required ['house_name']"
@@ -2579,26 +2581,26 @@
   "E06000057": {
     "cases": [
       {
-        "id": "E06000057-s1",
-        "label": "46, Green Croft, Ashington, NE63 8EG",
+        "id": "E06000057-s3",
+        "label": "251, Milburn Road, Ashington, NE63 0NE",
         "params": {
-          "address": "46, Green Croft, Ashington, NE63 8EG",
-          "house_number": "46",
-          "postcode": "NE63 8EG",
-          "street": "Green Croft",
-          "uprn": "100110652671"
+          "address": "251, Milburn Road, Ashington, NE63 0NE",
+          "house_number": "251",
+          "postcode": "NE63 0NE",
+          "street": "Milburn Road",
+          "uprn": "100110654793"
         },
         "source": "sampled"
       },
       {
-        "id": "E06000057-s2",
-        "label": "56, Devonworth Place, Blyth, NE24 5AG",
+        "id": "E06000057-s4",
+        "label": "24, Spital Road, Newbiggin-By-The-Sea, NE64 6SX",
         "params": {
-          "address": "56, Devonworth Place, Blyth, NE24 5AG",
-          "house_number": "56",
-          "postcode": "NE24 5AG",
-          "street": "Devonworth Place",
-          "uprn": "100110590697"
+          "address": "24, Spital Road, Newbiggin-By-The-Sea, NE64 6SX",
+          "house_number": "24",
+          "postcode": "NE64 6SX",
+          "street": "Spital Road",
+          "uprn": "100110672073"
         },
         "source": "sampled"
       },
@@ -2728,45 +2730,6 @@
     ],
     "name": "Dorset",
     "scraper_id": "hacs_dorset_gov_uk"
-  },
-  "E06000060": {
-    "cases": [
-      {
-        "id": "E06000060-s1",
-        "label": "3, Rowan Place, Amersham, HP6 6UR",
-        "params": {
-          "address": "3, Rowan Place, Amersham, HP6 6UR",
-          "house_number": "3",
-          "postcode": "HP6 6UR",
-          "street": "Rowan Place",
-          "uprn": "100080502956"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E06000060-s2",
-        "label": "1 Reelers Mews, Millgate, High Wycombe, HP11 1GN",
-        "params": {
-          "address": "1 Reelers Mews, Millgate, High Wycombe, HP11 1GN",
-          "house_number": "1",
-          "postcode": "HP11 1GN",
-          "street": "Reelers Mews",
-          "uprn": "10004798852"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E06000060-f1",
-        "label": "Buckinghamshire",
-        "params": {
-          "postcode": "HP13 7BA",
-          "uprn": "100081093078"
-        },
-        "source": "fixture"
-      }
-    ],
-    "name": "Buckinghamshire",
-    "scraper_id": "ukbcd_buckinghamshire_council"
   },
   "E06000061": {
     "cases": [
@@ -3321,14 +3284,14 @@
         "source": "sampled"
       },
       {
-        "id": "E07000032-s2",
-        "label": "5, Kilbourne Court Close, Belper, DE56 1SD",
+        "id": "E07000032-s3",
+        "label": "7, Woodside Avenue, Ripley, DE5 3PW",
         "params": {
-          "address": "5, Kilbourne Court Close, Belper, DE56 1SD",
-          "house_number": "5",
-          "postcode": "DE56 1SD",
-          "street": "Kilbourne Court Close",
-          "uprn": "10013429995"
+          "address": "7, Woodside Avenue, Ripley, DE5 3PW",
+          "house_number": "7",
+          "postcode": "DE5 3PW",
+          "street": "Woodside Avenue",
+          "uprn": "100030046118"
         },
         "source": "sampled"
       },
@@ -3497,6 +3460,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "Derbyshire Dales",
     "notes": [
       "fixture-only: frontend cannot supply required ['address_id']"
@@ -3839,26 +3803,26 @@
   "E07000043": {
     "cases": [
       {
-        "id": "E07000043-s1",
-        "label": "4, Grosvenor Terrace, Barnstaple, EX32 7DS",
+        "id": "E07000043-s3",
+        "label": "11, Yelland Road, Fremington, Barnstaple, EX31 3BX",
         "params": {
-          "address": "4, Grosvenor Terrace, Barnstaple, EX32 7DS",
-          "house_number": "4",
-          "postcode": "EX32 7DS",
-          "street": "Grosvenor Terrace",
-          "uprn": "10000483594"
+          "address": "11, Yelland Road, Fremington, Barnstaple, EX31 3BX",
+          "house_number": "11",
+          "postcode": "EX31 3BX",
+          "street": "Yelland Road",
+          "uprn": "100040256416"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000043-s2",
-        "label": "11 Cormelles Court, Bowling Green, Combe Martin, Ilfracombe, EX34 0LG",
+        "id": "E07000043-s4",
+        "label": "2, The Bushens, Bishops Tawton, Barnstaple, EX32 0AA",
         "params": {
-          "address": "11 Cormelles Court, Bowling Green, Combe Martin, Ilfracombe, EX34 0LG",
-          "house_number": "11",
-          "postcode": "EX34 0LG",
-          "street": "Cormelles Court",
-          "uprn": "10000483784"
+          "address": "2, The Bushens, Bishops Tawton, Barnstaple, EX32 0AA",
+          "house_number": "2",
+          "postcode": "EX32 0AA",
+          "street": "The Bushens",
+          "uprn": "10012091708"
         },
         "source": "sampled"
       },
@@ -4406,26 +4370,26 @@
   "E07000067": {
     "cases": [
       {
-        "id": "E07000067-s1",
-        "label": "15a, Manor Street, Braintree, CM7 3HW",
+        "id": "E07000067-s3",
+        "label": "15, Wainwright Avenue, Braintree, CM77 7LJ",
         "params": {
-          "address": "15a, Manor Street, Braintree, CM7 3HW",
-          "house_number": "15a",
-          "postcode": "CM7 3HW",
-          "street": "Manor Street",
-          "uprn": "100090301633"
+          "address": "15, Wainwright Avenue, Braintree, CM77 7LJ",
+          "house_number": "15",
+          "postcode": "CM77 7LJ",
+          "street": "Wainwright Avenue",
+          "uprn": "10006921706"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000067-s2",
-        "label": "34, Wisdoms Green, Coggeshall, Colchester, CO6 1SG",
+        "id": "E07000067-s4",
+        "label": "15, Haygreen Road, Witham, CM8 1GT",
         "params": {
-          "address": "34, Wisdoms Green, Coggeshall, Colchester, CO6 1SG",
-          "house_number": "34",
-          "postcode": "CO6 1SG",
-          "street": "Wisdoms Green",
-          "uprn": "100090314543"
+          "address": "15, Haygreen Road, Witham, CM8 1GT",
+          "house_number": "15",
+          "postcode": "CM8 1GT",
+          "street": "Haygreen Road",
+          "uprn": "10090831556"
         },
         "source": "sampled"
       },
@@ -4538,26 +4502,26 @@
   "E07000069": {
     "cases": [
       {
-        "id": "E07000069-s1",
-        "label": "15, Kenneth Road, Benfleet, SS7 3AU",
+        "id": "E07000069-s3",
+        "label": "1, Telese Avenue, Canvey Island, SS8 7LR",
         "params": {
-          "address": "15, Kenneth Road, Benfleet, SS7 3AU",
-          "house_number": "15",
-          "postcode": "SS7 3AU",
-          "street": "Kenneth Road",
-          "uprn": "100090360128"
+          "address": "1, Telese Avenue, Canvey Island, SS8 7LR",
+          "house_number": "1",
+          "postcode": "SS8 7LR",
+          "street": "Telese Avenue",
+          "uprn": "100090381471"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000069-s2",
-        "label": "282, Link Road, Canvey Island, SS8 9UX",
+        "id": "E07000069-s4",
+        "label": "78, South View Road, Benfleet, SS7 5NE",
         "params": {
-          "address": "282, Link Road, Canvey Island, SS8 9UX",
-          "house_number": "282",
-          "postcode": "SS8 9UX",
-          "street": "Link Road",
-          "uprn": "100090377150"
+          "address": "78, South View Road, Benfleet, SS7 5NE",
+          "house_number": "78",
+          "postcode": "SS7 5NE",
+          "street": "South View Road",
+          "uprn": "100090366555"
         },
         "source": "sampled"
       },
@@ -4856,26 +4820,26 @@
   "E07000075": {
     "cases": [
       {
-        "id": "E07000075-s1",
-        "label": "17, Main Road, Hockley, SS5 4QY",
+        "id": "E07000075-s3",
+        "label": "200, Hockley Road, Rayleigh, SS6 8ET",
         "params": {
-          "address": "17, Main Road, Hockley, SS5 4QY",
-          "house_number": "17",
-          "postcode": "SS5 4QY",
-          "street": "Main Road",
-          "uprn": "10096020597"
+          "address": "200, Hockley Road, Rayleigh, SS6 8ET",
+          "house_number": "200",
+          "postcode": "SS6 8ET",
+          "street": "Hockley Road",
+          "uprn": "100090581502"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000075-s2",
-        "label": "21, Dene Gardens, Rayleigh, SS6 9LJ",
+        "id": "E07000075-s4",
+        "label": "76, Main Road, Hawkwell, Hockley, SS5 4JH",
         "params": {
-          "address": "21, Dene Gardens, Rayleigh, SS6 9LJ",
-          "house_number": "21",
-          "postcode": "SS6 9LJ",
-          "street": "Dene Gardens",
-          "uprn": "100090578710"
+          "address": "76, Main Road, Hawkwell, Hockley, SS5 4JH",
+          "house_number": "76",
+          "postcode": "SS5 4JH",
+          "street": "Main Road",
+          "uprn": "100090572675"
         },
         "source": "sampled"
       },
@@ -5005,6 +4969,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "Cheltenham",
     "notes": [
       "fixture-only: frontend cannot supply required ['property_id']"
@@ -5052,26 +5017,26 @@
   "E07000080": {
     "cases": [
       {
-        "id": "E07000080-s1",
-        "label": "4, Sedbury Lane, Tutshill, Chepstow, NP16 7DU",
+        "id": "E07000080-s3",
+        "label": "2 Preston Court Cottages, Preston Cross, Ledbury, HR8 2LL",
         "params": {
-          "address": "4, Sedbury Lane, Tutshill, Chepstow, NP16 7DU",
-          "house_number": "4",
-          "postcode": "NP16 7DU",
-          "street": "Sedbury Lane",
-          "uprn": "100120435916"
+          "address": "2 Preston Court Cottages, Preston Cross, Ledbury, HR8 2LL",
+          "house_number": "2",
+          "postcode": "HR8 2LL",
+          "street": "Preston Court Cottages",
+          "uprn": "100121244837"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000080-s2",
-        "label": "6, Abbots View, Buckshaft, Cinderford, GL14 3EG",
+        "id": "E07000080-s4",
+        "label": "6, Forest Road, Cinderford, GL14 2NR",
         "params": {
-          "address": "6, Abbots View, Buckshaft, Cinderford, GL14 3EG",
+          "address": "6, Forest Road, Cinderford, GL14 2NR",
           "house_number": "6",
-          "postcode": "GL14 3EG",
-          "street": "Abbots View",
-          "uprn": "100120436330"
+          "postcode": "GL14 2NR",
+          "street": "Forest Road",
+          "uprn": "100120437255"
         },
         "source": "sampled"
       },
@@ -5098,26 +5063,26 @@
   "E07000081": {
     "cases": [
       {
-        "id": "E07000081-s1",
-        "label": "5, Temple Close, Barnwood, Gloucester, GL4 3ER",
+        "id": "E07000081-s3",
+        "label": "64, Howard Street, Gloucester, GL1 4UU",
         "params": {
-          "address": "5, Temple Close, Barnwood, Gloucester, GL4 3ER",
-          "house_number": "5",
-          "postcode": "GL4 3ER",
-          "street": "Temple Close",
-          "uprn": "100120492072"
+          "address": "64, Howard Street, Gloucester, GL1 4UU",
+          "house_number": "64",
+          "postcode": "GL1 4UU",
+          "street": "Howard Street",
+          "uprn": "100120476076"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000081-s2",
-        "label": "27, Liddington Road, Longlevens, Gloucester, GL2 0HL",
+        "id": "E07000081-s4",
+        "label": "4, Purslane Close, Gloucester, GL4 6UZ",
         "params": {
-          "address": "27, Liddington Road, Longlevens, Gloucester, GL2 0HL",
-          "house_number": "27",
-          "postcode": "GL2 0HL",
-          "street": "Liddington Road",
-          "uprn": "100120478947"
+          "address": "4, Purslane Close, Gloucester, GL4 6UZ",
+          "house_number": "4",
+          "postcode": "GL4 6UZ",
+          "street": "Purslane Close",
+          "uprn": "100120486296"
         },
         "source": "sampled"
       },
@@ -5149,14 +5114,14 @@
         "source": "sampled"
       },
       {
-        "id": "E07000082-s2",
-        "label": "9, Parsons Close, Dursley, GL11 4PJ",
+        "id": "E07000082-s3",
+        "label": "1, Morris Orchard, Cam, Dursley, GL11 5LZ",
         "params": {
-          "address": "9, Parsons Close, Dursley, GL11 4PJ",
-          "house_number": "9",
-          "postcode": "GL11 4PJ",
-          "street": "Parsons Close",
-          "uprn": "10009415414"
+          "address": "1, Morris Orchard, Cam, Dursley, GL11 5LZ",
+          "house_number": "1",
+          "postcode": "GL11 5LZ",
+          "street": "Morris Orchard",
+          "uprn": "200003102766"
         },
         "source": "sampled"
       },
@@ -5599,6 +5564,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "Havant",
     "notes": [
       "fixture-only: frontend cannot supply required ['password', 'username']"
@@ -5608,26 +5574,26 @@
   "E07000091": {
     "cases": [
       {
-        "id": "E07000091-s1",
-        "label": "80, Laburnum Crescent, Hythe, Southampton, SO45 3PN",
+        "id": "E07000091-s3",
+        "label": "1, North Charford, Breamore, Fordingbridge, SP6 2DR",
         "params": {
-          "address": "80, Laburnum Crescent, Hythe, Southampton, SO45 3PN",
-          "house_number": "80",
-          "postcode": "SO45 3PN",
-          "street": "Laburnum Crescent",
-          "uprn": "10007450371"
+          "address": "1, North Charford, Breamore, Fordingbridge, SP6 2DR",
+          "house_number": "1",
+          "postcode": "SP6 2DR",
+          "street": "North Charford",
+          "uprn": "10007447021"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000091-s2",
-        "label": "1a, Queen Katherine Road, Lymington, SO41 3RY",
+        "id": "E07000091-s4",
+        "label": "24, Heatherstone Avenue, Dibden Purlieu, Southampton, SO45 4LH",
         "params": {
-          "address": "1a, Queen Katherine Road, Lymington, SO41 3RY",
-          "house_number": "1a",
-          "postcode": "SO41 3RY",
-          "street": "Queen Katherine Road",
-          "uprn": "100060480554"
+          "address": "24, Heatherstone Avenue, Dibden Purlieu, Southampton, SO45 4LH",
+          "house_number": "24",
+          "postcode": "SO45 4LH",
+          "street": "Heatherstone Avenue",
+          "uprn": "100060508889"
         },
         "source": "sampled"
       },
@@ -6131,18 +6097,6 @@
   "E07000106": {
     "cases": [
       {
-        "id": "E07000106-s1",
-        "label": "61a, Rough Common Road, Rough Common, Canterbury, CT2 9DQ",
-        "params": {
-          "address": "61a, Rough Common Road, Rough Common, Canterbury, CT2 9DQ",
-          "house_number": "61a",
-          "postcode": "CT2 9DQ",
-          "street": "Rough Common Road",
-          "uprn": "100060821382"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E07000106-s2",
         "label": "3, Consul Close, Herne Bay, CT6 8EB",
         "params": {
@@ -6151,6 +6105,18 @@
           "postcode": "CT6 8EB",
           "street": "Consul Close",
           "uprn": "100060831337"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E07000106-s3",
+        "label": "189a, Cromwell Road, Whitstable, CT5 1NA",
+        "params": {
+          "address": "189a, Cromwell Road, Whitstable, CT5 1NA",
+          "house_number": "189a",
+          "postcode": "CT5 1NA",
+          "street": "Cromwell Road",
+          "uprn": "10090317467"
         },
         "source": "sampled"
       },
@@ -6396,6 +6362,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "Sevenoaks",
     "notes": [
       "fixture-only: frontend cannot supply required ['property_id']"
@@ -6885,26 +6852,26 @@
   "E07000123": {
     "cases": [
       {
-        "id": "E07000123-s1",
-        "label": "6, Silver Street, Preston, PR1 3RH",
+        "id": "E07000123-s3",
+        "label": "36, Miller Field, Lea, Preston, PR2 1XB",
         "params": {
-          "address": "6, Silver Street, Preston, PR1 3RH",
-          "house_number": "6",
-          "postcode": "PR1 3RH",
-          "street": "Silver Street",
-          "uprn": "10007611644"
+          "address": "36, Miller Field, Lea, Preston, PR2 1XB",
+          "house_number": "36",
+          "postcode": "PR2 1XB",
+          "street": "Miller Field",
+          "uprn": "100010558516"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000123-s2",
-        "label": "6, Avonbridge, Fulwood, Preston, PR2 3RE",
+        "id": "E07000123-s4",
+        "label": "16, Ridgemont, Fulwood, Preston, PR2 3FQ",
         "params": {
-          "address": "6, Avonbridge, Fulwood, Preston, PR2 3RE",
-          "house_number": "6",
-          "postcode": "PR2 3RE",
-          "street": "Avonbridge",
-          "uprn": "100010532944"
+          "address": "16, Ridgemont, Fulwood, Preston, PR2 3FQ",
+          "house_number": "16",
+          "postcode": "PR2 3FQ",
+          "street": "Ridgemont",
+          "uprn": "100010564707"
         },
         "source": "sampled"
       },
@@ -7230,26 +7197,26 @@
   "E07000130": {
     "cases": [
       {
-        "id": "E07000130-s1",
-        "label": "6, The Covert, East Goscote, Leicester, LE7 3WR",
+        "id": "E07000130-s3",
+        "label": "16, Paget Avenue, Birstall, Leicester, LE4 4HX",
         "params": {
-          "address": "6, The Covert, East Goscote, Leicester, LE7 3WR",
-          "house_number": "6",
-          "postcode": "LE7 3WR",
-          "street": "The Covert",
-          "uprn": "100030427644"
+          "address": "16, Paget Avenue, Birstall, Leicester, LE4 4HX",
+          "house_number": "16",
+          "postcode": "LE4 4HX",
+          "street": "Paget Avenue",
+          "uprn": "100030423823"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000130-s2",
-        "label": "1, Marys Court, Anstey, Leicester, LE7 7GZ",
+        "id": "E07000130-s4",
+        "label": "14, Maplewell Close, Shepshed, Loughborough, LE12 9GS",
         "params": {
-          "address": "1, Marys Court, Anstey, Leicester, LE7 7GZ",
-          "house_number": "1",
-          "postcode": "LE7 7GZ",
-          "street": "Marys Court",
-          "uprn": "100032070532"
+          "address": "14, Maplewell Close, Shepshed, Loughborough, LE12 9GS",
+          "house_number": "14",
+          "postcode": "LE12 9GS",
+          "street": "Maplewell Close",
+          "uprn": "10095776374"
         },
         "source": "sampled"
       },
@@ -7760,6 +7727,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "South Kesteven",
     "notes": [
       "fixture-only: frontend cannot supply required ['address_id']"
@@ -7856,26 +7824,26 @@
   "E07000144": {
     "cases": [
       {
-        "id": "E07000144-s1",
-        "label": "12, The Common, Ringland, Norwich, NR8 6JF",
+        "id": "E07000144-s3",
+        "label": "18, Gurney Drive, Sprowston, Norwich, NR7 8LS",
         "params": {
-          "address": "12, The Common, Ringland, Norwich, NR8 6JF",
-          "house_number": "12",
-          "postcode": "NR8 6JF",
-          "street": "The Common",
-          "uprn": "100090826843"
+          "address": "18, Gurney Drive, Sprowston, Norwich, NR7 8LS",
+          "house_number": "18",
+          "postcode": "NR7 8LS",
+          "street": "Gurney Drive",
+          "uprn": "100090807535"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000144-s2",
-        "label": "86, Barkers Lane, Norwich, NR7 8QZ",
+        "id": "E07000144-s4",
+        "label": "3, Lancaster Gardens, Aylsham, Norwich, NR11 6LB",
         "params": {
-          "address": "86, Barkers Lane, Norwich, NR7 8QZ",
-          "house_number": "86",
-          "postcode": "NR7 8QZ",
-          "street": "Barkers Lane",
-          "uprn": "100090795973"
+          "address": "3, Lancaster Gardens, Aylsham, Norwich, NR11 6LB",
+          "house_number": "3",
+          "postcode": "NR11 6LB",
+          "street": "Lancaster Gardens",
+          "uprn": "100090811381"
         },
         "source": "sampled"
       },
@@ -8169,26 +8137,26 @@
   "E07000149": {
     "cases": [
       {
-        "id": "E07000149-s1",
-        "label": "59, Rectory Lane, Poringland, Norwich, NR14 7SJ",
+        "id": "E07000149-s3",
+        "label": "97, Norwich Road, Norwich, NR5 0AA",
         "params": {
-          "address": "59, Rectory Lane, Poringland, Norwich, NR14 7SJ",
-          "house_number": "59",
-          "postcode": "NR14 7SJ",
-          "street": "Rectory Lane",
-          "uprn": "2630133710"
+          "address": "97, Norwich Road, Norwich, NR5 0AA",
+          "house_number": "97",
+          "postcode": "NR5 0AA",
+          "street": "Norwich Road",
+          "uprn": "2630108119"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000149-s2",
-        "label": "28, Kells Way, Geldeston, Beccles, NR34 0LU",
+        "id": "E07000149-s4",
+        "label": "1 Orchard Corner, Langley Park, Chedgrave, Norwich, NR14 6BJ",
         "params": {
-          "address": "28, Kells Way, Geldeston, Beccles, NR34 0LU",
-          "house_number": "28",
-          "postcode": "NR34 0LU",
-          "street": "Kells Way",
-          "uprn": "2630192480"
+          "address": "1 Orchard Corner, Langley Park, Chedgrave, Norwich, NR14 6BJ",
+          "house_number": "1",
+          "postcode": "NR14 6BJ",
+          "street": "Orchard Corner",
+          "uprn": "2630126988"
         },
         "source": "sampled"
       },
@@ -9308,6 +9276,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "Ipswich",
     "notes": [
       "fixture-only: frontend cannot supply required ['location_id']"
@@ -9979,26 +9948,26 @@
   "E07000219": {
     "cases": [
       {
-        "id": "E07000219-s1",
-        "label": "51, Malvern Avenue, Nuneaton, CV10 8NJ",
+        "id": "E07000219-s3",
+        "label": "4, Burns Walk, Bedworth, CV12 9HL",
         "params": {
-          "address": "51, Malvern Avenue, Nuneaton, CV10 8NJ",
-          "house_number": "51",
-          "postcode": "CV10 8NJ",
-          "street": "Malvern Avenue",
-          "uprn": "100070156280"
+          "address": "4, Burns Walk, Bedworth, CV12 9HL",
+          "house_number": "4",
+          "postcode": "CV12 9HL",
+          "street": "Burns Walk",
+          "uprn": "100070140151"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000219-s2",
-        "label": "34, Delamere Road, Bedworth, CV12 8SQ",
+        "id": "E07000219-s4",
+        "label": "49, Hayes Lane, Exhall, Coventry, CV7 9BN",
         "params": {
-          "address": "34, Delamere Road, Bedworth, CV12 8SQ",
-          "house_number": "34",
-          "postcode": "CV12 8SQ",
-          "street": "Delamere Road",
-          "uprn": "100070145298"
+          "address": "49, Hayes Lane, Exhall, Coventry, CV7 9BN",
+          "house_number": "49",
+          "postcode": "CV7 9BN",
+          "street": "Hayes Lane",
+          "uprn": "100070132480"
         },
         "source": "sampled"
       },
@@ -10451,9 +10420,6 @@
       }
     ],
     "name": "Horsham",
-    "notes": [
-      "address API failed for 1 postcode(s)"
-    ],
     "scraper_id": "hacs_horsham_gov_uk"
   },
   "E07000228": {
@@ -10681,18 +10647,6 @@
   "E07000236": {
     "cases": [
       {
-        "id": "E07000236-s1",
-        "label": "30, Southcrest Road, Redditch, B98 7JJ",
-        "params": {
-          "address": "30, Southcrest Road, Redditch, B98 7JJ",
-          "house_number": "30",
-          "postcode": "B98 7JJ",
-          "street": "Southcrest Road",
-          "uprn": "100120635019"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E07000236-s2",
         "label": "53, Guinness Close, Redditch, B98 7XW",
         "params": {
@@ -10701,6 +10655,18 @@
           "postcode": "B98 7XW",
           "street": "Guinness Close",
           "uprn": "100120622198"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E07000236-s3",
+        "label": "3, Summer Street, Redditch, B98 7BD",
+        "params": {
+          "address": "3, Summer Street, Redditch, B98 7BD",
+          "house_number": "3",
+          "postcode": "B98 7BD",
+          "street": "Summer Street",
+          "uprn": "100120635780"
         },
         "source": "sampled"
       },
@@ -10808,6 +10774,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "Wyre Forest",
     "notes": [
       "fixture-only: frontend cannot supply required ['town']"
@@ -11037,18 +11004,6 @@
   "E07000244": {
     "cases": [
       {
-        "id": "E07000244-s1",
-        "label": "272, High Street, Felixstowe, IP11 9DS",
-        "params": {
-          "address": "272, High Street, Felixstowe, IP11 9DS",
-          "house_number": "272",
-          "postcode": "IP11 9DS",
-          "street": "High Street",
-          "uprn": "100091390508"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E07000244-s2",
         "label": "8, Uggeshall Close, Lowestoft, NR32 4PU",
         "params": {
@@ -11057,6 +11012,18 @@
           "postcode": "NR32 4PU",
           "street": "Uggeshall Close",
           "uprn": "100091182033"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E07000244-s3",
+        "label": "66, Black Tiles Lane, Martlesham, Woodbridge, IP12 4TQ",
+        "params": {
+          "address": "66, Black Tiles Lane, Martlesham, Woodbridge, IP12 4TQ",
+          "house_number": "66",
+          "postcode": "IP12 4TQ",
+          "street": "Black Tiles Lane",
+          "uprn": "100091142276"
         },
         "source": "sampled"
       },
@@ -11085,26 +11052,26 @@
   "E07000245": {
     "cases": [
       {
-        "id": "E07000245-s1",
-        "label": "3 Barn Cottages, The Green, Fornham All Saints, Bury St. Edmunds, IP28 6JX",
+        "id": "E07000245-s3",
+        "label": "6, Orchard Close, Lidgate, Newmarket, CB8 9PU",
         "params": {
-          "address": "3 Barn Cottages, The Green, Fornham All Saints, Bury St. Edmunds, IP28 6JX",
-          "house_number": "3",
-          "postcode": "IP28 6JX",
-          "street": "Barn Cottages",
-          "uprn": "10009753969"
+          "address": "6, Orchard Close, Lidgate, Newmarket, CB8 9PU",
+          "house_number": "6",
+          "postcode": "CB8 9PU",
+          "street": "Orchard Close",
+          "uprn": "10009738967"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000245-s2",
-        "label": "4, Cargo Lane, Bury St. Edmunds, IP32 6FW",
+        "id": "E07000245-s4",
+        "label": "25, Fordham Place, Ixworth, Bury St. Edmunds, IP31 2GJ",
         "params": {
-          "address": "4, Cargo Lane, Bury St. Edmunds, IP32 6FW",
-          "house_number": "4",
-          "postcode": "IP32 6FW",
-          "street": "Cargo Lane",
-          "uprn": "10094768756"
+          "address": "25, Fordham Place, Ixworth, Bury St. Edmunds, IP31 2GJ",
+          "house_number": "25",
+          "postcode": "IP31 2GJ",
+          "street": "Fordham Place",
+          "uprn": "10009751136"
         },
         "source": "sampled"
       },
@@ -11181,26 +11148,26 @@
   "E08000002": {
     "cases": [
       {
-        "id": "E08000002-s1",
-        "label": "17, Cross Lane, Radcliffe, Manchester, M26 2QZ",
+        "id": "E08000002-s3",
+        "label": "93, Park Road, Prestwich, Manchester, M25 0DX",
         "params": {
-          "address": "17, Cross Lane, Radcliffe, Manchester, M26 2QZ",
-          "house_number": "17",
-          "postcode": "M26 2QZ",
-          "street": "Cross Lane",
-          "uprn": "100010989583"
+          "address": "93, Park Road, Prestwich, Manchester, M25 0DX",
+          "house_number": "93",
+          "postcode": "M25 0DX",
+          "street": "Park Road",
+          "uprn": "100011002337"
         },
         "source": "sampled"
       },
       {
-        "id": "E08000002-s2",
-        "label": "11, Green Street, Bury, BL8 1TF",
+        "id": "E08000002-s4",
+        "label": "2, Woodlands Avenue, Whitefield, Manchester, M45 7NP",
         "params": {
-          "address": "11, Green Street, Bury, BL8 1TF",
-          "house_number": "11",
-          "postcode": "BL8 1TF",
-          "street": "Green Street",
-          "uprn": "100010959576"
+          "address": "2, Woodlands Avenue, Whitefield, Manchester, M45 7NP",
+          "house_number": "2",
+          "postcode": "M45 7NP",
+          "street": "Woodlands Avenue",
+          "uprn": "100011012773"
         },
         "source": "sampled"
       },
@@ -11809,26 +11776,26 @@
   "E08000014": {
     "cases": [
       {
-        "id": "E08000014-s1",
-        "label": "86, Beach Road, Liverpool, L21 2PP",
+        "id": "E08000014-s3",
+        "label": "78a, South Road, Waterloo, Liverpool, L22 0LY",
         "params": {
-          "address": "86, Beach Road, Liverpool, L21 2PP",
-          "house_number": "86",
-          "postcode": "L21 2PP",
-          "street": "Beach Road",
-          "uprn": "41005915"
+          "address": "78a, South Road, Waterloo, Liverpool, L22 0LY",
+          "house_number": "78a",
+          "postcode": "L22 0LY",
+          "street": "South Road",
+          "uprn": "41128505"
         },
         "source": "sampled"
       },
       {
-        "id": "E08000014-s2",
-        "label": "38, Cumberland Gate, Bootle, L30 7PZ",
+        "id": "E08000014-s4",
+        "label": "17, Ashcroft Road, Formby, Liverpool, L37 6BJ",
         "params": {
-          "address": "38, Cumberland Gate, Bootle, L30 7PZ",
-          "house_number": "38",
-          "postcode": "L30 7PZ",
-          "street": "Cumberland Gate",
-          "uprn": "41022953"
+          "address": "17, Ashcroft Road, Formby, Liverpool, L37 6BJ",
+          "house_number": "17",
+          "postcode": "L37 6BJ",
+          "street": "Ashcroft Road",
+          "uprn": "41003436"
         },
         "source": "sampled"
       },
@@ -12152,25 +12119,25 @@
       },
       {
         "id": "E08000021-f1",
-        "label": "Test_001",
+        "label": "Grange Road",
         "params": {
-          "postcode": "NE5 3UY ",
-          "uprn": "004510053797"
+          "address": "1 Grange Road",
+          "postcode": "NE3 5LA"
         },
         "source": "fixture"
       },
       {
         "id": "E08000021-f2",
-        "label": "Test_002",
+        "label": "Westerhope",
         "params": {
-          "postcode": "NE5 3UY ",
-          "uprn": "4510053797"
+          "address": "1 Westerhope Homes Hillhead Road",
+          "postcode": "NE5 1NJ"
         },
         "source": "fixture"
       }
     ],
     "name": "Newcastle upon Tyne",
-    "scraper_id": "hacs_newcastle_gov_uk"
+    "scraper_id": "port_newcastle_city_council"
   },
   "E08000022": {
     "cases": [
@@ -12280,26 +12247,26 @@
   "E08000024": {
     "cases": [
       {
-        "id": "E08000024-s1",
-        "label": "1, Rainton Grove, Houghton Le Spring, DH5 8JT",
+        "id": "E08000024-s3",
+        "label": "35, Shakespeare Street, Sunderland, SR5 2HQ",
         "params": {
-          "address": "1, Rainton Grove, Houghton Le Spring, DH5 8JT",
-          "house_number": "1",
-          "postcode": "DH5 8JT",
-          "street": "Rainton Grove",
-          "uprn": "45079949"
+          "address": "35, Shakespeare Street, Sunderland, SR5 2HQ",
+          "house_number": "35",
+          "postcode": "SR5 2HQ",
+          "street": "Shakespeare Street",
+          "uprn": "45154808"
         },
         "source": "sampled"
       },
       {
-        "id": "E08000024-s2",
-        "label": "18, Grange View, Newbottle, Houghton Le Spring, DH4 4HU",
+        "id": "E08000024-s4",
+        "label": "12, Dubmire Court, Houghton Le Spring, DH4 5NF",
         "params": {
-          "address": "18, Grange View, Newbottle, Houghton Le Spring, DH4 4HU",
-          "house_number": "18",
-          "postcode": "DH4 4HU",
-          "street": "Grange View",
-          "uprn": "45089028"
+          "address": "12, Dubmire Court, Houghton Le Spring, DH4 5NF",
+          "house_number": "12",
+          "postcode": "DH4 5NF",
+          "street": "Dubmire Court",
+          "uprn": "45099129"
         },
         "source": "sampled"
       },
@@ -12965,18 +12932,6 @@
   "E08000037": {
     "cases": [
       {
-        "id": "E08000037-s1",
-        "label": "19, Priory Court, Gateshead, NE8 3JL",
-        "params": {
-          "address": "19, Priory Court, Gateshead, NE8 3JL",
-          "house_number": "19",
-          "postcode": "NE8 3JL",
-          "street": "Priory Court",
-          "uprn": "100000049555"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E08000037-s2",
         "label": "1 Bungalows, Sunderland Road, Gateshead, NE10 0NU",
         "params": {
@@ -12985,6 +12940,18 @@
           "postcode": "NE10 0NU",
           "street": "Bungalows",
           "uprn": "100000058639"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E08000037-s3",
+        "label": "23, Langdale, Birtley, Chester Le Street, DH3 2EL",
+        "params": {
+          "address": "23, Langdale, Birtley, Chester Le Street, DH3 2EL",
+          "house_number": "23",
+          "postcode": "DH3 2EL",
+          "street": "Langdale",
+          "uprn": "100000010631"
         },
         "source": "sampled"
       },
@@ -13184,18 +13151,6 @@
   "E09000005": {
     "cases": [
       {
-        "id": "E09000005-s1",
-        "label": "7 Therapies Health & Beauty 7, Lonsdale Road, London, NW6 6RA",
-        "params": {
-          "address": "7 Therapies Health & Beauty 7, Lonsdale Road, London, NW6 6RA",
-          "house_number": "7",
-          "postcode": "NW6 6RA",
-          "street": "Therapies Health & Beauty 7",
-          "uprn": "202073163"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E09000005-s2",
         "label": "184, Harrow Road, Wembley, HA9 6QH",
         "params": {
@@ -13204,6 +13159,18 @@
           "postcode": "HA9 6QH",
           "street": "Harrow Road",
           "uprn": "202089765"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E09000005-s3",
+        "label": "7, Adams Close, London, NW9 8PT",
+        "params": {
+          "address": "7, Adams Close, London, NW9 8PT",
+          "house_number": "7",
+          "postcode": "NW9 8PT",
+          "street": "Adams Close",
+          "uprn": "202136740"
         },
         "source": "sampled"
       },
@@ -13462,26 +13429,26 @@
   "E09000011": {
     "cases": [
       {
-        "id": "E09000011-s1",
-        "label": "34, Altash Way, London, SE9 3EL",
+        "id": "E09000011-s3",
+        "label": "1, Merryfield, London, SE3 0SQ",
         "params": {
-          "address": "34, Altash Way, London, SE9 3EL",
-          "house_number": "34",
-          "postcode": "SE9 3EL",
-          "street": "Altash Way",
-          "uprn": "100020934794"
+          "address": "1, Merryfield, London, SE3 0SQ",
+          "house_number": "1",
+          "postcode": "SE3 0SQ",
+          "street": "Merryfield",
+          "uprn": "100020987778"
         },
         "source": "sampled"
       },
       {
-        "id": "E09000011-s2",
-        "label": "1, Dabin Crescent, London, SE10 8TF",
+        "id": "E09000011-s4",
+        "label": "45, Macoma Road, London, SE18 2QW",
         "params": {
-          "address": "1, Dabin Crescent, London, SE10 8TF",
-          "house_number": "1",
-          "postcode": "SE10 8TF",
-          "street": "Dabin Crescent",
-          "uprn": "100020955753"
+          "address": "45, Macoma Road, London, SE18 2QW",
+          "house_number": "45",
+          "postcode": "SE18 2QW",
+          "street": "Macoma Road",
+          "uprn": "10010201834"
         },
         "source": "sampled"
       },
@@ -13517,26 +13484,26 @@
   "E09000012": {
     "cases": [
       {
-        "id": "E09000012-s1",
-        "label": "6, Pembury Place, London, E5 8LX",
+        "id": "E09000012-s3",
+        "label": "1, Felton Street, London, N1 5NA",
         "params": {
-          "address": "6, Pembury Place, London, E5 8LX",
-          "house_number": "6",
-          "postcode": "E5 8LX",
-          "street": "Pembury Place",
-          "uprn": "100023003131"
+          "address": "1, Felton Street, London, N1 5NA",
+          "house_number": "1",
+          "postcode": "N1 5NA",
+          "street": "Felton Street",
+          "uprn": "100023135252"
         },
         "source": "sampled"
       },
       {
-        "id": "E09000012-s2",
-        "label": "11, Stage Plaza Curtain Road, London, EC2A 3NQ",
+        "id": "E09000012-s4",
+        "label": "28, Lidfield Road, London, N16 9LX",
         "params": {
-          "address": "11, Stage Plaza Curtain Road, London, EC2A 3NQ",
-          "house_number": "11",
-          "postcode": "EC2A 3NQ",
-          "street": "Stage Plaza Curtain Road",
-          "uprn": "10008353755"
+          "address": "28, Lidfield Road, London, N16 9LX",
+          "house_number": "28",
+          "postcode": "N16 9LX",
+          "street": "Lidfield Road",
+          "uprn": "100021054312"
         },
         "source": "sampled"
       },
@@ -13804,18 +13771,6 @@
   "E09000018": {
     "cases": [
       {
-        "id": "E09000018-s1",
-        "label": "220, Great West Road, Hounslow, TW5 9AW",
-        "params": {
-          "address": "220, Great West Road, Hounslow, TW5 9AW",
-          "house_number": "220",
-          "postcode": "TW5 9AW",
-          "street": "Great West Road",
-          "uprn": "100023405849"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E09000018-s2",
         "label": "64b, Waldeck Road, London, W4 3NU",
         "params": {
@@ -13824,6 +13779,18 @@
           "postcode": "W4 3NU",
           "street": "Waldeck Road",
           "uprn": "100021591291"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E09000018-s3",
+        "label": "211, Page Road, Feltham, TW14 8DL",
+        "params": {
+          "address": "211, Page Road, Feltham, TW14 8DL",
+          "house_number": "211",
+          "postcode": "TW14 8DL",
+          "street": "Page Road",
+          "uprn": "100021529611"
         },
         "source": "sampled"
       },
@@ -13843,26 +13810,26 @@
   "E09000019": {
     "cases": [
       {
-        "id": "E09000019-s1",
-        "label": "12, Noel Road, London, N1 8HA",
+        "id": "E09000019-s3",
+        "label": "30, Rotherfield Street, London, N1 3DZ",
         "params": {
-          "address": "12, Noel Road, London, N1 8HA",
-          "house_number": "12",
-          "postcode": "N1 8HA",
-          "street": "Noel Road",
-          "uprn": "5300067127"
+          "address": "30, Rotherfield Street, London, N1 3DZ",
+          "house_number": "30",
+          "postcode": "N1 3DZ",
+          "street": "Rotherfield Street",
+          "uprn": "5300080323"
         },
         "source": "sampled"
       },
       {
-        "id": "E09000019-s2",
-        "label": "37, Brydon Walk, London, N1 0UU",
+        "id": "E09000019-s4",
+        "label": "37, Arlington Avenue, London, N1 7BE",
         "params": {
-          "address": "37, Brydon Walk, London, N1 0UU",
+          "address": "37, Arlington Avenue, London, N1 7BE",
           "house_number": "37",
-          "postcode": "N1 0UU",
-          "street": "Brydon Walk",
-          "uprn": "5300012509"
+          "postcode": "N1 7BE",
+          "street": "Arlington Avenue",
+          "uprn": "5300002989"
         },
         "source": "sampled"
       },
@@ -13955,26 +13922,26 @@
   "E09000021": {
     "cases": [
       {
-        "id": "E09000021-s1",
-        "label": "2 Ryehill Court, South Lane, New Malden, KT3 5LE",
+        "id": "E09000021-s3",
+        "label": "10, Arthur Road, Kingston Upon Thames, KT2 6BA",
         "params": {
-          "address": "2 Ryehill Court, South Lane, New Malden, KT3 5LE",
-          "house_number": "2",
-          "postcode": "KT3 5LE",
-          "street": "Ryehill Court",
-          "uprn": "100021781528"
+          "address": "10, Arthur Road, Kingston Upon Thames, KT2 6BA",
+          "house_number": "10",
+          "postcode": "KT2 6BA",
+          "street": "Arthur Road",
+          "uprn": "100021753793"
         },
         "source": "sampled"
       },
       {
-        "id": "E09000021-s2",
-        "label": "30, Chestnut Grove, New Malden, KT3 3JN",
+        "id": "E09000021-s4",
+        "label": "332, Ewell Road, Surbiton, KT6 7AL",
         "params": {
-          "address": "30, Chestnut Grove, New Malden, KT3 3JN",
-          "house_number": "30",
-          "postcode": "KT3 3JN",
-          "street": "Chestnut Grove",
-          "uprn": "100021774172"
+          "address": "332, Ewell Road, Surbiton, KT6 7AL",
+          "house_number": "332",
+          "postcode": "KT6 7AL",
+          "street": "Ewell Road",
+          "uprn": "100023066387"
         },
         "source": "sampled"
       },
@@ -14157,26 +14124,26 @@
   "E09000025": {
     "cases": [
       {
-        "id": "E09000025-s1",
-        "label": "103, Prince Regent Lane, London, E13 8RW",
+        "id": "E09000025-s3",
+        "label": "21, Gadwall Close, London, E16 3SQ",
         "params": {
-          "address": "103, Prince Regent Lane, London, E13 8RW",
-          "house_number": "103",
-          "postcode": "E13 8RW",
-          "street": "Prince Regent Lane",
-          "uprn": "46058986"
+          "address": "21, Gadwall Close, London, E16 3SQ",
+          "house_number": "21",
+          "postcode": "E16 3SQ",
+          "street": "Gadwall Close",
+          "uprn": "46028380"
         },
         "source": "sampled"
       },
       {
-        "id": "E09000025-s2",
-        "label": "62, Melbourne Road, London, E6 2RX",
+        "id": "E09000025-s4",
+        "label": "2a, Jutland Road, London, E13 8HZ",
         "params": {
-          "address": "62, Melbourne Road, London, E6 2RX",
-          "house_number": "62",
-          "postcode": "E6 2RX",
-          "street": "Melbourne Road",
-          "uprn": "46050083"
+          "address": "2a, Jutland Road, London, E13 8HZ",
+          "house_number": "2a",
+          "postcode": "E13 8HZ",
+          "street": "Jutland Road",
+          "uprn": "10009001035"
         },
         "source": "sampled"
       },
@@ -14271,18 +14238,6 @@
   "E09000027": {
     "cases": [
       {
-        "id": "E09000027-s1",
-        "label": "45, London Road, Twickenham, TW1 3SZ",
-        "params": {
-          "address": "45, London Road, Twickenham, TW1 3SZ",
-          "house_number": "45",
-          "postcode": "TW1 3SZ",
-          "street": "London Road",
-          "uprn": "100023392379"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E09000027-s2",
         "label": "40, Lawn Crescent, Richmond, TW9 3NS",
         "params": {
@@ -14291,6 +14246,18 @@
           "postcode": "TW9 3NS",
           "street": "Lawn Crescent",
           "uprn": "100022310307"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E09000027-s3",
+        "label": "70, Upper Richmond Road West, London, SW14 8DA",
+        "params": {
+          "address": "70, Upper Richmond Road West, London, SW14 8DA",
+          "house_number": "70",
+          "postcode": "SW14 8DA",
+          "street": "Upper Richmond Road West",
+          "uprn": "100022300609"
         },
         "source": "sampled"
       },
@@ -14328,18 +14295,6 @@
   "E09000028": {
     "cases": [
       {
-        "id": "E09000028-s1",
-        "label": "7, Copper Row, London, SE1 2LH",
-        "params": {
-          "address": "7, Copper Row, London, SE1 2LH",
-          "house_number": "7",
-          "postcode": "SE1 2LH",
-          "street": "Copper Row",
-          "uprn": "200003358507"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E09000028-s2",
         "label": "2, Hankey Place, London, SE1 4BQ",
         "params": {
@@ -14348,6 +14303,18 @@
           "postcode": "SE1 4BQ",
           "street": "Hankey Place",
           "uprn": "10013529081"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E09000028-s3",
+        "label": "19a, Peckham Park Road, London, SE15 6TR",
+        "params": {
+          "address": "19a, Peckham Park Road, London, SE15 6TR",
+          "house_number": "19a",
+          "postcode": "SE15 6TR",
+          "street": "Peckham Park Road",
+          "uprn": "10009804926"
         },
         "source": "sampled"
       },
@@ -14594,6 +14561,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "Westminster",
     "notes": [
       "fixture-only: frontend cannot supply required ['usrn']"
@@ -14603,26 +14571,26 @@
   "N09000001": {
     "cases": [
       {
-        "id": "N09000001-s1",
-        "label": "30a, The Diamond, Newtownabbey, BT37 9BJ",
+        "id": "N09000001-s3",
+        "label": "59, Thornhill Road, Antrim, BT41 2LG",
         "params": {
-          "address": "30a, The Diamond, Newtownabbey, BT37 9BJ",
-          "house_number": "30a",
-          "postcode": "BT37 9BJ",
-          "street": "The Diamond",
-          "uprn": "185375666"
+          "address": "59, Thornhill Road, Antrim, BT41 2LG",
+          "house_number": "59",
+          "postcode": "BT41 2LG",
+          "street": "Thornhill Road",
+          "uprn": "187116679"
         },
         "source": "sampled"
       },
       {
-        "id": "N09000001-s2",
-        "label": "17, Altmore Green, Newtownabbey, BT37 9AX",
+        "id": "N09000001-s4",
+        "label": "26, Liscoole Park, Newtownabbey, BT36 6EL",
         "params": {
-          "address": "17, Altmore Green, Newtownabbey, BT37 9AX",
-          "house_number": "17",
-          "postcode": "BT37 9AX",
-          "street": "Altmore Green",
-          "uprn": "185375363"
+          "address": "26, Liscoole Park, Newtownabbey, BT36 6EL",
+          "house_number": "26",
+          "postcode": "BT36 6EL",
+          "street": "Liscoole Park",
+          "uprn": "185358980"
         },
         "source": "sampled"
       },
@@ -14644,6 +14612,9 @@
       }
     ],
     "name": "Antrim and Newtownabbey",
+    "notes": [
+      "address API failed for 1 postcode(s)"
+    ],
     "scraper_id": "port_antrim_and_newtownabbey_council"
   },
   "N09000002": {
@@ -14734,26 +14705,26 @@
   "N09000006": {
     "cases": [
       {
-        "id": "N09000006-s1",
-        "label": "1, Tonyglaskan Road, Tempo Imeroo, Enniskillen, BT94 3LG",
+        "id": "N09000006-s3",
+        "label": "30, Castlebalfour Road, Lisnaskea Castle Balfour Demesne, Enniskillen, BT92 0LT",
         "params": {
-          "address": "1, Tonyglaskan Road, Tempo Imeroo, Enniskillen, BT94 3LG",
-          "house_number": "1",
-          "postcode": "BT94 3LG",
-          "street": "Tonyglaskan Road",
-          "uprn": "187526874"
+          "address": "30, Castlebalfour Road, Lisnaskea Castle Balfour Demesne, Enniskillen, BT92 0LT",
+          "house_number": "30",
+          "postcode": "BT92 0LT",
+          "street": "Castlebalfour Road",
+          "uprn": "185797006"
         },
         "source": "sampled"
       },
       {
-        "id": "N09000006-s2",
-        "label": "99, Cloy Road, Ederney Edenagee, Enniskillen, BT93 0LJ",
+        "id": "N09000006-s4",
+        "label": "102, Coa Road, Woaghternerry, Enniskillen, BT74 4AP",
         "params": {
-          "address": "99, Cloy Road, Ederney Edenagee, Enniskillen, BT93 0LJ",
-          "house_number": "99",
-          "postcode": "BT93 0LJ",
-          "street": "Cloy Road",
-          "uprn": "185883221"
+          "address": "102, Coa Road, Woaghternerry, Enniskillen, BT74 4AP",
+          "house_number": "102",
+          "postcode": "BT74 4AP",
+          "street": "Coa Road",
+          "uprn": "185786758"
         },
         "source": "sampled"
       },
@@ -14824,9 +14795,6 @@
       }
     ],
     "name": "Lisburn and Castlereagh",
-    "notes": [
-      "address API failed for 1 postcode(s)"
-    ],
     "scraper_id": "ukbcd_lisburn_castlereagh_city_council"
   },
   "N09000008": {
@@ -14886,18 +14854,6 @@
   "N09000009": {
     "cases": [
       {
-        "id": "N09000009-s1",
-        "label": "3, Poplar Hill Road, Cookstown, BT80 8SQ",
-        "params": {
-          "address": "3, Poplar Hill Road, Cookstown, BT80 8SQ",
-          "house_number": "3",
-          "postcode": "BT80 8SQ",
-          "street": "Poplar Hill Road",
-          "uprn": "185695070"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "N09000009-s2",
         "label": "11, Altmore Road, Pomeroy, Dungannon, BT70 2UJ",
         "params": {
@@ -14906,6 +14862,18 @@
           "postcode": "BT70 2UJ",
           "street": "Altmore Road",
           "uprn": "185643024"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "N09000009-s3",
+        "label": "11, Lisnawery Road, Augher, BT77 0EQ",
+        "params": {
+          "address": "11, Lisnawery Road, Augher, BT77 0EQ",
+          "house_number": "11",
+          "postcode": "BT77 0EQ",
+          "street": "Lisnawery Road",
+          "uprn": "187288398"
         },
         "source": "sampled"
       },
@@ -15031,34 +14999,31 @@
       }
     ],
     "name": "Ards and North Down",
-    "notes": [
-      "address API failed for 1 postcode(s)"
-    ],
     "scraper_id": "hacs_ardsandnorthdown_gov_uk"
   },
   "S12000005": {
     "cases": [
       {
-        "id": "S12000005-s1",
-        "label": "11, James Pollock Court, Tillicoultry, FK13 6ND",
+        "id": "S12000005-s3",
+        "label": "45, Whins Road, Alloa, FK10 3RF",
         "params": {
-          "address": "11, James Pollock Court, Tillicoultry, FK13 6ND",
-          "house_number": "11",
-          "postcode": "FK13 6ND",
-          "street": "James Pollock Court",
-          "uprn": "35028786"
+          "address": "45, Whins Road, Alloa, FK10 3RF",
+          "house_number": "45",
+          "postcode": "FK10 3RF",
+          "street": "Whins Road",
+          "uprn": "35006780"
         },
         "source": "sampled"
       },
       {
-        "id": "S12000005-s2",
-        "label": "24, Scott Crescent, Alloa, FK10 1BD",
+        "id": "S12000005-s4",
+        "label": "33, Stirling Road, Alva, FK12 5DA",
         "params": {
-          "address": "24, Scott Crescent, Alloa, FK10 1BD",
-          "house_number": "24",
-          "postcode": "FK10 1BD",
-          "street": "Scott Crescent",
-          "uprn": "35005755"
+          "address": "33, Stirling Road, Alva, FK12 5DA",
+          "house_number": "33",
+          "postcode": "FK12 5DA",
+          "street": "Stirling Road",
+          "uprn": "35008847"
         },
         "source": "sampled"
       },
@@ -15136,26 +15101,26 @@
   "S12000008": {
     "cases": [
       {
-        "id": "S12000008-s1",
-        "label": "50, Elizabeth Crescent, Cumnock, KA18 1QP",
+        "id": "S12000008-s3",
+        "label": "39, Heathfield Road, Auchinleck, Cumnock, KA18 2JB",
         "params": {
-          "address": "50, Elizabeth Crescent, Cumnock, KA18 1QP",
-          "house_number": "50",
-          "postcode": "KA18 1QP",
-          "street": "Elizabeth Crescent",
-          "uprn": "127042774"
+          "address": "39, Heathfield Road, Auchinleck, Cumnock, KA18 2JB",
+          "house_number": "39",
+          "postcode": "KA18 2JB",
+          "street": "Heathfield Road",
+          "uprn": "127037511"
         },
         "source": "sampled"
       },
       {
-        "id": "S12000008-s2",
-        "label": "82, Coyle Avenue, Drongan, Ayr, KA6 7DW",
+        "id": "S12000008-s4",
+        "label": "6, Sim Gardens, Darvel, KA17 0LD",
         "params": {
-          "address": "82, Coyle Avenue, Drongan, Ayr, KA6 7DW",
-          "house_number": "82",
-          "postcode": "KA6 7DW",
-          "street": "Coyle Avenue",
-          "uprn": "127001075"
+          "address": "6, Sim Gardens, Darvel, KA17 0LD",
+          "house_number": "6",
+          "postcode": "KA17 0LD",
+          "street": "Sim Gardens",
+          "uprn": "127040209"
         },
         "source": "sampled"
       },
@@ -16020,26 +15985,26 @@
   "S12000035": {
     "cases": [
       {
-        "id": "S12000035-s1",
-        "label": "2 Gartloist Cottage, Bowmore, Isle Of Islay, PA43 7LW",
+        "id": "S12000035-s3",
+        "label": "2a, Broadcroft Lane, Rothesay, Isle Of Bute, PA20 9BA",
         "params": {
-          "address": "2 Gartloist Cottage, Bowmore, Isle Of Islay, PA43 7LW",
-          "house_number": "2",
-          "postcode": "PA43 7LW",
-          "street": "Gartloist Cottage",
-          "uprn": "125060597"
+          "address": "2a, Broadcroft Lane, Rothesay, Isle Of Bute, PA20 9BA",
+          "house_number": "2a",
+          "postcode": "PA20 9BA",
+          "street": "Broadcroft Lane",
+          "uprn": "125035906"
         },
         "source": "sampled"
       },
       {
-        "id": "S12000035-s2",
-        "label": "25d, Glencruitten Drive, Oban, PA34 4EQ",
+        "id": "S12000035-s4",
+        "label": "14, Miller Road, Whitehouse, Tarbert, PA29 6WX",
         "params": {
-          "address": "25d, Glencruitten Drive, Oban, PA34 4EQ",
-          "house_number": "25d",
-          "postcode": "PA34 4EQ",
-          "street": "Glencruitten Drive",
-          "uprn": "125016142"
+          "address": "14, Miller Road, Whitehouse, Tarbert, PA29 6WX",
+          "house_number": "14",
+          "postcode": "PA29 6WX",
+          "street": "Miller Road",
+          "uprn": "125085900"
         },
         "source": "sampled"
       },
@@ -16332,18 +16297,6 @@
   "S12000042": {
     "cases": [
       {
-        "id": "S12000042-s1",
-        "label": "11c, Raglan Street, Dundee, DD4 6NT",
-        "params": {
-          "address": "11c, Raglan Street, Dundee, DD4 6NT",
-          "house_number": "11c",
-          "postcode": "DD4 6NT",
-          "street": "Raglan Street",
-          "uprn": "9059112622"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "S12000042-s2",
         "label": "1 Elm Court, Elm Street, Dundee, DD2 2AX",
         "params": {
@@ -16352,6 +16305,18 @@
           "postcode": "DD2 2AX",
           "street": "Elm Court",
           "uprn": "9059074921"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "S12000042-s3",
+        "label": "31, St. Leonard Road, Dundee, DD3 9HN",
+        "params": {
+          "address": "31, St. Leonard Road, Dundee, DD3 9HN",
+          "house_number": "31",
+          "postcode": "DD3 9HN",
+          "street": "St. Leonard Road",
+          "uprn": "9059069046"
         },
         "source": "sampled"
       },
@@ -16638,6 +16603,7 @@
         "source": "fixture"
       }
     ],
+    "fixture_only": true,
     "name": "North Lanarkshire",
     "notes": [
       "fixture-only: frontend cannot supply required ['usrn']"
@@ -16962,26 +16928,14 @@
   "W06000008": {
     "cases": [
       {
-        "id": "W06000008-s1",
-        "label": "6, Maes Y Dderwen, Cenarth, Newcastle Emlyn, SA38 9JW",
+        "id": "W06000008-s3",
+        "label": "8, Maes Y Deri, Pontrhydygroes, Ystrad Meurig, SY25 6DL",
         "params": {
-          "address": "6, Maes Y Dderwen, Cenarth, Newcastle Emlyn, SA38 9JW",
-          "house_number": "6",
-          "postcode": "SA38 9JW",
-          "street": "Maes Y Dderwen",
-          "uprn": "49051772"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "W06000008-s2",
-        "label": "2, Bro Llethi, Llannarth, SA47 0RF",
-        "params": {
-          "address": "2, Bro Llethi, Llannarth, SA47 0RF",
-          "house_number": "2",
-          "postcode": "SA47 0RF",
-          "street": "Bro Llethi",
-          "uprn": "49011025"
+          "address": "8, Maes Y Deri, Pontrhydygroes, Ystrad Meurig, SY25 6DL",
+          "house_number": "8",
+          "postcode": "SY25 6DL",
+          "street": "Maes Y Deri",
+          "uprn": "49035987"
         },
         "source": "sampled"
       },
@@ -16996,6 +16950,9 @@
       }
     ],
     "name": "Ceredigion",
+    "notes": [
+      "only 1/2 domestic addresses in 10 candidate postcodes"
+    ],
     "scraper_id": "port_ceredigion_county_council"
   },
   "W06000009": {
@@ -17700,7 +17657,7 @@
     "scraper_id": "ukbcd_merthyr_tydfil_county_borough_council"
   },
   "_meta": {
-    "generated_at": "2026-09-30T17:29:03+00:00",
+    "generated_at": "2026-09-30T17:38:28+00:00",
     "per_lad": 2,
     "sampling": "ONSUD postcode -> address API",
     "schema": 1,

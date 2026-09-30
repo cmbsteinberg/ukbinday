@@ -221,8 +221,6 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 
-# Pytest smoke-test artifact (regenerated each run)
-tests/test_output.json
 
 # Upstream clone used by pipeline/ukbcd/test_selenium_scrapers.py
 pipeline/upstream/ukbcd_selenium_clone/

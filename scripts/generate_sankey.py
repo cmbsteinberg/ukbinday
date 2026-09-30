@@ -1,4 +1,4 @@
-"""Generate the Mermaid sankey diagram in README.md from lad_lookup.json and integration_output.json."""
+"""Generate the Mermaid sankey diagram in README.md and badge_coverage.json from the `working` flags in lad_lookup.json."""
 
 import json
 import re

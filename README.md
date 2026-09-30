@@ -65,16 +65,18 @@ Rate limiting needs Redis — set `REDIS_URL` or just leave it off and the API w
 ```bash
 uv run pytest -m ci -v                    # smoke tests: syntax, imports, registry (~1s)
 uv run pytest -m api -v                   # API routes, CORS, error cases (~1s)
-uv run pytest -m live -v                  # hits live council sites (~40s)
+uv run pytest -m live -v                  # every council against live sites (~7 min)
 uv run pytest -m docker -v                # Docker compose stack (~60s)
 uv run pytest -m "not live and not docker" -v  # all fast tests
 ```
 
-Run a single council with `-k`:
+The live test (`tests/test_lad_integration.py`) runs one test per council (LAD code), using real addresses sampled from ONS data and looked up the same way the frontend does. Run a few councils by LAD code:
 
 ```bash
-uv run pytest tests/test_integration.py -v -k "aberdeen"
+LAD_CODES=S12000033,E08000035 uv run pytest tests/test_lad_integration.py -v
 ```
+
+Test runs only write `tests/output/lad_integration_output.json`. To refresh the `working` flags, badge, sankey and coverage map from it, run `./pipeline/ci/post_integration.sh`.
 
 ## Syncing scrapers from upstream
 
