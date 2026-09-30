@@ -174,6 +174,9 @@
     ],
     "port_torfaen_county_borough_council": [
       "W06000020"
+    ],
+    "port_newcastle_city_council": [
+      "E08000021"
     ]
   },
   "unwired_lads": {
@@ -187,11 +190,13 @@
     "E06000017": "deeplink-unwired: bin lookup behind Salesforce MyAccount login wall, no guest flow",
     "E09000001": "deeplink-unwired: no address lookup feed exists, estate-based collections via Veolia with static pages only",
     "E06000053": "deeplink-unwired: no address lookup exists, static round map + area table only (no kerbside off St Mary's/St Martins)",
-    "E07000038": "deeplink-unwired: Firmstep Check_your_Bin_Day retired (302, button commented out), static Calendar A/B only; apibroker 403"
+    "E07000038": "deeplink-unwired: Firmstep Check_your_Bin_Day retired (302, button commented out), static Calendar A/B only; apibroker 403",
+    "E06000060": "deeplink-unwired: iTouchVision kmbd/collectionDay returns null for all UPRNs and the replacement iappcustomer WSR endpoint errors server-side (2026-09-30); re-probe after the Oct 2026 calendar switch"
   },
   "deeplink_urls": {
     "E07000119": "https://new.fylde.gov.uk/wasteportal/",
     "N09000004": "https://causewaycoastandglens.gov.uk/live/bins-and-recycling/bin-collections/collection-calendars",
-    "N09000005": "https://recycling.derrystrabane.com/services/bin-collections/"
+    "N09000005": "https://recycling.derrystrabane.com/services/bin-collections/",
+    "E06000060": "https://www.buckinghamshire.gov.uk/waste-and-recycling/bin-collections/find-out-when-its-your-bin-collection/"
   }
 }

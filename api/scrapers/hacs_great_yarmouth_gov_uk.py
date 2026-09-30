@@ -3,7 +3,7 @@ import json
 import re
 from datetime import date, datetime, timedelta
 
-import httpx
+from api.compat.curl_cffi_fallback import AsyncClient as _CurlCffiClient
 from bs4 import BeautifulSoup
 
 from api.compat.hacs import Collection, Icons  # type: ignore[attr-defined]
@@ -69,7 +69,7 @@ class Source:
             return None
 
     async def fetch(self) -> list[Collection]:
-        session = httpx.AsyncClient(follow_redirects=True)
+        session = _CurlCffiClient(follow_redirects=True)
         session.headers.update(_HEADERS)
 
         # Step 1: GET the form page and extract session tokens.

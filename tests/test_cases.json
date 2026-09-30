@@ -5966,6 +5966,22 @@
       }
     }
   ],
+  "port_newcastle_city_council": [
+    {
+      "label": "Grange Road",
+      "params": {
+        "address": "1 Grange Road",
+        "postcode": "NE3 5LA"
+      }
+    },
+    {
+      "label": "Westerhope",
+      "params": {
+        "address": "1 Westerhope Homes Hillhead Road",
+        "postcode": "NE5 1NJ"
+      }
+    }
+  ],
   "port_newry_mourne_and_down_council": [
     {
       "label": "1 John Mitchel Street, Newry (Fri Z-V2)",

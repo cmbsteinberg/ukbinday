@@ -199,10 +199,6 @@
     "scraper_id": "hacs_dorset_gov_uk",
     "url": "https://www.dorsetcouncil.gov.uk/"
   },
-  "E06000060": {
-    "scraper_id": "ukbcd_buckinghamshire_council",
-    "url": "https://www.buckinghamshire.gov.uk/waste-and-recycling/find-out-when-its-your-bin-collection/"
-  },
   "E06000061": {
     "scraper_id": "hacs_northnorthants_gov_uk",
     "url": "https://cms.northnorthants.gov.uk/bin-collection-search/calendarevents/100031021318/2023-10-17/2023-10-01"
@@ -960,7 +956,7 @@
     "url": "https://wasteservices.sheffield.gov.uk"
   },
   "E08000021": {
-    "scraper_id": "hacs_newcastle_gov_uk",
+    "scraper_id": "port_newcastle_city_council",
     "url": "https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day"
   },
   "E08000022": {
