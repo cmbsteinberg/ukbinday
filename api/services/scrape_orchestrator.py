@@ -46,6 +46,13 @@ def map_scrape_exception(council: str, exc: Exception) -> HTTPException:
     )
 
 
+def is_cacheable_uprn(uprn: str) -> bool:
+    """A UPRN that can key the ICS cache. "0" (or any all-zero/non-numeric
+    placeholder) is what callers send for address-only councils; caching on it
+    would hand every later address-only lookup the first one's schedule."""
+    return uprn.isdigit() and uprn.strip("0") != ""
+
+
 def build_scrape_params(
     meta, council: str, uprn: str, query_params
 ) -> dict[str, str]:
@@ -72,8 +79,16 @@ async def get_or_scrape(
     registry = request.app.state.registry
     redis_client = getattr(request.app.state, "redis", None)
 
+    def _hit(entry) -> bool:
+        # A sidecar written by a different scraper is not this council's data
+        return (
+            entry is not None
+            and entry.last_success is not None
+            and entry.scraper == council
+        )
+
     entry = await cache.read(uprn)
-    if entry is not None and entry.last_success is not None:
+    if _hit(entry):
         return entry, True
 
     lock_acquired = await acquire(redis_client, uprn)
@@ -82,7 +97,7 @@ async def get_or_scrape(
         while asyncio.get_event_loop().time() < deadline:
             await asyncio.sleep(config.SCRAPE_LOCK_POLL_INTERVAL_S)
             entry = await cache.read(uprn)
-            if entry is not None and entry.last_success is not None:
+            if _hit(entry):
                 return entry, True
         raise HTTPException(
             status_code=503,

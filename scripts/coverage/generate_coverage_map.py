@@ -50,13 +50,12 @@ def _load_scraper_pass_rates() -> dict[str, float]:
     }
 
 
-def _coverage_status(scraper_id: str | None, pass_rates: dict[str, float]) -> str:
-    """Return coverage status: 'working' or 'broken'."""
-    if not scraper_id:
-        return "broken"
-    if scraper_id not in pass_rates:
+def _coverage_status(council_info: dict) -> str:
+    """'working' or 'broken', from the flag scripts.annotate_lad_working
+    wrote (rule in scripts/lad_status.py). Untested is not working."""
+    if council_info.get("scraper_id") and council_info.get("working"):
         return "working"
-    return "working" if pass_rates[scraper_id] > 0 else "broken"
+    return "broken"
 
 
 def _load_population_by_lad() -> dict[str, int]:
@@ -118,7 +117,7 @@ def main():
         lad_cd = feature["properties"].get("LAD25CD", "")
         council_info = lad_lookup.get(lad_cd, {})
         scraper_id = council_info.get("scraper_id")
-        status = _coverage_status(scraper_id, pass_rates)
+        status = _coverage_status(council_info)
         feature["properties"]["coverage_status"] = status
         # Keep backward compat
         feature["properties"]["covered"] = status != "broken"

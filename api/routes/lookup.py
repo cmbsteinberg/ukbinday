@@ -22,6 +22,7 @@ from api.services.rate_limiting import _get_client_ip, rate_limit
 from api.services.scrape_orchestrator import (
     build_scrape_params,
     get_or_scrape,
+    is_cacheable_uprn,
     live_scrape,
     resolve_council,
 )
@@ -158,7 +159,7 @@ async def lookup(
 
     params = build_scrape_params(meta, council, uprn, request.query_params)
 
-    if meta.passthrough_url:
+    if meta.passthrough_url or not is_cacheable_uprn(uprn):
         collections = await live_scrape(request, council, params)
         return LookupResponse(
             uprn=uprn,
@@ -206,6 +207,12 @@ async def calendar(
 
     if meta.passthrough_url:
         return RedirectResponse(url=meta.passthrough_url, status_code=302)
+
+    if not is_cacheable_uprn(uprn):
+        raise HTTPException(
+            status_code=422,
+            detail="A calendar subscription needs a real UPRN for your address.",
+        )
 
     await get_or_scrape(request, uprn, council, params)
 

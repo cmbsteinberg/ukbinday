@@ -6,31 +6,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LAD_PATH = ROOT / "api" / "data" / "lad_lookup.json"
-INTEGRATION_PATH = ROOT / "tests" / "output" / "integration_output.json"
 README_PATH = ROOT / "README.md"
 
 
 def load_data():
     with open(LAD_PATH) as f:
-        lad = json.load(f)
-    with open(INTEGRATION_PATH) as f:
-        integration = json.load(f)
-    return lad, integration
+        return json.load(f)
 
 
-def compute_counts(lad, integration):
-    # Per-council pass/fail from all_results
-    council_results = {}
-    for r in integration["all_results"]:
-        c = r["council"]
-        if c not in council_results:
-            council_results[c] = {"pass": 0, "fail": 0}
-        if r.get("passed", False):
-            council_results[c]["pass"] += 1
-        else:
-            council_results[c]["fail"] += 1
-
-    # Classify LADs
+def compute_counts(lad):
+    # `working` is written by scripts.annotate_lad_working (rule in
+    # scripts/lad_status.py); run that first. No re-derivation here.
     hacs_total = 0
     ukbcd_total = 0
     not_supported = 0
@@ -51,9 +37,7 @@ def compute_counts(lad, integration):
         else:
             ukbcd_total += 1
 
-        # A scraper with any passes counts as passing; no tests also counts as passing
-        results = council_results.get(sid)
-        passing = results is None or results["pass"] > 0
+        passing = bool(info.get("working"))
 
         if is_hacs:
             if passing:
@@ -132,8 +116,8 @@ BADGE_PATH = ROOT / "badge_coverage.json"
 
 
 def main():
-    lad, integration = load_data()
-    counts = compute_counts(lad, integration)
+    lad = load_data()
+    counts = compute_counts(lad)
     mermaid = build_mermaid(counts)
     update_readme(mermaid)
     badge = build_badge(counts)

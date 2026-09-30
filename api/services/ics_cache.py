@@ -301,6 +301,18 @@ class IcsCache:
         today = date.today()
         new_dicts = _collection_dicts(collections, uprn)
 
+        existing: dict = {}
+        if sidecar_path.exists():
+            try:
+                existing = json.loads(sidecar_path.read_text())
+            except (OSError, json.JSONDecodeError):
+                existing = {}
+        # Events from a different scraper are a different council's data;
+        # start the calendar afresh rather than merging them in.
+        if existing.get("scraper") and existing["scraper"] != scraper_id:
+            ics_path.unlink(missing_ok=True)
+            existing = {}
+
         cal = self._merge_and_prune(
             ics_path, uprn, new_dicts, config.ICS_RETENTION_DAYS, today
         )
@@ -310,12 +322,6 @@ class IcsCache:
         next_collection = upcoming[0]["date"] if upcoming else None
 
         now = datetime.now(UTC)
-        existing: dict = {}
-        if sidecar_path.exists():
-            try:
-                existing = json.loads(sidecar_path.read_text())
-            except (OSError, json.JSONDecodeError):
-                existing = {}
 
         sidecar = {
             "uprn": uprn,
