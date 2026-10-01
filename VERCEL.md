@@ -1,6 +1,17 @@
 # Moving off Hetzner: Vercel + Cloudflare
 
-Status: plan, 2026-10-01. Nothing is built yet.
+Status: plan, revised 2026-10-01. Nothing is built yet.
+
+This plan assumes the tidy-up lands first: `api/scrapers/`, `api/compat/` and the upstream
+sync (`pipeline/hacs/`, `pipeline/ukbcd/`, `pipeline/sync.sh`) are gone, and the modules in
+`api/councils/` are the only scrapers. That shrinks this work in a few places:
+
+- `ScraperRegistry.invoke()` has one path (`api.councils._base.run`), and every outbound
+  request goes through the harness `Http` (`api/councils/_base/http.py`), so timeouts,
+  transport choice (httpx or curl_cffi) and TLS settings are in one file.
+- `requests` leaves the runtime dependencies (no council module imports it; only
+  `api/compat/requests_fallback.py` did).
+- Nothing under `api/` needs excluding from the bundle except `__pycache__`.
 
 ## Why
 
@@ -44,8 +55,12 @@ One real case per council module, 346 modules, run one at a time per process
 | CPU per scrape | 35 ms | 22 ms | 55 ms | 321 ms | 876 ms (Trafford, PDF) |
 | Wall time per scrape | 1.8 s | 0.9 s | 3.9 s | 12.5 s | 22 s |
 
-- Importing all 348 council modules takes 0.24 s of CPU. `ScraperRegistry.build()`,
-  including the old `api/scrapers/`, takes 0.54 s. Peak RSS was 63-134 MB.
+- Importing all 348 council modules takes 0.24 s of CPU. `ScraperRegistry.build()`
+  took 0.54 s with the old `api/scrapers/` loaded and 0.15 s (after a 0.19 s import) on
+  2026-10-01 with 370 IDs; without `api/scrapers/` it only gets smaller. Peak RSS was
+  63-134 MB.
+- Postcode lookup: `import duckdb` 0.12 s, first `read_parquet` query on the 16 MB
+  `postcode_lookup.parquet` 31 ms, later queries 13 ms. Cold start cost is small (phase 3).
 - Budget below uses **70 ms per scrape**, double the measured mean, for slower cloud vCPUs.
 
 The refresh job only re-scrapes a UPRN once its `next_collection` is tomorrow or earlier
@@ -100,7 +115,11 @@ and answer these questions before writing any code. Anything that fails here cha
    which only matters for closing the curl_cffi session and duckdb, both safe to drop.
    Confirm the cold start time.
 3. **Bundle size** under the 500 MB Python limit. See "Dependencies" below.
-4. **Native wheels**: duckdb, curl_cffi, lxml, pypdfium2 import and work on Vercel's Linux.
+4. **Native wheels**: duckdb, curl_cffi, lxml, cryptography, pillow and pypdfium2 import
+   and work on Vercel's Linux. All ship manylinux x86_64 wheels for Python 3.13, so the
+   build needs no compiler. curl_cffi bundles its own libcurl-impersonate (23 MB); check a
+   `Transport.CURL_CFFI` module actually completes a TLS handshake from Vercel, since 50
+   modules depend on it.
 5. **Region** `lhr1` is applied (check the response headers), and the cold start time.
 6. `/api/v1/lookup/{uprn}` returns collections for a handful of councils, including one
    `Transport.CURL_CFFI` module and one PDF module.
@@ -187,28 +206,58 @@ Small changes, each independent:
   - The `api:request_counts` analytics hash and `/status`'s `redis_connected` fall away.
     Cloudflare and Vercel analytics replace GoAccess.
   - If any of these turn out to matter, Upstash Redis has a free tier and the existing code
-    works with it unchanged via `REDIS_URL`.
+    works with it unchanged via `REDIS_URL=rediss://...` (redis-py over TLS). The cost is a
+    TLS connect on every cold start plus one round trip per rate-limit check and two per
+    scrape lock. Turn it on first for the scrape lock if duplicate scrapes of one UPRN
+    show up in logs, since that's the only Redis use with a correctness effect.
+  - Remove the `ratelimit:*` flush from the deploy step (`deploy.yml`); there's no Redis
+    container to exec into.
 - **Scraper health** (`registry.record_success/failure`, shown on `/councils` and
   `/metrics`) is in-memory per instance, so on Vercel it resets on every cold start. That's
   harmless, but don't treat it as meaningful there. The live test and the `working` flags
   are the real source of truth.
+- **Postcode lookup.** `CouncilLookup` uses plain duckdb (there is no ibis, whatever older
+  notes say) and runs `read_parquet` on every request against the bundled
+  `api/data/postcode_lookup.parquet` (16 MB, 1.6M rows). The bundle is read-only, which
+  duckdb's in-memory connection doesn't mind. Leave it as is. If cold starts matter later,
+  load the parquet once into an in-memory table in the lifespan, or drop duckdb (57 MB of
+  the bundle) for a sorted postcode->LAD file and a binary search.
+- **Timeouts.** A scrape is bounded three ways: `Http` per-request `DEFAULT_TIMEOUT` (20 s),
+  `SCRAPER_TIMEOUT` (30 s) around the whole `run()`, and on Vercel the function's
+  `maxDuration`. The whole app is one function, so `maxDuration` is 300 s for every route
+  (the refresh needs it); user routes are held well under that by `SCRAPER_TIMEOUT`. A
+  cache-miss `/lookup` is at most the 30 s scrape plus address and postcode work, inside
+  Cloudflare's 100 s proxy timeout. The slowest measured scrape was 22 s, so
+  `SCRAPER_TIMEOUT` stays at 30. Wall time spent waiting on councils isn't active CPU, so
+  it doesn't eat the 4 h budget, but it does count toward provisioned GB-hours.
+  `SCRAPE_LOCK_MAX_WAIT_S` only matters with Redis.
 - **Static files**: Vercel promotes `app.mount("/static", StaticFiles(...))` to its CDN at
   build time, but keeps them in the function when there's top-level middleware, which
   `api/main.py` has (`log_requests`). Set `[tool.vercel.fastapi.static] cdn = true` to
   promote anyway; static responses then skip the security headers `log_requests` adds,
-  which can be set in `vercel.json` `headers` instead.
+  which can be set in `vercel.json` `headers` instead. `api/static/` is 1.2 MB, almost all
+  `coverage.geojson`. The three Jinja templates (`index.html`, `coverage.html`,
+  `api-docs.html`) are rendered by the function and need no change.
 - **Logs**: JSON to stdout already. Hobby keeps runtime logs for 1 hour, so anything
   you'd want to look back on (refresh stats) goes in the heartbeat object.
 
 ### Phase 4: deploy pipeline and council probe
 
-- **Dependencies.** `playwright` (130 MB), `pytest`, `pytest-asyncio` and `ty` moved to
-  the `dev` group (done 2026-10-01). Add `boto3`. What's left (duckdb ~39 MB, lxml, cryptography, pdfminer,
-  curl_cffi, pypdfium2, boto3, ...) should be ~200 MB, inside the 500 MB Python limit.
-  Exclude `pipeline/`, `tests/`, `scripts/`, `api/scrapers/__pycache__` and the
-  committed ONS parquets in `pipeline/data/` (~100 MB) from the function bundle. Only
-  `api/data/postcode_lookup.parquet` (15 MB) and `lad_lookup.json` are needed at runtime.
-- **CI.** `deploy.yml`: keep the `smoke-test` job; replace the SSH step with
+- **Dependencies.** `playwright` (130 MB), `pytest`, `pytest-asyncio` and `ty` are in
+  the `dev` group already. Measured 2026-10-01: the production dependencies plus `boto3`,
+  installed for `x86_64-manylinux_2_28` / Python 3.13, come to **197 MB**. The biggest are
+  duckdb (57 MB), botocore (25 MB), curl_cffi (23 MB), pillow (20 MB, pulled in by
+  pdfplumber), lxml and cryptography (13 MB each). That's well inside the 500 MB limit.
+  After the tidy-up, drop `requests` from `[project] dependencies`. If size ever matters,
+  replacing boto3 with signed httpx calls to R2 saves 25 MB.
+- **Bundle exclusions.** Exclude `pipeline/`, `tests/`, `scripts/`, `node_modules/` and
+  `**/__pycache__`. The committed ONS parquets in `pipeline/data/` (104 MB) are for test
+  generation, not runtime. Only `api/data/postcode_lookup.parquet` (16 MB) and
+  `api/data/lad_lookup.json` are read at runtime, plus `api/councils/_aliases.json`.
+- **CI.** The current deploy is the `appleboy/ssh-action` step in
+  `.github/workflows/deploy.yml` (git reset, rewrite `.env` with the Turnstile secrets,
+  `docker compose up -d --build`, flush rate-limit keys). `scripts/deploy/deployment.py`
+  (Hetzner provisioning, using `hcloud` and `paramiko`) is separate and goes in Phase 6. Keep the `smoke-test` job; replace the SSH step with
   `vercel deploy --prebuilt --prod` using a `VERCEL_TOKEN` secret, and turn off Vercel's
   automatic Git deploys so a failing smoke test still blocks production.
 - **Env vars** in Vercel (production): `ADDRESS_API_URL`, `ADDRESS_API_COMPANY_ID`,
@@ -246,8 +295,25 @@ Small changes, each independent:
 - Remove `Caddyfile`, `goaccess.conf`, and the `redis`, `caddy`, `goaccess`, `uptime-kuma`
   and `worker` services from `docker-compose.yml` (keep `api` for local use).
   `tests/test_deploy.py` and `tests/test_deploy_docker.sh` shrink to match.
-- Replace Uptime Kuma with any free external monitor on `/api/v1/status`.
-- Update `AGENTS.md` (Infrastructure, CI/CD, `ics_cache`, `refresh_job`, `scrape_lock`).
+- Monitoring: replace Uptime Kuma with a free external monitor (UptimeRobot, Better Stack)
+  on `/api/v1/status`, plus a second check that fails when the refresh heartbeat in R2 is
+  older than 36 h (expose its age on `/api/v1/metrics` or `/status`). Replace GoAccess with
+  Cloudflare Web Analytics and the Cloudflare/Vercel request dashboards. Hobby keeps
+  runtime logs for an hour, so errors worth keeping need a log drain or Sentry's free tier.
+- Delete `scripts/deploy/deployment.py` and drop `hcloud` and `paramiko` from the dev group.
+- Update `AGENTS.md` (Infrastructure, CI/CD, `ics_cache`, `refresh_job`, `scrape_lock`,
+  `deploy/deployment.py` becomes `scripts/deploy/deployment.py`, then goes; drop the ibis mentions).
+
+## Risks, biggest first
+
+| Risk | Phase it surfaces | Mitigation |
+|---|---|---|
+| Councils block or throttle AWS (Vercel) egress IPs that Hetzner's weren't | 4 (council probe) | Diff a preview run against the last live run; few failures go to `NeedsBrowser`, many mean Cloud Run europe-west2 |
+| R2 read-merge-write races across instances lose a write | 1 | Stable UIDs mean the next refresh repairs it; conditional PUT on the sidecar ETag if it ever matters |
+| Refresh pass outgrows 300 s | 2 | Shards plus a deadline; unfinished UPRNs stay eligible for the next night |
+| Calendar polls exhaust the 1M invocation cap (feature pauses, no bill) | 5 | Cloudflare cache rule on `/api/v1/calendar/*` before reaching ~10k calendars |
+| curl_cffi impersonation behaves differently on Vercel's Linux | 0 | Spike item 4; the 50 `CURL_CFFI` modules are in the council probe |
+| Losing Redis drops cross-instance scrape coalescing and per-IP limits | 3 | Turnstile on `/addresses`, Cloudflare rate-limit rule, Upstash if needed |
 
 ## Watch points
 
