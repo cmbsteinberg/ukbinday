@@ -9,9 +9,10 @@ from dateutil import parser as dateutil_parser
 
 _ORDINAL = re.compile(r"(?<=\d)(st|nd|rd|th)\b", re.IGNORECASE)
 _WEEKDAYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
-# Two leap years, so "29 February" parses whichever default fills the year.
+# Two defaults differing in every field: a field that comes out different between
+# the two parses was missing from the text. Leap years, so "29 February" parses.
 _PROBE_A = datetime(2000, 1, 1)
-_PROBE_B = datetime(2004, 1, 1)
+_PROBE_B = datetime(2004, 2, 2)
 
 
 def parse_date(text: str, *, today: date | None = None) -> date:
@@ -20,18 +21,22 @@ def parse_date(text: str, *, today: date | None = None) -> date:
     Day comes before month. When the text has no year, the year is the one
     that puts the date closest to `today` (default: the real today), so
     "2 January" read on 30 December is next year's and "29 December" read on
-    3 January is last year's. Raises `ValueError` for text with no date in it.
+    3 January is last year's. Raises `ValueError` for text without both a day
+    and a month ("December TBC", "Monday").
     """
     cleaned = _ORDINAL.sub("", text).strip()
     iso = len(cleaned) >= 10 and cleaned[4] == "-" and cleaned[:4].isdigit()
     a = dateutil_parser.parse(cleaned, default=_PROBE_A, dayfirst=not iso, fuzzy=True)
     b = dateutil_parser.parse(cleaned, default=_PROBE_B, dayfirst=not iso, fuzzy=True)
+    # fuzzy=True would otherwise read "December TBC" as 1 December, "Mon" as some Monday.
+    if a.day != b.day or a.month != b.month:
+        raise ValueError(f"No day and month in {text!r}")
     if a.year == b.year:
         return a.date()
 
     today = today or date.today()
     candidates = []
-    for year in (today.year - 1, today.year, today.year + 1):
+    for year in range(today.year - 4, today.year + 5):  # a leap year for 29 February
         try:
             candidates.append(date(year, a.month, a.day))
         except ValueError:  # 29 February in a common year

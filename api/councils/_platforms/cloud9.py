@@ -25,8 +25,8 @@ from api.councils._base import (
     Http,
     InputError,
     Meta,
+    Platform,
     Response,
-    Scraper,
     Transport,
     UpstreamError,
     match_address,
@@ -164,7 +164,7 @@ def _collections(payload: Json) -> list[Collection]:
     return out
 
 
-class Cloud9(Scraper):
+class Cloud9(Platform[Cloud9Config]):
     # The old client used curl_cffi (Chrome impersonation) and forced HTTP/1.1 because the
     # API's ELB can send HTTP/1.1-only headers on HTTP/2 (nghttp2 error 92). `Http` can't
     # force the version; the default transport worked against the live API.
@@ -179,11 +179,8 @@ class Cloud9(Scraper):
     )
 
     def __init__(self, meta: Meta, config: Cloud9Config, *, icons: Mapping[str, str] | None = None) -> None:
-        self.meta = meta
-        self.config = config
+        super().__init__(meta, config, icons=icons)
         self.requires = frozenset({"uprn"}) if config.lookup == "uprn" else frozenset()
-        if icons is not None:
-            self.icons = icons
 
     async def _get_json(self, http: Http, path: str, params: Mapping[str, str] | None = None) -> Json:
         """Try each API hostname; only a transport failure moves on to the next."""

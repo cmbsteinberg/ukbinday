@@ -14,6 +14,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
+    Transport,
     UpstreamError,
     match_address,
     soup,
@@ -66,6 +67,7 @@ class Sunderland(Scraper):
     )
     requires = frozenset({"postcode"})
     headers = _HEADERS
+    transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         postcode = address.need("postcode")
@@ -152,7 +154,8 @@ class Sunderland(Scraper):
         # Step 5: Parse collection dates from the results page.
         collections: list[Collection] = []
         for bin_type in _BIN_TYPES:
-            title_el = page.find("p", string=re.compile(re.escape(bin_type), re.IGNORECASE))
+            pattern = re.compile(re.escape(bin_type), re.IGNORECASE)
+            title_el = next((p for p in page.find_all("p") if p.string and pattern.search(p.string)), None)
             if not isinstance(title_el, Tag):
                 continue
 

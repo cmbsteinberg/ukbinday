@@ -56,6 +56,8 @@ def _parse_collections(html: str) -> list[Collection]:
 
     recordset = serialized["Recordset1"]
     value = recordset.get("value", recordset) if isinstance(recordset, dict) else recordset
+    if not isinstance(value, dict):
+        raise UpstreamError("Gosport returned an empty collection recordset")
     result = value.get("GetCollectionByUprnAndDateResult", value)
 
     if not result.get("SuccessFlag"):

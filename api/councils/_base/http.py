@@ -34,8 +34,10 @@ Method = Literal["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
 Params = Mapping[str, str | int | float | None]
 
 DEFAULT_TIMEOUT = 20.0
-# curl_cffi's newest Chrome fingerprint, which brings its own matching headers.
-IMPERSONATE = "chrome"
+# A pinned Chrome fingerprint (it brings its own matching headers). Not the
+# floating "chrome" alias: curl_cffi 0.14 maps that to chrome142, which some
+# councils' bot checks block (Swale, Eastleigh), and an upgrade would move it again.
+IMPERSONATE = "chrome136"
 
 
 class Transport(StrEnum):
@@ -155,7 +157,9 @@ class Http(ABC):
             data=dict(data) if data is not None else None,
             json=json,
             content=content,
-            headers=dict(merged),
+            # From .raw, not dict(merged): that lower-cases the names, and some
+            # WAFs reject "user-agent" while accepting "User-Agent" (Boston).
+            headers={k.decode(): v.decode() for k, v in merged.raw},
             timeout=DEFAULT_TIMEOUT if timeout is None else timeout,
             follow_redirects=follow_redirects,
         )

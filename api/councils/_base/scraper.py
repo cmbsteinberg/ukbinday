@@ -64,6 +64,19 @@ class Scraper(ABC):
         """
 
 
+class Platform[C](Scraper):
+    """A shared council platform (Whitespace, Cloud9...): one class, an instance
+    per council, configured by a frozen dataclass `C`."""
+
+    config: C
+
+    def __init__(self, meta: Meta, config: C, *, icons: Mapping[str, str] | None = None) -> None:
+        self.meta = meta
+        self.config = config
+        if icons is not None:
+            self.icons = icons
+
+
 def tidy(collections: Sequence[Collection], icons: Mapping[str, str]) -> list[Collection]:
     """Whitespace-collapsed types, icons filled, duplicates dropped, sorted by date then type."""
     seen: set[tuple[object, str]] = set()

@@ -21,8 +21,7 @@ from api.councils._base import (
     Collection,
     Http,
     InputError,
-    Meta,
-    Scraper,
+    Platform,
     UpstreamError,
     match_address,
     parse_ics,
@@ -39,17 +38,11 @@ class SocietyWorksConfig:
     """With a trailing slash: "https://recyclingservices.brent.gov.uk/"."""
 
 
-class SocietyWorks(Scraper):
+class SocietyWorks(Platform[SocietyWorksConfig]):
     requires = frozenset()  # a UPRN, or a postcode plus the house number
     headers: Mapping[str, str] = MappingProxyType(
         {"User-Agent": "uk-bin-collection/1.0 (+https://github.com/robbrad/UKBinCollectionData)"}
     )
-
-    def __init__(self, meta: Meta, config: SocietyWorksConfig, *, icons: Mapping[str, str] | None = None) -> None:
-        self.meta = meta
-        self.config = config
-        if icons is not None:
-            self.icons = icons
 
     async def _uprn_to_property_id(self, http: Http, uprn: str) -> str:
         r = await http.get(f"{self.config.base_url}property/{uprn}", follow_redirects=False, timeout=_TIMEOUT, check=False)

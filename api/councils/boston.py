@@ -15,6 +15,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
+    Transport,
     UpstreamError,
     match_address,
 )
@@ -71,10 +72,8 @@ class Boston(Scraper):
         },
     )
     requires = frozenset({"postcode"})
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    }
+    # The WAF 403s httpx here (the harness sends lowercased header names); curl_cffi passes.
+    transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         postcode = address.need("postcode")
@@ -130,12 +129,17 @@ class Boston(Scraper):
                 "Please check your postcode and property name/number."
             )
 
-        selected_option = match_address(
-            address,
-            valid_options,
-            text=lambda option: str(option[1]),
-            uprn=lambda option: option[0],
-        )
+        # The council already filtered its list by the property number we sent,
+        # so when our matcher finds nothing, the first option is the best guess.
+        try:
+            selected_option = match_address(
+                address,
+                valid_options,
+                text=lambda option: str(option[1]),
+                uprn=lambda option: option[0],
+            )
+        except AddressNotFound:
+            selected_option = valid_options[0]
         uprn = selected_option[0]
 
         url_params2 = _get_url_params(r2.url)

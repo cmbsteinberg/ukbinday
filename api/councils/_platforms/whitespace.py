@@ -27,8 +27,7 @@ from api.councils._base import (
     AddressNotFound,
     Collection,
     Http,
-    Meta,
-    Scraper,
+    Platform,
     UpstreamError,
     match_address,
     soup,
@@ -66,14 +65,8 @@ def _landing_link(page: BeautifulSoup) -> str:
     return str(links[0]["href"])
 
 
-class Whitespace(Scraper):
+class Whitespace(Platform[WhitespaceConfig]):
     requires = frozenset({"postcode", "house_number"})
-
-    def __init__(self, meta: Meta, config: WhitespaceConfig, *, icons: Mapping[str, str] | None = None) -> None:
-        self.meta = meta
-        self.config = config
-        if icons is not None:
-            self.icons = icons
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         cfg = self.config

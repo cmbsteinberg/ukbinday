@@ -12,7 +12,6 @@ from api.councils._base import (
     Scraper,
     UpstreamError,
     soup,
-    text_of,
 )
 
 _PAGE = "https://waste.southhams.gov.uk/mycollections"
@@ -57,8 +56,11 @@ class SouthHams(Scraper):
         for tile in response.json()["binCollections"]["tile"]:
             page = soup(tile[0])
             for item in page.find_all("div", class_="collectionDiv"):
-                service_name = text_of(item.find("h3"))
-                details = text_of(item.find("div", class_="detWrap"))
+                # Plain .text: text_of's " " separator would split "date." across tags.
+                h3 = item.find("h3")
+                det = item.find("div", class_="detWrap")
+                service_name = h3.text.strip() if h3 else ""
+                details = det.text.strip() if det else ""
                 next_collection = details.split("Your next scheduled collection is ")[1].split(".")[0]
 
                 if next_collection.startswith("today"):

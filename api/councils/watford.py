@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import re
 import time
-from datetime import date
+from collections.abc import Mapping
+from datetime import datetime
 from html import unescape
 
 from api.councils._base import (
@@ -41,7 +42,7 @@ def _extract_collections(html_text: str) -> list[Collection]:
             continue
 
         waste_type = re.sub(r"\s+", " ", unescape(title_match.group(1))).strip()
-        day = date.strptime(date_match.group(1), "%d/%m/%Y")
+        day = datetime.strptime(date_match.group(1), "%d/%m/%Y").date()
         entries.append(Collection(day, waste_type))
 
     return entries
@@ -72,7 +73,7 @@ class Watford(Scraper):
             raise UpstreamError("Failed to obtain Watford auth session")
         sid = match.group(1)
 
-        async def run_lookup(lookup_id: str, form_values: dict[str, object]) -> dict:
+        async def run_lookup(lookup_id: str, form_values: Mapping[str, object]) -> dict:
             params = {
                 "id": lookup_id,
                 "repeat_against": "",

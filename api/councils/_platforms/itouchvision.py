@@ -19,7 +19,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper
+from api.councils._base import Address, Collection, Http, Platform
 
 _KEY = bytes.fromhex("F57E76482EE3DC3336495DEDEEF3962671B054FE353E815145E29C5689F72FEC")
 _IV = bytes.fromhex("2CBF4FC35C69B82362D393A4F0B9971A")
@@ -47,12 +47,8 @@ def _decrypt(hex_str: str) -> dict[str, Any]:
     return json.loads((unpadder.update(padded) + unpadder.finalize()).decode())
 
 
-class ITouchVision(Scraper):
+class ITouchVision(Platform[ITouchVisionConfig]):
     requires = frozenset({"uprn"})
-
-    def __init__(self, meta: Meta, config: ITouchVisionConfig) -> None:
-        self.meta = meta
-        self.config = config
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         cfg = self.config

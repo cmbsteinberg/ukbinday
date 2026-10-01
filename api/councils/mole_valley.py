@@ -41,7 +41,8 @@ def _parse_collections(html: str) -> list[Collection]:
     entries: list[Collection] = []
 
     for bin_type in _BIN_TYPES:
-        label_tag = page.find("strong", string=re.compile(re.escape(bin_type)))
+        pattern = re.compile(re.escape(bin_type))
+        label_tag = page.find(lambda t, p=pattern: t.name == "strong" and t.string is not None and p.search(t.string) is not None)
         if not label_tag:
             continue
 
@@ -92,7 +93,12 @@ class MoleValley(Scraper):
                 _API_URL + postcode,
                 params={"page": page_number},
                 timeout=30,
+                check=False,
             )
+            if response.status_code >= 400:
+                if page_number == 1:
+                    response.raise_for_status()
+                break  # past the last page
             data = response.json()
 
             if not data.get("result", True):

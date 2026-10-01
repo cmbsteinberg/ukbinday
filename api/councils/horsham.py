@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
+from api.councils._base import Address, Collection, Http, Meta, Scraper, Transport, soup
 
 _API_URL = "https://satellite.horsham.gov.uk/environment/refuse/cal_details.asp"
 
@@ -20,7 +20,8 @@ class Horsham(Scraper):
         },
     )
     requires = frozenset({"uprn"})
-    headers = {"user-agent": "Mozilla/5.0"}
+    # Legacy TLS 1.2 cipher only; curl copes, default httpx cannot negotiate it.
+    transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         r = await http.post(_API_URL, data={"uprn": address.need("uprn")})

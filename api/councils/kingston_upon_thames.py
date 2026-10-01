@@ -43,6 +43,8 @@ class KingstonUponThames(Scraper):
     )
     requires = frozenset({"postcode"})
     transport = Transport.CURL_CFFI
+    # curl_cffi's default Chrome User-Agent gets a 503 maintenance page; a plain UA passes.
+    headers = {"User-Agent": "Mozilla/5.0"}
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         await http.get(_WASTE_URL)

@@ -14,7 +14,7 @@ from api.councils._base.html import soup, text_of
 from api.councils._base.http import Http, Response, Transport
 from api.councils._base.ics import IcsEvent, parse_ics
 from api.councils._base.matching import match_address, normalise_text
-from api.councils._base.scraper import Meta, Scraper, run
+from api.councils._base.scraper import Meta, Platform, Scraper, run
 
 __all__ = [
     "Address",
@@ -27,6 +27,7 @@ __all__ = [
     "InputError",
     "Meta",
     "NeedsBrowser",
+    "Platform",
     "Response",
     "Scraper",
     "ScraperError",

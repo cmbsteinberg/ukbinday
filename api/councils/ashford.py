@@ -13,15 +13,11 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
+    Transport,
     soup,
 )
 
 _API_URL = "https://secure.ashford.gov.uk/waste/collectiondaylookup/"
-_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Application": "application/x-www-form-urlencoded",
-}
 
 
 class Ashford(Scraper):
@@ -36,7 +32,8 @@ class Ashford(Scraper):
         },
     )
     requires = frozenset({"postcode", "uprn"})
-    headers = _HEADERS
+    # The site only speaks legacy TLS 1.2 ciphers; curl handles that, httpx would need a custom SSLContext.
+    transport = Transport.CURL_CFFI
     verify_tls = False
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:

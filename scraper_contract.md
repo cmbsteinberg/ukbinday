@@ -1,7 +1,9 @@
 # Scraper contract: design
 
-Status: draft, 2026-09-30. Nothing is built yet. Next step: hand-convert about 10 varied
-scrapers against this design, then revise it before any bulk conversion.
+Status, 2026-10-01: built and converted, not wired in. `api/councils/` holds the framework,
+8 platforms and 347 council modules; production still serves `api/scrapers/`. See
+[Progress](#progress) for where each council stands and [As built](#as-built-departures-from-this-design)
+for what changed from the design below.
 
 ## Why
 
@@ -303,6 +305,90 @@ the main cost, and the recorder is built to avoid it:
 Replay caveat: scrapers that put `now()` in a request (timestamps, date ranges) won't
 replay byte-identically. Replay matches on method + URL path + body with the same volatile
 values masked, and the harness freezes `today` during replay.
+
+## As built: departures from this design
+
+- **No default User-Agent.** Bexley (FixMyStreet) rejects a full Chrome UA sent without
+  Chrome's other headers, and 165 old scrapers sent no UA at all. Each scraper sets
+  `headers` itself.
+- **Header names are sent as written.** `Http` used to lower-case them; Boston's WAF
+  rejects `user-agent` and accepts `User-Agent`.
+- **curl_cffi impersonates a pinned `chrome136`**, as the old client did, not the floating
+  `"chrome"` alias. curl_cffi 0.14 maps that alias to chrome142, which Swale and Eastleigh
+  block, and an upgrade would move it again. Bump the pin deliberately and re-check the
+  curl_cffi modules when you do.
+- **No HTTP/1.1 switch for curl_cffi.** Cloud9's old client forced it for an intermittent
+  ELB error; the default works today. Add it to `open_http` if that error comes back.
+- **No legacy-TLS option for httpx.** Ashford, Horsham and Inverclyde only speak old
+  ciphers; `Transport.CURL_CFFI` with `verify_tls = False` reaches them.
+- **`Collection` is a frozen dataclass**, not dict-shaped. The cache and routes only read
+  `.date`, `.type`, `.icon`, so nothing else changed.
+- **`Platform[C]`** in `_base/scraper.py` is the base for every `_platforms/` class:
+  `(meta, config, *, icons=None)`. Platforms: Whitespace, iTouchVision, AchieveForms (a
+  helper, not a class), Cloud9, Firmstep, SocietyWorks, Bartec (the public dashboard page:
+  4 councils), ReCollect (7). The other Bartec-backed councils reach it through their own
+  APIs, AchieveForms or Firmstep, so they stay bespoke.
+- **`parse_date` rejects text without a day and a month** ("December TBC", "Mon"), which
+  dateutil's fuzzy mode would otherwise read as the 1st or the next weekday. Text with no
+  year still takes the year nearest today.
+- **`text_of` joins child text with spaces**, so inline markup gives "( if subscribed )".
+  Its 52 users were checked against that behaviour, so it stays; use
+  `" ".join(node.get_text().split())` where inline tags sit inside the text.
+- **Cassettes and record/replay aren't built.** Conversions were checked with
+  `scripts/councils/check.py --compare`, which runs each module's cases and the sampled
+  addresses live, side by side with the old scraper. It's flaky by nature (site outages,
+  DNS, concurrency), which is why the progress table below needs a triage column.
+
+## Progress
+
+### 2026-10-01: after fixes, one full live run
+
+`check --all --compare`, 347 modules, sampled addresses, concurrency 10. Buckets compare
+the sampled cases with the old scraper.
+
+| Bucket | Count | Councils |
+|---|---|---|
+| Same output as the old scraper | 283 | |
+| Differs, triaged below | 38 | |
+| Passes; the old scraper fails | 15 | central_bedfordshire, ceredigion, cheltenham, croydon, derbyshire_dales, flintshire, folkestone_and_hythe, ipswich, north_lanarkshire, preston, sevenoaks, south_kesteven, thurrock, westminster, wyre_forest |
+| Both fail | 11 | ards_and_north_down, blaby, cardiff, coventry, gedling, gosport, havant, north_norfolk, telford_and_wrekin, tonbridge_and_malling, welwyn_hatfield |
+| Regressed (old passes, new fails) | 0 | |
+
+The 38 differences:
+
+| Kind | Count | Councils | Evidence |
+|---|---|---|---|
+| No real difference: one side failed one case, the comparable cases match | 20 | antrim_and_newtownabbey, bassetlaw, belfast, birmingham, bracknell_forest, camden, dacorum, enfield, fareham, greenwich, gwynedd, hackney, leicester, lisburn_and_castlereagh, middlesbrough, milton_keynes, north_west_leicestershire, oadby_and_wigston, redditch, west_northamptonshire | Mostly address-not-found or site errors on both sides; on bracknell_forest, dacorum, milton_keynes the new module passes where the old crashes; on middlesbrough, redditch the new raises where the old returned `[]` (the intended contract) |
+| Network noise on this machine | 6 | broxbourne, castle_point, east_staffordshire, lewisham, reigate_and_banstead, stoke_on_trent | New side hit a DNS `ConnectError` on one case; the other case is SAME |
+| Old scraper failed a case the new passes | 2 | east_renfrewshire, tandridge | Old: "results table not found" / read timeout |
+| Intended: more data | 2 | brent, sutton | All old dates present; new reads the full ICS feed (365 days, old 60) |
+| Old was wrong | 3 | colchester, oxford, torbay | Colchester's old matcher took house 1 for house 10; Oxford's old shared curl_cffi session bled one lookup's cookies into another; Torbay's old output had an empty-type row |
+| Better address match | 2 | boston, kingston_upon_thames | New matches the UPRN where the old took the first listed address (Boston) or failed (Kingston) |
+| Decision needed | 2 | redcar_and_cleveland, shetland_islands | Redcar: ReCollect names ("Refuse") replace codes ("REFUSE"), same dates. Shetland: a collection due today counts (old skipped to next week) |
+| Site-side concurrency | 1 | swansea | Identical when run one at a time; under concurrent lookups the council's server answered with another address's dates |
+
+Fixed today, all now SAME or better: the 14 regressions from the first run (ashford, boston,
+eastleigh, horsham, inverclyde, kingston_upon_thames, mole_valley, north_warwickshire,
+redbridge, south_hams, sunderland, swale, watford, waverley), plus conwy (cosmetic) and
+na_h_eileanan_siar ("December TBC" read as a date). Root causes: the curl_cffi
+fingerprint and header casing (base), old-cipher sites needing curl_cffi, wrong lookup IDs
+and `date.strptime` from the bulk conversion, and status checks raising on a 404 the old
+code never reached. Redbridge and Waverley needed nothing: the first run caught them flaky.
+
+Open:
+- **Renaming bin types** (Redcar, and any cosmetic fix) changes the ICS event UIDs, which
+  hash the type, so existing subscribers would see each collection twice until the old
+  events age out. Keep the old names unless they're wrong.
+- **Concurrency bleed**: Oxford (old code, shared session) and Swansea (council server)
+  can return another address's dates under concurrent load. The new `Http` is per-lookup,
+  which fixes Oxford; Swansea may need the scrape lock to serialise per council.
+- **12 basedpyright errors** remain in `api/councils/`; pre-commit doesn't run the checker.
+- **Not wired in**: the registry doesn't load `api/councils/` yet.
+
+### 2026-09-30: first full run after bulk conversion
+
+283 SAME (265 at first pass plus 18 on a slower re-run), 31 differing, 15 new-only, 11
+both-fail, 14 regressed.
 
 ## Decisions
 

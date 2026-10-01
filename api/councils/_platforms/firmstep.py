@@ -30,8 +30,7 @@ from api.councils._base import (
     Collection,
     Http,
     InputError,
-    Meta,
-    Scraper,
+    Platform,
     UpstreamError,
     soup,
 )
@@ -89,16 +88,10 @@ class FirmstepAddressFormConfig:
     """`searchNlpg` for the postcode-lookup fallback."""
 
 
-class FirmstepAddressForm(Scraper):
+class FirmstepAddressForm(Platform[FirmstepAddressFormConfig]):
     """Councils that take the address key ("U" + UPRN, or a postcode) directly."""
 
     requires = frozenset()
-
-    def __init__(self, meta: Meta, config: FirmstepAddressFormConfig, *, icons: Mapping[str, str] | None = None) -> None:
-        self.meta = meta
-        self.config = config
-        if icons is not None:
-            self.icons = icons
 
     async def _submit(self, http: Http, address_id: str) -> list[Collection]:
         cfg = self.config

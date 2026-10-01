@@ -49,7 +49,7 @@ class Conwy(Scraper):
             day = datetime.strptime(date_text, "%A, %d/%m/%Y").date()
 
             for element in collection.select("#main1 li"):
-                collections.append(Collection(day, text_of(element)))
+                collections.append(Collection(day, " ".join(element.get_text().split())))
 
         return collections
 

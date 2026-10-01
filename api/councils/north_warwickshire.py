@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import time
 from datetime import datetime, timedelta
+from typing import Any
 
 from api.councils._base import (
     Address,
@@ -16,7 +17,8 @@ from api.councils._base import (
 
 _SESSION_URL = "https://nwarks-ss.achieveservice.com/authapi/isauthenticated"
 _API_URL = "https://nwarks-ss.achieveservice.com/apibroker/runLookup"
-_LOOKUP_IDS = ("6964f19aac313", "6964f19aac313", "6964f19d080c5", "6964f19bc2e2e", "695fc85344bb3")
+_TOKEN_LOOKUP_ID = "695fc5d469d65"
+_LOOKUP_IDS = ("6964f19aac313", "6964f19d080c5", "6964f19bc2e2e", "695fc85344bb3")
 _REQUEST_HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -56,7 +58,7 @@ class NorthWarwickshire(Scraper):
 
         token_response = await http.post(
             _API_URL,
-            params=_params(_LOOKUP_IDS[0], sid, "true"),
+            params=_params(_TOKEN_LOOKUP_ID, sid, "true"),
             json={
                 "formValues": {
                     "Collection Details": {
@@ -85,8 +87,8 @@ class NorthWarwickshire(Scraper):
             },
         }
 
-        rows: list[object] = []
-        for lookup_id in _LOOKUP_IDS[1:]:
+        rows: list[Any] = []
+        for lookup_id in _LOOKUP_IDS:
             response = await http.post(
                 _API_URL,
                 params=_params(lookup_id, sid, "false"),

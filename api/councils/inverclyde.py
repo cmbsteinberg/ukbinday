@@ -12,6 +12,7 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
+    Transport,
     match_address,
     parse_date,
 )
@@ -86,6 +87,9 @@ class Inverclyde(Scraper):
     requires = frozenset({"postcode"})
     headers = _HEADERS
     verify_tls = False
+    # The server only speaks TLS 1.2 RSA key exchange, which httpx/OpenSSL at the default
+    # security level rejects; curl_cffi's TLS stack accepts it.
+    transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         first_line = address.first_line
