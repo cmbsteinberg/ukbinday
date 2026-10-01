@@ -1,10 +1,10 @@
 # Scraper contract: design
 
-Status, 2026-10-01: built, converted and wired in. `api/councils/` holds the framework,
-9 platforms and 348 council modules, and the registry serves every wired LAD from them
-under its LAD code; `api/scrapers/` still loads for the 21 old IDs no module has taken over. See
-[Progress](#progress) for where each council stands and [As built](#as-built-departures-from-this-design)
-for what changed from the design below.
+Status, 2026-10-01: built, converted, wired in, and upstream cut. `api/councils/` holds the
+framework, 9 platforms and the council modules; the registry serves every wired LAD from them
+under its LAD code, and the modules decide which LADs are wired. `api/scrapers/`, `api/compat/`
+and the upstream sync are deleted. See [Progress](#progress) for where each council stands and
+[As built](#as-built-departures-from-this-design) for what changed from the design below.
 
 ## Why
 
@@ -171,8 +171,7 @@ class UpstreamError(ScraperError): ...      # 503: council site down / HTTP erro
 class NeedsBrowser(ScraperError): ...       # captcha, JS-only, login: a deeplink candidate
 ```
 
-- `map_scrape_exception` maps these types directly. It keeps accepting
-  `httpx.HTTPError` / `SourceArgument*` while old-style scrapers exist.
+- `map_scrape_exception` maps these types directly, plus a stray `httpx.HTTPError` (503).
 - `Response.raise_for_status` and connection failures in `Http` raise `UpstreamError`, so
   scrapers don't need to know the backend's exception types.
 - An empty result is legal (some addresses genuinely have no service) and stays the live
@@ -223,9 +222,8 @@ nothing else.
 - `invoke(scraper_id, params)`: `Address.from_params(params)` → check `requires` →
   open `Http` for the declared transport → `await wait_for(fetch(...), SCRAPER_TIMEOUT)` →
   post-process → close.
-- During migration it loads both `api/scrapers/*.py` (`Source`) and `api/councils/*.py`
-  (`SCRAPER`), with a new module shadowing the old one of the same ID. Tests and the
-  frontend don't change while conversion is in flight.
+- During migration it loaded both `api/scrapers/*.py` (`Source`) and `api/councils/*.py`
+  (`SCRAPER`). Since the upstream cut it loads only the modules.
 
 ### IDs: the ONS LAD code
 
@@ -281,9 +279,10 @@ Since the code is ours:
 5. **Live run**, then `post_integration.sh`.
 6. **Cut upstream.** Delete `api/scrapers/`, `pipeline/hacs/`, `pipeline/ukbcd/`,
    `pipeline/ports/`, `pipeline/sync_all.py`, `patch_overrides.json`, `api/compat/hacs/`,
-   `api/compat/ukbcd/`. Keep `pipeline/data/*` and the LAD tooling. Add a monthly job that
-   diffs upstream for councils we cover and opens an issue when one changes. Keep upstream
-   attribution and licence notices.
+   `api/compat/ukbcd/`. Keep `pipeline/data/*` and the LAD tooling. Add a job that
+   diffs upstream for councils we cover. Keep upstream attribution and licence notices.
+   Done 2026-10-01; the job is `scripts/upstream_watch.sh`, a daily pre-commit warning
+   rather than an issue.
 
 ### Cassettes
 
@@ -355,22 +354,16 @@ values masked, and the harness freezes `today` during replay.
     `UnknownCouncilError` and ages out after `ICS_FAILURE_THRESHOLD` failures. A sidecar
     for a Worthing UPRN under `hacs_adur_worthing_gov_uk` becomes Adur's code (the alias
     picks one LAD); same module, so the data is right. The cache compares resolved IDs.
-  - **The 21 old scrapers no module replaced keep their old IDs.** None is wired to a LAD:
-    most duplicate a council a module now serves, the rest are retired (Southampton,
-    Buckinghamshire, Fylde, Harrogate, the Google Calendar fixture). An old scraper
-    that `lad_lookup.json` wires to a LAD no module serves would be registered under the
-    LAD code; none is today.
-  - **`lad_lookup.json` keeps `scraper_id`** as provenance: the upstream scraper the sync
-    wired. The tooling still keys on it until the cut (wired-or-not for coverage, sankey
-    and deeplinks; sticky test-case refresh; `lad_status` rewire detection;
-    `check --compare`), so the generator is unchanged. A module for a LAD it calls
-    unwired (Buckinghamshire, in progress) is served by the API but missed by that
-    tooling until the LAD is wired in `lad_overrides.json` and the lookup recomposed.
-  - `scripts/councils/check.py --compare` runs the old `Source` directly. Through the
-    registry the old ID resolves to the module, so since the wiring commit the "old"
-    side had been running the new module.
+  - **The 20 old scrapers no module replaced were deleted with `api/scrapers/`.** None was
+    wired to a LAD: most duplicated a council a module serves, the rest were retired
+    (Southampton, Fylde, Harrogate, the Google Calendar fixture). Their IDs have no alias,
+    so a calendar URL carrying one answers 404 and its sidecar ages out of the cache.
+  - **`lad_lookup.json`'s `scraper_id` is the module name**, composed from each module's
+    `meta.lads` by `build_lad_lookup --compose`. `pipeline/data/scraper_lad_map.json` and
+    the wiring half of `lad_overrides.json` are gone; the file keeps only the notes for
+    unwired LADs. Changing the key resampled every council's test addresses once.
 - **Site failures deeplink too.** Beyond `NeedsBrowser`: when a module raises
-  `UpstreamError` or times out (or an old scraper hits any 503/504) and nothing is cached,
+  `UpstreamError` or times out and nothing is cached,
   `/lookup` answers 200 with a deeplink (GOV.UK page first, then `meta.url`) instead of
   the 503/504, with `X-Scrape-Failure` saying why. 200 because that's how the frontend
   and unwired councils already treat a deeplink: `app.js` renders `data.deeplink` only on
@@ -378,11 +371,20 @@ values masked, and the harness freezes `today` during replay.
   `AddressNotFound.suggestions` in the body. Any other exception from a module is a bug
   and stays a plain 503.
 - **Cassettes and record/replay aren't built.** Conversions were checked with
-  `scripts/councils/check.py --compare`, which runs each module's cases and the sampled
-  addresses live, side by side with the old scraper. It's flaky by nature (site outages,
+  `scripts/councils/check.py --compare` (removed with the old scrapers), which ran each
+  module's cases and the sampled addresses live, side by side with the old scraper. It's
+  flaky by nature (site outages,
   DNS, concurrency), which is why the progress table below needs a triage column.
 
 ## Progress
+
+### 2026-10-01: upstream cut
+
+`api/scrapers/`, `api/compat/`, `pipeline/ports/` and the sync pipeline are deleted, with
+the `requests` and `playwright` dependencies. The registry loads only council modules, and
+`lad_lookup.json` is composed from them. `scripts/upstream_watch.sh` lists upstream commits
+touching councils we serve. The live test hasn't been run since; it is the next step,
+followed by `./pipeline/ci/post_integration.sh`.
 
 ### 2026-10-01: public IDs switched to LAD codes
 
@@ -437,14 +439,6 @@ Open:
   no switch for just that noise, so the
   pre-commit hook checks only staged council files: nothing new gets in, and the rest
   are fixed as files are touched.
-- **Retired IDs with no module**: `ukbcd_google_public_calendar_council` (16 LADs, never
-  aliased), and the old IDs for LADs that are now unwired (Southampton, Buckinghamshire,
-  Fylde, Harrogate) still run their old scrapers. They need a decision before
-  `api/scrapers/` is deleted, or their calendar URLs start answering 404.
-- **`fixture_only` is stale for three LADs** (central_bedfordshire, derbyshire_dales,
-  south_kesteven): the new modules don't need the param the old scrapers did, but
-  `tests/lad_test_cases.json` still holds only fixture cases for them. The next
-  `generate_lad_test_cases` run reads `requires` through the registry and samples them.
 
 ### 2026-09-30: first full run after bulk conversion
 

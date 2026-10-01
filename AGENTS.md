@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-UK Bin Collection API -- a FastAPI service that scrapes UK council websites to return bin/waste collection schedules. About 310 council scrapers live in `api/scrapers/`, patched from two upstream repos (hacs_waste_collection_schedule and UKBinCollectionData) to work as async API endpoints.
+UK Bin Collection API -- a FastAPI service that scrapes UK council websites to return bin/waste collection schedules. Each council is a module in `api/councils/` (design in `scraper_contract.md`). The modules began as ports of two upstream repos (hacs_waste_collection_schedule and UKBinCollectionData) and are maintained here; `scripts/upstream_watch.sh` flags upstream fixes to councils we serve.
 
 ## Commands
 
@@ -28,25 +28,15 @@ LAD_CODES=S12000033,E08000035 uv run pytest tests/test_lad_integration.py -v
 uv run python -m pipeline.shared.generate_lad_test_cases
 uv run python -m pipeline.shared.generate_lad_test_cases --resample-all   # full resample
 
-# Lint Python (ruff -- excludes api/scrapers/)
+# Lint Python
 uv run ruff check --fix
 
 # Lint JS/JSON (biome)
 npx @biomejs/biome check --write
 
-# Sync and patch all scrapers from upstream repos (manual only; never a commit hook,
-# since it rewrites api/scrapers/ and the generated JSONs)
-uv run lefthook run sync             # same as pipeline/sync.sh
-pipeline/sync.sh                     # orchestrates both HACS + UKBCD
-pipeline/hacs/sync.sh                # hacs_waste_collection_schedule only
-pipeline/ukbcd/sync.sh               # UKBinCollectionData only
-
-# Regenerate test_cases.json (upstream fixtures, input to generate_lad_test_cases) from scraper TEST_CASES
-uv run python -m pipeline.hacs.generate_test_lookup   # hacs scrapers
-uv run python -m pipeline.ukbcd.generate_test_lookup   # ukbcd scrapers (merges into same file)
-
-# Regenerate admin_scraper_lookup.json (council domain to scraper ID mapping)
-uv run python -m scripts.generate_admin_lookup
+# Upstream commits touching councils we serve, since the last check (pre-commit runs it daily with --hook)
+scripts/upstream_watch.sh
+scripts/upstream_watch.sh --since 2026-09-01
 
 # Publish the committed ONSPD parquet to api/data/postcode_lookup.parquet
 uv run python -m scripts.lookup.create_lookup_table
@@ -56,7 +46,7 @@ uv run python -m scripts.lookup.create_lookup_table
 
 # Rebuild the council mapping: lad_base.json from upstream, then lad_lookup.json
 uv run python -m scripts.lookup.build_lad_lookup
-uv run python -m scripts.lookup.build_lad_lookup --compose  # committed files only
+uv run python -m scripts.lookup.build_lad_lookup --compose  # committed files only; run after adding a module or changing its lads/url
 
 # Regenerate coverage map
 uv run python -m scripts.coverage.generate_coverage_map
@@ -70,10 +60,9 @@ uv run python -m scripts.generate_sankey
 # After a live run: annotate, then coverage map, then sankey/badge. Tests never run this.
 ./pipeline/ci/post_integration.sh
 
-# New scraper contract (api/councils/): run modules on their cases, vs the old scraper
-uv run python -m scripts.councils.check hartlepool --compare -v
-uv run python -m scripts.councils.check --all --compare --json /tmp/check.json
-uv run python -m scripts.councils.convert --plan      # old scraper id -> module name + LADs
+# Run council modules on their fixtures and sampled addresses (live sites)
+uv run python -m scripts.councils.check hartlepool -v
+uv run python -m scripts.councils.check --all --json /tmp/check.json
 uv run ty check                                       # type-checks api/councils/ (pre-commit: staged files only)
 
 # Docker
@@ -86,8 +75,8 @@ docker compose up --build
 - `main.py` -- FastAPI app with lifespan managing `ScraperRegistry`, `CouncilLookup`, and optional Redis
 - `config.py` -- Centralised configuration from environment variables (timeouts, rate limits, address API, CORS, logging)
 - `routes.py` -- All endpoints: `/api/v1/addresses/{postcode}`, `/api/v1/council/{postcode}`, `/api/v1/lookup/{uprn}`, `/api/v1/calendar/{uprn}`, `/api/v1/councils`, `/api/v1/health`, `/api/v1/status`, `/api/v1/metrics`. Routes are mounted under `/api/v1` only
-- `services/scraper_registry.py` -- Loads the council modules (`api/councils/*.py`, via `_base/discovery.py`) and the old `api/scrapers/*.py`. The public council ID is the ONS LAD code: what `/council/{postcode}` returns, `/councils` lists, calendar URLs carry and ICS sidecars store. A module is registered once per LAD in its `meta.lads` (Adur & Worthing answers to both codes, each with its own GOV.UK deeplink). Wiring is the registry's call, not `lad_lookup.json`'s: `/council` returns the LAD code when the registry serves it, else the LAD's deeplink. Every old scraper ID in `api/councils/_aliases.json` resolves to its LAD (`get()`, `canonical_id()`), and `/lookup` answers with the LAD code. The 21 old scrapers no module replaced (none wired to a LAD) keep their old IDs; an old scraper `lad_lookup.json` wires to a LAD no module serves would be registered under that LAD code. `/councils` params come from `requires` (`label` is sent as `address`). `invoke()` runs `api.councils._base.run(scraper, params)` for modules, `Source(**params).fetch()` for old scrapers, both under `SCRAPER_TIMEOUT`; an unknown ID raises `UnknownCouncilError`
-- `services/scrape_orchestrator.py` -- Cache-or-scrape with the scrape lock, and `map_scrape_exception`: `InputError`/`AddressNotFound`/`SourceArgument*` 422 (AddressNotFound's `suggestions` go in the body), `UpstreamError`/`httpx.HTTPError` 503, timeout 504. `NeedsBrowser` answers with a deeplink (module `meta.url`, else GOV.UK); `/calendar` answers 404 with the reason, since a calendar app can't use a web page. A site failure (module `UpstreamError` or timeout; any old-scraper 503/504) with nothing cached makes `/lookup` answer 200 with a GOV.UK-first deeplink and an `X-Scrape-Failure: network|timeout|error` header; `/calendar` keeps the 503/504
+- `services/scraper_registry.py` -- Loads the council modules (`api/councils/*.py`, via `_base/discovery.py`). The public council ID is the ONS LAD code: what `/council/{postcode}` returns, `/councils` lists, calendar URLs carry and ICS sidecars store. A module is registered once per LAD in its `meta.lads` (Adur & Worthing answers to both codes, each with its own GOV.UK deeplink). Wiring is the registry's call, not `lad_lookup.json`'s: `/council` returns the LAD code when the registry serves it, else the LAD's deeplink. Every old scraper ID in `api/councils/_aliases.json` resolves to its LAD (`get()`, `canonical_id()`), and `/lookup` answers with the LAD code; an old ID with no alias (a scraper retired without a module) answers to nothing. `/councils` params come from `requires` (`label` is sent as `address`). `invoke()` runs `api.councils._base.run(scraper, params)` under `SCRAPER_TIMEOUT`; an unknown ID raises `UnknownCouncilError`
+- `services/scrape_orchestrator.py` -- Cache-or-scrape with the scrape lock, and `map_scrape_exception`: `InputError`/`AddressNotFound` 422 (AddressNotFound's `suggestions` go in the body), `UpstreamError`/`httpx.HTTPError` 503, timeout 504, anything else 503 (a bug). `NeedsBrowser` answers with a deeplink (module `meta.url`, else GOV.UK); `/calendar` answers 404 with the reason, since a calendar app can't use a web page. A site failure (`UpstreamError` or timeout) with nothing cached makes `/lookup` answer 200 with a GOV.UK-first deeplink and an `X-Scrape-Failure: network|timeout` header; `/calendar` keeps the 503/504
 - `services/deeplinks.py` -- The "check on the council website" response: unwired LADs (from `lad_lookup.json`), plus `for_needs_browser` and `for_upstream_failure` for wired councils
 - `services/council_lookup.py` -- Resolves postcodes to local authorities via local parquet lookup with ibis/duckdb. Provides `CouncilLookup.get_local_authority()` (name, homepage URL, LAD code; whether the LAD is wired is the registry's call)
 - `services/address_lookup.py` -- Resolves postcodes to addresses via external address API (configured via `ADDRESS_API_URL` and `ADDRESS_API_COMPANY_ID`)
@@ -96,63 +85,47 @@ docker compose up --build
 - `services/ics_cache.py` -- Persistent on-disk ICS cache keyed by UPRN. Writes `data/calendars/{uprn}.ics` + `{uprn}.json` sidecar atomically. The ICS file is the source of truth served by `/calendar`; the sidecar holds scraper params, `last_success`, `consecutive_failures`, and an upcoming-collections slice for `/lookup`
 - `services/refresh_job.py` -- Nightly worker that re-scrapes stale UPRNs. Scans sidecars, skips UPRNs successfully refreshed within `ICS_REFRESH_MIN_AGE_HOURS`, fans out via bounded queue, deletes entries after `ICS_FAILURE_THRESHOLD` consecutive failures. Runs in a dedicated `worker` container (API sets `RUN_REFRESH_JOB=0`)
 - `services/scrape_lock.py` -- Redis `SET NX` lock keyed by UPRN, shared by API and worker so the same UPRN isn't scraped twice concurrently
-- `data/admin_scraper_lookup.json` -- Council domain to scraper ID mapping
-- `data/lad_lookup.json` -- LAD code to council name, scraper URL, scraper ID, GOV.UK waste-service URL, and working status. `scraper_id` is no longer a public ID: it records the upstream scraper the sync wired, which the tooling still keys on (wired-or-not for coverage/sankey/deeplinks, sticky test-case refresh, `lad_status` rewire detection, `check --compare`). Generated -- never edit by hand. Keys are exactly the LAD codes `postcode_lookup.parquet` can return (361), so every council a postcode resolves to has an entry even when no scraper exists yet
+- `data/lad_lookup.json` -- LAD code to council name, `scraper_id` (the name of the module claiming it, null when unwired), `url` (the module's `meta.url`, or a `deeplink_urls` override for an unwired LAD), GOV.UK waste-service URL, unwired `status` note, and working status. `scraper_id` is not a public ID; the tooling keys on it (wired-or-not for coverage/sankey/deeplinks, sticky test-case refresh, `lad_status` rewire detection). Generated by `build_lad_lookup --compose` -- never edit by hand. Keys are exactly the LAD codes `postcode_lookup.parquet` can return (361), so every council a postcode resolves to has an entry even when no scraper exists yet
 - `badge_coverage.json` (repo root) -- Coverage stats for README badge
 - `data/postcode_lookup.parquet` -- 1.6M postcodes mapped to LAD codes for fast local lookup
 - `data/calendars/` -- On-disk ICS cache (`{uprn}.ics` + `{uprn}.json` sidecar), gitignored
 - `templates/` -- HTML pages: landing (`index.html`), coverage map (`coverage.html`), API docs (`api-docs.html`)
 - `static/` -- Frontend JS (`app.js`), coverage GeoJSON, Leaflet map
 
-**Scrapers** (`api/scrapers/`):
-- About 310 files (flat directory), one per council. Each defines `TITLE`, `URL`, `TEST_CASES`, and a `Source` class with `async def fetch() -> list[Collection]`
-- About 235 from hacs (named `hacs_*_gov_uk.py`), about 73 from ukbcd (named `ukbcd_*.py`)
-- Excluded from ruff linting (configured in `pyproject.toml`)
-
-**Councils, new contract** (`api/councils/`, design in `scraper_contract.md`; serves every wired LAD through the registry; `api/scrapers/` stays until the upstream cut):
+**Councils** (`api/councils/`, design in `scraper_contract.md`; the source of truth for which LADs are wired):
 - `_base/` -- the framework: `Scraper` (stateless; `meta`, `requires`, `headers`, `transport`, `verify_tls`, `icons`, `async fetch(address, http)`), `Meta` (title, url, LAD codes, cases), `Address` (built once from query params; `need()` for required fields), `Http`/`Response` (harness-owned httpx or curl_cffi session; 4xx/5xx and transport failures raise `UpstreamError` unless `check=False`), `Collection` (frozen dataclass: date, type, icon), errors (`InputError`, `AddressNotFound`, `UpstreamError`, `NeedsBrowser`), `match_address`, `parse_date`, `soup`/`text_of`, `parse_ics`, and `run()` which builds the address, checks `requires`, opens `Http`, fetches and tidies (dedupe, sort, icons)
 - `_platforms/` -- shared council platforms (Whitespace, ...) as `Scraper` subclasses configured per council
 - `<council>.py` -- one module per scraper, named after its LADs, exposing `SCRAPER`. Stricter lint via `api/councils/ruff.toml` (ASYNC, BLE, B). `needs_browser = "<reason>"` makes it a deeplink (Coventry, Havant), including on `/council/{postcode}`
-- `_aliases.json` -- old scraper ID (every one ever wired to a LAD, up to the switch to LAD codes) or recoded LAD code -> current LAD code. Frozen: old calendar URLs and ICS sidecars carry these IDs, and it's how the registry knows which old scrapers a module replaced. Add an entry only when ONS recodes a LAD; scraper renames no longer need one
-
-**Compat shims** (`api/compat/`):
-- `hacs/` -- Minimal types/helpers synced from hacs upstream: `Collection`, `CollectionBase`, `CollectionGroup`, `ICS`, `SSLError`. Avoids pulling full Home Assistant dependencies
-- `ukbcd/` -- Lightweight reimplementation of UKBinCollectionData helpers: `AbstractGetBinDataClass`, validators, date functions. Avoids selenium/pandas dependencies
-- `requests_fallback.py` -- AsyncClient wrapper using `requests.Session` + `asyncio.to_thread` for Cloudflare-blocked sites
-- `curl_cffi_fallback.py` -- AsyncClient wrapper using `curl_cffi` for TLS fingerprint impersonation
-- `httpx_helpers.py` -- Helpers for one-shot httpx requests that properly close the client
+- `_aliases.json` -- old scraper ID (every one ever wired to a LAD, up to the switch to LAD codes) or recoded LAD code -> current LAD code. Frozen: old calendar URLs and ICS sidecars carry these IDs. Add an entry only when ONS recodes a LAD; module renames don't need one. `scripts/upstream_watch.sh` also reads it to map each module to its upstream file
 
 **Pipeline** (`pipeline/`):
-- `sync.sh` -- Top-level sync orchestrator: runs `sync_all.py` which fetches input.json (source of truth for which councils have a *scraper*, not for which councils exist), syncs HACS scrapers, fills gaps with UKBCD, and regenerates lookups
 - `data/lad_base.json` -- Ground-truth LAD code to `{name, govuk_url}` for all 361 councils, from ONS + GOV.UK. Only changes when upstream does (`scripts/lookup/fetch_latest.sh`)
-- `data/scraper_lad_map.json` -- LAD code to `{scraper_id, url}`, written by `ukbcd/patch_scrapers.py` and patched by `sync_all._merge_preserved_scrapers`. Composed with `lad_base.json` into `api/data/lad_lookup.json`
 - `data/onspd_postcode_lad.parquet`, `data/onsud_uprn_postcode.parquet` -- Committed ONS extracts (15MB/88MB) so a checkout, test run or deploy never needs the multi-hundred-MB upstream zips
-- `shared.py` -- Common utilities: path constants, blocked domains list, domain normalization, lookup loaders
-- `overrides.json` -- Central config for HACS-to-UKBCD fallbacks, curl_cffi backends, SSL overrides, requests fallback scrapers
-- `lad_overrides.json` -- `scraper_id` to LAD codes, applied after the sync's own wiring wins. Needed wherever input.json can't wire a scraper itself: the council's listed URL is a third-party portal (`mybasildon.powerappsportals.com`) or plain wrong (Teignbridge's is `google.co.uk`), its `LAD24CD` is wrong (Gosport's said `E07000082`, which is Stroud), or the code was recoded (East Herts `E07000097` to `E07000242`). `build_lad_lookup.check_scraper_matches_council` warns when a LAD's scraper matches neither the council name nor its GOV.UK domain, which is how the next such case gets caught
-- `hacs/` -- Scripts to sync and patch hacs_waste_collection_schedule scrapers (AST-based `requests` to async `httpx`)
-- `ukbcd/` -- Scripts to sync and patch UKBinCollectionData scrapers (import rewrite, sync httpx, Source adapter generation)
-- `upstream/` -- Downloaded originals from both repos (gitignored, populated by sync scripts)
+- `shared/__init__.py` -- `normalise_domain` and the loaders for `lad_overrides.json`
+- `shared/generate_lad_test_cases.py` -- builds `tests/lad_test_cases.json` (see Tests)
+- `lad_overrides.json` -- Notes for councils deliberately left unwired: `unwired_lads` (LAD -> reason, shipped as the entry's `status` and shown in the deeplink) and `deeplink_urls` (LAD -> bin page, where the GOV.UK link is dead or wrong). `build_lad_lookup` refuses a LAD that is both listed here and claimed by a module, and `check_scraper_matches_council` warns when a module's `meta.url` matches neither the council name nor its GOV.UK domain (a wrong code in `meta.lads`)
 
 **Scripts** (`scripts/`):
-- `generate_admin_lookup.py` -- Builds `admin_scraper_lookup.json` from all scrapers
+- `upstream_watch.sh` -- Lists new commits in the two upstream repos touching the source file of a council we serve (old IDs in `_aliases.json` name the file: `hacs_<x>` -> `source/<x>.py`, `ukbcd_<x>`/`port_<x>` -> `councils/<CamelCase>.py`). `upstream_watch.json` holds the last check, so each run reports only what's new. `--hook` (lefthook pre-commit) runs at most once a day, caps each `gh` call at 5s and the whole check at ~20s, is silent offline or without `gh`, always exits 0, and stages the state file
+- `councils/check.py` -- Runs council modules on their `meta.cases` and their LADs' sampled addresses against the live sites
 - `lad_status.py` -- The one definition of a council's status, used by the live test and every consumer. `working`: a *sampled* case passed (200 + at least one collection); for `fixture_only` LADs (scraper requires params `/addresses` can't supply, e.g. property_id, usrn) a fixture pass counts instead. A fixture pass with all sampled cases failing is `broken`. `deeplink`: deciding cases answered with a NeedsBrowser deeplink (not working). `unverified` (every deciding case unreachable, or none) keeps the previous flag
 - `annotate_lad_working.py` -- Writes `working` into `lad_lookup.json` from `tests/output/lad_integration_output.json` via `lad_status.py`
 - `generate_sankey.py` -- Rewrites README.md's `<!-- coverage:start/end -->` block and `badge_coverage.json` (bin dates / all 361 LADs). Each LAD is bin dates (`working`), deeplink by design (unwired, with its `lad_overrides` status, or a module's `needs_browser`), or broken (with its last live-run status)
 - `pipeline/ci/post_integration.sh` -- Explicit post-run step: annotate, then coverage map, then sankey/badge. No test calls it
 - `lookup/fetch_latest.sh` -- Version-checked fetch of the four upstream sources (ONSPD, ONSUD, ONS LAD boundaries, GOV.UK Local Links Manager) into `$BINS_DATA_CACHE` (default `~/.cache/bins-data`). ONSPD/ONSUD are ArcGIS items that mint a new id per edition and ignore conditional GETs, so freshness comes from the item's `modified` stamp in `.upstream_version`, not `curl -z`; the small sources do use ETag/`If-Modified-Since`. `--check` reports staleness without downloading, `--small-only` skips the multi-hundred-MB zips
 - `lookup/create_lookup_table.py` -- Publishes the committed ONSPD parquet to `postcode_lookup.parquet`. `--from-onspd`/`--from-onsud` rebuild the pipeline parquets from an unpacked ONS release and stamp the edition into parquet key-value metadata (`SELECT * FROM parquet_kv_metadata(...)`); `--stamp-edition` labels an existing parquet in place
-- `lookup/build_lad_lookup.py` -- Rebuilds the council mapping from ground truth. Stage 1 joins ONS boundary names and GOV.UK waste URLs onto the distinct LAD codes in `onspd_postcode_lad.parquet` and writes `pipeline/data/lad_base.json`; stage 2 (`--compose`) merges that with `pipeline/data/scraper_lad_map.json` into `api/data/lad_lookup.json`. Where sources disagree on a code after a reorganisation (ONS boundaries lead ONSPD on `E08000038/39` vs `E08000016/19`; GOV.UK lags on the 2023 unitaries), `CODE_ALIASES` re-keys the row onto the code ONSPD actually returns -- an unnamed code is a hard error, not a null name
+- `lookup/build_lad_lookup.py` -- Rebuilds the council mapping from ground truth. Stage 1 joins ONS boundary names and GOV.UK waste URLs onto the distinct LAD codes in `onspd_postcode_lad.parquet` and writes `pipeline/data/lad_base.json`; stage 2 (`--compose`) merges that with each module's `meta.lads`/`meta.url` and the unwired notes in `pipeline/lad_overrides.json` into `api/data/lad_lookup.json`, carrying `working` across only for the same module (an old ID counts as the module its alias resolves to). Where sources disagree on a code after a reorganisation (ONS boundaries lead ONSPD on `E08000038/39` vs `E08000016/19`; GOV.UK lags on the 2023 unitaries), `CODE_ALIASES` re-keys the row onto the code ONSPD actually returns -- an unnamed code is a hard error, not a null name
 - `coverage/generate_coverage_map.py` -- Fetches UK LAD boundaries from ArcGIS and generates `coverage.geojson`; status from the `working` flag, `pass_rate` from the last live run
 
 **Tests** (`tests/`):
-- `test_ci.py` (marker: `ci`) -- Smoke tests (9 test functions, parametrized over ~310 scrapers): syntax, imports, app boot, registry loading. Runs as pre-commit hook
+- `test_ci.py` (marker: `ci`) -- Smoke tests: scripts parse, app boot, `/councils` lists exactly the wired LADs. Runs as pre-commit hook
+- `test_councils.py` (marker: `ci`) -- every council module loads, LAD claims are unique and known, and the `_base` helpers (`Address`, `match_address`, `parse_date`, tidy)
 - `test_frontend.py` (marker: `api`) -- API surface tests (8): landing page, routes, CORS, error cases
 - `test_scrape_cache.py` (marker: `api`) -- ICS cache keying with stubbed scrapers: `/lookup/0` never caches, a cache entry never answers for a different scraper, `/calendar/0` is rejected
-- `test_deeplinks.py` (marker: `api`), `test_sync_pipeline.py` (marker: `ci`) -- deeplink routing and sync pipeline checks
+- `test_deeplinks.py` (marker: `api`) -- deeplink routing for unwired LADs
 - `test_council_wiring.py` (marker: `api`) -- council modules through the routes with stubbed `fetch`: LAD-code IDs (`/council` returns them, two-LAD modules answer to each, every wired LAD is served), old IDs resolving to them, `/councils` params from `requires`, NeedsBrowser and upstream-failure deeplinks, cache beats deeplink, error mapping, refreshing a sidecar written under an old ID (migrated to the LAD code) or an unknown one (ages out as a failure)
-- `test_lad_integration.py` (marker: `live`) -- One test per wired LAD (council), not per scraper. Reads `lad_test_cases.json`, runs each case through the real `/lookup/{uprn}` route in-process with the params the frontend sends (`council` is the LAD code; jobs still dedupe on `scraper_id` so two LADs sharing a fixture don't race), retries failures once at low concurrency, probes scraper hosts to tell `unreachable` (this machine can't reach it) from `upstream_error`. Case outcomes: pass, empty, input_rejected, deeplink (NeedsBrowser), unreachable, upstream_error, scraper_error (a 200 fallback deeplink is classified by its `X-Scrape-Failure` header, as the 503/504 it replaces). Writes `output/lad_integration_output.json` (subset runs via `LAD_CODES` merge into it); status per LAD from `scripts/lad_status.py`. ~7 min for all 350 LADs
-- `lad_test_cases.json` -- Generated by `pipeline/shared/generate_lad_test_cases.py`, keyed by LAD code: `{name, scraper_id, fixture_only?, cases: [{id, source: sampled|fixture, label, params}]}`. Sampled cases: an ONSUD postcode in the LAD (4-60 UPRNs), resolved through the address API, keeping a plain-numbered address whose UPRN is in ONSUD. Fixture cases are the serving module's `meta.cases` (`test_cases.json`, upstream `TEST_CASES` from the hacs/ukbcd `generate_test_lookup` scripts, only for an old scraper no module replaced)
+- `test_lad_integration.py` (marker: `live`) -- One test per wired LAD (council), not per scraper. Reads `lad_test_cases.json`, runs each case through the real `/lookup/{uprn}` route in-process with the params the frontend sends (`council` is the LAD code; jobs dedupe on the module the registry serves, so two LADs sharing a fixture don't race), retries failures once at low concurrency, probes scraper hosts to tell `unreachable` (this machine can't reach it) from `upstream_error`. Case outcomes: pass, empty, input_rejected, deeplink (NeedsBrowser), unreachable, upstream_error, scraper_error (a 200 fallback deeplink is classified by its `X-Scrape-Failure` header, as the 503/504 it replaces). Writes `output/lad_integration_output.json` (subset runs via `LAD_CODES` merge into it); status per LAD from `scripts/lad_status.py`. ~7 min for all 350 LADs
+- `lad_test_cases.json` -- Generated by `pipeline/shared/generate_lad_test_cases.py`, keyed by LAD code: `{name, scraper_id (module name), fixture_only?, cases: [{id, source: sampled|fixture, label, params}]}`. Sampled cases: an ONSUD postcode in the LAD (4-60 UPRNs), resolved through the address API, keeping a plain-numbered address whose UPRN is in ONSUD. Fixture cases are the serving module's `meta.cases`
 - `test_deploy.py` (marker: `docker`) -- Docker stack tests (3): compose boot, scraper loading, static files
 - `test_deploy_docker.sh` -- Bash-based Docker deployment test (curl assertions, standalone)
 - `conftest.py` -- Test-time env defaults (fresh `DATA_DIR` tempdir per session, address API config)
@@ -164,16 +137,14 @@ docker compose up --build
 **CI/CD** (`.github/workflows/deploy.yml`):
 - On push to `main`: runs `tests/test_ci.py` only → deploys to Hetzner via SSH (git pull + docker compose). Live tests do not run in CI; run `tests/test_lad_integration.py` then `./pipeline/ci/post_integration.sh` locally and commit the output, flags, badge and sankey
 
-**Infrastructure**: Docker Compose runs the API + refresh worker + Redis + Caddy (reverse proxy) + GoAccess (log analytics) + Uptime Kuma (monitoring). API and worker share a named volume (`bins_data`) mounted at `/app/data` for the ICS cache. Pre-commit hooks via lefthook run ruff, biome, and CI smoke tests; the upstream sync is a manual `lefthook run sync`. Deployment to Hetzner is automated via GitHub Actions and `deploy/deployment.py`.
+**Infrastructure**: Docker Compose runs the API + refresh worker + Redis + Caddy (reverse proxy) + GoAccess (log analytics) + Uptime Kuma (monitoring). API and worker share a named volume (`bins_data`) mounted at `/app/data` for the ICS cache. Pre-commit hooks via lefthook run ruff, ty (staged council modules), biome, the CI smoke tests and the daily upstream watch. Deployment to Hetzner is automated via GitHub Actions and `deploy/deployment.py`.
 
 ## Key Patterns
 
-- Council modules get every query param as an `Address` (`Address.from_params`); old scraper `Source` classes take params like `uprn`, `postcode`, `address` in `__init__`, and the registry filters params to those their `__init__` accepts
-- `admin_scraper_lookup.json` maps council website domains to old scraper filenames; the API doesn't read it (postcodes resolve to LAD codes)
+- Council modules get every query param as an `Address` (`Address.from_params`) and declare what they need in `requires`
 - The `/calendar/{uprn}` endpoint returns iCal format for calendar subscription
 - `council=` on `/lookup` and `/calendar` is the LAD code (`E06000001`); `/lookup` echoes the LAD code back even when called with an old scraper ID
-- hacs scrapers take priority over ukbcd; `pipeline/overrides.json` maps specific failing hacs scrapers to working ukbcd alternatives
-- Some scrapers use `requests_fallback.py` (Cloudflare-blocked sites) or `curl_cffi_fallback.py` (TLS fingerprinting) instead of plain httpx
+- A module sets `transport = Transport.CURL_CFFI` for sites that block on TLS fingerprint, and `verify_tls = False` for broken certificates or old ciphers
 - Cache miss on `/lookup` or `/calendar` triggers an inline scrape guarded by the Redis scrape-lock; parallel requests for the same UPRN poll the cache up to `SCRAPE_LOCK_MAX_WAIT_S` (default 15s) and return 503 on timeout rather than racing
 - `/calendar/{uprn}` streams the on-disk ICS directly; events are merged on write (stable UIDs = sha1(uprn|date|type)) and pruned by `ICS_RETENTION_DAYS`
 - Routes include `/status` (system health with uptime/scraper counts) and `/metrics` (Prometheus-format metrics plus ICS cache entry count and last refresh stats)

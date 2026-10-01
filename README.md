@@ -4,7 +4,7 @@
 
 An API that tells you when your bins are being collected. Enter a postcode, pick your address, get your collection dates back as JSON or subscribe via iCal.
 
-Under the hood, it pulls from about 350 council scrapers maintained by two community projects — [hacs_waste_collection_schedule](https://github.com/mampfes/hacs_waste_collection_schedule) and [UKBinCollectionData](https://github.com/robbrad/UKBinCollectionData) — patches them to run as async Python, and serves them through a single FastAPI app.
+Each council is a module in `api/councils/`, served through a single FastAPI app. The modules started as ports of two community projects, [hacs_waste_collection_schedule](https://github.com/mampfes/hacs_waste_collection_schedule) and [UKBinCollectionData](https://github.com/robbrad/UKBinCollectionData), and are now maintained here.
 
 ## Coverage
 
@@ -104,22 +104,16 @@ LAD_CODES=S12000033,E08000035 uv run pytest tests/test_lad_integration.py -v
 
 Test runs only write `tests/output/lad_integration_output.json`. To refresh the `working` flags, badge, sankey and coverage map from it, run `./pipeline/ci/post_integration.sh`.
 
-## Syncing scrapers from upstream
+## Adding or fixing a council
 
-The scrapers in `api/scrapers/` are patched copies of the upstream originals. The sync scripts clone each upstream repo, apply AST transforms (converting `requests` calls to async `httpx`), and drop the results into the scrapers directory.
-
-```bash
-pipeline/hacs/sync.sh    # primary source
-pipeline/ukbcd/sync.sh   # fallback source
-```
-
-After syncing, regenerate the lookup data:
+A council module declares the LAD codes it serves (`meta.lads`); see `scraper_contract.md` for the contract. After adding a module or changing its `lads` or `url`, recompose the council mapping and run the module against its cases:
 
 ```bash
-uv run python -m pipeline.hacs.generate_test_lookup
-uv run python -m pipeline.ukbcd.generate_test_lookup
-uv run python -m scripts.generate_admin_lookup
+uv run python -m scripts.lookup.build_lad_lookup --compose
+uv run python -m scripts.councils.check <module>
 ```
+
+Upstream still fixes its scrapers when a council changes its site. `scripts/upstream_watch.sh` lists new upstream commits that touch a council we serve; the pre-commit hook runs it at most once a day.
 
 ## Deployment
 
@@ -134,12 +128,13 @@ See [deploy/deployment.md](deploy/deployment.md) for Hetzner provisioning and pr
 ## Linting
 
 ```bash
-uv run ruff check --fix          # Python (scrapers excluded)
+uv run ruff check --fix          # Python
+uv run ty check                  # type-checks api/councils/
 npx @biomejs/biome check --write  # JS/JSON
 ```
 
-Pre-commit hooks via [lefthook](https://github.com/evilmartians/lefthook) run linting, smoke tests, and scraper sync checks automatically.
+Pre-commit hooks via [lefthook](https://github.com/evilmartians/lefthook) run linting, smoke tests and the daily upstream watch.
 
 ## Acknowledgements
 
-This project wouldn't exist without the scraper collections built by [mampfes/hacs_waste_collection_schedule](https://github.com/mampfes/hacs_waste_collection_schedule) and [robbrad/UKBinCollectionData](https://github.com/robbrad/UKBinCollectionData). If your council isn't supported, consider contributing a scraper to one of those projects.
+This project wouldn't exist without the scraper collections built by [mampfes/hacs_waste_collection_schedule](https://github.com/mampfes/hacs_waste_collection_schedule) and [robbrad/UKBinCollectionData](https://github.com/robbrad/UKBinCollectionData). The council modules here began as ports of their scrapers.

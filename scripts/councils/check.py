@@ -1,13 +1,10 @@
-"""Run council modules on their cases, optionally side by side with the old scraper.
+"""Run council modules on their cases, against the live council sites.
 
 Cases: the module's own `meta.cases`, plus the sampled addresses for its LADs
-from tests/lad_test_cases.json. With --compare, each sampled case also runs
-through the old api/scrapers/ scraper wired to that LAD, and the (date, type)
-sets are compared, so a conversion can be judged against what it replaces.
+from tests/lad_test_cases.json.
 
     uv run python -m scripts.councils.check hartlepool adur_and_worthing
-    uv run python -m scripts.councils.check hartlepool --compare
-    uv run python -m scripts.councils.check --all --compare --json /tmp/check.json
+    uv run python -m scripts.councils.check --all --json /tmp/check.json
 
 Exit status is 1 when any module has a case that errored.
 """
@@ -16,8 +13,6 @@ from __future__ import annotations
 
 import argparse
 import asyncio
-import importlib
-import inspect
 import json
 import sys
 import traceback
@@ -28,7 +23,6 @@ from api.councils._base.discovery import by_lad, load, module_names
 
 ROOT = Path(__file__).resolve().parents[2]
 LAD_CASES = ROOT / "tests" / "lad_test_cases.json"
-LAD_LOOKUP = ROOT / "api" / "data" / "lad_lookup.json"
 TIMEOUT = 60
 
 
@@ -54,22 +48,7 @@ def _summary(result: list[Collection] | BaseException) -> dict:
     }
 
 
-def _pairs(result: list) -> set[tuple[str, str]]:
-    return {(str(c.date), " ".join(c.type.split())) for c in result}
-
-
-async def _old(scraper_id: str, params: dict) -> list | BaseException:
-    """The old api/scrapers/ Source, run directly: the registry routes its ID to the module."""
-    try:
-        source = importlib.import_module(f"api.scrapers.{scraper_id}").Source
-        accepted = set(inspect.signature(source.__init__).parameters) - {"self"}
-        call = source(**{k: v for k, v in params.items() if k in accepted}).fetch()
-        return await asyncio.wait_for(call, TIMEOUT)
-    except Exception as exc:  # noqa: BLE001 - reporting any failure is the point
-        return exc
-
-
-async def _new(scraper: Scraper, params: dict) -> list[Collection] | BaseException:
+async def _run(scraper: Scraper, params: dict) -> list[Collection] | BaseException:
     try:
         return await asyncio.wait_for(run(scraper, params), TIMEOUT)
     except Exception as exc:  # noqa: BLE001 - reporting any failure is the point
@@ -77,31 +56,17 @@ async def _new(scraper: Scraper, params: dict) -> list[Collection] | BaseExcepti
         return exc
 
 
-async def check_module(name: str, *, compare: bool, verbose: bool) -> dict:
+async def check_module(name: str, *, verbose: bool) -> dict:
     try:
         scraper = load(name)
     except Exception as exc:  # noqa: BLE001
         return {"module": name, "load_error": f"{type(exc).__name__}: {exc}", "cases": []}
-    old_ids = {}
-    if compare:
-        lookup = json.loads(LAD_LOOKUP.read_text())
-        old_ids = {lad: lookup.get(lad, {}).get("scraper_id") for lad in scraper.meta.lads}
 
     async def one(case_id: str, source: str, params: dict) -> dict:
-        new = await _new(scraper, params)
-        row = {"id": case_id, "source": source, "new": _summary(new)}
-        if verbose and isinstance(new, BaseException):
-            row["new"]["traceback"] = getattr(new, "__traceback_text__", "")
-        old_id = next(iter(old_ids.values()), None) if source == "sampled" else None
-        if old_id:
-            old = await _old(old_id, params)
-            row["old"] = _summary(old)
-            if not isinstance(old, BaseException) and not isinstance(new, BaseException):
-                a, b = _pairs(old), _pairs(new)
-                row["same"] = a == b
-                if a != b:
-                    row["only_old"] = sorted(a - b)[:6]
-                    row["only_new"] = sorted(b - a)[:6]
+        result = await _run(scraper, params)
+        row = {"id": case_id, "source": source, **_summary(result)}
+        if verbose and isinstance(result, BaseException):
+            row["traceback"] = getattr(result, "__traceback_text__", "")
         return row
 
     rows = await asyncio.gather(*(one(*c) for c in _cases(scraper)))
@@ -114,24 +79,16 @@ def _print(result: dict) -> None:
         return
     print(f"{result['module']} {result['lads']}")
     for row in result["cases"]:
-        new = row["new"]
-        mark = {"pass": "✓", "empty": "∅", "error": "✗"}[new["outcome"]]
-        line = f"  {mark} {row['id']:<22} new: {new.get('count', '')} {new.get('types') or new.get('error', '')}"
-        if "old" in row:
-            old = row["old"]
-            line += f"\n      old: {old.get('count', '')} {old.get('types') or old.get('error', '')}"
-            if "same" in row:
-                line += "  SAME" if row["same"] else f"  DIFF only_old={row['only_old']} only_new={row['only_new']}"
-        print(line)
-        if new.get("traceback"):
-            print("      " + new["traceback"].replace("\n", "\n      "))
+        mark = {"pass": "✓", "empty": "∅", "error": "✗"}[row["outcome"]]
+        print(f"  {mark} {row['id']:<22} {row.get('count', '')} {row.get('types') or row.get('error', '')}")
+        if row.get("traceback"):
+            print("      " + row["traceback"].replace("\n", "\n      "))
 
 
 async def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("modules", nargs="*")
     ap.add_argument("--all", action="store_true")
-    ap.add_argument("--compare", action="store_true", help="also run the old scraper on sampled cases")
     ap.add_argument("--json", type=Path, help="write results here")
     ap.add_argument("-v", "--verbose", action="store_true", help="show tracebacks")
     ap.add_argument("--concurrency", type=int, default=12)
@@ -146,14 +103,14 @@ async def main() -> int:
 
     async def guarded(name: str) -> dict:
         async with sem:
-            result = await check_module(name, compare=args.compare, verbose=args.verbose)
+            result = await check_module(name, verbose=args.verbose)
             _print(result)
             return result
 
     results = await asyncio.gather(*(guarded(n) for n in names))
     if args.json:
         args.json.write_text(json.dumps(results, indent=1, default=str))
-    failed = [r["module"] for r in results if "load_error" in r or any(c["new"]["outcome"] == "error" for c in r["cases"])]
+    failed = [r["module"] for r in results if "load_error" in r or any(c["outcome"] == "error" for c in r["cases"])]
     print(f"\n{len(results) - len(failed)}/{len(results)} modules without errors")
     if failed:
         print("errors: " + " ".join(failed))
