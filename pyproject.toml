@@ -56,7 +56,7 @@ markers = [
     "docker: Tests that require Docker running",
 ]
 testpaths = ["tests"]
-norecursedirs = ["pipeline/upstream", ".claude"]
+norecursedirs = [".claude"]
 
 [tool.ty.environment]
 python-version = "3.13"

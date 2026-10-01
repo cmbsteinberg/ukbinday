@@ -1,4 +1,3 @@
-pipeline/upstream
 .claude
 data/calendars/
 data/.worker_heartbeat
@@ -220,6 +219,3 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 
-
-# Upstream clone used by pipeline/ukbcd/test_selenium_scrapers.py
-pipeline/upstream/ukbcd_selenium_clone/

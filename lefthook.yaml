@@ -1,10 +1,3 @@
-# Manual only: `uv run lefthook run sync`. The full upstream re-sync rewrites
-# api/scrapers/ and the generated JSONs, so it must never run on someone's commit.
-sync:
-  commands:
-    sync-gov-uk-sources:
-      run: pipeline/sync.sh
-
 pre-commit:
   parallel: true
   commands:
@@ -19,8 +12,6 @@ pre-commit:
     ruff-check:
       tags: linter
       glob: "*.py"
-      exclude:
-        - "pipeline/upstream/**"
       run: uv run ruff check --fix {staged_files}
 
     # Type-check only the council modules being committed: the existing errors
