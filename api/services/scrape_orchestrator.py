@@ -7,10 +7,6 @@ import httpx
 from fastapi import HTTPException, Request
 
 from api import config
-from api.compat.hacs.exceptions import (
-    SourceArgumentException,
-    SourceArgumentExceptionMultiple,
-)
 from api.councils._base import AddressNotFound, InputError, NeedsBrowser, UpstreamError
 from api.services import deeplinks
 from api.services.council_lookup import LookupDatabaseError, PostcodeNotFoundError
@@ -32,7 +28,7 @@ class ScrapeHTTPException(HTTPException):
     - `suggestions`: the council's own address labels (AddressNotFound); api/main.py
       renders them next to `detail` in the 422 body.
     - `failure`: for a 503/504, the kind: "network" (site unreachable or erroring),
-      "timeout", or "error" (an old scraper crashed).
+      "timeout", or "error" (the scraper itself failed: a bug).
     - `fallback`: the deeplink /lookup answers with instead of the 503/504, when
       the council's site failed and nothing was cached. /calendar can't show a
       deeplink, so it raises the error as is.
@@ -61,7 +57,7 @@ class DeeplinkAnswer(Exception):
 
 
 def map_scrape_exception(council: str, exc: Exception) -> ScrapeHTTPException:
-    if isinstance(exc, (SourceArgumentException, SourceArgumentExceptionMultiple, InputError)):
+    if isinstance(exc, InputError):
         suggestions = exc.suggestions if isinstance(exc, AddressNotFound) else ()
         logger.info("Scraper %s rejected the input: %s", council, exc)
         return ScrapeHTTPException(422, _INPUT_REJECTED, suggestions=suggestions)
@@ -196,18 +192,15 @@ def _answer_for(registry, council: str, exc: Exception) -> Exception:
 
     NeedsBrowser: a deeplink (meta.url first). Otherwise the mapped HTTP error,
     with a GOV.UK-first deeplink attached as its `fallback` when the council's
-    site failed: any 503/504 from an old scraper; UpstreamError or a timeout from
-    a council module (anything else escaping a module is a bug, not the site).
+    site failed: UpstreamError or a timeout (anything else escaping a module is
+    a bug, not the site).
     """
     meta = registry.get(council)
     if isinstance(exc, NeedsBrowser) and meta is not None:
         logger.info("Scraper %s needs a browser: %s", council, exc)
         return needs_browser_deeplink(meta, str(exc))
     error = map_scrape_exception(council, exc)
-    site_failed = error.failure is not None and (
-        meta is None or meta.scraper is None or isinstance(exc, (UpstreamError, ScraperTimeoutError))
-    )
-    if site_failed and meta is not None:
+    if isinstance(exc, (UpstreamError, ScraperTimeoutError)) and meta is not None:
         error.fallback = deeplinks.for_upstream_failure(meta)
     return error
 

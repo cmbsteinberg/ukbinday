@@ -23,7 +23,6 @@ import pytest
 import pytest_asyncio
 from asgi_lifespan import LifespanManager
 
-from api.compat.hacs.exceptions import SourceArgumentException
 from api.councils._base import (
     AddressNotFound,
     Collection,
@@ -306,7 +305,6 @@ async def test_missing_required_param_is_422(client):
         (InputError("x"), 422),
         (AddressNotFound("x"), 422),
         (UpstreamError("x"), 503),
-        (SourceArgumentException("uprn", "bad"), 422),
         (httpx.ConnectError("x"), 503),
         (scraper_registry.ScraperTimeoutError("x"), 504),
         (ValueError("x"), 503),

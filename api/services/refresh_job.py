@@ -46,9 +46,6 @@ class RefreshJob:
         self.last_stats: RefreshStats | None = None
 
     def _eligible(self, entry, today: date) -> bool:
-        meta = self.registry.get(entry.scraper)
-        if meta is not None and meta.passthrough_url:
-            return False
         if entry.next_collection is None:
             return True
         if entry.next_collection > today + timedelta(days=1):

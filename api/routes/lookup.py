@@ -185,7 +185,7 @@ async def lookup(
         # `council` may be an old ID; answer, cache and log under the public one (the LAD code)
         params = build_scrape_params(meta, council, uprn, request.query_params)
 
-        if meta.passthrough_url or not is_cacheable_uprn(uprn):
+        if not is_cacheable_uprn(uprn):
             collections = await live_scrape(request, meta.id, params)
             return LookupResponse(
                 uprn=uprn,
@@ -247,9 +247,6 @@ async def calendar(
             raise needs_browser_deeplink(meta, meta.needs_browser)
 
         params = build_scrape_params(meta, council, uprn, request.query_params)
-
-        if meta.passthrough_url:
-            return RedirectResponse(url=meta.passthrough_url, status_code=302)
 
         if not is_cacheable_uprn(uprn):
             raise HTTPException(
