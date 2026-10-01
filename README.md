@@ -56,7 +56,7 @@ Of 361 councils, 343 return bin dates. The other 18 send users to the council's 
 | Telford and Wrekin | broken / upstream_error |
 <!-- coverage:end -->
 
-The [coverage map](https://bins.09steic.com/coverage) shows each council on a map.
+The [coverage map](https://ukbinday.co.uk/coverage) shows each council on a map.
 
 ## API
 

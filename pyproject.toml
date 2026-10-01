@@ -59,7 +59,8 @@ markers = [
     "live: Integration tests that hit live council websites",
     "docker: Tests that require Docker running",
 ]
-norecursedirs = ["pipeline/upstream"]
+testpaths = ["tests"]
+norecursedirs = ["pipeline/upstream", ".claude"]
 
 [tool.ty.environment]
 python-version = "3.13"

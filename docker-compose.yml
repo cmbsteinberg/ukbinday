@@ -9,6 +9,7 @@ services:
         condition: service_healthy
     environment:
       - REDIS_URL=redis://redis:6379
+      - RUN_REFRESH_JOB=0
       - BASE_URL=${BASE_URL:-}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
       - LOG_FORMAT=${LOG_FORMAT:-json}
