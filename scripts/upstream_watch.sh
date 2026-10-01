@@ -16,13 +16,13 @@
 #   hacs_itv_*             source/iapp_itouchvision_com.py
 #   ukbcd_<x>, port_<x>    councils/<CamelCase x>.py  robbrad/UKBinCollectionData
 #
-# State: scripts/upstream_watch.json holds the time of the last successful
-# check. A run reports commits after it, then moves it to now.
+# State: scripts/upstream_watch.json (gitignored, per checkout) holds the time
+# of the last successful check. A run reports commits after it, then moves it
+# to now.
 #
 # --hook (lefthook pre-commit) never blocks a commit: it checks at most once a
 # day, gives up after ~20s, stays silent when gh or python3 is missing or the
-# network is down, always exits 0, and stages the updated state file so it
-# goes in with the commit.
+# network is down, always exits 0.
 
 set -uo pipefail
 
@@ -142,8 +142,4 @@ elif [ "$HOOK" = 0 ]; then
 fi
 
 printf '{\n  "checked_at": "%s"\n}\n' "$NOW" >"$STATE"
-if [ "$HOOK" = 1 ]; then
-  # Parallel hooks may hold the index lock for a moment
-  for _ in 1 2 3; do git -C "$ROOT" add -- "$STATE" 2>/dev/null && break; sleep 0.5; done
-fi
 exit 0
