@@ -1,33 +1,39 @@
 {
   "meta": {
-    "started_at": "2026-10-01T09:19:51+00:00",
-    "wall_clock_s": 0.8,
+    "started_at": "2026-10-01T09:27:29+00:00",
+    "wall_clock_s": 1.5,
     "cases_file": "tests/lad_test_cases.json",
-    "jobs": 4,
+    "jobs": 21,
     "canary_ok": true,
     "partial": true,
     "lads_run": [
-      "E07000130"
+      "E06000056",
+      "E06000060",
+      "E07000123",
+      "E07000173",
+      "W06000015"
     ]
   },
   "summary": {
     "lads": 350,
     "status": {
-      "working": 341,
-      "broken": 5,
-      "deeplink": 2,
+      "working": 342,
+      "broken": 3,
+      "deeplink": 3,
       "unverified": 2
     },
     "outcomes_by_source": {
       "sampled": {
-        "upstream_error": 2
+        "pass": 8,
+        "deeplink": 2
       },
       "fixture": {
-        "upstream_error": 1,
-        "input_rejected": 1
+        "pass": 9,
+        "deeplink": 2
       }
     },
     "passed_sources": {
+      "fixture+sampled": 4,
       "-": 1
     }
   },
@@ -5205,6 +5211,7 @@
       "status": "working",
       "reason": null,
       "passed_sources": [
+        "fixture",
         "sampled"
       ],
       "cases": [
@@ -5214,7 +5221,7 @@
           "label": "39, Clarkes Way, Houghton Regis, Dunstable, LU5 5EN",
           "uprn": "100080091628",
           "status_code": 200,
-          "elapsed_s": 2.3,
+          "elapsed_s": 1.44,
           "collections_count": 52,
           "first": {
             "date": "2026-10-06",
@@ -5235,7 +5242,7 @@
           "label": "8 The Fields, Lower Caldecote, Biggleswade, SG18 9BA",
           "uprn": "10002899940",
           "status_code": 200,
-          "elapsed_s": 2.23,
+          "elapsed_s": 1.36,
           "collections_count": 41,
           "first": {
             "date": "2026-10-01",
@@ -5255,20 +5262,43 @@
           "source": "fixture",
           "label": "Buttermere Avenue, Dunstable",
           "uprn": null,
-          "status_code": 422,
-          "elapsed_s": 0.03,
-          "outcome": "input_rejected",
-          "error": "The details provided don't match what this council's system expects. Please check your UPRN and postcode are correct."
+          "status_code": 200,
+          "elapsed_s": 1.44,
+          "collections_count": 54,
+          "first": {
+            "date": "2026-10-01",
+            "type": "Food waste",
+            "icon": "mdi:food-apple"
+          },
+          "types": [
+            "Food waste",
+            "Recycling",
+            "Refuse (black bin)"
+          ],
+          "cached": false,
+          "outcome": "pass"
         },
         {
           "id": "E06000056-f2",
           "source": "fixture",
-          "label": "Chestnut Avenue, Biggleswade (unspaced postcode, separate garden waste row)",
+          "label": "Chestnut Avenue, Biggleswade",
           "uprn": null,
-          "status_code": 422,
-          "elapsed_s": 0.01,
-          "outcome": "input_rejected",
-          "error": "The details provided don't match what this council's system expects. Please check your UPRN and postcode are correct."
+          "status_code": 200,
+          "elapsed_s": 1.49,
+          "collections_count": 67,
+          "first": {
+            "date": "2026-10-01",
+            "type": "Food waste",
+            "icon": "mdi:food-apple"
+          },
+          "types": [
+            "Food waste",
+            "Garden waste collection (paid subscription)",
+            "Recycling",
+            "Refuse (black bin)"
+          ],
+          "cached": false,
+          "outcome": "pass"
         }
       ]
     },
@@ -5597,7 +5627,7 @@
           "label": "3, Rowan Place, Amersham, HP6 6UR",
           "uprn": "100080502956",
           "status_code": 200,
-          "elapsed_s": 1.11,
+          "elapsed_s": 1.42,
           "collections_count": 5,
           "first": {
             "date": "2026-10-02",
@@ -5640,10 +5670,10 @@
         {
           "id": "E06000060-f1",
           "source": "fixture",
-          "label": "Buckinghamshire",
+          "label": "High Wycombe",
           "uprn": "100081093078",
           "status_code": 200,
-          "elapsed_s": 0.93,
+          "elapsed_s": 1.15,
           "collections_count": 5,
           "first": {
             "date": "2026-10-02",
@@ -5652,6 +5682,51 @@
           },
           "types": [
             "Food waste",
+            "General waste",
+            "Mixed recycling",
+            "Paper and cardboard recycling",
+            "Small household electricals, batteries and textiles"
+          ],
+          "cached": false,
+          "outcome": "pass"
+        },
+        {
+          "id": "E06000060-f2",
+          "source": "fixture",
+          "label": "Aylesbury",
+          "uprn": "766323596",
+          "status_code": 200,
+          "elapsed_s": 1.15,
+          "collections_count": 3,
+          "first": {
+            "date": "2026-10-01",
+            "type": "Food waste",
+            "icon": "mdi:food-apple"
+          },
+          "types": [
+            "Food waste",
+            "General waste",
+            "Mixed recycling"
+          ],
+          "cached": false,
+          "outcome": "pass"
+        },
+        {
+          "id": "E06000060-f3",
+          "source": "fixture",
+          "label": "Chalfont St Peter",
+          "uprn": "100080517055",
+          "status_code": 200,
+          "elapsed_s": 1.42,
+          "collections_count": 6,
+          "first": {
+            "date": "2026-10-02",
+            "type": "Food waste",
+            "icon": "mdi:food-apple"
+          },
+          "types": [
+            "Food waste",
+            "Garden waste",
             "General waste",
             "Mixed recycling",
             "Paper and cardboard recycling",
@@ -14075,49 +14150,57 @@
       "name": "Preston",
       "scraper_id": "hacs_preston_gov_uk",
       "fixture_only": false,
-      "status": "broken",
-      "reason": "input_rejected",
+      "status": "deeplink",
+      "reason": "Preston's bin-day search answers every automated request with an image captcha.",
       "passed_sources": [],
       "cases": [
         {
-          "id": "E07000123-s7",
+          "id": "E07000123-s9",
           "source": "sampled",
-          "label": "36, Miller Field, Lea, Preston, PR2 1XB",
-          "uprn": "100010558516",
-          "status_code": 422,
-          "elapsed_s": 0.12,
-          "outcome": "input_rejected",
-          "error": "The details provided don't match what this council's system expects. Please check your UPRN and postcode are correct."
+          "label": "6, Silver Street, Preston, PR1 3RH",
+          "uprn": "10007611644",
+          "status_code": 200,
+          "elapsed_s": 0.09,
+          "collections_count": 0,
+          "cached": false,
+          "outcome": "deeplink",
+          "error": "Preston's bin-day search answers every automated request with an image captcha."
         },
         {
-          "id": "E07000123-s8",
+          "id": "E07000123-s10",
           "source": "sampled",
-          "label": "16, Ridgemont, Fulwood, Preston, PR2 3FQ",
-          "uprn": "100010564707",
-          "status_code": 422,
-          "elapsed_s": 0.13,
-          "outcome": "input_rejected",
-          "error": "The details provided don't match what this council's system expects. Please check your UPRN and postcode are correct."
+          "label": "6, Avonbridge, Fulwood, Preston, PR2 3RE",
+          "uprn": "100010532944",
+          "status_code": 200,
+          "elapsed_s": 0.09,
+          "collections_count": 0,
+          "cached": false,
+          "outcome": "deeplink",
+          "error": "Preston's bin-day search answers every automated request with an image captcha."
         },
         {
           "id": "E07000123-f1",
           "source": "fixture",
           "label": "Test_001",
           "uprn": null,
-          "status_code": 422,
-          "elapsed_s": 0.12,
-          "outcome": "input_rejected",
-          "error": "The details provided don't match what this council's system expects. Please check your UPRN and postcode are correct."
+          "status_code": 200,
+          "elapsed_s": 0.09,
+          "collections_count": 0,
+          "cached": false,
+          "outcome": "deeplink",
+          "error": "Preston's bin-day search answers every automated request with an image captcha."
         },
         {
           "id": "E07000123-f2",
           "source": "fixture",
           "label": "Test_002",
           "uprn": "10002220003",
-          "status_code": 422,
-          "elapsed_s": 0.12,
-          "outcome": "input_rejected",
-          "error": "The details provided don't match what this council's system expects. Please check your UPRN and postcode are correct."
+          "status_code": 200,
+          "elapsed_s": 0.09,
+          "collections_count": 0,
+          "cached": false,
+          "outcome": "deeplink",
+          "error": "Preston's bin-day search answers every automated request with an image captcha."
         }
       ]
     },
@@ -17060,6 +17143,7 @@
       "status": "working",
       "reason": null,
       "passed_sources": [
+        "fixture",
         "sampled"
       ],
       "cases": [
@@ -17069,7 +17153,7 @@
           "label": "4, Denbury Road, Ravenshead, Nottingham, NG15 9FQ",
           "uprn": "100031357015",
           "status_code": 200,
-          "elapsed_s": 3.73,
+          "elapsed_s": 1.41,
           "collections_count": 7,
           "first": {
             "date": "2026-10-05",
@@ -17091,7 +17175,7 @@
           "label": "2, Orchard Court, Gedling, Nottingham, NG4 4FF",
           "uprn": "200004048864",
           "status_code": 200,
-          "elapsed_s": 3.69,
+          "elapsed_s": 1.41,
           "collections_count": 6,
           "first": {
             "date": "2026-10-01",
@@ -17109,12 +17193,45 @@
         {
           "id": "E07000173-f1",
           "source": "fixture",
-          "label": "Gedling",
+          "label": "4 Denbury Road",
           "uprn": null,
-          "status_code": 422,
-          "elapsed_s": 0.0,
-          "outcome": "input_rejected",
-          "error": "Missing required parameters for E07000173: ['postcode']. Required: ['postcode'], Optional: ['uprn', 'address', 'house_number', 'street']"
+          "status_code": 200,
+          "elapsed_s": 1.41,
+          "collections_count": 7,
+          "first": {
+            "date": "2026-10-05",
+            "type": "Recycling",
+            "icon": "mdi:recycle"
+          },
+          "types": [
+            "Garden",
+            "General",
+            "Glass",
+            "Recycling"
+          ],
+          "cached": false,
+          "outcome": "pass"
+        },
+        {
+          "id": "E07000173-f2",
+          "source": "fixture",
+          "label": "2 Orchard Court",
+          "uprn": null,
+          "status_code": 200,
+          "elapsed_s": 1.41,
+          "collections_count": 6,
+          "first": {
+            "date": "2026-10-01",
+            "type": "Recycling",
+            "icon": "mdi:recycle"
+          },
+          "types": [
+            "General",
+            "Glass",
+            "Recycling"
+          ],
+          "cached": false,
+          "outcome": "pass"
         }
       ]
     },
@@ -35014,9 +35131,12 @@
       "name": "Cardiff",
       "scraper_id": "hacs_cardiff_gov_uk",
       "fixture_only": false,
-      "status": "broken",
-      "reason": "upstream_error",
-      "passed_sources": [],
+      "status": "working",
+      "reason": null,
+      "passed_sources": [
+        "fixture",
+        "sampled"
+      ],
       "cases": [
         {
           "id": "W06000015-s1",
@@ -35024,11 +35144,22 @@
           "label": "46, Adeline Street, Cardiff, CF24 2BJ",
           "uprn": "100100062342",
           "status_code": 200,
-          "elapsed_s": 20.01,
-          "outcome": "upstream_error",
-          "error": "Cardiff Council's website isn't responding right now; check your bin day on the council's site.",
-          "attempts": 2,
-          "first_attempt": "network"
+          "elapsed_s": 0.65,
+          "collections_count": 7,
+          "first": {
+            "date": "2026-10-01",
+            "type": "Food",
+            "icon": "mdi:food-apple"
+          },
+          "types": [
+            "Food",
+            "Garden",
+            "General",
+            "Glass",
+            "Recycling"
+          ],
+          "cached": false,
+          "outcome": "pass"
         },
         {
           "id": "W06000015-s2",
@@ -35036,11 +35167,22 @@
           "label": "5, Archer Road, Cardiff, CF5 4FL",
           "uprn": "100100093796",
           "status_code": 200,
-          "elapsed_s": 20.02,
-          "outcome": "upstream_error",
-          "error": "Cardiff Council's website isn't responding right now; check your bin day on the council's site.",
-          "attempts": 2,
-          "first_attempt": "network"
+          "elapsed_s": 0.58,
+          "collections_count": 7,
+          "first": {
+            "date": "2026-10-06",
+            "type": "Food",
+            "icon": "mdi:food-apple"
+          },
+          "types": [
+            "Food",
+            "Garden",
+            "General",
+            "Glass",
+            "Recycling"
+          ],
+          "cached": false,
+          "outcome": "pass"
         },
         {
           "id": "W06000015-f1",
@@ -35048,11 +35190,22 @@
           "label": "Glass",
           "uprn": "100100124569",
           "status_code": 200,
-          "elapsed_s": 20.01,
-          "outcome": "upstream_error",
-          "error": "Cardiff Council's website isn't responding right now; check your bin day on the council's site.",
-          "attempts": 2,
-          "first_attempt": "network"
+          "elapsed_s": 0.68,
+          "collections_count": 7,
+          "first": {
+            "date": "2026-10-02",
+            "type": "Food",
+            "icon": "mdi:food-apple"
+          },
+          "types": [
+            "Food",
+            "Garden",
+            "General",
+            "Glass",
+            "Recycling"
+          ],
+          "cached": false,
+          "outcome": "pass"
         },
         {
           "id": "W06000015-f2",
@@ -35060,11 +35213,22 @@
           "label": "NoGlass",
           "uprn": "100100127440",
           "status_code": 200,
-          "elapsed_s": 20.02,
-          "outcome": "upstream_error",
-          "error": "Cardiff Council's website isn't responding right now; check your bin day on the council's site.",
-          "attempts": 2,
-          "first_attempt": "network"
+          "elapsed_s": 0.51,
+          "collections_count": 7,
+          "first": {
+            "date": "2026-10-02",
+            "type": "Food",
+            "icon": "mdi:food-apple"
+          },
+          "types": [
+            "Food",
+            "Garden",
+            "General",
+            "Glass",
+            "Recycling"
+          ],
+          "cached": false,
+          "outcome": "pass"
         }
       ]
     },

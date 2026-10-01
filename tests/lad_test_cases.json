@@ -29,7 +29,6 @@
         "id": "E06000001-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "TS25 2NA",
           "uprn": "100110021946"
         },
         "source": "fixture"
@@ -38,17 +37,7 @@
         "id": "E06000001-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "TS26 0BS",
           "uprn": "100110007383"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000001-f3",
-        "label": "Test_003",
-        "params": {
-          "postcode": "TS24 9SJ",
-          "uprn": "10009716952"
         },
         "source": "fixture"
       }
@@ -81,14 +70,6 @@
           "uprn": "100110125003"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E06000002-f1",
-        "label": "Middlesbrough",
-        "params": {
-          "house_number": "12 Constantine Court Park Road North, Middlesbrough"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Middlesbrough",
@@ -119,15 +100,6 @@
           "uprn": "100110057772"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E06000003-f1",
-        "label": "Redcar and Cleveland",
-        "params": {
-          "house_number": "11",
-          "postcode": "TS10 2RE"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Redcar and Cleveland",
@@ -163,7 +135,6 @@
         "id": "E06000004-f1",
         "label": "100110203615",
         "params": {
-          "postcode": "TS16 0NW",
           "uprn": "100110203615"
         },
         "source": "fixture"
@@ -172,7 +143,6 @@
         "id": "E06000004-f2",
         "label": "100110160417",
         "params": {
-          "postcode": "TS2 1SS ",
           "uprn": "100110160417"
         },
         "source": "fixture"
@@ -181,17 +151,7 @@
         "id": "E06000004-f3",
         "label": "20002027430",
         "params": {
-          "postcode": "TS22 5RY",
           "uprn": "20002027430"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000004-f4",
-        "label": "100110206644",
-        "params": {
-          "postcode": "TS18 4AL",
-          "uprn": "100110206644"
         },
         "source": "fixture"
       }
@@ -229,16 +189,14 @@
         "id": "E06000005-f1",
         "label": "10013321444",
         "params": {
-          "postcode": "DL3 0RZ ",
           "uprn": "10013321444"
         },
         "source": "fixture"
       },
       {
         "id": "E06000005-f2",
-        "label": "010013315817",
+        "label": "10013315817",
         "params": {
-          "postcode": "DL3 9AB ",
           "uprn": "10013315817"
         },
         "source": "fixture"
@@ -247,17 +205,7 @@
         "id": "E06000005-f3",
         "label": "100110560916",
         "params": {
-          "postcode": "DL1 3RG ",
           "uprn": "100110560916"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000005-f4",
-        "label": "200002724471",
-        "params": {
-          "postcode": "DL3 0BG ",
-          "uprn": "200002724471"
         },
         "source": "fixture"
       }
@@ -295,7 +243,6 @@
         "id": "E06000007-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "WA5 2PF ",
           "uprn": "100010309878"
         },
         "source": "fixture"
@@ -304,7 +251,6 @@
         "id": "E06000007-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "WA5 0AF ",
           "uprn": "100010296572"
         },
         "source": "fixture"
@@ -313,17 +259,7 @@
         "id": "E06000007-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "WA4 6QW ",
           "uprn": "100010291332"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000007-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "WA13 0LE",
-          "uprn": "100010258176"
         },
         "source": "fixture"
       }
@@ -361,7 +297,6 @@
         "id": "E06000008-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "BB2 3JG ",
           "uprn": "10091617919"
         },
         "source": "fixture"
@@ -370,7 +305,6 @@
         "id": "E06000008-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "BB1 5PL ",
           "uprn": "100010732130"
         },
         "source": "fixture"
@@ -379,17 +313,7 @@
         "id": "E06000008-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "BB2 3PJ ",
           "uprn": "100010729702"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000008-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "BB2 3HE ",
-          "uprn": "100010751876"
         },
         "source": "fixture"
       }
@@ -484,7 +408,6 @@
         "id": "E06000010-f1",
         "label": "21095794",
         "params": {
-          "postcode": "HU6 8NL ",
           "uprn": "21095794"
         },
         "source": "fixture"
@@ -493,7 +416,6 @@
         "id": "E06000010-f2",
         "label": "21009164",
         "params": {
-          "postcode": "HU9 5LH ",
           "uprn": "21009164"
         },
         "source": "fixture"
@@ -554,15 +476,6 @@
           "uprn": "100050099708"
         },
         "source": "fixture"
-      },
-      {
-        "id": "E06000011-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": " DN146BJ ",
-          "uprn": "10002364380"
-        },
-        "source": "fixture"
       }
     ],
     "name": "East Riding of Yorkshire",
@@ -598,7 +511,6 @@
         "id": "E06000012-f1",
         "label": "11042949",
         "params": {
-          "postcode": "DN33 2DN",
           "uprn": "11042949"
         },
         "source": "fixture"
@@ -607,7 +519,6 @@
         "id": "E06000012-f2",
         "label": "11043243",
         "params": {
-          "postcode": "DN40 1JU",
           "uprn": "11043243"
         },
         "source": "fixture"
@@ -646,7 +557,6 @@
         "id": "E06000013-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "DN15 7PJ",
           "uprn": "100050200824"
         },
         "source": "fixture"
@@ -655,7 +565,6 @@
         "id": "E06000013-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "DN20 0NH",
           "uprn": "100050188326"
         },
         "source": "fixture"
@@ -664,17 +573,7 @@
         "id": "E06000013-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "DN17 3EN",
           "uprn": "100050199446"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000013-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "DN16 3HU",
-          "uprn": "100050196285"
         },
         "source": "fixture"
       }
@@ -712,7 +611,6 @@
         "id": "E06000014-f1",
         "label": "Reighton Avenue, York",
         "params": {
-          "postcode": "YO30 5QS",
           "uprn": "100050580641"
         },
         "source": "fixture"
@@ -721,7 +619,6 @@
         "id": "E06000014-f2",
         "label": "Granary Walk, York",
         "params": {
-          "postcode": "YO30 6QN",
           "uprn": "010093236548"
         },
         "source": "fixture"
@@ -760,7 +657,6 @@
         "id": "E06000015-f1",
         "label": "22A Wood Road, Chaddesden, Derby, DE21 4LU",
         "params": {
-          "postcode": "DE21 4LU",
           "uprn": "10010688168"
         },
         "source": "fixture"
@@ -769,7 +665,6 @@
         "id": "E06000015-f2",
         "label": "Allestree Home Improvements, 512 Duffield Road, Derby, DE22 2DL",
         "params": {
-          "postcode": "DE22 2DL",
           "uprn": "100030310335"
         },
         "source": "fixture"
@@ -803,15 +698,6 @@
           "uprn": "2465031829"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E06000016-f1",
-        "label": "Leicester",
-        "params": {
-          "postcode": "LE4 1FB ",
-          "uprn": "2465027976"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Leicester",
@@ -847,7 +733,6 @@
         "id": "E06000018-f1",
         "label": "Douglas Rd, Nottingham NG7 1NW",
         "params": {
-          "postcode": "NG7 1NW ",
           "uprn": "100031540175"
         },
         "source": "fixture"
@@ -856,7 +741,6 @@
         "id": "E06000018-f2",
         "label": "Harlaxton Drive, Nottingham, NG7 1JE",
         "params": {
-          "postcode": "NG7 1JE ",
           "uprn": "100031553830"
         },
         "source": "fixture"
@@ -896,7 +780,7 @@
         "label": "houseNumber",
         "params": {
           "house_number": "52",
-          "postcode": "hr49js"
+          "postcode": "HR4 9JS"
         },
         "source": "fixture"
       },
@@ -905,7 +789,7 @@
         "label": "uprn",
         "params": {
           "house_number": "200002607460",
-          "postcode": "hr49js"
+          "postcode": "HR4 9JS"
         },
         "source": "fixture"
       }
@@ -943,8 +827,7 @@
         "id": "E06000020-f1",
         "label": "10 Long Row Drive, Lawley",
         "params": {
-          "postcode": "TF4 2SF ",
-          "uprn": "000452097493"
+          "uprn": "452097493"
         },
         "source": "fixture"
       },
@@ -1000,7 +883,6 @@
         "id": "E06000021-f1",
         "label": "Test1",
         "params": {
-          "postcode": "ST4 3QF ",
           "uprn": "3455011383"
         },
         "source": "fixture"
@@ -1009,7 +891,6 @@
         "id": "E06000021-f2",
         "label": "Test2",
         "params": {
-          "postcode": "ST3 7QR ",
           "uprn": "3455011391"
         },
         "source": "fixture"
@@ -1048,7 +929,6 @@
         "id": "E06000022-f1",
         "label": "uprn",
         "params": {
-          "postcode": "BA1 2LR ",
           "uprn": "10001138699"
         },
         "source": "fixture"
@@ -1105,7 +985,6 @@
         "id": "E06000023-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "BS8 4PP ",
           "uprn": "107652"
         },
         "source": "fixture"
@@ -1114,7 +993,6 @@
         "id": "E06000023-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "BS10 7PS",
           "uprn": "2987"
         },
         "source": "fixture"
@@ -1123,7 +1001,6 @@
         "id": "E06000023-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "BS7 0HE ",
           "uprn": "17929"
         },
         "source": "fixture"
@@ -1210,7 +1087,6 @@
         "id": "E06000025-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "BS16 7BF",
           "uprn": "643346"
         },
         "source": "fixture"
@@ -1219,7 +1095,6 @@
         "id": "E06000025-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "BS16 7JG",
           "uprn": "641084"
         },
         "source": "fixture"
@@ -1258,7 +1133,6 @@
         "id": "E06000026-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "PL4 6PX ",
           "uprn": "100040429524"
         },
         "source": "fixture"
@@ -1267,7 +1141,6 @@
         "id": "E06000026-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "PL4 7AL ",
           "uprn": "100040425325"
         },
         "source": "fixture"
@@ -1276,26 +1149,7 @@
         "id": "E06000026-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "PL1 5LJ ",
           "uprn": "100040472543"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000026-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "PL4 9NA ",
-          "uprn": "100040462838"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000026-f5",
-        "label": "Test_005",
-        "params": {
-          "postcode": "PL9 7RW ",
-          "uprn": "100040461084"
         },
         "source": "fixture"
       }
@@ -1333,7 +1187,6 @@
         "id": "E06000027-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "TQ1 1AG",
           "uprn": "10000016984"
         },
         "source": "fixture"
@@ -1372,7 +1225,6 @@
         "id": "E06000030-f1",
         "label": "1 Nyland Road",
         "params": {
-          "postcode": "SN3 3RD ",
           "uprn": "100121147490"
         },
         "source": "fixture"
@@ -1381,7 +1233,6 @@
         "id": "E06000030-f2",
         "label": "74 Standen Way",
         "params": {
-          "postcode": "SN25 4YG",
           "uprn": "200002922415"
         },
         "source": "fixture"
@@ -1390,17 +1241,7 @@
         "id": "E06000030-f3",
         "label": "1 Eastbury Way",
         "params": {
-          "postcode": "SN25 2EL",
           "uprn": "10010424600"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000030-f4",
-        "label": "33 Ulysses Road",
-        "params": {
-          "postcode": "SN25 2JN",
-          "uprn": "10010427033"
         },
         "source": "fixture"
       }
@@ -1423,14 +1264,14 @@
         "source": "sampled"
       },
       {
-        "id": "E06000031-s5",
-        "label": "75, London Road, Peterborough, PE2 9BS",
+        "id": "E06000031-s6",
+        "label": "6 Space, St. Peters Road, Peterborough, PE1 1YX",
         "params": {
-          "address": "75, London Road, Peterborough, PE2 9BS",
-          "house_number": "75",
-          "postcode": "PE2 9BS",
-          "street": "London Road",
-          "uprn": "100091524999"
+          "address": "6 Space, St. Peters Road, Peterborough, PE1 1YX",
+          "house_number": "6",
+          "postcode": "PE1 1YX",
+          "street": "Space",
+          "uprn": "10094544997"
         },
         "source": "sampled"
       },
@@ -1472,15 +1313,6 @@
           "uprn": "100080140781"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E06000032-f1",
-        "label": "Luton",
-        "params": {
-          "postcode": "LU4 0SL ",
-          "uprn": "100080155778"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Luton",
@@ -1516,7 +1348,6 @@
         "id": "E06000033-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "SS1 2XB ",
           "uprn": "100090691871"
         },
         "source": "fixture"
@@ -1525,17 +1356,9 @@
         "id": "E06000033-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "SS3 9JD ",
-          "uprn": "100090700485"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000033-f3",
-        "label": "Test_003",
-        "params": {
-          "address": "38 Thorpedene Gardens, Shoeburyness",
-          "postcode": "SS3 9JD"
+          "house_number": "38",
+          "postcode": "SS3 9JD",
+          "street": "Thorpedene Gardens"
         },
         "source": "fixture"
       }
@@ -1556,7 +1379,7 @@
       },
       {
         "id": "E06000034-f2",
-        "label": "Abberton Way West Thurrock (street starting with A)",
+        "label": "Abberton Way West Thurrock",
         "params": {
           "street": "Abberton Way",
           "town": "West Thurrock"
@@ -1601,22 +1424,12 @@
         "id": "E06000035-f1",
         "label": "known_uprn",
         "params": {
-          "postcode": "ME4 4AY ",
           "uprn": "100062390963"
         },
         "source": "fixture"
       },
       {
         "id": "E06000035-f2",
-        "label": "known_uprn_as_number",
-        "params": {
-          "postcode": "ME4 4AY ",
-          "uprn": "100062390963"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000035-f3",
         "label": "by_postcode",
         "params": {
           "house_number": "194-198",
@@ -1680,24 +1493,6 @@
           "postcode": "RG12 8SG"
         },
         "source": "fixture"
-      },
-      {
-        "id": "E06000036-f4",
-        "label": "1 Acacia Avenue",
-        "params": {
-          "house_number": "1",
-          "postcode": "GU47 0RU"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000036-f5",
-        "label": "Myrtle, 39 New Wokingham Road",
-        "params": {
-          "house_number": "Myrtle",
-          "postcode": "RG45 6JG"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Bracknell Forest",
@@ -1733,22 +1528,12 @@
         "id": "E06000037-f1",
         "label": "known_uprn",
         "params": {
-          "postcode": "RG7 6NZ ",
           "uprn": "100080241094"
         },
         "source": "fixture"
       },
       {
         "id": "E06000037-f2",
-        "label": "known_uprn as number",
-        "params": {
-          "postcode": "RG8 8BB ",
-          "uprn": "100081026602"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000037-f3",
         "label": "unknown_uprn_by_name",
         "params": {
           "house_number": "PARROG HOUSE",
@@ -1757,20 +1542,11 @@
         "source": "fixture"
       },
       {
-        "id": "E06000037-f4",
+        "id": "E06000037-f3",
         "label": "unknown_uprn_by_number",
         "params": {
           "house_number": "6",
           "postcode": "RG18 4QU"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000037-f5",
-        "label": "unknown_uprn_business",
-        "params": {
-          "house_number": "3",
-          "postcode": "RG18 4GE"
         },
         "source": "fixture"
       }
@@ -1808,32 +1584,13 @@
         "id": "E06000038-f1",
         "label": "known_uprn",
         "params": {
-          "postcode": "RG31 5PN",
           "uprn": "310027679"
         },
         "source": "fixture"
       },
       {
         "id": "E06000038-f2",
-        "label": "known_uprn as number",
-        "params": {
-          "postcode": "RG31 5PN",
-          "uprn": "310027679"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000038-f3",
         "label": "unknown_uprn_by_number",
-        "params": {
-          "house_number": "65",
-          "postcode": "RG31 5PN"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000038-f4",
-        "label": "unknown_uprn_by_number as number",
         "params": {
           "house_number": "65",
           "postcode": "RG31 5PN"
@@ -1893,14 +1650,6 @@
           "record_id": "34069"
         },
         "source": "fixture"
-      },
-      {
-        "id": "E06000039-f4",
-        "label": "Search by street name",
-        "params": {
-          "street": "Knolton Way, Montgomery Place"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Slough",
@@ -1945,7 +1694,6 @@
         "id": "E06000040-f2",
         "label": "Windsor 2",
         "params": {
-          "postcode": "SL4 3NX ",
           "uprn": "100080384194"
         },
         "source": "fixture"
@@ -1954,17 +1702,7 @@
         "id": "E06000040-f3",
         "label": "Maidenhead 1",
         "params": {
-          "postcode": "SL6 8EH ",
           "uprn": "100080359672"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000040-f4",
-        "label": "Maidenhead 2",
-        "params": {
-          "postcode": "SL6 5HX ",
-          "uprn": "100080355442"
         },
         "source": "fixture"
       }
@@ -2011,35 +1749,18 @@
         "id": "E06000041-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "RG413BP",
+          "postcode": "RG41 3BP",
           "property": "14007633"
         },
         "source": "fixture"
       },
       {
         "id": "E06000041-f3",
-        "label": "Test_003",
-        "params": {
-          "postcode": "rg41 1ph",
-          "property": "14040037"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000041-f4",
         "label": "Test_004",
         "params": {
-          "address": "16 Davy Close",
-          "postcode": "RG40 2LW"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000041-f5",
-        "label": "No-Collection Test",
-        "params": {
-          "address": "39 Broadwater Road",
-          "postcode": "RG10 0EU"
+          "house_number": "16",
+          "postcode": "RG40 2LW",
+          "street": "Davy Close"
         },
         "source": "fixture"
       }
@@ -2072,15 +1793,6 @@
           "uprn": "25110170"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E06000042-f1",
-        "label": "Milton Keynes",
-        "params": {
-          "postcode": "MK10 9NQ",
-          "uprn": "25109551"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Milton Keynes",
@@ -2114,36 +1826,16 @@
       },
       {
         "id": "E06000044-f1",
-        "label": "Fawcett Road - number",
+        "label": "Fawcett Road",
         "params": {
-          "postcode": "PO4 0LE ",
           "uprn": "1775027540"
         },
         "source": "fixture"
       },
       {
         "id": "E06000044-f2",
-        "label": "Fawcett Road - string",
+        "label": "Westbourne Road",
         "params": {
-          "postcode": "PO4 0LE ",
-          "uprn": "1775027540"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000044-f3",
-        "label": "Westbourne Road - number",
-        "params": {
-          "postcode": "PO2 7LB ",
-          "uprn": "1775084532"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000044-f4",
-        "label": "Westbourne Road - string",
-        "params": {
-          "postcode": "PO2 7LB ",
           "uprn": "1775084532"
         },
         "source": "fixture"
@@ -2182,7 +1874,6 @@
         "id": "E06000047-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "DH1 1LZ ",
           "uprn": "100110414978"
         },
         "source": "fixture"
@@ -2191,7 +1882,6 @@
         "id": "E06000047-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "DH1 5BB ",
           "uprn": "100110427200"
         },
         "source": "fixture"
@@ -2225,15 +1915,6 @@
           "uprn": "10007948746"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E06000049-f1",
-        "label": "Cheshire East",
-        "params": {
-          "postcode": "SK9 7DZ ",
-          "uprn": "100012830647"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Cheshire East",
@@ -2269,53 +1950,23 @@
         "id": "E06000050-f1",
         "label": "Chester",
         "params": {
-          "postcode": "CH1 3JN ",
           "uprn": "100010030086"
         },
         "source": "fixture"
       },
       {
         "id": "E06000050-f2",
-        "label": "Chester - string",
-        "params": {
-          "postcode": "CH1 3JN ",
-          "uprn": "100010030086"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000050-f3",
         "label": "Northwich",
         "params": {
-          "postcode": "CW9 5HT ",
           "uprn": "10011715183"
         },
         "source": "fixture"
       },
       {
-        "id": "E06000050-f4",
+        "id": "E06000050-f3",
         "label": "Hartford",
         "params": {
-          "postcode": "CW8 1LG ",
           "uprn": "100010181592"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000050-f5",
-        "label": "Tarporley",
-        "params": {
-          "postcode": "CW6 0GF ",
-          "uprn": "10014514851"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000050-f6",
-        "label": "Knutsford - no results",
-        "params": {
-          "postcode": "WA16 9DE",
-          "uprn": "100010132172"
         },
         "source": "fixture"
       }
@@ -2353,7 +2004,6 @@
         "id": "E06000051-f1",
         "label": "100070056686",
         "params": {
-          "postcode": "SY3 9LY ",
           "uprn": "100070056686"
         },
         "source": "fixture"
@@ -2400,7 +2050,6 @@
         "id": "E06000052-f1",
         "label": "known_uprn",
         "params": {
-          "postcode": "TR26 1SP",
           "uprn": "100040118005"
         },
         "source": "fixture"
@@ -2410,7 +2059,7 @@
         "label": "unknown_uprn",
         "params": {
           "house_number": "7",
-          "postcode": "TR261SP"
+          "postcode": "TR26 1SP"
         },
         "source": "fixture"
       },
@@ -2420,15 +2069,6 @@
         "params": {
           "house_number": "3",
           "postcode": "PL17 8PL"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000052-f4",
-        "label": "uprn_with_garden_int_uprn",
-        "params": {
-          "postcode": "PL31 2BN",
-          "uprn": "100040080721"
         },
         "source": "fixture"
       }
@@ -2523,8 +2163,7 @@
         "id": "E06000055-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "MK42 9TE",
-          "uprn": "10002973361"
+          "uprn": "100080009302"
         },
         "source": "fixture"
       },
@@ -2532,8 +2171,7 @@
         "id": "E06000055-f2",
         "label": "Test_003",
         "params": {
-          "postcode": "MK43 8DT",
-          "uprn": "100080995768"
+          "uprn": "100080018481"
         },
         "source": "fixture"
       },
@@ -2541,8 +2179,7 @@
         "id": "E06000055-f3",
         "label": "Test_004",
         "params": {
-          "postcode": "MK40 1AT",
-          "uprn": "10093202307"
+          "uprn": "100080023672"
         },
         "source": "fixture"
       }
@@ -2580,17 +2217,19 @@
         "id": "E06000056-f1",
         "label": "Buttermere Avenue, Dunstable",
         "params": {
-          "house_name": "1 Buttermere Avenue",
-          "postcode": "LU6 3PD"
+          "house_number": "1",
+          "postcode": "LU6 3PD",
+          "street": "Buttermere Avenue"
         },
         "source": "fixture"
       },
       {
         "id": "E06000056-f2",
-        "label": "Chestnut Avenue, Biggleswade (unspaced postcode, separate garden waste row)",
+        "label": "Chestnut Avenue, Biggleswade",
         "params": {
-          "house_name": "1 Chestnut Avenue",
-          "postcode": "SG180LL"
+          "house_number": "1",
+          "postcode": "SG180LL",
+          "street": "Chestnut Avenue"
         },
         "source": "fixture"
       }
@@ -2629,7 +2268,7 @@
         "label": "Test_001",
         "params": {
           "postcode": "NE65 0ZP",
-          "uprn": "010096302588"
+          "uprn": "10096302588"
         },
         "source": "fixture"
       }
@@ -2667,7 +2306,6 @@
         "id": "E06000058-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "BH8 8LT ",
           "uprn": "10013449141"
         },
         "source": "fixture"
@@ -2676,7 +2314,6 @@
         "id": "E06000058-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "BH17 7HA",
           "uprn": "10001085438"
         },
         "source": "fixture"
@@ -2685,7 +2322,6 @@
         "id": "E06000058-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "BH23 3DD",
           "uprn": "100040567667"
         },
         "source": "fixture"
@@ -2724,7 +2360,6 @@
         "id": "E06000059-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "BH16 6EB",
           "uprn": "100040606062"
         },
         "source": "fixture"
@@ -2733,7 +2368,6 @@
         "id": "E06000059-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "BH16 6EB",
           "uprn": "100040606087"
         },
         "source": "fixture"
@@ -2742,7 +2376,6 @@
         "id": "E06000059-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "BH16 6EB",
           "uprn": "100040606071"
         },
         "source": "fixture"
@@ -2779,10 +2412,25 @@
       },
       {
         "id": "E06000060-f1",
-        "label": "Buckinghamshire",
+        "label": "High Wycombe",
         "params": {
-          "postcode": "HP13 7BA",
           "uprn": "100081093078"
+        },
+        "source": "fixture"
+      },
+      {
+        "id": "E06000060-f2",
+        "label": "Aylesbury",
+        "params": {
+          "uprn": "766323596"
+        },
+        "source": "fixture"
+      },
+      {
+        "id": "E06000060-f3",
+        "label": "Chalfont St Peter",
+        "params": {
+          "uprn": "100080517055"
         },
         "source": "fixture"
       }
@@ -2820,7 +2468,6 @@
         "id": "E06000061-f1",
         "label": "100030987513",
         "params": {
-          "postcode": "NN17 1BB",
           "uprn": "100030987513"
         },
         "source": "fixture"
@@ -2829,7 +2476,6 @@
         "id": "E06000061-f2",
         "label": "100030987514",
         "params": {
-          "postcode": "NN17 1BB",
           "uprn": "100030987514"
         },
         "source": "fixture"
@@ -2838,17 +2484,7 @@
         "id": "E06000061-f3",
         "label": "10093005361",
         "params": {
-          "postcode": "NN9 6UR ",
           "uprn": "10093005361"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E06000061-f4",
-        "label": "Castle Farm House Main Street Rockingham North Northamptonshire LE16 8TG",
-        "params": {
-          "postcode": "LE16 8TG",
-          "uprn": "100030993903"
         },
         "source": "fixture"
       }
@@ -2886,7 +2522,6 @@
         "id": "E06000062-f1",
         "label": "28058314",
         "params": {
-          "postcode": "NN7 4PZ ",
           "uprn": "28058314"
         },
         "source": "fixture"
@@ -2895,7 +2530,6 @@
         "id": "E06000062-f2",
         "label": "15049111",
         "params": {
-          "postcode": "NN1 1HJ ",
           "uprn": "15049111"
         },
         "source": "fixture"
@@ -2956,15 +2590,6 @@
           "uprn": "10000895390"
         },
         "source": "fixture"
-      },
-      {
-        "id": "E06000063-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "CA28 6SW",
-          "uprn": "10000895390"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Cumberland",
@@ -2995,16 +2620,6 @@
           "uprn": "10003960708"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E06000064-f1",
-        "label": "Westmorland and Furness",
-        "params": {
-          "house_number": "23",
-          "postcode": "LA9 4QU",
-          "uprn": "100110698636"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Westmorland and Furness",
@@ -3035,15 +2650,6 @@
           "uprn": "100050502990"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E06000065-f1",
-        "label": "North Yorkshire",
-        "params": {
-          "postcode": "LS25 6QJ",
-          "uprn": "10093091235"
-        },
-        "source": "fixture"
       }
     ],
     "name": "North Yorkshire",
@@ -3079,7 +2685,6 @@
         "id": "E06000066-f1",
         "label": "test",
         "params": {
-          "postcode": "TA20 2JG",
           "uprn": "30071272"
         },
         "source": "fixture"
@@ -3166,7 +2771,6 @@
         "id": "E07000009-f1",
         "label": "14 Meadow Way Ely",
         "params": {
-          "postcode": "CB6 3EX ",
           "uprn": "10002601730"
         },
         "source": "fixture"
@@ -3175,7 +2779,6 @@
         "id": "E07000009-f2",
         "label": "20 Forehill Ely",
         "params": {
-          "postcode": "CB7 4AF ",
           "uprn": "10002597181"
         },
         "source": "fixture"
@@ -3262,7 +2865,6 @@
         "id": "E07000011-f1",
         "label": "Wells Close, Brampton",
         "params": {
-          "postcode": "PE28 4UJ",
           "uprn": "100090123510"
         },
         "source": "fixture"
@@ -3271,7 +2873,6 @@
         "id": "E07000011-f2",
         "label": "Inkerman Rise, St. Neots",
         "params": {
-          "postcode": "PE19 7NB",
           "uprn": "10000144271"
         },
         "source": "fixture"
@@ -3311,7 +2912,7 @@
         "label": "houseNumber",
         "params": {
           "house_number": "53",
-          "postcode": "CB236GZ"
+          "postcode": "CB23 6GZ"
         },
         "source": "fixture"
       },
@@ -3320,7 +2921,7 @@
         "label": "houseName",
         "params": {
           "house_number": "Rectory Farm Cottage",
-          "postcode": "CB225HT"
+          "postcode": "CB22 5HT"
         },
         "source": "fixture"
       }
@@ -3358,8 +2959,7 @@
         "id": "E07000032-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "DE56 2UH",
-          "predict": "True",
+          "predict": "true",
           "uprn": "100030011612"
         },
         "source": "fixture"
@@ -3368,7 +2968,6 @@
         "id": "E07000032-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "DE56 2UH",
           "uprn": "100030011654"
         },
         "source": "fixture"
@@ -3377,8 +2976,7 @@
         "id": "E07000032-f3",
         "label": "test_003",
         "params": {
-          "postcode": "DE5 3HN ",
-          "predict": "True",
+          "predict": "true",
           "uprn": "100030041980"
         },
         "source": "fixture"
@@ -3412,15 +3010,6 @@
           "uprn": "100030047207"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000033-f1",
-        "label": "Bolsover",
-        "params": {
-          "postcode": "NG20 8AY",
-          "uprn": "100030066827"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Bolsover",
@@ -3456,7 +3045,6 @@
         "id": "E07000034-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "S41 7AZ ",
           "uprn": "74023685"
         },
         "source": "fixture"
@@ -3465,7 +3053,6 @@
         "id": "E07000034-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "S40 1HW ",
           "uprn": "74009625"
         },
         "source": "fixture"
@@ -3474,17 +3061,7 @@
         "id": "E07000034-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "S41 8JL ",
           "uprn": "74035689"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000034-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "S40 2JF ",
-          "uprn": "74020930"
         },
         "source": "fixture"
       }
@@ -3495,10 +3072,34 @@
   "E07000035": {
     "cases": [
       {
+        "id": "E07000035-s1",
+        "label": "4, John Turner Road, Darley Dale, Matlock, DE4 2TR",
+        "params": {
+          "address": "4, John Turner Road, Darley Dale, Matlock, DE4 2TR",
+          "house_number": "4",
+          "postcode": "DE4 2TR",
+          "street": "John Turner Road",
+          "uprn": "10070092498"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E07000035-s2",
+        "label": "1, The Nook, Stoney Middleton, Hope Valley, S32 4TU",
+        "params": {
+          "address": "1, The Nook, Stoney Middleton, Hope Valley, S32 4TU",
+          "house_number": "1",
+          "postcode": "S32 4TU",
+          "street": "The Nook",
+          "uprn": "10070099374"
+        },
+        "source": "sampled"
+      },
+      {
         "id": "E07000035-f1",
         "label": "Matlock",
         "params": {
-          "address_id": "DE4 3GS"
+          "postcode": "DE4 3GS"
         },
         "source": "fixture"
       },
@@ -3506,7 +3107,7 @@
         "id": "E07000035-f2",
         "label": "Bakewell",
         "params": {
-          "address_id": "U10070089522"
+          "uprn": "10070089522"
         },
         "source": "fixture"
       },
@@ -3514,16 +3115,12 @@
         "id": "E07000035-f3",
         "label": "Wirksworth",
         "params": {
-          "address_id": "U10070097828"
+          "uprn": "10070097828"
         },
         "source": "fixture"
       }
     ],
-    "fixture_only": true,
     "name": "Derbyshire Dales",
-    "notes": [
-      "fixture-only: frontend cannot supply required ['address_id']"
-    ],
     "scraper_id": "hacs_derbyshiredales_gov_uk"
   },
   "E07000036": {
@@ -3556,7 +3153,6 @@
         "id": "E07000036-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "DE7 5AH ",
           "uprn": "100030126659"
         },
         "source": "fixture"
@@ -3565,7 +3161,6 @@
         "id": "E07000036-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "NG10 3JB",
           "uprn": "100030154311"
         },
         "source": "fixture"
@@ -3574,7 +3169,6 @@
         "id": "E07000036-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "DE21 5AA",
           "uprn": "100030118783"
         },
         "source": "fixture"
@@ -3629,7 +3223,7 @@
       },
       {
         "id": "E07000037-f3",
-        "label": " SK13 2AD, 10010734345",
+        "label": "SK13 2AD, 10010734345",
         "params": {
           "postcode": "SK13 2AD",
           "uprn": "10010734345"
@@ -3670,7 +3264,6 @@
         "id": "E07000039-f1",
         "label": "test case 1",
         "params": {
-          "postcode": "DE65 6FT",
           "uprn": "100030233745"
         },
         "source": "fixture"
@@ -3679,7 +3272,6 @@
         "id": "E07000039-f2",
         "label": "test case 2",
         "params": {
-          "postcode": "DE11 0FF",
           "uprn": "10090304958"
         },
         "source": "fixture"
@@ -3718,8 +3310,7 @@
         "id": "E07000040-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "EX11 1GX",
-          "uprn": "010000246114"
+          "uprn": "10000246114"
         },
         "source": "fixture"
       },
@@ -3727,7 +3318,6 @@
         "id": "E07000040-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "EX10 0AA",
           "uprn": "10000272679"
         },
         "source": "fixture"
@@ -3766,7 +3356,6 @@
         "id": "E07000041-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "EX1 2HT ",
           "uprn": "100040227486"
         },
         "source": "fixture"
@@ -3775,7 +3364,6 @@
         "id": "E07000041-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "EX4 7JH ",
           "uprn": "10013043921"
         },
         "source": "fixture"
@@ -3784,17 +3372,7 @@
         "id": "E07000041-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "EX2 7FN ",
           "uprn": "10023120282"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000041-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "EX4 1LU ",
-          "uprn": "100040241022"
         },
         "source": "fixture"
       }
@@ -3832,7 +3410,6 @@
         "id": "E07000042-f1",
         "label": "Bradninch",
         "params": {
-          "postcode": "EX5 4QZ ",
           "uprn": "100040359199"
         },
         "source": "fixture"
@@ -3841,7 +3418,6 @@
         "id": "E07000042-f2",
         "label": "Bradninch - string",
         "params": {
-          "postcode": "EX5 4QZ ",
           "uprn": "100040359199"
         },
         "source": "fixture"
@@ -3850,7 +3426,6 @@
         "id": "E07000042-f3",
         "label": "Cullompton",
         "params": {
-          "postcode": "EX15 1DW",
           "uprn": "100040354099"
         },
         "source": "fixture"
@@ -3874,14 +3449,14 @@
         "source": "sampled"
       },
       {
-        "id": "E07000043-s6",
-        "label": "11 Cormelles Court, Bowling Green, Combe Martin, Ilfracombe, EX34 0LG",
+        "id": "E07000043-s7",
+        "label": "4, Grosvenor Terrace, Barnstaple, EX32 7DS",
         "params": {
-          "address": "11 Cormelles Court, Bowling Green, Combe Martin, Ilfracombe, EX34 0LG",
-          "house_number": "11",
-          "postcode": "EX34 0LG",
-          "street": "Cormelles Court",
-          "uprn": "10000483784"
+          "address": "4, Grosvenor Terrace, Barnstaple, EX32 7DS",
+          "house_number": "4",
+          "postcode": "EX32 7DS",
+          "street": "Grosvenor Terrace",
+          "uprn": "10000483594"
         },
         "source": "sampled"
       },
@@ -3923,15 +3498,6 @@
           "uprn": "100040302103"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000044-f1",
-        "label": "South Hams",
-        "params": {
-          "postcode": "TQ9 5PY ",
-          "uprn": "10004742851"
-        },
-        "source": "fixture"
       }
     ],
     "name": "South Hams",
@@ -3968,7 +3534,7 @@
         "label": "EX4 2JR",
         "params": {
           "postcode": "EX4 2JR",
-          "uprn": "010032968474"
+          "uprn": "10032968474"
         },
         "source": "fixture"
       },
@@ -4015,7 +3581,6 @@
         "id": "E07000046-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "EX39 3FY",
           "uprn": "10093911050"
         },
         "source": "fixture"
@@ -4024,7 +3589,6 @@
         "id": "E07000046-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "EX39 2QG",
           "uprn": "10002296087"
         },
         "source": "fixture"
@@ -4033,17 +3597,7 @@
         "id": "E07000046-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "EX39 6EP",
           "uprn": "200001644184"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000046-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "PL15 9TA",
-          "uprn": "100040385608"
         },
         "source": "fixture"
       }
@@ -4081,7 +3635,6 @@
         "id": "E07000047-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "EX20 1AU",
           "uprn": "100040391940"
         },
         "source": "fixture"
@@ -4090,7 +3643,6 @@
         "id": "E07000047-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "PL20 7RS",
           "uprn": "100040403601"
         },
         "source": "fixture"
@@ -4124,15 +3676,6 @@
           "uprn": "100061919434"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000061-f1",
-        "label": "Eastbourne",
-        "params": {
-          "postcode": "BN22 8SS",
-          "uprn": "100060011258"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Eastbourne",
@@ -4168,8 +3711,6 @@
         "id": "E07000062-f1",
         "label": "Test_001",
         "params": {
-          "house_number": "36",
-          "postcode": "TN34 1QF",
           "uprn": "100060038877"
         },
         "source": "fixture"
@@ -4178,8 +3719,6 @@
         "id": "E07000062-f2",
         "label": "Test_002",
         "params": {
-          "house_number": "28A",
-          "postcode": "TN34 2DL",
           "uprn": "10070609836"
         },
         "source": "fixture"
@@ -4188,8 +3727,6 @@
         "id": "E07000062-f3",
         "label": "Test_003",
         "params": {
-          "house_number": "5",
-          "postcode": "TN37 7QH",
           "uprn": "100060041770"
         },
         "source": "fixture"
@@ -4223,15 +3760,6 @@
           "uprn": "100060075272"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000063-f1",
-        "label": "Lewes",
-        "params": {
-          "postcode": "BN7 1TT ",
-          "uprn": "100061930155"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Lewes",
@@ -4267,7 +3795,6 @@
         "id": "E07000064-f1",
         "label": "Test_01",
         "params": {
-          "postcode": "TN31 6PH",
           "uprn": "10002653856"
         },
         "source": "fixture"
@@ -4276,7 +3803,6 @@
         "id": "E07000064-f2",
         "label": "Test_02",
         "params": {
-          "postcode": "TN31 6QT",
           "uprn": "100060102891"
         },
         "source": "fixture"
@@ -4315,7 +3841,6 @@
         "id": "E07000065-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "BN27 1AU",
           "uprn": "10094620272"
         },
         "source": "fixture"
@@ -4324,7 +3849,6 @@
         "id": "E07000065-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "BN27 1NX",
           "uprn": "200001678582"
         },
         "source": "fixture"
@@ -4333,17 +3857,7 @@
         "id": "E07000065-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "BN27 3HS",
           "uprn": "100060120819"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000065-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "BN27 3HW",
-          "uprn": "100060122306"
         },
         "source": "fixture"
       }
@@ -4379,19 +3893,21 @@
       },
       {
         "id": "E07000066-f1",
-        "label": "Test_Addres_001",
+        "label": "Test_Address_001",
         "params": {
-          "address": "6, HEADLEY ROAD",
-          "postcode": "CM111BJ"
+          "house_number": "6",
+          "postcode": "CM11 1BJ",
+          "street": "HEADLEY ROAD"
         },
         "source": "fixture"
       },
       {
         "id": "E07000066-f2",
-        "label": "Test_Addres_002",
+        "label": "Test_Address_002",
         "params": {
-          "address": "25 LONG RIDING",
-          "postcode": "SS14 1QU"
+          "house_number": "25",
+          "postcode": "SS14 1QU",
+          "street": "LONG RIDING"
         },
         "source": "fixture"
       },
@@ -4399,26 +3915,7 @@
         "id": "E07000066-f3",
         "label": "Test_UPRN_001",
         "params": {
-          "postcode": "CM11 2QR",
           "uprn": "100090277795"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000066-f4",
-        "label": "Test_UPRN_002",
-        "params": {
-          "postcode": "CM12 9ET",
-          "uprn": "10024197625"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000066-f5",
-        "label": "Test_UPRN_003",
-        "params": {
-          "postcode": "CM11 1GG",
-          "uprn": "10090455610"
         },
         "source": "fixture"
       }
@@ -4472,28 +3969,10 @@
       },
       {
         "id": "E07000067-f3",
-        "label": "18 St Mary's Road",
-        "params": {
-          "house_number": "1",
-          "postcode": "CM8 3PE"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000067-f4",
         "label": "20 Peel Crescent",
         "params": {
           "house_number": "20",
           "postcode": "CM7 2RS"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000067-f5",
-        "label": "Causeway House",
-        "params": {
-          "house_number": "Causeway House",
-          "postcode": "CM7 9HB"
         },
         "source": "fixture"
       }
@@ -4529,9 +4008,8 @@
       },
       {
         "id": "E07000068-f1",
-        "label": "127 Greenshaw, Brentwood CM14 4YP (Thursday, Route 9)",
+        "label": "127 Greenshaw, Brentwood CM14 4YP",
         "params": {
-          "postcode": "CM14 4YP",
           "uprn": "100090336817"
         },
         "source": "fixture"
@@ -4540,7 +4018,6 @@
         "id": "E07000068-f2",
         "label": "Route 1 (Monday)",
         "params": {
-          "postcode": "CM15 8RQ",
           "uprn": "10093276507"
         },
         "source": "fixture"
@@ -4549,7 +4026,6 @@
         "id": "E07000068-f3",
         "label": "Route 8 (Friday)",
         "params": {
-          "postcode": "CM14 4QN",
           "uprn": "10093274131"
         },
         "source": "fixture"
@@ -4586,14 +4062,6 @@
       },
       {
         "id": "E07000069-f1",
-        "label": "ABBOTSWOOD",
-        "params": {
-          "roadID": "4448"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000069-f2",
         "label": "Ash Road",
         "params": {
           "street": "Ash Road"
@@ -4601,7 +4069,7 @@
         "source": "fixture"
       },
       {
-        "id": "E07000069-f3",
+        "id": "E07000069-f2",
         "label": "St Marys Road",
         "params": {
           "street": "St Marys Road"
@@ -4609,26 +4077,10 @@
         "source": "fixture"
       },
       {
-        "id": "E07000069-f4",
-        "label": "Ash Road, Hadleigh",
-        "params": {
-          "street": "ASH ROAD - HADLEIGH"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000069-f5",
+        "id": "E07000069-f3",
         "label": "High Street (Canvey Island)",
         "params": {
           "street": "HIGH STREET (CANVEY ISLAND)"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000069-f6",
-        "label": "12 Ash Road",
-        "params": {
-          "street": "12 Ash Road"
         },
         "source": "fixture"
       }
@@ -4661,15 +4113,6 @@
           "uprn": "100090384211"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000070-f1",
-        "label": "Chelmsford",
-        "params": {
-          "house_number": "1 Celeborn Street, South Woodham Ferrers, Chelmsford, CM3 7AE",
-          "postcode": "CM3 7AE"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Chelmsford",
@@ -4744,7 +4187,6 @@
         "id": "E07000072-f1",
         "label": "51 Crows Road Epping",
         "params": {
-          "postcode": "CM16 5DH",
           "uprn": "100090495060"
         },
         "source": "fixture"
@@ -4753,7 +4195,6 @@
         "id": "E07000072-f2",
         "label": "47 Crows Road Epping",
         "params": {
-          "postcode": "CM16 5DH",
           "uprn": "100090495056"
         },
         "source": "fixture"
@@ -4792,8 +4233,7 @@
         "id": "E07000073-f1",
         "label": "12 Kingfisher Gate, Old Harlow",
         "params": {
-          "postcode": "CM18 7LW",
-          "uprn": "10003707426"
+          "uprn": "10033891501"
         },
         "source": "fixture"
       },
@@ -4801,8 +4241,7 @@
         "id": "E07000073-f2",
         "label": "4 Ryecroft, Harlow",
         "params": {
-          "postcode": "CM18 7HR",
-          "uprn": "200002565613"
+          "uprn": "100090544008"
         },
         "source": "fixture"
       },
@@ -4810,17 +4249,7 @@
         "id": "E07000073-f3",
         "label": "2 The Crescent, Harlow",
         "params": {
-          "postcode": "CM18 7DH",
-          "uprn": "10003707644"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000073-f4",
-        "label": "1 Kerril Croft, Harlow",
-        "params": {
-          "postcode": "CM20 3AQ",
-          "uprn": "10023422026"
+          "uprn": "100090546627"
         },
         "source": "fixture"
       }
@@ -4858,7 +4287,6 @@
         "id": "E07000074-f1",
         "label": "test 1",
         "params": {
-          "postcode": "CM9 4RP ",
           "uprn": "200000917928"
         },
         "source": "fixture"
@@ -4867,7 +4295,6 @@
         "id": "E07000074-f2",
         "label": "test 2",
         "params": {
-          "postcode": "CM9 5BZ ",
           "uprn": "100091258454"
         },
         "source": "fixture"
@@ -4907,7 +4334,7 @@
         "label": "Station View, Rochford",
         "params": {
           "postcode": "SS4 1AS",
-          "uprn": "E05010853-10014203194"
+          "uprn": "10014203194"
         },
         "source": "fixture"
       },
@@ -4916,7 +4343,7 @@
         "label": "Windermere Ave, Hullbridge",
         "params": {
           "postcode": "SS5 6JT",
-          "uprn": "E05010850-100090575867"
+          "uprn": "100090575867"
         },
         "source": "fixture"
       }
@@ -4954,7 +4381,6 @@
         "id": "E07000076-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "CO15 4EU",
           "uprn": "100090604247"
         },
         "source": "fixture"
@@ -5103,7 +4529,9 @@
         "id": "E07000080-f1",
         "label": "Southfield Road, Coleford",
         "params": {
-          "address": "8 SOUTHFIELD ROAD, COLEFORD, GL16 8BZ"
+          "house_number": "8",
+          "postcode": "GL16 8BZ",
+          "street": "SOUTHFIELD ROAD"
         },
         "source": "fixture"
       },
@@ -5111,7 +4539,9 @@
         "id": "E07000080-f2",
         "label": "Wynols Close, Broadwell",
         "params": {
-          "address": "36 WYNOLS CLOSE, BROADWELL, COLEFORD, GL16 7RR"
+          "house_number": "36",
+          "postcode": "GL16 7RR",
+          "street": "WYNOLS CLOSE"
         },
         "source": "fixture"
       }
@@ -5227,7 +4657,6 @@
         "id": "E07000083-f1",
         "label": "UPRN example",
         "params": {
-          "postcode": "GL3 1NH ",
           "uprn": "100120544973"
         },
         "source": "fixture"
@@ -5282,7 +4711,6 @@
         "id": "E07000084-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "RG21 3LL",
           "uprn": "100060234732"
         },
         "source": "fixture"
@@ -5291,7 +4719,6 @@
         "id": "E07000084-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "RG22 6UJ",
           "uprn": "100060218986"
         },
         "source": "fixture"
@@ -5300,17 +4727,7 @@
         "id": "E07000084-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "RG21 3LH",
           "uprn": "100060235836"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000084-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "RG21 4BQ",
-          "uprn": "100060224194"
         },
         "source": "fixture"
       }
@@ -5348,7 +4765,6 @@
         "id": "E07000085-f1",
         "label": "UPRN lookup",
         "params": {
-          "postcode": "GU33 7BW",
           "uprn": "1710041123"
         },
         "source": "fixture"
@@ -5367,15 +4783,6 @@
         "label": "Calendar 1 without garden waste",
         "params": {
           "calendar_number": "1"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000085-f4",
-        "label": "Calendar 20 with garden waste G10",
-        "params": {
-          "calendar_number": "20",
-          "garden_calendar_number": "10"
         },
         "source": "fixture"
       }
@@ -5413,7 +4820,6 @@
         "id": "E07000086-f1",
         "label": "100060319000",
         "params": {
-          "postcode": "SO30 0HJ",
           "uprn": "100060319000"
         },
         "source": "fixture"
@@ -5422,7 +4828,6 @@
         "id": "E07000086-f2",
         "label": "100060300958",
         "params": {
-          "postcode": "SO50 8JB",
           "uprn": "100060300958"
         },
         "source": "fixture"
@@ -5477,19 +4882,11 @@
       },
       {
         "id": "E07000087-f3",
-        "label": "BRIDGE_ROAD",
-        "params": {
-          "postcode": "SO31 7GD",
-          "street": "Bridge road"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000087-f4",
         "label": "SEGENSWORTH_ROAD",
         "params": {
+          "house_number": "203",
           "postcode": "PO15 5EL",
-          "street": "203 Segensworth road"
+          "street": "Segensworth road"
         },
         "source": "fixture"
       }
@@ -5575,7 +4972,6 @@
         "id": "E07000089-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "RG27 9RP",
           "uprn": "100060420702"
         },
         "source": "fixture"
@@ -5584,7 +4980,6 @@
         "id": "E07000089-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "GU10 5AW",
           "uprn": "100061994826"
         },
         "source": "fixture"
@@ -5593,17 +4988,7 @@
         "id": "E07000089-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "RG7 1XU ",
           "uprn": "200003085501"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000089-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "RG27 9ES",
-          "uprn": "100062464806"
         },
         "source": "fixture"
       }
@@ -5612,17 +4997,7 @@
     "scraper_id": "hacs_hart_gov_uk"
   },
   "E07000090": {
-    "cases": [
-      {
-        "id": "E07000090-f1",
-        "label": "Test Case 1",
-        "params": {
-          "password": "!secret waste_havant_gov_uk_password",
-          "username": "!secret waste_havant_gov_uk_username"
-        },
-        "source": "fixture"
-      }
-    ],
+    "cases": [],
     "fixture_only": true,
     "name": "Havant",
     "notes": [
@@ -5699,7 +5074,6 @@
         "id": "E07000092-f1",
         "label": "GU14",
         "params": {
-          "postcode": "GU14 9XT",
           "uprn": "100060551749"
         },
         "source": "fixture"
@@ -5738,7 +5112,6 @@
         "id": "E07000093-f1",
         "label": "test",
         "params": {
-          "postcode": "SO51 5BE",
           "uprn": "100060571645"
         },
         "source": "fixture"
@@ -5777,7 +5150,6 @@
         "id": "E07000094-f1",
         "label": "test",
         "params": {
-          "postcode": "PO7 3AD ",
           "uprn": "10090844134"
         },
         "source": "fixture"
@@ -5928,19 +5300,21 @@
       },
       {
         "id": "E07000098-f1",
-        "label": "1 Abbots Place, Borehamwood WD6 5QP",
+        "label": "1 Abbots Place",
         "params": {
-          "house_number": "1 Abbots Place",
-          "postcode": "WD6 5QP"
+          "house_number": "1",
+          "postcode": "WD6 5QP",
+          "street": "Abbots Place"
         },
         "source": "fixture"
       },
       {
         "id": "E07000098-f2",
-        "label": "Flat 1, 1 Shenley Road, Borehamwood WD6 1AA",
+        "label": "Flat 1, 1 Shenley Road",
         "params": {
-          "house_number": "Flat 1, 1 Shenley Road",
-          "postcode": "WD6 1AA"
+          "house_number": "Flat 1",
+          "postcode": "WD6 1AA",
+          "street": "Shenley Road"
         },
         "source": "fixture"
       }
@@ -5986,31 +5360,11 @@
       },
       {
         "id": "E07000099-f2",
-        "label": "Example No Postcode Space",
-        "params": {
-          "house_number": "26",
-          "postcode": "SG49QY",
-          "street": "BENSLOW RISE"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000099-f3",
         "label": "Example fuzzy matching",
         "params": {
           "house_number": "4",
           "postcode": "SG6 4EG",
           "street": "Wilbury Road"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000099-f4",
-        "label": "Example garden waste",
-        "params": {
-          "house_number": "37",
-          "postcode": "SG8 5BN",
-          "street": "Heathfield"
         },
         "source": "fixture"
       }
@@ -6048,7 +5402,6 @@
         "id": "E07000102-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "WD3 7AZ ",
           "uprn": "100080913662"
         },
         "source": "fixture"
@@ -6087,7 +5440,6 @@
         "id": "E07000103-f1",
         "label": "1 Coningsby Drive, Watford",
         "params": {
-          "postcode": "WD17 3BD",
           "uprn": "100080932722"
         },
         "source": "fixture"
@@ -6144,7 +5496,7 @@
         "id": "E07000105-f3",
         "label": "100062558476",
         "params": {
-          "postcode": "TN233LX",
+          "postcode": "TN23 3LX",
           "uprn": "100062558476"
         },
         "source": "fixture"
@@ -6184,7 +5536,7 @@
         "label": "houseNumber",
         "params": {
           "house_number": "63",
-          "postcode": "ct68ru"
+          "postcode": "CT6 8RU"
         },
         "source": "fixture"
       },
@@ -6193,7 +5545,7 @@
         "label": "houseName",
         "params": {
           "house_number": "KOWLOON",
-          "postcode": "ct68ru"
+          "postcode": "CT6 8RU"
         },
         "source": "fixture"
       }
@@ -6231,7 +5583,6 @@
         "id": "E07000107-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "DA1 1PA ",
           "uprn": "100060862889"
         },
         "source": "fixture"
@@ -6240,7 +5591,6 @@
         "id": "E07000107-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "DA2 7PU ",
           "uprn": "100060857499"
         },
         "source": "fixture"
@@ -6249,7 +5599,6 @@
         "id": "E07000107-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "DA2 6NT ",
           "uprn": "200000540020"
         },
         "source": "fixture"
@@ -6288,7 +5637,6 @@
         "id": "E07000108-f1",
         "label": "200002423404",
         "params": {
-          "postcode": "CT18 7LY",
           "uprn": "200002423404"
         },
         "source": "fixture"
@@ -6297,7 +5645,6 @@
         "id": "E07000108-f2",
         "label": "100060905828",
         "params": {
-          "postcode": "CT16 3HA",
           "uprn": "100060905828"
         },
         "source": "fixture"
@@ -6331,15 +5678,6 @@
           "uprn": "100060951301"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000109-f1",
-        "label": "Gravesham",
-        "params": {
-          "house_number": "2",
-          "postcode": "DA13 9DF"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Gravesham",
@@ -6375,7 +5713,6 @@
         "id": "E07000110-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "ME16 8RD",
           "uprn": "10022892379"
         },
         "source": "fixture"
@@ -6384,7 +5721,6 @@
         "id": "E07000110-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "ME14 2NY",
           "uprn": "10014307164"
         },
         "source": "fixture"
@@ -6393,7 +5729,6 @@
         "id": "E07000110-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "ME16 8QQ",
           "uprn": "200003674881"
         },
         "source": "fixture"
@@ -6458,7 +5793,6 @@
         "id": "E07000112-f1",
         "label": "Folkestone_Test",
         "params": {
-          "postcode": "CT20 2QE",
           "uprn": "50032102"
         },
         "source": "fixture"
@@ -6467,7 +5801,6 @@
         "id": "E07000112-f2",
         "label": "Hythe_Test",
         "params": {
-          "postcode": "CT21 6DN",
           "uprn": "50019287"
         },
         "source": "fixture"
@@ -6561,28 +5894,28 @@
       },
       {
         "id": "E07000114-f1",
-        "label": "uprn",
+        "label": "houseName",
         "params": {
-          "postcode": "CT7 0DN ",
-          "uprn": "100061108233"
+          "address": "Forus",
+          "postcode": "CT7 9SL"
         },
         "source": "fixture"
       },
       {
         "id": "E07000114-f2",
-        "label": "houseName",
+        "label": "houseNumber",
         "params": {
+          "house_number": "6",
           "postcode": "CT7 9SL",
-          "street_address": "Forus"
+          "street": "Gordon Square"
         },
         "source": "fixture"
       },
       {
         "id": "E07000114-f3",
-        "label": "houseNumber",
+        "label": "uprn",
         "params": {
-          "postcode": "CT7 9SL",
-          "street_address": "6 Gordon Square"
+          "uprn": "100061108233"
         },
         "source": "fixture"
       }
@@ -6620,8 +5953,9 @@
         "id": "E07000115-f1",
         "label": "High Street, West Malling",
         "params": {
-          "address": "138 High Street",
-          "postcode": "ME19 6NE"
+          "house_number": "138",
+          "postcode": "ME19 6NE",
+          "street": "High Street"
         },
         "source": "fixture"
       },
@@ -6629,8 +5963,9 @@
         "id": "E07000115-f2",
         "label": "Nutfields, Ightham, Sevenoaks",
         "params": {
-          "address": "5 Nutfields, Ightham, Sevenoaks",
-          "postcode": "TN15 9EA"
+          "house_number": "5",
+          "postcode": "TN15 9EA",
+          "street": "Nutfields"
         },
         "source": "fixture"
       }
@@ -6668,7 +6003,6 @@
         "id": "E07000116-f1",
         "label": "10090058289",
         "params": {
-          "postcode": "TN4 9XZ ",
           "uprn": "10090058289"
         },
         "source": "fixture"
@@ -6677,7 +6011,6 @@
         "id": "E07000116-f2",
         "label": "100061204678",
         "params": {
-          "postcode": "TN2 4XW ",
           "uprn": "100061204678"
         },
         "source": "fixture"
@@ -6716,7 +6049,6 @@
         "id": "E07000117-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "BB10 4DQ",
           "uprn": "100010341681"
         },
         "source": "fixture"
@@ -6725,7 +6057,6 @@
         "id": "E07000117-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "BB10 1UJ",
           "uprn": "100010358864"
         },
         "source": "fixture"
@@ -6734,17 +6065,7 @@
         "id": "E07000117-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "BB11 4BU",
           "uprn": "100010357864"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000117-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "BB11 3DE",
-          "uprn": "100010327003"
         },
         "source": "fixture"
       }
@@ -6821,7 +6142,6 @@
         "id": "E07000120-f1",
         "label": "test",
         "params": {
-          "postcode": "BB5 2QS ",
           "uprn": "100010439798"
         },
         "source": "fixture"
@@ -6858,10 +6178,11 @@
       },
       {
         "id": "E07000121-f1",
-        "label": "1 Queen Street Lancaster, LA1 1RS",
+        "label": "1 Queen Street",
         "params": {
           "house_number": "1",
-          "postcode": "LA1 1RS"
+          "postcode": "LA1 1RS",
+          "street": "Queen Street"
         },
         "source": "fixture"
       }
@@ -6900,7 +6221,9 @@
         "label": "Pendle Market Street",
         "params": {
           "address": "PENDLE LEISURE TRUST, 1, MARKET STREET, NELSON",
-          "postcode": "BB9 7LJ"
+          "house_number": "1",
+          "postcode": "BB9 7LJ",
+          "street": "MARKET STREET"
         },
         "source": "fixture"
       }
@@ -6911,26 +6234,26 @@
   "E07000123": {
     "cases": [
       {
-        "id": "E07000123-s7",
-        "label": "36, Miller Field, Lea, Preston, PR2 1XB",
+        "id": "E07000123-s9",
+        "label": "6, Silver Street, Preston, PR1 3RH",
         "params": {
-          "address": "36, Miller Field, Lea, Preston, PR2 1XB",
-          "house_number": "36",
-          "postcode": "PR2 1XB",
-          "street": "Miller Field",
-          "uprn": "100010558516"
+          "address": "6, Silver Street, Preston, PR1 3RH",
+          "house_number": "6",
+          "postcode": "PR1 3RH",
+          "street": "Silver Street",
+          "uprn": "10007611644"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000123-s8",
-        "label": "16, Ridgemont, Fulwood, Preston, PR2 3FQ",
+        "id": "E07000123-s10",
+        "label": "6, Avonbridge, Fulwood, Preston, PR2 3RE",
         "params": {
-          "address": "16, Ridgemont, Fulwood, Preston, PR2 3FQ",
-          "house_number": "16",
-          "postcode": "PR2 3FQ",
-          "street": "Ridgemont",
-          "uprn": "100010564707"
+          "address": "6, Avonbridge, Fulwood, Preston, PR2 3RE",
+          "house_number": "6",
+          "postcode": "PR2 3RE",
+          "street": "Avonbridge",
+          "uprn": "100010532944"
         },
         "source": "sampled"
       },
@@ -6946,7 +6269,6 @@
         "id": "E07000123-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "PR1 2RL ",
           "street": "PR1 2RL",
           "uprn": "10002220003"
         },
@@ -6986,8 +6308,9 @@
         "id": "E07000124-f1",
         "label": "Test_001",
         "params": {
-          "address": "5 Pimlico Road",
-          "postcode": "BB7 2AG"
+          "house_number": "5",
+          "postcode": "BB7 2AG",
+          "street": "Pimlico Road"
         },
         "source": "fixture"
       },
@@ -6995,8 +6318,9 @@
         "id": "E07000124-f2",
         "label": "Test_002",
         "params": {
-          "address": "28 Towneley Road",
-          "postcode": "PR3 3EA"
+          "house_number": "28",
+          "postcode": "PR3 3EA",
+          "street": "Towneley Road"
         },
         "source": "fixture"
       }
@@ -7034,8 +6358,9 @@
         "id": "E07000125-f1",
         "label": "Test_001",
         "params": {
-          "address": "13 Spring Lane",
-          "postcode": "BB4 5AA"
+          "house_number": "13",
+          "postcode": "BB4 5AA",
+          "street": "Spring Lane"
         },
         "source": "fixture"
       },
@@ -7043,8 +6368,9 @@
         "id": "E07000125-f2",
         "label": "Test_002",
         "params": {
-          "address": "Flat 2, 14 Bury Road",
-          "postcode": "BB4 6AA"
+          "house_number": "Flat 2",
+          "postcode": "BB4 6AA",
+          "street": "14 Bury Road"
         },
         "source": "fixture"
       },
@@ -7052,8 +6378,9 @@
         "id": "E07000125-f3",
         "label": "Test_003",
         "params": {
-          "address": "9a Union Street",
-          "postcode": "OL13 0AA"
+          "house_number": "9a",
+          "postcode": "OL13 0AA",
+          "street": "Union Street"
         },
         "source": "fixture"
       }
@@ -7178,7 +6505,6 @@
         "id": "E07000128-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "FY5 4GX ",
           "uprn": "10094000847"
         },
         "source": "fixture"
@@ -7187,7 +6513,6 @@
         "id": "E07000128-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "FY5 5JE ",
           "uprn": "100010727065"
         },
         "source": "fixture"
@@ -7226,7 +6551,6 @@
         "id": "E07000129-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "LE8 4FS ",
           "uprn": "100030407500"
         },
         "source": "fixture"
@@ -7235,7 +6559,6 @@
         "id": "E07000129-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "LE8 4DX ",
           "uprn": "100030395499"
         },
         "source": "fixture"
@@ -7244,8 +6567,7 @@
         "id": "E07000129-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "LE19 4DS",
-          "uprn": "010001238216"
+          "uprn": "10001238216"
         },
         "source": "fixture"
       }
@@ -7324,15 +6646,6 @@
           "uprn": "100030477668"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000131-f1",
-        "label": "Harborough",
-        "params": {
-          "postcode": "LE16 8UD",
-          "uprn": "100030489072"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Harborough",
@@ -7368,7 +6681,6 @@
         "id": "E07000132-f1",
         "label": "Test_House",
         "params": {
-          "postcode": "LE10 0JR",
           "uprn": "100030499851"
         },
         "source": "fixture"
@@ -7407,7 +6719,6 @@
         "id": "E07000133-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "LE13 1UT",
           "uprn": "100030544791"
         },
         "source": "fixture"
@@ -7416,7 +6727,6 @@
         "id": "E07000133-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "NG13 0BG",
           "uprn": "100030549260"
         },
         "source": "fixture"
@@ -7425,7 +6735,6 @@
         "id": "E07000133-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "LE14 2PS",
           "uprn": "100030537000"
         },
         "source": "fixture"
@@ -7464,7 +6773,6 @@
         "id": "E07000134-f1",
         "label": "Dunmore",
         "params": {
-          "postcode": "DE74 2BS",
           "uprn": "10002359002"
         },
         "source": "fixture"
@@ -7473,7 +6781,6 @@
         "id": "E07000134-f2",
         "label": "Station Road",
         "params": {
-          "postcode": "DE74 2NL",
           "uprn": "100030573554"
         },
         "source": "fixture"
@@ -7558,8 +6865,8 @@
         "id": "E07000136-f1",
         "label": "43 Tarry Hill, Swineshead, PE20 3LW",
         "params": {
-          "postcode": "PE20 3LW",
-          "property": "43"
+          "house_number": "43",
+          "postcode": "PE20 3LW"
         },
         "source": "fixture"
       },
@@ -7567,8 +6874,8 @@
         "id": "E07000136-f2",
         "label": "The Old Vicarage, Church Close, PE21 6NE",
         "params": {
-          "postcode": "PE21 6NE",
-          "property": "10"
+          "house_number": "10",
+          "postcode": "PE21 6NE"
         },
         "source": "fixture"
       }
@@ -7606,7 +6913,6 @@
         "id": "E07000137-f1",
         "label": "13 Firbeck Avenue, Skegness",
         "params": {
-          "postcode": "PE25 3JY",
           "uprn": "100030786099"
         },
         "source": "fixture"
@@ -7643,27 +6949,27 @@
       },
       {
         "id": "E07000138-f1",
-        "label": "LN5 7SH 000235024846",
+        "label": "LN5 7SH",
         "params": {
           "postcode": "LN5 7SH",
-          "uprn": "000235024846"
+          "uprn": "235024846"
         },
         "source": "fixture"
       },
       {
         "id": "E07000138-f2",
-        "label": "LN2 4SA, 000235042214",
+        "label": "LN2 4SA",
         "params": {
-          "postcode": "LN24Sa",
+          "postcode": "LN2 4SA",
           "uprn": "235042214"
         },
         "source": "fixture"
       },
       {
         "id": "E07000138-f3",
-        "label": "LN2 4EB 000235036597",
+        "label": "LN2 4EB",
         "params": {
-          "postcode": " Ln 24 eB ",
+          "postcode": "LN2 4EB",
           "uprn": "235036597"
         },
         "source": "fixture"
@@ -7697,15 +7003,6 @@
           "uprn": "10006528486"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000139-f1",
-        "label": "North Kesteven",
-        "params": {
-          "postcode": "LN4 2GS ",
-          "uprn": "10006545854"
-        },
-        "source": "fixture"
       }
     ],
     "name": "North Kesteven",
@@ -7762,10 +7059,34 @@
   "E07000141": {
     "cases": [
       {
+        "id": "E07000141-s1",
+        "label": "2, Ash Close, Fulbeck, Grantham, NG32 3JY",
+        "params": {
+          "address": "2, Ash Close, Fulbeck, Grantham, NG32 3JY",
+          "house_number": "2",
+          "postcode": "NG32 3JY",
+          "street": "Ash Close",
+          "uprn": "100030907789"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E07000141-s2",
+        "label": "4, Lichfield Close, Grantham, NG31 8RS",
+        "params": {
+          "address": "4, Lichfield Close, Grantham, NG31 8RS",
+          "house_number": "4",
+          "postcode": "NG31 8RS",
+          "street": "Lichfield Close",
+          "uprn": "100030919294"
+        },
+        "source": "sampled"
+      },
+      {
         "id": "E07000141-f1",
         "label": "Grantham",
         "params": {
-          "address_id": "NG31 8XG"
+          "postcode": "NG31 8XG"
         },
         "source": "fixture"
       },
@@ -7773,7 +7094,7 @@
         "id": "E07000141-f2",
         "label": "Long Bennington",
         "params": {
-          "address_id": "NG23 5EQ"
+          "postcode": "NG23 5EQ"
         },
         "source": "fixture"
       },
@@ -7781,16 +7102,12 @@
         "id": "E07000141-f3",
         "label": "Grantham direct",
         "params": {
-          "address_id": "U10007272306"
+          "uprn": "10007272306"
         },
         "source": "fixture"
       }
     ],
-    "fixture_only": true,
     "name": "South Kesteven",
-    "notes": [
-      "fixture-only: frontend cannot supply required ['address_id']"
-    ],
     "scraper_id": "hacs_southkesteven_gov_uk"
   },
   "E07000142": {
@@ -7818,15 +7135,6 @@
           "uprn": "100030957014"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000142-f1",
-        "label": "West Lindsey",
-        "params": {
-          "house_number": "35",
-          "postcode": "LN8 3AX"
-        },
-        "source": "fixture"
       }
     ],
     "name": "West Lindsey",
@@ -7862,8 +7170,8 @@
         "id": "E07000143-f1",
         "label": "test1",
         "params": {
-          "address": "glen travis",
-          "postcode": "IP22 2LJ"
+          "postcode": "IP22 2LJ",
+          "street": "glen travis"
         },
         "source": "fixture"
       },
@@ -7871,7 +7179,6 @@
         "id": "E07000143-f2",
         "label": "test2",
         "params": {
-          "postcode": "IP22 2LJ",
           "uprn": "10011977093"
         },
         "source": "fixture"
@@ -7908,43 +7215,21 @@
       },
       {
         "id": "E07000144-f1",
-        "label": "Broadland residential address - UPRN payload",
+        "label": "Broadland residential address",
         "params": {
-          "address_payload": "{'Uprn': '010014355477', 'Address': '29 Mallard Way, Sprowston, Norwich, Norfolk, NR7 8DN', 'X': '626227.00000', 'Y': '312136.00000', 'Ward': 'Sprowston East', 'Parish': 'Sprowston', 'Village': 'Sprowston', 'Street': 'Mallard Way', 'Authority': '2610'}"
+          "house_number": "29",
+          "postcode": "NR7 8DN",
+          "street": "Mallard Way"
         },
         "source": "fixture"
       },
       {
         "id": "E07000144-f2",
-        "label": "Broadland residential address - postcode",
+        "label": "South Norfolk residential address",
         "params": {
-          "address": "29 Mallard Way, Sprowston, Norfolk, NR7 8DN",
-          "postcode": "NR7 8DN"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000144-f3",
-        "label": "South Norfolk residential address - UPRN payload",
-        "params": {
-          "address_payload": "{'Uprn': '002630130840', 'Address': '1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX', 'X': '619142.00000', 'Y': '300585.00000', 'Ward': 'Mulbarton And Stoke Holy Cross', 'Parish': 'Mulbarton', 'Village': 'Mulbarton', 'Street': 'Brindle Drive', 'Authority': '2630'}"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000144-f4",
-        "label": "South Norfolk residential address - postcode",
-        "params": {
-          "address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
-          "postcode": "NR14 8BX"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000144-f5",
-        "label": "Broadland business address (Tesco) - UPRN payload",
-        "params": {
-          "address_payload": "{'Uprn': '100091575309', 'Address': 'Tesco Stores Ltd, Blue Boar Lane, Sprowston, Norwich, Norfolk, NR7 8AB', 'X': '625657.00000', 'Y': '312146.00000', 'Ward': 'Sprowston East', 'Parish': 'Sprowston', 'Village': 'Sprowston', 'Street': 'Blue Boar Lane', 'Authority': '2610'}"
+          "house_number": "1",
+          "postcode": "NR14 8BX",
+          "street": "Brindle Drive"
         },
         "source": "fixture"
       }
@@ -7982,7 +7267,6 @@
         "id": "E07000145-f1",
         "label": "64 Black Street Martham NR29 4PR",
         "params": {
-          "postcode": "NR29 4PR",
           "uprn": "100090834016"
         },
         "source": "fixture"
@@ -7991,7 +7275,6 @@
         "id": "E07000145-f2",
         "label": "1 Hobland Barns Bradwell NR31 9BS",
         "params": {
-          "postcode": "NR31 9BS",
           "uprn": "10023466513"
         },
         "source": "fixture"
@@ -8030,7 +7313,6 @@
         "id": "E07000146-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "PE30 5AS",
           "uprn": "100090969937"
         },
         "source": "fixture"
@@ -8039,7 +7321,6 @@
         "id": "E07000146-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "PE30 3NJ",
           "uprn": "100090989776"
         },
         "source": "fixture"
@@ -8048,17 +7329,7 @@
         "id": "E07000146-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "PE33 0TH",
           "uprn": "10000021270"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000146-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "PE30 5AS",
-          "uprn": "100090969937"
         },
         "source": "fixture"
       }
@@ -8096,7 +7367,6 @@
         "id": "E07000147-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "NR12 9PB",
           "uprn": "100090878875"
         },
         "source": "fixture"
@@ -8105,7 +7375,6 @@
         "id": "E07000147-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "NR22 6DD",
           "uprn": "100090883974"
         },
         "source": "fixture"
@@ -8114,7 +7383,6 @@
         "id": "E07000147-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "NR12 8DP",
           "uprn": "100090880632"
         },
         "source": "fixture"
@@ -8171,16 +7439,6 @@
       },
       {
         "id": "E07000148-f3",
-        "label": "UncompletedRoadName",
-        "params": {
-          "house_number": "18",
-          "postcode": "NR3 3HG",
-          "street": "Aylsham"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000148-f4",
         "label": "PostcodeMissingSpace",
         "params": {
           "house_number": "258",
@@ -8221,43 +7479,21 @@
       },
       {
         "id": "E07000149-f1",
-        "label": "Broadland residential address - UPRN payload",
+        "label": "Broadland residential address",
         "params": {
-          "address_payload": "{'Uprn': '010014355477', 'Address': '29 Mallard Way, Sprowston, Norwich, Norfolk, NR7 8DN', 'X': '626227.00000', 'Y': '312136.00000', 'Ward': 'Sprowston East', 'Parish': 'Sprowston', 'Village': 'Sprowston', 'Street': 'Mallard Way', 'Authority': '2610'}"
+          "house_number": "29",
+          "postcode": "NR7 8DN",
+          "street": "Mallard Way"
         },
         "source": "fixture"
       },
       {
         "id": "E07000149-f2",
-        "label": "Broadland residential address - postcode",
+        "label": "South Norfolk residential address",
         "params": {
-          "address": "29 Mallard Way, Sprowston, Norfolk, NR7 8DN",
-          "postcode": "NR7 8DN"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000149-f3",
-        "label": "South Norfolk residential address - UPRN payload",
-        "params": {
-          "address_payload": "{'Uprn': '002630130840', 'Address': '1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX', 'X': '619142.00000', 'Y': '300585.00000', 'Ward': 'Mulbarton And Stoke Holy Cross', 'Parish': 'Mulbarton', 'Village': 'Mulbarton', 'Street': 'Brindle Drive', 'Authority': '2630'}"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000149-f4",
-        "label": "South Norfolk residential address - postcode",
-        "params": {
-          "address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
-          "postcode": "NR14 8BX"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000149-f5",
-        "label": "Broadland business address (Tesco) - UPRN payload",
-        "params": {
-          "address_payload": "{'Uprn': '100091575309', 'Address': 'Tesco Stores Ltd, Blue Boar Lane, Sprowston, Norwich, Norfolk, NR7 8AB', 'X': '625657.00000', 'Y': '312146.00000', 'Ward': 'Sprowston East', 'Parish': 'Sprowston', 'Village': 'Sprowston', 'Street': 'Blue Boar Lane', 'Authority': '2610'}"
+          "house_number": "1",
+          "postcode": "NR14 8BX",
+          "street": "Brindle Drive"
         },
         "source": "fixture"
       }
@@ -8295,22 +7531,12 @@
         "id": "E07000170-f1",
         "label": "11 Maun View Gardens, Sutton-in-Ashfield",
         "params": {
-          "postcode": "NG17 5HL",
           "uprn": "10001336299"
         },
         "source": "fixture"
       },
       {
         "id": "E07000170-f2",
-        "label": "101 Main Street, Huthwaite",
-        "params": {
-          "postcode": "NG17 2LQ",
-          "uprn": "100031253415"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000170-f3",
         "label": "1 Acacia Avenue, Kirkby-in-Ashfield",
         "params": {
           "house_number": "1",
@@ -8319,11 +7545,11 @@
         "source": "fixture"
       },
       {
-        "id": "E07000170-f4",
+        "id": "E07000170-f3",
         "label": "Council Offices, Kirkby-in-Ashfield",
         "params": {
           "name": "COUNCIL OFFICES",
-          "postcode": "NG178ZA"
+          "postcode": "NG17 8ZA"
         },
         "source": "fixture"
       }
@@ -8333,18 +7559,6 @@
   },
   "E07000171": {
     "cases": [
-      {
-        "id": "E07000171-s1",
-        "label": "2 Babbington Springs Cottages, Normanton-On-Trent, Newark, NG23 6RU",
-        "params": {
-          "address": "2 Babbington Springs Cottages, Normanton-On-Trent, Newark, NG23 6RU",
-          "house_number": "2",
-          "postcode": "NG23 6RU",
-          "street": "Babbington Springs Cottages",
-          "uprn": "10023268183"
-        },
-        "source": "sampled"
-      },
       {
         "id": "E07000171-s2",
         "label": "16, Spruce Court, Worksop, S80 3EP",
@@ -8358,11 +7572,24 @@
         "source": "sampled"
       },
       {
+        "id": "E07000171-s3",
+        "label": "18, Boundary Walk, Retford, DN22 7YU",
+        "params": {
+          "address": "18, Boundary Walk, Retford, DN22 7YU",
+          "house_number": "18",
+          "postcode": "DN22 7YU",
+          "street": "Boundary Walk",
+          "uprn": "200001606546"
+        },
+        "source": "sampled"
+      },
+      {
         "id": "E07000171-f1",
         "label": "Albert Road, Retford",
         "params": {
-          "address": "10 Albert Road",
-          "postcode": "DN22 6JB"
+          "house_number": "10",
+          "postcode": "DN22 6JB",
+          "street": "Albert Road"
         },
         "source": "fixture"
       },
@@ -8370,8 +7597,9 @@
         "id": "E07000171-f2",
         "label": "Albert Street, Worksop",
         "params": {
-          "address": "10 Albert Street",
-          "postcode": "S80 1QR"
+          "house_number": "10",
+          "postcode": "S80 1QR",
+          "street": "Albert Street"
         },
         "source": "fixture"
       }
@@ -8416,19 +7644,10 @@
       },
       {
         "id": "E07000172-f2",
-        "label": "100031514955 NG9 4DU",
+        "label": "100031308988 NG9 4DU",
         "params": {
           "postcode": "NG9 4DU",
-          "uprn": " 100031308988"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000172-f3",
-        "label": "U100031514955 NG9 4DU",
-        "params": {
-          "postcode": "NG9 4DU",
-          "uprn": "U100031308988 "
+          "uprn": "100031308988"
         },
         "source": "fixture"
       }
@@ -8464,9 +7683,21 @@
       },
       {
         "id": "E07000173-f1",
-        "label": "Gedling",
+        "label": "4 Denbury Road",
         "params": {
-          "house_number": "Friday G4, Friday J"
+          "house_number": "4",
+          "postcode": "NG15 9FQ",
+          "street": "Denbury Road"
+        },
+        "source": "fixture"
+      },
+      {
+        "id": "E07000173-f2",
+        "label": "2 Orchard Court",
+        "params": {
+          "house_number": "2",
+          "postcode": "NG4 4FF",
+          "street": "Orchard Court"
         },
         "source": "fixture"
       }
@@ -8504,7 +7735,6 @@
         "id": "E07000174-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "NG18 6AU",
           "uprn": "10091487039"
         },
         "source": "fixture"
@@ -8513,7 +7743,6 @@
         "id": "E07000174-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "NG19 6PU",
           "uprn": "100031399527"
         },
         "source": "fixture"
@@ -8522,7 +7751,6 @@
         "id": "E07000174-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "NG18 2QU",
           "uprn": "200000666900"
         },
         "source": "fixture"
@@ -8561,7 +7789,6 @@
         "id": "E07000175-f1",
         "label": "Edwinstowe",
         "params": {
-          "postcode": "NG21 9GL",
           "uprn": "010091747078"
         },
         "source": "fixture"
@@ -8570,7 +7797,6 @@
         "id": "E07000175-f2",
         "label": "Ollerton",
         "params": {
-          "postcode": "NG22 9UW",
           "uprn": "100031463343"
         },
         "source": "fixture"
@@ -8579,7 +7805,6 @@
         "id": "E07000175-f3",
         "label": "Clipstone",
         "params": {
-          "postcode": "NG21 9GG",
           "uprn": "010091745473"
         },
         "source": "fixture"
@@ -8616,10 +7841,12 @@
       },
       {
         "id": "E07000176-f1",
-        "label": "NG12 5FE 2 Church Drive, Keyworth, NOTTINGHAM, NG12 5FE",
+        "label": "NG12 5FE 2 Church Drive",
         "params": {
           "address": "2 Church Drive, Keyworth, NOTTINGHAM, NG12 5FE",
-          "postcode": "NG12 5FE"
+          "house_number": "2",
+          "postcode": "NG12 5FE",
+          "street": "Church Drive"
         },
         "source": "fixture"
       }
@@ -8657,7 +7884,6 @@
         "id": "E07000177-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "OX16 9QB",
           "uprn": "100120758315"
         },
         "source": "fixture"
@@ -8666,7 +7892,6 @@
         "id": "E07000177-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "OX26 2GR",
           "uprn": "100120780449"
         },
         "source": "fixture"
@@ -8675,17 +7900,7 @@
         "id": "E07000177-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "OX26 1XD",
           "uprn": "100120777153"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000177-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "OX27 8EP",
-          "uprn": "10011931488"
         },
         "source": "fixture"
       }
@@ -8744,18 +7959,6 @@
   "E07000179": {
     "cases": [
       {
-        "id": "E07000179-s1",
-        "label": "6, Newnham Green, Crowmarsh Gifford, Wallingford, OX10 8EW",
-        "params": {
-          "address": "6, Newnham Green, Crowmarsh Gifford, Wallingford, OX10 8EW",
-          "house_number": "6",
-          "postcode": "OX10 8EW",
-          "street": "Newnham Green",
-          "uprn": "100120885167"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "E07000179-s3",
         "label": "15, Bear Lane, Stadhampton, Oxford, OX44 7UR",
         "params": {
@@ -8768,13 +7971,16 @@
         "source": "sampled"
       },
       {
-        "id": "E07000179-f1",
-        "label": "South Oxfordshire",
+        "id": "E07000179-s4",
+        "label": "8, Hamilton Avenue, Henley-On-Thames, RG9 1SH",
         "params": {
-          "postcode": "OX11 7SZ",
-          "uprn": "10033002851"
+          "address": "8, Hamilton Avenue, Henley-On-Thames, RG9 1SH",
+          "house_number": "8",
+          "postcode": "RG9 1SH",
+          "street": "Hamilton Avenue",
+          "uprn": "100120864407"
         },
-        "source": "fixture"
+        "source": "sampled"
       }
     ],
     "name": "South Oxfordshire",
@@ -8805,15 +8011,6 @@
           "uprn": "10090582590"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000180-f1",
-        "label": "Vale of White Horse",
-        "params": {
-          "postcode": "OX13 5AX",
-          "uprn": "100121391443"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Vale of White Horse",
@@ -8847,17 +8044,23 @@
       },
       {
         "id": "E07000181-f1",
-        "label": "75 manor road woodstock, ox20 1xr",
+        "label": "75 manor road woodstock",
         "params": {
-          "address": "75 manor road woodstock, ox20 1xr"
+          "address": "75 manor road woodstock, ox20 1xr",
+          "house_number": "75",
+          "postcode": "OX20 1XR",
+          "street": "Manor Road"
         },
         "source": "fixture"
       },
       {
         "id": "E07000181-f2",
-        "label": "test",
+        "label": "65 main road long hanborough",
         "params": {
-          "address": "65 MAIN ROAD, LONG HANBOROUGH, WITNEY, OX29 8JX"
+          "address": "65 MAIN ROAD, LONG HANBOROUGH, WITNEY, OX29 8JX",
+          "house_number": "65",
+          "postcode": "OX29 8JX",
+          "street": "Main Road"
         },
         "source": "fixture"
       }
@@ -8917,15 +8120,6 @@
           "uprn": "100031624295"
         },
         "source": "fixture"
-      },
-      {
-        "id": "E07000192-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "WS11 7UD",
-          "uprn": "10008163213"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Cannock Chase",
@@ -8961,8 +8155,9 @@
         "id": "E07000193-f1",
         "label": "Test_001",
         "params": {
-          "house_number": "1 Fairham Road",
-          "postcode": "DE13 0BS"
+          "house_number": "1",
+          "postcode": "DE13 0BS",
+          "street": "Fairham Road"
         },
         "source": "fixture"
       }
@@ -9000,7 +8195,6 @@
         "id": "E07000194-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "WS14 9SY",
           "uprn": "100031695248"
         },
         "source": "fixture"
@@ -9009,7 +8203,6 @@
         "id": "E07000194-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "WS13 6AT",
           "uprn": "100031704571"
         },
         "source": "fixture"
@@ -9018,17 +8211,7 @@
         "id": "E07000194-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "WS14 9LB",
           "uprn": "10002768095"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000194-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "WS13 7EL",
-          "uprn": "100031699855"
         },
         "source": "fixture"
       }
@@ -9066,7 +8249,6 @@
         "id": "E07000195-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "ST5 2BD ",
           "uprn": "100031744129"
         },
         "source": "fixture"
@@ -9075,7 +8257,6 @@
         "id": "E07000195-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "ST5 8EQ ",
           "uprn": "100031726082"
         },
         "source": "fixture"
@@ -9084,17 +8265,7 @@
         "id": "E07000195-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "ST5 0PY ",
           "uprn": "100031736973"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000195-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "ST5 5AZ ",
-          "uprn": "200004602766"
         },
         "source": "fixture"
       }
@@ -9132,7 +8303,6 @@
         "id": "E07000196-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "WV10 7SX",
           "uprn": "100031831923"
         },
         "source": "fixture"
@@ -9141,7 +8311,6 @@
         "id": "E07000196-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "WS6 6DF ",
           "uprn": "100031811736"
         },
         "source": "fixture"
@@ -9150,7 +8319,6 @@
         "id": "E07000196-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "DY10 3PA",
           "uprn": "100031799974"
         },
         "source": "fixture"
@@ -9189,7 +8357,6 @@
         "id": "E07000197-f1",
         "label": "domestic",
         "params": {
-          "postcode": "ST16 3ES",
           "uprn": "100031780029"
         },
         "source": "fixture"
@@ -9226,7 +8393,7 @@
       },
       {
         "id": "E07000198-f1",
-        "label": "Managers Accommodation Roaring Meg (ST8 7EA)",
+        "label": "Managers Accommodation Roaring Meg",
         "params": {
           "postcode": "ST8 7EA",
           "uprn": "10010602737"
@@ -9235,7 +8402,7 @@
       },
       {
         "id": "E07000198-f2",
-        "label": "34 Pennine Way, Biddulph (ST8 7EA)",
+        "label": "34 Pennine Way, Biddulph",
         "params": {
           "postcode": "ST8 7EA",
           "uprn": "100031858191"
@@ -9271,15 +8438,6 @@
           "uprn": "394013639"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000199-f1",
-        "label": "Tamworth Borough",
-        "params": {
-          "postcode": "B79 7BX",
-          "uprn": "100031767448"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Tamworth",
@@ -9315,7 +8473,6 @@
         "id": "E07000200-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "IP8 4AA ",
           "uprn": "100091085564"
         },
         "source": "fixture"
@@ -9372,7 +8529,6 @@
         "id": "E07000203-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "IP14 3AA",
           "uprn": "100091488908"
         },
         "source": "fixture"
@@ -9411,7 +8567,6 @@
         "id": "E07000207-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "KT13 0NR",
           "uprn": "10013119164"
         },
         "source": "fixture"
@@ -9420,7 +8575,6 @@
         "id": "E07000207-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "KT11 2EZ",
           "uprn": "100061309206"
         },
         "source": "fixture"
@@ -9429,26 +8583,7 @@
         "id": "E07000207-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "KT8 9HN ",
           "uprn": "100062119825"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000207-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "KT13 8QE",
-          "uprn": "100061343923"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000207-f5",
-        "label": "Test_005",
-        "params": {
-          "postcode": "KT7 0XB ",
-          "uprn": "100062372553"
         },
         "source": "fixture"
       }
@@ -9486,7 +8621,6 @@
         "id": "E07000208-f1",
         "label": "test",
         "params": {
-          "postcode": "KT17 1NJ",
           "uprn": "100061349867"
         },
         "source": "fixture"
@@ -9525,7 +8659,6 @@
         "id": "E07000209-f1",
         "label": "GU12",
         "params": {
-          "postcode": "GU12 5RP",
           "uprn": "10007060305"
         },
         "source": "fixture"
@@ -9534,7 +8667,6 @@
         "id": "E07000209-f2",
         "label": "GU1",
         "params": {
-          "postcode": "GU1 1QN ",
           "uprn": "100061398158"
         },
         "source": "fixture"
@@ -9543,7 +8675,6 @@
         "id": "E07000209-f3",
         "label": "GU2",
         "params": {
-          "postcode": "GU2 4EU ",
           "uprn": "100061391831"
         },
         "source": "fixture"
@@ -9567,14 +8698,14 @@
         "source": "sampled"
       },
       {
-        "id": "E07000210-s2",
-        "label": "36, Lyons Court, Dorking, RH4 1AB",
+        "id": "E07000210-s3",
+        "label": "87, Chart Downs, Dorking, RH5 4DF",
         "params": {
-          "address": "36, Lyons Court, Dorking, RH4 1AB",
-          "house_number": "36",
-          "postcode": "RH4 1AB",
-          "street": "Lyons Court",
-          "uprn": "100061424685"
+          "address": "87, Chart Downs, Dorking, RH5 4DF",
+          "house_number": "87",
+          "postcode": "RH5 4DF",
+          "street": "Chart Downs",
+          "uprn": "100061421495"
         },
         "source": "sampled"
       },
@@ -9639,35 +8770,15 @@
         "id": "E07000211-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "SM7 1DG",
-          "uprn": "100061445152"
+          "uprn": "68110755"
         },
         "source": "fixture"
       },
       {
         "id": "E07000211-f2",
-        "label": "Test_002",
-        "params": {
-          "postcode": "KT17 3NT",
-          "uprn": "100061449039"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000211-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "RH6 9LF",
-          "uprn": "68138778"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000211-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "SM7 1BW",
-          "uprn": "000068157374"
+          "uprn": "68101147"
         },
         "source": "fixture"
       }
@@ -9703,36 +8814,16 @@
       },
       {
         "id": "E07000212-f1",
-        "label": "Acacia Close/uprn as string",
+        "label": "Acacia Close",
         "params": {
-          "postcode": "KT15 3SJ",
           "uprn": "100061482004"
         },
         "source": "fixture"
       },
       {
         "id": "E07000212-f2",
-        "label": "Acacia Close/uprn as number",
+        "label": "Addlestone Library",
         "params": {
-          "postcode": "KT15 3SJ",
-          "uprn": "100061482004"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000212-f3",
-        "label": "Addlestone Library/uprn as string",
-        "params": {
-          "postcode": "KT15 2AF",
-          "uprn": "10002019806"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000212-f4",
-        "label": "Addlestone Library/uprn as number",
-        "params": {
-          "postcode": "KT15 2AF",
           "uprn": "10002019806"
         },
         "source": "fixture"
@@ -9771,7 +8862,6 @@
         "id": "E07000213-f1",
         "label": "241 Thames Side Chertsey",
         "params": {
-          "postcode": "KT16 8LD",
           "uprn": "33042469"
         },
         "source": "fixture"
@@ -9990,15 +9080,6 @@
           "uprn": "100070126412"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000218-f1",
-        "label": "North Warwickshire",
-        "params": {
-          "postcode": "B79 0HT ",
-          "uprn": "10001179576"
-        },
-        "source": "fixture"
       }
     ],
     "name": "North Warwickshire",
@@ -10029,14 +9110,6 @@
           "uprn": "100070145298"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000219-f1",
-        "label": "Nuneaton and Bedworth",
-        "params": {
-          "house_number": "Newdigate Road"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Nuneaton and Bedworth",
@@ -10072,7 +9145,6 @@
         "id": "E07000220-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "CV23 9DF",
           "uprn": "100070200377"
         },
         "source": "fixture"
@@ -10081,7 +9153,6 @@
         "id": "E07000220-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "CV23 9DQ",
           "uprn": "100070200372"
         },
         "source": "fixture"
@@ -10090,8 +9161,7 @@
         "id": "E07000220-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "CV23 9FQ",
-          "uprn": "010010521297"
+          "uprn": "10010521297"
         },
         "source": "fixture"
       }
@@ -10129,7 +9199,6 @@
         "id": "E07000221-f1",
         "label": "Stratford DC",
         "params": {
-          "postcode": "CV37 6HX",
           "uprn": "100071513500"
         },
         "source": "fixture"
@@ -10138,7 +9207,6 @@
         "id": "E07000221-f2",
         "label": "Alscot Estate",
         "params": {
-          "postcode": "CV37 8NF",
           "uprn": "10024633309"
         },
         "source": "fixture"
@@ -10177,7 +9245,6 @@
         "id": "E07000222-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "CV34 4ED",
           "uprn": "100070260258"
         },
         "source": "fixture"
@@ -10186,7 +9253,6 @@
         "id": "E07000222-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "CV34 6LR",
           "uprn": "100070258568"
         },
         "source": "fixture"
@@ -10195,7 +9261,6 @@
         "id": "E07000222-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "CV34 5YZ",
           "uprn": "100070263501"
         },
         "source": "fixture"
@@ -10234,8 +9299,9 @@
         "id": "E07000223-f1",
         "label": "Test_001",
         "params": {
-          "address": "1 Western Road North",
-          "postcode": "BN15 9UX"
+          "house_number": "1",
+          "postcode": "BN15 9UX",
+          "street": "Western Road North"
         },
         "source": "fixture"
       },
@@ -10243,8 +9309,9 @@
         "id": "E07000223-f2",
         "label": "Test_002",
         "params": {
-          "address": "6 Hebe Road",
-          "postcode": "BN43 5WE"
+          "house_number": "6",
+          "postcode": "BN43 5WE",
+          "street": "Hebe Road"
         },
         "source": "fixture"
       },
@@ -10252,7 +9319,6 @@
         "id": "E07000223-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "BN11 1DY",
           "uprn": "100062209109"
         },
         "source": "fixture"
@@ -10291,8 +9357,9 @@
         "id": "E07000224-f1",
         "label": "Test_001",
         "params": {
-          "address": "21A Beach Road, Littlehampton",
-          "postcode": "BN17 5JA"
+          "house_number": "21A",
+          "postcode": "BN17 5JA",
+          "street": "Beach Road"
         },
         "source": "fixture"
       },
@@ -10300,26 +9367,7 @@
         "id": "E07000224-f2",
         "label": "Test_002",
         "params": {
-          "address": "2 Downs Way, East Preston",
-          "postcode": "BN16 1AA"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000224-f3",
-        "label": "Test_003",
-        "params": {
-          "postcode": "BN17 5EN",
           "uprn": "100062180214"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000224-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "BN17 5EN",
-          "uprn": "0100062180214"
         },
         "source": "fixture"
       }
@@ -10357,7 +9405,6 @@
         "id": "E07000225-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "PO18 0PR",
           "uprn": "010002476348"
         },
         "source": "fixture"
@@ -10366,7 +9413,6 @@
         "id": "E07000225-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "PO19 1EH",
           "uprn": "100062612654"
         },
         "source": "fixture"
@@ -10375,7 +9421,6 @@
         "id": "E07000225-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "PO19 1LW",
           "uprn": "100061745708"
         },
         "source": "fixture"
@@ -10414,7 +9459,6 @@
         "id": "E07000226-f1",
         "label": "Feroners Cl",
         "params": {
-          "postcode": "RH10 6EA",
           "uprn": "100061775179"
         },
         "source": "fixture"
@@ -10423,7 +9467,6 @@
         "id": "E07000226-f2",
         "label": "Peterborough Road",
         "params": {
-          "postcode": "RH10 5ES",
           "uprn": "100061787552",
           "usrn": "9700731"
         },
@@ -10463,7 +9506,6 @@
         "id": "E07000227-f1",
         "label": "Blackthorn Avenue - number",
         "params": {
-          "postcode": "RH14 9GW",
           "uprn": "10013792881"
         },
         "source": "fixture"
@@ -10472,7 +9514,6 @@
         "id": "E07000227-f2",
         "label": "Blackthorn Avenue - string",
         "params": {
-          "postcode": "RH14 9GW",
           "uprn": "10013792881"
         },
         "source": "fixture"
@@ -10509,9 +9550,9 @@
       },
       {
         "id": "E07000228-f1",
-        "label": "Test Case 1: 23 High Street",
+        "label": "23 High Street",
         "params": {
-          "number": "23",
+          "house_number": "23",
           "postcode": "RH17 6TB",
           "street": "HIGH STREET"
         },
@@ -10519,9 +9560,9 @@
       },
       {
         "id": "E07000228-f2",
-        "label": "Test Case 2: Hapstead Hall",
+        "label": "Hapstead Hall",
         "params": {
-          "number": "HAPSTEAD HALL",
+          "house_number": "HAPSTEAD HALL",
           "postcode": "RH17 6TB",
           "street": "HIGH STREET"
         },
@@ -10529,9 +9570,9 @@
       },
       {
         "id": "E07000228-f3",
-        "label": "Test Case 3: The Gardeners Arms",
+        "label": "The Gardeners Arms",
         "params": {
-          "number": "THE GARDENERS ARMS",
+          "house_number": "THE GARDENERS ARMS",
           "postcode": "RH17 6TJ",
           "street": "SELSFIELD ROAD"
         },
@@ -10571,8 +9612,9 @@
         "id": "E07000229-f1",
         "label": "Test_001",
         "params": {
-          "address": "1 Western Road North",
-          "postcode": "BN15 9UX"
+          "house_number": "1",
+          "postcode": "BN15 9UX",
+          "street": "Western Road North"
         },
         "source": "fixture"
       },
@@ -10580,8 +9622,9 @@
         "id": "E07000229-f2",
         "label": "Test_002",
         "params": {
-          "address": "6 Hebe Road",
-          "postcode": "BN43 5WE"
+          "house_number": "6",
+          "postcode": "BN43 5WE",
+          "street": "Hebe Road"
         },
         "source": "fixture"
       },
@@ -10589,7 +9632,6 @@
         "id": "E07000229-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "BN11 1DY",
           "uprn": "100062209109"
         },
         "source": "fixture"
@@ -10650,15 +9692,6 @@
           "uprn": "100120576392"
         },
         "source": "fixture"
-      },
-      {
-        "id": "E07000234-f4",
-        "label": "Finstall Road",
-        "params": {
-          "postcode": "B60 3DE",
-          "uprn": "100120571971"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Bromsgrove",
@@ -10689,15 +9722,6 @@
           "uprn": "100120593220"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000235-f1",
-        "label": "Malvern Hills",
-        "params": {
-          "postcode": "WR14 2AE",
-          "uprn": "100121348457"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Malvern Hills",
@@ -10728,15 +9752,6 @@
           "uprn": "100120635780"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000236-f1",
-        "label": "Redditch",
-        "params": {
-          "postcode": "B97 5AG ",
-          "uprn": "10094557691"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Redditch",
@@ -10767,15 +9782,6 @@
           "uprn": "10093053355"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000237-f1",
-        "label": "Worcester",
-        "params": {
-          "postcode": "WR5 1AE ",
-          "uprn": "100120650345"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Worcester",
@@ -10870,7 +9876,6 @@
         "id": "E07000240-f1",
         "label": "55 St John's Ct",
         "params": {
-          "postcode": "AL1 4TR ",
           "uprn": "100081132201"
         },
         "source": "fixture"
@@ -10879,7 +9884,6 @@
         "id": "E07000240-f2",
         "label": "9 Tyttenhanger Grn",
         "params": {
-          "postcode": "AL4 0RN ",
           "uprn": "100080869141"
         },
         "source": "fixture"
@@ -10966,34 +9970,24 @@
         "id": "E07000242-f1",
         "label": "Example",
         "params": {
-          "address_name_number": "1",
+          "house_number": "1",
           "postcode": "SG9 9AA"
         },
         "source": "fixture"
       },
       {
         "id": "E07000242-f2",
-        "label": "Example No Postcode Space",
+        "label": "UPRN only",
         "params": {
-          "address_name_number": "1",
-          "postcode": "SG99AA"
+          "uprn": "100080738904"
         },
         "source": "fixture"
       },
       {
         "id": "E07000242-f3",
-        "label": "UPRN only",
+        "label": "UPRN, postcode & number",
         "params": {
-          "postcode": "CM23 5FT",
-          "uprn": "10096485673"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E07000242-f4",
-        "label": "UPRN, POSTCODE & NUMBER",
-        "params": {
-          "address_name_number": "1",
+          "house_number": "1",
           "postcode": "SG9 9AA",
           "uprn": "10033104539"
         },
@@ -11033,7 +10027,6 @@
         "id": "E07000243-f1",
         "label": "Chepstow Close",
         "params": {
-          "postcode": "SG1 5TT ",
           "uprn": "100080879233"
         },
         "source": "fixture"
@@ -11042,7 +10035,6 @@
         "id": "E07000243-f2",
         "label": "Rectory Lane",
         "params": {
-          "postcode": "SG1 4DA ",
           "uprn": "100081137566"
         },
         "source": "fixture"
@@ -11051,7 +10043,6 @@
         "id": "E07000243-f3",
         "label": "Neptune Gate",
         "params": {
-          "postcode": "SG2 7SH ",
           "uprn": "200000585910"
         },
         "source": "fixture"
@@ -11088,18 +10079,16 @@
       },
       {
         "id": "E07000244-f1",
-        "label": "106 Mill Lane, Felixstowe, IP11 2LL",
+        "label": "106 Mill Lane",
         "params": {
-          "postcode": "IP11 2LL",
           "uprn": "100091126543"
         },
         "source": "fixture"
       },
       {
         "id": "E07000244-f2",
-        "label": "82 Mill Lane, Felixstowe, IP11 2LL",
+        "label": "82 Mill Lane",
         "params": {
-          "postcode": "IP11 2LL",
           "uprn": "100091126520"
         },
         "source": "fixture"
@@ -11133,15 +10122,6 @@
           "uprn": "10009753969"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000245-f1",
-        "label": "West Suffolk",
-        "params": {
-          "postcode": "IP28 6DR",
-          "uprn": "10009739960"
-        },
-        "source": "fixture"
       }
     ],
     "name": "West Suffolk",
@@ -11234,8 +10214,9 @@
         "id": "E08000002-f1",
         "label": "Test_Address_001",
         "params": {
-          "address": "2 Oakwood Close",
-          "postcode": "bl81dd"
+          "house_number": "2",
+          "postcode": "BL8 1DD",
+          "street": "Oakwood Close"
         },
         "source": "fixture"
       },
@@ -11243,8 +10224,9 @@
         "id": "E08000002-f2",
         "label": "Test_Address_002",
         "params": {
-          "address": "9, BIRKDALE DRIVE",
-          "postcode": "bl8 2sg"
+          "house_number": "9",
+          "postcode": "BL8 2SG",
+          "street": "Birkdale Drive"
         },
         "source": "fixture"
       },
@@ -11252,24 +10234,9 @@
         "id": "E08000002-f3",
         "label": "Test_Address_003",
         "params": {
-          "address": "18, slaidburn drive",
-          "postcode": "BL8 3DG"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E08000002-f4",
-        "label": "Test_ID_001",
-        "params": {
-          "id": "649158"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E08000002-f5",
-        "label": "Test_ID_002",
-        "params": {
-          "id": "593456"
+          "house_number": "18",
+          "postcode": "BL8 3DG",
+          "street": "Slaidburn Drive"
         },
         "source": "fixture"
       }
@@ -11302,15 +10269,6 @@
           "uprn": "77033125"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E08000003-f1",
-        "label": "Manchester",
-        "params": {
-          "postcode": "M20 6AR ",
-          "uprn": "77127089"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Manchester",
@@ -11346,7 +10304,6 @@
         "id": "E08000004-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "OL9 7EG ",
           "uprn": "422000125973"
         },
         "source": "fixture"
@@ -11355,7 +10312,6 @@
         "id": "E08000004-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "OL4 2AU ",
           "uprn": "422000129104"
         },
         "source": "fixture"
@@ -11364,7 +10320,6 @@
         "id": "E08000004-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "OL8 3SE ",
           "uprn": "422000042299"
         },
         "source": "fixture"
@@ -11403,7 +10358,6 @@
         "id": "E08000005-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "OL10 4TJ",
           "uprn": "10094359340"
         },
         "source": "fixture"
@@ -11412,7 +10366,6 @@
         "id": "E08000005-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "OL12 7TX",
           "uprn": "23030658"
         },
         "source": "fixture"
@@ -11421,17 +10374,7 @@
         "id": "E08000005-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "M24 5LN ",
           "uprn": "23011384"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E08000005-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "OL11 2SU",
-          "uprn": "23045922"
         },
         "source": "fixture"
       }
@@ -11469,7 +10412,6 @@
         "id": "E08000006-f1",
         "label": "domestic",
         "params": {
-          "postcode": "M6 7FT  ",
           "uprn": "100011404886"
         },
         "source": "fixture"
@@ -11508,7 +10450,6 @@
         "id": "E08000007-f1",
         "label": "domestic",
         "params": {
-          "postcode": "SK7 3AA ",
           "uprn": "100011460157"
         },
         "source": "fixture"
@@ -11556,7 +10497,7 @@
         "id": "E08000008-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "ol5 9jl",
+          "postcode": "OL5 9JL",
           "uprn": "100011548952"
         },
         "source": "fixture"
@@ -11565,7 +10506,7 @@
         "id": "E08000008-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "SK148JP",
+          "postcode": "SK14 8JP",
           "uprn": "100011573345"
         },
         "source": "fixture"
@@ -11602,7 +10543,7 @@
       },
       {
         "id": "E08000009-f1",
-        "label": "33 Tatton Road, Sale M33 7EE",
+        "label": "33 Tatton Road",
         "params": {
           "postcode": "M33 7EE",
           "uprn": "100011699343"
@@ -11611,7 +10552,7 @@
       },
       {
         "id": "E08000009-f2",
-        "label": "35 Tatton Road, Sale M33 7EE",
+        "label": "35 Tatton Road",
         "params": {
           "postcode": "M33 7EE",
           "uprn": "100011699344"
@@ -11670,7 +10611,7 @@
         "id": "E08000010-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "wn36au",
+          "postcode": "WN3 6AU",
           "uprn": "100011749007"
         },
         "source": "fixture"
@@ -11757,7 +10698,6 @@
         "id": "E08000012-f1",
         "label": "52 Swallowhurst Crescent Liverpool L11 2UZ",
         "params": {
-          "postcode": "L11 2UZ ",
           "uprn": "38148233"
         },
         "source": "fixture"
@@ -11766,7 +10706,6 @@
         "id": "E08000012-f2",
         "label": "1 Aston Street Liverpool L19 8LR",
         "params": {
-          "postcode": "L19 8LR ",
           "uprn": "38010019"
         },
         "source": "fixture"
@@ -11805,8 +10744,8 @@
         "id": "E08000013-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "WA11 9JL",
-          "uprn": "39019742"
+          "postcode": "WA10 1HE",
+          "uprn": "39079361"
         },
         "source": "fixture"
       },
@@ -11814,8 +10753,8 @@
         "id": "E08000013-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "WA12 0DL",
-          "uprn": "39078711"
+          "postcode": "WA10 1TG",
+          "uprn": "39013329"
         },
         "source": "fixture"
       },
@@ -11823,8 +10762,8 @@
         "id": "E08000013-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "WA10 1EU",
-          "uprn": "39065149"
+          "postcode": "WA10 9TJ",
+          "uprn": "39060317"
         },
         "source": "fixture"
       }
@@ -11923,7 +10862,7 @@
         "label": "Elm Avenue, Upton",
         "params": {
           "postcode": "CH49 4NP",
-          "uprn": "000042037487"
+          "uprn": "42037487"
         },
         "source": "fixture"
       }
@@ -12018,7 +10957,6 @@
         "id": "E08000017-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "DN4 7BN ",
           "uprn": "100050701118"
         },
         "source": "fixture"
@@ -12027,7 +10965,6 @@
         "id": "E08000017-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "DN2 4JP ",
           "uprn": "100050753396"
         },
         "source": "fixture"
@@ -12036,7 +10973,6 @@
         "id": "E08000017-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "DN4 0BU ",
           "uprn": "100050699118"
         },
         "source": "fixture"
@@ -12070,15 +11006,6 @@
           "uprn": "100050858600"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E08000018-f1",
-        "label": "Rotherham",
-        "params": {
-          "house_number": "77",
-          "postcode": "S60 1JD"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Rotherham",
@@ -12114,7 +11041,6 @@
         "id": "E08000019-f1",
         "label": "test001",
         "params": {
-          "postcode": "S11 9FR ",
           "uprn": "100050938234"
         },
         "source": "fixture"
@@ -12123,7 +11049,6 @@
         "id": "E08000019-f2",
         "label": "test002",
         "params": {
-          "postcode": "S2 2GS  ",
           "uprn": "100050961380"
         },
         "source": "fixture"
@@ -12132,17 +11057,7 @@
         "id": "E08000019-f3",
         "label": "test003",
         "params": {
-          "postcode": "S35 2EG ",
           "uprn": "100050920796"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E08000019-f4",
-        "label": "test004",
-        "params": {
-          "postcode": "S6 6AB  ",
-          "uprn": "100051085306"
         },
         "source": "fixture"
       }
@@ -12180,8 +11095,9 @@
         "id": "E08000021-f1",
         "label": "Grange Road",
         "params": {
-          "address": "1 Grange Road",
-          "postcode": "NE3 5LA"
+          "house_number": "1",
+          "postcode": "NE3 5LA",
+          "street": "Grange Road"
         },
         "source": "fixture"
       },
@@ -12189,8 +11105,9 @@
         "id": "E08000021-f2",
         "label": "Westerhope",
         "params": {
-          "address": "1 Westerhope Homes Hillhead Road",
-          "postcode": "NE5 1NJ"
+          "house_number": "1",
+          "postcode": "NE5 1NJ",
+          "street": "Westerhope Homes Hillhead Road"
         },
         "source": "fixture"
       }
@@ -12223,15 +11140,6 @@
           "uprn": "47051022"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E08000022-f1",
-        "label": "North Tyneside",
-        "params": {
-          "postcode": "NE26 2TG",
-          "uprn": "47097627"
-        },
-        "source": "fixture"
       }
     ],
     "name": "North Tyneside",
@@ -12289,15 +11197,6 @@
           "uprn": "100000304486"
         },
         "source": "fixture"
-      },
-      {
-        "id": "E08000023-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "NE35 9BP",
-          "uprn": "103009511"
-        },
-        "source": "fixture"
       }
     ],
     "name": "South Tyneside",
@@ -12333,8 +11232,9 @@
         "id": "E08000024-f1",
         "label": "Test_001",
         "params": {
-          "address": "191 Cleveland Road",
-          "postcode": "SR4 7PU"
+          "house_number": "191",
+          "postcode": "SR4 7PU",
+          "street": "Cleveland Road"
         },
         "source": "fixture"
       },
@@ -12342,8 +11242,9 @@
         "id": "E08000024-f2",
         "label": "Test_002",
         "params": {
-          "address": "43 Hill Street",
-          "postcode": "SR3 2DW"
+          "house_number": "43",
+          "postcode": "SR3 2DW",
+          "street": "Hill Street"
         },
         "source": "fixture"
       },
@@ -12351,8 +11252,9 @@
         "id": "E08000024-f3",
         "label": "Test_003",
         "params": {
-          "address": "17 Sutherland Drive",
-          "postcode": "SR4 8RJ"
+          "house_number": "17",
+          "postcode": "SR4 8RJ",
+          "street": "Sutherland Drive"
         },
         "source": "fixture"
       }
@@ -12410,24 +11312,6 @@
         "params": {
           "postcode": "B17 0AH",
           "uprn": "100070548572"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E08000025-f4",
-        "label": "Windermere Road",
-        "params": {
-          "postcode": "B13 9JP",
-          "uprn": "100070566109"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E08000025-f5",
-        "label": "Park Hill",
-        "params": {
-          "postcode": "B13 8DS",
-          "uprn": "100070475114"
         },
         "source": "fixture"
       }
@@ -12514,15 +11398,6 @@
           "uprn": "90219629"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E08000027-f1",
-        "label": "Dudley",
-        "params": {
-          "postcode": "B62 8SJ ",
-          "uprn": "90014244"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Dudley",
@@ -12558,7 +11433,6 @@
         "id": "E08000028-f1",
         "label": "uprn_10008535856",
         "params": {
-          "postcode": "DY4 7TL ",
           "uprn": "10008535856"
         },
         "source": "fixture"
@@ -12567,7 +11441,6 @@
         "id": "E08000028-f2",
         "label": "uprn_10008535857",
         "params": {
-          "postcode": "DY4 7TL ",
           "uprn": "10008535857"
         },
         "source": "fixture"
@@ -12606,7 +11479,6 @@
         "id": "E08000029-f1",
         "label": "100070994046",
         "params": {
-          "postcode": "B92 8JX ",
           "uprn": "100070994046"
         },
         "source": "fixture"
@@ -12615,8 +11487,7 @@
         "id": "E08000029-f2",
         "label": "200003821723, Predict",
         "params": {
-          "postcode": "B92 7JJ ",
-          "predict": "True",
+          "predict": "true",
           "uprn": "200003821723"
         },
         "source": "fixture"
@@ -12625,7 +11496,6 @@
         "id": "E08000029-f3",
         "label": "New Garden Waste Subscription Service",
         "params": {
-          "postcode": "B91 1TZ ",
           "uprn": "100071011936"
         },
         "source": "fixture"
@@ -12664,7 +11534,6 @@
         "id": "E08000030-f1",
         "label": "test001",
         "params": {
-          "postcode": "WS10 8HS",
           "uprn": "100071103746"
         },
         "source": "fixture"
@@ -12673,7 +11542,6 @@
         "id": "E08000030-f2",
         "label": "test002",
         "params": {
-          "postcode": "WV12 4TE",
           "uprn": "100071105627"
         },
         "source": "fixture"
@@ -12682,17 +11550,7 @@
         "id": "E08000030-f3",
         "label": "test003",
         "params": {
-          "postcode": "WS2 0HH ",
           "uprn": "100071095946"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E08000030-f4",
-        "label": "test004",
-        "params": {
-          "postcode": "WS5 4LR ",
-          "uprn": "100071048794"
         },
         "source": "fixture"
       }
@@ -12769,7 +11627,6 @@
         "id": "E08000032-f1",
         "label": "Ilkley",
         "params": {
-          "postcode": "LS29 9AH",
           "uprn": "100051250665"
         },
         "source": "fixture"
@@ -12778,7 +11635,6 @@
         "id": "E08000032-f2",
         "label": "Bradford",
         "params": {
-          "postcode": "BD8 8RX ",
           "uprn": "100051239296"
         },
         "source": "fixture"
@@ -12787,7 +11643,6 @@
         "id": "E08000032-f3",
         "label": "Baildon",
         "params": {
-          "postcode": "BD17 7JB",
           "uprn": "10002329242"
         },
         "source": "fixture"
@@ -12827,7 +11682,7 @@
         "label": "Test_1",
         "params": {
           "postcode": "OL14 7BX",
-          "uprn": "010010152783"
+          "uprn": "10010152783"
         },
         "source": "fixture"
       },
@@ -12836,7 +11691,7 @@
         "label": "Test_2",
         "params": {
           "postcode": "HX1 3UZ",
-          "uprn": "010006741170"
+          "uprn": "10006741170"
         },
         "source": "fixture"
       }
@@ -12874,8 +11729,8 @@
         "id": "E08000034-f1",
         "label": "Midgebottom House",
         "params": {
-          "postcode": "WF15 7NX",
-          "uprn": "83118349"
+          "postcode": "HD9 7HA",
+          "uprn": "83074265"
         },
         "source": "fixture"
       },
@@ -12883,8 +11738,8 @@
         "id": "E08000034-f2",
         "label": "HD8 8NA test",
         "params": {
-          "postcode": "WF17 8DL",
-          "uprn": "83140275"
+          "postcode": "HD8 8NA",
+          "uprn": "83194785"
         },
         "source": "fixture"
       }
@@ -12917,15 +11772,6 @@
           "uprn": "72234110"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E08000035-f1",
-        "label": "Leeds",
-        "params": {
-          "postcode": "LS6 2SE ",
-          "uprn": "72506983"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Leeds",
@@ -12961,7 +11807,6 @@
         "id": "E08000036-f1",
         "label": "uprn1",
         "params": {
-          "postcode": "WF1 2DW ",
           "uprn": "63024087"
         },
         "source": "fixture"
@@ -12970,7 +11815,6 @@
         "id": "E08000036-f2",
         "label": "uprn2",
         "params": {
-          "postcode": "WF1 3PN ",
           "uprn": "63105305"
         },
         "source": "fixture"
@@ -12979,7 +11823,6 @@
         "id": "E08000036-f3",
         "label": "uprn3",
         "params": {
-          "postcode": "WF1 2BW ",
           "uprn": "63012193"
         },
         "source": "fixture"
@@ -13018,7 +11861,6 @@
         "id": "E08000037-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "NE16 4ET",
           "uprn": "100000077407"
         },
         "source": "fixture"
@@ -13027,7 +11869,6 @@
         "id": "E08000037-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "NE8 3LG ",
           "uprn": "100000058404"
         },
         "source": "fixture"
@@ -13036,7 +11877,6 @@
         "id": "E08000037-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "NE11 0XN",
           "uprn": "100000033887"
         },
         "source": "fixture"
@@ -13075,7 +11915,6 @@
         "id": "E09000002-f1",
         "label": "100 Heathway",
         "params": {
-          "postcode": "RM10 9NX",
           "uprn": "100014033"
         },
         "source": "fixture"
@@ -13084,7 +11923,6 @@
         "id": "E09000002-f2",
         "label": "40 Porters Avenue",
         "params": {
-          "postcode": "RM8 2AG ",
           "uprn": "100024629"
         },
         "source": "fixture"
@@ -13123,7 +11961,6 @@
         "id": "E09000003-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "NW11 9HB",
           "uprn": "200062903"
         },
         "source": "fixture"
@@ -13132,7 +11969,6 @@
         "id": "E09000003-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "EN5 2SN ",
           "uprn": "200072958"
         },
         "source": "fixture"
@@ -13171,7 +12007,6 @@
         "id": "E09000004-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "DA16 3NY",
           "uprn": "200001604426"
         },
         "source": "fixture"
@@ -13180,26 +12015,7 @@
         "id": "E09000004-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "DA5 3DQ ",
           "uprn": "100020194783"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E09000004-f3",
-        "label": "Test_003",
-        "params": {
-          "postcode": "DA5 2DS ",
-          "uprn": "100020195768"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E09000004-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "DA5 1QU ",
-          "uprn": "100020200324"
         },
         "source": "fixture"
       }
@@ -13276,8 +12092,9 @@
         "id": "E09000006-f1",
         "label": "Test_001",
         "params": {
-          "house_number": "17 College Road",
-          "postcode": "BR1 3PU"
+          "house_number": "17",
+          "postcode": "BR1 3PU",
+          "street": "College Road"
         },
         "source": "fixture"
       }
@@ -13300,14 +12117,14 @@
         "source": "sampled"
       },
       {
-        "id": "E09000007-s4",
-        "label": "1, Millman Street, London, WC1N 3ER",
+        "id": "E09000007-s5",
+        "label": "26, Old Gloucester Street, London, WC1N 3AN",
         "params": {
-          "address": "1, Millman Street, London, WC1N 3ER",
-          "house_number": "1",
-          "postcode": "WC1N 3ER",
-          "street": "Millman Street",
-          "uprn": "5068456"
+          "address": "26, Old Gloucester Street, London, WC1N 3AN",
+          "house_number": "26",
+          "postcode": "WC1N 3AN",
+          "street": "Old Gloucester Street",
+          "uprn": "5001496"
         },
         "source": "sampled"
       },
@@ -13315,7 +12132,6 @@
         "id": "E09000007-f1",
         "label": "Red Lion Street",
         "params": {
-          "postcode": "WC1R 4NA",
           "uprn": "5121151"
         },
         "source": "fixture"
@@ -13354,8 +12170,9 @@
         "id": "E09000008-f1",
         "label": "Test_001",
         "params": {
-          "address": "64 Coniston Road",
-          "postcode": "CR0 6LN"
+          "house_number": "64",
+          "postcode": "CR0 6LN",
+          "street": "Coniston Road"
         },
         "source": "fixture"
       },
@@ -13363,8 +12180,9 @@
         "id": "E09000008-f2",
         "label": "Test_002",
         "params": {
-          "address": "23B Howard Road",
-          "postcode": "SE25 5BU"
+          "house_number": "23B",
+          "postcode": "SE25 5BU",
+          "street": "Howard Road"
         },
         "source": "fixture"
       },
@@ -13372,17 +12190,9 @@
         "id": "E09000008-f3",
         "label": "Test_003",
         "params": {
-          "address": "48 Exeter Road",
-          "postcode": "CR0 6EG"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E09000008-f4",
-        "label": "Test_004",
-        "params": {
-          "address": "18 South Drive",
-          "postcode": "CR5 2BG"
+          "house_number": "48",
+          "postcode": "CR0 6EG",
+          "street": "Exeter Road"
         },
         "source": "fixture"
       }
@@ -13420,7 +12230,6 @@
         "id": "E09000009-f1",
         "label": "11 LOTHAIR ROAD, EALING, LONDON, W5 4TA",
         "params": {
-          "postcode": "W5 4TA  ",
           "uprn": "12081500"
         },
         "source": "fixture"
@@ -13429,7 +12238,6 @@
         "id": "E09000009-f2",
         "label": "53 CREIGHTON ROAD, EALING, LONDON, W5 4SH",
         "params": {
-          "postcode": "W5 4SH  ",
           "uprn": "12082293"
         },
         "source": "fixture"
@@ -13468,8 +12276,7 @@
         "id": "E09000010-f1",
         "label": "uprn",
         "params": {
-          "postcode": "EN2 6SB",
-          "uprn": "207027910"
+          "uprn": "207102166"
         },
         "source": "fixture"
       },
@@ -13477,7 +12284,10 @@
         "id": "E09000010-f2",
         "label": "address",
         "params": {
-          "address": "127 Palmerston Rd, London N22 8QX"
+          "address": "127 Palmerston Rd, London N22 8QX",
+          "house_number": "127",
+          "postcode": "N22 8QX",
+          "street": "Palmerston Rd"
         },
         "source": "fixture"
       }
@@ -13500,14 +12310,14 @@
         "source": "sampled"
       },
       {
-        "id": "E09000011-s7",
-        "label": "1, Merryfield, London, SE3 0SQ",
+        "id": "E09000011-s8",
+        "label": "1, Dabin Crescent, London, SE10 8TF",
         "params": {
-          "address": "1, Merryfield, London, SE3 0SQ",
+          "address": "1, Dabin Crescent, London, SE10 8TF",
           "house_number": "1",
-          "postcode": "SE3 0SQ",
-          "street": "Merryfield",
-          "uprn": "100020987778"
+          "postcode": "SE10 8TF",
+          "street": "Dabin Crescent",
+          "uprn": "100020955753"
         },
         "source": "sampled"
       },
@@ -13515,7 +12325,9 @@
         "id": "E09000011-f1",
         "label": "address",
         "params": {
-          "address": "25 - Tizzard Grove - London - SE3 9DH"
+          "house_number": "25",
+          "postcode": "SE3 9DH",
+          "street": "Tizzard Grove"
         },
         "source": "fixture"
       },
@@ -13523,7 +12335,7 @@
         "id": "E09000011-f2",
         "label": "houseNumber",
         "params": {
-          "house": "11",
+          "house_number": "11",
           "postcode": "SE9 5AW"
         },
         "source": "fixture"
@@ -13532,7 +12344,9 @@
         "id": "E09000011-f3",
         "label": "alternativeWeek",
         "params": {
-          "address": "32 - Glenlyon Road - London - SE9 1AJ"
+          "house_number": "32",
+          "postcode": "SE9 1AJ",
+          "street": "Glenlyon Road"
         },
         "source": "fixture"
       }
@@ -13555,14 +12369,14 @@
         "source": "sampled"
       },
       {
-        "id": "E09000012-s7",
-        "label": "1, Felton Street, London, N1 5NA",
+        "id": "E09000012-s8",
+        "label": "11, Stage Plaza Curtain Road, London, EC2A 3NQ",
         "params": {
-          "address": "1, Felton Street, London, N1 5NA",
-          "house_number": "1",
-          "postcode": "N1 5NA",
-          "street": "Felton Street",
-          "uprn": "100023135252"
+          "address": "11, Stage Plaza Curtain Road, London, EC2A 3NQ",
+          "house_number": "11",
+          "postcode": "EC2A 3NQ",
+          "street": "Stage Plaza Curtain Road",
+          "uprn": "10008353755"
         },
         "source": "sampled"
       },
@@ -13622,14 +12436,6 @@
           "uprn": "34008403"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E09000013-f1",
-        "label": "Hammersmith & Fulham",
-        "params": {
-          "postcode": "W12 0BQ"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Hammersmith and Fulham",
@@ -13665,7 +12471,6 @@
         "id": "E09000014-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "N4 4NL  ",
           "uprn": "100021209182"
         },
         "source": "fixture"
@@ -13674,7 +12479,6 @@
         "id": "E09000014-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "N22 5EP ",
           "uprn": "100021207181"
         },
         "source": "fixture"
@@ -13683,17 +12487,7 @@
         "id": "E09000014-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "N22 6NG ",
           "uprn": "100021202738"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E09000014-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "N6 5QD  ",
-          "uprn": "100021202131"
         },
         "source": "fixture"
       }
@@ -13731,7 +12525,6 @@
         "id": "E09000015-f1",
         "label": "1 Dudley Gardens",
         "params": {
-          "postcode": "HA2 0DQ ",
           "uprn": "100021261713"
         },
         "source": "fixture"
@@ -13740,7 +12533,6 @@
         "id": "E09000015-f2",
         "label": "FLAT 3, 12, LOWER ROAD, HARROW, HA2 0DA",
         "params": {
-          "postcode": "HA2 0DA ",
           "uprn": "10070270427"
         },
         "source": "fixture"
@@ -13779,7 +12571,6 @@
         "id": "E09000016-f1",
         "label": "53 Argyle Gardens",
         "params": {
-          "postcode": "RM14 3HH",
           "uprn": "100021403735"
         },
         "source": "fixture"
@@ -13852,15 +12643,6 @@
           "uprn": "100021529611"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E09000018-f1",
-        "label": "Hounslow",
-        "params": {
-          "postcode": "TW7 7HX ",
-          "uprn": "100021577765"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Hounslow",
@@ -14008,8 +12790,9 @@
         "id": "E09000021-f1",
         "label": "Test_001",
         "params": {
-          "house_number": "25 Beechcroft Avenue",
-          "postcode": "KT3 3EG"
+          "house_number": "25",
+          "postcode": "KT3 3EG",
+          "street": "Beechcroft Avenue"
         },
         "source": "fixture"
       }
@@ -14047,7 +12830,6 @@
         "id": "E09000022-f1",
         "label": "Sternhold Avenue",
         "params": {
-          "postcode": "SW2 4PG ",
           "uprn": "100021893293"
         },
         "source": "fixture"
@@ -14056,7 +12838,6 @@
         "id": "E09000022-f2",
         "label": "Sibella Road",
         "params": {
-          "postcode": "SW4 6JA ",
           "uprn": "100021889496"
         },
         "source": "fixture"
@@ -14065,7 +12846,6 @@
         "id": "E09000022-f3",
         "label": "Hoadly Road",
         "params": {
-          "postcode": "SW16 1AE",
           "uprn": "100021852695"
         },
         "source": "fixture"
@@ -14105,7 +12885,7 @@
         "label": "houseNumber",
         "params": {
           "house_number": "4",
-          "postcode": "SE41LR"
+          "postcode": "SE4 1LR"
         },
         "source": "fixture"
       },
@@ -14113,8 +12893,8 @@
         "id": "E09000023-f2",
         "label": "houseName",
         "params": {
-          "name": "The Haven",
-          "postcode": "SE233TE"
+          "house_number": "The Haven",
+          "postcode": "SE23 3TE"
         },
         "source": "fixture"
       },
@@ -14122,17 +12902,7 @@
         "id": "E09000023-f3",
         "label": "houseUprn",
         "params": {
-          "postcode": "SE13 6HX",
           "uprn": "10070495030"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "E09000023-f4",
-        "label": "houseUprn2",
-        "params": {
-          "postcode": "SE23 3TE",
-          "uprn": "100021959032"
         },
         "source": "fixture"
       }
@@ -14210,8 +12980,7 @@
         "id": "E09000025-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "E12 5DD ",
-          "uprn": "000046029461"
+          "uprn": "46029461"
         },
         "source": "fixture"
       },
@@ -14219,8 +12988,7 @@
         "id": "E09000025-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "E7 8HU  ",
-          "uprn": "000046250697"
+          "uprn": "46250697"
         },
         "source": "fixture"
       },
@@ -14228,7 +12996,6 @@
         "id": "E09000025-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "E6 3DJ  ",
           "uprn": "46012509"
         },
         "source": "fixture"
@@ -14267,7 +13034,6 @@
         "id": "E09000026-f1",
         "label": "council office recycling only",
         "params": {
-          "postcode": "IG1 1NY ",
           "uprn": "10034922090"
         },
         "source": "fixture"
@@ -14276,7 +13042,6 @@
         "id": "E09000026-f2",
         "label": "refuse and recycling only",
         "params": {
-          "postcode": "E18 2FD ",
           "uprn": "10013585215"
         },
         "source": "fixture"
@@ -14285,7 +13050,6 @@
         "id": "E09000026-f3",
         "label": "a church vicarage, garden, recycling, refuse",
         "params": {
-          "postcode": "IG2 6XQ ",
           "uprn": "10034912354"
         },
         "source": "fixture"
@@ -14324,7 +13088,6 @@
         "id": "E09000027-f1",
         "label": "Sheen Common Drive",
         "params": {
-          "postcode": "TW10 5BN",
           "uprn": "100022316011"
         },
         "source": "fixture"
@@ -14333,7 +13096,6 @@
         "id": "E09000027-f2",
         "label": "Rosemont Road",
         "params": {
-          "postcode": "TW10 6QL",
           "uprn": "100022315214"
         },
         "source": "fixture"
@@ -14342,7 +13104,6 @@
         "id": "E09000027-f3",
         "label": "Bryanston Avenue",
         "params": {
-          "postcode": "TW2 6HP ",
           "uprn": "100022330653"
         },
         "source": "fixture"
@@ -14381,7 +13142,6 @@
         "id": "E09000028-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "SE5 0PQ ",
           "uprn": "200003455089"
         },
         "source": "fixture"
@@ -14390,7 +13150,6 @@
         "id": "E09000028-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "SE15 1AA",
           "uprn": "200003379615"
         },
         "source": "fixture"
@@ -14469,7 +13228,6 @@
         "id": "E09000030-f1",
         "label": "Celtic St",
         "params": {
-          "postcode": "E14 6QB ",
           "uprn": "6085613"
         },
         "source": "fixture"
@@ -14478,7 +13236,6 @@
         "id": "E09000030-f2",
         "label": "Ernest St",
         "params": {
-          "postcode": "E1 4LS  ",
           "uprn": "6034631"
         },
         "source": "fixture"
@@ -14487,7 +13244,6 @@
         "id": "E09000030-f3",
         "label": "Blue Anchor Yard",
         "params": {
-          "postcode": "E1 8LR  ",
           "uprn": "6007545"
         },
         "source": "fixture"
@@ -14526,7 +13282,6 @@
         "id": "E09000031-f1",
         "label": "200001421821",
         "params": {
-          "postcode": "E11 1DY ",
           "uprn": "200001421821"
         },
         "source": "fixture"
@@ -14535,7 +13290,6 @@
         "id": "E09000031-f2",
         "label": "100023583909",
         "params": {
-          "postcode": "E11 4QN ",
           "uprn": "100022551607"
         },
         "source": "fixture"
@@ -14574,7 +13328,6 @@
         "id": "E09000032-f1",
         "label": "100022659217",
         "params": {
-          "postcode": "SW17 0DF",
           "uprn": "100022659217"
         },
         "source": "fixture"
@@ -14583,7 +13336,6 @@
         "id": "E09000032-f2",
         "label": "100022611611",
         "params": {
-          "postcode": "SW18 1DU",
           "uprn": "100022611611"
         },
         "source": "fixture"
@@ -14592,7 +13344,6 @@
         "id": "E09000032-f3",
         "label": "10091501435",
         "params": {
-          "postcode": "SW18 4GL",
           "uprn": "10091501435"
         },
         "source": "fixture"
@@ -14630,18 +13381,6 @@
   "N09000001": {
     "cases": [
       {
-        "id": "N09000001-s5",
-        "label": "30a, The Diamond, Newtownabbey, BT37 9BJ",
-        "params": {
-          "address": "30a, The Diamond, Newtownabbey, BT37 9BJ",
-          "house_number": "30a",
-          "postcode": "BT37 9BJ",
-          "street": "The Diamond",
-          "uprn": "185375666"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "N09000001-s6",
         "label": "17, Altmore Green, Newtownabbey, BT37 9AX",
         "params": {
@@ -14650,6 +13389,18 @@
           "postcode": "BT37 9AX",
           "street": "Altmore Green",
           "uprn": "185375363"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "N09000001-s7",
+        "label": "59, Thornhill Road, Antrim, BT41 2LG",
+        "params": {
+          "address": "59, Thornhill Road, Antrim, BT41 2LG",
+          "house_number": "59",
+          "postcode": "BT41 2LG",
+          "street": "Thornhill Road",
+          "uprn": "187116679"
         },
         "source": "sampled"
       },
@@ -14673,13 +13424,17 @@
         "id": "N09000001-f3",
         "label": "Postcode + address",
         "params": {
-          "address": "59 Thornhill Road",
-          "postcode": "BT41 2LG"
+          "house_number": "59",
+          "postcode": "BT41 2LG",
+          "street": "Thornhill Road"
         },
         "source": "fixture"
       }
     ],
     "name": "Antrim and Newtownabbey",
+    "notes": [
+      "address API failed for 1 postcode(s)"
+    ],
     "scraper_id": "port_antrim_and_newtownabbey_council"
   },
   "N09000002": {
@@ -14707,14 +13462,6 @@
           "uprn": "185903591"
         },
         "source": "sampled"
-      },
-      {
-        "id": "N09000002-f1",
-        "label": "Armagh City, Banbridge and Craigavon",
-        "params": {
-          "uprn": "185625284"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Armagh City, Banbridge and Craigavon",
@@ -14826,18 +13573,6 @@
   "N09000007": {
     "cases": [
       {
-        "id": "N09000007-s1",
-        "label": "14, Smithfield, Lisburn, BT28 1TH",
-        "params": {
-          "address": "14, Smithfield, Lisburn, BT28 1TH",
-          "house_number": "14",
-          "postcode": "BT28 1TH",
-          "street": "Smithfield",
-          "uprn": "185887182"
-        },
-        "source": "sampled"
-      },
-      {
         "id": "N09000007-s2",
         "label": "203, Belsize Road, Lisburn, BT27 4DP",
         "params": {
@@ -14850,16 +13585,22 @@
         "source": "sampled"
       },
       {
-        "id": "N09000007-f1",
-        "label": "Lisburn and Castlereagh",
+        "id": "N09000007-s3",
+        "label": "16, Burnbrae Avenue, Lisburn, BT27 5JE",
         "params": {
-          "house_number": "97",
-          "postcode": "BT28 1JN"
+          "address": "16, Burnbrae Avenue, Lisburn, BT27 5JE",
+          "house_number": "16",
+          "postcode": "BT27 5JE",
+          "street": "Burnbrae Avenue",
+          "uprn": "185262413"
         },
-        "source": "fixture"
+        "source": "sampled"
       }
     ],
     "name": "Lisburn and Castlereagh",
+    "notes": [
+      "address API failed for 2 postcode(s)"
+    ],
     "scraper_id": "ukbcd_lisburn_castlereagh_city_council"
   },
   "N09000008": {
@@ -14983,28 +13724,31 @@
       },
       {
         "id": "N09000010-f1",
-        "label": "1 John Mitchel Street, Newry (Fri Z-V2)",
+        "label": "1 John Mitchel Street, Newry",
         "params": {
-          "address": "1 John Mitchel Street",
-          "postcode": "BT34 2AP"
+          "house_number": "1",
+          "postcode": "BT34 2AP",
+          "street": "John Mitchel Street"
         },
         "source": "fixture"
       },
       {
         "id": "N09000010-f2",
-        "label": "9 Kildare Street, Newry (Tue Z1)",
+        "label": "9 Kildare Street, Newry",
         "params": {
-          "address": "9 Kildare Street",
-          "postcode": "BT34 1DQ"
+          "house_number": "9",
+          "postcode": "BT34 1DQ",
+          "street": "Kildare Street"
         },
         "source": "fixture"
       },
       {
         "id": "N09000010-f3",
-        "label": "44 Glenmore Road, Belleek (Tue Z1)",
+        "label": "44 Glenmore Road, Belleek",
         "params": {
-          "address": "44 Glenmore Road",
-          "postcode": "BT35 7PU"
+          "house_number": "44",
+          "postcode": "BT35 7PU",
+          "street": "Glenmore Road"
         },
         "source": "fixture"
       }
@@ -15096,8 +13840,9 @@
         "id": "S12000005-f1",
         "label": "16 Crophill, Sauchie",
         "params": {
-          "address": "16 Crophill, Sauchie",
-          "postcode": "FK10 3EY"
+          "house_number": "16",
+          "postcode": "FK10 3EY",
+          "street": "Crophill, Sauchie"
         },
         "source": "fixture"
       },
@@ -15114,9 +13859,10 @@
         "id": "S12000005-f3",
         "label": "With garden waste permit",
         "params": {
-          "address": "16 Crophill, Sauchie",
-          "garden_waste": "True",
-          "postcode": "FK10 3EY"
+          "garden_waste": "true",
+          "house_number": "16",
+          "postcode": "FK10 3EY",
+          "street": "Crophill, Sauchie"
         },
         "source": "fixture"
       }
@@ -15154,7 +13900,6 @@
         "id": "S12000006-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "DG6 4NT ",
           "uprn": "137034556"
         },
         "source": "fixture"
@@ -15243,14 +13988,15 @@
         "id": "S12000010-f1",
         "label": "EH21 8GU 4 Laing Loan, Wallyford",
         "params": {
-          "address": "4 Laing Loan, Wallyford",
-          "postcode": "EH21 8GU"
+          "house_number": "4",
+          "postcode": "EH21 8GU",
+          "street": "Laing Loan"
         },
         "source": "fixture"
       },
       {
         "id": "S12000010-f2",
-        "label": "EH41 4LN Peterhouse, Morham, Haddington",
+        "label": "EH41 4LN Peterhouse, Morham",
         "params": {
           "address": "Peterhouse, Morham, Haddington",
           "postcode": "EH41 4LN"
@@ -15261,8 +14007,9 @@
         "id": "S12000010-f3",
         "label": "1 Colliers Row Wallyford",
         "params": {
-          "address": "1 Colliers Row, Wallyford",
-          "postcode": "EH21 8GX"
+          "house_number": "1",
+          "postcode": "EH21 8GX",
+          "street": "Colliers Row"
         },
         "source": "fixture"
       }
@@ -15352,15 +14099,6 @@
           "uprn": "139010639"
         },
         "source": "sampled"
-      },
-      {
-        "id": "S12000013-f1",
-        "label": "Comhairle nan Eilean Siar",
-        "params": {
-          "house_number": "1",
-          "postcode": "HS1 2BJ"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Na h-Eileanan Siar",
@@ -15391,15 +14129,6 @@
           "uprn": "136044047"
         },
         "source": "sampled"
-      },
-      {
-        "id": "S12000014-f1",
-        "label": "Falkirk",
-        "params": {
-          "postcode": "FK1 1NB ",
-          "uprn": "136065818"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Falkirk",
@@ -15435,38 +14164,16 @@
         "id": "S12000017-f1",
         "label": "Allangrange Mains Road, Black Isle",
         "params": {
-          "postcode": "IV8 8NL ",
-          "predict": "True",
+          "predict": "true",
           "uprn": "130108578"
         },
         "source": "fixture"
       },
       {
         "id": "S12000017-f2",
-        "label": "Kishorn, Wester Ross",
-        "params": {
-          "postcode": "IV14 9AB",
-          "predict": "True",
-          "uprn": "130066519"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "S12000017-f3",
         "label": "Quarry Lane, Tain",
         "params": {
-          "postcode": "IV19 1EN",
           "uprn": "130007199"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "S12000017-f4",
-        "label": "130143631",
-        "params": {
-          "postcode": "KW1 5TA ",
-          "predict": "True",
-          "uprn": "130072429"
         },
         "source": "fixture"
       }
@@ -15504,8 +14211,9 @@
         "id": "S12000018-f1",
         "label": "1 Findhorn Crescent",
         "params": {
-          "address": "1 Findhorn Crescent",
-          "postcode": "PA16 0FG"
+          "house_number": "1",
+          "postcode": "PA16 0FG",
+          "street": "Findhorn Crescent"
         },
         "source": "fixture"
       },
@@ -15513,8 +14221,9 @@
         "id": "S12000018-f2",
         "label": "1 Merrylee Avenue",
         "params": {
-          "address": "1 Merrylee Avenue",
-          "postcode": "PA14 5UT"
+          "house_number": "1",
+          "postcode": "PA14 5UT",
+          "street": "Merrylee Avenue"
         },
         "source": "fixture"
       },
@@ -15522,8 +14231,9 @@
         "id": "S12000018-f3",
         "label": "10 St John's Road",
         "params": {
-          "address": "10 St John's Road",
-          "postcode": "PA19 1PL"
+          "house_number": "10",
+          "postcode": "PA19 1PL",
+          "street": "St John's Road"
         },
         "source": "fixture"
       }
@@ -15595,16 +14305,6 @@
           "uprn": "133021451"
         },
         "source": "sampled"
-      },
-      {
-        "id": "S12000020-f1",
-        "label": "Moray",
-        "params": {
-          "house_number": "41 Mayne Road",
-          "postcode": "IV30 1NZ",
-          "uprn": "45438"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Moray",
@@ -15640,7 +14340,6 @@
         "id": "S12000021-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "KA11 1BB",
           "uprn": "126043248"
         },
         "source": "fixture"
@@ -15649,7 +14348,6 @@
         "id": "S12000021-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "KA20 4JA",
           "uprn": "126021147"
         },
         "source": "fixture"
@@ -15658,17 +14356,7 @@
         "id": "S12000021-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "KA11 1FD",
           "uprn": "126091148"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "S12000021-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "KA27 8NP",
-          "uprn": "126000270"
         },
         "source": "fixture"
       }
@@ -15706,7 +14394,6 @@
         "id": "S12000023-f1",
         "label": "Palace Gardens, Birsay",
         "params": {
-          "postcode": "KW17 2LL",
           "uprn": "134017306"
         },
         "source": "fixture"
@@ -15715,7 +14402,6 @@
         "id": "S12000023-f2",
         "label": "Gill Pier, Westray",
         "params": {
-          "postcode": "KW17 2DL",
           "uprn": "134004695"
         },
         "source": "fixture"
@@ -15788,14 +14474,6 @@
           "uprn": "30100010891"
         },
         "source": "sampled"
-      },
-      {
-        "id": "S12000027-f1",
-        "label": "Shetland Islands",
-        "params": {
-          "postcode": "ZE1 0NY"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Shetland Islands",
@@ -15831,7 +14509,9 @@
         "id": "S12000028-f1",
         "label": "4 Thistle Walk, Ayr, KA7 3XH",
         "params": {
+          "house_number": "4",
           "postcode": "KA7 3XH",
+          "street": "Thistle Walk",
           "uprn": "141030966"
         },
         "source": "fixture"
@@ -15892,15 +14572,6 @@
           "uprn": "484073020"
         },
         "source": "fixture"
-      },
-      {
-        "id": "S12000029-f4",
-        "label": "2 Braxfield Road, Lanark, ML11 9AB",
-        "params": {
-          "postcode": "ML11 9AB",
-          "uprn": "484118513"
-        },
-        "source": "fixture"
       }
     ],
     "name": "South Lanarkshire",
@@ -15936,8 +14607,9 @@
         "id": "S12000030-f1",
         "label": "Test_001",
         "params": {
-          "house_number": "5 Sunnylaw Road",
-          "postcode": "FK9 4QA"
+          "house_number": "5",
+          "postcode": "FK9 4QA",
+          "street": "Sunnylaw Road"
         },
         "source": "fixture"
       }
@@ -15975,7 +14647,6 @@
         "id": "S12000033-f1",
         "label": "179 Skene Street, AB10 1QN",
         "params": {
-          "postcode": "AB10 1QN",
           "uprn": "9051064786"
         },
         "source": "fixture"
@@ -16014,8 +14685,7 @@
         "id": "S12000034-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "AB23 8YE",
-          "uprn": "000151124612"
+          "uprn": "151124612"
         },
         "source": "fixture"
       },
@@ -16023,8 +14693,7 @@
         "id": "S12000034-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "AB42 2FA",
-          "uprn": "000151004105"
+          "uprn": "151004105"
         },
         "source": "fixture"
       },
@@ -16032,17 +14701,7 @@
         "id": "S12000034-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "AB35 5ZR",
-          "uprn": "0151035884"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "S12000034-f4",
-        "label": "Test_004",
-        "params": {
-          "postcode": "AB51 3WN",
-          "uprn": "151170625"
+          "uprn": "151035884"
         },
         "source": "fixture"
       }
@@ -16080,8 +14739,8 @@
         "id": "S12000035-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "PA286LJ",
-          "uprn": "000125011723"
+          "postcode": "PA28 6LJ",
+          "uprn": "125011723"
         },
         "source": "fixture"
       }
@@ -16114,15 +14773,6 @@
           "uprn": "906426189"
         },
         "source": "sampled"
-      },
-      {
-        "id": "S12000036-f1",
-        "label": "City of Edinburgh",
-        "params": {
-          "house_number": "157",
-          "postcode": "EH10 4AX"
-        },
-        "source": "fixture"
       }
     ],
     "name": "City of Edinburgh",
@@ -16215,10 +14865,6 @@
         "id": "S12000039-f1",
         "label": "2/2 26 Kilbowie Road, Clydebank",
         "params": {
-          "house_number": "2/2 26",
-          "postcode": "G81 1TH ",
-          "street": "Kilbowie Road",
-          "town": "Clydebank",
           "uprn": "129040292"
         },
         "source": "fixture"
@@ -16227,10 +14873,6 @@
         "id": "S12000039-f2",
         "label": "6A Victoria Street, Dumbarton",
         "params": {
-          "house_number": "6A",
-          "postcode": "G82 1HT ",
-          "street": "Victoria Street",
-          "town": "Dumbarton",
           "uprn": "129033978"
         },
         "source": "fixture"
@@ -16239,35 +14881,7 @@
         "id": "S12000039-f3",
         "label": "8 Clairinsh, Balloch",
         "params": {
-          "house_number": "8",
-          "postcode": "G83 8SE ",
-          "street": "Clairinsh",
-          "town": "Balloch",
           "uprn": "129491488"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "S12000039-f4",
-        "label": "Rowan Lea, Gartocharn",
-        "params": {
-          "house_number": "Rowan Lea",
-          "postcode": "G83 8SB ",
-          "street": "Stirling Road",
-          "town": "Gartocharn",
-          "uprn": "129490987"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "S12000039-f5",
-        "label": "20 35 Risk Street, Dumbarton",
-        "params": {
-          "house_number": "20 35",
-          "postcode": "G82 1SF ",
-          "street": "Risk Street",
-          "town": "Dumbarton",
-          "uprn": "129003614"
         },
         "source": "fixture"
       }
@@ -16305,7 +14919,7 @@
         "id": "S12000040-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "EH48+4DD",
+          "postcode": "EH48 4DD",
           "uprn": "135007799"
         },
         "source": "fixture"
@@ -16314,7 +14928,7 @@
         "id": "S12000040-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "EH55+8FJ",
+          "postcode": "EH55 8FJ",
           "uprn": "135051417"
         },
         "source": "fixture"
@@ -16392,7 +15006,6 @@
         "id": "S12000042-f1",
         "label": "Test_1",
         "params": {
-          "postcode": "DD5 1QD ",
           "uprn": "9059046613"
         },
         "source": "fixture"
@@ -16401,7 +15014,6 @@
         "id": "S12000042-f2",
         "label": "Test_2",
         "params": {
-          "postcode": "DD3 0RR ",
           "uprn": "9059082280"
         },
         "source": "fixture"
@@ -16410,7 +15022,6 @@
         "id": "S12000042-f3",
         "label": "Test_3",
         "params": {
-          "postcode": "DD2 1QQ ",
           "uprn": "9059060343"
         },
         "source": "fixture"
@@ -16449,7 +15060,6 @@
         "id": "S12000045-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "G66 5HA ",
           "uprn": "132020996"
         },
         "source": "fixture"
@@ -16458,7 +15068,6 @@
         "id": "S12000045-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "G62 7AX ",
           "uprn": "132040577"
         },
         "source": "fixture"
@@ -16467,7 +15076,6 @@
         "id": "S12000045-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "G66 8JS ",
           "uprn": "132020494"
         },
         "source": "fixture"
@@ -16506,7 +15114,6 @@
         "id": "S12000047-f1",
         "label": "SANDYHILL ROAD, ST ANDREWS",
         "params": {
-          "postcode": "KY16 8EG",
           "uprn": "320069186"
         },
         "source": "fixture"
@@ -16515,7 +15122,6 @@
         "id": "S12000047-f2",
         "label": "CERES ROAD, PITSCOTTIE",
         "params": {
-          "postcode": "KY15 5TD",
           "uprn": "320063641"
         },
         "source": "fixture"
@@ -16524,17 +15130,7 @@
         "id": "S12000047-f3",
         "label": "SHORE ROAD, BALMALCOLM",
         "params": {
-          "postcode": "KY15 7TJ",
           "uprn": "320083539"
-        },
-        "source": "fixture"
-      },
-      {
-        "id": "S12000047-f4",
-        "label": "CANMORE STREET, DUNFERMLINE",
-        "params": {
-          "postcode": "KY12 7NT",
-          "uprn": "320101510"
         },
         "source": "fixture"
       }
@@ -16572,7 +15168,6 @@
         "id": "S12000048-f1",
         "label": "7 St Marys Drive, Perth, PH2 7BY",
         "params": {
-          "postcode": "PH2 7BY ",
           "uprn": "124022910"
         },
         "source": "fixture"
@@ -16581,7 +15176,6 @@
         "id": "S12000048-f2",
         "label": "10A Crieff Road, Perth, PH1 5AF",
         "params": {
-          "postcode": "PH1 5AF ",
           "uprn": "124003157"
         },
         "source": "fixture"
@@ -16620,7 +15214,6 @@
         "id": "S12000049-f1",
         "label": "test 1 - house",
         "params": {
-          "postcode": "G13 1AF ",
           "uprn": "906700099060"
         },
         "source": "fixture"
@@ -16629,7 +15222,6 @@
         "id": "S12000049-f2",
         "label": "test 2 - flat",
         "params": {
-          "postcode": "G20 6NN ",
           "uprn": "906700335412"
         },
         "source": "fixture"
@@ -16644,7 +15236,6 @@
         "id": "S12000050-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "G67 4BJ ",
           "uprn": "118026605",
           "usrn": "48406574"
         },
@@ -16654,7 +15245,6 @@
         "id": "S12000050-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "ML1 5FH ",
           "uprn": "118177268",
           "usrn": "48410258"
         },
@@ -16664,7 +15254,6 @@
         "id": "S12000050-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "G68 0EX ",
           "uprn": "000118035256",
           "usrn": "48409125"
         },
@@ -16703,15 +15292,6 @@
           "uprn": "100100009546"
         },
         "source": "sampled"
-      },
-      {
-        "id": "W06000001-f1",
-        "label": "Isle of Anglesey",
-        "params": {
-          "postcode": "LL61 6HZ",
-          "uprn": "200002649711"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Isle of Anglesey",
@@ -16747,7 +15327,6 @@
         "id": "W06000002-f1",
         "label": "200003177805",
         "params": {
-          "postcode": "LL55 1SA",
           "uprn": "200003177805"
         },
         "source": "fixture"
@@ -16756,7 +15335,6 @@
         "id": "W06000002-f2",
         "label": "200003175227",
         "params": {
-          "postcode": "SY20 9BS",
           "uprn": "200003175227"
         },
         "source": "fixture"
@@ -16765,7 +15343,6 @@
         "id": "W06000002-f3",
         "label": "10070340900",
         "params": {
-          "postcode": "LL53 8BD",
           "uprn": "10070340900"
         },
         "source": "fixture"
@@ -16804,7 +15381,6 @@
         "id": "W06000003-f1",
         "label": "50000009637",
         "params": {
-          "postcode": "LL32 8DE",
           "uprn": "50000009637"
         },
         "source": "fixture"
@@ -16813,7 +15389,6 @@
         "id": "W06000003-f2",
         "label": "100101037037",
         "params": {
-          "postcode": "LL32 8AY",
           "uprn": "100101037037"
         },
         "source": "fixture"
@@ -16822,7 +15397,6 @@
         "id": "W06000003-f3",
         "label": "50000007574",
         "params": {
-          "postcode": "LL31 9NE",
           "uprn": "50000007574"
         },
         "source": "fixture"
@@ -16861,7 +15435,6 @@
         "id": "W06000004-f1",
         "label": "10003928409",
         "params": {
-          "postcode": "LL15 2EY",
           "uprn": "10003928409"
         },
         "source": "fixture"
@@ -16870,7 +15443,6 @@
         "id": "W06000004-f2",
         "label": "100100183412",
         "params": {
-          "postcode": "LL16 3AH",
           "uprn": "100100183412"
         },
         "source": "fixture"
@@ -16879,7 +15451,6 @@
         "id": "W06000004-f3",
         "label": "10003928445",
         "params": {
-          "postcode": "LL15 2EY",
           "uprn": "10003928445"
         },
         "source": "fixture"
@@ -16918,7 +15489,6 @@
         "id": "W06000005-f1",
         "label": "100100211557",
         "params": {
-          "postcode": "CH7 3JD ",
           "uprn": "100100211557"
         },
         "source": "fixture"
@@ -16927,7 +15497,6 @@
         "id": "W06000005-f2",
         "label": "200001744973",
         "params": {
-          "postcode": "CH7 3JD ",
           "uprn": "200001744973"
         },
         "source": "fixture"
@@ -16966,7 +15535,6 @@
         "id": "W06000006-f1",
         "label": "Duck Farm, Gresford, LL12 8YT",
         "params": {
-          "postcode": "LL12 8TY",
           "uprn": "100100940408"
         },
         "source": "fixture"
@@ -16975,7 +15543,6 @@
         "id": "W06000006-f2",
         "label": "Regent St, Wrexham, LL11 1SA",
         "params": {
-          "postcode": "LL11 1SA",
           "uprn": "10096241365"
         },
         "source": "fixture"
@@ -16984,7 +15551,6 @@
         "id": "W06000006-f3",
         "label": "Hill Crest, Wrexham, LL13 8RN",
         "params": {
-          "postcode": "LL13 8RN",
           "uprn": "100100860092"
         },
         "source": "fixture"
@@ -17062,7 +15628,6 @@
         "id": "W06000009-f1",
         "label": "Dew Street",
         "params": {
-          "postcode": "SA61 1ST",
           "uprn": "100100283349"
         },
         "source": "fixture"
@@ -17071,7 +15636,6 @@
         "id": "W06000009-f2",
         "label": "Heol Cleddau",
         "params": {
-          "postcode": "SA65 9JP",
           "uprn": "100100281816"
         },
         "source": "fixture"
@@ -17105,15 +15669,6 @@
           "uprn": "10004848910"
         },
         "source": "sampled"
-      },
-      {
-        "id": "W06000010-f1",
-        "label": "Carmarthenshire",
-        "params": {
-          "postcode": "SA18 2BR",
-          "uprn": "10004859302"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Carmarthenshire",
@@ -17144,15 +15699,6 @@
           "uprn": "100100344942"
         },
         "source": "sampled"
-      },
-      {
-        "id": "W06000011-f1",
-        "label": "Swansea",
-        "params": {
-          "postcode": "SA43PQ",
-          "uprn": "100100324821"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Swansea",
@@ -17245,7 +15791,6 @@
         "id": "W06000013-f1",
         "label": "test_001",
         "params": {
-          "postcode": "CF31 4JR",
           "uprn": "100100479873"
         },
         "source": "fixture"
@@ -17254,7 +15799,6 @@
         "id": "W06000013-f2",
         "label": "test_002",
         "params": {
-          "postcode": "CF31 5BZ",
           "uprn": "10032996088"
         },
         "source": "fixture"
@@ -17263,7 +15807,6 @@
         "id": "W06000013-f3",
         "label": "test_003",
         "params": {
-          "postcode": "CF35 6DF",
           "uprn": "10090813443"
         },
         "source": "fixture"
@@ -17302,7 +15845,6 @@
         "id": "W06000014-f1",
         "label": "CF62 7JP",
         "params": {
-          "postcode": "CF62 7JP",
           "uprn": "64003486"
         },
         "source": "fixture"
@@ -17311,7 +15853,6 @@
         "id": "W06000014-f2",
         "label": "CF32 0PW",
         "params": {
-          "postcode": "CF32 0PW",
           "uprn": "64017161"
         },
         "source": "fixture"
@@ -17350,7 +15891,6 @@
         "id": "W06000015-f1",
         "label": "Glass",
         "params": {
-          "postcode": "CF14 6LX",
           "uprn": "100100124569"
         },
         "source": "fixture"
@@ -17359,7 +15899,6 @@
         "id": "W06000015-f2",
         "label": "NoGlass",
         "params": {
-          "postcode": "CF14 6NB",
           "uprn": "100100127440"
         },
         "source": "fixture"
@@ -17398,7 +15937,6 @@
         "id": "W06000016-f1",
         "label": "Test_001",
         "params": {
-          "postcode": "CF72 9FP",
           "uprn": "10024274791"
         },
         "source": "fixture"
@@ -17407,7 +15945,6 @@
         "id": "W06000016-f2",
         "label": "Test_002",
         "params": {
-          "postcode": "CF44 9QG",
           "uprn": "100100718352"
         },
         "source": "fixture"
@@ -17416,7 +15953,6 @@
         "id": "W06000016-f3",
         "label": "Test_003",
         "params": {
-          "postcode": "CF40 2AP",
           "uprn": "100100733093"
         },
         "source": "fixture"
@@ -17450,15 +15986,6 @@
           "uprn": "43001943"
         },
         "source": "sampled"
-      },
-      {
-        "id": "W06000018-f1",
-        "label": "Caerphilly County Borough",
-        "params": {
-          "house_number": "1",
-          "postcode": "CF83 1EP"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Caerphilly",
@@ -17494,7 +16021,6 @@
         "id": "W06000019-f1",
         "label": "test",
         "params": {
-          "postcode": "NP23 6BQ",
           "uprn": "100100457787"
         },
         "source": "fixture"
@@ -17533,7 +16059,6 @@
         "id": "W06000020-f1",
         "label": "NP4 6LU",
         "params": {
-          "postcode": "NP4 6LU ",
           "uprn": "100100800320"
         },
         "source": "fixture"
@@ -17542,7 +16067,6 @@
         "id": "W06000020-f2",
         "label": "NP44 3DN",
         "params": {
-          "postcode": "NP44 3DN",
           "uprn": "100100789478"
         },
         "source": "fixture"
@@ -17551,7 +16075,6 @@
         "id": "W06000020-f3",
         "label": "NP4 8HQ",
         "params": {
-          "postcode": "NP4 8HQ ",
           "uprn": "100100798047"
         },
         "source": "fixture"
@@ -17590,7 +16113,6 @@
         "id": "W06000021-f1",
         "label": "200000952833",
         "params": {
-          "postcode": "NP16 6BT",
           "uprn": "200000952833"
         },
         "source": "fixture"
@@ -17599,7 +16121,6 @@
         "id": "W06000021-f2",
         "label": "10033354474",
         "params": {
-          "postcode": "NP16 6RG",
           "uprn": "10033354474"
         },
         "source": "fixture"
@@ -17608,7 +16129,6 @@
         "id": "W06000021-f3",
         "label": "10033351693",
         "params": {
-          "postcode": "NP16 5GF",
           "uprn": "10033351693"
         },
         "source": "fixture"
@@ -17642,15 +16162,6 @@
           "uprn": "100100675681"
         },
         "source": "sampled"
-      },
-      {
-        "id": "W06000022-f1",
-        "label": "Newport",
-        "params": {
-          "postcode": "NP20 4HE",
-          "uprn": "100100688819"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Newport",
@@ -17720,21 +16231,13 @@
           "uprn": "100100589468"
         },
         "source": "sampled"
-      },
-      {
-        "id": "W06000024-f1",
-        "label": "Merthyr Tydfil County Borough",
-        "params": {
-          "postcode": "CF47 0HY"
-        },
-        "source": "fixture"
       }
     ],
     "name": "Merthyr Tydfil",
     "scraper_id": "ukbcd_merthyr_tydfil_county_borough_council"
   },
   "_meta": {
-    "generated_at": "2026-10-01T09:12:09+00:00",
+    "generated_at": "2026-10-01T09:26:42+00:00",
     "per_lad": 2,
     "sampling": "ONSUD postcode -> address API",
     "schema": 1,

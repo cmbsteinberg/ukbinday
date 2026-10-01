@@ -81,7 +81,7 @@ def _parse(container: Tag) -> list[Collection]:
 class Preston(Scraper):
     meta = Meta(
         title="Preston City Council",
-        url="https://preston.gov.uk",
+        url="https://www.preston.gov.uk/binday",
         lads=("E07000123",),
         cases={
             "Test_001": {"street": "town hall, lancaster road"},
@@ -89,6 +89,7 @@ class Preston(Scraper):
         },
     )
     requires = frozenset()
+    needs_browser = "Preston's bin-day search answers every automated request with an image captcha."
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         search_text = address.street or address.postcode or address.first_line

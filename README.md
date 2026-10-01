@@ -23,8 +23,8 @@ sankey-beta
 "LAD Codes","UKBCD",87
 "LAD Codes","Not Supported",11
 
-"HACS","Passing",255
-"HACS","Failing",8
+"HACS","Passing",256
+"HACS","Failing",7
 
 "UKBCD","UKBCD Passing",87
 "UKBCD","UKBCD Failing",0

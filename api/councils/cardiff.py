@@ -1,9 +1,8 @@
-"""Cardiff: obtain a JWT with SOAP, then request waste collections by UPRN."""
+"""Cardiff: the council page embeds a webforms proxy; its page token authorises the waste API."""
 
 from __future__ import annotations
 
-import json
-import xml.etree.ElementTree as ET
+import re
 from datetime import datetime
 
 from api.councils._base import (
@@ -15,44 +14,16 @@ from api.councils._base import (
     UpstreamError,
 )
 
-_URL_COLLECTIONS = "https://api.cardiff.gov.uk/WasteManagement/api/WasteCollection"
-_URL_GET_JWT = "https://authwebservice.cardiff.gov.uk/AuthenticationWebService.asmx?op=GetJWT"
-_PAYLOAD_GET_JWT = (
-    "<?xml version='1.0' encoding='utf-8'?>"
-    "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'"
-    " xmlns:xsd='http://www.w3.org/2001/XMLSchema'"
-    " xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>"
-    "<soap:Body>"
-    "<GetJWT xmlns='http://tempuri.org/' />"
-    "</soap:Body>"
-    "</soap:Envelope>"
-)
-
-
-async def _get_token(http: Http) -> str:
-    response = await http.post(
-        _URL_GET_JWT,
-        content=_PAYLOAD_GET_JWT,
-        headers={"Content-Type": 'text/xml; charset="UTF-8"'},
-    )
-    try:
-        tree = ET.fromstring(response.text)
-    except ET.ParseError as exc:
-        raise UpstreamError("Cardiff's authentication response was not valid XML") from exc
-
-    result = tree.find(".//GetJWTResult", namespaces={"": "http://tempuri.org/"})
-    if result is None or result.text is None:
-        raise UpstreamError("Cardiff's authentication response did not contain a token")
-    try:
-        return json.loads(result.text)["access_token"]
-    except (json.JSONDecodeError, KeyError, TypeError) as exc:
-        raise UpstreamError("Cardiff's authentication response did not contain a valid token") from exc
+_BASE = "https://app-cprd-webformsproxy-prd.azurewebsites.net"
+_URL_FORM = f"{_BASE}/WASTE_wc"
+_URL_COLLECTIONS = f"{_BASE}/api/WasteManagement/api/WasteCollection"
+_TOKEN = re.compile(r"verificationToken\s*=\s*'([^']+)'")
 
 
 class Cardiff(Scraper):
     meta = Meta(
         title="Cardiff Council",
-        url="https://www.cardiff.gov.uk/ENG/resident/Rubbish-and-recycling/When-are-my-bins-collected/pages/default.aspx",
+        url="https://www.cardiff.gov.uk/collections",
         lads=("W06000015",),
         cases={
             "Glass": {"uprn": "100100124569"},
@@ -61,8 +32,8 @@ class Cardiff(Scraper):
     )
     requires = frozenset({"uprn"})
     headers = {
-        "Origin": "https://www.cardiff.gov.uk",
-        "Referer": "https://www.cardiff.gov.uk/",
+        "Origin": _BASE,
+        "Referer": _URL_FORM,
         "User-Agent": "Mozilla/5.0",
     }
 
@@ -72,10 +43,13 @@ class Cardiff(Scraper):
             "language": "eng",
             "uprn": address.need("uprn"),
         }
-        token = await _get_token(http)
+        form = await http.get(_URL_FORM)
+        token = _TOKEN.search(form.text)
+        if token is None:
+            raise UpstreamError("Cardiff's bin form did not contain a verification token")
         response = await http.post(
             _URL_COLLECTIONS,
-            headers={"Authorization": f"Bearer {token}"},
+            headers={"VerificationToken": token.group(1)},
             json=payload,
         )
 

@@ -390,7 +390,7 @@
     "scraper_id": "hacs_cardiff_gov_uk",
     "url": "https://www.cardiff.gov.uk",
     "govuk_url": "https://www.cardiff.gov.uk/collections",
-    "working": false
+    "working": true
   },
   "W06000010": {
     "name": "Carmarthenshire",

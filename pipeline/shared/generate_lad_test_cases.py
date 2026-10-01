@@ -15,9 +15,11 @@ emits:
             house number are kept, a proxy for "domestic" since neither
             source carries a classification. Params mirror api/static/app.js
             exactly, so a pass means a real user could get a schedule.
-  fixture   The scraper's upstream TEST_CASES rows (from tests/test_cases.json),
-            kept as a fallback. They cover scrapers that need council-internal
-            ids (property_id, usrn, ...) the frontend cannot supply.
+  fixture   The council module's `meta.cases` (an old scraper's upstream
+            TEST_CASES from tests/test_cases.json where no module serves the
+            LAD), kept as a fallback. They cover scrapers that need
+            council-internal ids (property_id, usrn, ...) the frontend cannot
+            supply.
   blind     Optional (--blind N): ONSUD uprn+postcode with no address API
             filtering. Only useful to measure how often a raw ONS UPRN is
             unknown to the council.
@@ -27,8 +29,8 @@ point. A sampled case is kept unless its outcome in the last
 tests/output/lad_integration_output.json was input_rejected or empty (the
 address, not the scraper, is the likely problem); dropped cases are replaced
 from postcodes the LAD hasn't used yet. LADs that are new, or whose
-scraper_id changed, are sampled afresh. Fixture rows are always re-read from
-tests/test_cases.json. --resample-all ignores the existing file.
+scraper_id changed, are sampled afresh. Fixture rows are always re-read.
+--resample-all ignores the existing file.
 
 Selection is deterministic: every choice is ordered by md5(seed || key), so a
 given seed plus the same ONS edition and address API answers reproduces the
@@ -242,6 +244,17 @@ def _fixture_cases(lad: str, rows: list[dict]) -> list[dict]:
     ]
 
 
+def _module_cases() -> dict[str, list[dict]]:
+    """LAD code -> its council module's `meta.cases` as fixture rows."""
+    from api.councils._base import discovery
+
+    scrapers = {name: discovery.load(name) for name in discovery.module_names()}
+    return {
+        lad: [{"label": label, "params": dict(params)} for label, params in scrapers[name].meta.cases.items()]
+        for lad, name in discovery.by_lad(scrapers).items()
+    }
+
+
 def _registry_required() -> dict[str, list[str]]:
     """Council ID -> required params. Councils are keyed by LAD code; an old
     scraper no LAD is wired to keeps its scraper ID."""
@@ -285,19 +298,23 @@ async def build(
     """previous: the existing lad_test_cases.json ({} for a full resample)."""
     lad_lookup = json.loads(LAD_LOOKUP_PATH.read_text())
     fixtures = json.loads(FIXTURES_PATH.read_text()) if FIXTURES_PATH.exists() else {}
+    module_cases = _module_cases()
     required = _registry_required()
 
+    # A LAD is wired when a module serves it (the registry's rule), or the
+    # sync wired an old scraper to it
     wired = {
         code: info
         for code, info in sorted(lad_lookup.items())
-        if info.get("scraper_id") and (not lads_filter or code in lads_filter)
+        if (code in module_cases or info.get("scraper_id")) and (not lads_filter or code in lads_filter)
     }
     candidates = _candidate_postcodes(list(wired), seed, max(CANDIDATE_POSTCODES, blind))
     sem = asyncio.Semaphore(6)
     stats = {"kept": 0, "dropped": 0, "new": 0, "fresh_lads": 0}
 
     async def one(code: str, info: dict) -> tuple[str, dict]:
-        sid = info["scraper_id"]
+        # Still the sticky key, and the live test dedupes jobs on it
+        sid = info.get("scraper_id") or code
         unmet = sorted(set(required.get(code, [])) - FRONTEND_PARAMS)
         entry: dict = {"name": info.get("name"), "scraper_id": sid, "cases": [], "notes": []}
         if unmet:
@@ -336,7 +353,8 @@ async def build(
         if blind and cands and not offline:
             taken = {c["params"]["uprn"] for c in entry["cases"]}
             entry["cases"] += _blind_cases(code, cands, blind, seed, taken)
-        entry["cases"] += _fixture_cases(code, fixtures.get(sid, []))
+        rows = module_cases[code] if code in module_cases else fixtures.get(sid, [])
+        entry["cases"] += _fixture_cases(code, rows)
         if not entry["notes"]:
             del entry["notes"]
         return code, entry
