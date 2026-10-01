@@ -32,7 +32,7 @@ def _verification_token(markup: str | bytes) -> str:
 class NorthNorfolk(Scraper):
     meta = Meta(
         title="North Norfolk District Council",
-        url="https://www.north-norfolk.gov.uk/",
+        url="https://www.north-norfolk.gov.uk/tasks/environmental-services/view-bin-collections-days/",
         lads=("E07000147",),
         cases={
             "Test_001": {"uprn": "100090878875"},

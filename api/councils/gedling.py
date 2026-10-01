@@ -19,7 +19,7 @@ _HEADERS = {
 class Gedling(Scraper):
     meta = Meta(
         title="Gedling",
-        url="https://www.gedling.gov.uk/",
+        url="https://waste.digital.gedling.gov.uk/w/webpage/bin-collections",
         lads=("E07000173",),
         cases={},
     )

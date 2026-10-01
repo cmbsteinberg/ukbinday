@@ -69,10 +69,15 @@ class RefreshJob:
             return
         try:
             try:
+                # entry.scraper may be an alias (an old scraper ID now served by a
+                # council module); invoke resolves it and the write stores the resolved ID.
                 collections = await self.registry.invoke(entry.scraper, entry.params)
                 self.registry.record_success(entry.scraper)
                 await self.cache.write(
-                    entry.uprn, entry.scraper, entry.params, collections
+                    entry.uprn,
+                    self.registry.canonical_id(entry.scraper),
+                    entry.params,
+                    collections,
                 )
                 stats.refreshed += 1
             except Exception as exc:
@@ -177,8 +182,11 @@ async def _main() -> None:
     from api.logging_config import setup_logging
 
     setup_logging()
-    cache = IcsCache(Path(config.DATA_DIR) / config.ICS_CACHE_SUBDIR)
     registry = ScraperRegistry.build()
+    cache = IcsCache(
+        Path(config.DATA_DIR) / config.ICS_CACHE_SUBDIR,
+        canonical_id=registry.canonical_id,
+    )
     redis_client = None
     redis_url = os.getenv("REDIS_URL")
     if redis_url:

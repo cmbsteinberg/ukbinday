@@ -182,7 +182,7 @@
   "unwired_lads": {
     "N09000004": "deeplink-unwired: no address lookup exists, only 4 area calendar PDFs with colour-only week marking and no address-to-area mapping",
     "N09000005": "deeplink-unwired: no address lookup exists, one generic calendar image; the Sentireal app backend is not publicly reachable",
-    "E06000046": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Isle of Wight data",
+    "E06000046": "deeplink-unwired: Blazor Server app (state over a SignalR WebSocket, no HTTP data endpoint) and bin types only as PDF cell colours that change yearly (2026-10-01)",
     "E07000119": "deeplink-unwired: Bartec portal behind mandatory login, no guest lookup (dead by redesign)",
     "E06000045": "deeplink-unwired: whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API",
     "E06000043": "deeplink-unwired: Mendix platform, no plain-HTTP path (reference case)",
@@ -197,6 +197,12 @@
     "E07000119": "https://new.fylde.gov.uk/wasteportal/",
     "N09000004": "https://causewaycoastandglens.gov.uk/live/bins-and-recycling/bin-collections/collection-calendars",
     "N09000005": "https://recycling.derrystrabane.com/services/bin-collections/",
-    "E06000060": "https://www.buckinghamshire.gov.uk/waste-and-recycling/bin-collections/find-out-when-its-your-bin-collection/"
+    "E06000060": "https://www.buckinghamshire.gov.uk/waste-and-recycling/bin-collections/find-out-when-its-your-bin-collection/",
+    "E06000043": "https://www.brighton-hove.gov.uk/rubbish-recycling-and-streets/bins-and-collections/check-your-bin-box-and-caddy-collection-days",
+    "E09000001": "https://www.cityoflondon.gov.uk/services/waste-and-recycling/household-waste-and-recycling/waste-and-recycling-services",
+    "E06000006": "https://webapp.halton.gov.uk/PublicWebForms/WasteServiceSearchv1.aspx",
+    "E06000046": "https://digitalservices.iow.gov.uk/wasteday",
+    "E06000017": "https://www.rutland.gov.uk/bins-waste-recycling/find-your-bin-collection-day",
+    "E06000045": "https://www.southampton.gov.uk/bins-recycling/bins/collections/"
   }
 }

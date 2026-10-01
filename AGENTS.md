@@ -86,7 +86,9 @@ docker compose up --build
 - `main.py` -- FastAPI app with lifespan managing `ScraperRegistry`, `CouncilLookup`, and optional Redis
 - `config.py` -- Centralised configuration from environment variables (timeouts, rate limits, address API, CORS, logging)
 - `routes.py` -- All endpoints: `/api/v1/addresses/{postcode}`, `/api/v1/council/{postcode}`, `/api/v1/lookup/{uprn}`, `/api/v1/calendar/{uprn}`, `/api/v1/councils`, `/api/v1/health`, `/api/v1/status`, `/api/v1/metrics`. Routes are mounted under `/api/v1` only
-- `services/scraper_registry.py` -- Dynamically imports all `api/scrapers/*.py` at startup, introspects `Source.__init__` signatures for required/optional params, and dispatches `await source.fetch()` calls
+- `services/scraper_registry.py` -- Loads the council modules (`api/councils/*.py`, via `_base/discovery.py`) and the old `api/scrapers/*.py`. A module serves the LADs in its `meta.lads` and wins over the old scraper for them. Public IDs are unchanged: a module is listed under the scraper ID `lad_lookup.json` gives its LADs (what `/council` returns and calendar URLs carry); its LAD codes and every old ID in `api/councils/_aliases.json` resolve to it (`get()`, `canonical_id()`). `/councils` params come from `requires` (`label` is sent as `address`). `invoke()` runs `api.councils._base.run(scraper, params)` for modules, `Source(**params).fetch()` for the ~20 old scrapers no module has taken over, both under `SCRAPER_TIMEOUT`
+- `services/scrape_orchestrator.py` -- Cache-or-scrape with the scrape lock, and `map_scrape_exception`: `InputError`/`AddressNotFound`/`SourceArgument*` 422 (AddressNotFound's `suggestions` go in the body), `UpstreamError`/`httpx.HTTPError` 503, timeout 504. `NeedsBrowser` answers with a deeplink (module `meta.url`, else GOV.UK). A site failure (module `UpstreamError` or timeout; any old-scraper 503/504) with nothing cached makes `/lookup` answer 200 with a GOV.UK-first deeplink and an `X-Scrape-Failure: network|timeout|error` header; `/calendar` keeps the 503/504
+- `services/deeplinks.py` -- The "check on the council website" response: unwired LADs (from `lad_lookup.json`), plus `for_needs_browser` and `for_upstream_failure` for wired councils
 - `services/council_lookup.py` -- Resolves postcodes to local authorities via local parquet lookup with ibis/duckdb. Provides `CouncilLookup` class with `get_local_authority()` and `get_authority_by_slug()`
 - `services/address_lookup.py` -- Resolves postcodes to addresses via external address API (configured via `ADDRESS_API_URL` and `ADDRESS_API_COMPANY_ID`)
 - `services/models.py` -- Pydantic response models
@@ -107,10 +109,11 @@ docker compose up --build
 - About 235 from hacs (named `hacs_*_gov_uk.py`), about 73 from ukbcd (named `ukbcd_*.py`)
 - Excluded from ruff linting (configured in `pyproject.toml`)
 
-**Councils, new contract** (`api/councils/`, design in `scraper_contract.md`; migration in progress, not yet wired into the registry):
+**Councils, new contract** (`api/councils/`, design in `scraper_contract.md`; serves every wired LAD through the registry; `api/scrapers/` stays until the upstream cut):
 - `_base/` -- the framework: `Scraper` (stateless; `meta`, `requires`, `headers`, `transport`, `verify_tls`, `icons`, `async fetch(address, http)`), `Meta` (title, url, LAD codes, cases), `Address` (built once from query params; `need()` for required fields), `Http`/`Response` (harness-owned httpx or curl_cffi session; 4xx/5xx and transport failures raise `UpstreamError` unless `check=False`), `Collection` (frozen dataclass: date, type, icon), errors (`InputError`, `AddressNotFound`, `UpstreamError`, `NeedsBrowser`), `match_address`, `parse_date`, `soup`/`text_of`, `parse_ics`, and `run()` which builds the address, checks `requires`, opens `Http`, fetches and tidies (dedupe, sort, icons)
 - `_platforms/` -- shared council platforms (Whitespace, ...) as `Scraper` subclasses configured per council
-- `<council>.py` -- one module per scraper, named after its LADs, exposing `SCRAPER`. Stricter lint via `api/councils/ruff.toml` (ASYNC, BLE, B)
+- `<council>.py` -- one module per scraper, named after its LADs, exposing `SCRAPER`. Stricter lint via `api/councils/ruff.toml` (ASYNC, BLE, B). `needs_browser = "<reason>"` makes it a deeplink (Coventry, Havant), including on `/council/{postcode}`
+- `_aliases.json` -- old scraper ID (every one ever wired to a LAD, from `lad_lookup.json` history) or recoded LAD code -> current LAD code. Permanent: calendar URLs and ICS sidecars carry these IDs. Add an entry when a LAD's `scraper_id` changes; `tests/test_council_wiring.py` fails until you do
 
 **Compat shims** (`api/compat/`):
 - `hacs/` -- Minimal types/helpers synced from hacs upstream: `Collection`, `CollectionBase`, `CollectionGroup`, `ICS`, `SSLError`. Avoids pulling full Home Assistant dependencies
@@ -133,7 +136,7 @@ docker compose up --build
 
 **Scripts** (`scripts/`):
 - `generate_admin_lookup.py` -- Builds `admin_scraper_lookup.json` from all scrapers
-- `lad_status.py` -- The one definition of a council's status, used by the live test and every consumer. `working`: a *sampled* case passed (200 + at least one collection); for `fixture_only` LADs (scraper requires params `/addresses` can't supply, e.g. property_id, usrn) a fixture pass counts instead. A fixture pass with all sampled cases failing is `broken`. `unverified` (every deciding case unreachable, or none) keeps the previous flag
+- `lad_status.py` -- The one definition of a council's status, used by the live test and every consumer. `working`: a *sampled* case passed (200 + at least one collection); for `fixture_only` LADs (scraper requires params `/addresses` can't supply, e.g. property_id, usrn) a fixture pass counts instead. A fixture pass with all sampled cases failing is `broken`. `deeplink`: deciding cases answered with a NeedsBrowser deeplink (not working). `unverified` (every deciding case unreachable, or none) keeps the previous flag
 - `annotate_lad_working.py` -- Writes `working` into `lad_lookup.json` from `tests/output/lad_integration_output.json` via `lad_status.py`
 - `generate_sankey.py` -- Generates the Mermaid sankey in README.md and `badge_coverage.json` from the `working` flags in `lad_lookup.json`
 - `pipeline/ci/post_integration.sh` -- Explicit post-run step: annotate, then coverage map, then sankey/badge. No test calls it
@@ -147,7 +150,8 @@ docker compose up --build
 - `test_frontend.py` (marker: `api`) -- API surface tests (8): landing page, routes, CORS, error cases
 - `test_scrape_cache.py` (marker: `api`) -- ICS cache keying with stubbed scrapers: `/lookup/0` never caches, a cache entry never answers for a different scraper, `/calendar/0` is rejected
 - `test_deeplinks.py` (marker: `api`), `test_sync_pipeline.py` (marker: `ci`) -- deeplink routing and sync pipeline checks
-- `test_lad_integration.py` (marker: `live`) -- One test per wired LAD (council), not per scraper. Reads `lad_test_cases.json`, runs each case through the real `/lookup/{uprn}` route in-process with the params the frontend sends, retries failures once at low concurrency, probes scraper hosts to tell `unreachable` (this machine can't reach it) from `upstream_error`. Case outcomes: pass, empty, input_rejected, unreachable, upstream_error, scraper_error. Writes `output/lad_integration_output.json` (subset runs via `LAD_CODES` merge into it); status per LAD from `scripts/lad_status.py`. ~7 min for all 350 LADs
+- `test_council_wiring.py` (marker: `api`) -- council modules through the routes with stubbed `fetch`: alias resolution (old ID, LAD code, retired ID), `/councils` params from `requires`, NeedsBrowser and upstream-failure deeplinks, cache beats deeplink, error mapping, refreshing a sidecar written under an old ID
+- `test_lad_integration.py` (marker: `live`) -- One test per wired LAD (council), not per scraper. Reads `lad_test_cases.json`, runs each case through the real `/lookup/{uprn}` route in-process with the params the frontend sends, retries failures once at low concurrency, probes scraper hosts to tell `unreachable` (this machine can't reach it) from `upstream_error`. Case outcomes: pass, empty, input_rejected, deeplink (NeedsBrowser), unreachable, upstream_error, scraper_error (a 200 fallback deeplink is classified by its `X-Scrape-Failure` header, as the 503/504 it replaces). Writes `output/lad_integration_output.json` (subset runs via `LAD_CODES` merge into it); status per LAD from `scripts/lad_status.py`. ~7 min for all 350 LADs
 - `lad_test_cases.json` -- Generated by `pipeline/shared/generate_lad_test_cases.py`, keyed by LAD code: `{name, scraper_id, fixture_only?, cases: [{id, source: sampled|fixture, label, params}]}`. Sampled cases: an ONSUD postcode in the LAD (4-60 UPRNs), resolved through the address API, keeping a plain-numbered address whose UPRN is in ONSUD. Fixture cases come from `test_cases.json` (upstream `TEST_CASES`, built by the hacs/ukbcd `generate_test_lookup` scripts)
 - `test_deploy.py` (marker: `docker`) -- Docker stack tests (3): compose boot, scraper loading, static files
 - `test_deploy_docker.sh` -- Bash-based Docker deployment test (curl assertions, standalone)
@@ -164,8 +168,7 @@ docker compose up --build
 
 ## Key Patterns
 
-- Scraper `Source` classes take params like `uprn`, `postcode`, `address` in `__init__` and return `list[Collection]` from `async def fetch()`
-- The registry filters params to only those accepted by each scraper's `__init__` signature before invocation
+- Council modules get every query param as an `Address` (`Address.from_params`); old scraper `Source` classes take params like `uprn`, `postcode`, `address` in `__init__`, and the registry filters params to those their `__init__` accepts
 - `admin_scraper_lookup.json` maps council website domains to scraper filenames -- used to auto-detect which scraper to use from a postcode lookup
 - The `/calendar/{uprn}` endpoint returns iCal format for calendar subscription
 - hacs scrapers take priority over ukbcd; `pipeline/overrides.json` maps specific failing hacs scrapers to working ukbcd alternatives

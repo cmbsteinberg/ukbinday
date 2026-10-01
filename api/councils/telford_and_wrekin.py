@@ -23,7 +23,7 @@ _COLLECTION_URL = "https://dac.telford.gov.uk/BinDayFinder/Find/PropertySearch"
 class TelfordAndWrekin(Scraper):
     meta = Meta(
         title="Telford and Wrekin Council",
-        url="https://www.telford.gov.uk",
+        url="https://www.telford.gov.uk/bins-and-recycling/check-your-collection-day/",
         lads=("E06000020",),
         cases={
             "10 Long Row Drive, Lawley": {"uprn": "452097493"},

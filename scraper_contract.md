@@ -1,7 +1,8 @@
 # Scraper contract: design
 
-Status, 2026-10-01: built and converted, not wired in. `api/councils/` holds the framework,
-8 platforms and 347 council modules; production still serves `api/scrapers/`. See
+Status, 2026-10-01: built, converted and wired in. `api/councils/` holds the framework,
+8 platforms and 347 council modules, and the registry serves every wired LAD from them;
+`api/scrapers/` still loads for the ~20 old IDs no module has taken over. See
 [Progress](#progress) for where each council stands and [As built](#as-built-departures-from-this-design)
 for what changed from the design below.
 
@@ -335,6 +336,23 @@ values masked, and the harness freezes `today` during replay.
 - **`text_of` joins child text with spaces**, so inline markup gives "( if subscribed )".
   Its 52 users were checked against that behaviour, so it stays; use
   `" ".join(node.get_text().split())` where inline tags sit inside the text.
+- **Public IDs stay the old scraper IDs for now.** The registry lists a module under the
+  scraper ID `lad_lookup.json` gives its LADs, which is what `/council/{postcode}` returns,
+  what calendar URLs carry and what sidecars store. LAD codes and every ID in
+  `_aliases.json` (all IDs ever wired to a LAD, mined from `lad_lookup.json`'s git history,
+  plus recoded LAD codes) resolve to the module. Switching sidecars to LAD codes now would
+  buy nothing visible, and a rollback to the old registry couldn't read them: the refresh
+  job would fail them until it deleted them. Flip the public ID to the LAD code when the
+  pipeline is cut and `lad_lookup.json` stops carrying `scraper_id`; the aliases already
+  cover every old URL. The ICS cache and the orchestrator compare resolved IDs.
+- **Site failures deeplink too.** Beyond `NeedsBrowser`: when a module raises
+  `UpstreamError` or times out (or an old scraper hits any 503/504) and nothing is cached,
+  `/lookup` answers 200 with a deeplink (GOV.UK page first, then `meta.url`) instead of
+  the 503/504, with `X-Scrape-Failure` saying why. 200 because that's how the frontend
+  and unwired councils already treat a deeplink: `app.js` renders `data.deeplink` only on
+  an ok response. `/calendar` keeps the 503/504. `InputError` stays 422, with
+  `AddressNotFound.suggestions` in the body. Any other exception from a module is a bug
+  and stays a plain 503.
 - **Cassettes and record/replay aren't built.** Conversions were checked with
   `scripts/councils/check.py --compare`, which runs each module's cases and the sampled
   addresses live, side by side with the old scraper. It's flaky by nature (site outages,
@@ -387,7 +405,14 @@ Open:
   no switch for just that noise, so the
   pre-commit hook checks only staged council files: nothing new gets in, and the rest
   are fixed as files are touched.
-- **Not wired in**: the registry doesn't load `api/councils/` yet.
+- **Retired IDs with no module**: `ukbcd_google_public_calendar_council` (16 LADs, never
+  aliased), and the old IDs for LADs that are now unwired (Southampton, Buckinghamshire,
+  Fylde, Harrogate) still run their old scrapers. They need a decision before
+  `api/scrapers/` is deleted, or their calendar URLs start answering 404.
+- **`fixture_only` is stale for three LADs** (central_bedfordshire, derbyshire_dales,
+  south_kesteven): the new modules don't need the param the old scrapers did, but
+  `tests/lad_test_cases.json` still holds only fixture cases for them. The next
+  `generate_lad_test_cases` run reads `requires` through the registry and samples them.
 
 ### 2026-09-30: first full run after bulk conversion
 

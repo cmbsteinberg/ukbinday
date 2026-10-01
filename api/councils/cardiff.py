@@ -52,7 +52,7 @@ async def _get_token(http: Http) -> str:
 class Cardiff(Scraper):
     meta = Meta(
         title="Cardiff Council",
-        url="https://cardiff.gov.uk",
+        url="https://www.cardiff.gov.uk/ENG/resident/Rubbish-and-recycling/When-are-my-bins-collected/pages/default.aspx",
         lads=("W06000015",),
         cases={
             "Glass": {"uprn": "100100124569"},

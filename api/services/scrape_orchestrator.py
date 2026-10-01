@@ -11,6 +11,8 @@ from api.compat.hacs.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
 )
+from api.councils._base import AddressNotFound, InputError, NeedsBrowser, UpstreamError
+from api.services import deeplinks
 from api.services.council_lookup import LookupDatabaseError, PostcodeNotFoundError
 from api.services.models import CouncilCandidate
 from api.services.scrape_lock import acquire, release
@@ -18,31 +20,73 @@ from api.services.scraper_registry import ScraperTimeoutError
 
 logger = logging.getLogger(__name__)
 
+_INPUT_REJECTED = (
+    "The details provided don't match what this council's system expects. "
+    "Please check your UPRN and postcode are correct."
+)
 
-def map_scrape_exception(council: str, exc: Exception) -> HTTPException:
-    if isinstance(exc, (SourceArgumentException, SourceArgumentExceptionMultiple)):
-        return HTTPException(
-            status_code=422,
-            detail="The details provided don't match what this council's system expects. "
-            "Please check your UPRN and postcode are correct.",
-        )
+
+class ScrapeHTTPException(HTTPException):
+    """A failed scrape, as an HTTP error, plus what a caller may answer instead.
+
+    - `suggestions`: the council's own address labels (AddressNotFound); api/main.py
+      renders them next to `detail` in the 422 body.
+    - `failure`: for a 503/504, the kind: "network" (site unreachable or erroring),
+      "timeout", or "error" (an old scraper crashed).
+    - `fallback`: the deeplink /lookup answers with instead of the 503/504, when
+      the council's site failed and nothing was cached. /calendar can't show a
+      deeplink, so it raises the error as is.
+    """
+
+    def __init__(
+        self,
+        status_code: int,
+        detail: str,
+        *,
+        suggestions: tuple[str, ...] = (),
+        failure: str | None = None,
+    ) -> None:
+        super().__init__(status_code=status_code, detail=detail)
+        self.suggestions = list(suggestions)
+        self.failure = failure
+        self.fallback: deeplinks.Deeplink | None = None
+
+
+class DeeplinkAnswer(Exception):
+    """The scraper needs a person at a browser: answer with this deeplink, not an error."""
+
+    def __init__(self, deeplink: deeplinks.Deeplink) -> None:
+        super().__init__(deeplink.reason)
+        self.deeplink = deeplink
+
+
+def map_scrape_exception(council: str, exc: Exception) -> ScrapeHTTPException:
+    if isinstance(exc, (SourceArgumentException, SourceArgumentExceptionMultiple, InputError)):
+        suggestions = exc.suggestions if isinstance(exc, AddressNotFound) else ()
+        logger.info("Scraper %s rejected the input: %s", council, exc)
+        return ScrapeHTTPException(422, _INPUT_REJECTED, suggestions=suggestions)
     if isinstance(exc, ScraperTimeoutError):
-        return HTTPException(
-            status_code=504,
-            detail="Your council's website is taking too long to respond. "
+        return ScrapeHTTPException(
+            504,
+            "Your council's website is taking too long to respond. "
             "Please try again later.",
+            failure="timeout",
         )
-    if isinstance(exc, (httpx.HTTPError, TimeoutError)):
-        return HTTPException(
-            status_code=503,
-            detail="We couldn't reach your council's website. "
+    if isinstance(exc, (httpx.HTTPError, TimeoutError, UpstreamError)):
+        if isinstance(exc, UpstreamError):
+            logger.info("Scraper %s upstream error: %s", council, exc)
+        return ScrapeHTTPException(
+            503,
+            "We couldn't reach your council's website. "
             "The site may be temporarily down \u2014 please try again later.",
+            failure="network",
         )
     logger.exception("Scraper %s failed", council)
-    return HTTPException(
-        status_code=503,
-        detail="Something went wrong while fetching your collection schedule. "
+    return ScrapeHTTPException(
+        503,
+        "Something went wrong while fetching your collection schedule. "
         "Please try again later.",
+        failure="error",
     )
 
 
@@ -80,11 +124,12 @@ async def get_or_scrape(
     redis_client = getattr(request.app.state, "redis", None)
 
     def _hit(entry) -> bool:
-        # A sidecar written by a different scraper is not this council's data
+        # A sidecar written by a different scraper is not this council's data.
+        # Compare resolved IDs: a sidecar may carry an alias of `council`.
         return (
             entry is not None
             and entry.last_success is not None
-            and entry.scraper == council
+            and registry.canonical_id(entry.scraper) == registry.canonical_id(council)
         )
 
     entry = await cache.read(uprn)
@@ -114,7 +159,7 @@ async def get_or_scrape(
             await cache.record_failure(
                 uprn, str(exc), scraper_id=council, params=params
             )
-            raise map_scrape_exception(council, exc) from exc
+            raise _answer_for(registry, council, exc) from exc
 
         entry = await cache.write(uprn, council, params, collections)
         return entry, False
@@ -129,8 +174,42 @@ async def live_scrape(request: Request, council: str, params: dict[str, str]):
         registry.record_success(council)
     except Exception as exc:
         registry.record_failure(council, str(exc))
-        raise map_scrape_exception(council, exc) from exc
+        raise _answer_for(registry, council, exc) from exc
     return collections
+
+
+def needs_browser_deeplink(meta, reason: str) -> DeeplinkAnswer | HTTPException:
+    """What to raise for a council that needs a browser: its deeplink, or a 503
+    when there's no URL to send anyone to."""
+    target = deeplinks.for_needs_browser(meta, reason)
+    if target is None:
+        return HTTPException(
+            status_code=503,
+            detail="Something went wrong while fetching your collection schedule. "
+            "Please try again later.",
+        )
+    return DeeplinkAnswer(target)
+
+
+def _answer_for(registry, council: str, exc: Exception) -> Exception:
+    """What a failed scrape answers with.
+
+    NeedsBrowser: a deeplink (meta.url first). Otherwise the mapped HTTP error,
+    with a GOV.UK-first deeplink attached as its `fallback` when the council's
+    site failed: any 503/504 from an old scraper; UpstreamError or a timeout from
+    a council module (anything else escaping a module is a bug, not the site).
+    """
+    meta = registry.get(council)
+    if isinstance(exc, NeedsBrowser) and meta is not None:
+        logger.info("Scraper %s needs a browser: %s", council, exc)
+        return needs_browser_deeplink(meta, str(exc))
+    error = map_scrape_exception(council, exc)
+    site_failed = error.failure is not None and (
+        meta is None or meta.scraper is None or isinstance(exc, (UpstreamError, ScraperTimeoutError))
+    )
+    if site_failed and meta is not None:
+        error.fallback = deeplinks.for_upstream_failure(meta)
+    return error
 
 
 async def resolve_council(

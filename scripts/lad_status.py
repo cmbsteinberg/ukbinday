@@ -16,6 +16,9 @@ The rule:
   broken      anything else that was actually tested. A fixture pass with every
               sampled case failing is broken: the scraper runs, users can't
               reach it.
+  deeplink    no deciding case passed and the scraper answered with a deeplink
+              (it raised NeedsBrowser: captcha, login) where it answered at all.
+              Users are sent to the council's page; not `working`.
   unverified  every case was unreachable from the test machine, or there was
               no case able to decide (no sampled address found). The previous
               `working` flag is kept.
@@ -44,6 +47,8 @@ def lad_status(cases: list[dict], fixture_only: bool) -> tuple[str, str | None]:
         return "unverified", "no sampled case" if not fixture_only else "no fixture case"
     if all(c["outcome"] == "unreachable" for c in deciding):
         return "unverified", "unreachable"
+    if all(c["outcome"] in {"deeplink", "unreachable"} for c in deciding):
+        return "deeplink", next(c.get("error") for c in deciding if c["outcome"] == "deeplink") or None
     outcomes = sorted({c["outcome"] for c in deciding} - {"unreachable"})
     if not fixture_only and any(c["source"] == "fixture" and c["outcome"] == "pass" for c in cases):
         return "broken", "fixture passes, sampled fails: " + ",".join(outcomes)

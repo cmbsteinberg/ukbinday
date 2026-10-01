@@ -31,7 +31,7 @@ def _normalize_space(text: str) -> str:
 class Coventry(Scraper):
     meta = Meta(
         title="Coventry City Council",
-        url="https://www.coventry.gov.uk/",
+        url="https://www.coventry.gov.uk/bin-collection-calendar",
         lads=("E08000026",),
         cases={
             "Test_001": {"street": "Linwood Drive"},

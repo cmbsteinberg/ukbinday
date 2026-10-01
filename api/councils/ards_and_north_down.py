@@ -22,7 +22,7 @@ _API_URL = "https://ardsandnorthdownbincalendar.azurewebsites.net/api/calendarht
 class ArdsAndNorthDown(Scraper):
     meta = Meta(
         title="Ards and North Down Borough Council",
-        url="https://ardsandnorthdown.gov.uk",
+        url="https://www.ardsandnorthdown.gov.uk/Recycle",
         lads=("N09000011",),
         cases={
             "185833845": {"uprn": "185833845"},

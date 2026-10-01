@@ -11,7 +11,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 
@@ -21,6 +21,7 @@ from api.routes import router as api_router
 from api.services.council_lookup import CouncilLookup
 from api.services.ics_cache import IcsCache
 from api.services.refresh_job import RefreshJob
+from api.services.scrape_orchestrator import ScrapeHTTPException
 from api.services.scraper_registry import ScraperRegistry
 
 setup_logging()
@@ -69,7 +70,7 @@ async def lifespan(app: FastAPI):
 
     cache_root = Path(config.DATA_DIR) / config.ICS_CACHE_SUBDIR
     cache_root.mkdir(parents=True, exist_ok=True)
-    app.state.ics_cache = IcsCache(cache_root)
+    app.state.ics_cache = IcsCache(cache_root, canonical_id=app.state.registry.canonical_id)
 
     app.state.refresh_job = None
     app.state.refresh_task = None
@@ -118,6 +119,17 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
+
+
+
+@app.exception_handler(ScrapeHTTPException)
+async def scrape_http_exception(request: Request, exc: ScrapeHTTPException):
+    """The usual {"detail": ...} body, plus the council's address list when it offered one."""
+    body: dict = {"detail": exc.detail}
+    if exc.suggestions:
+        body["suggestions"] = exc.suggestions
+    return JSONResponse(body, status_code=exc.status_code, headers=exc.headers)
+
 
 request_logger = logging.getLogger("api.requests")
 

@@ -27,7 +27,7 @@ _ADDRESS_FIELD = "q752eec300b2ffef2757e4536b77b07061842041a_1_0"
 class TonbridgeAndMalling(Scraper):
     meta = Meta(
         title="Tonbridge and Malling Borough Council",
-        url="https://www.tmbc.gov.uk",
+        url="https://www.tmbc.gov.uk/bins-waste",
         lads=("E07000115",),
         cases={
             "High Street, West Malling": {

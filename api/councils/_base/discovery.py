@@ -1,4 +1,4 @@
-"""Find the council modules and check which LADs they claim."""
+"""Find the council modules, check which LADs they claim, and read the ID aliases."""
 
 from __future__ import annotations
 
@@ -10,6 +10,14 @@ from api.councils._base.scraper import Scraper
 
 COUNCILS_DIR = Path(__file__).resolve().parent.parent
 LAD_LOOKUP = COUNCILS_DIR.parent / "data" / "lad_lookup.json"
+ALIASES = COUNCILS_DIR / "_aliases.json"
+"""Old scraper IDs (every one ever wired to a LAD) and recoded LAD codes -> the
+current LAD code. They sit in calendar URLs (`council=`) and ICS sidecars
+(`scraper`), so entries are only ever added, never removed or repointed."""
+
+
+def aliases() -> dict[str, str]:
+    return json.loads(ALIASES.read_text())
 
 
 def module_names() -> list[str]:

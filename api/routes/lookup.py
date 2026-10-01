@@ -20,10 +20,13 @@ from api.services.models import (
 )
 from api.services.rate_limiting import _get_client_ip, rate_limit
 from api.services.scrape_orchestrator import (
+    DeeplinkAnswer,
+    ScrapeHTTPException,
     build_scrape_params,
     get_or_scrape,
     is_cacheable_uprn,
     live_scrape,
+    needs_browser_deeplink,
     resolve_council,
 )
 
@@ -33,9 +36,19 @@ router = APIRouter()
 
 _UPRN_RE = re.compile(r"^[0-9]{1,20}$")
 
+# On a /lookup answered with the fallback deeplink because the council's site
+# failed: "network", "timeout" or "error" (see ScrapeHTTPException.failure).
+# The body is the frontend's deeplink shape; this keeps the failure visible to
+# the live test and to logs.
+SCRAPE_FAILURE_HEADER = "X-Scrape-Failure"
+
 
 def _safe_uprn_filename(uprn: str) -> str:
     return uprn if _UPRN_RE.match(uprn) else "unknown"
+
+
+def _deeplink_info(target: deeplink_service.Deeplink) -> DeeplinkInfo:
+    return DeeplinkInfo(url=target.url, reason=target.reason, council_name=target.council_name)
 
 
 async def verify_turnstile(request: Request) -> None:
@@ -114,9 +127,15 @@ async def council_lookup(
     if lad_code and not council_id:
         target = deeplink_service.resolve(lad_code)
         if target:
-            deeplink = DeeplinkInfo(
-                url=target.url, reason=target.reason, council_name=target.council_name
-            )
+            deeplink = _deeplink_info(target)
+    elif council_id:
+        # A wired council whose scraper can never run without a browser
+        # (captcha, login) answers like an unwired one: no address step.
+        meta = request.app.state.registry.get(council_id)
+        if meta is not None and meta.needs_browser:
+            target = deeplink_service.for_needs_browser(meta, meta.needs_browser)
+            if target:
+                council_id, deeplink = None, _deeplink_info(target)
 
     return CouncilLookupResponse(
         postcode=postcode.strip().upper(),
@@ -130,6 +149,7 @@ async def council_lookup(
 @router.get("/lookup/{uprn}", response_model=LookupResponse)
 async def lookup(
     request: Request,
+    response: Response,
     uprn: str,
     council: str,
     postcode: str | None = None,
@@ -145,11 +165,7 @@ async def lookup(
                 uprn=uprn,
                 council=council,
                 collections=[],
-                deeplink=DeeplinkInfo(
-                    url=target.url,
-                    reason=target.reason,
-                    council_name=target.council_name,
-                ),
+                deeplink=_deeplink_info(target),
             )
         raise HTTPException(
             status_code=404,
@@ -157,22 +173,40 @@ async def lookup(
             "Check /api/v1/councils for the list of supported councils.",
         )
 
-    params = build_scrape_params(meta, council, uprn, request.query_params)
+    try:
+        if meta.needs_browser:
+            raise needs_browser_deeplink(meta, meta.needs_browser)
 
-    if meta.passthrough_url or not is_cacheable_uprn(uprn):
-        collections = await live_scrape(request, council, params)
+        # `council` may be an alias (old scraper ID, LAD code); cache and log under the resolved ID
+        params = build_scrape_params(meta, council, uprn, request.query_params)
+
+        if meta.passthrough_url or not is_cacheable_uprn(uprn):
+            collections = await live_scrape(request, meta.id, params)
+            return LookupResponse(
+                uprn=uprn,
+                council=council,
+                cached=False,
+                cached_at=None,
+                collections=[
+                    CollectionItem(date=c.date, type=c.type, icon=c.icon)
+                    for c in collections
+                ],
+            )
+
+        entry, cached = await get_or_scrape(request, uprn, meta.id, params)
+    except DeeplinkAnswer as answer:
         return LookupResponse(
-            uprn=uprn,
-            council=council,
-            cached=False,
-            cached_at=None,
-            collections=[
-                CollectionItem(date=c.date, type=c.type, icon=c.icon)
-                for c in collections
-            ],
+            uprn=uprn, council=council, collections=[], deeplink=_deeplink_info(answer.deeplink)
         )
-
-    entry, cached = await get_or_scrape(request, uprn, council, params)
+    except ScrapeHTTPException as error:
+        # The council's site failed and nothing was cached (a cache hit never
+        # scrapes): send the user to the council's page, as for an unwired council.
+        if error.fallback is None:
+            raise
+        response.headers[SCRAPE_FAILURE_HEADER] = error.failure or "error"
+        return LookupResponse(
+            uprn=uprn, council=council, collections=[], deeplink=_deeplink_info(error.fallback)
+        )
     return LookupResponse(
         uprn=uprn,
         council=council,
@@ -203,18 +237,25 @@ async def calendar(
             "Check /api/v1/councils for the list of supported councils.",
         )
 
-    params = build_scrape_params(meta, council, uprn, request.query_params)
+    try:
+        if meta.needs_browser:
+            raise needs_browser_deeplink(meta, meta.needs_browser)
 
-    if meta.passthrough_url:
-        return RedirectResponse(url=meta.passthrough_url, status_code=302)
+        params = build_scrape_params(meta, council, uprn, request.query_params)
 
-    if not is_cacheable_uprn(uprn):
-        raise HTTPException(
-            status_code=422,
-            detail="A calendar subscription needs a real UPRN for your address.",
-        )
+        if meta.passthrough_url:
+            return RedirectResponse(url=meta.passthrough_url, status_code=302)
 
-    await get_or_scrape(request, uprn, council, params)
+        if not is_cacheable_uprn(uprn):
+            raise HTTPException(
+                status_code=422,
+                detail="A calendar subscription needs a real UPRN for your address.",
+            )
+
+        await get_or_scrape(request, uprn, meta.id, params)
+    except DeeplinkAnswer as answer:
+        # Same as an unwired council: send the subscriber to the council's page
+        return RedirectResponse(url=answer.deeplink.url, status_code=302)
 
     cache = request.app.state.ics_cache
     ics_bytes = await cache.read_ics_bytes(uprn)

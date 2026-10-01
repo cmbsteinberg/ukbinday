@@ -36,7 +36,7 @@ def _form_body(token: str, postcode: str, uprn: str) -> str:
 class WelwynHatfield(Scraper):
     meta = Meta(
         title="Welwyn Hatfield Borough Council",
-        url="https://www.welhat.gov.uk",
+        url="https://www.welhat.gov.uk/rubbish-recycling/check-bin-collection-day",
         lads=("E07000241",),
         cases={
             "test 1 - South Red": {"uprn": "100080965745", "postcode": "AL9 5EA"},

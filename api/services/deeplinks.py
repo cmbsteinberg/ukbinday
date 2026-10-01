@@ -8,6 +8,11 @@ build backlog (Brighton et al, served deeplink-shaped until ported).
 
 URL priority: council bin page (``url``) > GOV.UK page (``govuk_url``).
 Reason: the entry's ``status`` line, or a generic fallback.
+
+Wired councils get the same response shape in two cases (see
+``scrape_orchestrator``): the scraper raised ``NeedsBrowser``
+(``for_needs_browser``: scraper URL first), or the council's site failed
+with nothing cached (``for_upstream_failure``: GOV.UK first).
 """
 
 from __future__ import annotations
@@ -51,6 +56,41 @@ def resolve(lad_code: str) -> Deeplink | None:
         url=url,
         reason=entry.get("status") or _GENERIC_REASON,
     )
+
+
+def _for_scraper(meta, url: str | None, reason: str) -> Deeplink | None:
+    if not url:
+        return None
+    return Deeplink(
+        lad_code=meta.lads[0] if meta.lads else "",
+        council_name=meta.title,
+        url=url,
+        reason=reason or _GENERIC_REASON,
+    )
+
+
+def for_needs_browser(meta, reason: str) -> Deeplink | None:
+    """The deeplink for a wired council whose scraper raised ``NeedsBrowser``.
+
+    ``meta`` is the registry's ``ScraperMeta``. URL: the scraper's ``url``
+    (a council module's ``meta.url`` points at its lookup page), else the
+    LAD's GOV.UK page. Reason: the scraper's.
+    """
+    return _for_scraper(meta, meta.url or meta.govuk_url, reason)
+
+
+def for_upstream_failure(meta) -> Deeplink | None:
+    """The deeplink for a wired council whose site failed (down, erroring, timed out).
+
+    URL: the LAD's GOV.UK page first (Local Links Manager is maintained
+    centrally, so it outlives a council's site reshuffle), else the scraper's
+    ``url``.
+    """
+    reason = (
+        f"{meta.title}'s website isn't responding right now; "
+        "check your bin day on the council's site."
+    )
+    return _for_scraper(meta, meta.govuk_url or meta.url, reason)
 
 
 def resolve_by_council_param(param: str) -> Deeplink | None:

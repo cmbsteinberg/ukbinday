@@ -275,7 +275,7 @@
   "E06000043": {
     "name": "Brighton and Hove",
     "scraper_id": null,
-    "url": null,
+    "url": "https://www.brighton-hove.gov.uk/rubbish-recycling-and-streets/bins-and-collections/check-your-bin-box-and-caddy-collection-days",
     "govuk_url": "https://www.brighton-hove.gov.uk/node/321871",
     "status": "deeplink-unwired: Mendix platform, no plain-HTTP path (reference case)",
     "working": false
@@ -502,7 +502,7 @@
   "E09000001": {
     "name": "City of London",
     "scraper_id": null,
-    "url": null,
+    "url": "https://www.cityoflondon.gov.uk/services/waste-and-recycling/household-waste-and-recycling/waste-and-recycling-services",
     "govuk_url": "http://www.cityoflondon.gov.uk/services/environment-and-planning/waste-and-recycling/household-waste-and-recycling/Pages/household-recycling.aspx",
     "status": "deeplink-unwired: no address lookup feed exists, estate-based collections via Veolia with static pages only",
     "working": false
@@ -960,7 +960,7 @@
   "E06000006": {
     "name": "Halton",
     "scraper_id": null,
-    "url": null,
+    "url": "https://webapp.halton.gov.uk/PublicWebForms/WasteServiceSearchv1.aspx",
     "govuk_url": "https://webapp.halton.gov.uk/PublicWebForms/WasteServiceSearch.aspx",
     "status": "deeplink-unwired: ASP.NET WebForms behind reCAPTCHA v2, server-side validator rejects guest POSTs with no data endpoint",
     "working": false
@@ -1129,9 +1129,9 @@
   "E06000046": {
     "name": "Isle of Wight",
     "scraper_id": null,
-    "url": null,
+    "url": "https://digitalservices.iow.gov.uk/wasteday",
     "govuk_url": "https://www.iow.gov.uk/recyclingandwaste",
-    "status": "test-fixture-unwired: only upstream option is the shared UKBCD Google-calendar test fixture, not Isle of Wight data",
+    "status": "deeplink-unwired: Blazor Server app (state over a SignalR WebSocket, no HTTP data endpoint) and bin types only as PDF cell colours that change yearly (2026-10-01)",
     "working": false
   },
   "E06000053": {
@@ -1818,7 +1818,7 @@
   "E06000017": {
     "name": "Rutland",
     "scraper_id": null,
-    "url": null,
+    "url": "https://www.rutland.gov.uk/bins-waste-recycling/find-your-bin-collection-day",
     "govuk_url": "https://www.rutland.gov.uk/my-services/waste-and-recycling/",
     "status": "deeplink-unwired: bin lookup behind Salesforce MyAccount login wall, no guest flow",
     "working": false
@@ -1994,7 +1994,7 @@
   "E06000045": {
     "name": "Southampton",
     "scraper_id": null,
-    "url": null,
+    "url": "https://www.southampton.gov.uk/bins-recycling/bins/collections/",
     "govuk_url": "https://www.southampton.gov.uk/bins-recycling/bins/",
     "status": "deeplink-unwired: whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API",
     "working": false

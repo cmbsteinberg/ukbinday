@@ -5,7 +5,7 @@ import hashlib
 import json
 import logging
 import os
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
@@ -80,8 +80,11 @@ def _collection_dicts(collections: list[Collection], uprn: str) -> list[dict]:
 class IcsCache:
     """Disk-backed ICS cache keyed by UPRN."""
 
-    def __init__(self, root: Path) -> None:
+    def __init__(self, root: Path, canonical_id: Callable[[str], str] | None = None) -> None:
+        """`canonical_id` resolves a scraper ID alias (the registry's), so a
+        sidecar written under an old scraper ID still counts as the same scraper."""
         self.root = Path(root)
+        self._canonical_id = canonical_id or (lambda scraper_id: scraper_id)
         self.root.mkdir(parents=True, exist_ok=True)
         self._locks: WeakValueDictionary[str, asyncio.Lock] = WeakValueDictionary()
 
@@ -309,7 +312,7 @@ class IcsCache:
                 existing = {}
         # Events from a different scraper are a different council's data;
         # start the calendar afresh rather than merging them in.
-        if existing.get("scraper") and existing["scraper"] != scraper_id:
+        if existing.get("scraper") and self._canonical_id(existing["scraper"]) != self._canonical_id(scraper_id):
             ics_path.unlink(missing_ok=True)
             existing = {}
 

@@ -8,6 +8,12 @@ same query params the frontend sends. Outcomes:
   pass            200 with at least one collection
   empty           200 with no collections (wrong property or a parse break)
   input_rejected  422: the scraper refused the params
+  deeplink        200 with a deeplink instead of collections: the scraper
+                  raised NeedsBrowser (captcha, login), so the user is sent
+                  to the council's own page
+
+A 200 deeplink sent because the council's site failed (the X-Scrape-Failure
+header) is classified by that failure, as the 503/504 it replaces was.
   unreachable     network error/timeout AND the scraper's host failed a
                   plain connectivity probe from this machine
   upstream_error  network error/timeout/HTTP error but the host answers
@@ -15,7 +21,8 @@ same query params the frontend sends. Outcomes:
 
 The LAD's status (working / broken / unverified) comes from
 scripts/lad_status.py: a sampled case must pass, except for `fixture_only`
-LADs, where a fixture pass counts. Unverified LADs are skipped, not failed.
+LADs, where a fixture pass counts. Unverified LADs, and LADs whose scraper
+needs a browser (status `deeplink`), are skipped, not failed.
 
 This test only writes the output file. Regenerating lad_lookup.json flags,
 the README sankey, badge and coverage map is a separate explicit step:
@@ -126,6 +133,11 @@ async def _lookup(client: httpx.AsyncClient, scraper_id: str, params: dict) -> d
         body = resp.json()
     except ValueError:
         return {**out, "outcome": "scraper_error", "error": "invalid json"}
+    failure = resp.headers.get("X-Scrape-Failure")
+    if resp.status_code == 200 and failure:
+        out["outcome"] = {"network": "network", "timeout": "timeout"}.get(failure, "scraper_error")
+        out["error"] = str((body.get("deeplink") or {}).get("reason", ""))[:300]
+        return out
     if resp.status_code == 200:
         cols = body.get("collections") or []
         out["collections_count"] = len(cols)
@@ -136,7 +148,9 @@ async def _lookup(client: httpx.AsyncClient, scraper_id: str, params: dict) -> d
         # the same scraper + real UPRN, so a hit means another case in this
         # run already scraped this exact property. Keep the flag visible.
         out["cached"] = bool(body.get("cached"))
-        out["outcome"] = "pass" if cols else "empty"
+        out["outcome"] = "pass" if cols else "deeplink" if body.get("deeplink") else "empty"
+        if out["outcome"] == "deeplink":
+            out["error"] = str(body["deeplink"].get("reason", ""))[:300]
         return out
     out["outcome"] = _classify_http(resp.status_code, body)
     out["error"] = str(body.get("detail", ""))[:300] if isinstance(body, dict) else ""
@@ -198,7 +212,7 @@ async def lad_results() -> dict:
             results = dict(await asyncio.gather(*(run(k, sem) for k in jobs)))
             # 200-empty is cached as a success by the app, so retrying it would
             # only read it back; 422 is deterministic.
-            retry = [k for k, r in results.items() if r["outcome"] not in {"pass", "empty", "input_rejected"}]
+            retry = [k for k, r in results.items() if r["outcome"] not in {"pass", "empty", "input_rejected", "deeplink"}]
             if retry:
                 rsem = asyncio.Semaphore(RETRY_CONCURRENCY)
                 for key, r in await asyncio.gather(*(run(k, rsem) for k in retry)):
@@ -285,6 +299,6 @@ async def test_council(lad_results, lad_code: str):
             f"  [{c['source']}] {c['outcome']:<15} uprn={c.get('uprn')} "
             f"status={c.get('status_code')} {c.get('error') or ''} {c.get('probe_error') or ''}".rstrip()
         )
-    if r["status"] == "unverified":
+    if r["status"] in {"unverified", "deeplink"}:
         pytest.skip("\n".join(lines))
     pytest.fail("\n".join(lines))
