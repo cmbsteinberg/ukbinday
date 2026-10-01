@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-UK Bin Collection API -- a FastAPI service that scrapes UK council websites to return bin/waste collection schedules. Each council is a module in `api/councils/` (design in `scraper_contract.md`). The modules began as ports of two upstream repos (hacs_waste_collection_schedule and UKBinCollectionData) and are maintained here; `scripts/upstream_watch.sh` flags upstream fixes to councils we serve.
+UK Bin Collection API -- a FastAPI service that scrapes UK council websites to return bin/waste collection schedules. Each council is a module in `api/councils/` (design in `scraper_contract.md`). The modules began as ports of two upstream repos (hacs_waste_collection_schedule and UKBinCollectionData) and are maintained here; `scripts/upstream_watch.sh` flags upstream fixes to councils we serve. The retired sync that produced the original ports is described in `upstream_sync.md` and preserved at the git tag `upstream-sync-final`.
 
 ## Commands
 
