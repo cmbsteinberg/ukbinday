@@ -1,6 +1,6 @@
 # UK Bin Collection API
 
-![councils passing](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2F09steicm%2Fbins%2Fmain%2Fbadge_coverage.json)
+![councils with bin dates](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2F09steicm%2Fbins%2Fmain%2Fbadge_coverage.json)
 
 An API that tells you when your bins are being collected. Enter a postcode, pick your address, get your collection dates back as JSON or subscribe via iCal.
 
@@ -8,6 +8,7 @@ Under the hood, it pulls from about 350 council scrapers maintained by two commu
 
 ## Coverage
 
+<!-- coverage:start -->
 ```mermaid
 ---
 config:
@@ -19,18 +20,43 @@ config:
 ---
 sankey-beta
 
-"LAD Codes","HACS",263
-"LAD Codes","UKBCD",87
-"LAD Codes","Not Supported",11
-
-"HACS","Passing",256
-"HACS","Failing",7
-
-"UKBCD","UKBCD Passing",87
-"UKBCD","UKBCD Failing",0
+"Councils","Bin dates",343
+"Councils","Deeplink (no scraper possible)",14
+"Councils","Broken (being fixed)",4
 ```
 
-HACS scrapers (~240) are the primary source. UKBinCollectionData scrapers (~110) fill gaps where HACS has no coverage or where a HACS scraper is broken. The [coverage map](https://bins.09steic.com/coverage) shows which councils are supported.
+Of 361 councils, 343 return bin dates. The other 18 send users to the council's own bin-day page:
+
+**Deeplinked by design (14)**: the council's lookup can't be scraped.
+
+| Council | Why |
+|---|---|
+| Brighton and Hove | Mendix platform, no plain-HTTP path (reference case) |
+| Causeway Coast and Glens | no address lookup exists, only 4 area calendar PDFs with colour-only week marking and no address-to-area mapping |
+| City of London | no address lookup feed exists, estate-based collections via Veolia with static pages only |
+| Coventry | Coventry's bin-day search is behind a reCAPTCHA. |
+| Derry City and Strabane | no address lookup exists, one generic calendar image; the Sentireal app backend is not publicly reachable |
+| Fylde | Bartec portal behind mandatory login, no guest lookup (dead by redesign) |
+| Halton | ASP.NET WebForms behind reCAPTCHA v2, server-side validator rejects guest POSTs with no data endpoint |
+| Havant | Havant's bin days are only shown after logging in to a council account. |
+| Isle of Wight | Blazor Server app (state over a SignalR WebSocket, no HTTP data endpoint) and bin types only as PDF cell colours that change yearly (2026-10-01) |
+| Isles of Scilly | no address lookup exists, static round map + area table only (no kerbside off St Mary's/St Martins) |
+| North East Derbyshire | Firmstep Check_your_Bin_Day retired (302, button commented out), static Calendar A/B only; apibroker 403 |
+| Preston | Preston's bin-day search answers every automated request with an image captcha. |
+| Rutland | bin lookup behind Salesforce MyAccount login wall, no guest flow |
+| Southampton | whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API |
+
+**Broken (4)**: a scraper exists but failed the last live run, usually because the council's site is down.
+
+| Council | Last run |
+|---|---|
+| Ards and North Down | broken / upstream_error |
+| Charnwood | broken / upstream_error |
+| North Norfolk | unverified / unreachable |
+| Telford and Wrekin | broken / upstream_error |
+<!-- coverage:end -->
+
+The [coverage map](https://bins.09steic.com/coverage) shows each council on a map.
 
 ## API
 
