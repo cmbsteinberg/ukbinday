@@ -433,7 +433,7 @@
     "scraper_id": "charnwood",
     "url": "https://www.charnwood.gov.uk/",
     "govuk_url": "http://my.charnwood.gov.uk/recycling",
-    "working": false
+    "working": true
   },
   "E07000070": {
     "name": "Chelmsford",

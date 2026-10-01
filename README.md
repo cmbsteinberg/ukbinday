@@ -20,12 +20,12 @@ config:
 ---
 sankey-beta
 
-"Councils","Bin dates",343
+"Councils","Bin dates",344
 "Councils","Deeplink (no scraper possible)",14
-"Councils","Broken (being fixed)",4
+"Councils","Broken (being fixed)",3
 ```
 
-Of 361 councils, 343 return bin dates. The other 18 send users to the council's own bin-day page:
+Of 361 councils, 344 return bin dates. The other 17 send users to the council's own bin-day page:
 
 **Deeplinked by design (14)**: the council's lookup can't be scraped.
 
@@ -46,12 +46,11 @@ Of 361 councils, 343 return bin dates. The other 18 send users to the council's 
 | Rutland | bin lookup behind Salesforce MyAccount login wall, no guest flow |
 | Southampton | whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API |
 
-**Broken (4)**: a scraper exists but failed the last live run, usually because the council's site is down.
+**Broken (3)**: a scraper exists but failed the last live run, usually because the council's site is down.
 
 | Council | Last run |
 |---|---|
 | Ards and North Down | broken / upstream_error |
-| Charnwood | broken / upstream_error |
 | North Norfolk | unverified / unreachable |
 | Telford and Wrekin | broken / upstream_error |
 <!-- coverage:end -->

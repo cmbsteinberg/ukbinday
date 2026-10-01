@@ -3437,7 +3437,19 @@
   "E07000043": {
     "cases": [
       {
-        "id": "E07000043-s1",
+        "id": "E07000043-s3",
+        "label": "11, Yelland Road, Fremington, Barnstaple, EX31 3BX",
+        "params": {
+          "address": "11, Yelland Road, Fremington, Barnstaple, EX31 3BX",
+          "house_number": "11",
+          "postcode": "EX31 3BX",
+          "street": "Yelland Road",
+          "uprn": "100040256416"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E07000043-s7",
         "label": "4, Grosvenor Terrace, Barnstaple, EX32 7DS",
         "params": {
           "address": "4, Grosvenor Terrace, Barnstaple, EX32 7DS",
@@ -3445,18 +3457,6 @@
           "postcode": "EX32 7DS",
           "street": "Grosvenor Terrace",
           "uprn": "10000483594"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E07000043-s2",
-        "label": "11 Cormelles Court, Bowling Green, Combe Martin, Ilfracombe, EX34 0LG",
-        "params": {
-          "address": "11 Cormelles Court, Bowling Green, Combe Martin, Ilfracombe, EX34 0LG",
-          "house_number": "11",
-          "postcode": "EX34 0LG",
-          "street": "Cormelles Court",
-          "uprn": "10000483784"
         },
         "source": "sampled"
       },
@@ -4037,26 +4037,26 @@
   "E07000069": {
     "cases": [
       {
-        "id": "E07000069-s1",
-        "label": "15, Kenneth Road, Benfleet, SS7 3AU",
+        "id": "E07000069-s3",
+        "label": "1, Telese Avenue, Canvey Island, SS8 7LR",
         "params": {
-          "address": "15, Kenneth Road, Benfleet, SS7 3AU",
-          "house_number": "15",
-          "postcode": "SS7 3AU",
-          "street": "Kenneth Road",
-          "uprn": "100090360128"
+          "address": "1, Telese Avenue, Canvey Island, SS8 7LR",
+          "house_number": "1",
+          "postcode": "SS8 7LR",
+          "street": "Telese Avenue",
+          "uprn": "100090381471"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000069-s2",
-        "label": "282, Link Road, Canvey Island, SS8 9UX",
+        "id": "E07000069-s4",
+        "label": "78, South View Road, Benfleet, SS7 5NE",
         "params": {
-          "address": "282, Link Road, Canvey Island, SS8 9UX",
-          "house_number": "282",
-          "postcode": "SS8 9UX",
-          "street": "Link Road",
-          "uprn": "100090377150"
+          "address": "78, South View Road, Benfleet, SS7 5NE",
+          "house_number": "78",
+          "postcode": "SS7 5NE",
+          "street": "South View Road",
+          "uprn": "100090366555"
         },
         "source": "sampled"
       },
@@ -12111,7 +12111,19 @@
   "E09000007": {
     "cases": [
       {
-        "id": "E09000007-s1",
+        "id": "E09000007-s3",
+        "label": "6, South Grove, London, N6 6BS",
+        "params": {
+          "address": "6, South Grove, London, N6 6BS",
+          "house_number": "6",
+          "postcode": "N6 6BS",
+          "street": "South Grove",
+          "uprn": "5091262"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E09000007-s5",
         "label": "26, Old Gloucester Street, London, WC1N 3AN",
         "params": {
           "address": "26, Old Gloucester Street, London, WC1N 3AN",
@@ -12119,18 +12131,6 @@
           "postcode": "WC1N 3AN",
           "street": "Old Gloucester Street",
           "uprn": "5001496"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E09000007-s2",
-        "label": "182, High Holborn, London, WC1V 7AP",
-        "params": {
-          "address": "182, High Holborn, London, WC1V 7AP",
-          "house_number": "182",
-          "postcode": "WC1V 7AP",
-          "street": "High Holborn",
-          "uprn": "5085862"
         },
         "source": "sampled"
       },
@@ -13520,26 +13520,26 @@
   "N09000006": {
     "cases": [
       {
-        "id": "N09000006-s1",
-        "label": "1, Tonyglaskan Road, Tempo Imeroo, Enniskillen, BT94 3LG",
+        "id": "N09000006-s3",
+        "label": "30, Castlebalfour Road, Lisnaskea Castle Balfour Demesne, Enniskillen, BT92 0LT",
         "params": {
-          "address": "1, Tonyglaskan Road, Tempo Imeroo, Enniskillen, BT94 3LG",
-          "house_number": "1",
-          "postcode": "BT94 3LG",
-          "street": "Tonyglaskan Road",
-          "uprn": "187526874"
+          "address": "30, Castlebalfour Road, Lisnaskea Castle Balfour Demesne, Enniskillen, BT92 0LT",
+          "house_number": "30",
+          "postcode": "BT92 0LT",
+          "street": "Castlebalfour Road",
+          "uprn": "185797006"
         },
         "source": "sampled"
       },
       {
-        "id": "N09000006-s2",
-        "label": "99, Cloy Road, Ederney Edenagee, Enniskillen, BT93 0LJ",
+        "id": "N09000006-s4",
+        "label": "102, Coa Road, Woaghternerry, Enniskillen, BT74 4AP",
         "params": {
-          "address": "99, Cloy Road, Ederney Edenagee, Enniskillen, BT93 0LJ",
-          "house_number": "99",
-          "postcode": "BT93 0LJ",
-          "street": "Cloy Road",
-          "uprn": "185883221"
+          "address": "102, Coa Road, Woaghternerry, Enniskillen, BT74 4AP",
+          "house_number": "102",
+          "postcode": "BT74 4AP",
+          "street": "Coa Road",
+          "uprn": "185786758"
         },
         "source": "sampled"
       },
@@ -14898,26 +14898,26 @@
   "S12000040": {
     "cases": [
       {
-        "id": "S12000040-s1",
-        "label": "5c Pardovan Holdings, Linlithgow, EH49 6QZ",
+        "id": "S12000040-s3",
+        "label": "3, Reid Road, Bathgate, EH48 2TX",
         "params": {
-          "address": "5c Pardovan Holdings, Linlithgow, EH49 6QZ",
-          "house_number": "5C",
-          "postcode": "EH49 6QZ",
-          "street": "Pardovan Holdings",
-          "uprn": "135050428"
+          "address": "3, Reid Road, Bathgate, EH48 2TX",
+          "house_number": "3",
+          "postcode": "EH48 2TX",
+          "street": "Reid Road",
+          "uprn": "135020071"
         },
         "source": "sampled"
       },
       {
-        "id": "S12000040-s2",
-        "label": "14, Napier Square, Houstoun Industrial Estate, Livingston, EH54 5DG",
+        "id": "S12000040-s4",
+        "label": "9, Mungle Place, West Calder, EH55 8BZ",
         "params": {
-          "address": "14, Napier Square, Houstoun Industrial Estate, Livingston, EH54 5DG",
-          "house_number": "14",
-          "postcode": "EH54 5DG",
-          "street": "Napier Square",
-          "uprn": "200004113002"
+          "address": "9, Mungle Place, West Calder, EH55 8BZ",
+          "house_number": "9",
+          "postcode": "EH55 8BZ",
+          "street": "Mungle Place",
+          "uprn": "135008841"
         },
         "source": "sampled"
       },
