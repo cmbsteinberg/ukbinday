@@ -29,6 +29,7 @@ class Havant(Scraper):
         cases={},
     )
     requires = frozenset({"username", "password"})
+    needs_browser = "Havant's bin days are only shown after logging in to a council account."
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         username = address.need("username")

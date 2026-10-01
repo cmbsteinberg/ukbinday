@@ -23,6 +23,7 @@ dependencies = [
     "python-dateutil>=2.9.0.post0",
     "redis>=7.3.0",
     "requests>=2.32.0",
+    "ty>=0.0.84",
     "uvicorn>=0.42.0",
 ]
 
@@ -42,7 +43,7 @@ dev = [
     "paramiko>=4.0.0",
     "ai[openai]>=0.8.0",
     "ruff>=0.16.9",
-    "basedpyright>=1.40.1",
+    "ty>=0.0.84",
 ]
 
 [tool.ruff]
@@ -61,20 +62,13 @@ markers = [
 ]
 norecursedirs = ["pipeline/upstream"]
 
-[tool.basedpyright]
+[tool.ty.environment]
+python-version = "3.13"
+
+[tool.ty.src]
 include = ["api/councils"]
-pythonVersion = "3.13"
-typeCheckingMode = "standard"
-# bs4 types `find()` as Tag | NavigableString | None; a missing node is a
-# crash we'd see in the live test, not something to annotate 300 times.
-reportOptionalMemberAccess = false
-reportOptionalSubscript = false
-reportOptionalIterable = false
-reportAttributeAccessIssue = "warning"
-reportArgumentType = "warning"
-reportIndexIssue = "warning"
-reportReturnType = "warning"
-reportOperatorIssue = "warning"
-reportAssignmentType = "warning"
-reportCallIssue = "warning"
-reportUnusedCoroutine = "error"
+
+[tool.ty.rules]
+# A coroutine called without `await` (the Slough/Sevenoaks/Hackney bug class).
+unused-awaitable = "error"
+

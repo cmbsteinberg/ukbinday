@@ -181,7 +181,8 @@ class NeedsBrowser(ScraperError): ...       # captcha, JS-only, login: a deeplin
   response `deeplinks.py` serves today (council name, reason, the scraper's `meta.url` or the
   LAD's GOV.UK waste URL). The live test records it as its own outcome, and those LADs show
   as "deeplink" rather than broken. A scraper that knows it can never work without a browser
-  can declare `needs_browser = True` and skip the request entirely.
+  can set `needs_browser = "<reason>"` and skip the request entirely (Coventry: reCAPTCHA;
+  Havant: login).
 
 ### Output
 
@@ -254,8 +255,8 @@ provenance, which is meaningless once upstream is cut. The new ID is the LAD cod
 Since the code is ours:
 
 - ruff over `api/councils/` including `ASYNC` (blocking calls in async), `BLE001`, `B`.
-- pyright (basic) over `api/councils/`. Un-awaited coroutines (`'coroutine' object has
-  no attribute`) are type errors, which catches the whole Slough/Sevenoaks/Hackney class
+- ty over `api/councils/`. Un-awaited coroutines (`'coroutine' object has no attribute`,
+  or a bare call) are type errors, which catches the whole Slough/Sevenoaks/Hackney class
   statically.
 
 ## Migration plan
@@ -382,7 +383,10 @@ Open:
 - **Concurrency bleed**: Oxford (old code, shared session) and Swansea (council server)
   can return another address's dates under concurrent load. The new `Http` is per-lookup,
   which fixes Oxford; Swansea may need the scrape lock to serialise per council.
-- **12 basedpyright errors** remain in `api/councils/`; pre-commit doesn't run the checker.
+- **Type errors**: ty reports 181 in `api/councils/`, mostly bs4's `Tag | None`. ty has
+  no switch for just that noise, so the
+  pre-commit hook checks only staged council files: nothing new gets in, and the rest
+  are fixed as files are touched.
 - **Not wired in**: the registry doesn't load `api/councils/` yet.
 
 ### 2026-09-30: first full run after bulk conversion

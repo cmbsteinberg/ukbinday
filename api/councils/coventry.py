@@ -40,6 +40,7 @@ class Coventry(Scraper):
         },
     )
     requires = frozenset({"street"})
+    needs_browser = "Coventry's bin-day search is behind a reCAPTCHA."
     headers = {"user-agent": "Mozilla/5.0"}
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
@@ -56,7 +57,7 @@ class Coventry(Scraper):
         directory_record: str | None = None
         for link in page.find_all("a", {"class": "list__link"}):
             if street.upper() in link.text.upper():
-                directory_record = link["href"]
+                directory_record = str(link["href"])
                 break
 
         if directory_record is None:
@@ -70,7 +71,7 @@ class Coventry(Scraper):
         schedule: str | None = None
         for button in page.find_all("a", {"class": "button"}):
             if "bin" in button["href"]:
-                schedule = button["href"]
+                schedule = str(button["href"])
                 break
 
         if schedule is None:

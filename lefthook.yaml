@@ -30,6 +30,13 @@ pre-commit:
         - "pipeline/upstream/**"
       run: uv run ruff check --fix {staged_files}
 
+    # Type-check only the council modules being committed: the existing errors
+    # (mostly bs4's `Tag | None`) are fixed as files are touched, never added.
+    ty-check:
+      tags: linter
+      glob: "api/councils/**/*.py"
+      run: uv run ty check {staged_files}
+
     biome-check:
       glob: "*.{js}"
       run: npx --yes @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}

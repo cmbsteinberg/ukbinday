@@ -74,7 +74,7 @@ uv run python -m scripts.generate_sankey
 uv run python -m scripts.councils.check hartlepool --compare -v
 uv run python -m scripts.councils.check --all --compare --json /tmp/check.json
 uv run python -m scripts.councils.convert --plan      # old scraper id -> module name + LADs
-uv run basedpyright                                   # type-checks api/councils/
+uv run ty check                                       # type-checks api/councils/ (pre-commit: staged files only)
 
 # Docker
 docker compose up --build
