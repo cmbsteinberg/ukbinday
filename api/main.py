@@ -95,8 +95,6 @@ async def lifespan(app: FastAPI):
         with contextlib.suppress(asyncio.CancelledError):
             await app.state.refresh_task
 
-    from api.compat.curl_cffi_fallback import close_shared_session
-    await close_shared_session()
     if getattr(app.state, "council_lookup", None):
         await app.state.council_lookup.close()
     if getattr(app.state, "redis", None):

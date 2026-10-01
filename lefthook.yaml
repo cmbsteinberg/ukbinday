@@ -8,12 +8,6 @@ sync:
 pre-commit:
   parallel: true
   commands:
-    sync-passthrough-urls:
-      glob:
-        - "api/scrapers/ukbcd_google_public_calendar_council.py"
-        - "api/static/app.js"
-      run: pipeline/ci/sync_passthrough_urls.sh
-      stage_fixed: true
     # 1. Sync dependencies with uv
     # This ensures your lockfile is up to date before any code is committed.
     uv-sync:
@@ -26,7 +20,6 @@ pre-commit:
       tags: linter
       glob: "*.py"
       exclude:
-        - "api/scrapers/**"
         - "pipeline/upstream/**"
       run: uv run ruff check --fix {staged_files}
 
@@ -42,7 +35,7 @@ pre-commit:
       run: npx --yes @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       stage_fixed: true
 
-    # 3. CI smoke tests — scrapers compile, compat imports, app starts
+    # 3. CI smoke tests — council modules load, app starts
     ci-tests:
       tags: test
       glob: "*.py"

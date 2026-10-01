@@ -15,7 +15,7 @@ import pytest
 import pytest_asyncio
 from asgi_lifespan import LifespanManager
 
-from api.compat.hacs.collection import Collection
+from api.councils._base import Collection
 from api.main import app
 from api.services.scrape_orchestrator import is_cacheable_uprn
 

@@ -19,7 +19,6 @@ dependencies = [
     "pypdf>=6.9.2",
     "python-dateutil>=2.9.0.post0",
     "redis>=7.3.0",
-    "requests>=2.32.0",
     "uvicorn>=0.42.0",
 ]
 
@@ -44,9 +43,6 @@ dev = [
     "ruff>=0.16.9",
     "ty>=0.0.84",
 ]
-
-[tool.ruff]
-exclude = ["api/scrapers"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I"]

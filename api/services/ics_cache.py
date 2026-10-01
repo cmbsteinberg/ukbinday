@@ -14,7 +14,7 @@ from weakref import WeakValueDictionary
 from icalendar import Calendar, Event
 
 from api import config
-from api.compat.hacs import Collection
+from api.councils._base import Collection
 
 logger = logging.getLogger(__name__)
 

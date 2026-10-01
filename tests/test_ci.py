@@ -1,15 +1,14 @@
 """
 Lightweight CI smoke tests — no network calls, fast.
 
-Checks that all scrapers compile, compat modules import, scripts parse,
-the app starts, and the registry loads all scrapers without errors.
+Checks that scripts parse, the app starts, and the registry serves every
+wired LAD. Each council module's own load check is in tests/test_councils.py.
 
 Usage:
     uv run pytest tests/test_ci.py -v
 """
 
 import ast
-import importlib
 import json
 from pathlib import Path
 
@@ -22,112 +21,17 @@ from api.main import app
 
 pytestmark = pytest.mark.ci
 
-SCRAPERS_DIR = Path(__file__).resolve().parent.parent / "api" / "scrapers"
-COMPAT_DIR = Path(__file__).resolve().parent.parent / "api" / "compat"
+ROOT = Path(__file__).resolve().parent.parent
+LAD_LOOKUP = ROOT / "api" / "data" / "lad_lookup.json"
 
 BASE_URL = "http://testserver"
 
-# ---------------------------------------------------------------------------
-# Collect all scraper and compat module paths
-# ---------------------------------------------------------------------------
-
-SCRAPER_FILES = sorted(p for p in SCRAPERS_DIR.glob("*.py") if p.name != "__init__.py")
-
-COMPAT_MODULES = sorted(
-    p
-    for p in COMPAT_DIR.rglob("*.py")
-    if p.name != "__init__.py" and "__pycache__" not in str(p)
-)
-
-
-def _module_name(path: Path, root_name: str = "api") -> str:
-    """Convert a file path to a dotted module name relative to the project root."""
-    parts = path.with_suffix("").parts
-    idx = parts.index(root_name)
-    return ".".join(parts[idx:])
-
 
 # ---------------------------------------------------------------------------
-# 1. All scrapers parse as valid Python (AST-level — no imports executed)
+# 1. Scripts parse as valid Python
 # ---------------------------------------------------------------------------
 
-
-@pytest.mark.parametrize(
-    "path",
-    SCRAPER_FILES,
-    ids=[p.stem for p in SCRAPER_FILES],
-)
-def test_scraper_parses(path: Path):
-    """Each scraper file must be valid Python syntax."""
-    source = path.read_text()
-    ast.parse(source, filename=str(path))
-
-
-# ---------------------------------------------------------------------------
-# 2. All scrapers import successfully and expose the expected interface
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.parametrize(
-    "path",
-    SCRAPER_FILES,
-    ids=[p.stem for p in SCRAPER_FILES],
-)
-def test_scraper_imports(path: Path):
-    """Each scraper should import without error and define Source, TITLE, URL, TEST_CASES."""
-    mod_name = _module_name(path)
-    mod = importlib.import_module(mod_name)
-
-    assert hasattr(mod, "Source"), f"{mod_name} missing Source class"
-    assert hasattr(mod, "TITLE"), f"{mod_name} missing TITLE"
-    assert hasattr(mod, "URL"), f"{mod_name} missing URL"
-    assert hasattr(mod, "TEST_CASES"), f"{mod_name} missing TEST_CASES"
-
-    # Source must have an async fetch method
-    assert hasattr(mod.Source, "fetch"), f"{mod_name} Source missing fetch()"
-
-
-# ---------------------------------------------------------------------------
-# 3. All compat modules import successfully
-# ---------------------------------------------------------------------------
-
-
-@pytest.mark.parametrize(
-    "path",
-    COMPAT_MODULES,
-    ids=[_module_name(p) for p in COMPAT_MODULES],
-)
-def test_compat_imports(path: Path):
-    """Each compat module should import without error."""
-    mod_name = _module_name(path)
-    importlib.import_module(mod_name)
-
-
-# ---------------------------------------------------------------------------
-# 4. Key compat types are importable
-# ---------------------------------------------------------------------------
-
-
-def test_hacs_compat_types():
-    from api.compat.hacs import (  # noqa: F401
-        Collection,
-        CollectionBase,
-        CollectionGroup,
-    )
-    from api.compat.hacs.exceptions import SourceArgumentException  # noqa: F401
-    from api.compat.hacs.service.ICS import ICS  # noqa: F401
-
-
-def test_ukbcd_compat_types():
-    from api.compat.ukbcd.common import check_uprn, date_format  # noqa: F401
-    from api.compat.ukbcd.get_bin_data import AbstractGetBinDataClass  # noqa: F401
-
-
-# ---------------------------------------------------------------------------
-# 5. Scripts parse as valid Python
-# ---------------------------------------------------------------------------
-
-SCRIPTS_DIR = Path(__file__).resolve().parent.parent / "scripts"
+SCRIPTS_DIR = ROOT / "scripts"
 SCRIPT_FILES = sorted(
     p
     for p in SCRIPTS_DIR.rglob("*.py")
@@ -147,7 +51,7 @@ def test_script_parses(path: Path):
 
 
 # ---------------------------------------------------------------------------
-# 6. App starts and registry loads all scrapers
+# 2. App starts and the registry serves every wired LAD
 # ---------------------------------------------------------------------------
 
 
@@ -173,7 +77,7 @@ async def test_registry_loads_all_scrapers(client):
     resp = await client.get("/api/v1/councils")
     assert resp.status_code == 200
     ids = {c["id"] for c in resp.json()}
-    lad_lookup = json.loads((SCRAPERS_DIR.parent / "data" / "lad_lookup.json").read_text())
+    lad_lookup = json.loads(LAD_LOOKUP.read_text())
     wired = {code for code, v in lad_lookup.items() if v.get("scraper_id")}
     assert ids == wired, (
         f"missing: {sorted(wired - ids)}, not wired: {sorted(ids - wired)}"
