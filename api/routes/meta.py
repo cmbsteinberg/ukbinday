@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from datetime import UTC, datetime
 
 from fastapi import APIRouter, Request
 
@@ -11,6 +12,28 @@ from api.services.models import CouncilInfo, HealthEntry, SystemHealth
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
+
+
+def _ics_info(heartbeat: dict | None) -> dict:
+    """Cache figures from the refresh heartbeat: entries summed over the shards,
+    and the age of the *oldest* shard's last run, which is what a monitor alerts on."""
+    shards = (heartbeat or {}).get("shards", {})
+    if not shards:
+        return {
+            "entries": None,
+            "last_refresh": None,
+            "last_refresh_age_seconds": None,
+            "shards_expected": None,
+            "last_refresh_stats": None,
+        }
+    oldest = min(datetime.fromisoformat(s["last_run"]) for s in shards.values())
+    return {
+        "entries": sum(s["entries"] for s in shards.values()),
+        "last_refresh": oldest.isoformat(),
+        "last_refresh_age_seconds": round((datetime.now(UTC) - oldest).total_seconds()),
+        "shards_expected": heartbeat["of"],
+        "last_refresh_stats": {i: s["stats"] for i, s in shards.items()},
+    }
 
 
 @router.get("/councils", response_model=list[CouncilInfo])
@@ -99,20 +122,14 @@ async def metrics(request: Request):
         }
 
     ics_cache = getattr(request.app.state, "ics_cache", None)
-    refresh_job = getattr(request.app.state, "refresh_job", None)
     ics_info = None
     if ics_cache is not None:
-        ics_info = {
-            "entries": ics_cache.count_entries(),
-            "last_refresh": refresh_job.last_run.isoformat()
-            if refresh_job and refresh_job.last_run
-            else None,
-            "last_refresh_stats": (
-                refresh_job.last_stats.__dict__
-                if refresh_job and refresh_job.last_stats
-                else None
-            ),
-        }
+        try:
+            heartbeat = await ics_cache.read_heartbeat()
+        except Exception:
+            logger.warning("Failed to read refresh heartbeat", exc_info=True)
+            heartbeat = None
+        ics_info = _ics_info(heartbeat)
 
     return {
         "request_counts": request_counts,

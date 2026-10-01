@@ -1,6 +1,6 @@
 .claude
 data/calendars/
-data/.worker_heartbeat
+data/meta/
 
 *.DS_Store
 .psycn
@@ -219,3 +219,6 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 scripts/upstream_watch.json
+
+# Vercel CLI link + build output
+.vercel

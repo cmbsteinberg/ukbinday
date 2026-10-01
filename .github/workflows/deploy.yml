@@ -48,3 +48,56 @@ jobs:
             mv .env.tmp .env
             docker compose up -d --build --remove-orphans
             docker compose exec -T redis redis-cli --scan --pattern 'ratelimit:*' | xargs -r docker compose exec -T redis redis-cli del || true
+
+  # Vercel production deploy. Skips (green) until the VERCEL_TOKEN secret exists, so this
+  # can merge before the project is set up. Vercel's own Git deploys are off
+  # (vercel.json `git.deploymentEnabled`), so this job is the only way to production and
+  # needs a passing smoke test.
+  deploy-vercel:
+    needs: smoke-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - name: Check Vercel credentials
+        id: gate
+        run: |
+          if [ -n "$VERCEL_TOKEN" ] && [ -n "$VERCEL_ORG_ID" ] && [ -n "$VERCEL_PROJECT_ID" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Skipping Vercel deploy: VERCEL_TOKEN, VERCEL_ORG_ID or VERCEL_PROJECT_ID is not set"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.enabled == 'true'
+
+      # The local `vercel build` resolves the Python runtime and installs dependencies
+      # with uv, so match the Vercel runtime (Python 3.13, x86_64 Linux).
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          python-version: "3.13"
+
+      - uses: astral-sh/setup-uv@v4
+        if: steps.gate.outputs.enabled == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          node-version: 22
+
+      - name: Pull Vercel project settings
+        if: steps.gate.outputs.enabled == 'true'
+        run: npx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build
+        if: steps.gate.outputs.enabled == 'true'
+        run: npx vercel@latest build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy
+        if: steps.gate.outputs.enabled == 'true'
+        run: npx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN"

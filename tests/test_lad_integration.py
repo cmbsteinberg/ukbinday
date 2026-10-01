@@ -60,6 +60,7 @@ import pytest_asyncio
 from asgi_lifespan import LifespanManager
 
 from api.main import app
+from scripts.lad_cases import FINAL_OUTCOMES, NETWORKISH, job_key, load_lads, lookup
 from scripts.lad_status import lad_status
 
 pytestmark = pytest.mark.live
@@ -77,86 +78,12 @@ RETRY_CONCURRENCY = 4
 REQUEST_TIMEOUT = 60  # the app enforces its own SCRAPER_TIMEOUT inside this
 PROBE_TIMEOUT = 8
 
-NETWORKISH = {"network", "timeout"}
 
-
-def _load_lads() -> dict[str, dict]:
-    if not CASES_PATH.exists():
-        return {}
-    data = json.loads(CASES_PATH.read_text())
-    codes = {c for c in os.environ.get("LAD_CODES", "").split(",") if c}
-    sources = {s for s in os.environ.get("LAD_SOURCES", "").split(",") if s}
-    lads = {}
-    for code, entry in sorted(data.items()):
-        if code.startswith("_") or (codes and code not in codes):
-            continue
-        cases = [c for c in entry["cases"] if not sources or c["source"] in sources]
-        lads[code] = {**entry, "cases": cases}
-    return lads
-
-
-LADS = _load_lads()
-
-
-def _job_key(module: str, params: dict) -> str:
-    """Two LADs sharing a module and a fixture must not race on one UPRN, so
-    jobs dedupe on the module; the request carries the first LAD's code."""
-    return module + "|" + json.dumps(params, sort_keys=True)
-
-
-def _classify_http(status: int, body: dict | None) -> str:
-    detail = (body or {}).get("detail", "") if isinstance(body, dict) else ""
-    if status == 422:
-        return "input_rejected"
-    if status == 504:
-        return "timeout"
-    if status == 503 and "couldn't reach" in detail:
-        return "network"
-    if status == 503 and "already fetching" in detail:
-        return "lock_contention"
-    return "scraper_error"
-
-
-async def _lookup(client: httpx.AsyncClient, council: str, params: dict) -> dict:
-    """`council` is the LAD code, as /council/{postcode} hands it to the frontend."""
-    params = dict(params)
-    uprn = str(params.pop("uprn", "") or "0").strip()
-    query = {"council": council, **{k: v for k, v in params.items() if v}}
-    start = time.monotonic()
-    try:
-        resp = await client.get(f"/lookup/{uprn}", params=query)
-    except (httpx.TimeoutException, asyncio.TimeoutError) as exc:
-        return {"outcome": "timeout", "error": type(exc).__name__, "elapsed_s": round(time.monotonic() - start, 2)}
-    except Exception as exc:  # noqa: BLE001 - raise_app_exceptions=False, so this is transport-level
-        return {"outcome": "scraper_error", "error": f"{type(exc).__name__}: {exc}"[:300],
-                "elapsed_s": round(time.monotonic() - start, 2)}
-    out = {"status_code": resp.status_code, "elapsed_s": round(time.monotonic() - start, 2)}
-    try:
-        body = resp.json()
-    except ValueError:
-        return {**out, "outcome": "scraper_error", "error": "invalid json"}
-    failure = resp.headers.get("X-Scrape-Failure")
-    if resp.status_code == 200 and failure:
-        out["outcome"] = {"network": "network", "timeout": "timeout"}.get(failure, "scraper_error")
-        out["error"] = str((body.get("deeplink") or {}).get("reason", ""))[:300]
-        return out
-    if resp.status_code == 200:
-        cols = body.get("collections") or []
-        out["collections_count"] = len(cols)
-        if cols:
-            out["first"] = cols[0]
-            out["types"] = sorted({c.get("type", "") for c in cols})
-        # DATA_DIR is a fresh tempdir per session and the cache only hits on
-        # the same scraper + real UPRN, so a hit means another case in this
-        # run already scraped this exact property. Keep the flag visible.
-        out["cached"] = bool(body.get("cached"))
-        out["outcome"] = "pass" if cols else "deeplink" if body.get("deeplink") else "empty"
-        if out["outcome"] == "deeplink":
-            out["error"] = str(body["deeplink"].get("reason", ""))[:300]
-        return out
-    out["outcome"] = _classify_http(resp.status_code, body)
-    out["error"] = str(body.get("detail", ""))[:300] if isinstance(body, dict) else ""
-    return out
+LADS = load_lads(
+    CASES_PATH,
+    codes={c for c in os.environ.get("LAD_CODES", "").split(",") if c},
+    sources={s for s in os.environ.get("LAD_SOURCES", "").split(",") if s},
+)
 
 
 async def _probe_hosts(urls: dict[str, str]) -> dict[str, str | None]:
@@ -204,20 +131,20 @@ async def lad_results() -> dict:
             jobs: dict[str, tuple[str, dict]] = {}
             for code, entry in LADS.items():
                 for case in entry["cases"]:
-                    jobs.setdefault(_job_key(module[code], case["params"]), (code, case["params"]))
+                    jobs.setdefault(job_key(module[code], case["params"]), (code, case["params"]))
 
             sem = asyncio.Semaphore(MAX_CONCURRENCY)
 
             async def run(key: str, sem: asyncio.Semaphore) -> tuple[str, dict]:
                 council, params = jobs[key]
                 async with sem:
-                    return key, await _lookup(client, council, params)
+                    return key, await lookup(client, council, params)
 
             batch_start = time.monotonic()
             results = dict(await asyncio.gather(*(run(k, sem) for k in jobs)))
             # 200-empty is cached as a success by the app, so retrying it would
             # only read it back; 422 is deterministic.
-            retry = [k for k, r in results.items() if r["outcome"] not in {"pass", "empty", "input_rejected", "deeplink"}]
+            retry = [k for k, r in results.items() if r["outcome"] not in FINAL_OUTCOMES]
             if retry:
                 rsem = asyncio.Semaphore(RETRY_CONCURRENCY)
                 for key, r in await asyncio.gather(*(run(k, rsem) for k in retry)):
@@ -248,7 +175,7 @@ async def lad_results() -> dict:
     for code, entry in LADS.items():
         cases = []
         for case in entry["cases"]:
-            r = results[_job_key(module[code], case["params"])]
+            r = results[job_key(module[code], case["params"])]
             cases.append({"id": case["id"], "source": case["source"], "label": case.get("label"),
                           "uprn": case["params"].get("uprn"), **r})
         fixture_only = bool(entry.get("fixture_only"))

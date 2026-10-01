@@ -4,19 +4,20 @@ import asyncio
 import hashlib
 import json
 import logging
-import os
-from collections.abc import Callable, Iterator
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
-from pathlib import Path
 from weakref import WeakValueDictionary
 
 from icalendar import Calendar, Event
 
 from api import config
 from api.councils._base import Collection
+from api.services.blob_store import BlobStore
 
 logger = logging.getLogger(__name__)
+
+HEARTBEAT_KEY = "meta/refresh_heartbeat.json"
 
 
 @dataclass(frozen=True)
@@ -24,8 +25,6 @@ class CacheEntry:
     uprn: str
     scraper: str
     params: dict[str, str]
-    ics_path: Path
-    sidecar_path: Path
     last_scraped: datetime | None
     last_success: datetime | None
     last_error: str | None
@@ -63,6 +62,12 @@ def _parse_date(value: str | None) -> date | None:
         return None
 
 
+def _shard_of(uprn: str, of: int) -> int:
+    """Which of `of` refresh shards owns this UPRN. A non-numeric one (never
+    cached by the routes) goes to shard 0 rather than belonging to none."""
+    return int(uprn) % of if uprn.isascii() and uprn.isdigit() else 0
+
+
 def _collection_dicts(collections: list[Collection], uprn: str) -> list[dict]:
     out: list[dict] = []
     for c in collections:
@@ -78,15 +83,15 @@ def _collection_dicts(collections: list[Collection], uprn: str) -> list[dict]:
 
 
 class IcsCache:
-    """Disk-backed ICS cache keyed by UPRN."""
+    """ICS cache keyed by UPRN, over a blob store: `calendars/{uprn}.ics` is the
+    calendar, `calendars/{uprn}.json` its sidecar."""
 
-    def __init__(self, root: Path, canonical_id: Callable[[str], str] | None = None) -> None:
+    def __init__(self, store: BlobStore, canonical_id: Callable[[str], str] | None = None) -> None:
         """`canonical_id` resolves an old council ID to its public one (the
         registry's), so a sidecar written under an old scraper ID still counts
         as the same council as its LAD code."""
-        self.root = Path(root)
+        self.store = store
         self._canonical_id = canonical_id or (lambda scraper_id: scraper_id)
-        self.root.mkdir(parents=True, exist_ok=True)
         self._locks: WeakValueDictionary[str, asyncio.Lock] = WeakValueDictionary()
 
     def _lock_for(self, uprn: str) -> asyncio.Lock:
@@ -96,18 +101,29 @@ class IcsCache:
             self._locks[uprn] = lock
         return lock
 
-    def paths_for(self, uprn: str) -> tuple[Path, Path]:
-        return (self.root / f"{uprn}.ics", self.root / f"{uprn}.json")
+    def keys_for(self, uprn: str) -> tuple[str, str]:
+        """The (ics, sidecar) keys."""
+        return (
+            f"{config.ICS_CACHE_SUBDIR}/{uprn}.ics",
+            f"{config.ICS_CACHE_SUBDIR}/{uprn}.json",
+        )
+
+    def _read_sidecar_data(self, sidecar_key: str) -> dict | None:
+        raw = self.store.get(sidecar_key)
+        if raw is None:
+            return None
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError:
+            logger.warning("Failed to read sidecar %s", sidecar_key, exc_info=True)
+            return None
 
     def _build_entry(self, sidecar: dict) -> CacheEntry:
         uprn = sidecar["uprn"]
-        ics_path, sidecar_path = self.paths_for(uprn)
         return CacheEntry(
             uprn=uprn,
             scraper=sidecar.get("scraper", ""),
             params=sidecar.get("params", {}),
-            ics_path=ics_path,
-            sidecar_path=sidecar_path,
             last_scraped=_parse_iso(sidecar.get("last_scraped")),
             last_success=_parse_iso(sidecar.get("last_success")),
             last_error=sidecar.get("last_error"),
@@ -120,13 +136,9 @@ class IcsCache:
         return await asyncio.to_thread(self._read_sync, uprn)
 
     def _read_sync(self, uprn: str) -> CacheEntry | None:
-        ics_path, sidecar_path = self.paths_for(uprn)
-        if not ics_path.exists() or not sidecar_path.exists():
-            return None
-        try:
-            data = json.loads(sidecar_path.read_text())
-        except (OSError, json.JSONDecodeError):
-            logger.warning("Failed to read sidecar %s", sidecar_path, exc_info=True)
+        ics_key, sidecar_key = self.keys_for(uprn)
+        data = self._read_sidecar_data(sidecar_key)
+        if data is None or self.store.get(ics_key) is None:
             return None
         return self._build_entry(data)
 
@@ -134,29 +146,19 @@ class IcsCache:
         return await asyncio.to_thread(self._read_ics_bytes_sync, uprn)
 
     def _read_ics_bytes_sync(self, uprn: str) -> bytes | None:
-        ics_path, _ = self.paths_for(uprn)
-        if not ics_path.exists():
-            return None
-        try:
-            return ics_path.read_bytes()
-        except OSError:
-            return None
+        ics_key, _ = self.keys_for(uprn)
+        return self.store.get(ics_key)
 
-    def _load_ics(self, ics_path: Path) -> Calendar:
-        if ics_path.exists():
+    def _load_ics(self, raw: bytes | None, ics_key: str) -> Calendar:
+        if raw is not None:
             try:
-                return Calendar.from_ical(ics_path.read_bytes())
-            except (ValueError, OSError):
-                logger.warning("Failed to parse existing ICS %s — rebuilding", ics_path)
+                return Calendar.from_ical(raw)
+            except ValueError:
+                logger.warning("Failed to parse existing ICS %s — rebuilding", ics_key)
         cal = Calendar()
         cal.add("prodid", "-//UK Bin Collections//bins//EN")
         cal.add("version", "2.0")
         return cal
-
-    def _atomic_write(self, path: Path, content: bytes) -> None:
-        tmp = path.with_suffix(path.suffix + ".tmp")
-        tmp.write_bytes(content)
-        os.replace(tmp, path)
 
     def _split_components(
         self, cal: Calendar
@@ -238,13 +240,14 @@ class IcsCache:
 
     def _merge_and_prune(
         self,
-        ics_path: Path,
+        raw_ics: bytes | None,
+        ics_key: str,
         uprn: str,
         new_collections: list[dict],
         retention_days: int,
         today: date,
     ) -> Calendar:
-        cal = self._load_ics(ics_path)
+        cal = self._load_ics(raw_ics, ics_key)
         events_by_uid, other_components = self._split_components(cal)
 
         now = datetime.now(UTC)
@@ -301,26 +304,23 @@ class IcsCache:
         params: dict[str, str],
         collections: list[Collection],
     ) -> CacheEntry:
-        ics_path, sidecar_path = self.paths_for(uprn)
+        ics_key, sidecar_key = self.keys_for(uprn)
         today = date.today()
         new_dicts = _collection_dicts(collections, uprn)
 
-        existing: dict = {}
-        if sidecar_path.exists():
-            try:
-                existing = json.loads(sidecar_path.read_text())
-            except (OSError, json.JSONDecodeError):
-                existing = {}
+        existing = self._read_sidecar_data(sidecar_key) or {}
+        raw_ics = self.store.get(ics_key)
         # Events from a different scraper are a different council's data;
         # start the calendar afresh rather than merging them in.
         if existing.get("scraper") and self._canonical_id(existing["scraper"]) != self._canonical_id(scraper_id):
-            ics_path.unlink(missing_ok=True)
+            raw_ics = None
             existing = {}
 
         cal = self._merge_and_prune(
-            ics_path, uprn, new_dicts, config.ICS_RETENTION_DAYS, today
+            raw_ics, ics_key, uprn, new_dicts, config.ICS_RETENTION_DAYS, today
         )
-        self._atomic_write(ics_path, cal.to_ical())
+        # ICS first, sidecar last: a sidecar never points at a missing calendar
+        self.store.put(ics_key, cal.to_ical())
 
         upcoming = self._extract_upcoming(cal, uprn, today)
         next_collection = upcoming[0]["date"] if upcoming else None
@@ -339,10 +339,7 @@ class IcsCache:
             "next_collection": next_collection,
             "collections": upcoming,
         }
-        self._atomic_write(
-            sidecar_path,
-            json.dumps(sidecar, indent=2, default=str).encode(),
-        )
+        self.store.put(sidecar_key, json.dumps(sidecar, indent=2, default=str).encode())
         return self._build_entry(sidecar)
 
     async def record_failure(
@@ -365,14 +362,9 @@ class IcsCache:
         scraper_id: str,
         params: dict[str, str],
     ) -> None:
-        _, sidecar_path = self.paths_for(uprn)
+        _, sidecar_key = self.keys_for(uprn)
         now_iso = _iso_utc(datetime.now(UTC))
-        data: dict = {}
-        if sidecar_path.exists():
-            try:
-                data = json.loads(sidecar_path.read_text())
-            except (OSError, json.JSONDecodeError):
-                data = {}
+        data = self._read_sidecar_data(sidecar_key) or {}
         if not data:
             data = {
                 "uprn": uprn,
@@ -386,32 +378,65 @@ class IcsCache:
         data["last_scraped"] = now_iso
         data["last_error"] = error[:500]
         data["consecutive_failures"] = int(data.get("consecutive_failures", 0)) + 1
-        self._atomic_write(
-            sidecar_path,
-            json.dumps(data, indent=2, default=str).encode(),
-        )
+        self.store.put(sidecar_key, json.dumps(data, indent=2, default=str).encode())
 
-    def iter_entries(self) -> Iterator[CacheEntry]:
-        for sidecar_path in sorted(self.root.glob("*.json")):
-            try:
-                data = json.loads(sidecar_path.read_text())
-            except (OSError, json.JSONDecodeError):
-                continue
-            if "uprn" not in data:
-                continue
-            yield self._build_entry(data)
+    async def sidecar_uprns(self, shard: int = 0, of: int = 1) -> list[str]:
+        """UPRNs with a sidecar that belong to refresh shard `shard` of `of`."""
+        return await asyncio.to_thread(self._sidecar_uprns_sync, shard, of)
+
+    def _sidecar_uprns_sync(self, shard: int, of: int) -> list[str]:
+        prefix = f"{config.ICS_CACHE_SUBDIR}/"
+        uprns = (
+            key.removeprefix(prefix).removesuffix(".json")
+            for key in self.store.keys(prefix)
+            if key.endswith(".json")
+        )
+        return [u for u in uprns if _shard_of(u, of) == shard]
+
+    async def read_sidecar(self, uprn: str) -> CacheEntry | None:
+        """Like `read`, but also returns an entry that has no calendar (a UPRN
+        whose first scrape failed), which the refresh still has to retry."""
+        return await asyncio.to_thread(self._read_sidecar_sync, uprn)
+
+    def _read_sidecar_sync(self, uprn: str) -> CacheEntry | None:
+        data = self._read_sidecar_data(self.keys_for(uprn)[1])
+        if data is None or "uprn" not in data:
+            return None
+        return self._build_entry(data)
 
     async def delete(self, uprn: str) -> None:
         async with self._lock_for(uprn):
             await asyncio.to_thread(self._delete_sync, uprn)
 
     def _delete_sync(self, uprn: str) -> None:
-        ics_path, sidecar_path = self.paths_for(uprn)
-        for p in (ics_path, sidecar_path):
-            try:
-                p.unlink()
-            except FileNotFoundError:
-                pass
+        for key in self.keys_for(uprn):
+            self.store.delete(key)
 
-    def count_entries(self) -> int:
-        return sum(1 for _ in self.root.glob("*.json"))
+    async def read_heartbeat(self) -> dict | None:
+        """The refresh heartbeat: `{"of": n, "shards": {"<i>": {"last_run",
+        "entries", "stats"}}}`, one record per shard of the current shard count."""
+        return await asyncio.to_thread(self._read_heartbeat_sync)
+
+    def _read_heartbeat_sync(self) -> dict | None:
+        raw = self.store.get(HEARTBEAT_KEY)
+        if raw is None:
+            return None
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError:
+            return None
+
+    async def write_heartbeat(self, shard: int, of: int, entries: int, stats: dict) -> None:
+        """Record a finished pass of one shard, keeping the other shards' records
+        (dropped when the shard count changed, so a retired layout can't look stale)."""
+        await asyncio.to_thread(self._write_heartbeat_sync, shard, of, entries, stats)
+
+    def _write_heartbeat_sync(self, shard: int, of: int, entries: int, stats: dict) -> None:
+        current = self._read_heartbeat_sync() or {}
+        shards = current.get("shards", {}) if current.get("of") == of else {}
+        shards[str(shard)] = {
+            "last_run": _iso_utc(datetime.now(UTC)),
+            "entries": entries,
+            "stats": stats,
+        }
+        self.store.put(HEARTBEAT_KEY, json.dumps({"of": of, "shards": shards}).encode())

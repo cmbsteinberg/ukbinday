@@ -1,15 +1,14 @@
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 import os
 import time
 from dataclasses import asdict, dataclass
 from datetime import UTC, date, datetime, timedelta
-from pathlib import Path
 
 from api import config
+from api.services.blob_store import from_config
 from api.services.ics_cache import IcsCache
 from api.services.scrape_lock import acquire, release
 from api.services.scraper_registry import ScraperRegistry
@@ -24,6 +23,9 @@ class RefreshStats:
     skipped: int = 0
     failed: int = 0
     deleted: int = 0
+    deferred: int = 0  # skipped for the deadline; counts unread sidecars too, so an upper bound on the due ones
+    shard: int = 0
+    of: int = 1
     duration_s: float = 0.0
 
 
@@ -42,8 +44,6 @@ class RefreshJob:
         self.redis = redis_client
         self.concurrency = concurrency
         self.failure_threshold = failure_threshold
-        self.last_run: datetime | None = None
-        self.last_stats: RefreshStats | None = None
 
     def _eligible(self, entry, today: date) -> bool:
         if entry.next_collection is None:
@@ -104,8 +104,14 @@ class RefreshJob:
         finally:
             await release(self.redis, entry.uprn)
 
-    async def run_once(self) -> RefreshStats:
-        stats = RefreshStats()
+    async def run_once(
+        self, *, shard: int = 0, of: int = 1, deadline: float | None = None
+    ) -> RefreshStats:
+        """Refresh the due UPRNs of shard `shard` of `of` (those with
+        `int(uprn) % of == shard`). `deadline` is a `time.monotonic()` value:
+        nothing new is queued after it, in-flight scrapes finish, and the rest
+        are counted as `deferred` and left for the next pass."""
+        stats = RefreshStats(shard=shard, of=of)
         start = time.monotonic()
         today = date.today()
 
@@ -117,13 +123,23 @@ class RefreshJob:
                 try:
                     if entry is None:
                         return
+                    if deadline is not None and time.monotonic() >= deadline:
+                        stats.deferred += 1  # queued, but too late to start
+                        continue
                     await self._refresh_one(entry, stats)
                 finally:
                     queue.task_done()
 
         workers = [asyncio.create_task(worker()) for _ in range(self.concurrency)]
 
-        for entry in self.cache.iter_entries():
+        uprns = await self.cache.sidecar_uprns(shard, of)
+        for i, uprn in enumerate(uprns):
+            if deadline is not None and time.monotonic() >= deadline:
+                stats.deferred += len(uprns) - i
+                break
+            entry = await self.cache.read_sidecar(uprn)
+            if entry is None:
+                continue
             stats.scanned += 1
             if not self._eligible(entry, today):
                 stats.skipped += 1
@@ -136,26 +152,17 @@ class RefreshJob:
         await asyncio.gather(*workers, return_exceptions=True)
 
         stats.duration_s = round(time.monotonic() - start, 2)
-        self.last_run = datetime.now(UTC)
-        self.last_stats = stats
-        self._write_heartbeat(stats)
+        await self._write_heartbeat(stats, len(uprns))
         logger.info("Refresh pass complete: %s", asdict(stats))
         return stats
 
-    def _write_heartbeat(self, stats: RefreshStats) -> None:
+    async def _write_heartbeat(self, stats: RefreshStats, entries: int) -> None:
         try:
-            path = Path(config.DATA_DIR) / ".worker_heartbeat"
-            payload = json.dumps(
-                {
-                    "last_run": self.last_run.isoformat() if self.last_run else None,
-                    "stats": asdict(stats),
-                }
-            ).encode()
-            tmp = path.with_suffix(path.suffix + ".tmp")
-            tmp.write_bytes(payload)
-            os.replace(tmp, path)
-        except OSError:
-            logger.debug("Failed to write heartbeat", exc_info=True)
+            await self.cache.write_heartbeat(
+                stats.shard, stats.of, entries, asdict(stats)
+            )
+        except Exception:
+            logger.warning("Failed to write heartbeat", exc_info=True)
 
     async def run_forever(self, *, hour_utc: int = 3) -> None:
         while True:
@@ -182,10 +189,7 @@ async def _main() -> None:
 
     setup_logging()
     registry = ScraperRegistry.build()
-    cache = IcsCache(
-        Path(config.DATA_DIR) / config.ICS_CACHE_SUBDIR,
-        canonical_id=registry.canonical_id,
-    )
+    cache = IcsCache(from_config(), canonical_id=registry.canonical_id)
     redis_client = None
     redis_url = os.getenv("REDIS_URL")
     if redis_url:

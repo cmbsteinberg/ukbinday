@@ -1,0 +1,37 @@
+{
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"framework": "fastapi",
+	"regions": ["lhr1"],
+	"functions": {
+		"api/main.py": {
+			"maxDuration": 300,
+			"excludeFiles": "{pipeline/**,tests/**,scripts/**,node_modules/**,data/**,.venv/**,api/scrapers/**,api/compat/**}"
+		}
+	},
+	"crons": [
+		{
+			"path": "/api/v1/internal/refresh?shard=0&of=1",
+			"schedule": "0 5 * * *"
+		}
+	],
+	"git": {
+		"deploymentEnabled": false
+	},
+	"headers": [
+		{
+			"source": "/static/(.*)",
+			"headers": [
+				{ "key": "X-Content-Type-Options", "value": "nosniff" },
+				{ "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+				{
+					"key": "Strict-Transport-Security",
+					"value": "max-age=31536000; includeSubDomains"
+				},
+				{
+					"key": "Referrer-Policy",
+					"value": "strict-origin-when-cross-origin"
+				}
+			]
+		}
+	]
+}

@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "beautifulsoup4>=4.14.3",
+    "boto3>=1.43.106",
     "cryptography>=46.0.5",
     "curl-cffi>=0.14.0",
     "duckdb>=1.5.1",
@@ -41,6 +42,7 @@ dev = [
     "ai[openai]>=0.8.0",
     "ruff>=0.16.9",
     "ty>=0.0.84",
+    "moto[s3]>=5.2.3",
 ]
 
 [tool.ruff.lint]
@@ -67,3 +69,12 @@ include = ["api/councils"]
 # A coroutine called without `await` (the Slough/Sevenoaks/Hackney bug class).
 unused-awaitable = "error"
 
+
+[tool.vercel]
+entrypoint = "api.main:app"
+
+# api/main.py has top-level middleware (log_requests), so Vercel would keep /static in
+# the function. Promote it to the CDN anyway; vercel.json `headers` re-adds the security
+# headers the middleware would have set.
+[tool.vercel.fastapi.static]
+cdn = true

@@ -33,6 +33,7 @@ from api.councils._base import (
 from api.councils._base.discovery import load
 from api.main import app
 from api.services import scraper_registry
+from api.services.blob_store import LocalBlobStore
 from api.services.ics_cache import IcsCache
 from api.services.refresh_job import RefreshJob
 from api.services.scrape_orchestrator import map_scrape_exception
@@ -322,7 +323,7 @@ async def test_sidecar_with_old_scraper_id_still_refreshes(client, stub, tmp_pat
     # Its own cache dir: run_once refreshes every eligible sidecar, and other
     # tests' failure sidecars would go to the network.
     registry = app.state.registry
-    cache = IcsCache(tmp_path, canonical_id=registry.canonical_id)
+    cache = IcsCache(LocalBlobStore(tmp_path), canonical_id=registry.canonical_id)
     uprn = fresh_uprn()
     params = {"uprn": uprn, "postcode": "BS14 8ES"}
     # A sidecar as the old scraper left it: retired ID, no upcoming collections
@@ -342,7 +343,7 @@ async def test_sidecar_with_old_scraper_id_still_refreshes(client, stub, tmp_pat
 @pytest.mark.asyncio(loop_scope="session")
 async def test_sidecar_with_unknown_id_fails_without_crashing(tmp_path):
     """A sidecar no council answers to (a removed scraper) counts as a failure and ages out."""
-    cache = IcsCache(tmp_path, canonical_id=app.state.registry.canonical_id)
+    cache = IcsCache(LocalBlobStore(tmp_path), canonical_id=app.state.registry.canonical_id)
     uprn = fresh_uprn()
     await cache.write(uprn, "hacs_no_such_council", {"uprn": uprn}, [])
     job = RefreshJob(cache, app.state.registry, failure_threshold=2)

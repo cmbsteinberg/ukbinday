@@ -24,6 +24,16 @@ ICS_SIDECAR_UPCOMING_LIMIT: int = _int_env("ICS_SIDECAR_UPCOMING_LIMIT", 60)
 ICS_REFRESH_MIN_AGE_HOURS: int = _int_env("ICS_REFRESH_MIN_AGE_HOURS", 12)
 RUN_REFRESH_JOB: bool = os.getenv("RUN_REFRESH_JOB", "1") != "0"
 
+# Cloudflare R2 for the ICS cache; when R2_BUCKET is unset the cache lives in DATA_DIR
+R2_ACCOUNT_ID: str = os.getenv("R2_ACCOUNT_ID", "")
+R2_ACCESS_KEY_ID: str = os.getenv("R2_ACCESS_KEY_ID", "")
+R2_SECRET_ACCESS_KEY: str = os.getenv("R2_SECRET_ACCESS_KEY", "")
+R2_BUCKET: str = os.getenv("R2_BUCKET", "")
+
+# Cron-triggered refresh (GET /api/v1/internal/refresh); the route is off without CRON_SECRET
+CRON_SECRET: str = os.getenv("CRON_SECRET", "")
+REFRESH_DEADLINE_S: float = float(os.getenv("REFRESH_DEADLINE_S", "250"))
+
 # Scrape coalescing (API inline scrape on cache miss)
 SCRAPE_LOCK_POLL_INTERVAL_S: float = float(
     os.getenv("SCRAPE_LOCK_POLL_INTERVAL_S", "0.5")

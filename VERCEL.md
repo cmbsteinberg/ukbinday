@@ -1,17 +1,51 @@
 # Moving off Hetzner: Vercel + Cloudflare
 
-Status: plan, revised 2026-10-01. Nothing is built yet.
+Status: revised 2026-10-01. The tidy-up has landed, and the in-repo work (phases 1-4)
+is on `feature/vercel-migration`. What's left is outside the repo: the phase 0 spike,
+R2 and Vercel setup, the council probe against a preview, and the cutover.
 
-This plan assumes the tidy-up lands first: `api/scrapers/`, `api/compat/` and the upstream
-sync (`pipeline/hacs/`, `pipeline/ukbcd/`, `pipeline/sync.sh`) are gone, and the modules in
-`api/councils/` are the only scrapers. That shrinks this work in a few places:
+The modules in `api/councils/` are the only scrapers. `ScraperRegistry.invoke()` has one
+path (`api.councils._base.run`), and every outbound request goes through the harness
+`Http` (`api/councils/_base/http.py`), so timeouts, transport choice (httpx or curl_cffi)
+and TLS settings are in one file. `requests` and `playwright` are no longer dependencies.
+`api/scrapers/` and `api/compat/` may still exist locally holding stale `.pyc` files;
+they're untracked, and `.vercelignore` keeps them out of a local `vercel build`.
 
-- `ScraperRegistry.invoke()` has one path (`api.councils._base.run`), and every outbound
-  request goes through the harness `Http` (`api/councils/_base/http.py`), so timeouts,
-  transport choice (httpx or curl_cffi) and TLS settings are in one file.
-- `requests` leaves the runtime dependencies (no council module imports it; only
-  `api/compat/requests_fallback.py` did).
-- Nothing under `api/` needs excluding from the bundle except `__pycache__`.
+## Done in the repo vs. left to do
+
+| Phase | In the repo | Outside the repo |
+|---|---|---|
+| 0 spike | `[tool.vercel]` in `pyproject.toml`, `vercel.json` | Deploy a preview and answer the questions below |
+| 1 R2 cache | `api/services/blob_store.py`, `IcsCache` on top of it, heartbeat in the store | Create the bucket and keys, `rclone` the Hetzner cache across, set `R2_*` on Hetzner |
+| 2 refresh endpoint | `/api/v1/internal/refresh`, sharded `run_once` with a deadline, cron in `vercel.json` | Set `CRON_SECRET` |
+| 3 serverless | Nothing needed beyond phase 1; static CDN option and headers in config | — |
+| 4 deploy | `deploy-vercel` job in `deploy.yml`, `.vercelignore`, `scripts/vercel_probe.py` | Vercel project, secrets, env vars, run the probe |
+| 5 cutover | — | DNS and Cloudflare rules |
+| 6 decommission | Deliberately not done, Hetzner being the rollback path until two weeks after cutover. `scripts/vercel/decommission.sh` does it then | Run the script; set up the monitors |
+
+### Scripts for the steps outside the repo
+
+Throwaway scripts in `scripts/vercel/`, each with usage in its header. The Vercel CLI
+flags were checked against `vercel <cmd> --help` (CLI 62.1.0) and the CLI docs. None of the
+scripts has run against real Vercel or R2 yet.
+
+| Script | Phase | What it does |
+|---|---|---|
+| `preview.sh` | 0 | `vercel pull` / `build` / `deploy --prebuilt` to a preview; prints only the URL, so `URL=$(scripts/vercel/preview.sh)` works. Needs `npx vercel@latest link` once |
+| `spike.sh <url>` | 0 | PASS/FAIL checks: cold start, `lhr1` in `x-vercel-id`, `/councils`, `/council`, a `/lookup` each for a curl_cffi, a PDF and a plain httpx council (cases read from `lad_test_cases.json`), a static file, `/calendar` |
+| `logs.sh <url>` | 0, 5 | `vercel inspect` plus recent error logs (Hobby keeps an hour) |
+| `env.example`, `env_push.sh <file> [production\|preview]` | 4 | Pushes the expected env vars to Vercel (unknown keys rejected, values on stdin, generates `CRON_SECRET` if absent). Vercel stores them as sensitive and won't show them again, so keep your own `CRON_SECRET` if you want to call `refresh_now.sh` |
+| `r2_sync.sh` | 1 | Run on the Hetzner box: `rclone sync` of the calendars dir into R2, with object counts before and after (`--dry-run` passes through) |
+| `refresh_now.sh <url> [shard] [of]` | 2 | Calls `/api/v1/internal/refresh` with `CRON_SECRET`, then prints the heartbeat from `/metrics` |
+| `probe.sh <url>` | 4 | Wraps `scripts/vercel_probe.py` |
+| `decommission.sh` | 6 | Preflight (production answers from Vercel, refresh heartbeat under 36 h, clean tree), then three typed-confirmation stages: delete the Hetzner server/firewall/SSH key (`hcloud`), delete the SSH deploy secrets (`gh`), and the repo edits (remove Caddy/GoAccess/`scripts/deploy`, cut compose to `api`, drop the SSH job and `hcloud`/`paramiko`). `--dry-run`, `--skip-*`. Repo stage tested on a copy; the others only dry-run |
+
+`VERCEL_BYPASS` (Deployment Protection bypass secret) is honoured by `spike.sh` and
+`probe.sh`, if previews are protected.
+
+Order: `preview.sh` → `spike.sh` → (R2 bucket, `r2_sync.sh`, `R2_*` on Hetzner) →
+`env_push.sh` → `refresh_now.sh` against the preview → `probe.sh` → set the GitHub
+`VERCEL_*` secrets so `deploy-vercel` starts deploying → phase 5.
 
 ## Why
 
@@ -85,6 +119,55 @@ R2 free tier: 10 GB, 1M Class A ops (writes, lists), 10M Class B ops (reads) a m
 no egress fees. A daily refresh pass at 10k calendars is ~10 list calls + 10k sidecar
 reads, about 300k reads a month.
 
+## Will it be free
+
+Checked against Vercel's Hobby, fair-use and fluid-compute pricing pages and Cloudflare's
+R2 pricing page on 2026-10-01.
+
+**Today (~100 calendars): yes, with large margins.** Every allowance is under 5% used.
+
+**Usage against the free allowances** (calendar size measured: a year of events is
+~26 KB raw, ~4 KB gzipped; `GZipMiddleware` is on in `api/main.py`):
+
+| Allowance (per month) | Free | 100 calendars | 10k calendars, uncached | Notes |
+|---|---|---|---|---|
+| Vercel invocations | 1M | ~10k | ~950k | Polls + page/API traffic + 30 cron runs |
+| Vercel CDN requests | 1M | ~10k | ~950k + static | Counts every request, including static |
+| Vercel active CPU | 4 h | < 0.1 h | ~2.5-3.5 h | Guessing ~10 ms CPU per poll (R2 GET + render) plus ~0.85 h refresh. Measure on the spike |
+| Vercel provisioned memory | 360 GB-h | ~1 GB-h | ~40 GB-h | Billed while any request is in flight on an instance, I/O wait included |
+| Vercel Fast Origin Transfer | 10 GB | ~0.04 GB | ~3.6 GB gzipped (~23 GB raw) | Missing from the earlier sizing. Gzip is what keeps it under |
+| Vercel Fast Data Transfer | 100 GB | tiny | ~4 GB | |
+| R2 Class A (writes, lists) | 1M | ~1k | ~100k | 2 PUTs per refresh or cache-miss scrape. Deletes are free |
+| R2 Class B (reads) | 10M | ~10k | ~1.2M | One GET per poll + sidecar reads in the refresh |
+| R2 storage | 10 GB | < 1 MB | ~300 MB | |
+
+**What could cost money or break:**
+
+1. **Hobby is non-commercial only.** Vercel's definition is broad: a deployment used "for
+   the purpose of financial gain of anyone involved in any part of the production",
+   explicitly including "a paid employee or consultant writing the code", ads, or
+   selling anything. Donations are fine. This project qualifies: nobody is paid to work
+   on it, and it has no ads or payments. Adding any of those would mean moving to Pro
+   ($20/seat/month) or Cloud Run.
+2. **Going over a Vercel limit doesn't bill, it pauses**, for up to 30 days. For a
+   calendar feed that's an outage, so it matters more than a small bill would. Around
+   5-10k calendars, invocations, CDN requests and active CPU all approach their caps
+   together. The Cloudflare calendar cache (phase 5) is the lever, but only if its edge
+   TTL is longer than the gap between a calendar app's polls. With ~3 polls per
+   calendar per day, a 6 h TTL saves little, so phase 5 uses 12 h. Data only changes on
+   the nightly refresh, so 12 h of staleness costs nothing. Watch Vercel's usage page
+   monthly and move to Cloud Run before a cap, not after.
+3. **R2 bills past the free tier rather than pausing.** Cloudflare asks for a payment
+   method when you enable R2; confirm this when you enable it. Overage is $4.50 per
+   million writes and $0.36 per million reads, so even 10x the 10k-calendar figures is
+   pennies.
+4. **Unchanged costs:** the domain and the address API (`ADDRESS_API_URL`), which is paid
+   per postcode lookup and doesn't depend on the host. Cloudflare's free plan covers DNS,
+   proxy, cache and one rate-limiting rule. Uptime monitoring (UptimeRobot / Better Stack
+   free tiers) is free.
+5. **Not free:** Upstash is free only up to its own limits (not used by default), and
+   Vercel log drains need Pro (Hobby keeps an hour of logs).
+
 ## Phases
 
 Each phase ships on its own and leaves the system working. Phases 1-2 run on Hetzner
@@ -139,10 +222,12 @@ methods already run through `asyncio.to_thread`: `_read_sync`, `_read_ics_bytes_
 - Keys stay `calendars/{uprn}.ics` and `calendars/{uprn}.json`. A single S3 PUT is atomic,
   so `_atomic_write`'s tmp-and-rename goes away. Keep the existing write order: ICS
   first, sidecar last, so a reader never sees a sidecar pointing at a missing calendar.
-- Move the worker heartbeat (`DATA_DIR/.worker_heartbeat`) to `meta/refresh_heartbeat.json`
-  in the same store, and add `entries` to it. `/api/v1/metrics` then reads the heartbeat
-  instead of `app.state.refresh_job` (there is no long-lived job object on Vercel) and
-  instead of `count_entries()` (a bucket list on every metrics scrape).
+- The worker heartbeat (was `DATA_DIR/.worker_heartbeat`) is `meta/refresh_heartbeat.json`
+  in the same store: `{"of": n, "shards": {"<i>": {"last_run", "entries", "stats"}}}`, one
+  record per shard, reset when the shard count changes. `/api/v1/metrics` reads it instead
+  of `app.state.refresh_job` (there is no long-lived job object on Vercel) and instead of
+  counting the bucket. Its `ics_cache.last_refresh_age_seconds` is the oldest shard's age,
+  for the stale-refresh monitor in phase 6.
 - Concurrency: `IcsCache`'s per-UPRN `asyncio.Lock` protects only within one instance.
   Two Vercel instances writing the same UPRN at once would race the read-merge-write, and
   the last writer wins. The next refresh repairs it, since writes merge on stable UIDs. At
@@ -151,9 +236,12 @@ methods already run through `asyncio.to_thread`: `_read_sync`, `_read_ics_bytes_
 - Copy the existing cache: `rclone sync /var/lib/docker/volumes/bins_data/_data/calendars r2:bins/calendars`.
   The store is recoverable anyway: every calendar URL carries `council`, `postcode` and
   `address`, so a lost object is rebuilt on its next poll (only past events are lost).
-- Tests: `tests/test_scrape_cache.py` runs against the local store unchanged. Add one
-  test for the R2 implementation against a stub S3 server (moto), or skip it if
-  credentials aren't set.
+- Tests: `tests/test_scrape_cache.py` runs against the local store unchanged.
+  `tests/test_blob_store.py` runs one contract against both stores, R2 through moto.
+  moto can't intercept the `r2.cloudflarestorage.com` endpoint, so the test swaps in a
+  mocked client: the real R2 endpoint and checksum settings (`when_required`, since R2
+  rejects boto3's default CRC checksums) are first exercised by the spike.
+- `docker-compose.yml` passes `R2_*` through to `api` and `worker`.
 
 Ship it on Hetzner with `R2_*` env vars set. From here on, Hetzner and Vercel can both
 serve from the same bucket, which is what makes cutover and rollback a DNS change.
@@ -172,8 +260,9 @@ become a cron-triggered route.
   eligible, so nothing is lost; they're just a day late.
 - Shard count: at 10k calendars ~1,500 UPRNs are due on a given day; at 1.8 s wall each
   and `ICS_REFRESH_CONCURRENCY` raised to 8, that's ~340 s, so 4 shards with headroom.
-  Today 1 shard is enough. Crons in `vercel.json`, spread across the night (Hobby fires
-  anywhere within the hour):
+  Today 1 shard is enough, so `vercel.json` has one cron
+  (`/api/v1/internal/refresh?shard=0&of=1` at 05:00 UTC, two hours after Hetzner's worker). At scale, spread the shards across
+  the night (Hobby fires anywhere within the hour):
 
   ```json
   {
@@ -189,7 +278,17 @@ become a cron-triggered route.
   }
   ```
 
-  The `functions` key depends on the entrypoint chosen in phase 0.
+  The `functions` key is the entrypoint's file, `api/main.py` (Vercel FastAPI docs).
+  Vercel's docs give no example of a query string in a cron `path`; the spike confirms the
+  cron actually fires with it (`refresh_now.sh` covers the route itself).
+- `run_once` stops scanning at the deadline and workers skip anything queued but not yet
+  started; both count as `deferred` in the stats and heartbeat. Sidecars are read one at a
+  time, about 50 ms each on R2, so a 2,500-UPRN shard spends ~2 min just reading. If
+  shards run out of time, parallelise those reads before adding shards.
+- While Hetzner still runs its worker (03:00 UTC) against the same bucket, both refresh.
+  The cron runs two hours later, so `ICS_REFRESH_MIN_AGE_HOURS` (12) makes it skip what
+  Hetzner just refreshed, and the two never scrape a UPRN at the same time (only Hetzner
+  has the Redis scrape lock).
 - Keep `python -m api.services.refresh_job` working (it calls `run_once` with one shard
   and no deadline) so Hetzner keeps refreshing until cutover.
 
@@ -210,8 +309,7 @@ Small changes, each independent:
     TLS connect on every cold start plus one round trip per rate-limit check and two per
     scrape lock. Turn it on first for the scrape lock if duplicate scrapes of one UPRN
     show up in logs, since that's the only Redis use with a correctness effect.
-  - Remove the `ratelimit:*` flush from the deploy step (`deploy.yml`); there's no Redis
-    container to exec into.
+  - The `ratelimit:*` flush stays in the Hetzner deploy job and goes with it in phase 6.
 - **Scraper health** (`registry.record_success/failure`, shown on `/councils` and
   `/metrics`) is in-memory per instance, so on Vercel it resets on every cold start. That's
   harmless, but don't treat it as meaningful there. The live test and the `working` flags
@@ -243,33 +341,38 @@ Small changes, each independent:
 
 ### Phase 4: deploy pipeline and council probe
 
-- **Dependencies.** `playwright` (130 MB), `pytest`, `pytest-asyncio` and `ty` are in
-  the `dev` group already. Measured 2026-10-01: the production dependencies plus `boto3`,
-  installed for `x86_64-manylinux_2_28` / Python 3.13, come to **197 MB**. The biggest are
-  duckdb (57 MB), botocore (25 MB), curl_cffi (23 MB), pillow (20 MB, pulled in by
-  pdfplumber), lxml and cryptography (13 MB each). That's well inside the 500 MB limit.
-  After the tidy-up, drop `requests` from `[project] dependencies`. If size ever matters,
-  replacing boto3 with signed httpx calls to R2 saves 25 MB.
+- **Dependencies.** Test and tooling packages are in the `dev` group. Measured
+  2026-10-01: the production dependencies plus `boto3`, installed for
+  `x86_64-manylinux_2_28` / Python 3.13, come to **197 MB** (that count still included
+  `requests`, now gone). The biggest are duckdb (57 MB), botocore (25 MB), curl_cffi
+  (23 MB), pillow (20 MB, pulled in by pdfplumber), lxml and cryptography (13 MB each).
+  That's well inside the 500 MB limit. If size ever matters, replacing boto3 with signed
+  httpx calls to R2 saves 25 MB.
 - **Bundle exclusions.** Exclude `pipeline/`, `tests/`, `scripts/`, `node_modules/` and
   `**/__pycache__`. The committed ONS parquets in `pipeline/data/` (104 MB) are for test
   generation, not runtime. Only `api/data/postcode_lookup.parquet` (16 MB) and
   `api/data/lad_lookup.json` are read at runtime, plus `api/councils/_aliases.json`.
-- **CI.** The current deploy is the `appleboy/ssh-action` step in
-  `.github/workflows/deploy.yml` (git reset, rewrite `.env` with the Turnstile secrets,
-  `docker compose up -d --build`, flush rate-limit keys). `scripts/deploy/deployment.py`
-  (Hetzner provisioning, using `hcloud` and `paramiko`) is separate and goes in Phase 6. Keep the `smoke-test` job; replace the SSH step with
-  `vercel deploy --prebuilt --prod` using a `VERCEL_TOKEN` secret, and turn off Vercel's
-  automatic Git deploys so a failing smoke test still blocks production.
+- **CI.** `.github/workflows/deploy.yml` runs `smoke-test`, then two deploy jobs: the
+  Hetzner `appleboy/ssh-action` job (git reset, rewrite `.env` with the Turnstile secrets,
+  `docker compose up -d --build`, flush rate-limit keys), unchanged, and `deploy-vercel`
+  (`vercel pull`, `vercel build --prod`, `vercel deploy --prebuilt --prod`). The Vercel
+  job skips itself until the `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`
+  secrets exist. Both deploy on every push until phase 6, so either can serve the domain.
+  `vercel.json` turns off Vercel's own Git deploys, so a failing smoke test still blocks
+  production. `scripts/deploy/deployment.py` (Hetzner provisioning, using `hcloud` and
+  `paramiko`) goes in phase 6.
 - **Env vars** in Vercel (production): `ADDRESS_API_URL`, `ADDRESS_API_COMPANY_ID`,
   `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET`, `BASE_URL`, `CORS_ORIGINS`, `R2_ACCOUNT_ID`,
   `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `CRON_SECRET`, `ENV=production`,
   `LOG_FORMAT=json`, `SCRAPER_TIMEOUT=30`, `ICS_REFRESH_CONCURRENCY=8`. Not
   `RUN_REFRESH_JOB` (set it to `0`; the background task can't run there) and not `REDIS_URL`.
 - **Council probe.** Requests now leave from AWS London instead of Hetzner, and a council
-  that blocks AWS ranges would break silently. Before cutover, run the sampled cases from
-  `tests/lad_test_cases.json` against a preview deployment's `/api/v1/lookup/{uprn}`
-  (a short script; leave `TURNSTILE_SECRET` unset on the preview) and diff the outcomes
-  against `tests/output/lad_integration_output.json`. Councils that pass locally but fail
+  that blocks AWS ranges would break silently. Before cutover, run
+  `uv run python -m scripts.vercel_probe --base-url https://<preview>.vercel.app`
+  (leave `TURNSTILE_SECRET` unset on the preview). It runs the sampled cases from
+  `tests/lad_test_cases.json` against the preview's `/api/v1/lookup/{uprn}`, classifies
+  them the way the live test does, and diffs per-LAD status against
+  `tests/output/lad_integration_output.json`; it exits 1 on any regression. Councils that pass locally but fail
   from Vercel are the list to deal with. Small numbers can be left on a `NeedsBrowser`
   deeplink; a large number means going to Cloud Run (europe-west2) instead, with the same image.
 
@@ -280,7 +383,7 @@ Small changes, each independent:
 2. Add the domain to the Vercel project, point the records at Vercel, and turn on the
    Cloudflare proxy. Cloudflare SSL mode is "Full (strict)".
 3. Cloudflare rules:
-   - Cache rule: `/api/v1/calendar/*`, eligible for cache, edge TTL 6 h, cache key includes
+   - Cache rule: `/api/v1/calendar/*`, eligible for cache, edge TTL 12 h (longer than the gap between a calendar app's polls; see "Will it be free"), cache key includes
      the query string (the default). Only 200s are cached, so a 503 isn't pinned.
    - Cache rule: `/static/*`, edge TTL 1 day.
    - Rate-limiting rule on `/api/*`, per IP, to replace `RATE_LIMIT_HOURLY`.
@@ -291,7 +394,8 @@ Small changes, each independent:
 
 ### Phase 6: decommission
 
-- Delete the Hetzner server and the `SERVER_HOST` / `SSH_PRIVATE_KEY` secrets.
+- Delete the Hetzner server, the `deploy` (SSH) job in `deploy.yml`, and the
+  `SERVER_HOST` / `SSH_PRIVATE_KEY` secrets.
 - Remove `Caddyfile`, `goaccess.conf`, and the `redis`, `caddy`, `goaccess`, `uptime-kuma`
   and `worker` services from `docker-compose.yml` (keep `api` for local use).
   `tests/test_deploy.py` and `tests/test_deploy_docker.sh` shrink to match.

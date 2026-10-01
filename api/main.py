@@ -11,6 +11,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
@@ -18,6 +19,7 @@ from starlette.templating import Jinja2Templates
 from api import config
 from api.logging_config import setup_logging
 from api.routes import router as api_router
+from api.services.blob_store import from_config
 from api.services.council_lookup import CouncilLookup
 from api.services.ics_cache import IcsCache
 from api.services.refresh_job import RefreshJob
@@ -68,9 +70,7 @@ async def lifespan(app: FastAPI):
         app.state.redis = None
         logger.info("No REDIS_URL set, rate limiting disabled")
 
-    cache_root = Path(config.DATA_DIR) / config.ICS_CACHE_SUBDIR
-    cache_root.mkdir(parents=True, exist_ok=True)
-    app.state.ics_cache = IcsCache(cache_root, canonical_id=app.state.registry.canonical_id)
+    app.state.ics_cache = IcsCache(from_config(), canonical_id=app.state.registry.canonical_id)
 
     app.state.refresh_job = None
     app.state.refresh_task = None
@@ -111,6 +111,9 @@ app = FastAPI(
     openapi_url="/api/v1/openapi.json",
 )
 
+# Calendars are mostly repeated VEVENT boilerplate; gzip cuts them ~10x, which is what
+# counts against Vercel Hobby's Fast Origin Transfer allowance (VERCEL.md, "Will it be free")
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=config.CORS_ORIGINS,
