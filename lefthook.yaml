@@ -26,6 +26,11 @@ pre-commit:
       run: npx --yes @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       stage_fixed: true
 
+    # Warn about upstream fixes to councils we serve. Never blocks the commit:
+    # at most once a day, ~20s cap, silent offline or without gh, always exits 0.
+    upstream-watch:
+      run: scripts/upstream_watch.sh --hook
+
     # 3. CI smoke tests — council modules load, app starts
     ci-tests:
       tags: test
