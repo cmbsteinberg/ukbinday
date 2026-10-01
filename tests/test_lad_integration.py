@@ -99,7 +99,8 @@ LADS = _load_lads()
 
 
 def _job_key(scraper_id: str, params: dict) -> str:
-    """Two LADs sharing a scraper and a fixture must not race on one UPRN."""
+    """Two LADs sharing a scraper and a fixture must not race on one UPRN, so
+    jobs dedupe on the scraper; the request carries the first LAD's code."""
     return scraper_id + "|" + json.dumps(params, sort_keys=True)
 
 
@@ -116,10 +117,11 @@ def _classify_http(status: int, body: dict | None) -> str:
     return "scraper_error"
 
 
-async def _lookup(client: httpx.AsyncClient, scraper_id: str, params: dict) -> dict:
+async def _lookup(client: httpx.AsyncClient, council: str, params: dict) -> dict:
+    """`council` is the LAD code, as /council/{postcode} hands it to the frontend."""
     params = dict(params)
     uprn = str(params.pop("uprn", "") or "0").strip()
-    query = {"council": scraper_id, **{k: v for k, v in params.items() if v}}
+    query = {"council": council, **{k: v for k, v in params.items() if v}}
     start = time.monotonic()
     try:
         resp = await client.get(f"/lookup/{uprn}", params=query)
@@ -158,7 +160,7 @@ async def _lookup(client: httpx.AsyncClient, scraper_id: str, params: dict) -> d
 
 
 async def _probe_hosts(urls: dict[str, str]) -> dict[str, str | None]:
-    """scraper_id -> None if its host answers any HTTP at all, else the error."""
+    """council ID -> None if its host answers any HTTP at all, else the error."""
     hosts = {sid: urlparse(u).scheme + "://" + urlparse(u).netloc for sid, u in urls.items() if u}
     results: dict[str, str | None] = {}
     sem = asyncio.Semaphore(20)
@@ -197,16 +199,16 @@ async def lad_results() -> dict:
         transport = httpx.ASGITransport(app=manager.app, raise_app_exceptions=False)
         async with httpx.AsyncClient(transport=transport, base_url=BASE_URL, timeout=REQUEST_TIMEOUT) as client:
             jobs: dict[str, tuple[str, dict]] = {}
-            for entry in LADS.values():
+            for code, entry in LADS.items():
                 for case in entry["cases"]:
-                    jobs.setdefault(_job_key(entry["scraper_id"], case["params"]), (entry["scraper_id"], case["params"]))
+                    jobs.setdefault(_job_key(entry["scraper_id"], case["params"]), (code, case["params"]))
 
             sem = asyncio.Semaphore(MAX_CONCURRENCY)
 
             async def run(key: str, sem: asyncio.Semaphore) -> tuple[str, dict]:
-                sid, params = jobs[key]
+                council, params = jobs[key]
                 async with sem:
-                    return key, await _lookup(client, sid, params)
+                    return key, await _lookup(client, council, params)
 
             batch_start = time.monotonic()
             results = dict(await asyncio.gather(*(run(k, sem) for k in jobs)))
@@ -224,13 +226,13 @@ async def lad_results() -> dict:
             needs_probe = {
                 jobs[k][0] for k, r in results.items() if r["outcome"] in NETWORKISH | {"scraper_error"}
             }
-            meta_urls = {sid: (registry.get(sid).url if registry.get(sid) else "") for sid in needs_probe}
+            meta_urls = {c: (registry.get(c).url if registry.get(c) else "") for c in needs_probe}
             probes = await _probe_hosts(meta_urls) if meta_urls else {}
 
     for key, r in results.items():
-        sid = jobs[key][0]
+        council = jobs[key][0]
         if r["outcome"] in NETWORKISH:
-            probe_err = probes.get(sid)
+            probe_err = probes.get(council)
             if probe_err or not canary_ok:
                 r["probe_error"] = probe_err or "canary failed"
                 r["outcome"] = "unreachable"

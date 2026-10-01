@@ -11,9 +11,10 @@ from api.councils._base.scraper import Scraper
 COUNCILS_DIR = Path(__file__).resolve().parent.parent
 LAD_LOOKUP = COUNCILS_DIR.parent / "data" / "lad_lookup.json"
 ALIASES = COUNCILS_DIR / "_aliases.json"
-"""Old scraper IDs (every one ever wired to a LAD) and recoded LAD codes -> the
-current LAD code. They sit in calendar URLs (`council=`) and ICS sidecars
-(`scraper`), so entries are only ever added, never removed or repointed."""
+"""Old scraper IDs (every one ever wired to a LAD, up to the switch to LAD codes)
+and recoded LAD codes -> the current LAD code. Old calendar URLs (`council=`) and
+ICS sidecars (`scraper`) carry them. Frozen: public IDs are LAD codes now, so a
+new entry is needed only when ONS recodes a LAD."""
 
 
 def aliases() -> dict[str, str]:

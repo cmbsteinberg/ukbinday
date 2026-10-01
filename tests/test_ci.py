@@ -169,21 +169,21 @@ async def test_app_starts(client):
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_registry_loads_all_scrapers(client):
-    """Every wired council is listed, and nearly every old scraper a council
-    module hasn't taken over (those answer under their alias instead)."""
+    """Every wired LAD is listed under its LAD code, and nearly every old
+    scraper a council module hasn't replaced is listed under its old ID."""
     from api.councils._base.discovery import aliases
 
     resp = await client.get("/api/v1/councils")
     assert resp.status_code == 200
     ids = {c["id"] for c in resp.json()}
     lad_lookup = json.loads((SCRAPERS_DIR.parent / "data" / "lad_lookup.json").read_text())
-    wired = {v["scraper_id"] for v in lad_lookup.values() if v.get("scraper_id")}
-    assert wired <= ids, f"wired scraper IDs missing from /councils: {sorted(wired - ids)}"
-    standalone = [p for p in SCRAPER_FILES if p.stem not in aliases() or p.stem in wired]
-    expected_min = len(standalone) * 0.95
-    assert len(ids) >= expected_min, (
-        f"Registry only loaded {len(ids)} scrapers but {len(standalone)} "
-        f"are expected. Expected at least {int(expected_min)}"
+    wired = {code for code, v in lad_lookup.items() if v.get("scraper_id")}
+    assert wired <= ids, f"wired LADs missing from /councils: {sorted(wired - ids)}"
+    standalone = {p.stem for p in SCRAPER_FILES if p.stem not in aliases()}
+    loaded = ids & standalone
+    assert len(loaded) >= len(standalone) * 0.95, (
+        f"Registry loaded {len(loaded)} of the {len(standalone)} old scrapers no "
+        "council module replaces"
     )
 
 

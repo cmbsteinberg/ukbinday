@@ -199,6 +199,10 @@
     "scraper_id": "hacs_dorset_gov_uk",
     "url": "https://www.dorsetcouncil.gov.uk/"
   },
+  "E06000060": {
+    "scraper_id": "ukbcd_buckinghamshire_council",
+    "url": "https://www.buckinghamshire.gov.uk/waste-and-recycling/find-out-when-its-your-bin-collection/"
+  },
   "E06000061": {
     "scraper_id": "hacs_northnorthants_gov_uk",
     "url": "https://cms.northnorthants.gov.uk/bin-collection-search/calendarevents/100031021318/2023-10-17/2023-10-01"

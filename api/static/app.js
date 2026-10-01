@@ -327,13 +327,8 @@ function attachCopyHandler(icsUrl) {
 	});
 }
 
-const PASSTHROUGH_ICS = {
-	ukbcd_google_public_calendar_council:
-		"https://calendar.google.com/calendar/ical/0d775884b4db6a7bae5204f06dae113c1a36e505b25991ebc27c6bd42edf5b5e%40group.calendar.google.com/public/basic.ics",
-};
-
+// councilId is the LAD code /council/{postcode} returned (e.g. E06000001).
 function icsUrlFor(councilId, addr) {
-	if (PASSTHROUGH_ICS[councilId]) return PASSTHROUGH_ICS[councilId];
 	const params = new URLSearchParams({
 		council: councilId,
 		postcode: addr.postcode,

@@ -4,7 +4,7 @@ import logging
 import re
 
 import httpx
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from fastapi.responses import RedirectResponse, Response
 
 from api import config
@@ -41,6 +41,11 @@ _UPRN_RE = re.compile(r"^[0-9]{1,20}$")
 # The body is the frontend's deeplink shape; this keeps the failure visible to
 # the live test and to logs.
 SCRAPE_FAILURE_HEADER = "X-Scrape-Failure"
+
+COUNCIL_PARAM = Query(
+    description="The council's ONS LAD code (e.g. E06000001), as /council/{postcode} returns it. "
+    "Scraper IDs from before the switch to LAD codes still resolve.",
+)
 
 
 def _safe_uprn_filename(uprn: str) -> str:
@@ -151,7 +156,7 @@ async def lookup(
     request: Request,
     response: Response,
     uprn: str,
-    council: str,
+    council: str = COUNCIL_PARAM,
     postcode: str | None = None,
     address: str | None = None,
     _rate_limit: None = Depends(rate_limit),
@@ -177,14 +182,14 @@ async def lookup(
         if meta.needs_browser:
             raise needs_browser_deeplink(meta, meta.needs_browser)
 
-        # `council` may be an alias (old scraper ID, LAD code); cache and log under the resolved ID
+        # `council` may be an old ID; answer, cache and log under the public one (the LAD code)
         params = build_scrape_params(meta, council, uprn, request.query_params)
 
         if meta.passthrough_url or not is_cacheable_uprn(uprn):
             collections = await live_scrape(request, meta.id, params)
             return LookupResponse(
                 uprn=uprn,
-                council=council,
+                council=meta.id,
                 cached=False,
                 cached_at=None,
                 collections=[
@@ -196,7 +201,7 @@ async def lookup(
         entry, cached = await get_or_scrape(request, uprn, meta.id, params)
     except DeeplinkAnswer as answer:
         return LookupResponse(
-            uprn=uprn, council=council, collections=[], deeplink=_deeplink_info(answer.deeplink)
+            uprn=uprn, council=meta.id, collections=[], deeplink=_deeplink_info(answer.deeplink)
         )
     except ScrapeHTTPException as error:
         # The council's site failed and nothing was cached (a cache hit never
@@ -205,11 +210,11 @@ async def lookup(
             raise
         response.headers[SCRAPE_FAILURE_HEADER] = error.failure or "error"
         return LookupResponse(
-            uprn=uprn, council=council, collections=[], deeplink=_deeplink_info(error.fallback)
+            uprn=uprn, council=meta.id, collections=[], deeplink=_deeplink_info(error.fallback)
         )
     return LookupResponse(
         uprn=uprn,
-        council=council,
+        council=meta.id,
         cached=cached,
         cached_at=entry.last_success if cached else None,
         collections=[CollectionItem(**c) for c in entry.collections],
@@ -220,7 +225,7 @@ async def lookup(
 async def calendar(
     request: Request,
     uprn: str,
-    council: str,
+    council: str = COUNCIL_PARAM,
     postcode: str | None = None,
     address: str | None = None,
     _rate_limit: None = Depends(rate_limit),
@@ -254,8 +259,11 @@ async def calendar(
 
         await get_or_scrape(request, uprn, meta.id, params)
     except DeeplinkAnswer as answer:
-        # Same as an unwired council: send the subscriber to the council's page
-        return RedirectResponse(url=answer.deeplink.url, status_code=302)
+        # A calendar app can't follow a redirect to a web page; say it plainly.
+        raise HTTPException(
+            status_code=404,
+            detail=f"We can't fetch bin days for this council: {answer.deeplink.reason}",
+        ) from None
 
     cache = request.app.state.ics_cache
     ics_bytes = await cache.read_ics_bytes(uprn)

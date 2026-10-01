@@ -16,6 +16,8 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import importlib
+import inspect
 import json
 import sys
 import traceback
@@ -56,9 +58,13 @@ def _pairs(result: list) -> set[tuple[str, str]]:
     return {(str(c.date), " ".join(c.type.split())) for c in result}
 
 
-async def _old(registry, scraper_id: str, params: dict) -> list | BaseException:
+async def _old(scraper_id: str, params: dict) -> list | BaseException:
+    """The old api/scrapers/ Source, run directly: the registry routes its ID to the module."""
     try:
-        return await asyncio.wait_for(registry.invoke(scraper_id, params), TIMEOUT)
+        source = importlib.import_module(f"api.scrapers.{scraper_id}").Source
+        accepted = set(inspect.signature(source.__init__).parameters) - {"self"}
+        call = source(**{k: v for k, v in params.items() if k in accepted}).fetch()
+        return await asyncio.wait_for(call, TIMEOUT)
     except Exception as exc:  # noqa: BLE001 - reporting any failure is the point
         return exc
 
@@ -71,7 +77,7 @@ async def _new(scraper: Scraper, params: dict) -> list[Collection] | BaseExcepti
         return exc
 
 
-async def check_module(name: str, *, compare: bool, registry, verbose: bool) -> dict:
+async def check_module(name: str, *, compare: bool, verbose: bool) -> dict:
     try:
         scraper = load(name)
     except Exception as exc:  # noqa: BLE001
@@ -88,7 +94,7 @@ async def check_module(name: str, *, compare: bool, registry, verbose: bool) -> 
             row["new"]["traceback"] = getattr(new, "__traceback_text__", "")
         old_id = next(iter(old_ids.values()), None) if source == "sampled" else None
         if old_id:
-            old = await _old(registry, old_id, params)
+            old = await _old(old_id, params)
             row["old"] = _summary(old)
             if not isinstance(old, BaseException) and not isinstance(new, BaseException):
                 a, b = _pairs(old), _pairs(new)
@@ -136,17 +142,11 @@ async def main() -> int:
         ap.error("name modules or pass --all")
     by_lad({n: load(n) for n in names if _loads(n)})  # duplicate / unknown LAD claims fail loudly
 
-    registry = None
-    if args.compare:
-        from api.services.scraper_registry import ScraperRegistry
-
-        registry = ScraperRegistry.build()
-
     sem = asyncio.Semaphore(args.concurrency)
 
     async def guarded(name: str) -> dict:
         async with sem:
-            result = await check_module(name, compare=args.compare, registry=registry, verbose=args.verbose)
+            result = await check_module(name, compare=args.compare, verbose=args.verbose)
             _print(result)
             return result
 

@@ -33,14 +33,14 @@ class ITouchVisionConfig:
     api_url: str = DEFAULT_API_URL
 
 
-def _encrypt(payload: dict[str, Any]) -> str:
+def encrypt(payload: dict[str, Any]) -> str:
     padder = padding.PKCS7(128).padder()
     padded = padder.update(json.dumps(payload).encode()) + padder.finalize()
     enc = Cipher(algorithms.AES(_KEY), modes.CBC(_IV), default_backend()).encryptor()
     return (enc.update(padded) + enc.finalize()).hex()
 
 
-def _decrypt(hex_str: str) -> dict[str, Any]:
+def decrypt(hex_str: str) -> dict[str, Any]:
     dec = Cipher(algorithms.AES(_KEY), modes.CBC(_IV), default_backend()).decryptor()
     padded = dec.update(bytes.fromhex(hex_str)) + dec.finalize()
     unpadder = padding.PKCS7(128).unpadder()
@@ -58,8 +58,8 @@ class ITouchVision(Platform[ITouchVisionConfig]):
             "P_COUNCIL_ID": cfg.council_id,
             "P_LANG_CODE": "EN",
         }
-        r = await http.get(cfg.api_url, headers={"P_PARAMETER": _encrypt(payload)})
-        data = _decrypt(r.text)
+        r = await http.get(cfg.api_url, headers={"P_PARAMETER": encrypt(payload)})
+        data = decrypt(r.text)
 
         collections = []
         for service in data["collectionDay"]:

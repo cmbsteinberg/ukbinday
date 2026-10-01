@@ -1,8 +1,8 @@
 # Scraper contract: design
 
 Status, 2026-10-01: built, converted and wired in. `api/councils/` holds the framework,
-8 platforms and 347 council modules, and the registry serves every wired LAD from them;
-`api/scrapers/` still loads for the ~20 old IDs no module has taken over. See
+9 platforms and 348 council modules, and the registry serves every wired LAD from them
+under its LAD code; `api/scrapers/` still loads for the 21 old IDs no module has taken over. See
 [Progress](#progress) for where each council stands and [As built](#as-built-departures-from-this-design)
 for what changed from the design below.
 
@@ -31,6 +31,7 @@ comes from something the scraper decides for itself but the platform should own:
   path. These are baked into ICS subscription URLs already sitting in users' calendars.
 - `council=<scraper_id>` in those URLs, and `scraper` + `params` in every ICS sidecar
   (the refresh job re-invokes with the stored params). Any rename needs aliases (see IDs).
+  Since 2026-10-01 `council=` is the LAD code; old IDs resolve through the aliases.
 - The output `Collection` fields the cache reads: `date`, `type`, `icon`.
 - 422 / 503 / 504 semantics and messages in `scrape_orchestrator.map_scrape_exception`.
 
@@ -129,7 +130,7 @@ SCRAPER = WhitespaceWRP(
 ```
 
 Platform classes (`WhitespaceWRP`, `AchieveForms`, `Bartec`, `ReCollect`, `ITouchVision`,
-`FirmstepSelfService`, `Cloud9`, `SocietyWorks`...) live in `api/councils/_platforms/`.
+`FirmstepSelfService`, `Cloud9`, `SocietyWorks`, `LibertyCreate`...) live in `api/councils/_platforms/`.
 Each is a `Scraper` subclass taking a frozen config dataclass. `api/compat/whitespace.py`
 is already this shape and becomes the first one.
 
@@ -328,7 +329,8 @@ values masked, and the harness freezes `today` during replay.
 - **`Platform[C]`** in `_base/scraper.py` is the base for every `_platforms/` class:
   `(meta, config, *, icons=None)`. Platforms: Whitespace, iTouchVision, AchieveForms (a
   helper, not a class), Cloud9, Firmstep, SocietyWorks, Bartec (the public dashboard page:
-  4 councils), ReCollect (7). The other Bartec-backed councils reach it through their own
+  4 councils), ReCollect (7), LibertyCreate (Netcall portals: Hertsmere, Gedling; the result-table
+  reader is a `parse` callable in the config). The other Bartec-backed councils reach it through their own
   APIs, AchieveForms or Firmstep, so they stay bespoke.
 - **`parse_date` rejects text without a day and a month** ("December TBC", "Mon"), which
   dateutil's fuzzy mode would otherwise read as the 1st or the next weekday. Text with no
@@ -336,15 +338,37 @@ values masked, and the harness freezes `today` during replay.
 - **`text_of` joins child text with spaces**, so inline markup gives "( if subscribed )".
   Its 52 users were checked against that behaviour, so it stays; use
   `" ".join(node.get_text().split())` where inline tags sit inside the text.
-- **Public IDs stay the old scraper IDs for now.** The registry lists a module under the
-  scraper ID `lad_lookup.json` gives its LADs, which is what `/council/{postcode}` returns,
-  what calendar URLs carry and what sidecars store. LAD codes and every ID in
-  `_aliases.json` (all IDs ever wired to a LAD, mined from `lad_lookup.json`'s git history,
-  plus recoded LAD codes) resolve to the module. Switching sidecars to LAD codes now would
-  buy nothing visible, and a rollback to the old registry couldn't read them: the refresh
-  job would fail them until it deleted them. Flip the public ID to the LAD code when the
-  pipeline is cut and `lad_lookup.json` stops carrying `scraper_id`; the aliases already
-  cover every old URL. The ICS cache and the orchestrator compare resolved IDs.
+- **Public IDs are LAD codes (switched 2026-10-01).** `/council/{postcode}` returns the
+  LAD code, `/councils` lists it, calendar URLs and sidecars carry it, and `/lookup`
+  echoes it back even when called with an old ID. Whether a LAD is wired is the
+  registry's call (a module claims it), not `lad_lookup.json`'s.
+  - `/councils` has **one row per LAD**, not per module. Every ID `/council` returns is
+    then listed, and each row carries its own LAD's GOV.UK page, which the deeplinks use:
+    Worthing's site failure sends people to Worthing's page, not Adur's. Name and URL
+    are the module's, so Adur and Worthing show the same title.
+  - **Old-ID aliases are kept**, frozen. Keeping them costs a dict lookup; the file was
+    needed anyway to know which old scrapers a module replaced; and it keeps every
+    calendar subscription made before the switch updating. It no longer grows: a
+    scraper rename doesn't change a public ID, so only a LAD recode adds an entry.
+  - **Old sidecars migrate on refresh**: the refresh job resolves the stored ID and writes
+    back the LAD code. One under an ID nothing answers to (a deleted scraper) raises
+    `UnknownCouncilError` and ages out after `ICS_FAILURE_THRESHOLD` failures. A sidecar
+    for a Worthing UPRN under `hacs_adur_worthing_gov_uk` becomes Adur's code (the alias
+    picks one LAD); same module, so the data is right. The cache compares resolved IDs.
+  - **The 21 old scrapers no module replaced keep their old IDs.** None is wired to a LAD:
+    most duplicate a council a module now serves, the rest are retired (Southampton,
+    Buckinghamshire, Fylde, Harrogate, the Google Calendar fixture). An old scraper
+    that `lad_lookup.json` wires to a LAD no module serves would be registered under the
+    LAD code; none is today.
+  - **`lad_lookup.json` keeps `scraper_id`** as provenance: the upstream scraper the sync
+    wired. The tooling still keys on it until the cut (wired-or-not for coverage, sankey
+    and deeplinks; sticky test-case refresh; `lad_status` rewire detection;
+    `check --compare`), so the generator is unchanged. A module for a LAD it calls
+    unwired (Buckinghamshire, in progress) is served by the API but missed by that
+    tooling until the LAD is wired in `lad_overrides.json` and the lookup recomposed.
+  - `scripts/councils/check.py --compare` runs the old `Source` directly. Through the
+    registry the old ID resolves to the module, so since the wiring commit the "old"
+    side had been running the new module.
 - **Site failures deeplink too.** Beyond `NeedsBrowser`: when a module raises
   `UpstreamError` or times out (or an old scraper hits any 503/504) and nothing is cached,
   `/lookup` answers 200 with a deeplink (GOV.UK page first, then `meta.url`) instead of
@@ -359,6 +383,14 @@ values masked, and the harness freezes `today` during replay.
   DNS, concurrency), which is why the progress table below needs a triage column.
 
 ## Progress
+
+### 2026-10-01: public IDs switched to LAD codes
+
+Registry, routes, refresh job, live test and test-case generator use LAD codes; see the
+As-built entry above. User-visible: `/council` and `/councils` return LAD codes;
+`/lookup` echoes the LAD code; `/councils` has 370 rows (349 LADs + 21 old IDs; before,
+368 IDs). Old calendar URLs keep working through the frozen aliases. The live test sends
+the LAD code; it hasn't been run since the switch.
 
 ### 2026-10-01: after fixes, one full live run
 
@@ -422,6 +454,7 @@ both-fail, 14 regressed.
 ## Decisions
 
 - IDs are ONS LAD codes, with permanent aliases for old scraper IDs and recoded LADs.
+  Switched 2026-10-01, with one `/councils` row per LAD.
 - `NeedsBrowser` routes to a deeplink automatically.
 - Cassettes are committed; the recorder writes only on change and never replaces a good
   recording with a failed one.

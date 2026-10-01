@@ -215,6 +215,17 @@ def _answer_for(registry, council: str, exc: Exception) -> Exception:
 async def resolve_council(
     request: Request, lookup, postcode: str
 ) -> tuple[str | None, str | None, list[CouncilCandidate], str | None]:
+    """(council ID, name, candidates, LAD code) for a postcode.
+
+    The council ID is the LAD code when the registry serves that LAD, else
+    None (the caller answers with the LAD's deeplink).
+    """
+    registry = request.app.state.registry
+
+    def council_id(authority) -> str | None:
+        meta = registry.get(authority.lad_code)
+        return meta.id if meta is not None else None
+
     request_id = getattr(request.state, "request_id", None)
     log_extra = {"request_id": request_id, "postcode": postcode}
     try:
@@ -237,15 +248,15 @@ async def resolve_council(
 
     if len(authorities) == 1:
         authority = authorities[0]
-        if not authority.slug:
+        cid = council_id(authority)
+        if cid is None:
             logger.info(
                 "Postcode resolved to unwired council %s (%s) — deeplink",
                 authority.name,
                 authority.lad_code,
                 extra=log_extra,
             )
-            return None, authority.name, [], authority.lad_code
-        return authority.slug, authority.name, [], authority.lad_code
+        return cid, authority.name, [], authority.lad_code
 
     logger.info(
         "Ambiguous postcode: %d candidate councils",
@@ -253,8 +264,8 @@ async def resolve_council(
         extra=log_extra,
     )
     candidates = [
-        CouncilCandidate(slug=a.slug, name=a.name, homepage_url=a.homepage_url)
+        CouncilCandidate(slug=cid, name=a.name, homepage_url=a.homepage_url)
         for a in authorities
-        if a.slug
+        if (cid := council_id(a)) is not None
     ]
     return None, None, candidates, None

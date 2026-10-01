@@ -36,13 +36,22 @@
         Find your address on the <a href="/">home page</a> and click the subscribe link,
         or build one directly:
       </p>
+      <pre><code>https://ukbinday.co.uk/api/v1/calendar/{uprn}?council={lad_code}&amp;postcode={postcode}</code></pre>
     </section>
 
     <section>
       <h2>Programmatic access</h2>
       <p>
         If you need JSON instead of a calendar feed, resolve a postcode to its council
-        with <code>/council/{postcode}</code>, then call <code>/lookup/{uprn}</code>.
+        with <code>/api/v1/council/{postcode}</code>, then call
+        <code>/api/v1/lookup/{uprn}?council={council_id}&amp;postcode={postcode}</code>.
+      </p>
+      <p>
+        The <code>council</code> parameter is the council's ONS LAD code, for example
+        <code>E06000001</code> for Hartlepool. <code>/council/{postcode}</code> returns it as
+        <code>council_id</code>, and <code>/api/v1/councils</code> lists every supported code
+        with the parameters each council needs. Some councils also need
+        <code>address</code>, <code>house_number</code> or <code>street</code>.
       </p>
       <p>
         Cache misses trigger a live scrape of the council website and may take several
@@ -63,8 +72,9 @@
 
       <h3>Local Authority District (LAD)</h3>
       <p>
-        The council responsible for waste collection at an address, identified by ONS LAD
-        code. Each LAD maps to at most one scraper.
+        The council responsible for waste collection at an address, identified by its ONS
+        LAD code. It is the <code>council</code> parameter on every lookup. Councils that
+        share one collection service (Adur and Worthing) keep separate codes.
       </p>
 
     </section>

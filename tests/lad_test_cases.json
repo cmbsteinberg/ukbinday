@@ -2553,6 +2553,30 @@
   "E06000056": {
     "cases": [
       {
+        "id": "E06000056-s1",
+        "label": "39, Clarkes Way, Houghton Regis, Dunstable, LU5 5EN",
+        "params": {
+          "address": "39, Clarkes Way, Houghton Regis, Dunstable, LU5 5EN",
+          "house_number": "39",
+          "postcode": "LU5 5EN",
+          "street": "Clarkes Way",
+          "uprn": "100080091628"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E06000056-s2",
+        "label": "8 The Fields, Lower Caldecote, Biggleswade, SG18 9BA",
+        "params": {
+          "address": "8 The Fields, Lower Caldecote, Biggleswade, SG18 9BA",
+          "house_number": "8",
+          "postcode": "SG18 9BA",
+          "street": "The Fields",
+          "uprn": "10002899940"
+        },
+        "source": "sampled"
+      },
+      {
         "id": "E06000056-f1",
         "label": "Buttermere Avenue, Dunstable",
         "params": {
@@ -2571,11 +2595,7 @@
         "source": "fixture"
       }
     ],
-    "fixture_only": true,
     "name": "Central Bedfordshire",
-    "notes": [
-      "fixture-only: frontend cannot supply required ['house_name']"
-    ],
     "scraper_id": "hacs_centralbedfordshire_gov_uk"
   },
   "E06000057": {
@@ -2730,6 +2750,45 @@
     ],
     "name": "Dorset",
     "scraper_id": "hacs_dorset_gov_uk"
+  },
+  "E06000060": {
+    "cases": [
+      {
+        "id": "E06000060-s1",
+        "label": "3, Rowan Place, Amersham, HP6 6UR",
+        "params": {
+          "address": "3, Rowan Place, Amersham, HP6 6UR",
+          "house_number": "3",
+          "postcode": "HP6 6UR",
+          "street": "Rowan Place",
+          "uprn": "100080502956"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E06000060-s2",
+        "label": "1 Reelers Mews, Millgate, High Wycombe, HP11 1GN",
+        "params": {
+          "address": "1 Reelers Mews, Millgate, High Wycombe, HP11 1GN",
+          "house_number": "1",
+          "postcode": "HP11 1GN",
+          "street": "Reelers Mews",
+          "uprn": "10004798852"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E06000060-f1",
+        "label": "Buckinghamshire",
+        "params": {
+          "postcode": "HP13 7BA",
+          "uprn": "100081093078"
+        },
+        "source": "fixture"
+      }
+    ],
+    "name": "Buckinghamshire",
+    "scraper_id": "ukbcd_buckinghamshire_council"
   },
   "E06000061": {
     "cases": [
@@ -17675,7 +17734,7 @@
     "scraper_id": "ukbcd_merthyr_tydfil_county_borough_council"
   },
   "_meta": {
-    "generated_at": "2026-09-30T18:20:34+00:00",
+    "generated_at": "2026-10-01T09:12:09+00:00",
     "per_lad": 2,
     "sampling": "ONSUD postcode -> address API",
     "schema": 1,

@@ -324,11 +324,10 @@
   },
   "E06000060": {
     "name": "Buckinghamshire",
-    "scraper_id": null,
-    "url": "https://www.buckinghamshire.gov.uk/waste-and-recycling/bin-collections/find-out-when-its-your-bin-collection/",
+    "scraper_id": "ukbcd_buckinghamshire_council",
+    "url": "https://www.buckinghamshire.gov.uk/waste-and-recycling/find-out-when-its-your-bin-collection/",
     "govuk_url": "https://www.buckinghamshire.gov.uk/waste-and-recycling/",
-    "status": "deeplink-unwired: iTouchVision kmbd/collectionDay returns null for all UPRNs and the replacement iappcustomer WSR endpoint errors server-side (2026-09-30); re-probe after the Oct 2026 calendar switch",
-    "working": false
+    "working": true
   },
   "E07000117": {
     "name": "Burnley",
@@ -427,14 +426,14 @@
     "scraper_id": "port_ceredigion_county_council",
     "url": "https://www.ceredigion.gov.uk",
     "govuk_url": "https://www.ceredigion.gov.uk/English/Resident/Bins-Recycling/Recycling-Bin-Collection-Dates/Pages/default.aspx",
-    "working": false
+    "working": true
   },
   "E07000130": {
     "name": "Charnwood",
     "scraper_id": "hacs_charnwood_gov_uk",
     "url": "https://www.charnwood.gov.uk/pages/waste_collections_calendars",
     "govuk_url": "http://my.charnwood.gov.uk/recycling",
-    "working": true
+    "working": false
   },
   "E07000070": {
     "name": "Chelmsford",
@@ -568,7 +567,7 @@
     "scraper_id": "hacs_croydon_gov_uk",
     "url": "https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address",
     "govuk_url": "http://www.croydon.gov.uk/environment/rrandw/",
-    "working": false
+    "working": true
   },
   "E06000063": {
     "name": "Cumberland",
@@ -892,7 +891,7 @@
     "scraper_id": "ukbcd_gedling_borough_council",
     "url": "https://www.gedling.gov.uk/",
     "govuk_url": "https://www.gedling.gov.uk/rubbish/",
-    "working": false
+    "working": true
   },
   "S12000049": {
     "name": "Glasgow City",

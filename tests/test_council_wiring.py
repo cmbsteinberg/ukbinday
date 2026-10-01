@@ -1,7 +1,8 @@
 """
 The council modules (api/councils/) wired into the registry and routes:
-ID aliases, NeedsBrowser deeplinks, the upstream-failure deeplink fallback,
-error mapping, and refreshing ICS sidecars written under old scraper IDs.
+LAD-code IDs and the old scraper IDs that resolve to them, NeedsBrowser
+deeplinks, the upstream-failure deeplink fallback, error mapping, and
+refreshing ICS sidecars written under old scraper IDs.
 
 Module `fetch` methods are stubbed per test; no network.
 
@@ -41,10 +42,12 @@ pytestmark = pytest.mark.api
 
 LAD_LOOKUP = json.loads((Path(__file__).resolve().parent.parent / "api" / "data" / "lad_lookup.json").read_text())
 
-HARTLEPOOL = "hacs_hartlepool_gov_uk"  # E06000001, module hartlepool
-BRISTOL = "hacs_bristol_gov_uk"  # E06000023, module bristol
-BRISTOL_OLD = "ukbcd_bristol_city_council"  # wired to E06000023 before; an alias now
-COVENTRY = "hacs_coventry_gov_uk"  # module coventry sets needs_browser
+HARTLEPOOL = "E06000001"  # module hartlepool
+HARTLEPOOL_OLD = "hacs_hartlepool_gov_uk"  # its scraper ID until the switch to LAD codes
+BRISTOL = "E06000023"  # module bristol
+BRISTOL_OLD = "ukbcd_bristol_city_council"  # wired to E06000023 two scrapers ago
+COVENTRY = "E08000026"  # module coventry sets needs_browser
+ADUR, WORTHING = "E07000223", "E07000229"  # one module, adur_and_worthing
 
 _uprns = itertools.count(900000000001)
 
@@ -95,19 +98,25 @@ def stub(monkeypatch):
 
 
 @pytest.mark.asyncio(loop_scope="session")
-@pytest.mark.parametrize("council", [HARTLEPOOL, "E06000001"])
-async def test_old_id_and_lad_code_reach_the_module(client, stub, council):
+@pytest.mark.parametrize("council", [HARTLEPOOL, HARTLEPOOL_OLD])
+async def test_lad_code_and_old_id_reach_the_module(client, stub, council):
     calls = stub("hartlepool", [Collection(soon(), "Refuse")])
     uprn = fresh_uprn()
     r = await client.get(f"/lookup/{uprn}", params={"council": council, "postcode": "TS26 0BL"})
     assert r.status_code == 200, r.text
     body = r.json()
-    assert body["council"] == council
+    assert body["council"] == HARTLEPOOL  # the public ID, whatever name the request used
     assert [c["type"] for c in body["collections"]] == ["Refuse"]
     assert calls and calls[0].uprn == uprn and calls[0].postcode == "TS26 0BL"
-    # Cached under the resolved ID, whatever name the request used
     entry = await app.state.ics_cache.read(uprn)
     assert entry.scraper == HARTLEPOOL
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_council_lookup_returns_the_lad_code(client):
+    r = await client.get("/council/TS26 0BL")
+    assert r.status_code == 200, r.text
+    assert r.json()["council_id"] == HARTLEPOOL
 
 
 @pytest.mark.asyncio(loop_scope="session")
@@ -122,14 +131,36 @@ async def test_retired_scraper_id_reaches_the_module(client, stub):
     assert registry.canonical_id(BRISTOL_OLD) == BRISTOL
 
 
-def test_every_wired_scraper_id_has_a_permanent_alias():
-    """New wiring must be frozen into api/councils/_aliases.json before the pipeline goes."""
-    from api.councils._base.discovery import aliases
+@pytest.mark.asyncio(loop_scope="session")
+async def test_unknown_council_is_404(client):
+    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": "hacs_no_such_council"})
+    assert r.status_code == 404
 
-    table = aliases()
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_every_wired_lad_answers_to_its_code(client):
+    registry = app.state.registry
     for code, entry in LAD_LOOKUP.items():
         if entry.get("scraper_id"):
-            assert entry["scraper_id"] in table, f"{entry['scraper_id']} ({code}) has no alias"
+            meta = registry.get(code)
+            assert meta is not None and meta.id == code, f"{code} ({entry['name']}) not served under its code"
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_two_lad_module_answers_to_each_code(client, stub):
+    """Adur & Worthing: one module, two councils, each with its own ID and GOV.UK page."""
+    registry = app.state.registry
+    adur, worthing = registry.get(ADUR), registry.get(WORTHING)
+    assert adur.module == worthing.module == "adur_and_worthing"
+    assert (adur.id, worthing.id) == (ADUR, WORTHING)
+    assert (adur.govuk_url, worthing.govuk_url) == (LAD_LOOKUP[ADUR]["govuk_url"], LAD_LOOKUP[WORTHING]["govuk_url"])
+    councils = {c["id"] for c in (await client.get("/councils")).json()}
+    assert {ADUR, WORTHING} <= councils
+
+    stub("adur_and_worthing", UpstreamError("down"))
+    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": WORTHING})
+    assert r.json()["council"] == WORTHING
+    assert r.json()["deeplink"]["url"] == LAD_LOOKUP[WORTHING]["govuk_url"]
 
 
 @pytest.mark.asyncio(loop_scope="session")
@@ -140,7 +171,7 @@ async def test_councils_metadata_comes_from_requires(client):
     registry = app.state.registry
     cotswold = next(m for m in registry.list_all() if m.module == "cotswold")
     assert cotswold.required_params == ["address"]  # `label` is sent as `address`
-    assert BRISTOL_OLD not in councils  # an alias, not a council of its own
+    assert BRISTOL_OLD not in councils and HARTLEPOOL_OLD not in councils  # old IDs, not councils
 
 
 # --- NeedsBrowser ---------------------------------------------------------------
@@ -161,7 +192,7 @@ async def test_needs_browser_module_answers_with_deeplink(client):
         "council_name": coventry.meta.title,
     }
     cal = await client.get("/calendar/100070713054", params={"council": COVENTRY}, follow_redirects=False)
-    assert cal.status_code == 302 and cal.headers["location"] == coventry.meta.url
+    assert cal.status_code == 404 and coventry.needs_browser in cal.json()["detail"]
 
 
 @pytest.mark.asyncio(loop_scope="session")
@@ -305,9 +336,23 @@ async def test_sidecar_with_old_scraper_id_still_refreshes(client, stub, tmp_pat
     assert calls and calls[-1].uprn == uprn
 
     entry = await cache.read(uprn)
-    assert entry.scraper == BRISTOL
+    assert entry.scraper == BRISTOL  # migrated to the LAD code
     assert entry.params == params
     assert [c["type"] for c in entry.collections] == ["Recycling"]
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_sidecar_with_unknown_id_fails_without_crashing(tmp_path):
+    """A sidecar no council answers to (a removed scraper) counts as a failure and ages out."""
+    cache = IcsCache(tmp_path, canonical_id=app.state.registry.canonical_id)
+    uprn = fresh_uprn()
+    await cache.write(uprn, "hacs_no_such_council", {"uprn": uprn}, [])
+    job = RefreshJob(cache, app.state.registry, failure_threshold=2)
+
+    assert (await job.run_once()).failed == 1
+    assert (await cache.read(uprn)).consecutive_failures == 1
+    assert (await job.run_once()).deleted == 1
+    assert await cache.read(uprn) is None
 
 
 @pytest.mark.asyncio(loop_scope="session")

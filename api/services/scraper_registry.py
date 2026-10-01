@@ -1,18 +1,21 @@
-"""Every council the API can scrape, keyed by the ID the frontend sends.
+"""Every council the API can scrape, keyed by its public council ID.
 
-Two kinds of entry during the migration:
+The public ID is the ONS LAD code (`E06000001`): what `/council/{postcode}`
+returns, `/councils` lists, calendar URLs carry and ICS sidecars store.
 
-- New-contract modules in `api/councils/` (a `SCRAPER` per module). Each
-  serves the LADs in its `meta.lads`; for those LADs it wins over any old
-  scraper. Its public ID is the scraper ID `lad_lookup.json` gives its LADs
-  (what `/council/{postcode}` returns and calendar URLs carry), falling back
-  to its first LAD code for a LAD that never had one.
-- Old `Source` classes in `api/scrapers/`, for IDs no module has taken over.
+- Council modules in `api/councils/` (a `SCRAPER` per module) are registered
+  once per LAD in their `meta.lads`, so a module serving two councils (Adur &
+  Worthing) answers to each code, with that LAD's GOV.UK page for deeplinks.
+- Old `Source` classes in `api/scrapers/` that no module has replaced. One
+  that `lad_lookup.json` wires to a LAD no module serves is registered under
+  that LAD code too; the rest (none wired to any LAD today) keep their old
+  scraper ID, since there is no LAD code to give them.
 
-Any other name for a module resolves to it: an old scraper ID in
-`api/councils/_aliases.json` (permanent, so old calendar URLs and cache
-sidecars keep working) or one of its LAD codes. `get()` resolves; `meta.id`
-is the canonical ID to cache and log under.
+`api/councils/_aliases.json` is frozen: old scraper IDs and recoded LAD codes
+-> the current LAD code. It resolves the IDs in calendar URLs and sidecars
+written before the switch, and it is how the registry knows which old
+scrapers a module has replaced. `get()` resolves; `meta.id` is the public ID
+to cache and log under.
 """
 
 from __future__ import annotations
@@ -53,6 +56,10 @@ class ScraperTimeoutError(Exception):
     """Raised when a scraper exceeds the allowed timeout."""
 
 
+class UnknownCouncilError(LookupError):
+    """No council answers to this ID (e.g. a sidecar from a removed scraper)."""
+
+
 @dataclass
 class ScraperMeta:
     id: str
@@ -63,7 +70,8 @@ class ScraperMeta:
     passthrough_url: str | None = None
     scraper: Scraper | None = None
     """The new-contract module serving this ID; None for an old `Source` scraper."""
-    module: str | None = None
+    module: str = ""
+    """The module name: `api.councils.<module>`, or `api.scrapers.<module>` for an old scraper."""
     lads: tuple[str, ...] = ()
     govuk_url: str | None = None
     """The council's waste page on GOV.UK's Local Links Manager, from `lad_lookup.json`.
@@ -108,19 +116,67 @@ class ScraperRegistry:
     @classmethod
     def build(cls) -> ScraperRegistry:
         registry = cls()
-        registry._load_old_scrapers()
         registry._load_councils()
+        registry._load_old_scrapers()
         return registry
 
+    def _load_councils(self) -> None:
+        """Register every council module under each LAD code it claims.
+
+        A module that fails to import, two modules claiming one LAD, or a claim
+        on an unknown LAD fails startup: each would silently unwire a council.
+        """
+        modules = {name: discovery.load(name) for name in discovery.module_names()}
+        owner = discovery.by_lad(modules)
+        lad_lookup = json.loads(LAD_LOOKUP.read_text())
+
+        for lad, name in sorted(owner.items()):
+            scraper = modules[name]
+            required, optional = _module_params(scraper)
+            self._scrapers[lad] = ScraperMeta(
+                id=lad,
+                title=scraper.meta.title,
+                url=scraper.meta.url,
+                required_params=required,
+                optional_params=optional,
+                scraper=scraper,
+                module=name,
+                lads=(lad,),
+                govuk_url=lad_lookup.get(lad, {}).get("govuk_url"),
+            )
+        for name in sorted(set(modules) - set(owner.values())):
+            logger.warning("Council module %s claims no LAD; not served", name)
+
+        for alias, lad in discovery.aliases().items():
+            if lad in self._scrapers:
+                self._aliases[alias] = lad
+            else:
+                # The old scraper under this ID (if any) still loads under its own ID.
+                logger.warning("Alias %s points at %s, which no council module serves", alias, lad)
+
+        logger.info(
+            "Loaded %d council modules for %d LADs (%d old IDs resolve to them)",
+            len(set(owner.values())), len(owner), len(self._aliases),
+        )
+
     def _load_old_scrapers(self) -> None:
-        govuk_by_id: dict[str, str] = {}
-        for entry in json.loads(LAD_LOOKUP.read_text()).values():
-            if entry.get("scraper_id") and entry.get("govuk_url"):
-                govuk_by_id.setdefault(entry["scraper_id"], entry["govuk_url"])
+        """Register the old `Source` scrapers no council module has replaced.
+
+        One that `lad_lookup.json` wires to LADs no module serves is registered
+        under those LAD codes, its old ID an alias; any other keeps its old ID.
+        """
+        lad_lookup = json.loads(LAD_LOOKUP.read_text())
+        lads_by_id: dict[str, list[str]] = {}
+        for lad, entry in sorted(lad_lookup.items()):
+            if entry.get("scraper_id") and lad not in self._scrapers:
+                lads_by_id.setdefault(entry["scraper_id"], []).append(lad)
+
         scraper_files = sorted(SCRAPERS_DIR.glob("*.py"))
         loaded = 0
         for path in scraper_files:
             name = path.stem
+            if name in self._aliases:
+                continue  # replaced by a council module
             try:
                 module = importlib.import_module(f"api.scrapers.{name}")
                 if not hasattr(module, "Source"):
@@ -144,90 +200,36 @@ class ScraperRegistry:
                         optional.append(param_name)
 
                 module.Source.__qualname__ = name
-                self._scrapers[name] = ScraperMeta(
-                    id=name,
-                    title=title,
-                    url=url,
-                    required_params=required,
-                    optional_params=optional,
-                    passthrough_url=passthrough_url,
-                    govuk_url=govuk_by_id.get(name),
-                )
+                lads = lads_by_id.get(name)
+                for public_id in lads or [name]:
+                    self._scrapers[public_id] = ScraperMeta(
+                        id=public_id,
+                        title=title,
+                        url=url,
+                        required_params=required,
+                        optional_params=optional,
+                        passthrough_url=passthrough_url,
+                        module=name,
+                        lads=(public_id,) if lads else (),
+                        govuk_url=lad_lookup[public_id].get("govuk_url") if lads else None,
+                    )
+                if lads:
+                    self._aliases[name] = lads[0]
                 loaded += 1
             except Exception:
                 logger.warning("Failed to load scraper %s", name, exc_info=True)
 
         logger.info("Loaded %d/%d old scrapers", loaded, len(scraper_files))
 
-    def _load_councils(self) -> None:
-        """Register every council module, shadowing the old scrapers it replaces.
-
-        A module that fails to import, two modules claiming one LAD, or a claim
-        on an unknown LAD fails startup: each would silently unwire a council.
-        """
-        modules = {name: discovery.load(name) for name in discovery.module_names()}
-        owner = discovery.by_lad(modules)
-        lad_lookup = json.loads(LAD_LOOKUP.read_text())
-
-        public: dict[str, str] = {}  # module -> public ID
-        for lad in sorted(owner):
-            name = owner[lad]
-            sid = (lad_lookup.get(lad) or {}).get("scraper_id")
-            if name not in public:
-                public[name] = sid or lad
-            elif sid and sid != public[name]:
-                # One module whose LADs carry different scraper IDs: the others alias it.
-                self._aliases[sid] = public[name]
-
-        for name, scraper in modules.items():
-            if name not in public:
-                logger.warning("Council module %s claims no LAD; not served", name)
-                continue
-            sid = public[name]
-            required, optional = _module_params(scraper)
-            govuk = next(
-                (url for lad in scraper.meta.lads if (url := lad_lookup.get(lad, {}).get("govuk_url"))),
-                None,
-            )
-            self._scrapers[sid] = ScraperMeta(
-                id=sid,
-                title=scraper.meta.title,
-                url=scraper.meta.url,
-                required_params=required,
-                optional_params=optional,
-                scraper=scraper,
-                module=name,
-                lads=scraper.meta.lads,
-                govuk_url=govuk,
-            )
-            for lad in scraper.meta.lads:
-                self._aliases[lad] = sid
-
-        for alias, lad in discovery.aliases().items():
-            name = owner.get(lad)
-            if name is None:
-                logger.warning("Alias %s points at %s, which no council module serves", alias, lad)
-                continue
-            if alias in public.values():
-                continue  # a module's own public ID: lad_lookup.json's current wiring wins
-            # The module wins: an old scraper under this ID is shadowed.
-            self._scrapers.pop(alias, None)
-            self._aliases[alias] = public[name]
-
-        logger.info(
-            "Loaded %d council modules (%d LADs, %d aliases); %d IDs in total",
-            len(public), len(owner), len(self._aliases), len(self._scrapers),
-        )
-
     def get(self, council_id: str) -> ScraperMeta | None:
-        """The entry for an ID or any alias of it."""
+        """The entry for a council ID, or for an old ID that resolves to one."""
         meta = self._scrapers.get(council_id)
         if meta is None and council_id in self._aliases:
             meta = self._scrapers.get(self._aliases[council_id])
         return meta
 
     def canonical_id(self, council_id: str) -> str:
-        """The ID an alias resolves to; unknown IDs come back unchanged."""
+        """The public ID an old ID resolves to; unknown IDs come back unchanged."""
         meta = self.get(council_id)
         return meta.id if meta is not None else council_id
 
@@ -236,17 +238,15 @@ class ScraperRegistry:
 
     async def invoke(self, council_id: str, params: dict) -> list[Any]:
         meta = self.get(council_id)
+        if meta is None:
+            raise UnknownCouncilError(f"No council answers to {council_id!r}")
         call: Awaitable[list[Any]]
-        if meta is not None and meta.scraper is not None:
+        if meta.scraper is not None:
             call = run(meta.scraper, params)
         else:
-            module = importlib.import_module(f"api.scrapers.{meta.id if meta else council_id}")
-            if meta:
-                accepted = set(meta.required_params + meta.optional_params)
-                filtered = {k: v for k, v in params.items() if k in accepted}
-            else:
-                filtered = params
-            call = module.Source(**filtered).fetch()
+            module = importlib.import_module(f"api.scrapers.{meta.module}")
+            accepted = set(meta.required_params + meta.optional_params)
+            call = module.Source(**{k: v for k, v in params.items() if k in accepted}).fetch()
         try:
             return await asyncio.wait_for(call, timeout=SCRAPER_TIMEOUT)
         except asyncio.TimeoutError:

@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI):
     # Startup
     logger.info("Building scraper registry...")
     app.state.registry = ScraperRegistry.build()
-    logger.info("Registry ready: %d scrapers", len(app.state.registry.list_all()))
+    logger.info("Registry ready: %d council IDs", len(app.state.registry.list_all()))
 
     app.state.council_lookup = CouncilLookup()
     if not app.state.council_lookup.parquet_loaded:

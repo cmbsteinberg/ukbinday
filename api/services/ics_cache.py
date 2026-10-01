@@ -81,8 +81,9 @@ class IcsCache:
     """Disk-backed ICS cache keyed by UPRN."""
 
     def __init__(self, root: Path, canonical_id: Callable[[str], str] | None = None) -> None:
-        """`canonical_id` resolves a scraper ID alias (the registry's), so a
-        sidecar written under an old scraper ID still counts as the same scraper."""
+        """`canonical_id` resolves an old council ID to its public one (the
+        registry's), so a sidecar written under an old scraper ID still counts
+        as the same council as its LAD code."""
         self.root = Path(root)
         self._canonical_id = canonical_id or (lambda scraper_id: scraper_id)
         self.root.mkdir(parents=True, exist_ok=True)

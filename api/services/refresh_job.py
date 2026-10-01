@@ -69,8 +69,10 @@ class RefreshJob:
             return
         try:
             try:
-                # entry.scraper may be an alias (an old scraper ID now served by a
-                # council module); invoke resolves it and the write stores the resolved ID.
+                # entry.scraper may be an old scraper ID from before the switch to LAD
+                # codes: invoke resolves it and the write stores the LAD code, so the
+                # sidecar is migrated on its first successful refresh. An ID nothing
+                # answers to raises UnknownCouncilError and ages out as a failure.
                 collections = await self.registry.invoke(entry.scraper, entry.params)
                 self.registry.record_success(entry.scraper)
                 await self.cache.write(

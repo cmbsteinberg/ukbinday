@@ -243,6 +243,8 @@ def _fixture_cases(lad: str, rows: list[dict]) -> list[dict]:
 
 
 def _registry_required() -> dict[str, list[str]]:
+    """Council ID -> required params. Councils are keyed by LAD code; an old
+    scraper no LAD is wired to keeps its scraper ID."""
     import logging as _logging
 
     from api.services.scraper_registry import ScraperRegistry
@@ -296,7 +298,7 @@ async def build(
 
     async def one(code: str, info: dict) -> tuple[str, dict]:
         sid = info["scraper_id"]
-        unmet = sorted(set(required.get(sid, [])) - FRONTEND_PARAMS)
+        unmet = sorted(set(required.get(code, [])) - FRONTEND_PARAMS)
         entry: dict = {"name": info.get("name"), "scraper_id": sid, "cases": [], "notes": []}
         if unmet:
             entry["fixture_only"] = True
@@ -311,7 +313,7 @@ async def build(
         stats["kept"] += len(kept)
         stats["dropped"] += len(prev_sampled) - len(kept)
 
-        if sid not in required:
+        if code not in required:
             entry["notes"].append("scraper not loadable by registry")
         if unmet:
             entry["notes"].append(f"fixture-only: frontend cannot supply required {unmet}")

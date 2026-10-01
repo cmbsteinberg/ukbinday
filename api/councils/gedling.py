@@ -1,66 +1,56 @@
-"""Gedling: query the bin calendar API using the house number and/or postcode."""
+"""Gedling: search by postcode, match an address, then read its next collection dates."""
 
 from __future__ import annotations
 
-from datetime import datetime
+from bs4 import BeautifulSoup
 
-from api.councils._base import Address, Collection, Http, InputError, Meta, Scraper
-
-_API_URL = "https://api.gbcbincalendars.co.uk/get-bin-collection-calendar"
-_HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/134.0.0.0 Safari/537.36"
-    ),
-}
+from api.councils._base import Collection, Meta, parse_date, text_of
+from api.councils._platforms.liberty_create import LibertyCreate, LibertyCreateConfig
 
 
-class Gedling(Scraper):
-    meta = Meta(
+def _dated_rows(page: BeautifulSoup) -> list[Collection]:
+    """Rows of (service, weekday, date); the service is "Recycling Collection Service"."""
+    collections: list[Collection] = []
+    for row in page.select("table.listing tbody tr"):
+        cells = row.find_all("td")
+        if len(cells) < 3:
+            continue
+        node = cells[0].select_one("[data-current_value]")  # the cell's text is rendered by script
+        if node is None:
+            continue
+        service = str(node["data-current_value"])
+        collections.append(
+            Collection(
+                date=parse_date(text_of(cells[2])),
+                type=service.removesuffix(" Collection Service"),
+            )
+        )
+    return collections
+
+
+SCRAPER = LibertyCreate(
+    Meta(
         title="Gedling",
         url="https://waste.digital.gedling.gov.uk/w/webpage/bin-collections",
         lads=("E07000173",),
-        cases={},
-    )
-    requires = frozenset()
-
-    async def fetch(self, address: Address, http: Http) -> list[Collection]:
-        house_number = address.house_number
-        postcode = address.postcode
-
-        if house_number and postcode:
-            address_query = f"{house_number} {postcode}"
-        elif postcode:
-            address_query = postcode
-        elif house_number:
-            address_query = house_number
-        else:
-            raise InputError(
-                "Supply a postcode, or house number + postcode, to look up "
-                "your Gedling bin collection schedule."
-            )
-
-        response = await http.get(
-            _API_URL,
-            params={"address": address_query},
-            headers=_HEADERS,
-            timeout=30,
-        )
-        result = response.json()
-        if not result.get("collections"):
-            return []
-
-        run_date = datetime.now().date()
-        collections = []
-        for month_block in result["collections"]:
-            for entry in month_block.get("dates", []):
-                bin_date = datetime.strptime(entry["date"], "%Y-%m-%d").date()
-                if bin_date < run_date:
-                    continue
-                for service in entry.get("collections", []):
-                    collections.append(Collection(bin_date, service))
-        return collections
-
-
-SCRAPER = Gedling()
+        cases={
+            "4 Denbury Road": {
+                "postcode": "NG15 9FQ",
+                "house_number": "4",
+                "street": "Denbury Road",
+            },
+            "2 Orchard Court": {
+                "postcode": "NG4 4FF",
+                "house_number": "2",
+                "street": "Orchard Court",
+            },
+        },
+    ),
+    LibertyCreateConfig(
+        base_url="https://waste.digital.gedling.gov.uk",
+        landing_path="/w/webpage/bin-collections",
+        subpage_id="PAG0000634GBSHB1",
+        address_field="PCF0014909",
+        parse=_dated_rows,
+    ),
+)

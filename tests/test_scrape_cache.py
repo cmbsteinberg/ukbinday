@@ -21,8 +21,8 @@ from api.services.scrape_orchestrator import is_cacheable_uprn
 
 pytestmark = pytest.mark.api
 
-A = "hacs_cambridge_gov_uk"
-B = "hacs_bolton_gov_uk"
+A = "E07000008"  # Cambridge
+B = "E08000001"  # Bolton
 
 
 @pytest_asyncio.fixture(scope="module", loop_scope="session")

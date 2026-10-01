@@ -28,10 +28,11 @@ def _normalize_postcode(postcode: str) -> str:
 
 @dataclass
 class LocalAuthority:
+    """A council a postcode resolves to. Whether it's wired is the registry's call."""
+
     name: str
-    slug: str
     homepage_url: str
-    lad_code: str = ""
+    lad_code: str
 
 
 class CouncilLookup:
@@ -100,7 +101,6 @@ class CouncilLookup:
                 authorities.append(
                     LocalAuthority(
                         name=council["name"],
-                        slug=council["scraper_id"] or "",
                         homepage_url=council["url"] or "",
                         lad_code=lad,
                     )
@@ -114,18 +114,3 @@ class CouncilLookup:
             )
 
         return authorities
-
-    async def get_authority_by_slug(self, slug: str) -> LocalAuthority:
-        """Look up a specific local authority by its slug (scraper_id)."""
-        logger.info("Looking up authority by slug: %s", slug)
-
-        for lad, council in self._lad_to_council.items():
-            if council["scraper_id"] == slug:
-                return LocalAuthority(
-                    name=council["name"],
-                    slug=slug,
-                    homepage_url=council["url"] or "",
-                    lad_code=lad,
-                )
-
-        raise ValueError(f"Authority with slug '{slug}' not found locally")
