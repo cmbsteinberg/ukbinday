@@ -4,13 +4,18 @@ Two stages, deliberately separate:
 
   build_base()  ONSPD parquet codes + ONS boundary names + GOV.UK Local Links
                 Manager URLs        ->  pipeline/data/lad_base.json
-  compose()     lad_base.json + pipeline/data/scraper_lad_map.json
+  compose()     lad_base.json + the council modules' meta.lads/meta.url
+                + pipeline/lad_overrides.json (notes for unwired LADs)
                                     ->  api/data/lad_lookup.json
 
 Stage 1 needs the upstream sources in the fetch cache, so it only runs after
 `scripts/lookup/fetch_latest.sh` and only when ONS/GOV.UK publish something new.
-Its output is committed. Stage 2 reads nothing but committed files, so
-`sync_all.py` and CI can rebuild the API's mapping at any time.
+Its output is committed. Stage 2 reads nothing but committed files, so it can
+rebuild the API's mapping at any time: run it after adding a council module or
+changing a module's `lads` or `url`.
+
+The modules are the source of truth for wiring: a LAD is wired when a module in
+api/councils/ claims it, and its `scraper_id` is that module's name.
 
 The keys of lad_base.json are exactly the LAD codes that
 `pipeline/data/onspd_postcode_lad.parquet` can return, because those are the
@@ -43,7 +48,6 @@ logger = logging.getLogger(__name__)
 ROOT = Path(__file__).resolve().parent.parent.parent
 ONSPD_PARQUET = ROOT / "pipeline" / "data" / "onspd_postcode_lad.parquet"
 LAD_BASE_PATH = ROOT / "pipeline" / "data" / "lad_base.json"
-SCRAPER_MAP_PATH = ROOT / "pipeline" / "data" / "scraper_lad_map.json"
 LAD_LOOKUP_PATH = ROOT / "api" / "data" / "lad_lookup.json"
 
 CACHE_DIR = Path(
@@ -86,14 +90,6 @@ CODE_ALIASES = {
 }
 
 
-# One scraper legitimately serves many councils via their public Google
-# Calendar feeds, so its domain never matches any council's. Any other
-# domain mismatch is a wiring bug worth shouting about.
-# NOTE 2026-09-03: the calendar scraper is currently blocklisted (see
-# "unwired_lads" in pipeline/lad_overrides.json) — its URL is the shared
-# UKBCD *test* fixture, not per-council data. Kept here so the exemption
-# still applies if real per-council feeds ever re-wire it.
-PASSTHROUGH_SCRAPERS = {"ukbcd_google_public_calendar_council"}
 
 # Domain words that identify a host rather than a council.
 _GENERIC_DOMAIN_WORDS = {
@@ -115,16 +111,14 @@ def _domain_words(domain: str) -> set[str]:
 
 
 def check_scraper_matches_council(lookup: dict[str, dict]) -> list[str]:
-    """Warn where a LAD's scraper looks like it belongs to a different council.
+    """Warn where a LAD's module looks like it belongs to a different council.
 
-    input.json decides which council a scraper serves, and its `LAD24CD` and
-    `url` fields are unvalidated upstream — a wrong one silently serves another
-    council's bin days (E06000008 once resolved to Blaby's scraper because
-    input.json listed Blackburn with Blaby's URL). `govuk_url` is an independent
-    per-LAD domain from GOV.UK, so disagreement between it and the scraper's own
-    URL is a cheap signal. Councils that outsource to a third-party portal
-    legitimately disagree, so a scraper whose name matches the council name is
-    accepted too.
+    A wrong code in a module's `lads` silently serves another council's bin
+    days (E06000008 once resolved to Blaby's scraper because upstream listed
+    Blackburn with Blaby's URL). `govuk_url` is an independent per-LAD domain
+    from GOV.UK, so disagreement between it and the module's `meta.url` is a
+    cheap signal. Councils that outsource to a third-party portal legitimately
+    disagree, so a module whose name matches the council name is accepted too.
     """
     suspect = []
     for code, entry in sorted(lookup.items(), key=lambda kv: kv[1]["name"]):
@@ -135,12 +129,10 @@ def check_scraper_matches_council(lookup: dict[str, dict]) -> list[str]:
         )
         if not scraper_id or not url or not govuk_url:
             continue
-        if scraper_id in PASSTHROUGH_SCRAPERS:
-            continue
         scraper_domain = normalise_domain(url)
         if _domain_words(scraper_domain) & _domain_words(normalise_domain(govuk_url)):
             continue
-        stem = scraper_id.split("_", 1)[-1]
+        stem = scraper_id
         name_words = {w.lower() for w in entry["name"].replace(",", " ").split()}
         if any(len(w) > 3 and w[:5] in stem for w in name_words):
             continue
@@ -155,9 +147,8 @@ def check_scraper_matches_council(lookup: dict[str, dict]) -> list[str]:
         )
     if suspect:
         logger.warning(
-            "%d LAD(s) wired to a scraper whose domain matches neither the "
-            "council name nor its GOV.UK page — check for a bad LAD24CD or url "
-            "in input.json, and override in pipeline/lad_overrides.json",
+            "%d LAD(s) wired to a module whose domain matches neither the "
+            "council name nor its GOV.UK page — check the module's lads and url",
             len(suspect),
         )
     return suspect
@@ -244,42 +235,59 @@ def build_base() -> dict[str, dict]:
     return base
 
 
+def module_wiring(known: set[str]) -> tuple[dict[str, dict], dict[str, str]]:
+    """(LAD code -> {scraper_id, url}, LAD code -> module name) from api/councils/.
+
+    Fails on a LAD claimed twice or a code not in `known`, as the registry does
+    at startup.
+    """
+    from api.councils._base import discovery  # noqa: PLC0415
+
+    scrapers = discovery.load_all()
+    owner = discovery.by_lad(scrapers, known)
+    for name in sorted(set(scrapers) - set(owner.values())):
+        logger.warning("Council module %s claims no LAD", name)
+    wiring = {
+        code: {"scraper_id": name, "url": scrapers[name].meta.url}
+        for code, name in owner.items()
+    }
+    return wiring, owner
+
+
 def compose() -> dict[str, dict]:
-    """Write api/data/lad_lookup.json from the base plus this sync's scraper wiring."""
+    """Write api/data/lad_lookup.json from the base plus the council modules."""
     if not LAD_BASE_PATH.exists():
         raise SystemExit(
             f"{LAD_BASE_PATH} not found — run without --compose to build it."
         )
     base = json.loads(LAD_BASE_PATH.read_text())
+    scrapers, owner = module_wiring(set(base))
 
-    if SCRAPER_MAP_PATH.exists():
-        scrapers = json.loads(SCRAPER_MAP_PATH.read_text())
-    else:
-        scrapers = {}
-        logger.warning(
-            "%s not found — every entry will have a null scraper_id.",
-            SCRAPER_MAP_PATH,
-        )
-
-    # Deliberately unwired LADs (placeholder scrapers that can never return
-    # real data). Stripped here so any sync output re-wiring them is settled
-    # back to null at composition time; the reason ships as "status".
+    # Councils deliberately left without a module, with the reason; it ships
+    # as the entry's "status". A module claiming one of them is a contradiction.
+    from api.councils._base.discovery import aliases  # noqa: PLC0415
     from pipeline.shared import load_deeplink_urls, load_unwired_lads  # noqa: PLC0415
 
     unwired = load_unwired_lads()
-    for code in unwired:
-        scrapers.pop(code, None)
+    both = sorted(set(unwired) & set(scrapers))
+    if both:
+        claims = ", ".join(f"{c} ({owner[c]})" for c in both)
+        raise SystemExit(
+            f"Claimed by a module but listed as unwired in pipeline/lad_overrides.json: "
+            f"{claims}. Remove one."
+        )
 
     # Unwired LADs whose default deeplink target (GOV.UK) is dead or wrong.
-    # A wired scraper's own url always wins, so an override on a wired code is
+    # A wired module's own url always wins, so an override on a wired code is
     # inert — worth saying out loud rather than leaving it to rot.
     deeplink_urls = load_deeplink_urls()
-    inert = sorted(code for code in deeplink_urls if scrapers.get(code, {}).get("url"))
+    inert = sorted(code for code in deeplink_urls if code in scrapers)
     if inert:
         logger.warning(
             "deeplink_urls override(s) ignored — these LADs are wired: %s",
             ", ".join(inert),
         )
+    old_ids = aliases()
 
     previous = (
         json.loads(LAD_LOOKUP_PATH.read_text()) if LAD_LOOKUP_PATH.exists() else {}
@@ -298,21 +306,17 @@ def compose() -> dict[str, dict]:
             record["status"] = unwired[code]
         # `working` is written by scripts.annotate_lad_working, which keeps the
         # previous flag for LADs a live run didn't decide. Carry it across, but
-        # only for the same scraper: a flag earned by another scraper means nothing.
+        # only for the same module: a flag earned by another scraper means nothing.
+        # A previous old scraper ID counts as the module its alias resolves to.
         was = previous.get(code, {})
         if "working" in was:
-            record["working"] = (
-                was["working"] if was.get("scraper_id") == record["scraper_id"] else False
+            was_id = was.get("scraper_id")
+            same = was_id == record["scraper_id"] or (
+                record["scraper_id"] is not None
+                and owner.get(old_ids.get(was_id, "")) == record["scraper_id"]
             )
+            record["working"] = was["working"] if same else False
         lookup[code] = record
-
-    stale = sorted(set(scrapers) - set(base))
-    if stale:
-        logger.info(
-            "Dropped %d scraper mapping(s) for codes ONSPD no longer returns: %s",
-            len(stale),
-            ", ".join(f"{c} ({scrapers[c].get('scraper_id')})" for c in stale),
-        )
 
     added = sorted(set(lookup) - set(previous))
     removed = sorted(set(previous) - set(lookup))
@@ -322,7 +326,7 @@ def compose() -> dict[str, dict]:
         if previous[c].get("name") != lookup[c]["name"]
     ]
     logger.info(
-        "lad_lookup.json: %d entries (%d with a scraper) — +%d added, -%d removed, "
+        "lad_lookup.json: %d entries (%d with a module) — +%d added, -%d removed, "
         "%d renamed",
         len(lookup),
         sum(1 for e in lookup.values() if e["scraper_id"]),

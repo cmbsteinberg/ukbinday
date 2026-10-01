@@ -95,7 +95,7 @@ def main():
         )
 
     # Council counts from lad_lookup (our source of truth), not GeoJSON features
-    # Multiple LADs can share a scraper, so count unique scrapers for "covered"
+    # Multiple LADs can share a module, so count unique modules for "covered"
     total_councils = len(lad_lookup)
     covered_scrapers = {
         info["scraper_id"] for info in lad_lookup.values() if info.get("scraper_id")

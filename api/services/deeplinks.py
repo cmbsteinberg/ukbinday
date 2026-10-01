@@ -2,9 +2,8 @@
 
 A deeplink is a structured "check on the council website instead" response:
 a URL plus a human-readable reason. It covers every unwired LAD in
-``lad_lookup.json`` (``scraper_id: null``) — the settled test-fixture
-blocklist, the deeplink-unwired settlements (Fylde, Southampton), and the
-build backlog (Brighton et al, served deeplink-shaped until ported).
+``lad_lookup.json`` (``scraper_id: null``: no council module claims it), with
+the reason from ``pipeline/lad_overrides.json`` where one is recorded.
 
 URL priority: council bin page (``url``) > GOV.UK page (``govuk_url``).
 Reason: the entry's ``status`` line, or a generic fallback.

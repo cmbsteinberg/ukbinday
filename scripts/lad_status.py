@@ -71,7 +71,7 @@ def working_by_lad(lad_lookup: dict) -> dict[str, bool]:
             out[code] = False
             continue
         r = lads.get(code)
-        # Not in this run, or tested against a different scraper: keep the flag
+        # Not in this run, or tested against a different module: keep the flag
         if r is None or r.get("scraper_id") != info["scraper_id"] or r["status"] == "unverified":
             out[code] = previous
         else:

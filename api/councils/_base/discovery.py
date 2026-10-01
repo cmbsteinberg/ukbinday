@@ -33,9 +33,20 @@ def load(name: str) -> Scraper:
     return scraper
 
 
-def by_lad(scrapers: dict[str, Scraper]) -> dict[str, str]:
-    """LAD code -> module name. Raises on a code claimed twice or not a real LAD."""
-    known = set(json.loads(LAD_LOOKUP.read_text()))
+def load_all() -> dict[str, Scraper]:
+    """Module name -> its SCRAPER, for every council module."""
+    return {name: load(name) for name in module_names()}
+
+
+def by_lad(scrapers: dict[str, Scraper], known: set[str] | None = None) -> dict[str, str]:
+    """LAD code -> module name. Raises on a code claimed twice or not a real LAD.
+
+    `known` defaults to the keys of lad_lookup.json (every LAD a postcode can
+    resolve to); scripts/lookup/build_lad_lookup passes lad_base.json's, since
+    it is the one writing lad_lookup.json.
+    """
+    if known is None:
+        known = set(json.loads(LAD_LOOKUP.read_text()))
     owner: dict[str, str] = {}
     for name, scraper in scrapers.items():
         for lad in scraper.meta.lads:

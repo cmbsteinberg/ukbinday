@@ -98,10 +98,10 @@ def _load_lads() -> dict[str, dict]:
 LADS = _load_lads()
 
 
-def _job_key(scraper_id: str, params: dict) -> str:
-    """Two LADs sharing a scraper and a fixture must not race on one UPRN, so
-    jobs dedupe on the scraper; the request carries the first LAD's code."""
-    return scraper_id + "|" + json.dumps(params, sort_keys=True)
+def _job_key(module: str, params: dict) -> str:
+    """Two LADs sharing a module and a fixture must not race on one UPRN, so
+    jobs dedupe on the module; the request carries the first LAD's code."""
+    return module + "|" + json.dumps(params, sort_keys=True)
 
 
 def _classify_http(status: int, body: dict | None) -> str:
@@ -196,12 +196,15 @@ async def lad_results() -> dict:
 
     async with LifespanManager(app) as manager:
         registry = app.state.registry
+        # The module the registry serves each LAD with, which may differ from the
+        # cases file's scraper_id when the file predates a rewiring
+        module = {code: (m.module if (m := registry.get(code)) else entry["scraper_id"]) for code, entry in LADS.items()}
         transport = httpx.ASGITransport(app=manager.app, raise_app_exceptions=False)
         async with httpx.AsyncClient(transport=transport, base_url=BASE_URL, timeout=REQUEST_TIMEOUT) as client:
             jobs: dict[str, tuple[str, dict]] = {}
             for code, entry in LADS.items():
                 for case in entry["cases"]:
-                    jobs.setdefault(_job_key(entry["scraper_id"], case["params"]), (code, case["params"]))
+                    jobs.setdefault(_job_key(module[code], case["params"]), (code, case["params"]))
 
             sem = asyncio.Semaphore(MAX_CONCURRENCY)
 
@@ -245,12 +248,12 @@ async def lad_results() -> dict:
     for code, entry in LADS.items():
         cases = []
         for case in entry["cases"]:
-            r = results[_job_key(entry["scraper_id"], case["params"])]
+            r = results[_job_key(module[code], case["params"])]
             cases.append({"id": case["id"], "source": case["source"], "label": case.get("label"),
                           "uprn": case["params"].get("uprn"), **r})
         fixture_only = bool(entry.get("fixture_only"))
         status, reason = lad_status(cases, fixture_only)
-        lads_out[code] = {"name": entry.get("name"), "scraper_id": entry["scraper_id"],
+        lads_out[code] = {"name": entry.get("name"), "scraper_id": module[code],
                           "fixture_only": fixture_only, "status": status, "reason": reason,
                           "passed_sources": sorted({c["source"] for c in cases if c["outcome"] == "pass"}),
                           "cases": cases}

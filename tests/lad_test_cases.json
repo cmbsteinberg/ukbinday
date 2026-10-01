@@ -43,10 +43,22 @@
       }
     ],
     "name": "Hartlepool",
-    "scraper_id": "hacs_hartlepool_gov_uk"
+    "scraper_id": "hartlepool"
   },
   "E06000002": {
     "cases": [
+      {
+        "id": "E06000002-s1",
+        "label": "8, Darwen Court, Hemlington, Middlesbrough, TS8 9JF",
+        "params": {
+          "address": "8, Darwen Court, Hemlington, Middlesbrough, TS8 9JF",
+          "house_number": "8",
+          "postcode": "TS8 9JF",
+          "street": "Darwen Court",
+          "uprn": "100110105446"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E06000002-s2",
         "label": "110, Park Lane, Middlesbrough, TS1 3LL",
@@ -58,22 +70,10 @@
           "uprn": "100110129190"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E06000002-s5",
-        "label": "10, Middleton Avenue, Middlesbrough, TS5 4JT",
-        "params": {
-          "address": "10, Middleton Avenue, Middlesbrough, TS5 4JT",
-          "house_number": "10",
-          "postcode": "TS5 4JT",
-          "street": "Middleton Avenue",
-          "uprn": "100110125003"
-        },
-        "source": "sampled"
       }
     ],
     "name": "Middlesbrough",
-    "scraper_id": "ukbcd_middlesbrough_council"
+    "scraper_id": "middlesbrough"
   },
   "E06000003": {
     "cases": [
@@ -103,7 +103,7 @@
       }
     ],
     "name": "Redcar and Cleveland",
-    "scraper_id": "ukbcd_redcarand_cleveland_council"
+    "scraper_id": "redcar_and_cleveland"
   },
   "E06000004": {
     "cases": [
@@ -157,7 +157,7 @@
       }
     ],
     "name": "Stockton-on-Tees",
-    "scraper_id": "hacs_stockton_gov_uk"
+    "scraper_id": "stockton_on_tees"
   },
   "E06000005": {
     "cases": [
@@ -211,7 +211,7 @@
       }
     ],
     "name": "Darlington",
-    "scraper_id": "hacs_darlington_gov_uk"
+    "scraper_id": "darlington"
   },
   "E06000007": {
     "cases": [
@@ -265,7 +265,7 @@
       }
     ],
     "name": "Warrington",
-    "scraper_id": "hacs_warrington_gov_uk"
+    "scraper_id": "warrington"
   },
   "E06000008": {
     "cases": [
@@ -319,7 +319,7 @@
       }
     ],
     "name": "Blackburn with Darwen",
-    "scraper_id": "hacs_blackburn_gov_uk"
+    "scraper_id": "blackburn_with_darwen"
   },
   "E06000009": {
     "cases": [
@@ -376,7 +376,7 @@
       }
     ],
     "name": "Blackpool",
-    "scraper_id": "hacs_blackpool_gov_uk"
+    "scraper_id": "blackpool"
   },
   "E06000010": {
     "cases": [
@@ -422,7 +422,7 @@
       }
     ],
     "name": "Kingston upon Hull, City of",
-    "scraper_id": "hacs_hull_gov_uk"
+    "scraper_id": "kingston_upon_hull"
   },
   "E06000011": {
     "cases": [
@@ -479,7 +479,7 @@
       }
     ],
     "name": "East Riding of Yorkshire",
-    "scraper_id": "hacs_eastriding_gov_uk"
+    "scraper_id": "east_riding_of_yorkshire"
   },
   "E06000012": {
     "cases": [
@@ -525,7 +525,7 @@
       }
     ],
     "name": "North East Lincolnshire",
-    "scraper_id": "hacs_nelincs_gov_uk"
+    "scraper_id": "north_east_lincolnshire"
   },
   "E06000013": {
     "cases": [
@@ -579,7 +579,7 @@
       }
     ],
     "name": "North Lincolnshire",
-    "scraper_id": "hacs_northlincs_gov_uk"
+    "scraper_id": "north_lincolnshire"
   },
   "E06000014": {
     "cases": [
@@ -625,7 +625,7 @@
       }
     ],
     "name": "York",
-    "scraper_id": "hacs_york_gov_uk"
+    "scraper_id": "york"
   },
   "E06000015": {
     "cases": [
@@ -671,7 +671,7 @@
       }
     ],
     "name": "Derby",
-    "scraper_id": "hacs_derby_gov_uk"
+    "scraper_id": "derby"
   },
   "E06000016": {
     "cases": [
@@ -701,7 +701,7 @@
       }
     ],
     "name": "Leicester",
-    "scraper_id": "ukbcd_leicester_city_council"
+    "scraper_id": "leicester"
   },
   "E06000018": {
     "cases": [
@@ -747,7 +747,7 @@
       }
     ],
     "name": "Nottingham",
-    "scraper_id": "hacs_nottingham_city_gov_uk"
+    "scraper_id": "nottingham"
   },
   "E06000019": {
     "cases": [
@@ -795,7 +795,7 @@
       }
     ],
     "name": "Herefordshire, County of",
-    "scraper_id": "hacs_herefordshire_gov_uk"
+    "scraper_id": "herefordshire"
   },
   "E06000020": {
     "cases": [
@@ -851,7 +851,7 @@
       }
     ],
     "name": "Telford and Wrekin",
-    "scraper_id": "hacs_telford_gov_uk"
+    "scraper_id": "telford_and_wrekin"
   },
   "E06000021": {
     "cases": [
@@ -897,7 +897,7 @@
       }
     ],
     "name": "Stoke-on-Trent",
-    "scraper_id": "hacs_stoke_gov_uk"
+    "scraper_id": "stoke_on_trent"
   },
   "E06000022": {
     "cases": [
@@ -953,7 +953,7 @@
       }
     ],
     "name": "Bath and North East Somerset",
-    "scraper_id": "hacs_bathnes_gov_uk"
+    "scraper_id": "bath_and_north_east_somerset"
   },
   "E06000023": {
     "cases": [
@@ -1007,7 +1007,7 @@
       }
     ],
     "name": "Bristol, City of",
-    "scraper_id": "hacs_bristol_gov_uk"
+    "scraper_id": "bristol"
   },
   "E06000024": {
     "cases": [
@@ -1055,7 +1055,7 @@
       }
     ],
     "name": "North Somerset",
-    "scraper_id": "hacs_nsomerset_gov_uk"
+    "scraper_id": "north_somerset"
   },
   "E06000025": {
     "cases": [
@@ -1101,12 +1101,24 @@
       }
     ],
     "name": "South Gloucestershire",
-    "scraper_id": "hacs_southglos_gov_uk"
+    "scraper_id": "south_gloucestershire"
   },
   "E06000026": {
     "cases": [
       {
-        "id": "E06000026-s6",
+        "id": "E06000026-s1",
+        "label": "9, Research Way, Derriford, Plymouth, PL6 8BT",
+        "params": {
+          "address": "9, Research Way, Derriford, Plymouth, PL6 8BT",
+          "house_number": "9",
+          "postcode": "PL6 8BT",
+          "street": "Research Way",
+          "uprn": "10000796025"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E06000026-s2",
         "label": "41, South Down Road, Plymouth, PL2 3HW",
         "params": {
           "address": "41, South Down Road, Plymouth, PL2 3HW",
@@ -1114,18 +1126,6 @@
           "postcode": "PL2 3HW",
           "street": "South Down Road",
           "uprn": "100040486381"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E06000026-s7",
-        "label": "72, Shirburn Road, Plymouth, PL6 5PH",
-        "params": {
-          "address": "72, Shirburn Road, Plymouth, PL6 5PH",
-          "house_number": "72",
-          "postcode": "PL6 5PH",
-          "street": "Shirburn Road",
-          "uprn": "100040485598"
         },
         "source": "sampled"
       },
@@ -1155,7 +1155,7 @@
       }
     ],
     "name": "Plymouth",
-    "scraper_id": "hacs_plymouth_gov_uk"
+    "scraper_id": "plymouth"
   },
   "E06000027": {
     "cases": [
@@ -1193,7 +1193,7 @@
       }
     ],
     "name": "Torbay",
-    "scraper_id": "port_torbay_council"
+    "scraper_id": "torbay"
   },
   "E06000030": {
     "cases": [
@@ -1247,7 +1247,7 @@
       }
     ],
     "name": "Swindon",
-    "scraper_id": "hacs_swindon_gov_uk"
+    "scraper_id": "swindon"
   },
   "E06000031": {
     "cases": [
@@ -1264,7 +1264,7 @@
         "source": "sampled"
       },
       {
-        "id": "E06000031-s6",
+        "id": "E06000031-s2",
         "label": "6 Space, St. Peters Road, Peterborough, PE1 1YX",
         "params": {
           "address": "6 Space, St. Peters Road, Peterborough, PE1 1YX",
@@ -1286,7 +1286,7 @@
       }
     ],
     "name": "Peterborough",
-    "scraper_id": "hacs_peterborough_gov_uk"
+    "scraper_id": "peterborough"
   },
   "E06000032": {
     "cases": [
@@ -1316,7 +1316,7 @@
       }
     ],
     "name": "Luton",
-    "scraper_id": "ukbcd_luton_borough_council"
+    "scraper_id": "luton"
   },
   "E06000033": {
     "cases": [
@@ -1364,7 +1364,7 @@
       }
     ],
     "name": "Southend-on-Sea",
-    "scraper_id": "hacs_southend_gov_uk"
+    "scraper_id": "southend_on_sea"
   },
   "E06000034": {
     "cases": [
@@ -1392,7 +1392,7 @@
     "notes": [
       "fixture-only: frontend cannot supply required ['town']"
     ],
-    "scraper_id": "hacs_thurrock_gov_uk"
+    "scraper_id": "thurrock"
   },
   "E06000035": {
     "cases": [
@@ -1439,7 +1439,7 @@
       }
     ],
     "name": "Medway",
-    "scraper_id": "hacs_medway_gov_uk"
+    "scraper_id": "medway"
   },
   "E06000036": {
     "cases": [
@@ -1496,7 +1496,7 @@
       }
     ],
     "name": "Bracknell Forest",
-    "scraper_id": "hacs_bracknell_forest_gov_uk"
+    "scraper_id": "bracknell_forest"
   },
   "E06000037": {
     "cases": [
@@ -1513,14 +1513,14 @@
         "source": "sampled"
       },
       {
-        "id": "E06000037-s3",
-        "label": "1101, Oxford Road, Tilehurst, Reading, RG31 6YE",
+        "id": "E06000037-s2",
+        "label": "22, Lowbury Gardens, Compton, Newbury, RG20 6NN",
         "params": {
-          "address": "1101, Oxford Road, Tilehurst, Reading, RG31 6YE",
-          "house_number": "1101",
-          "postcode": "RG31 6YE",
-          "street": "Oxford Road",
-          "uprn": "200004724948"
+          "address": "22, Lowbury Gardens, Compton, Newbury, RG20 6NN",
+          "house_number": "22",
+          "postcode": "RG20 6NN",
+          "street": "Lowbury Gardens",
+          "uprn": "10023919984"
         },
         "source": "sampled"
       },
@@ -1552,7 +1552,7 @@
       }
     ],
     "name": "West Berkshire",
-    "scraper_id": "hacs_westberks_gov_uk"
+    "scraper_id": "west_berkshire"
   },
   "E06000038": {
     "cases": [
@@ -1599,7 +1599,7 @@
       }
     ],
     "name": "Reading",
-    "scraper_id": "hacs_reading_gov_uk"
+    "scraper_id": "reading"
   },
   "E06000039": {
     "cases": [
@@ -1616,14 +1616,14 @@
         "source": "sampled"
       },
       {
-        "id": "E06000039-s3",
-        "label": "6, Waterman Court, Slough, SL1 5TF",
+        "id": "E06000039-s2",
+        "label": "6, Cranford Drive, Slough, SL1 5FA",
         "params": {
-          "address": "6, Waterman Court, Slough, SL1 5TF",
+          "address": "6, Cranford Drive, Slough, SL1 5FA",
           "house_number": "6",
-          "postcode": "SL1 5TF",
-          "street": "Waterman Court",
-          "uprn": "100080344817"
+          "postcode": "SL1 5FA",
+          "street": "Cranford Drive",
+          "uprn": "10022917569"
         },
         "source": "sampled"
       },
@@ -1653,7 +1653,7 @@
       }
     ],
     "name": "Slough",
-    "scraper_id": "hacs_slough_gov_uk"
+    "scraper_id": "slough"
   },
   "E06000040": {
     "cases": [
@@ -1708,7 +1708,7 @@
       }
     ],
     "name": "Windsor and Maidenhead",
-    "scraper_id": "hacs_rbwm_gov_uk"
+    "scraper_id": "windsor_and_maidenhead"
   },
   "E06000041": {
     "cases": [
@@ -1766,7 +1766,7 @@
       }
     ],
     "name": "Wokingham",
-    "scraper_id": "hacs_wokingham_gov_uk"
+    "scraper_id": "wokingham"
   },
   "E06000042": {
     "cases": [
@@ -1796,7 +1796,7 @@
       }
     ],
     "name": "Milton Keynes",
-    "scraper_id": "ukbcd_milton_keynes_city_council"
+    "scraper_id": "milton_keynes"
   },
   "E06000044": {
     "cases": [
@@ -1842,7 +1842,7 @@
       }
     ],
     "name": "Portsmouth",
-    "scraper_id": "hacs_portsmouth_gov_uk"
+    "scraper_id": "portsmouth"
   },
   "E06000047": {
     "cases": [
@@ -1888,7 +1888,7 @@
       }
     ],
     "name": "County Durham",
-    "scraper_id": "hacs_durham_gov_uk"
+    "scraper_id": "county_durham"
   },
   "E06000049": {
     "cases": [
@@ -1918,7 +1918,7 @@
       }
     ],
     "name": "Cheshire East",
-    "scraper_id": "ukbcd_cheshire_east_council"
+    "scraper_id": "cheshire_east"
   },
   "E06000050": {
     "cases": [
@@ -1935,14 +1935,14 @@
         "source": "sampled"
       },
       {
-        "id": "E06000050-s3",
-        "label": "23, Cowhey Close, Chester, CH4 7QT",
+        "id": "E06000050-s2",
+        "label": "6, The Quad Mercury Court, Chester, CH1 4QP",
         "params": {
-          "address": "23, Cowhey Close, Chester, CH4 7QT",
-          "house_number": "23",
-          "postcode": "CH4 7QT",
-          "street": "Cowhey Close",
-          "uprn": "100010007699"
+          "address": "6, The Quad Mercury Court, Chester, CH1 4QP",
+          "house_number": "6",
+          "postcode": "CH1 4QP",
+          "street": "The Quad Mercury Court",
+          "uprn": "100012825079"
         },
         "source": "sampled"
       },
@@ -1972,7 +1972,7 @@
       }
     ],
     "name": "Cheshire West and Chester",
-    "scraper_id": "hacs_cheshire_west_and_chester_gov_uk"
+    "scraper_id": "cheshire_west_and_chester"
   },
   "E06000051": {
     "cases": [
@@ -2018,7 +2018,7 @@
       }
     ],
     "name": "Shropshire",
-    "scraper_id": "hacs_shropshire_gov_uk"
+    "scraper_id": "shropshire"
   },
   "E06000052": {
     "cases": [
@@ -2074,10 +2074,22 @@
       }
     ],
     "name": "Cornwall",
-    "scraper_id": "hacs_cornwall_gov_uk"
+    "scraper_id": "cornwall"
   },
   "E06000054": {
     "cases": [
+      {
+        "id": "E06000054-s1",
+        "label": "10a, Warminster Road, Westbury, BA13 3PB",
+        "params": {
+          "address": "10a, Warminster Road, Westbury, BA13 3PB",
+          "house_number": "10a",
+          "postcode": "BA13 3PB",
+          "street": "Warminster Road",
+          "uprn": "10093532793"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E06000054-s2",
         "label": "1, Houghton Close, Warminster, BA12 9QZ",
@@ -2087,18 +2099,6 @@
           "postcode": "BA12 9QZ",
           "street": "Houghton Close",
           "uprn": "200001306480"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E06000054-s3",
-        "label": "24, Longleaze, Royal Wootton Bassett, Swindon, SN4 8AX",
-        "params": {
-          "address": "24, Longleaze, Royal Wootton Bassett, Swindon, SN4 8AX",
-          "house_number": "24",
-          "postcode": "SN4 8AX",
-          "street": "Longleaze",
-          "uprn": "100121026562"
         },
         "source": "sampled"
       },
@@ -2131,7 +2131,7 @@
       }
     ],
     "name": "Wiltshire",
-    "scraper_id": "hacs_wiltshire_gov_uk"
+    "scraper_id": "wiltshire"
   },
   "E06000055": {
     "cases": [
@@ -2185,7 +2185,7 @@
       }
     ],
     "name": "Bedford",
-    "scraper_id": "hacs_bedford_gov_uk"
+    "scraper_id": "bedford"
   },
   "E06000056": {
     "cases": [
@@ -2235,12 +2235,12 @@
       }
     ],
     "name": "Central Bedfordshire",
-    "scraper_id": "hacs_centralbedfordshire_gov_uk"
+    "scraper_id": "central_bedfordshire"
   },
   "E06000057": {
     "cases": [
       {
-        "id": "E06000057-s5",
+        "id": "E06000057-s1",
         "label": "46, Green Croft, Ashington, NE63 8EG",
         "params": {
           "address": "46, Green Croft, Ashington, NE63 8EG",
@@ -2252,7 +2252,7 @@
         "source": "sampled"
       },
       {
-        "id": "E06000057-s6",
+        "id": "E06000057-s2",
         "label": "56, Devonworth Place, Blyth, NE24 5AG",
         "params": {
           "address": "56, Devonworth Place, Blyth, NE24 5AG",
@@ -2274,7 +2274,7 @@
       }
     ],
     "name": "Northumberland",
-    "scraper_id": "port_northumberland_council"
+    "scraper_id": "northumberland"
   },
   "E06000058": {
     "cases": [
@@ -2328,7 +2328,7 @@
       }
     ],
     "name": "Bournemouth, Christchurch and Poole",
-    "scraper_id": "hacs_bcp_gov_uk"
+    "scraper_id": "bournemouth"
   },
   "E06000059": {
     "cases": [
@@ -2382,7 +2382,7 @@
       }
     ],
     "name": "Dorset",
-    "scraper_id": "hacs_dorset_gov_uk"
+    "scraper_id": "dorset"
   },
   "E06000060": {
     "cases": [
@@ -2436,7 +2436,7 @@
       }
     ],
     "name": "Buckinghamshire",
-    "scraper_id": "ukbcd_buckinghamshire_council"
+    "scraper_id": "buckinghamshire"
   },
   "E06000061": {
     "cases": [
@@ -2490,7 +2490,7 @@
       }
     ],
     "name": "North Northamptonshire",
-    "scraper_id": "hacs_northnorthants_gov_uk"
+    "scraper_id": "north_northamptonshire"
   },
   "E06000062": {
     "cases": [
@@ -2536,7 +2536,7 @@
       }
     ],
     "name": "West Northamptonshire",
-    "scraper_id": "hacs_westnorthants_gov_uk"
+    "scraper_id": "west_northamptonshire"
   },
   "E06000063": {
     "cases": [
@@ -2593,7 +2593,7 @@
       }
     ],
     "name": "Cumberland",
-    "scraper_id": "hacs_cumberland_gov_uk"
+    "scraper_id": "cumberland"
   },
   "E06000064": {
     "cases": [
@@ -2623,7 +2623,7 @@
       }
     ],
     "name": "Westmorland and Furness",
-    "scraper_id": "ukbcd_west_morland_and_furness"
+    "scraper_id": "westmorland_and_furness"
   },
   "E06000065": {
     "cases": [
@@ -2653,7 +2653,7 @@
       }
     ],
     "name": "North Yorkshire",
-    "scraper_id": "ukbcd_north_yorkshire"
+    "scraper_id": "north_yorkshire"
   },
   "E06000066": {
     "cases": [
@@ -2691,7 +2691,7 @@
       }
     ],
     "name": "Somerset",
-    "scraper_id": "hacs_itv_somerset"
+    "scraper_id": "somerset"
   },
   "E07000008": {
     "cases": [
@@ -2739,7 +2739,7 @@
       }
     ],
     "name": "Cambridge",
-    "scraper_id": "hacs_cambridge_gov_uk"
+    "scraper_id": "cambridge"
   },
   "E07000009": {
     "cases": [
@@ -2785,7 +2785,7 @@
       }
     ],
     "name": "East Cambridgeshire",
-    "scraper_id": "hacs_eastcambs_gov_uk"
+    "scraper_id": "east_cambridgeshire"
   },
   "E07000010": {
     "cases": [
@@ -2833,7 +2833,7 @@
       }
     ],
     "name": "Fenland",
-    "scraper_id": "hacs_fenland_gov_uk"
+    "scraper_id": "fenland"
   },
   "E07000011": {
     "cases": [
@@ -2879,7 +2879,7 @@
       }
     ],
     "name": "Huntingdonshire",
-    "scraper_id": "hacs_huntingdonshire_gov_uk"
+    "scraper_id": "huntingdonshire"
   },
   "E07000012": {
     "cases": [
@@ -2927,7 +2927,7 @@
       }
     ],
     "name": "South Cambridgeshire",
-    "scraper_id": "hacs_scambs_gov_uk"
+    "scraper_id": "south_cambridgeshire"
   },
   "E07000032": {
     "cases": [
@@ -2944,14 +2944,14 @@
         "source": "sampled"
       },
       {
-        "id": "E07000032-s3",
-        "label": "7, Woodside Avenue, Ripley, DE5 3PW",
+        "id": "E07000032-s2",
+        "label": "5, Kilbourne Court Close, Belper, DE56 1SD",
         "params": {
-          "address": "7, Woodside Avenue, Ripley, DE5 3PW",
-          "house_number": "7",
-          "postcode": "DE5 3PW",
-          "street": "Woodside Avenue",
-          "uprn": "100030046118"
+          "address": "5, Kilbourne Court Close, Belper, DE56 1SD",
+          "house_number": "5",
+          "postcode": "DE56 1SD",
+          "street": "Kilbourne Court Close",
+          "uprn": "10013429995"
         },
         "source": "sampled"
       },
@@ -2983,7 +2983,7 @@
       }
     ],
     "name": "Amber Valley",
-    "scraper_id": "hacs_ambervalley_gov_uk"
+    "scraper_id": "amber_valley"
   },
   "E07000033": {
     "cases": [
@@ -3013,7 +3013,7 @@
       }
     ],
     "name": "Bolsover",
-    "scraper_id": "ukbcd_bolsover_council"
+    "scraper_id": "bolsover"
   },
   "E07000034": {
     "cases": [
@@ -3067,7 +3067,7 @@
       }
     ],
     "name": "Chesterfield",
-    "scraper_id": "hacs_chesterfield_gov_uk"
+    "scraper_id": "chesterfield"
   },
   "E07000035": {
     "cases": [
@@ -3121,7 +3121,7 @@
       }
     ],
     "name": "Derbyshire Dales",
-    "scraper_id": "hacs_derbyshiredales_gov_uk"
+    "scraper_id": "derbyshire_dales"
   },
   "E07000036": {
     "cases": [
@@ -3175,7 +3175,7 @@
       }
     ],
     "name": "Erewash",
-    "scraper_id": "hacs_erewash_gov_uk"
+    "scraper_id": "erewash"
   },
   "E07000037": {
     "cases": [
@@ -3232,7 +3232,7 @@
       }
     ],
     "name": "High Peak",
-    "scraper_id": "hacs_highpeak_gov_uk"
+    "scraper_id": "high_peak"
   },
   "E07000039": {
     "cases": [
@@ -3278,7 +3278,7 @@
       }
     ],
     "name": "South Derbyshire",
-    "scraper_id": "hacs_southderbyshire_gov_uk"
+    "scraper_id": "south_derbyshire"
   },
   "E07000040": {
     "cases": [
@@ -3324,7 +3324,7 @@
       }
     ],
     "name": "East Devon",
-    "scraper_id": "hacs_eastdevon_gov_uk"
+    "scraper_id": "eastdevon"
   },
   "E07000041": {
     "cases": [
@@ -3378,7 +3378,7 @@
       }
     ],
     "name": "Exeter",
-    "scraper_id": "hacs_exeter_gov_uk"
+    "scraper_id": "exeter"
   },
   "E07000042": {
     "cases": [
@@ -3432,24 +3432,12 @@
       }
     ],
     "name": "Mid Devon",
-    "scraper_id": "hacs_mid_devon_gov_uk"
+    "scraper_id": "mid_devon"
   },
   "E07000043": {
     "cases": [
       {
-        "id": "E07000043-s3",
-        "label": "11, Yelland Road, Fremington, Barnstaple, EX31 3BX",
-        "params": {
-          "address": "11, Yelland Road, Fremington, Barnstaple, EX31 3BX",
-          "house_number": "11",
-          "postcode": "EX31 3BX",
-          "street": "Yelland Road",
-          "uprn": "100040256416"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E07000043-s7",
+        "id": "E07000043-s1",
         "label": "4, Grosvenor Terrace, Barnstaple, EX32 7DS",
         "params": {
           "address": "4, Grosvenor Terrace, Barnstaple, EX32 7DS",
@@ -3457,6 +3445,18 @@
           "postcode": "EX32 7DS",
           "street": "Grosvenor Terrace",
           "uprn": "10000483594"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E07000043-s2",
+        "label": "11 Cormelles Court, Bowling Green, Combe Martin, Ilfracombe, EX34 0LG",
+        "params": {
+          "address": "11 Cormelles Court, Bowling Green, Combe Martin, Ilfracombe, EX34 0LG",
+          "house_number": "11",
+          "postcode": "EX34 0LG",
+          "street": "Cormelles Court",
+          "uprn": "10000483784"
         },
         "source": "sampled"
       },
@@ -3471,7 +3471,7 @@
       }
     ],
     "name": "North Devon",
-    "scraper_id": "port_north_devon_council"
+    "scraper_id": "north_devon"
   },
   "E07000044": {
     "cases": [
@@ -3501,7 +3501,7 @@
       }
     ],
     "name": "South Hams",
-    "scraper_id": "ukbcd_south_hams_district_council"
+    "scraper_id": "south_hams"
   },
   "E07000045": {
     "cases": [
@@ -3549,7 +3549,7 @@
       }
     ],
     "name": "Teignbridge",
-    "scraper_id": "hacs_teignbridge_gov_uk"
+    "scraper_id": "teignbridge"
   },
   "E07000046": {
     "cases": [
@@ -3603,7 +3603,7 @@
       }
     ],
     "name": "Torridge",
-    "scraper_id": "hacs_torridge_gov_uk"
+    "scraper_id": "torridge"
   },
   "E07000047": {
     "cases": [
@@ -3649,7 +3649,7 @@
       }
     ],
     "name": "West Devon",
-    "scraper_id": "port_west_devon_borough_council"
+    "scraper_id": "west_devon"
   },
   "E07000061": {
     "cases": [
@@ -3679,7 +3679,7 @@
       }
     ],
     "name": "Eastbourne",
-    "scraper_id": "ukbcd_eastbourne_borough_council"
+    "scraper_id": "eastbourne"
   },
   "E07000062": {
     "cases": [
@@ -3733,7 +3733,7 @@
       }
     ],
     "name": "Hastings",
-    "scraper_id": "hacs_hastings_gov_uk"
+    "scraper_id": "hastings"
   },
   "E07000063": {
     "cases": [
@@ -3763,7 +3763,7 @@
       }
     ],
     "name": "Lewes",
-    "scraper_id": "ukbcd_lewes_district_council"
+    "scraper_id": "lewes"
   },
   "E07000064": {
     "cases": [
@@ -3809,7 +3809,7 @@
       }
     ],
     "name": "Rother",
-    "scraper_id": "hacs_rother_gov_uk"
+    "scraper_id": "rother"
   },
   "E07000065": {
     "cases": [
@@ -3863,7 +3863,7 @@
       }
     ],
     "name": "Wealden",
-    "scraper_id": "hacs_wealden_gov_uk"
+    "scraper_id": "wealden"
   },
   "E07000066": {
     "cases": [
@@ -3921,12 +3921,12 @@
       }
     ],
     "name": "Basildon",
-    "scraper_id": "hacs_basildon_gov_uk"
+    "scraper_id": "basildon"
   },
   "E07000067": {
     "cases": [
       {
-        "id": "E07000067-s5",
+        "id": "E07000067-s1",
         "label": "15a, Manor Street, Braintree, CM7 3HW",
         "params": {
           "address": "15a, Manor Street, Braintree, CM7 3HW",
@@ -3938,7 +3938,7 @@
         "source": "sampled"
       },
       {
-        "id": "E07000067-s6",
+        "id": "E07000067-s2",
         "label": "34, Wisdoms Green, Coggeshall, Colchester, CO6 1SG",
         "params": {
           "address": "34, Wisdoms Green, Coggeshall, Colchester, CO6 1SG",
@@ -3978,7 +3978,7 @@
       }
     ],
     "name": "Braintree",
-    "scraper_id": "hacs_braintree_gov_uk"
+    "scraper_id": "braintree"
   },
   "E07000068": {
     "cases": [
@@ -4032,31 +4032,31 @@
       }
     ],
     "name": "Brentwood",
-    "scraper_id": "port_brentwood_borough_council"
+    "scraper_id": "brentwood"
   },
   "E07000069": {
     "cases": [
       {
-        "id": "E07000069-s3",
-        "label": "1, Telese Avenue, Canvey Island, SS8 7LR",
+        "id": "E07000069-s1",
+        "label": "15, Kenneth Road, Benfleet, SS7 3AU",
         "params": {
-          "address": "1, Telese Avenue, Canvey Island, SS8 7LR",
-          "house_number": "1",
-          "postcode": "SS8 7LR",
-          "street": "Telese Avenue",
-          "uprn": "100090381471"
+          "address": "15, Kenneth Road, Benfleet, SS7 3AU",
+          "house_number": "15",
+          "postcode": "SS7 3AU",
+          "street": "Kenneth Road",
+          "uprn": "100090360128"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000069-s4",
-        "label": "78, South View Road, Benfleet, SS7 5NE",
+        "id": "E07000069-s2",
+        "label": "282, Link Road, Canvey Island, SS8 9UX",
         "params": {
-          "address": "78, South View Road, Benfleet, SS7 5NE",
-          "house_number": "78",
-          "postcode": "SS7 5NE",
-          "street": "South View Road",
-          "uprn": "100090366555"
+          "address": "282, Link Road, Canvey Island, SS8 9UX",
+          "house_number": "282",
+          "postcode": "SS8 9UX",
+          "street": "Link Road",
+          "uprn": "100090377150"
         },
         "source": "sampled"
       },
@@ -4086,7 +4086,7 @@
       }
     ],
     "name": "Castle Point",
-    "scraper_id": "hacs_castlepoint_gov_uk"
+    "scraper_id": "castle_point"
   },
   "E07000070": {
     "cases": [
@@ -4116,7 +4116,7 @@
       }
     ],
     "name": "Chelmsford",
-    "scraper_id": "ukbcd_chelmsford_city_council"
+    "scraper_id": "chelmsford"
   },
   "E07000071": {
     "cases": [
@@ -4155,7 +4155,7 @@
       }
     ],
     "name": "Colchester",
-    "scraper_id": "port_colchester_city_council"
+    "scraper_id": "colchester"
   },
   "E07000072": {
     "cases": [
@@ -4201,7 +4201,7 @@
       }
     ],
     "name": "Epping Forest",
-    "scraper_id": "hacs_eppingforestdc_gov_uk"
+    "scraper_id": "epping_forest"
   },
   "E07000073": {
     "cases": [
@@ -4255,7 +4255,7 @@
       }
     ],
     "name": "Harlow",
-    "scraper_id": "hacs_harlow_gov_uk"
+    "scraper_id": "harlow"
   },
   "E07000074": {
     "cases": [
@@ -4301,12 +4301,12 @@
       }
     ],
     "name": "Maldon",
-    "scraper_id": "hacs_maldon_gov_uk"
+    "scraper_id": "maldon"
   },
   "E07000075": {
     "cases": [
       {
-        "id": "E07000075-s5",
+        "id": "E07000075-s1",
         "label": "17, Main Road, Hockley, SS5 4QY",
         "params": {
           "address": "17, Main Road, Hockley, SS5 4QY",
@@ -4318,7 +4318,7 @@
         "source": "sampled"
       },
       {
-        "id": "E07000075-s6",
+        "id": "E07000075-s2",
         "label": "21, Dene Gardens, Rayleigh, SS6 9LJ",
         "params": {
           "address": "21, Dene Gardens, Rayleigh, SS6 9LJ",
@@ -4349,7 +4349,7 @@
       }
     ],
     "name": "Rochford",
-    "scraper_id": "hacs_rochford_gov_uk"
+    "scraper_id": "rochford"
   },
   "E07000076": {
     "cases": [
@@ -4387,7 +4387,7 @@
       }
     ],
     "name": "Tendring",
-    "scraper_id": "port_tendring_district_council"
+    "scraper_id": "tendring"
   },
   "E07000077": {
     "cases": [
@@ -4433,7 +4433,7 @@
       }
     ],
     "name": "Uttlesford",
-    "scraper_id": "hacs_uttlesford_gov_uk"
+    "scraper_id": "uttlesford"
   },
   "E07000078": {
     "cases": [
@@ -4459,7 +4459,7 @@
     "notes": [
       "fixture-only: frontend cannot supply required ['property_id']"
     ],
-    "scraper_id": "hacs_cheltenham_gov_uk"
+    "scraper_id": "cheltenham"
   },
   "E07000079": {
     "cases": [
@@ -4497,31 +4497,31 @@
       }
     ],
     "name": "Cotswold",
-    "scraper_id": "hacs_cotswold_gov_uk"
+    "scraper_id": "cotswold"
   },
   "E07000080": {
     "cases": [
       {
-        "id": "E07000080-s3",
-        "label": "2 Preston Court Cottages, Preston Cross, Ledbury, HR8 2LL",
+        "id": "E07000080-s1",
+        "label": "4, Sedbury Lane, Tutshill, Chepstow, NP16 7DU",
         "params": {
-          "address": "2 Preston Court Cottages, Preston Cross, Ledbury, HR8 2LL",
-          "house_number": "2",
-          "postcode": "HR8 2LL",
-          "street": "Preston Court Cottages",
-          "uprn": "100121244837"
+          "address": "4, Sedbury Lane, Tutshill, Chepstow, NP16 7DU",
+          "house_number": "4",
+          "postcode": "NP16 7DU",
+          "street": "Sedbury Lane",
+          "uprn": "100120435916"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000080-s4",
-        "label": "6, Forest Road, Cinderford, GL14 2NR",
+        "id": "E07000080-s2",
+        "label": "6, Abbots View, Buckshaft, Cinderford, GL14 3EG",
         "params": {
-          "address": "6, Forest Road, Cinderford, GL14 2NR",
+          "address": "6, Abbots View, Buckshaft, Cinderford, GL14 3EG",
           "house_number": "6",
-          "postcode": "GL14 2NR",
-          "street": "Forest Road",
-          "uprn": "100120437255"
+          "postcode": "GL14 3EG",
+          "street": "Abbots View",
+          "uprn": "100120436330"
         },
         "source": "sampled"
       },
@@ -4547,12 +4547,12 @@
       }
     ],
     "name": "Forest of Dean",
-    "scraper_id": "hacs_forest_of_dean_gov_uk"
+    "scraper_id": "forest_of_dean"
   },
   "E07000081": {
     "cases": [
       {
-        "id": "E07000081-s5",
+        "id": "E07000081-s1",
         "label": "5, Temple Close, Barnwood, Gloucester, GL4 3ER",
         "params": {
           "address": "5, Temple Close, Barnwood, Gloucester, GL4 3ER",
@@ -4564,7 +4564,7 @@
         "source": "sampled"
       },
       {
-        "id": "E07000081-s6",
+        "id": "E07000081-s2",
         "label": "27, Liddington Road, Longlevens, Gloucester, GL2 0HL",
         "params": {
           "address": "27, Liddington Road, Longlevens, Gloucester, GL2 0HL",
@@ -4586,7 +4586,7 @@
       }
     ],
     "name": "Gloucester",
-    "scraper_id": "port_gloucester_city_council"
+    "scraper_id": "gloucester"
   },
   "E07000082": {
     "cases": [
@@ -4603,14 +4603,14 @@
         "source": "sampled"
       },
       {
-        "id": "E07000082-s3",
-        "label": "1, Morris Orchard, Cam, Dursley, GL11 5LZ",
+        "id": "E07000082-s2",
+        "label": "9, Parsons Close, Dursley, GL11 4PJ",
         "params": {
-          "address": "1, Morris Orchard, Cam, Dursley, GL11 5LZ",
-          "house_number": "1",
-          "postcode": "GL11 5LZ",
-          "street": "Morris Orchard",
-          "uprn": "200003102766"
+          "address": "9, Parsons Close, Dursley, GL11 4PJ",
+          "house_number": "9",
+          "postcode": "GL11 4PJ",
+          "street": "Parsons Close",
+          "uprn": "10009415414"
         },
         "source": "sampled"
       },
@@ -4625,7 +4625,7 @@
       }
     ],
     "name": "Stroud",
-    "scraper_id": "hacs_stroud_gov_uk"
+    "scraper_id": "stroud"
   },
   "E07000083": {
     "cases": [
@@ -4679,7 +4679,7 @@
       }
     ],
     "name": "Tewkesbury",
-    "scraper_id": "hacs_tewkesbury_gov_uk"
+    "scraper_id": "tewkesbury"
   },
   "E07000084": {
     "cases": [
@@ -4733,7 +4733,7 @@
       }
     ],
     "name": "Basingstoke and Deane",
-    "scraper_id": "hacs_basingstoke_gov_uk"
+    "scraper_id": "basingstoke_and_deane"
   },
   "E07000085": {
     "cases": [
@@ -4788,7 +4788,7 @@
       }
     ],
     "name": "East Hampshire",
-    "scraper_id": "hacs_easthants_gov_uk"
+    "scraper_id": "east_hampshire"
   },
   "E07000086": {
     "cases": [
@@ -4834,7 +4834,7 @@
       }
     ],
     "name": "Eastleigh",
-    "scraper_id": "hacs_eastleigh_gov_uk"
+    "scraper_id": "eastleigh"
   },
   "E07000087": {
     "cases": [
@@ -4892,7 +4892,7 @@
       }
     ],
     "name": "Fareham",
-    "scraper_id": "hacs_fareham_gov_uk"
+    "scraper_id": "fareham"
   },
   "E07000088": {
     "cases": [
@@ -4940,7 +4940,7 @@
       }
     ],
     "name": "Gosport",
-    "scraper_id": "hacs_gosport_gov_uk"
+    "scraper_id": "gosport"
   },
   "E07000089": {
     "cases": [
@@ -4994,7 +4994,7 @@
       }
     ],
     "name": "Hart",
-    "scraper_id": "hacs_hart_gov_uk"
+    "scraper_id": "hart"
   },
   "E07000090": {
     "cases": [],
@@ -5003,12 +5003,12 @@
     "notes": [
       "fixture-only: frontend cannot supply required ['password', 'username']"
     ],
-    "scraper_id": "hacs_waste_havant_gov_uk"
+    "scraper_id": "havant"
   },
   "E07000091": {
     "cases": [
       {
-        "id": "E07000091-s5",
+        "id": "E07000091-s1",
         "label": "80, Laburnum Crescent, Hythe, Southampton, SO45 3PN",
         "params": {
           "address": "80, Laburnum Crescent, Hythe, Southampton, SO45 3PN",
@@ -5020,7 +5020,7 @@
         "source": "sampled"
       },
       {
-        "id": "E07000091-s6",
+        "id": "E07000091-s2",
         "label": "1a, Queen Katherine Road, Lymington, SO41 3RY",
         "params": {
           "address": "1a, Queen Katherine Road, Lymington, SO41 3RY",
@@ -5042,7 +5042,7 @@
       }
     ],
     "name": "New Forest",
-    "scraper_id": "port_new_forest_council"
+    "scraper_id": "new_forest"
   },
   "E07000092": {
     "cases": [
@@ -5080,7 +5080,7 @@
       }
     ],
     "name": "Rushmoor",
-    "scraper_id": "hacs_rushmoor_gov_uk"
+    "scraper_id": "rushmoor"
   },
   "E07000093": {
     "cases": [
@@ -5118,7 +5118,7 @@
       }
     ],
     "name": "Test Valley",
-    "scraper_id": "hacs_itv_test_valley"
+    "scraper_id": "test_valley"
   },
   "E07000094": {
     "cases": [
@@ -5156,7 +5156,7 @@
       }
     ],
     "name": "Winchester",
-    "scraper_id": "hacs_itv_winchester"
+    "scraper_id": "winchester"
   },
   "E07000095": {
     "cases": [
@@ -5213,7 +5213,7 @@
       }
     ],
     "name": "Broxbourne",
-    "scraper_id": "hacs_broxbourne_gov_uk"
+    "scraper_id": "broxbourne"
   },
   "E07000096": {
     "cases": [
@@ -5270,7 +5270,7 @@
       }
     ],
     "name": "Dacorum",
-    "scraper_id": "hacs_dacorum_gov_uk"
+    "scraper_id": "dacorum"
   },
   "E07000098": {
     "cases": [
@@ -5320,7 +5320,7 @@
       }
     ],
     "name": "Hertsmere",
-    "scraper_id": "port_hertsmere_borough_council"
+    "scraper_id": "hertsmere"
   },
   "E07000099": {
     "cases": [
@@ -5370,7 +5370,7 @@
       }
     ],
     "name": "North Hertfordshire",
-    "scraper_id": "hacs_northherts_gov_uk"
+    "scraper_id": "north_hertfordshire"
   },
   "E07000102": {
     "cases": [
@@ -5408,7 +5408,7 @@
       }
     ],
     "name": "Three Rivers",
-    "scraper_id": "port_three_rivers_district_council"
+    "scraper_id": "three_rivers"
   },
   "E07000103": {
     "cases": [
@@ -5446,7 +5446,7 @@
       }
     ],
     "name": "Watford",
-    "scraper_id": "hacs_watford_gov_uk"
+    "scraper_id": "watford"
   },
   "E07000105": {
     "cases": [
@@ -5503,10 +5503,22 @@
       }
     ],
     "name": "Ashford",
-    "scraper_id": "hacs_ashford_gov_uk"
+    "scraper_id": "ashford"
   },
   "E07000106": {
     "cases": [
+      {
+        "id": "E07000106-s1",
+        "label": "61a, Rough Common Road, Rough Common, Canterbury, CT2 9DQ",
+        "params": {
+          "address": "61a, Rough Common Road, Rough Common, Canterbury, CT2 9DQ",
+          "house_number": "61a",
+          "postcode": "CT2 9DQ",
+          "street": "Rough Common Road",
+          "uprn": "100060821382"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E07000106-s2",
         "label": "3, Consul Close, Herne Bay, CT6 8EB",
@@ -5516,18 +5528,6 @@
           "postcode": "CT6 8EB",
           "street": "Consul Close",
           "uprn": "100060831337"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E07000106-s4",
-        "label": "61a, Rough Common Road, Rough Common, Canterbury, CT2 9DQ",
-        "params": {
-          "address": "61a, Rough Common Road, Rough Common, Canterbury, CT2 9DQ",
-          "house_number": "61a",
-          "postcode": "CT2 9DQ",
-          "street": "Rough Common Road",
-          "uprn": "100060821382"
         },
         "source": "sampled"
       },
@@ -5551,7 +5551,7 @@
       }
     ],
     "name": "Canterbury",
-    "scraper_id": "hacs_canterbury_gov_uk"
+    "scraper_id": "canterbury"
   },
   "E07000107": {
     "cases": [
@@ -5605,7 +5605,7 @@
       }
     ],
     "name": "Dartford",
-    "scraper_id": "hacs_dartford_gov_uk"
+    "scraper_id": "dartford"
   },
   "E07000108": {
     "cases": [
@@ -5651,7 +5651,7 @@
       }
     ],
     "name": "Dover",
-    "scraper_id": "hacs_dover_gov_uk"
+    "scraper_id": "dover"
   },
   "E07000109": {
     "cases": [
@@ -5681,7 +5681,7 @@
       }
     ],
     "name": "Gravesham",
-    "scraper_id": "ukbcd_gravesham_borough_council"
+    "scraper_id": "gravesham"
   },
   "E07000110": {
     "cases": [
@@ -5735,7 +5735,7 @@
       }
     ],
     "name": "Maidstone",
-    "scraper_id": "hacs_maidstone_gov_uk"
+    "scraper_id": "maidstone"
   },
   "E07000111": {
     "cases": [
@@ -5761,7 +5761,7 @@
     "notes": [
       "fixture-only: frontend cannot supply required ['property_id']"
     ],
-    "scraper_id": "hacs_sevenoaks_gov_uk"
+    "scraper_id": "sevenoaks"
   },
   "E07000112": {
     "cases": [
@@ -5807,7 +5807,7 @@
       }
     ],
     "name": "Folkestone and Hythe",
-    "scraper_id": "hacs_folkestone_hythe_gov_uk"
+    "scraper_id": "folkestone_and_hythe"
   },
   "E07000113": {
     "cases": [
@@ -5864,7 +5864,7 @@
       }
     ],
     "name": "Swale",
-    "scraper_id": "hacs_swale_gov_uk"
+    "scraper_id": "swale"
   },
   "E07000114": {
     "cases": [
@@ -5921,7 +5921,7 @@
       }
     ],
     "name": "Thanet",
-    "scraper_id": "hacs_thanet_gov_uk"
+    "scraper_id": "thanet"
   },
   "E07000115": {
     "cases": [
@@ -5971,7 +5971,7 @@
       }
     ],
     "name": "Tonbridge and Malling",
-    "scraper_id": "hacs_tmbc_gov_uk"
+    "scraper_id": "tonbridge_and_malling"
   },
   "E07000116": {
     "cases": [
@@ -6017,7 +6017,7 @@
       }
     ],
     "name": "Tunbridge Wells",
-    "scraper_id": "hacs_tunbridgewells_gov_uk"
+    "scraper_id": "tunbridge_wells"
   },
   "E07000117": {
     "cases": [
@@ -6071,7 +6071,7 @@
       }
     ],
     "name": "Burnley",
-    "scraper_id": "hacs_burnley_gov_uk"
+    "scraper_id": "burnley"
   },
   "E07000118": {
     "cases": [
@@ -6110,7 +6110,7 @@
       }
     ],
     "name": "Chorley",
-    "scraper_id": "hacs_chorley_gov_uk"
+    "scraper_id": "chorley"
   },
   "E07000120": {
     "cases": [
@@ -6148,7 +6148,7 @@
       }
     ],
     "name": "Hyndburn",
-    "scraper_id": "hacs_itv_hyndburn"
+    "scraper_id": "hyndburn"
   },
   "E07000121": {
     "cases": [
@@ -6188,7 +6188,7 @@
       }
     ],
     "name": "Lancaster",
-    "scraper_id": "hacs_lancaster_gov_uk"
+    "scraper_id": "lancaster"
   },
   "E07000122": {
     "cases": [
@@ -6229,12 +6229,12 @@
       }
     ],
     "name": "Pendle",
-    "scraper_id": "hacs_pendle_gov_uk"
+    "scraper_id": "pendle"
   },
   "E07000123": {
     "cases": [
       {
-        "id": "E07000123-s9",
+        "id": "E07000123-s1",
         "label": "6, Silver Street, Preston, PR1 3RH",
         "params": {
           "address": "6, Silver Street, Preston, PR1 3RH",
@@ -6246,7 +6246,7 @@
         "source": "sampled"
       },
       {
-        "id": "E07000123-s10",
+        "id": "E07000123-s2",
         "label": "6, Avonbridge, Fulwood, Preston, PR2 3RE",
         "params": {
           "address": "6, Avonbridge, Fulwood, Preston, PR2 3RE",
@@ -6276,7 +6276,7 @@
       }
     ],
     "name": "Preston",
-    "scraper_id": "hacs_preston_gov_uk"
+    "scraper_id": "preston"
   },
   "E07000124": {
     "cases": [
@@ -6326,7 +6326,7 @@
       }
     ],
     "name": "Ribble Valley",
-    "scraper_id": "port_ribble_valley_borough_council"
+    "scraper_id": "ribble_valley"
   },
   "E07000125": {
     "cases": [
@@ -6386,7 +6386,7 @@
       }
     ],
     "name": "Rossendale",
-    "scraper_id": "port_rossendale_borough_council"
+    "scraper_id": "rossendale"
   },
   "E07000126": {
     "cases": [
@@ -6425,7 +6425,7 @@
       }
     ],
     "name": "South Ribble",
-    "scraper_id": "hacs_southribble_gov_uk"
+    "scraper_id": "south_ribble"
   },
   "E07000127": {
     "cases": [
@@ -6473,7 +6473,7 @@
       }
     ],
     "name": "West Lancashire",
-    "scraper_id": "hacs_westlancs_gov_uk"
+    "scraper_id": "west_lancashire"
   },
   "E07000128": {
     "cases": [
@@ -6519,7 +6519,7 @@
       }
     ],
     "name": "Wyre",
-    "scraper_id": "hacs_wyre_gov_uk"
+    "scraper_id": "wyre"
   },
   "E07000129": {
     "cases": [
@@ -6573,12 +6573,12 @@
       }
     ],
     "name": "Blaby",
-    "scraper_id": "hacs_blaby_gov_uk"
+    "scraper_id": "blaby"
   },
   "E07000130": {
     "cases": [
       {
-        "id": "E07000130-s5",
+        "id": "E07000130-s1",
         "label": "6, The Covert, East Goscote, Leicester, LE7 3WR",
         "params": {
           "address": "6, The Covert, East Goscote, Leicester, LE7 3WR",
@@ -6590,7 +6590,7 @@
         "source": "sampled"
       },
       {
-        "id": "E07000130-s6",
+        "id": "E07000130-s2",
         "label": "1, Marys Court, Anstey, Leicester, LE7 7GZ",
         "params": {
           "address": "1, Marys Court, Anstey, Leicester, LE7 7GZ",
@@ -6619,7 +6619,7 @@
       }
     ],
     "name": "Charnwood",
-    "scraper_id": "hacs_charnwood_gov_uk"
+    "scraper_id": "charnwood"
   },
   "E07000131": {
     "cases": [
@@ -6649,7 +6649,7 @@
       }
     ],
     "name": "Harborough",
-    "scraper_id": "ukbcd_harborough_district_council"
+    "scraper_id": "harborough"
   },
   "E07000132": {
     "cases": [
@@ -6687,7 +6687,7 @@
       }
     ],
     "name": "Hinckley and Bosworth",
-    "scraper_id": "hacs_hinckley_bosworth_gov_uk"
+    "scraper_id": "hinckley_and_bosworth"
   },
   "E07000133": {
     "cases": [
@@ -6741,7 +6741,7 @@
       }
     ],
     "name": "Melton",
-    "scraper_id": "hacs_melton_gov_uk"
+    "scraper_id": "melton"
   },
   "E07000134": {
     "cases": [
@@ -6787,7 +6787,7 @@
       }
     ],
     "name": "North West Leicestershire",
-    "scraper_id": "hacs_nwleics_gov_uk"
+    "scraper_id": "north_west_leicestershire"
   },
   "E07000135": {
     "cases": [
@@ -6833,7 +6833,7 @@
       }
     ],
     "name": "Oadby and Wigston",
-    "scraper_id": "hacs_oadby_wigston_gov_uk"
+    "scraper_id": "oadby_and_wigston"
   },
   "E07000136": {
     "cases": [
@@ -6881,7 +6881,7 @@
       }
     ],
     "name": "Boston",
-    "scraper_id": "hacs_boston_gov_uk"
+    "scraper_id": "boston"
   },
   "E07000137": {
     "cases": [
@@ -6919,7 +6919,7 @@
       }
     ],
     "name": "East Lindsey",
-    "scraper_id": "hacs_e_lindsey_gov_uk"
+    "scraper_id": "east_lindsey"
   },
   "E07000138": {
     "cases": [
@@ -6976,7 +6976,7 @@
       }
     ],
     "name": "Lincoln",
-    "scraper_id": "hacs_lincoln_gov_uk"
+    "scraper_id": "lincoln"
   },
   "E07000139": {
     "cases": [
@@ -7006,7 +7006,7 @@
       }
     ],
     "name": "North Kesteven",
-    "scraper_id": "ukbcd_north_kesteven_district_council"
+    "scraper_id": "north_kesteven"
   },
   "E07000140": {
     "cases": [
@@ -7054,7 +7054,7 @@
       }
     ],
     "name": "South Holland",
-    "scraper_id": "hacs_sholland_gov_uk"
+    "scraper_id": "south_holland"
   },
   "E07000141": {
     "cases": [
@@ -7108,7 +7108,7 @@
       }
     ],
     "name": "South Kesteven",
-    "scraper_id": "hacs_southkesteven_gov_uk"
+    "scraper_id": "south_kesteven"
   },
   "E07000142": {
     "cases": [
@@ -7138,7 +7138,7 @@
       }
     ],
     "name": "West Lindsey",
-    "scraper_id": "ukbcd_west_lindsey_district_council"
+    "scraper_id": "west_lindsey"
   },
   "E07000143": {
     "cases": [
@@ -7185,12 +7185,12 @@
       }
     ],
     "name": "Breckland",
-    "scraper_id": "hacs_breckland_gov_uk"
+    "scraper_id": "breckland"
   },
   "E07000144": {
     "cases": [
       {
-        "id": "E07000144-s5",
+        "id": "E07000144-s1",
         "label": "12, The Common, Ringland, Norwich, NR8 6JF",
         "params": {
           "address": "12, The Common, Ringland, Norwich, NR8 6JF",
@@ -7202,7 +7202,7 @@
         "source": "sampled"
       },
       {
-        "id": "E07000144-s6",
+        "id": "E07000144-s2",
         "label": "86, Barkers Lane, Norwich, NR7 8QZ",
         "params": {
           "address": "86, Barkers Lane, Norwich, NR7 8QZ",
@@ -7235,7 +7235,7 @@
       }
     ],
     "name": "Broadland",
-    "scraper_id": "hacs_south_norfolk_and_broadland_gov_uk"
+    "scraper_id": "broadland_and_south_norfolk"
   },
   "E07000145": {
     "cases": [
@@ -7281,7 +7281,7 @@
       }
     ],
     "name": "Great Yarmouth",
-    "scraper_id": "hacs_great_yarmouth_gov_uk"
+    "scraper_id": "great_yarmouth"
   },
   "E07000146": {
     "cases": [
@@ -7335,7 +7335,7 @@
       }
     ],
     "name": "King's Lynn and West Norfolk",
-    "scraper_id": "hacs_west_norfolk_gov_uk"
+    "scraper_id": "king_s_lynn_and_west_norfolk"
   },
   "E07000147": {
     "cases": [
@@ -7389,10 +7389,22 @@
       }
     ],
     "name": "North Norfolk",
-    "scraper_id": "hacs_north_norfolk_gov_uk"
+    "scraper_id": "north_norfolk"
   },
   "E07000148": {
     "cases": [
+      {
+        "id": "E07000148-s1",
+        "label": "3, Burton Close, Norwich, NR6 6AZ",
+        "params": {
+          "address": "3, Burton Close, Norwich, NR6 6AZ",
+          "house_number": "3",
+          "postcode": "NR6 6AZ",
+          "street": "Burton Close",
+          "uprn": "100091574386"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E07000148-s2",
         "label": "69, Tuckswood Lane, Norwich, NR4 6BE",
@@ -7402,18 +7414,6 @@
           "postcode": "NR4 6BE",
           "street": "Tuckswood Lane",
           "uprn": "100090927033"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E07000148-s3",
-        "label": "32b, Nasmith Road, Norwich, NR4 7BJ",
-        "params": {
-          "address": "32b, Nasmith Road, Norwich, NR4 7BJ",
-          "house_number": "32b",
-          "postcode": "NR4 7BJ",
-          "street": "Nasmith Road",
-          "uprn": "100090914172"
         },
         "source": "sampled"
       },
@@ -7449,12 +7449,12 @@
       }
     ],
     "name": "Norwich",
-    "scraper_id": "hacs_norwich_gov_uk"
+    "scraper_id": "norwich"
   },
   "E07000149": {
     "cases": [
       {
-        "id": "E07000149-s5",
+        "id": "E07000149-s1",
         "label": "59, Rectory Lane, Poringland, Norwich, NR14 7SJ",
         "params": {
           "address": "59, Rectory Lane, Poringland, Norwich, NR14 7SJ",
@@ -7466,7 +7466,7 @@
         "source": "sampled"
       },
       {
-        "id": "E07000149-s6",
+        "id": "E07000149-s2",
         "label": "28, Kells Way, Geldeston, Beccles, NR34 0LU",
         "params": {
           "address": "28, Kells Way, Geldeston, Beccles, NR34 0LU",
@@ -7499,7 +7499,7 @@
       }
     ],
     "name": "South Norfolk",
-    "scraper_id": "hacs_south_norfolk_and_broadland_gov_uk"
+    "scraper_id": "broadland_and_south_norfolk"
   },
   "E07000170": {
     "cases": [
@@ -7555,10 +7555,22 @@
       }
     ],
     "name": "Ashfield",
-    "scraper_id": "hacs_ashfield_gov_uk"
+    "scraper_id": "ashfield"
   },
   "E07000171": {
     "cases": [
+      {
+        "id": "E07000171-s1",
+        "label": "2 Babbington Springs Cottages, Normanton-On-Trent, Newark, NG23 6RU",
+        "params": {
+          "address": "2 Babbington Springs Cottages, Normanton-On-Trent, Newark, NG23 6RU",
+          "house_number": "2",
+          "postcode": "NG23 6RU",
+          "street": "Babbington Springs Cottages",
+          "uprn": "10023268183"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E07000171-s2",
         "label": "16, Spruce Court, Worksop, S80 3EP",
@@ -7568,18 +7580,6 @@
           "postcode": "S80 3EP",
           "street": "Spruce Court",
           "uprn": "100031298282"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E07000171-s3",
-        "label": "18, Boundary Walk, Retford, DN22 7YU",
-        "params": {
-          "address": "18, Boundary Walk, Retford, DN22 7YU",
-          "house_number": "18",
-          "postcode": "DN22 7YU",
-          "street": "Boundary Walk",
-          "uprn": "200001606546"
         },
         "source": "sampled"
       },
@@ -7605,7 +7605,7 @@
       }
     ],
     "name": "Bassetlaw",
-    "scraper_id": "port_bassetlaw_district_council"
+    "scraper_id": "bassetlaw"
   },
   "E07000172": {
     "cases": [
@@ -7653,7 +7653,7 @@
       }
     ],
     "name": "Broxtowe",
-    "scraper_id": "hacs_broxtowe_gov_uk"
+    "scraper_id": "broxtowe"
   },
   "E07000173": {
     "cases": [
@@ -7703,7 +7703,7 @@
       }
     ],
     "name": "Gedling",
-    "scraper_id": "ukbcd_gedling_borough_council"
+    "scraper_id": "gedling"
   },
   "E07000174": {
     "cases": [
@@ -7757,7 +7757,7 @@
       }
     ],
     "name": "Mansfield",
-    "scraper_id": "hacs_mansfield_gov_uk"
+    "scraper_id": "mansfield"
   },
   "E07000175": {
     "cases": [
@@ -7811,7 +7811,7 @@
       }
     ],
     "name": "Newark and Sherwood",
-    "scraper_id": "hacs_newark_sherwooddc_gov_uk"
+    "scraper_id": "newark_and_sherwood"
   },
   "E07000176": {
     "cases": [
@@ -7852,7 +7852,7 @@
       }
     ],
     "name": "Rushcliffe",
-    "scraper_id": "hacs_rushcliffe_gov_uk"
+    "scraper_id": "rushcliffe"
   },
   "E07000177": {
     "cases": [
@@ -7906,7 +7906,7 @@
       }
     ],
     "name": "Cherwell",
-    "scraper_id": "hacs_cherwell_gov_uk"
+    "scraper_id": "cherwell"
   },
   "E07000178": {
     "cases": [
@@ -7954,24 +7954,24 @@
       }
     ],
     "name": "Oxford",
-    "scraper_id": "hacs_oxford_gov_uk"
+    "scraper_id": "oxford"
   },
   "E07000179": {
     "cases": [
       {
-        "id": "E07000179-s3",
-        "label": "15, Bear Lane, Stadhampton, Oxford, OX44 7UR",
+        "id": "E07000179-s1",
+        "label": "6, Newnham Green, Crowmarsh Gifford, Wallingford, OX10 8EW",
         "params": {
-          "address": "15, Bear Lane, Stadhampton, Oxford, OX44 7UR",
-          "house_number": "15",
-          "postcode": "OX44 7UR",
-          "street": "Bear Lane",
-          "uprn": "100120867934"
+          "address": "6, Newnham Green, Crowmarsh Gifford, Wallingford, OX10 8EW",
+          "house_number": "6",
+          "postcode": "OX10 8EW",
+          "street": "Newnham Green",
+          "uprn": "100120885167"
         },
         "source": "sampled"
       },
       {
-        "id": "E07000179-s4",
+        "id": "E07000179-s2",
         "label": "8, Hamilton Avenue, Henley-On-Thames, RG9 1SH",
         "params": {
           "address": "8, Hamilton Avenue, Henley-On-Thames, RG9 1SH",
@@ -7984,7 +7984,7 @@
       }
     ],
     "name": "South Oxfordshire",
-    "scraper_id": "ukbcd_south_oxfordshire_council"
+    "scraper_id": "south_oxfordshire"
   },
   "E07000180": {
     "cases": [
@@ -8014,7 +8014,7 @@
       }
     ],
     "name": "Vale of White Horse",
-    "scraper_id": "ukbcd_valeof_white_horse_council"
+    "scraper_id": "vale_of_white_horse"
   },
   "E07000181": {
     "cases": [
@@ -8066,7 +8066,7 @@
       }
     ],
     "name": "West Oxfordshire",
-    "scraper_id": "hacs_westoxon_gov_uk"
+    "scraper_id": "west_oxfordshire"
   },
   "E07000192": {
     "cases": [
@@ -8123,7 +8123,7 @@
       }
     ],
     "name": "Cannock Chase",
-    "scraper_id": "hacs_cannock_chase_dc_gov_uk"
+    "scraper_id": "cannock_chase"
   },
   "E07000193": {
     "cases": [
@@ -8163,7 +8163,7 @@
       }
     ],
     "name": "East Staffordshire",
-    "scraper_id": "port_east_staffordshire_borough_council"
+    "scraper_id": "east_staffordshire"
   },
   "E07000194": {
     "cases": [
@@ -8217,7 +8217,7 @@
       }
     ],
     "name": "Lichfield",
-    "scraper_id": "hacs_lichfielddc_gov_uk"
+    "scraper_id": "lichfield"
   },
   "E07000195": {
     "cases": [
@@ -8271,7 +8271,7 @@
       }
     ],
     "name": "Newcastle-under-Lyme",
-    "scraper_id": "hacs_newcastle_staffs_gov_uk"
+    "scraper_id": "newcastle_under_lyme"
   },
   "E07000196": {
     "cases": [
@@ -8325,7 +8325,7 @@
       }
     ],
     "name": "South Staffordshire",
-    "scraper_id": "hacs_sstaffs_gov_uk"
+    "scraper_id": "south_staffordshire"
   },
   "E07000197": {
     "cases": [
@@ -8363,7 +8363,7 @@
       }
     ],
     "name": "Stafford",
-    "scraper_id": "hacs_staffordbc_gov_uk"
+    "scraper_id": "stafford"
   },
   "E07000198": {
     "cases": [
@@ -8411,7 +8411,7 @@
       }
     ],
     "name": "Staffordshire Moorlands",
-    "scraper_id": "hacs_staffsmoorlands_gov_uk"
+    "scraper_id": "staffordshire_moorlands"
   },
   "E07000199": {
     "cases": [
@@ -8441,7 +8441,7 @@
       }
     ],
     "name": "Tamworth",
-    "scraper_id": "ukbcd_tamworth_borough_council"
+    "scraper_id": "tamworth"
   },
   "E07000200": {
     "cases": [
@@ -8479,7 +8479,7 @@
       }
     ],
     "name": "Babergh",
-    "scraper_id": "port_babergh_district_council"
+    "scraper_id": "babergh"
   },
   "E07000202": {
     "cases": [
@@ -8497,7 +8497,7 @@
     "notes": [
       "fixture-only: frontend cannot supply required ['location_id']"
     ],
-    "scraper_id": "hacs_ipswich_gov_uk"
+    "scraper_id": "ipswich"
   },
   "E07000203": {
     "cases": [
@@ -8535,7 +8535,7 @@
       }
     ],
     "name": "Mid Suffolk",
-    "scraper_id": "port_mid_suffolk_district_council"
+    "scraper_id": "mid_suffolk"
   },
   "E07000207": {
     "cases": [
@@ -8589,7 +8589,7 @@
       }
     ],
     "name": "Elmbridge",
-    "scraper_id": "hacs_elmbridge_gov_uk"
+    "scraper_id": "elmbridge"
   },
   "E07000208": {
     "cases": [
@@ -8627,7 +8627,7 @@
       }
     ],
     "name": "Epsom and Ewell",
-    "scraper_id": "hacs_itv_epsom_ewell"
+    "scraper_id": "epsom_and_ewell"
   },
   "E07000209": {
     "cases": [
@@ -8681,7 +8681,7 @@
       }
     ],
     "name": "Guildford",
-    "scraper_id": "hacs_guildford_gov_uk"
+    "scraper_id": "guildford"
   },
   "E07000210": {
     "cases": [
@@ -8698,14 +8698,14 @@
         "source": "sampled"
       },
       {
-        "id": "E07000210-s3",
-        "label": "87, Chart Downs, Dorking, RH5 4DF",
+        "id": "E07000210-s2",
+        "label": "36, Lyons Court, Dorking, RH4 1AB",
         "params": {
-          "address": "87, Chart Downs, Dorking, RH5 4DF",
-          "house_number": "87",
-          "postcode": "RH5 4DF",
-          "street": "Chart Downs",
-          "uprn": "100061421495"
+          "address": "36, Lyons Court, Dorking, RH4 1AB",
+          "house_number": "36",
+          "postcode": "RH4 1AB",
+          "street": "Lyons Court",
+          "uprn": "100061424685"
         },
         "source": "sampled"
       },
@@ -8738,7 +8738,7 @@
       }
     ],
     "name": "Mole Valley",
-    "scraper_id": "hacs_mole_valley_gov_uk"
+    "scraper_id": "mole_valley"
   },
   "E07000211": {
     "cases": [
@@ -8784,7 +8784,7 @@
       }
     ],
     "name": "Reigate and Banstead",
-    "scraper_id": "hacs_reigatebanstead_gov_uk"
+    "scraper_id": "reigate_and_banstead"
   },
   "E07000212": {
     "cases": [
@@ -8830,7 +8830,7 @@
       }
     ],
     "name": "Runnymede",
-    "scraper_id": "hacs_runnymede_gov_uk"
+    "scraper_id": "runnymede"
   },
   "E07000213": {
     "cases": [
@@ -8868,7 +8868,7 @@
       }
     ],
     "name": "Spelthorne",
-    "scraper_id": "hacs_spelthorne_gov_uk"
+    "scraper_id": "spelthorne"
   },
   "E07000214": {
     "cases": [
@@ -8907,7 +8907,7 @@
       }
     ],
     "name": "Surrey Heath",
-    "scraper_id": "ukbcd_surrey_heath_borough_council"
+    "scraper_id": "surrey_heath"
   },
   "E07000215": {
     "cases": [
@@ -8964,10 +8964,22 @@
       }
     ],
     "name": "Tandridge",
-    "scraper_id": "hacs_tandridge_gov_uk"
+    "scraper_id": "tandridge"
   },
   "E07000216": {
     "cases": [
+      {
+        "id": "E07000216-s1",
+        "label": "3, Mosaic Place, Alfold, Cranleigh, GU6 8XL",
+        "params": {
+          "address": "3, Mosaic Place, Alfold, Cranleigh, GU6 8XL",
+          "house_number": "3",
+          "postcode": "GU6 8XL",
+          "street": "Mosaic Place",
+          "uprn": "10094582010"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E07000216-s2",
         "label": "7, The Warren, Farnham, GU9 9AS",
@@ -8977,18 +8989,6 @@
           "postcode": "GU9 9AS",
           "street": "The Warren",
           "uprn": "100061609895"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E07000216-s3",
-        "label": "1, Fenns Yard, Farnham, GU9 7EZ",
-        "params": {
-          "address": "1, Fenns Yard, Farnham, GU9 7EZ",
-          "house_number": "1",
-          "postcode": "GU9 7EZ",
-          "street": "Fenns Yard",
-          "uprn": "100061602319"
         },
         "source": "sampled"
       },
@@ -9014,7 +9014,7 @@
       }
     ],
     "name": "Waverley",
-    "scraper_id": "hacs_waverley_gov_uk"
+    "scraper_id": "waverley"
   },
   "E07000217": {
     "cases": [
@@ -9053,7 +9053,7 @@
       }
     ],
     "name": "Woking",
-    "scraper_id": "ukbcd_woking_borough_council"
+    "scraper_id": "woking"
   },
   "E07000218": {
     "cases": [
@@ -9083,12 +9083,12 @@
       }
     ],
     "name": "North Warwickshire",
-    "scraper_id": "ukbcd_north_warwickshire_borough_council"
+    "scraper_id": "north_warwickshire"
   },
   "E07000219": {
     "cases": [
       {
-        "id": "E07000219-s5",
+        "id": "E07000219-s1",
         "label": "51, Malvern Avenue, Nuneaton, CV10 8NJ",
         "params": {
           "address": "51, Malvern Avenue, Nuneaton, CV10 8NJ",
@@ -9100,7 +9100,7 @@
         "source": "sampled"
       },
       {
-        "id": "E07000219-s6",
+        "id": "E07000219-s2",
         "label": "34, Delamere Road, Bedworth, CV12 8SQ",
         "params": {
           "address": "34, Delamere Road, Bedworth, CV12 8SQ",
@@ -9113,7 +9113,7 @@
       }
     ],
     "name": "Nuneaton and Bedworth",
-    "scraper_id": "ukbcd_nuneaton_bedworth_borough_council"
+    "scraper_id": "nuneaton_and_bedworth"
   },
   "E07000220": {
     "cases": [
@@ -9167,7 +9167,7 @@
       }
     ],
     "name": "Rugby",
-    "scraper_id": "hacs_rugby_gov_uk"
+    "scraper_id": "rugby"
   },
   "E07000221": {
     "cases": [
@@ -9213,7 +9213,7 @@
       }
     ],
     "name": "Stratford-on-Avon",
-    "scraper_id": "hacs_stratford_gov_uk"
+    "scraper_id": "stratford_on_avon"
   },
   "E07000222": {
     "cases": [
@@ -9267,7 +9267,7 @@
       }
     ],
     "name": "Warwick",
-    "scraper_id": "hacs_warwickdc_gov_uk"
+    "scraper_id": "warwick"
   },
   "E07000223": {
     "cases": [
@@ -9325,7 +9325,7 @@
       }
     ],
     "name": "Adur",
-    "scraper_id": "hacs_adur_worthing_gov_uk"
+    "scraper_id": "adur_and_worthing"
   },
   "E07000224": {
     "cases": [
@@ -9373,7 +9373,7 @@
       }
     ],
     "name": "Arun",
-    "scraper_id": "hacs_arun_gov_uk"
+    "scraper_id": "arun"
   },
   "E07000225": {
     "cases": [
@@ -9427,7 +9427,7 @@
       }
     ],
     "name": "Chichester",
-    "scraper_id": "hacs_chichester_gov_uk"
+    "scraper_id": "chichester"
   },
   "E07000226": {
     "cases": [
@@ -9474,7 +9474,7 @@
       }
     ],
     "name": "Crawley",
-    "scraper_id": "hacs_crawley_gov_uk"
+    "scraper_id": "crawley"
   },
   "E07000227": {
     "cases": [
@@ -9520,7 +9520,10 @@
       }
     ],
     "name": "Horsham",
-    "scraper_id": "hacs_horsham_gov_uk"
+    "notes": [
+      "address API failed for 1 postcode(s)"
+    ],
+    "scraper_id": "horsham"
   },
   "E07000228": {
     "cases": [
@@ -9580,7 +9583,7 @@
       }
     ],
     "name": "Mid Sussex",
-    "scraper_id": "hacs_midsussex_gov_uk"
+    "scraper_id": "mid_sussex"
   },
   "E07000229": {
     "cases": [
@@ -9638,7 +9641,7 @@
       }
     ],
     "name": "Worthing",
-    "scraper_id": "hacs_adur_worthing_gov_uk"
+    "scraper_id": "adur_and_worthing"
   },
   "E07000234": {
     "cases": [
@@ -9695,7 +9698,7 @@
       }
     ],
     "name": "Bromsgrove",
-    "scraper_id": "hacs_bromsgrove_gov_uk"
+    "scraper_id": "bromsgrove"
   },
   "E07000235": {
     "cases": [
@@ -9725,10 +9728,22 @@
       }
     ],
     "name": "Malvern Hills",
-    "scraper_id": "ukbcd_malvern_hills_d_c"
+    "scraper_id": "malvern_hills"
   },
   "E07000236": {
     "cases": [
+      {
+        "id": "E07000236-s1",
+        "label": "30, Southcrest Road, Redditch, B98 7JJ",
+        "params": {
+          "address": "30, Southcrest Road, Redditch, B98 7JJ",
+          "house_number": "30",
+          "postcode": "B98 7JJ",
+          "street": "Southcrest Road",
+          "uprn": "100120635019"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E07000236-s2",
         "label": "53, Guinness Close, Redditch, B98 7XW",
@@ -9740,22 +9755,10 @@
           "uprn": "100120622198"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E07000236-s5",
-        "label": "3, Summer Street, Redditch, B98 7BD",
-        "params": {
-          "address": "3, Summer Street, Redditch, B98 7BD",
-          "house_number": "3",
-          "postcode": "B98 7BD",
-          "street": "Summer Street",
-          "uprn": "100120635780"
-        },
-        "source": "sampled"
       }
     ],
     "name": "Redditch",
-    "scraper_id": "ukbcd_redditch_borough_council"
+    "scraper_id": "redditch"
   },
   "E07000237": {
     "cases": [
@@ -9785,7 +9788,7 @@
       }
     ],
     "name": "Worcester",
-    "scraper_id": "ukbcd_worcester_city_council"
+    "scraper_id": "worcester"
   },
   "E07000238": {
     "cases": [
@@ -9824,7 +9827,7 @@
       }
     ],
     "name": "Wychavon",
-    "scraper_id": "port_wychavon_district_council"
+    "scraper_id": "wychavon"
   },
   "E07000239": {
     "cases": [
@@ -9844,7 +9847,7 @@
     "notes": [
       "fixture-only: frontend cannot supply required ['town']"
     ],
-    "scraper_id": "hacs_wyreforestdc_gov_uk"
+    "scraper_id": "wyre_forest"
   },
   "E07000240": {
     "cases": [
@@ -9890,7 +9893,7 @@
       }
     ],
     "name": "St Albans",
-    "scraper_id": "hacs_stalbans_gov_uk"
+    "scraper_id": "st_albans"
   },
   "E07000241": {
     "cases": [
@@ -9938,7 +9941,7 @@
       }
     ],
     "name": "Welwyn Hatfield",
-    "scraper_id": "hacs_welhat_gov_uk"
+    "scraper_id": "welwyn_hatfield"
   },
   "E07000242": {
     "cases": [
@@ -9995,7 +9998,7 @@
       }
     ],
     "name": "East Hertfordshire",
-    "scraper_id": "hacs_eastherts_gov_uk"
+    "scraper_id": "east_hertfordshire"
   },
   "E07000243": {
     "cases": [
@@ -10049,10 +10052,22 @@
       }
     ],
     "name": "Stevenage",
-    "scraper_id": "hacs_stevenage_gov_uk"
+    "scraper_id": "stevenage"
   },
   "E07000244": {
     "cases": [
+      {
+        "id": "E07000244-s1",
+        "label": "272, High Street, Felixstowe, IP11 9DS",
+        "params": {
+          "address": "272, High Street, Felixstowe, IP11 9DS",
+          "house_number": "272",
+          "postcode": "IP11 9DS",
+          "street": "High Street",
+          "uprn": "100091390508"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E07000244-s2",
         "label": "8, Uggeshall Close, Lowestoft, NR32 4PU",
@@ -10062,18 +10077,6 @@
           "postcode": "NR32 4PU",
           "street": "Uggeshall Close",
           "uprn": "100091182033"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E07000244-s3",
-        "label": "66, Black Tiles Lane, Martlesham, Woodbridge, IP12 4TQ",
-        "params": {
-          "address": "66, Black Tiles Lane, Martlesham, Woodbridge, IP12 4TQ",
-          "house_number": "66",
-          "postcode": "IP12 4TQ",
-          "street": "Black Tiles Lane",
-          "uprn": "100091142276"
         },
         "source": "sampled"
       },
@@ -10095,24 +10098,12 @@
       }
     ],
     "name": "East Suffolk",
-    "scraper_id": "hacs_eastsuffolk_gov_uk"
+    "scraper_id": "east_suffolk"
   },
   "E07000245": {
     "cases": [
       {
-        "id": "E07000245-s4",
-        "label": "25, Fordham Place, Ixworth, Bury St. Edmunds, IP31 2GJ",
-        "params": {
-          "address": "25, Fordham Place, Ixworth, Bury St. Edmunds, IP31 2GJ",
-          "house_number": "25",
-          "postcode": "IP31 2GJ",
-          "street": "Fordham Place",
-          "uprn": "10009751136"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E07000245-s5",
+        "id": "E07000245-s1",
         "label": "3 Barn Cottages, The Green, Fornham All Saints, Bury St. Edmunds, IP28 6JX",
         "params": {
           "address": "3 Barn Cottages, The Green, Fornham All Saints, Bury St. Edmunds, IP28 6JX",
@@ -10122,10 +10113,22 @@
           "uprn": "10009753969"
         },
         "source": "sampled"
+      },
+      {
+        "id": "E07000245-s2",
+        "label": "4, Cargo Lane, Bury St. Edmunds, IP32 6FW",
+        "params": {
+          "address": "4, Cargo Lane, Bury St. Edmunds, IP32 6FW",
+          "house_number": "4",
+          "postcode": "IP32 6FW",
+          "street": "Cargo Lane",
+          "uprn": "10094768756"
+        },
+        "source": "sampled"
       }
     ],
     "name": "West Suffolk",
-    "scraper_id": "ukbcd_west_suffolk_council"
+    "scraper_id": "west_suffolk"
   },
   "E08000001": {
     "cases": [
@@ -10182,12 +10185,12 @@
       }
     ],
     "name": "Bolton",
-    "scraper_id": "hacs_bolton_gov_uk"
+    "scraper_id": "bolton"
   },
   "E08000002": {
     "cases": [
       {
-        "id": "E08000002-s5",
+        "id": "E08000002-s1",
         "label": "17, Cross Lane, Radcliffe, Manchester, M26 2QZ",
         "params": {
           "address": "17, Cross Lane, Radcliffe, Manchester, M26 2QZ",
@@ -10199,7 +10202,7 @@
         "source": "sampled"
       },
       {
-        "id": "E08000002-s6",
+        "id": "E08000002-s2",
         "label": "11, Green Street, Bury, BL8 1TF",
         "params": {
           "address": "11, Green Street, Bury, BL8 1TF",
@@ -10242,7 +10245,7 @@
       }
     ],
     "name": "Bury",
-    "scraper_id": "hacs_bury_gov_uk"
+    "scraper_id": "bury"
   },
   "E08000003": {
     "cases": [
@@ -10272,7 +10275,7 @@
       }
     ],
     "name": "Manchester",
-    "scraper_id": "ukbcd_manchester_city_council"
+    "scraper_id": "manchester"
   },
   "E08000004": {
     "cases": [
@@ -10326,7 +10329,7 @@
       }
     ],
     "name": "Oldham",
-    "scraper_id": "hacs_oldham_gov_uk"
+    "scraper_id": "oldham"
   },
   "E08000005": {
     "cases": [
@@ -10380,7 +10383,7 @@
       }
     ],
     "name": "Rochdale",
-    "scraper_id": "hacs_rochdale_gov_uk"
+    "scraper_id": "rochdale"
   },
   "E08000006": {
     "cases": [
@@ -10418,7 +10421,7 @@
       }
     ],
     "name": "Salford",
-    "scraper_id": "hacs_salford_gov_uk"
+    "scraper_id": "salford"
   },
   "E08000007": {
     "cases": [
@@ -10456,7 +10459,7 @@
       }
     ],
     "name": "Stockport",
-    "scraper_id": "hacs_stockport_gov_uk"
+    "scraper_id": "stockport"
   },
   "E08000008": {
     "cases": [
@@ -10513,7 +10516,7 @@
       }
     ],
     "name": "Tameside",
-    "scraper_id": "hacs_tameside_gov_uk"
+    "scraper_id": "tameside"
   },
   "E08000009": {
     "cases": [
@@ -10561,7 +10564,7 @@
       }
     ],
     "name": "Trafford",
-    "scraper_id": "port_trafford_council"
+    "scraper_id": "trafford"
   },
   "E08000010": {
     "cases": [
@@ -10618,7 +10621,7 @@
       }
     ],
     "name": "Wigan",
-    "scraper_id": "hacs_wigan_gov_uk"
+    "scraper_id": "wigan"
   },
   "E08000011": {
     "cases": [
@@ -10666,7 +10669,7 @@
       }
     ],
     "name": "Knowsley",
-    "scraper_id": "hacs_knowsley_gov_uk"
+    "scraper_id": "knowsley"
   },
   "E08000012": {
     "cases": [
@@ -10712,7 +10715,7 @@
       }
     ],
     "name": "Liverpool",
-    "scraper_id": "hacs_liverpool_gov_uk"
+    "scraper_id": "liverpool"
   },
   "E08000013": {
     "cases": [
@@ -10769,12 +10772,12 @@
       }
     ],
     "name": "St. Helens",
-    "scraper_id": "hacs_st_helens_gov_uk"
+    "scraper_id": "st_helens"
   },
   "E08000014": {
     "cases": [
       {
-        "id": "E08000014-s5",
+        "id": "E08000014-s1",
         "label": "86, Beach Road, Liverpool, L21 2PP",
         "params": {
           "address": "86, Beach Road, Liverpool, L21 2PP",
@@ -10786,7 +10789,7 @@
         "source": "sampled"
       },
       {
-        "id": "E08000014-s6",
+        "id": "E08000014-s2",
         "label": "38, Cumberland Gate, Bootle, L30 7PZ",
         "params": {
           "address": "38, Cumberland Gate, Bootle, L30 7PZ",
@@ -10829,7 +10832,7 @@
       }
     ],
     "name": "Sefton",
-    "scraper_id": "hacs_sefton_gov_uk"
+    "scraper_id": "sefton"
   },
   "E08000015": {
     "cases": [
@@ -10868,7 +10871,7 @@
       }
     ],
     "name": "Wirral",
-    "scraper_id": "hacs_wirral_gov_uk"
+    "scraper_id": "wirral"
   },
   "E08000016": {
     "cases": [
@@ -10925,7 +10928,7 @@
       }
     ],
     "name": "Barnsley",
-    "scraper_id": "hacs_barnsley_gov_uk"
+    "scraper_id": "barnsley"
   },
   "E08000017": {
     "cases": [
@@ -10979,7 +10982,7 @@
       }
     ],
     "name": "Doncaster",
-    "scraper_id": "hacs_doncaster_gov_uk"
+    "scraper_id": "doncaster"
   },
   "E08000018": {
     "cases": [
@@ -11009,7 +11012,7 @@
       }
     ],
     "name": "Rotherham",
-    "scraper_id": "ukbcd_rotherham_council"
+    "scraper_id": "rotherham"
   },
   "E08000019": {
     "cases": [
@@ -11063,7 +11066,7 @@
       }
     ],
     "name": "Sheffield",
-    "scraper_id": "hacs_sheffield_gov_uk"
+    "scraper_id": "sheffield"
   },
   "E08000021": {
     "cases": [
@@ -11113,7 +11116,7 @@
       }
     ],
     "name": "Newcastle upon Tyne",
-    "scraper_id": "port_newcastle_city_council"
+    "scraper_id": "newcastle_upon_tyne"
   },
   "E08000022": {
     "cases": [
@@ -11143,7 +11146,7 @@
       }
     ],
     "name": "North Tyneside",
-    "scraper_id": "ukbcd_north_tyneside_council"
+    "scraper_id": "north_tyneside"
   },
   "E08000023": {
     "cases": [
@@ -11200,12 +11203,12 @@
       }
     ],
     "name": "South Tyneside",
-    "scraper_id": "hacs_southtyneside_gov_uk"
+    "scraper_id": "south_tyneside"
   },
   "E08000024": {
     "cases": [
       {
-        "id": "E08000024-s5",
+        "id": "E08000024-s1",
         "label": "1, Rainton Grove, Houghton Le Spring, DH5 8JT",
         "params": {
           "address": "1, Rainton Grove, Houghton Le Spring, DH5 8JT",
@@ -11217,7 +11220,7 @@
         "source": "sampled"
       },
       {
-        "id": "E08000024-s6",
+        "id": "E08000024-s2",
         "label": "18, Grange View, Newbottle, Houghton Le Spring, DH4 4HU",
         "params": {
           "address": "18, Grange View, Newbottle, Houghton Le Spring, DH4 4HU",
@@ -11260,7 +11263,7 @@
       }
     ],
     "name": "Sunderland",
-    "scraper_id": "hacs_sunderland_gov_uk"
+    "scraper_id": "sunderland"
   },
   "E08000025": {
     "cases": [
@@ -11317,7 +11320,7 @@
       }
     ],
     "name": "Birmingham",
-    "scraper_id": "hacs_birmingham_gov_uk"
+    "scraper_id": "birmingham"
   },
   "E08000026": {
     "cases": [
@@ -11371,7 +11374,7 @@
       }
     ],
     "name": "Coventry",
-    "scraper_id": "hacs_coventry_gov_uk"
+    "scraper_id": "coventry"
   },
   "E08000027": {
     "cases": [
@@ -11401,7 +11404,7 @@
       }
     ],
     "name": "Dudley",
-    "scraper_id": "ukbcd_dudley_council"
+    "scraper_id": "dudley"
   },
   "E08000028": {
     "cases": [
@@ -11447,7 +11450,7 @@
       }
     ],
     "name": "Sandwell",
-    "scraper_id": "hacs_sandwell_gov_uk"
+    "scraper_id": "sandwell"
   },
   "E08000029": {
     "cases": [
@@ -11502,7 +11505,7 @@
       }
     ],
     "name": "Solihull",
-    "scraper_id": "hacs_solihull_gov_uk"
+    "scraper_id": "solihull"
   },
   "E08000030": {
     "cases": [
@@ -11556,7 +11559,7 @@
       }
     ],
     "name": "Walsall",
-    "scraper_id": "hacs_walsall_gov_uk"
+    "scraper_id": "walsall"
   },
   "E08000031": {
     "cases": [
@@ -11574,13 +11577,13 @@
       },
       {
         "id": "E08000031-s2",
-        "label": "1, Farrington Road, Wolverhampton, WV4 6QJ",
+        "label": "885, Cannock Road, Westcroft, Wolverhampton, WV10 8QB",
         "params": {
-          "address": "1, Farrington Road, Wolverhampton, WV4 6QJ",
-          "house_number": "1",
-          "postcode": "WV4 6QJ",
-          "street": "Farrington Road",
-          "uprn": "100071157054"
+          "address": "885, Cannock Road, Westcroft, Wolverhampton, WV10 8QB",
+          "house_number": "885",
+          "postcode": "WV10 8QB",
+          "street": "Cannock Road",
+          "uprn": "100071143884"
         },
         "source": "sampled"
       },
@@ -11595,7 +11598,10 @@
       }
     ],
     "name": "Wolverhampton",
-    "scraper_id": "hacs_wolverhampton_gov_uk"
+    "notes": [
+      "address API failed for 2 postcode(s)"
+    ],
+    "scraper_id": "wolverhampton"
   },
   "E08000032": {
     "cases": [
@@ -11649,7 +11655,7 @@
       }
     ],
     "name": "Bradford",
-    "scraper_id": "hacs_bradford_gov_uk"
+    "scraper_id": "bradford"
   },
   "E08000033": {
     "cases": [
@@ -11697,7 +11703,7 @@
       }
     ],
     "name": "Calderdale",
-    "scraper_id": "hacs_calderdale_gov_uk"
+    "scraper_id": "calderdale"
   },
   "E08000034": {
     "cases": [
@@ -11745,7 +11751,7 @@
       }
     ],
     "name": "Kirklees",
-    "scraper_id": "hacs_kirklees_gov_uk"
+    "scraper_id": "kirklees"
   },
   "E08000035": {
     "cases": [
@@ -11775,7 +11781,7 @@
       }
     ],
     "name": "Leeds",
-    "scraper_id": "ukbcd_leeds_city_council"
+    "scraper_id": "leeds"
   },
   "E08000036": {
     "cases": [
@@ -11829,10 +11835,22 @@
       }
     ],
     "name": "Wakefield",
-    "scraper_id": "hacs_wakefield_gov_uk"
+    "scraper_id": "wakefield"
   },
   "E08000037": {
     "cases": [
+      {
+        "id": "E08000037-s1",
+        "label": "19, Priory Court, Gateshead, NE8 3JL",
+        "params": {
+          "address": "19, Priory Court, Gateshead, NE8 3JL",
+          "house_number": "19",
+          "postcode": "NE8 3JL",
+          "street": "Priory Court",
+          "uprn": "100000049555"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E08000037-s2",
         "label": "1 Bungalows, Sunderland Road, Gateshead, NE10 0NU",
@@ -11842,18 +11860,6 @@
           "postcode": "NE10 0NU",
           "street": "Bungalows",
           "uprn": "100000058639"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E08000037-s3",
-        "label": "23, Langdale, Birtley, Chester Le Street, DH3 2EL",
-        "params": {
-          "address": "23, Langdale, Birtley, Chester Le Street, DH3 2EL",
-          "house_number": "23",
-          "postcode": "DH3 2EL",
-          "street": "Langdale",
-          "uprn": "100000010631"
         },
         "source": "sampled"
       },
@@ -11883,7 +11889,7 @@
       }
     ],
     "name": "Gateshead",
-    "scraper_id": "hacs_gateshead_gov_uk"
+    "scraper_id": "gateshead"
   },
   "E09000002": {
     "cases": [
@@ -11929,7 +11935,7 @@
       }
     ],
     "name": "Barking and Dagenham",
-    "scraper_id": "hacs_lbbd_gov_uk"
+    "scraper_id": "barking_and_dagenham"
   },
   "E09000003": {
     "cases": [
@@ -11975,7 +11981,7 @@
       }
     ],
     "name": "Barnet",
-    "scraper_id": "hacs_barnet_gov_uk"
+    "scraper_id": "barnet"
   },
   "E09000004": {
     "cases": [
@@ -12021,10 +12027,22 @@
       }
     ],
     "name": "Bexley",
-    "scraper_id": "hacs_bexley_gov_uk"
+    "scraper_id": "bexley"
   },
   "E09000005": {
     "cases": [
+      {
+        "id": "E09000005-s1",
+        "label": "7 Therapies Health & Beauty 7, Lonsdale Road, London, NW6 6RA",
+        "params": {
+          "address": "7 Therapies Health & Beauty 7, Lonsdale Road, London, NW6 6RA",
+          "house_number": "7",
+          "postcode": "NW6 6RA",
+          "street": "Therapies Health & Beauty 7",
+          "uprn": "202073163"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E09000005-s2",
         "label": "184, Harrow Road, Wembley, HA9 6QH",
@@ -12034,18 +12052,6 @@
           "postcode": "HA9 6QH",
           "street": "Harrow Road",
           "uprn": "202089765"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E09000005-s3",
-        "label": "7, Adams Close, London, NW9 8PT",
-        "params": {
-          "address": "7, Adams Close, London, NW9 8PT",
-          "house_number": "7",
-          "postcode": "NW9 8PT",
-          "street": "Adams Close",
-          "uprn": "202136740"
         },
         "source": "sampled"
       },
@@ -12060,7 +12066,7 @@
       }
     ],
     "name": "Brent",
-    "scraper_id": "ukbcd_brent_council"
+    "scraper_id": "brent"
   },
   "E09000006": {
     "cases": [
@@ -12100,24 +12106,12 @@
       }
     ],
     "name": "Bromley",
-    "scraper_id": "port_bromley_borough_council"
+    "scraper_id": "bromley"
   },
   "E09000007": {
     "cases": [
       {
-        "id": "E09000007-s3",
-        "label": "6, South Grove, London, N6 6BS",
-        "params": {
-          "address": "6, South Grove, London, N6 6BS",
-          "house_number": "6",
-          "postcode": "N6 6BS",
-          "street": "South Grove",
-          "uprn": "5091262"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E09000007-s5",
+        "id": "E09000007-s1",
         "label": "26, Old Gloucester Street, London, WC1N 3AN",
         "params": {
           "address": "26, Old Gloucester Street, London, WC1N 3AN",
@@ -12125,6 +12119,18 @@
           "postcode": "WC1N 3AN",
           "street": "Old Gloucester Street",
           "uprn": "5001496"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "E09000007-s2",
+        "label": "182, High Holborn, London, WC1V 7AP",
+        "params": {
+          "address": "182, High Holborn, London, WC1V 7AP",
+          "house_number": "182",
+          "postcode": "WC1V 7AP",
+          "street": "High Holborn",
+          "uprn": "5085862"
         },
         "source": "sampled"
       },
@@ -12138,7 +12144,7 @@
       }
     ],
     "name": "Camden",
-    "scraper_id": "hacs_camden_gov_uk"
+    "scraper_id": "camden"
   },
   "E09000008": {
     "cases": [
@@ -12198,7 +12204,7 @@
       }
     ],
     "name": "Croydon",
-    "scraper_id": "hacs_croydon_gov_uk"
+    "scraper_id": "croydon"
   },
   "E09000009": {
     "cases": [
@@ -12244,7 +12250,7 @@
       }
     ],
     "name": "Ealing",
-    "scraper_id": "hacs_ealing_gov_uk"
+    "scraper_id": "ealing"
   },
   "E09000010": {
     "cases": [
@@ -12293,12 +12299,12 @@
       }
     ],
     "name": "Enfield",
-    "scraper_id": "hacs_enfield_gov_uk"
+    "scraper_id": "enfield"
   },
   "E09000011": {
     "cases": [
       {
-        "id": "E09000011-s5",
+        "id": "E09000011-s1",
         "label": "34, Altash Way, London, SE9 3EL",
         "params": {
           "address": "34, Altash Way, London, SE9 3EL",
@@ -12310,7 +12316,7 @@
         "source": "sampled"
       },
       {
-        "id": "E09000011-s8",
+        "id": "E09000011-s2",
         "label": "1, Dabin Crescent, London, SE10 8TF",
         "params": {
           "address": "1, Dabin Crescent, London, SE10 8TF",
@@ -12352,12 +12358,12 @@
       }
     ],
     "name": "Greenwich",
-    "scraper_id": "hacs_royalgreenwich_gov_uk"
+    "scraper_id": "greenwich"
   },
   "E09000012": {
     "cases": [
       {
-        "id": "E09000012-s5",
+        "id": "E09000012-s1",
         "label": "6, Pembury Place, London, E5 8LX",
         "params": {
           "address": "6, Pembury Place, London, E5 8LX",
@@ -12369,7 +12375,7 @@
         "source": "sampled"
       },
       {
-        "id": "E09000012-s8",
+        "id": "E09000012-s2",
         "label": "11, Stage Plaza Curtain Road, London, EC2A 3NQ",
         "params": {
           "address": "11, Stage Plaza Curtain Road, London, EC2A 3NQ",
@@ -12409,7 +12415,7 @@
       }
     ],
     "name": "Hackney",
-    "scraper_id": "hacs_hackney_gov_uk"
+    "scraper_id": "hackney"
   },
   "E09000013": {
     "cases": [
@@ -12439,7 +12445,7 @@
       }
     ],
     "name": "Hammersmith and Fulham",
-    "scraper_id": "ukbcd_london_borough_hammersmithand_fulham"
+    "scraper_id": "hammersmith_and_fulham"
   },
   "E09000014": {
     "cases": [
@@ -12493,7 +12499,7 @@
       }
     ],
     "name": "Haringey",
-    "scraper_id": "hacs_haringey_gov_uk"
+    "scraper_id": "haringey"
   },
   "E09000015": {
     "cases": [
@@ -12539,7 +12545,7 @@
       }
     ],
     "name": "Harrow",
-    "scraper_id": "hacs_harrow_gov_uk"
+    "scraper_id": "harrow"
   },
   "E09000016": {
     "cases": [
@@ -12577,7 +12583,7 @@
       }
     ],
     "name": "Havering",
-    "scraper_id": "hacs_havering_gov_uk"
+    "scraper_id": "havering"
   },
   "E09000017": {
     "cases": [
@@ -12616,10 +12622,22 @@
       }
     ],
     "name": "Hillingdon",
-    "scraper_id": "port_hillingdon_council"
+    "scraper_id": "hillingdon"
   },
   "E09000018": {
     "cases": [
+      {
+        "id": "E09000018-s1",
+        "label": "220, Great West Road, Hounslow, TW5 9AW",
+        "params": {
+          "address": "220, Great West Road, Hounslow, TW5 9AW",
+          "house_number": "220",
+          "postcode": "TW5 9AW",
+          "street": "Great West Road",
+          "uprn": "100023405849"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E09000018-s2",
         "label": "64b, Waldeck Road, London, W4 3NU",
@@ -12631,27 +12649,15 @@
           "uprn": "100021591291"
         },
         "source": "sampled"
-      },
-      {
-        "id": "E09000018-s3",
-        "label": "211, Page Road, Feltham, TW14 8DL",
-        "params": {
-          "address": "211, Page Road, Feltham, TW14 8DL",
-          "house_number": "211",
-          "postcode": "TW14 8DL",
-          "street": "Page Road",
-          "uprn": "100021529611"
-        },
-        "source": "sampled"
       }
     ],
     "name": "Hounslow",
-    "scraper_id": "ukbcd_london_borough_hounslow"
+    "scraper_id": "hounslow"
   },
   "E09000019": {
     "cases": [
       {
-        "id": "E09000019-s5",
+        "id": "E09000019-s1",
         "label": "12, Noel Road, London, N1 8HA",
         "params": {
           "address": "12, Noel Road, London, N1 8HA",
@@ -12663,7 +12669,7 @@
         "source": "sampled"
       },
       {
-        "id": "E09000019-s6",
+        "id": "E09000019-s2",
         "label": "37, Brydon Walk, London, N1 0UU",
         "params": {
           "address": "37, Brydon Walk, London, N1 0UU",
@@ -12703,7 +12709,7 @@
       }
     ],
     "name": "Islington",
-    "scraper_id": "hacs_islington_gov_uk"
+    "scraper_id": "islington"
   },
   "E09000020": {
     "cases": [
@@ -12758,12 +12764,12 @@
       }
     ],
     "name": "Kensington and Chelsea",
-    "scraper_id": "port_kensington_and_chelsea_council"
+    "scraper_id": "kensington_and_chelsea"
   },
   "E09000021": {
     "cases": [
       {
-        "id": "E09000021-s5",
+        "id": "E09000021-s1",
         "label": "2 Ryehill Court, South Lane, New Malden, KT3 5LE",
         "params": {
           "address": "2 Ryehill Court, South Lane, New Malden, KT3 5LE",
@@ -12775,7 +12781,7 @@
         "source": "sampled"
       },
       {
-        "id": "E09000021-s6",
+        "id": "E09000021-s2",
         "label": "30, Chestnut Grove, New Malden, KT3 3JN",
         "params": {
           "address": "30, Chestnut Grove, New Malden, KT3 3JN",
@@ -12798,7 +12804,7 @@
       }
     ],
     "name": "Kingston upon Thames",
-    "scraper_id": "port_kingston_upon_thames_council"
+    "scraper_id": "kingston_upon_thames"
   },
   "E09000022": {
     "cases": [
@@ -12852,7 +12858,7 @@
       }
     ],
     "name": "Lambeth",
-    "scraper_id": "hacs_lambeth_gov_uk"
+    "scraper_id": "lambeth"
   },
   "E09000023": {
     "cases": [
@@ -12908,7 +12914,7 @@
       }
     ],
     "name": "Lewisham",
-    "scraper_id": "hacs_lewisham_gov_uk"
+    "scraper_id": "lewisham"
   },
   "E09000024": {
     "cases": [
@@ -12948,12 +12954,12 @@
       }
     ],
     "name": "Merton",
-    "scraper_id": "ukbcd_merton_council"
+    "scraper_id": "merton"
   },
   "E09000025": {
     "cases": [
       {
-        "id": "E09000025-s5",
+        "id": "E09000025-s1",
         "label": "103, Prince Regent Lane, London, E13 8RW",
         "params": {
           "address": "103, Prince Regent Lane, London, E13 8RW",
@@ -12965,7 +12971,7 @@
         "source": "sampled"
       },
       {
-        "id": "E09000025-s6",
+        "id": "E09000025-s2",
         "label": "62, Melbourne Road, London, E6 2RX",
         "params": {
           "address": "62, Melbourne Road, London, E6 2RX",
@@ -13002,7 +13008,7 @@
       }
     ],
     "name": "Newham",
-    "scraper_id": "hacs_newham_gov_uk"
+    "scraper_id": "newham"
   },
   "E09000026": {
     "cases": [
@@ -13056,10 +13062,22 @@
       }
     ],
     "name": "Redbridge",
-    "scraper_id": "hacs_redbridge_gov_uk"
+    "scraper_id": "redbridge"
   },
   "E09000027": {
     "cases": [
+      {
+        "id": "E09000027-s1",
+        "label": "45, London Road, Twickenham, TW1 3SZ",
+        "params": {
+          "address": "45, London Road, Twickenham, TW1 3SZ",
+          "house_number": "45",
+          "postcode": "TW1 3SZ",
+          "street": "London Road",
+          "uprn": "100023392379"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E09000027-s2",
         "label": "40, Lawn Crescent, Richmond, TW9 3NS",
@@ -13069,18 +13087,6 @@
           "postcode": "TW9 3NS",
           "street": "Lawn Crescent",
           "uprn": "100022310307"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E09000027-s3",
-        "label": "70, Upper Richmond Road West, London, SW14 8DA",
-        "params": {
-          "address": "70, Upper Richmond Road West, London, SW14 8DA",
-          "house_number": "70",
-          "postcode": "SW14 8DA",
-          "street": "Upper Richmond Road West",
-          "uprn": "100022300609"
         },
         "source": "sampled"
       },
@@ -13110,10 +13116,22 @@
       }
     ],
     "name": "Richmond upon Thames",
-    "scraper_id": "hacs_richmond_gov_uk"
+    "scraper_id": "richmond_upon_thames"
   },
   "E09000028": {
     "cases": [
+      {
+        "id": "E09000028-s1",
+        "label": "7, Copper Row, London, SE1 2LH",
+        "params": {
+          "address": "7, Copper Row, London, SE1 2LH",
+          "house_number": "7",
+          "postcode": "SE1 2LH",
+          "street": "Copper Row",
+          "uprn": "200003358507"
+        },
+        "source": "sampled"
+      },
       {
         "id": "E09000028-s2",
         "label": "2, Hankey Place, London, SE1 4BQ",
@@ -13123,18 +13141,6 @@
           "postcode": "SE1 4BQ",
           "street": "Hankey Place",
           "uprn": "10013529081"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "E09000028-s3",
-        "label": "19a, Peckham Park Road, London, SE15 6TR",
-        "params": {
-          "address": "19a, Peckham Park Road, London, SE15 6TR",
-          "house_number": "19a",
-          "postcode": "SE15 6TR",
-          "street": "Peckham Park Road",
-          "uprn": "10009804926"
         },
         "source": "sampled"
       },
@@ -13156,7 +13162,7 @@
       }
     ],
     "name": "Southwark",
-    "scraper_id": "hacs_southwark_gov_uk"
+    "scraper_id": "southwark"
   },
   "E09000029": {
     "cases": [
@@ -13196,7 +13202,7 @@
       }
     ],
     "name": "Sutton",
-    "scraper_id": "ukbcd_london_borough_sutton"
+    "scraper_id": "sutton"
   },
   "E09000030": {
     "cases": [
@@ -13250,7 +13256,7 @@
       }
     ],
     "name": "Tower Hamlets",
-    "scraper_id": "hacs_tower_hamlets_gov_uk"
+    "scraper_id": "tower_hamlets"
   },
   "E09000031": {
     "cases": [
@@ -13296,7 +13302,7 @@
       }
     ],
     "name": "Waltham Forest",
-    "scraper_id": "hacs_walthamforest_gov_uk"
+    "scraper_id": "waltham_forest"
   },
   "E09000032": {
     "cases": [
@@ -13350,7 +13356,7 @@
       }
     ],
     "name": "Wandsworth",
-    "scraper_id": "hacs_wandsworth_gov_uk"
+    "scraper_id": "wandsworth"
   },
   "E09000033": {
     "cases": [
@@ -13376,12 +13382,24 @@
     "notes": [
       "fixture-only: frontend cannot supply required ['usrn']"
     ],
-    "scraper_id": "hacs_westminster_gov_uk"
+    "scraper_id": "westminster"
   },
   "N09000001": {
     "cases": [
       {
-        "id": "N09000001-s6",
+        "id": "N09000001-s1",
+        "label": "30a, The Diamond, Newtownabbey, BT37 9BJ",
+        "params": {
+          "address": "30a, The Diamond, Newtownabbey, BT37 9BJ",
+          "house_number": "30a",
+          "postcode": "BT37 9BJ",
+          "street": "The Diamond",
+          "uprn": "185375666"
+        },
+        "source": "sampled"
+      },
+      {
+        "id": "N09000001-s2",
         "label": "17, Altmore Green, Newtownabbey, BT37 9AX",
         "params": {
           "address": "17, Altmore Green, Newtownabbey, BT37 9AX",
@@ -13389,18 +13407,6 @@
           "postcode": "BT37 9AX",
           "street": "Altmore Green",
           "uprn": "185375363"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "N09000001-s7",
-        "label": "59, Thornhill Road, Antrim, BT41 2LG",
-        "params": {
-          "address": "59, Thornhill Road, Antrim, BT41 2LG",
-          "house_number": "59",
-          "postcode": "BT41 2LG",
-          "street": "Thornhill Road",
-          "uprn": "187116679"
         },
         "source": "sampled"
       },
@@ -13432,10 +13438,7 @@
       }
     ],
     "name": "Antrim and Newtownabbey",
-    "notes": [
-      "address API failed for 1 postcode(s)"
-    ],
-    "scraper_id": "port_antrim_and_newtownabbey_council"
+    "scraper_id": "antrim_and_newtownabbey"
   },
   "N09000002": {
     "cases": [
@@ -13465,7 +13468,7 @@
       }
     ],
     "name": "Armagh City, Banbridge and Craigavon",
-    "scraper_id": "ukbcd_armagh_banbridge_craigavon_council"
+    "scraper_id": "armagh_city"
   },
   "N09000003": {
     "cases": [
@@ -13512,31 +13515,31 @@
       }
     ],
     "name": "Belfast",
-    "scraper_id": "hacs_belfast_city_gov_uk"
+    "scraper_id": "belfast"
   },
   "N09000006": {
     "cases": [
       {
-        "id": "N09000006-s3",
-        "label": "30, Castlebalfour Road, Lisnaskea Castle Balfour Demesne, Enniskillen, BT92 0LT",
+        "id": "N09000006-s1",
+        "label": "1, Tonyglaskan Road, Tempo Imeroo, Enniskillen, BT94 3LG",
         "params": {
-          "address": "30, Castlebalfour Road, Lisnaskea Castle Balfour Demesne, Enniskillen, BT92 0LT",
-          "house_number": "30",
-          "postcode": "BT92 0LT",
-          "street": "Castlebalfour Road",
-          "uprn": "185797006"
+          "address": "1, Tonyglaskan Road, Tempo Imeroo, Enniskillen, BT94 3LG",
+          "house_number": "1",
+          "postcode": "BT94 3LG",
+          "street": "Tonyglaskan Road",
+          "uprn": "187526874"
         },
         "source": "sampled"
       },
       {
-        "id": "N09000006-s4",
-        "label": "102, Coa Road, Woaghternerry, Enniskillen, BT74 4AP",
+        "id": "N09000006-s2",
+        "label": "99, Cloy Road, Ederney Edenagee, Enniskillen, BT93 0LJ",
         "params": {
-          "address": "102, Coa Road, Woaghternerry, Enniskillen, BT74 4AP",
-          "house_number": "102",
-          "postcode": "BT74 4AP",
-          "street": "Coa Road",
-          "uprn": "185786758"
+          "address": "99, Cloy Road, Ederney Edenagee, Enniskillen, BT93 0LJ",
+          "house_number": "99",
+          "postcode": "BT93 0LJ",
+          "street": "Cloy Road",
+          "uprn": "185883221"
         },
         "source": "sampled"
       },
@@ -13568,10 +13571,22 @@
       }
     ],
     "name": "Fermanagh and Omagh",
-    "scraper_id": "hacs_fermanaghomagh_gov_uk"
+    "scraper_id": "fermanagh_and_omagh"
   },
   "N09000007": {
     "cases": [
+      {
+        "id": "N09000007-s1",
+        "label": "14, Smithfield, Lisburn, BT28 1TH",
+        "params": {
+          "address": "14, Smithfield, Lisburn, BT28 1TH",
+          "house_number": "14",
+          "postcode": "BT28 1TH",
+          "street": "Smithfield",
+          "uprn": "185887182"
+        },
+        "source": "sampled"
+      },
       {
         "id": "N09000007-s2",
         "label": "203, Belsize Road, Lisburn, BT27 4DP",
@@ -13583,25 +13598,13 @@
           "uprn": "185256505"
         },
         "source": "sampled"
-      },
-      {
-        "id": "N09000007-s3",
-        "label": "16, Burnbrae Avenue, Lisburn, BT27 5JE",
-        "params": {
-          "address": "16, Burnbrae Avenue, Lisburn, BT27 5JE",
-          "house_number": "16",
-          "postcode": "BT27 5JE",
-          "street": "Burnbrae Avenue",
-          "uprn": "185262413"
-        },
-        "source": "sampled"
       }
     ],
     "name": "Lisburn and Castlereagh",
     "notes": [
-      "address API failed for 2 postcode(s)"
+      "address API failed for 1 postcode(s)"
     ],
-    "scraper_id": "ukbcd_lisburn_castlereagh_city_council"
+    "scraper_id": "lisburn_and_castlereagh"
   },
   "N09000008": {
     "cases": [
@@ -13655,10 +13658,22 @@
       }
     ],
     "name": "Mid and East Antrim",
-    "scraper_id": "hacs_midandeastantrim_gov_uk"
+    "scraper_id": "mid_and_east_antrim"
   },
   "N09000009": {
     "cases": [
+      {
+        "id": "N09000009-s1",
+        "label": "3, Poplar Hill Road, Cookstown, BT80 8SQ",
+        "params": {
+          "address": "3, Poplar Hill Road, Cookstown, BT80 8SQ",
+          "house_number": "3",
+          "postcode": "BT80 8SQ",
+          "street": "Poplar Hill Road",
+          "uprn": "185695070"
+        },
+        "source": "sampled"
+      },
       {
         "id": "N09000009-s2",
         "label": "11, Altmore Road, Pomeroy, Dungannon, BT70 2UJ",
@@ -13668,18 +13683,6 @@
           "postcode": "BT70 2UJ",
           "street": "Altmore Road",
           "uprn": "185643024"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "N09000009-s3",
-        "label": "11, Lisnawery Road, Augher, BT77 0EQ",
-        "params": {
-          "address": "11, Lisnawery Road, Augher, BT77 0EQ",
-          "house_number": "11",
-          "postcode": "BT77 0EQ",
-          "street": "Lisnawery Road",
-          "uprn": "187288398"
         },
         "source": "sampled"
       },
@@ -13694,7 +13697,7 @@
       }
     ],
     "name": "Mid Ulster",
-    "scraper_id": "port_mid_ulster_district_council"
+    "scraper_id": "mid_ulster"
   },
   "N09000010": {
     "cases": [
@@ -13754,7 +13757,7 @@
       }
     ],
     "name": "Newry, Mourne and Down",
-    "scraper_id": "port_newry_mourne_and_down_council"
+    "scraper_id": "newry"
   },
   "N09000011": {
     "cases": [
@@ -13808,12 +13811,15 @@
       }
     ],
     "name": "Ards and North Down",
-    "scraper_id": "hacs_ardsandnorthdown_gov_uk"
+    "notes": [
+      "address API failed for 1 postcode(s)"
+    ],
+    "scraper_id": "ards_and_north_down"
   },
   "S12000005": {
     "cases": [
       {
-        "id": "S12000005-s5",
+        "id": "S12000005-s1",
         "label": "11, James Pollock Court, Tillicoultry, FK13 6ND",
         "params": {
           "address": "11, James Pollock Court, Tillicoultry, FK13 6ND",
@@ -13825,7 +13831,7 @@
         "source": "sampled"
       },
       {
-        "id": "S12000005-s6",
+        "id": "S12000005-s2",
         "label": "24, Scott Crescent, Alloa, FK10 1BD",
         "params": {
           "address": "24, Scott Crescent, Alloa, FK10 1BD",
@@ -13868,7 +13874,7 @@
       }
     ],
     "name": "Clackmannanshire",
-    "scraper_id": "hacs_clackmannanshire_gov_uk"
+    "scraper_id": "clackmannanshire"
   },
   "S12000006": {
     "cases": [
@@ -13906,12 +13912,12 @@
       }
     ],
     "name": "Dumfries and Galloway",
-    "scraper_id": "port_dumfries_and_galloway_council"
+    "scraper_id": "dumfries_and_galloway"
   },
   "S12000008": {
     "cases": [
       {
-        "id": "S12000008-s5",
+        "id": "S12000008-s1",
         "label": "50, Elizabeth Crescent, Cumnock, KA18 1QP",
         "params": {
           "address": "50, Elizabeth Crescent, Cumnock, KA18 1QP",
@@ -13923,7 +13929,7 @@
         "source": "sampled"
       },
       {
-        "id": "S12000008-s6",
+        "id": "S12000008-s2",
         "label": "82, Coyle Avenue, Drongan, Ayr, KA6 7DW",
         "params": {
           "address": "82, Coyle Avenue, Drongan, Ayr, KA6 7DW",
@@ -13956,7 +13962,7 @@
       }
     ],
     "name": "East Ayrshire",
-    "scraper_id": "hacs_east_ayrshire_gov_uk"
+    "scraper_id": "east_ayrshire"
   },
   "S12000010": {
     "cases": [
@@ -14015,7 +14021,7 @@
       }
     ],
     "name": "East Lothian",
-    "scraper_id": "hacs_eastlothian_gov_uk"
+    "scraper_id": "east_lothian"
   },
   "S12000011": {
     "cases": [
@@ -14072,7 +14078,7 @@
       }
     ],
     "name": "East Renfrewshire",
-    "scraper_id": "hacs_east_renfrewshire_gov_uk"
+    "scraper_id": "east_renfrewshire"
   },
   "S12000013": {
     "cases": [
@@ -14102,7 +14108,7 @@
       }
     ],
     "name": "Na h-Eileanan Siar",
-    "scraper_id": "ukbcd_cne_siar_council"
+    "scraper_id": "na_h_eileanan_siar"
   },
   "S12000014": {
     "cases": [
@@ -14132,7 +14138,7 @@
       }
     ],
     "name": "Falkirk",
-    "scraper_id": "ukbcd_falkirk_council"
+    "scraper_id": "falkirk"
   },
   "S12000017": {
     "cases": [
@@ -14179,7 +14185,7 @@
       }
     ],
     "name": "Highland",
-    "scraper_id": "hacs_highland_gov_uk"
+    "scraper_id": "highland"
   },
   "S12000018": {
     "cases": [
@@ -14196,14 +14202,14 @@
         "source": "sampled"
       },
       {
-        "id": "S12000018-s3",
-        "label": "3, Finlaystone Place, Kilmacolm, PA13 4RH",
+        "id": "S12000018-s2",
+        "label": "14g, Mary Street, Port Glasgow, PA14 5DB",
         "params": {
-          "address": "3, Finlaystone Place, Kilmacolm, PA13 4RH",
-          "house_number": "3",
-          "postcode": "PA13 4RH",
-          "street": "Finlaystone Place",
-          "uprn": "119031855"
+          "address": "14g, Mary Street, Port Glasgow, PA14 5DB",
+          "house_number": "14g",
+          "postcode": "PA14 5DB",
+          "street": "Mary Street",
+          "uprn": "119036143"
         },
         "source": "sampled"
       },
@@ -14239,7 +14245,7 @@
       }
     ],
     "name": "Inverclyde",
-    "scraper_id": "hacs_inverclyde_gov_uk"
+    "scraper_id": "inverclyde"
   },
   "S12000019": {
     "cases": [
@@ -14278,7 +14284,7 @@
       }
     ],
     "name": "Midlothian",
-    "scraper_id": "hacs_midlothian_gov_uk"
+    "scraper_id": "midlothian"
   },
   "S12000020": {
     "cases": [
@@ -14308,7 +14314,7 @@
       }
     ],
     "name": "Moray",
-    "scraper_id": "ukbcd_moray_council"
+    "scraper_id": "moray"
   },
   "S12000021": {
     "cases": [
@@ -14362,7 +14368,7 @@
       }
     ],
     "name": "North Ayrshire",
-    "scraper_id": "hacs_north_ayrshire_gov_uk"
+    "scraper_id": "north_ayrshire"
   },
   "S12000023": {
     "cases": [
@@ -14408,7 +14414,7 @@
       }
     ],
     "name": "Orkney Islands",
-    "scraper_id": "ukbcd_orkney_islands_council"
+    "scraper_id": "orkney_islands"
   },
   "S12000026": {
     "cases": [
@@ -14447,7 +14453,7 @@
       }
     ],
     "name": "Scottish Borders",
-    "scraper_id": "hacs_scotborders_gov_uk"
+    "scraper_id": "scottish_borders"
   },
   "S12000027": {
     "cases": [
@@ -14477,7 +14483,7 @@
       }
     ],
     "name": "Shetland Islands",
-    "scraper_id": "ukbcd_shetland_islands_council"
+    "scraper_id": "shetland_islands"
   },
   "S12000028": {
     "cases": [
@@ -14518,7 +14524,7 @@
       }
     ],
     "name": "South Ayrshire",
-    "scraper_id": "hacs_south_ayrshire_gov_uk"
+    "scraper_id": "south_ayrshire"
   },
   "S12000029": {
     "cases": [
@@ -14575,7 +14581,7 @@
       }
     ],
     "name": "South Lanarkshire",
-    "scraper_id": "hacs_southlanarkshire_gov_uk"
+    "scraper_id": "south_lanarkshire"
   },
   "S12000030": {
     "cases": [
@@ -14615,7 +14621,7 @@
       }
     ],
     "name": "Stirling",
-    "scraper_id": "port_stirling_council"
+    "scraper_id": "stirling"
   },
   "S12000033": {
     "cases": [
@@ -14653,7 +14659,7 @@
       }
     ],
     "name": "Aberdeen City",
-    "scraper_id": "hacs_aberdeencity_gov_uk"
+    "scraper_id": "aberdeen_city"
   },
   "S12000034": {
     "cases": [
@@ -14707,12 +14713,12 @@
       }
     ],
     "name": "Aberdeenshire",
-    "scraper_id": "hacs_aberdeenshire_gov_uk"
+    "scraper_id": "aberdeenshire"
   },
   "S12000035": {
     "cases": [
       {
-        "id": "S12000035-s5",
+        "id": "S12000035-s1",
         "label": "2 Gartloist Cottage, Bowmore, Isle Of Islay, PA43 7LW",
         "params": {
           "address": "2 Gartloist Cottage, Bowmore, Isle Of Islay, PA43 7LW",
@@ -14724,7 +14730,7 @@
         "source": "sampled"
       },
       {
-        "id": "S12000035-s6",
+        "id": "S12000035-s2",
         "label": "25d, Glencruitten Drive, Oban, PA34 4EQ",
         "params": {
           "address": "25d, Glencruitten Drive, Oban, PA34 4EQ",
@@ -14746,7 +14752,7 @@
       }
     ],
     "name": "Argyll and Bute",
-    "scraper_id": "port_argyll_and_bute_council"
+    "scraper_id": "argyll_and_bute"
   },
   "S12000036": {
     "cases": [
@@ -14776,7 +14782,7 @@
       }
     ],
     "name": "City of Edinburgh",
-    "scraper_id": "ukbcd_edinburgh_city_council"
+    "scraper_id": "city_of_edinburgh"
   },
   "S12000038": {
     "cases": [
@@ -14833,7 +14839,7 @@
       }
     ],
     "name": "Renfrewshire",
-    "scraper_id": "hacs_renfrewshire_gov_uk"
+    "scraper_id": "renfrewshire"
   },
   "S12000039": {
     "cases": [
@@ -14887,31 +14893,31 @@
       }
     ],
     "name": "West Dunbartonshire",
-    "scraper_id": "hacs_west_dunbartonshire_gov_uk"
+    "scraper_id": "west_dunbartonshire"
   },
   "S12000040": {
     "cases": [
       {
-        "id": "S12000040-s3",
-        "label": "3, Reid Road, Bathgate, EH48 2TX",
+        "id": "S12000040-s1",
+        "label": "5c Pardovan Holdings, Linlithgow, EH49 6QZ",
         "params": {
-          "address": "3, Reid Road, Bathgate, EH48 2TX",
-          "house_number": "3",
-          "postcode": "EH48 2TX",
-          "street": "Reid Road",
-          "uprn": "135020071"
+          "address": "5c Pardovan Holdings, Linlithgow, EH49 6QZ",
+          "house_number": "5C",
+          "postcode": "EH49 6QZ",
+          "street": "Pardovan Holdings",
+          "uprn": "135050428"
         },
         "source": "sampled"
       },
       {
-        "id": "S12000040-s4",
-        "label": "9, Mungle Place, West Calder, EH55 8BZ",
+        "id": "S12000040-s2",
+        "label": "14, Napier Square, Houstoun Industrial Estate, Livingston, EH54 5DG",
         "params": {
-          "address": "9, Mungle Place, West Calder, EH55 8BZ",
-          "house_number": "9",
-          "postcode": "EH55 8BZ",
-          "street": "Mungle Place",
-          "uprn": "135008841"
+          "address": "14, Napier Square, Houstoun Industrial Estate, Livingston, EH54 5DG",
+          "house_number": "14",
+          "postcode": "EH54 5DG",
+          "street": "Napier Square",
+          "uprn": "200004113002"
         },
         "source": "sampled"
       },
@@ -14935,7 +14941,7 @@
       }
     ],
     "name": "West Lothian",
-    "scraper_id": "hacs_westlothian_gov_uk"
+    "scraper_id": "west_lothian"
   },
   "S12000041": {
     "cases": [
@@ -14974,10 +14980,22 @@
       }
     ],
     "name": "Angus",
-    "scraper_id": "hacs_angus_gov_uk"
+    "scraper_id": "angus"
   },
   "S12000042": {
     "cases": [
+      {
+        "id": "S12000042-s1",
+        "label": "11c, Raglan Street, Dundee, DD4 6NT",
+        "params": {
+          "address": "11c, Raglan Street, Dundee, DD4 6NT",
+          "house_number": "11c",
+          "postcode": "DD4 6NT",
+          "street": "Raglan Street",
+          "uprn": "9059112622"
+        },
+        "source": "sampled"
+      },
       {
         "id": "S12000042-s2",
         "label": "1 Elm Court, Elm Street, Dundee, DD2 2AX",
@@ -14987,18 +15005,6 @@
           "postcode": "DD2 2AX",
           "street": "Elm Court",
           "uprn": "9059074921"
-        },
-        "source": "sampled"
-      },
-      {
-        "id": "S12000042-s3",
-        "label": "31, St. Leonard Road, Dundee, DD3 9HN",
-        "params": {
-          "address": "31, St. Leonard Road, Dundee, DD3 9HN",
-          "house_number": "31",
-          "postcode": "DD3 9HN",
-          "street": "St. Leonard Road",
-          "uprn": "9059069046"
         },
         "source": "sampled"
       },
@@ -15028,7 +15034,7 @@
       }
     ],
     "name": "Dundee City",
-    "scraper_id": "hacs_dundeecity_gov_uk"
+    "scraper_id": "dundee_city"
   },
   "S12000045": {
     "cases": [
@@ -15082,7 +15088,7 @@
       }
     ],
     "name": "East Dunbartonshire",
-    "scraper_id": "hacs_eastdunbarton_gov_uk"
+    "scraper_id": "east_dunbartonshire"
   },
   "S12000047": {
     "cases": [
@@ -15136,7 +15142,7 @@
       }
     ],
     "name": "Fife",
-    "scraper_id": "hacs_fife_gov_uk"
+    "scraper_id": "fife"
   },
   "S12000048": {
     "cases": [
@@ -15182,7 +15188,7 @@
       }
     ],
     "name": "Perth and Kinross",
-    "scraper_id": "hacs_pkc_gov_uk"
+    "scraper_id": "perth_and_kinross"
   },
   "S12000049": {
     "cases": [
@@ -15228,7 +15234,7 @@
       }
     ],
     "name": "Glasgow City",
-    "scraper_id": "hacs_glasgow_gov_uk"
+    "scraper_id": "glasgow_city"
   },
   "S12000050": {
     "cases": [
@@ -15265,7 +15271,7 @@
     "notes": [
       "fixture-only: frontend cannot supply required ['usrn']"
     ],
-    "scraper_id": "hacs_northlanarkshire_gov_uk"
+    "scraper_id": "north_lanarkshire"
   },
   "W06000001": {
     "cases": [
@@ -15295,7 +15301,7 @@
       }
     ],
     "name": "Isle of Anglesey",
-    "scraper_id": "ukbcd_isle_of_anglesey_council"
+    "scraper_id": "isle_of_anglesey"
   },
   "W06000002": {
     "cases": [
@@ -15349,7 +15355,7 @@
       }
     ],
     "name": "Gwynedd",
-    "scraper_id": "hacs_gwynedd_gov_uk"
+    "scraper_id": "gwynedd"
   },
   "W06000003": {
     "cases": [
@@ -15403,7 +15409,7 @@
       }
     ],
     "name": "Conwy",
-    "scraper_id": "hacs_conwy_gov_uk"
+    "scraper_id": "conwy"
   },
   "W06000004": {
     "cases": [
@@ -15457,7 +15463,7 @@
       }
     ],
     "name": "Denbighshire",
-    "scraper_id": "hacs_denbighshire_gov_uk"
+    "scraper_id": "denbighshire"
   },
   "W06000005": {
     "cases": [
@@ -15503,7 +15509,7 @@
       }
     ],
     "name": "Flintshire",
-    "scraper_id": "hacs_flintshire_gov_uk"
+    "scraper_id": "flintshire"
   },
   "W06000006": {
     "cases": [
@@ -15557,12 +15563,12 @@
       }
     ],
     "name": "Wrexham",
-    "scraper_id": "hacs_wrexham_gov_uk"
+    "scraper_id": "wrexham"
   },
   "W06000008": {
     "cases": [
       {
-        "id": "W06000008-s4",
+        "id": "W06000008-s1",
         "label": "6, Maes Y Dderwen, Cenarth, Newcastle Emlyn, SA38 9JW",
         "params": {
           "address": "6, Maes Y Dderwen, Cenarth, Newcastle Emlyn, SA38 9JW",
@@ -15574,7 +15580,7 @@
         "source": "sampled"
       },
       {
-        "id": "W06000008-s5",
+        "id": "W06000008-s2",
         "label": "2, Bro Llethi, Llannarth, SA47 0RF",
         "params": {
           "address": "2, Bro Llethi, Llannarth, SA47 0RF",
@@ -15596,7 +15602,7 @@
       }
     ],
     "name": "Ceredigion",
-    "scraper_id": "port_ceredigion_county_council"
+    "scraper_id": "ceredigion"
   },
   "W06000009": {
     "cases": [
@@ -15642,7 +15648,7 @@
       }
     ],
     "name": "Pembrokeshire",
-    "scraper_id": "hacs_pembrokeshire_gov_uk"
+    "scraper_id": "pembrokeshire"
   },
   "W06000010": {
     "cases": [
@@ -15672,7 +15678,7 @@
       }
     ],
     "name": "Carmarthenshire",
-    "scraper_id": "ukbcd_carmarthenshire_county_council"
+    "scraper_id": "carmarthenshire"
   },
   "W06000011": {
     "cases": [
@@ -15702,7 +15708,7 @@
       }
     ],
     "name": "Swansea",
-    "scraper_id": "ukbcd_swansea_council"
+    "scraper_id": "swansea"
   },
   "W06000012": {
     "cases": [
@@ -15759,7 +15765,7 @@
       }
     ],
     "name": "Neath Port Talbot",
-    "scraper_id": "hacs_neath_port_talbot_gov_uk"
+    "scraper_id": "neath_port_talbot"
   },
   "W06000013": {
     "cases": [
@@ -15813,7 +15819,7 @@
       }
     ],
     "name": "Bridgend",
-    "scraper_id": "hacs_bridgend_gov_uk"
+    "scraper_id": "bridgend"
   },
   "W06000014": {
     "cases": [
@@ -15859,7 +15865,7 @@
       }
     ],
     "name": "Vale of Glamorgan",
-    "scraper_id": "hacs_valeofglamorgan_gov_uk"
+    "scraper_id": "vale_of_glamorgan"
   },
   "W06000015": {
     "cases": [
@@ -15905,7 +15911,7 @@
       }
     ],
     "name": "Cardiff",
-    "scraper_id": "hacs_cardiff_gov_uk"
+    "scraper_id": "cardiff"
   },
   "W06000016": {
     "cases": [
@@ -15959,7 +15965,7 @@
       }
     ],
     "name": "Rhondda Cynon Taf",
-    "scraper_id": "hacs_rctcbc_gov_uk"
+    "scraper_id": "rhondda_cynon_taf"
   },
   "W06000018": {
     "cases": [
@@ -15989,7 +15995,7 @@
       }
     ],
     "name": "Caerphilly",
-    "scraper_id": "ukbcd_caerphilly_county_borough_council"
+    "scraper_id": "caerphilly"
   },
   "W06000019": {
     "cases": [
@@ -16027,7 +16033,7 @@
       }
     ],
     "name": "Blaenau Gwent",
-    "scraper_id": "hacs_itv_blaenau_gwent"
+    "scraper_id": "blaenau_gwent"
   },
   "W06000020": {
     "cases": [
@@ -16081,7 +16087,7 @@
       }
     ],
     "name": "Torfaen",
-    "scraper_id": "port_torfaen_county_borough_council"
+    "scraper_id": "torfaen"
   },
   "W06000021": {
     "cases": [
@@ -16135,7 +16141,7 @@
       }
     ],
     "name": "Monmouthshire",
-    "scraper_id": "hacs_monmouthshire_gov_uk"
+    "scraper_id": "monmouthshire"
   },
   "W06000022": {
     "cases": [
@@ -16165,7 +16171,7 @@
       }
     ],
     "name": "Newport",
-    "scraper_id": "ukbcd_newport_city_council"
+    "scraper_id": "newport"
   },
   "W06000023": {
     "cases": [
@@ -16204,7 +16210,7 @@
       }
     ],
     "name": "Powys",
-    "scraper_id": "port_powys_council"
+    "scraper_id": "powys"
   },
   "W06000024": {
     "cases": [
@@ -16234,10 +16240,10 @@
       }
     ],
     "name": "Merthyr Tydfil",
-    "scraper_id": "ukbcd_merthyr_tydfil_county_borough_council"
+    "scraper_id": "merthyr_tydfil"
   },
   "_meta": {
-    "generated_at": "2026-10-01T09:26:42+00:00",
+    "generated_at": "2026-10-01T09:47:55+00:00",
     "per_lad": 2,
     "sampling": "ONSUD postcode -> address API",
     "schema": 1,
