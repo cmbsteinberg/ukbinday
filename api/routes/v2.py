@@ -1,81 +1,50 @@
-"""v2: routes shaped after the LocalGov Drupal waste collection module
+"""The schedule routes, shaped after the LocalGov Drupal waste collection module
 (drupal.org/project/localgov_waste_collection), council in the path.
 
-    /{lad}/find?postcode=    addresses for a postcode
+    /find?postcode=          the postcode's council and addresses
     /{lad}/view/{uprn}       the schedule: {uprn, council, cached, cached_at, dates, deeplink}
     /{lad}/subscribe/{uprn}  the ICS feed, for calendar subscriptions
     /{lad}/download/{uprn}   the ICS as a file download
 
-Same lookup, cache and calendar logic as v1 (`schedule.py`); only the shape
-differs. Deliberate deviations from Drupal: ISO dates, a structured address
-list rather than a {uprn: address} map, and no `weekly_collection` or
-`collection_time`, which no council source gives us reliably.
+The logic is in `schedule.py`. Deliberate deviations from Drupal: ISO dates,
+a structured address list rather than a {uprn: address} map, and no
+`weekly_collection` or `collection_time`, which no council source gives us
+reliably.
 """
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, Path, Query, Request
+from fastapi import APIRouter, Depends, Path, Query, Request
 from fastapi.responses import Response
 
-from api.councils._base import colour_of
-from api.routes.schedule import (
-    SCRAPE_FAILURE_HEADER,
-    calendar_response,
-    get_schedule,
-    search_addresses,
-    verify_turnstile,
-)
-from api.services import deeplinks as deeplink_service
-from api.services.bank_holidays import holiday_name
-from api.services.models import (
-    CollectionDateV2,
-    CollectionItem,
-    CollectionTypeV2,
-    FindResponseV2,
-    ScheduleResponseV2,
-)
+from api.routes import schedule
+from api.services.models import FindResponse, ScheduleResponse
 from api.services.rate_limiting import rate_limit
 
-router = APIRouter(tags=["v2"])
+router = APIRouter()
 
 LAD_PATH = Path(
-    description="The council's ONS LAD code (e.g. E06000001), as /api/v1/council/{postcode} returns it. "
+    description="The council's ONS LAD code (e.g. E06000001), as /find returns it. "
     "Scraper IDs from before the switch to LAD codes still resolve.",
 )
 
 
-def _dates(lad: str, collections: list[CollectionItem]) -> list[CollectionDateV2]:
-    return [
-        CollectionDateV2(
-            date=c.date,
-            holiday=holiday_name(lad, c.date),
-            type=CollectionTypeV2(label=c.type, colour=colour_of(c.type), icon=c.icon),
-        )
-        for c in sorted(collections, key=lambda c: (c.date, c.type))
-    ]
-
-
-@router.get("/{lad}/find", response_model=FindResponseV2)
+@router.get("/find", response_model=FindResponse)
 async def find(
     request: Request,
-    lad: str = LAD_PATH,
-    postcode: str = Query(description="The postcode to list addresses for."),
+    postcode: str = Query(description="The postcode to look up."),
     _rate_limit: None = Depends(rate_limit),
-    _turnstile: None = Depends(verify_turnstile),
+    _turnstile: None = Depends(schedule.verify_turnstile),
 ):
-    """Addresses for a postcode, each with the UPRN to pass to /view."""
-    meta = request.app.state.registry.get(lad)
-    if meta is not None:
-        council = meta.id
-    elif deeplink_service.resolve_by_council_param(lad) is not None:
-        council = lad  # unwired: /view answers with its deeplink
-    else:
-        raise HTTPException(status_code=404, detail="No council answers to this code.")
-    found = await search_addresses(postcode)
-    return FindResponseV2(council=council, postcode=found.postcode, addresses=found.addresses)
+    """The postcode's council and its addresses, each with the UPRN to pass to /view.
+
+    `council` is the LAD code when we serve the council. Otherwise `addresses`
+    is empty and `deeplink` points at the council's own page, or `candidates`
+    lists the councils a postcode straddles."""
+    return await schedule.find(request, postcode)
 
 
-@router.get("/{lad}/view/{uprn}", response_model=ScheduleResponseV2)
+@router.get("/{lad}/view/{uprn}", response_model=ScheduleResponse)
 async def view(
     request: Request,
     response: Response,
@@ -88,18 +57,8 @@ async def view(
     """Collection dates, ascending; a deeplink instead when we can't fetch them.
 
     Councils that need more than the UPRN (postcode, address label,
-    property_id, usrn...) take it as query params, as on /api/v1/lookup."""
-    schedule = await get_schedule(request, uprn, lad)
-    if schedule.failure:
-        response.headers[SCRAPE_FAILURE_HEADER] = schedule.failure
-    return ScheduleResponseV2(
-        uprn=uprn,
-        council=schedule.council,
-        cached=schedule.cached,
-        cached_at=schedule.cached_at,
-        dates=_dates(schedule.council, schedule.collections),
-        deeplink=schedule.deeplink,
-    )
+    property_id, usrn...) take it as query params; /councils lists them."""
+    return await schedule.get_schedule(request, response, uprn, lad)
 
 
 @router.get("/{lad}/subscribe/{uprn}", response_class=Response)
@@ -112,7 +71,7 @@ async def subscribe(
     _rate_limit: None = Depends(rate_limit),
 ):
     """The ICS feed, for a calendar subscription (webcal)."""
-    return await calendar_response(request, uprn, lad, attachment=False)
+    return await schedule.calendar_response(request, uprn, lad, attachment=False)
 
 
 @router.get("/{lad}/download/{uprn}", response_class=Response)
@@ -125,4 +84,4 @@ async def download(
     _rate_limit: None = Depends(rate_limit),
 ):
     """The ICS as a file download."""
-    return await calendar_response(request, uprn, lad, attachment=True)
+    return await schedule.calendar_response(request, uprn, lad, attachment=True)

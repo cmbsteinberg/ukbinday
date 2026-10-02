@@ -74,7 +74,7 @@ async def test_app_starts(client):
 @pytest.mark.asyncio(loop_scope="session")
 async def test_registry_loads_all_scrapers(client):
     """/councils lists exactly the wired LADs, each under its LAD code."""
-    resp = await client.get("/api/v1/councils")
+    resp = await client.get("/api/v2/councils")
     assert resp.status_code == 200
     ids = {c["id"] for c in resp.json()}
     lad_lookup = json.loads(LAD_LOOKUP.read_text())
@@ -87,7 +87,7 @@ async def test_registry_loads_all_scrapers(client):
 @pytest.mark.asyncio(loop_scope="session")
 async def test_health_endpoint_returns_all(client):
     """Health endpoint should return an entry for every loaded scraper."""
-    councils_resp = await client.get("/api/v1/councils")
-    health_resp = await client.get("/api/v1/health")
+    councils_resp = await client.get("/api/v2/councils")
+    health_resp = await client.get("/api/v2/health")
     assert health_resp.status_code == 200
     assert len(health_resp.json()) == len(councils_resp.json())

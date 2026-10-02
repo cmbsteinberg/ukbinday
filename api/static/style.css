@@ -191,9 +191,9 @@ fieldset input {
     all: unset;
 }
 
-/* Bin colours: the colour the API read off the council's label
-   (data-bin-colour). --bin is the bin itself, --bin-tint the card behind it.
-   No colour: a neutral card and an outline bin, so it doesn't read as grey. */
+/* Bin colours (data-bin-colour): the colour the API read off the council's
+   label, else the stream's theme from its icon (app.js binColour).
+   --bin is the bin itself, --bin-tint the card behind it. */
 [data-bin-colour="black"] {
     --bin: #212121;
     --bin-tint: #e4e4e4;
@@ -244,10 +244,6 @@ fieldset input {
 }
 
 .bin-group {
-    background: #f5f6f7;
-    border-left-color: #d5d9dc;
-}
-.bin-group[data-bin-colour] {
     background: var(--bin-tint);
     border-left-color: var(--bin);
 }
@@ -255,15 +251,11 @@ fieldset input {
 .bin-group[data-bin-colour="white"] {
     border-left-color: #b0b6ba;
 }
-.bin-group:not([data-bin-colour]) .bin-body,
-.bin-group:not([data-bin-colour]) .bin-lid {
-    fill: none;
-}
-.bin-group[data-bin-colour] .bin-body,
-.bin-group[data-bin-colour] .bin-lid {
+.bin-group .bin-body,
+.bin-group .bin-lid {
     fill: var(--bin);
 }
-/* A dot per row; empty but still there without a colour, to keep the column aligned. */
+/* A dot per row in the bin's colour. */
 .all-dates-list li::before {
     content: "";
     flex-shrink: 0;
@@ -271,8 +263,6 @@ fieldset input {
     width: 0.7rem;
     height: 0.7rem;
     border-radius: 50%;
-}
-.all-dates-list li[data-bin-colour]::before {
     background: var(--bin);
     box-shadow: 0 0 0 1px #b0b6ba;
 }

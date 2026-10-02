@@ -7,11 +7,11 @@ api/data/lad_lookup.json; generate_sankey, the badge and the coverage map
 read the flag back rather than re-deriving it.
 
 The rule:
-  working     a *sampled* case passed (200 + at least one collection). Sampled
+  working     a *sampled* case passed (200 + at least one date). Sampled
               cases carry exactly what the frontend sends, so this is "a real
               user can get a schedule". For LADs the frontend cannot drive
               (`fixture_only`: the scraper requires params such as property_id
-              or usrn that /addresses doesn't return), a fixture pass counts
+              or usrn that /find doesn't return), a fixture pass counts
               instead.
   broken      anything else that was actually tested. A fixture pass with every
               sampled case failing is broken: the scraper runs, users can't

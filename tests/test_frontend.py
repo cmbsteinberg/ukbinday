@@ -39,62 +39,65 @@ async def test_landing_page(client):
 async def test_api_docs_page(client):
     resp = await client.get("/api-docs")
     assert resp.status_code == 200
-    assert "/api/v1/lookup/{uprn}" in resp.text
-    assert 'href="/api/v1/docs"' in resp.text
+    assert "/api/v2/{lad_code}/view/{uprn}" in resp.text
+    assert 'href="/api/v2/docs"' in resp.text
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_openapi_and_docs(client):
-    schema_resp = await client.get("/api/v1/openapi.json")
+    schema_resp = await client.get("/api/v2/openapi.json")
     assert schema_resp.status_code == 200
     assert schema_resp.json()["info"]["title"] == "UK Bin Collection API"
 
-    assert (await client.get("/api/v1/docs")).status_code == 200
-    assert (await client.get("/api/v1/redoc")).status_code == 200
+    assert (await client.get("/api/v2/docs")).status_code == 200
+    assert (await client.get("/api/v2/redoc")).status_code == 200
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_councils_and_health(client):
-    resp = await client.get("/api/v1/councils")
+    resp = await client.get("/api/v2/councils")
     assert resp.status_code == 200
     data = resp.json()
     assert len(data) > 0
     assert "id" in data[0] and "name" in data[0]
 
-    health = await client.get("/api/v1/health")
+    health = await client.get("/api/v2/health")
     assert health.status_code == 200
     assert isinstance(health.json(), list)
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_v1_prefix(client):
-    assert (await client.get("/api/v1/councils")).status_code == 200
+async def test_only_v2_is_mounted(client):
+    assert (await client.get("/api/v2/councils")).status_code == 200
     assert (await client.get("/api/councils")).status_code == 404
+    for path in (
+        "/api/v1/councils",
+        "/api/v1/lookup/123456?council=E06000001",
+        "/api/v1/calendar/123456?council=E06000001",
+        "/api/v1/council/TS260BL",
+        "/api/v1/docs",
+    ):
+        assert (await client.get(path)).status_code == 404, path
+
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_lookup_error_cases(client):
-    assert (
-        await client.get("/api/v1/lookup/123456?council=nonexistent")
-    ).status_code == 404
-    assert (await client.get("/api/v1/lookup/123456")).status_code == 422
+async def test_view_error_cases(client):
+    assert (await client.get("/api/v2/nonexistent/view/123456")).status_code == 404
+    assert (await client.get("/api/v2/find")).status_code == 422  # no postcode
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_calendar_error_cases(client):
-    # Missing council param → 422
-    resp = await client.get("/api/v1/calendar/123456")
-    assert resp.status_code == 422
-
-    # Unknown council → 404
-    resp = await client.get("/api/v1/calendar/123456?council=nonexistent")
-    assert resp.status_code == 404
+    for kind in ("subscribe", "download"):
+        resp = await client.get(f"/api/v2/nonexistent/{kind}/123456")
+        assert resp.status_code == 404
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_cors(client):
     # Request from allowed origin gets CORS headers
     resp = await client.options(
-        "/api/v1/councils",
+        "/api/v2/councils",
         headers={
             "Origin": "https://bins.lovesguinness.com",
             "Access-Control-Request-Method": "GET",
@@ -107,7 +110,7 @@ async def test_cors(client):
 
     # Request from disallowed origin does not get allow-origin header
     resp2 = await client.options(
-        "/api/v1/councils",
+        "/api/v2/councils",
         headers={
             "Origin": "http://evil.com",
             "Access-Control-Request-Method": "GET",

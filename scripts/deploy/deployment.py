@@ -228,7 +228,7 @@ Next steps:
      (root SSH is available until cloud-init disables it — use {DEPLOY_USER}@ after)
 
   3. Once cloud-init finishes and DNS propagates:
-       curl https://{DOMAIN}/api/v1/health
+       curl https://{DOMAIN}/api/v2/health
 
   4. Set up Uptime Kuma:
        http://{ipv4}:3001

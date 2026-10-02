@@ -257,7 +257,7 @@ async def resolve_council(
         extra=log_extra,
     )
     candidates = [
-        CouncilCandidate(slug=cid, name=a.name, homepage_url=a.homepage_url)
+        CouncilCandidate(council=cid, name=a.name, homepage_url=a.homepage_url)
         for a in authorities
         if (cid := council_id(a)) is not None
     ]

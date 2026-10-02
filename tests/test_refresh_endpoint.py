@@ -1,5 +1,5 @@
 """
-Cron-triggered refresh: GET /api/v1/internal/refresh auth, shard selection,
+Cron-triggered refresh: GET /api/v2/internal/refresh auth, shard selection,
 deadline, and the heartbeat /metrics reads. Scrapers are stubbed; no network.
 
 Usage:
@@ -36,7 +36,7 @@ async def client():
     async with LifespanManager(app) as manager:
         async with httpx.AsyncClient(
             transport=httpx.ASGITransport(app=manager.app),
-            base_url="http://testserver/api/v1",
+            base_url="http://testserver/api/v2",
         ) as c:
             yield c
 
@@ -106,7 +106,7 @@ async def test_params_checked_after_auth(client, cron_secret):
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_not_in_openapi(client):
-    r = await client.get("http://testserver/api/v1/openapi.json")
+    r = await client.get("http://testserver/api/v2/openapi.json")
     assert all("internal" not in path for path in r.json()["paths"])
 
 

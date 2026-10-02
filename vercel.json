@@ -10,7 +10,7 @@
 	},
 	"crons": [
 		{
-			"path": "/api/v1/internal/refresh?shard=0&of=1",
+			"path": "/api/v2/internal/refresh?shard=0&of=1",
 			"schedule": "0 5 * * *"
 		}
 	],

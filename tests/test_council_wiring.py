@@ -32,7 +32,7 @@ from api.councils._base import (
 )
 from api.councils._base.discovery import load
 from api.main import app
-from api.services import scraper_registry
+from api.services import address_lookup, scraper_registry
 from api.services.blob_store import LocalBlobStore
 from api.services.ics_cache import IcsCache
 from api.services.refresh_job import RefreshJob
@@ -66,7 +66,7 @@ async def client():
     async with LifespanManager(app) as manager:
         async with httpx.AsyncClient(
             transport=httpx.ASGITransport(app=manager.app),
-            base_url="http://testserver/api/v1",
+            base_url="http://testserver/api/v2",
         ) as c:
             yield c
 
@@ -102,28 +102,32 @@ def stub(monkeypatch):
 async def test_lad_code_and_old_id_reach_the_module(client, stub, council):
     calls = stub("hartlepool", [Collection(soon(), "Refuse")])
     uprn = fresh_uprn()
-    r = await client.get(f"/lookup/{uprn}", params={"council": council, "postcode": "TS26 0BL"})
+    r = await client.get(f"/{council}/view/{uprn}", params={"postcode": "TS26 0BL"})
     assert r.status_code == 200, r.text
     body = r.json()
     assert body["council"] == HARTLEPOOL  # the public ID, whatever name the request used
-    assert [c["type"] for c in body["collections"]] == ["Refuse"]
+    assert [d["type"]["label"] for d in body["dates"]] == ["Refuse"]
     assert calls and calls[0].uprn == uprn and calls[0].postcode == "TS26 0BL"
     entry = await app.state.ics_cache.read(uprn)
     assert entry.scraper == HARTLEPOOL
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_council_lookup_returns_the_lad_code(client):
-    r = await client.get("/council/TS26 0BL")
+async def test_find_returns_the_lad_code(client, monkeypatch):
+    async def search(postcode):
+        return []
+
+    monkeypatch.setattr(address_lookup, "search_addresses", search)
+    r = await client.get("/find", params={"postcode": "TS26 0BL"})
     assert r.status_code == 200, r.text
-    assert r.json()["council_id"] == HARTLEPOOL
+    assert r.json()["council"] == HARTLEPOOL
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_retired_scraper_id_reaches_the_module(client, stub):
     """An ID once wired to a LAD (still in old calendar URLs) runs today's module."""
     calls = stub("bristol", [Collection(soon(), "Recycling")])
-    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": BRISTOL_OLD})
+    r = await client.get(f"/{BRISTOL_OLD}/view/{fresh_uprn()}")
     assert r.status_code == 200, r.text
     assert len(calls) == 1
     registry = app.state.registry
@@ -133,7 +137,7 @@ async def test_retired_scraper_id_reaches_the_module(client, stub):
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_unknown_council_is_404(client):
-    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": "hacs_no_such_council"})
+    r = await client.get(f"/hacs_no_such_council/view/{fresh_uprn()}")
     assert r.status_code == 404
 
 
@@ -158,7 +162,7 @@ async def test_two_lad_module_answers_to_each_code(client, stub):
     assert {ADUR, WORTHING} <= councils
 
     stub("adur_and_worthing", UpstreamError("down"))
-    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": WORTHING})
+    r = await client.get(f"/{WORTHING}/view/{fresh_uprn()}")
     assert r.json()["council"] == WORTHING
     assert r.json()["deeplink"]["url"] == LAD_LOOKUP[WORTHING]["govuk_url"]
 
@@ -180,34 +184,36 @@ async def test_councils_metadata_comes_from_requires(client):
 @pytest.mark.asyncio(loop_scope="session")
 async def test_needs_browser_module_answers_with_deeplink(client):
     coventry = load("coventry")
-    r = await client.get(
-        "/lookup/100070713054", params={"council": COVENTRY, "postcode": "CV3 2LS", "house_number": "6"}
-    )
+    r = await client.get(f"/{COVENTRY}/view/100070713054", params={"postcode": "CV3 2LS", "house_number": "6"})
     assert r.status_code == 200, r.text
     body = r.json()
-    assert body["collections"] == []
+    assert body["dates"] == []
     assert body["deeplink"] == {
         "url": coventry.meta.url,
         "reason": coventry.needs_browser,
         "council_name": coventry.meta.title,
     }
-    cal = await client.get("/calendar/100070713054", params={"council": COVENTRY}, follow_redirects=False)
+    cal = await client.get(f"/{COVENTRY}/download/100070713054", follow_redirects=False)
     assert cal.status_code == 404 and coventry.needs_browser in cal.json()["detail"]
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_needs_browser_council_skips_the_address_step(client):
-    r = await client.get("/council/CV3 2LS")
-    assert r.status_code == 200
+async def test_needs_browser_council_skips_the_address_step(client, monkeypatch):
+    async def search(postcode):
+        raise AssertionError("the address API is not called for a deeplink council")
+
+    monkeypatch.setattr(address_lookup, "search_addresses", search)
+    r = await client.get("/find", params={"postcode": "CV3 2LS"})
+    assert r.status_code == 200, r.text
     body = r.json()
-    assert body["council_id"] is None
+    assert body["council"] is None and body["addresses"] == []
     assert body["deeplink"]["url"] == load("coventry").meta.url
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_needs_browser_raised_mid_fetch(client, stub):
     stub("hartlepool", NeedsBrowser("Blocked by a Cloudflare challenge."))
-    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": HARTLEPOOL})
+    r = await client.get(f"/{HARTLEPOOL}/view/{fresh_uprn()}")
     assert r.status_code == 200
     deeplink = r.json()["deeplink"]
     assert deeplink["reason"] == "Blocked by a Cloudflare challenge."
@@ -220,11 +226,11 @@ async def test_needs_browser_raised_mid_fetch(client, stub):
 @pytest.mark.asyncio(loop_scope="session")
 async def test_upstream_failure_without_cache_gives_govuk_deeplink(client, stub):
     stub("hartlepool", UpstreamError("HTTP 502 from the council"))
-    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": HARTLEPOOL})
+    r = await client.get(f"/{HARTLEPOOL}/view/{fresh_uprn()}")
     assert r.status_code == 200
     assert r.headers["X-Scrape-Failure"] == "network"
     body = r.json()
-    assert body["collections"] == []
+    assert body["dates"] == []
     assert body["deeplink"]["url"] == LAD_LOOKUP["E06000001"]["govuk_url"]
     assert "isn't responding" in body["deeplink"]["reason"]
 
@@ -237,7 +243,7 @@ async def test_timeout_without_cache_gives_deeplink(client, monkeypatch):
 
     monkeypatch.setattr(scraper_registry, "SCRAPER_TIMEOUT", 0.05)
     monkeypatch.setattr(load("hartlepool"), "fetch", slow)
-    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": HARTLEPOOL})
+    r = await client.get(f"/{HARTLEPOOL}/view/{fresh_uprn()}")
     assert r.status_code == 200
     assert r.headers["X-Scrape-Failure"] == "timeout"
     assert r.json()["deeplink"]["url"] == LAD_LOOKUP["E06000001"]["govuk_url"]
@@ -247,20 +253,20 @@ async def test_timeout_without_cache_gives_deeplink(client, monkeypatch):
 async def test_upstream_failure_with_cache_serves_cache(client, stub):
     uprn = fresh_uprn()
     stub("hartlepool", [Collection(soon(), "Refuse")])
-    first = await client.get(f"/lookup/{uprn}", params={"council": HARTLEPOOL})
+    first = await client.get(f"/{HARTLEPOOL}/view/{uprn}")
     assert first.status_code == 200 and not first.json()["cached"]
 
     stub("hartlepool", UpstreamError("down"))
-    again = await client.get(f"/lookup/{uprn}", params={"council": HARTLEPOOL})
+    again = await client.get(f"/{HARTLEPOOL}/view/{uprn}")
     assert again.status_code == 200
     assert again.json()["cached"] and again.json()["deeplink"] is None
-    assert [c["type"] for c in again.json()["collections"]] == ["Refuse"]
+    assert [d["type"]["label"] for d in again.json()["dates"]] == ["Refuse"]
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_calendar_keeps_503_on_upstream_failure(client, stub):
     stub("hartlepool", UpstreamError("down"))
-    r = await client.get(f"/calendar/{fresh_uprn()}", params={"council": HARTLEPOOL})
+    r = await client.get(f"/{HARTLEPOOL}/download/{fresh_uprn()}")
     assert r.status_code == 503
     assert "couldn't reach" in r.json()["detail"]
 
@@ -269,7 +275,7 @@ async def test_calendar_keeps_503_on_upstream_failure(client, stub):
 async def test_module_bug_is_not_a_site_failure(client, stub):
     """Anything other than UpstreamError escaping a module is our bug: no deeplink."""
     stub("hartlepool", KeyError("results"))
-    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": HARTLEPOOL})
+    r = await client.get(f"/{HARTLEPOOL}/view/{fresh_uprn()}")
     assert r.status_code == 503
     assert "Something went wrong" in r.json()["detail"]
 
@@ -280,7 +286,7 @@ async def test_module_bug_is_not_a_site_failure(client, stub):
 @pytest.mark.asyncio(loop_scope="session")
 async def test_input_error_stays_422(client, stub):
     stub("hartlepool", InputError("unknown UPRN"))
-    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": HARTLEPOOL})
+    r = await client.get(f"/{HARTLEPOOL}/view/{fresh_uprn()}")
     assert r.status_code == 422
     assert "suggestions" not in r.json()
 
@@ -288,7 +294,7 @@ async def test_input_error_stays_422(client, stub):
 @pytest.mark.asyncio(loop_scope="session")
 async def test_address_not_found_is_422_with_suggestions(client, stub):
     stub("hartlepool", AddressNotFound("no match", ["1 High Street", "2 High Street"]))
-    r = await client.get(f"/lookup/{fresh_uprn()}", params={"council": HARTLEPOOL})
+    r = await client.get(f"/{HARTLEPOOL}/view/{fresh_uprn()}")
     assert r.status_code == 422
     assert r.json()["suggestions"] == ["1 High Street", "2 High Street"]
     assert "don't match" in r.json()["detail"]
@@ -296,7 +302,7 @@ async def test_address_not_found_is_422_with_suggestions(client, stub):
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_missing_required_param_is_422(client):
-    r = await client.get("/lookup/0", params={"council": HARTLEPOOL})
+    r = await client.get(f"/{HARTLEPOOL}/view/0")
     assert r.status_code == 422
 
 
@@ -361,6 +367,6 @@ async def test_cache_hit_across_alias(client, stub):
     uprn = fresh_uprn()
     await cache.write(uprn, BRISTOL_OLD, {"uprn": uprn}, [Collection(soon(), "Refuse")])
     calls = stub("bristol", UpstreamError("should not be called"))
-    r = await client.get(f"/lookup/{uprn}", params={"council": "E06000023"})
+    r = await client.get(f"/E06000023/view/{uprn}")
     assert r.status_code == 200 and r.json()["cached"]
     assert calls == []

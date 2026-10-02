@@ -19,7 +19,6 @@ from starlette.templating import Jinja2Templates
 from api import config
 from api.logging_config import setup_logging
 from api.routes import router as api_router
-from api.routes import v2_router
 from api.services.blob_store import from_config
 from api.services.council_lookup import CouncilLookup
 from api.services.ics_cache import IcsCache
@@ -105,11 +104,11 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="UK Bin Collection API",
     description="Look up bin collection schedules for UK councils",
-    version="1.0.0",
+    version="2.0.0",
     lifespan=lifespan,
-    docs_url="/api/v1/docs",
-    redoc_url="/api/v1/redoc",
-    openapi_url="/api/v1/openapi.json",
+    docs_url="/api/v2/docs",
+    redoc_url="/api/v2/redoc",
+    openapi_url="/api/v2/openapi.json",
 )
 
 # Calendars are mostly repeated VEVENT boilerplate; gzip cuts them ~10x, which is what
@@ -121,7 +120,6 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
-
 
 
 @app.exception_handler(ScrapeHTTPException)
@@ -183,8 +181,7 @@ async def log_requests(request: Request, call_next):
 
 
 # API routes
-app.include_router(api_router, prefix="/api/v1")
-app.include_router(v2_router, prefix="/api/v2")
+app.include_router(api_router, prefix="/api/v2")
 
 
 # Static files

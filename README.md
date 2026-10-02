@@ -63,14 +63,14 @@ Base URL: `https://ukbinday.co.uk`
 
 | Endpoint | Description |
 |---|---|
-| `GET /api/v1/addresses/{postcode}` | List addresses for a postcode (with UPRNs) |
-| `GET /api/v1/lookup/{uprn}` | Get bin collection dates for a UPRN |
-| `GET /api/v1/calendar/{uprn}` | iCal feed for calendar subscriptions |
-| `GET /api/v1/council/{postcode}` | Identify which council covers a postcode |
-| `GET /api/v1/councils` | List all supported councils |
-| `GET /api/v1/health` | Health check |
+| `GET /api/v2/find?postcode=` | The council covering a postcode (its LAD code), and its addresses with UPRNs |
+| `GET /api/v2/{lad}/view/{uprn}` | Bin collection dates for a UPRN |
+| `GET /api/v2/{lad}/subscribe/{uprn}` | iCal feed for calendar subscriptions |
+| `GET /api/v2/{lad}/download/{uprn}` | The same iCal feed as a file download |
+| `GET /api/v2/councils` | List all supported councils |
+| `GET /api/v2/health` | Health check |
 
-Interactive docs at [`/api/v1/docs`](https://ukbinday.co.uk/api/v1/docs).
+`{lad}` is the council's ONS LAD code (e.g. `E06000001`). Interactive docs at [`/api/v2/docs`](https://ukbinday.co.uk/api/v2/docs).
 
 ## Setup
 

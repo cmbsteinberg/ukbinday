@@ -1,14 +1,14 @@
-"""Running one LAD test case against /lookup/{uprn}, shared by every runner.
+"""Running one LAD test case against /{lad}/view/{uprn}, shared by every runner.
 
 tests/test_lad_integration.py (in-process, against the app) and
 scripts/vercel_probe.py (over HTTP, against a deployment) both send a case the
 same way and classify the response the same way, so a case outcome means the
-same thing in both. Outcomes from `lookup`:
+same thing in both. Outcomes from `view`:
 
-  pass            200 with at least one collection
-  empty           200 with no collections (wrong property or a parse break)
+  pass            200 with at least one date
+  empty           200 with no dates (wrong property or a parse break)
   input_rejected  422: the scraper refused the params
-  deeplink        200 with a deeplink instead of collections: the scraper
+  deeplink        200 with a deeplink instead of dates: the scraper
                   raised NeedsBrowser (captcha, login)
   network         the council's site couldn't be reached (503, or a 200
                   fallback deeplink with `X-Scrape-Failure: network`)
@@ -29,6 +29,7 @@ import asyncio
 import json
 import time
 from pathlib import Path
+from urllib.parse import quote
 
 import httpx
 
@@ -65,12 +66,12 @@ def job_key(module: str, params: dict) -> str:
     return module + "|" + json.dumps(params, sort_keys=True)
 
 
-def lookup_request(council: str, params: dict) -> tuple[str, dict]:
-    """(uprn, query) for a case. `council` is the LAD code, as /council/{postcode}
-    hands it to the frontend; the other params are what the frontend sends."""
+def view_request(council: str, params: dict) -> tuple[str, dict]:
+    """(path, query) for a case. `council` is the LAD code, as /find hands it
+    to the frontend; the query is what the frontend sends besides the UPRN."""
     params = dict(params)
     uprn = str(params.pop("uprn", "") or "0").strip()
-    return uprn, {"council": council, **{k: v for k, v in params.items() if v}}
+    return f"/{quote(council, safe='')}/view/{quote(uprn, safe='')}", {k: v for k, v in params.items() if v}
 
 
 def classify_http(status: int, body: dict | None) -> str:
@@ -87,7 +88,7 @@ def classify_http(status: int, body: dict | None) -> str:
 
 
 def classify_response(resp: httpx.Response) -> dict:
-    """A /lookup response as a case result: `outcome` plus status_code and detail."""
+    """A /view response as a case result: `outcome` plus status_code and detail."""
     out: dict = {"status_code": resp.status_code}
     try:
         body = resp.json()
@@ -99,11 +100,11 @@ def classify_response(resp: httpx.Response) -> dict:
         out["error"] = str((body.get("deeplink") or {}).get("reason", ""))[:300]
         return out
     if resp.status_code == 200:
-        cols = body.get("collections") or []
+        cols = body.get("dates") or []
         out["collections_count"] = len(cols)
         if cols:
             out["first"] = cols[0]
-            out["types"] = sorted({c.get("type", "") for c in cols})
+            out["types"] = sorted({(c.get("type") or {}).get("label", "") for c in cols})
         # DATA_DIR is a fresh tempdir per session and the cache only hits on
         # the same scraper + real UPRN, so a hit means another case in this
         # run already scraped this exact property. Keep the flag visible.
@@ -117,16 +118,16 @@ def classify_response(resp: httpx.Response) -> dict:
     return out
 
 
-async def lookup(client: httpx.AsyncClient, council: str, params: dict) -> dict:
-    """Run one case through `GET /lookup/{uprn}` on a client whose base_url ends in /api/v1."""
-    uprn, query = lookup_request(council, params)
+async def view(client: httpx.AsyncClient, council: str, params: dict) -> dict:
+    """Run one case through `GET /{lad}/view/{uprn}` on a client whose base_url ends in /api/v2."""
+    path, query = view_request(council, params)
     start = time.monotonic()
 
     def elapsed() -> float:
         return round(time.monotonic() - start, 2)
 
     try:
-        resp = await client.get(f"/lookup/{uprn}", params=query)
+        resp = await client.get(path, params=query)
     except (httpx.TimeoutException, asyncio.TimeoutError) as exc:
         return {"outcome": "timeout", "error": type(exc).__name__, "elapsed_s": elapsed()}
     except Exception as exc:  # noqa: BLE001 - transport-level (the test sets raise_app_exceptions=False)

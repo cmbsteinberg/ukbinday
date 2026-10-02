@@ -17,7 +17,7 @@ count_other=0
 first_429=""
 
 for i in $(seq 1 "$TOTAL"); do
-    status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 15 "$BASE/api/v1/council/SW1A1AA")
+    status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 15 "$BASE/api/v2/find?postcode=SW1A1AA")
     case "$status" in
         200) count_200=$((count_200 + 1)) ;;
         429)
@@ -47,7 +47,7 @@ if [[ "$count_429" -gt 0 ]]; then
     # Check Retry-After header on a 429
     echo
     echo "429 response headers:"
-    curl -sS -D - -o /dev/null --max-time 15 "$BASE/api/v1/council/SW1A1AA" 2>/dev/null | grep -iE "retry-after|x-ratelimit"
+    curl -sS -D - -o /dev/null --max-time 15 "$BASE/api/v2/find?postcode=SW1A1AA" 2>/dev/null | grep -iE "retry-after|x-ratelimit"
 else
     echo
     echo "FAIL — no 429s received after $TOTAL requests"

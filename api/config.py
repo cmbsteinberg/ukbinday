@@ -30,7 +30,7 @@ R2_ACCESS_KEY_ID: str = os.getenv("R2_ACCESS_KEY_ID", "")
 R2_SECRET_ACCESS_KEY: str = os.getenv("R2_SECRET_ACCESS_KEY", "")
 R2_BUCKET: str = os.getenv("R2_BUCKET", "")
 
-# Cron-triggered refresh (GET /api/v1/internal/refresh); the route is off without CRON_SECRET
+# Cron-triggered refresh (GET /api/v2/internal/refresh); the route is off without CRON_SECRET
 CRON_SECRET: str = os.getenv("CRON_SECRET", "")
 REFRESH_DEADLINE_S: float = float(os.getenv("REFRESH_DEADLINE_S", "250"))
 

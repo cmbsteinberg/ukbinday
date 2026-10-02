@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run the council probe against a deployment: every sampled case through /lookup, diffed
+# Run the council probe against a deployment: every sampled case through /{lad}/view, diffed
 # against the last live run. Serves VERCEL.md phase 4 (council probe).
 #
 #   scripts/vercel/probe.sh https://<preview>.vercel.app [extra scripts.vercel_probe args]

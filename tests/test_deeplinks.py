@@ -93,11 +93,11 @@ def test_resolve_by_council_param_ignores_wired_scraper_ids():
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_lookup_returns_deeplink_not_404(client):
-    resp = await client.get(f"/api/v1/lookup/123456?council={_unwired_code()}")
+async def test_view_returns_deeplink_not_404(client):
+    resp = await client.get(f"/api/v2/{_unwired_code()}/view/123456")
     assert resp.status_code == 200
     body = resp.json()
-    assert body["collections"] == []
+    assert body["dates"] == []
     assert body["deeplink"]["url"] == LAD_LOOKUP[_unwired_code()]["url"]
     assert body["deeplink"]["council_name"] == "Fylde"
     assert body["deeplink"]["reason"]
@@ -105,15 +105,16 @@ async def test_lookup_returns_deeplink_not_404(client):
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_calendar_redirects_to_deeplink(client):
-    resp = await client.get(f"/api/v1/calendar/123456?council={_unwired_code()}")
-    assert resp.status_code == 302
-    assert resp.headers["location"] == LAD_LOOKUP[_unwired_code()]["url"]
+    for kind in ("subscribe", "download"):
+        resp = await client.get(f"/api/v2/{_unwired_code()}/{kind}/123456")
+        assert resp.status_code == 302
+        assert resp.headers["location"] == LAD_LOOKUP[_unwired_code()]["url"]
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_wired_council_gets_no_deeplink(client):
     """A wired council still 404s on an unknown *scraper*, never deeplinks."""
-    resp = await client.get("/api/v1/lookup/123456?council=nonexistent")
+    resp = await client.get("/api/v2/nonexistent/view/123456")
     assert resp.status_code == 404
     assert "deeplink" not in resp.text
 

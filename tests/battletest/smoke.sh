@@ -37,30 +37,30 @@ echo
 check "Landing page" "$BASE/"  200 "<title>"
 
 # Health / status
-check "Health endpoint" "$BASE/api/v1/health" 200
-check "System status"   "$BASE/api/v1/status" 200 '"scraper_count"'
+check "Health endpoint" "$BASE/api/v2/health" 200
+check "System status"   "$BASE/api/v2/status" 200 '"scraper_count"'
 
 # Council list
-check "Council list"    "$BASE/api/v1/councils" 200
+check "Council list"    "$BASE/api/v2/councils" 200
 
 # Council lookup (real postcode)
-check "Council lookup"  "$BASE/api/v1/council/SW1A1AA" 200
+check "Council lookup"  "$BASE/api/v2/find?postcode=SW1A1AA" 200
 
 # Scraper lookup (known UPRN from test cases — aberdeenshire)
-check "Scraper lookup"  "$BASE/api/v1/lookup/000151124612?council=hacs_aberdeenshire_gov_uk" 200
+check "Scraper lookup"  "$BASE/api/v2/S12000034/view/000151124612" 200
 
 # Calendar endpoint (should return ical)
-check "Calendar (ical)" "$BASE/api/v1/calendar/000151124612?council=hacs_aberdeenshire_gov_uk" 200 "BEGIN:VCALENDAR"
+check "Calendar (ical)" "$BASE/api/v2/S12000034/subscribe/000151124612" 200 "BEGIN:VCALENDAR"
 
 # Error cases
-check "Invalid postcode" "$BASE/api/v1/council/ZZZZZZZ" 404
-check "404 route"        "$BASE/api/v1/nonexistent" 404
+check "Invalid postcode" "$BASE/api/v2/find?postcode=ZZZZZZZ" 404
+check "404 route"        "$BASE/api/v2/nonexistent" 404
 
 # Static assets
 check "Static JS"        "$BASE/static/app.js" 200
 
 # Metrics
-check "Metrics endpoint" "$BASE/api/v1/metrics" 200
+check "Metrics endpoint" "$BASE/api/v2/metrics" 200
 
 echo
 echo "=== Results: $PASS passed, $FAIL failed ==="

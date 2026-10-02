@@ -1,5 +1,5 @@
 """
-ICS cache keying: address-only lookups (/lookup/0) must not share a cache
+ICS cache keying: address-only lookups (/{lad}/view/0) must not share a cache
 entry, and a cached entry from one scraper must not answer for another.
 
 Scrapers are stubbed; no network.
@@ -42,7 +42,7 @@ async def client():
         try:
             async with httpx.AsyncClient(
                 transport=httpx.ASGITransport(app=manager.app),
-                base_url="http://testserver/api/v1",
+                base_url="http://testserver/api/v2",
             ) as c:
                 c.calls = calls
                 yield c
@@ -61,12 +61,12 @@ def test_is_cacheable_uprn():
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_address_only_lookups_do_not_share_cache(client):
-    q = {"council": A, "postcode": "CB1 1AA"}
-    r1 = await client.get("/lookup/0", params={**q, "house_number": "1"})
-    r2 = await client.get("/lookup/0", params={**q, "house_number": "2"})
+    q = {"postcode": "CB1 1AA"}
+    r1 = await client.get(f"/{A}/view/0", params={**q, "house_number": "1"})
+    r2 = await client.get(f"/{A}/view/0", params={**q, "house_number": "2"})
     assert r1.status_code == r2.status_code == 200
-    assert r1.json()["collections"][0]["type"] == f"{A}:1"
-    assert r2.json()["collections"][0]["type"] == f"{A}:2"
+    assert r1.json()["dates"][0]["type"]["label"] == f"{A}:1"
+    assert r2.json()["dates"][0]["type"]["label"] == f"{A}:2"
     assert not r2.json()["cached"]
 
 
@@ -74,17 +74,18 @@ async def test_address_only_lookups_do_not_share_cache(client):
 async def test_cache_entry_not_reused_across_scrapers(client):
     uprn = "999000111222"
     params = {"postcode": "BL1 1AA", "house_number": "5"}
-    ra = await client.get(f"/lookup/{uprn}", params={"council": A, **params})
-    rb = await client.get(f"/lookup/{uprn}", params={"council": B, **params})
-    assert ra.json()["collections"][0]["type"].startswith(A)
-    assert rb.json()["collections"][0]["type"].startswith(B)
+    ra = await client.get(f"/{A}/view/{uprn}", params=params)
+    rb = await client.get(f"/{B}/view/{uprn}", params=params)
+    assert ra.json()["dates"][0]["type"]["label"].startswith(A)
+    assert rb.json()["dates"][0]["type"]["label"].startswith(B)
     assert not rb.json()["cached"]
     # Same scraper + same UPRN is a legitimate hit
-    ra2 = await client.get(f"/lookup/{uprn}", params={"council": B, **params})
+    ra2 = await client.get(f"/{B}/view/{uprn}", params=params)
     assert ra2.json()["cached"]
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_calendar_rejects_placeholder_uprn(client):
-    r = await client.get("/calendar/0", params={"council": A, "postcode": "CB1 1AA", "house_number": "1"})
-    assert r.status_code == 422
+    for kind in ("subscribe", "download"):
+        r = await client.get(f"/{A}/{kind}/0", params={"postcode": "CB1 1AA", "house_number": "1"})
+        assert r.status_code == 422

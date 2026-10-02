@@ -26,12 +26,13 @@ comes from something the scraper decides for itself but the platform should own:
 
 ## Public contract that must not change
 
-- Query keys the frontend sends to `/lookup/{uprn}` and `/calendar/{uprn}`: `council`,
-  `postcode`, `address` (comma-joined label), `house_number`, `street`, plus the UPRN in the
-  path. These are baked into ICS subscription URLs already sitting in users' calendars.
-- `council=<scraper_id>` in those URLs, and `scraper` + `params` in every ICS sidecar
-  (the refresh job re-invokes with the stored params). Any rename needs aliases (see IDs).
-  Since 2026-10-01 `council=` is the LAD code; old IDs resolve through the aliases.
+- Query keys the frontend sends to `/api/v2/{lad}/view/{uprn}` and
+  `/api/v2/{lad}/subscribe/{uprn}`: `postcode`, `address` (comma-joined label),
+  `house_number`, `street`, with the council and UPRN in the path. These are baked into ICS
+  subscription URLs sitting in users' calendars.
+- The council in those paths is the LAD code; old scraper IDs still resolve through the
+  aliases. `scraper` + `params` in every ICS sidecar (the refresh job re-invokes with the
+  stored params) stay as written. Any rename needs aliases (see IDs).
 - The output `Collection` fields the cache reads: `date`, `type`, `icon`.
 - 422 / 503 / 504 semantics and messages in `scrape_orchestrator.map_scrape_exception`.
 
@@ -337,17 +338,17 @@ values masked, and the harness freezes `today` during replay.
 - **`text_of` joins child text with spaces**, so inline markup gives "( if subscribed )".
   Its 52 users were checked against that behaviour, so it stays; use
   `" ".join(node.get_text().split())` where inline tags sit inside the text.
-- **Public IDs are LAD codes (switched 2026-10-01).** `/council/{postcode}` returns the
-  LAD code, `/councils` lists it, calendar URLs and sidecars carry it, and `/lookup`
+- **Public IDs are LAD codes (switched 2026-10-01).** `/find` returns the
+  LAD code, `/councils` lists it, calendar URLs and sidecars carry it, and `/{lad}/view`
   echoes it back even when called with an old ID. Whether a LAD is wired is the
   registry's call (a module claims it), not `lad_lookup.json`'s.
-  - `/councils` has **one row per LAD**, not per module. Every ID `/council` returns is
+  - `/councils` has **one row per LAD**, not per module. Every ID `/find` returns is
     then listed, and each row carries its own LAD's GOV.UK page, which the deeplinks use:
     Worthing's site failure sends people to Worthing's page, not Adur's. Name and URL
     are the module's, so Adur and Worthing show the same title.
   - **Old-ID aliases are kept**, frozen. Keeping them costs a dict lookup; the file was
-    needed anyway to know which old scrapers a module replaced; and it keeps every
-    calendar subscription made before the switch updating. It no longer grows: a
+    needed anyway to know which old scrapers a module replaced; and old IDs keep
+    resolving in the `{lad}` path segment and in ICS sidecars. It no longer grows: a
     scraper rename doesn't change a public ID, so only a LAD recode adds an entry.
   - **Old sidecars migrate on refresh**: the refresh job resolves the stored ID and writes
     back the LAD code. One under an ID nothing answers to (a deleted scraper) raises
@@ -364,10 +365,10 @@ values masked, and the harness freezes `today` during replay.
     unwired LADs. Changing the key resampled every council's test addresses once.
 - **Site failures deeplink too.** Beyond `NeedsBrowser`: when a module raises
   `UpstreamError` or times out and nothing is cached,
-  `/lookup` answers 200 with a deeplink (GOV.UK page first, then `meta.url`) instead of
+  `/{lad}/view` answers 200 with a deeplink (GOV.UK page first, then `meta.url`) instead of
   the 503/504, with `X-Scrape-Failure` saying why. 200 because that's how the frontend
   and unwired councils already treat a deeplink: `app.js` renders `data.deeplink` only on
-  an ok response. `/calendar` keeps the 503/504. `InputError` stays 422, with
+  an ok response. `/subscribe` and `/download` keep the 503/504. `InputError` stays 422, with
   `AddressNotFound.suggestions` in the body. Any other exception from a module is a bug
   and stays a plain 503.
 - **Cassettes and record/replay aren't built.** Conversions were checked with

@@ -30,13 +30,13 @@ echo "--- 1. Kill Redis (rate limiting + caching should degrade gracefully) ---"
 docker compose stop redis
 sleep 3
 
-check_status "API still responds without Redis" "$BASE/api/v1/status" "200"
-check_status "Scraper works without Redis (no cache)" "$BASE/api/v1/lookup/000151124612?council=hacs_aberdeenshire_gov_uk" "200"
+check_status "API still responds without Redis" "$BASE/api/v2/status" "200"
+check_status "Scraper works without Redis (no cache)" "$BASE/api/v2/S12000034/view/000151124612" "200"
 
 echo "  Restoring Redis..."
 docker compose start redis
 sleep 5
-check_status "API works after Redis restore" "$BASE/api/v1/status" "200"
+check_status "API works after Redis restore" "$BASE/api/v2/status" "200"
 echo
 
 # --- Test 2: Restart API under load ---
@@ -44,11 +44,11 @@ echo "--- 2. Restart API container (tests lifespan/registry reload) ---"
 docker compose restart api
 sleep 10  # wait for healthcheck
 
-check_status "API healthy after restart" "$BASE/api/v1/status" "200"
-check_status "Registry loaded after restart" "$BASE/api/v1/councils" "200"
+check_status "API healthy after restart" "$BASE/api/v2/status" "200"
+check_status "Registry loaded after restart" "$BASE/api/v2/councils" "200"
 
 # Verify scraper count didn't drop
-scraper_count=$(curl -sS --max-time 10 "$BASE/api/v1/status" | python3 -c "import sys,json; print(json.load(sys.stdin).get('scrapers_loaded', 0))")
+scraper_count=$(curl -sS --max-time 10 "$BASE/api/v2/status" | python3 -c "import sys,json; print(json.load(sys.stdin).get('scrapers_loaded', 0))")
 if (( scraper_count > 300 )); then
     echo "OK    Scraper count after restart: $scraper_count"
     PASS=$((PASS + 1))
@@ -63,10 +63,10 @@ echo "--- 3. Restart Redis (tests connection pool reconnection) ---"
 docker compose restart redis
 sleep 5
 
-check_status "API reconnects to Redis" "$BASE/api/v1/status" "200"
+check_status "API reconnects to Redis" "$BASE/api/v2/status" "200"
 
 # Verify rate limit headers come back (means Redis connection restored)
-headers=$(curl -sS -D - -o /dev/null --max-time 10 "$BASE/api/v1/status" 2>/dev/null)
+headers=$(curl -sS -D - -o /dev/null --max-time 10 "$BASE/api/v2/status" 2>/dev/null)
 if echo "$headers" | grep -qi "x-ratelimit"; then
     echo "OK    Rate limit headers present (Redis reconnected)"
     PASS=$((PASS + 1))

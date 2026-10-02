@@ -46,7 +46,7 @@ export default function () {
 
 	if (roll < 0.5) {
 		// Lightweight: status, councils, health
-		const endpoints = ["/api/v1/status", "/api/v1/councils", "/api/v1/health"];
+		const endpoints = ["/api/v2/status", "/api/v2/councils", "/api/v2/health"];
 		const endpoint = endpoints[Math.floor(Math.random() * endpoints.length)];
 		const res = http.get(`${BASE}${endpoint}`, { timeout: "10s" });
 		check(res, { "status 200": (r) => r.status === 200 }) || errorRate.add(1);
@@ -54,7 +54,7 @@ export default function () {
 		// Council lookup
 		const pc = POSTCODES[Math.floor(Math.random() * POSTCODES.length)];
 		const encoded = encodeURIComponent(pc);
-		const res = http.get(`${BASE}/api/v1/council/${encoded}`, {
+		const res = http.get(`${BASE}/api/v2/find?postcode=${encoded}`, {
 			timeout: "15s",
 		});
 		check(res, {
@@ -65,7 +65,7 @@ export default function () {
 		const entry = TEST_UPRNS[Math.floor(Math.random() * TEST_UPRNS.length)];
 		const start = Date.now();
 		const res = http.get(
-			`${BASE}/api/v1/lookup/${entry.uprn}?council=${entry.council}`,
+			`${BASE}/api/v2/${entry.council}/view/${entry.uprn}`,
 			{ timeout: "60s" },
 		);
 		scraperDuration.add(Date.now() - start);

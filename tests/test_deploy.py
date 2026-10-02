@@ -32,7 +32,7 @@ def docker_stack():
     elapsed = 0
     while elapsed < MAX_WAIT:
         try:
-            r = httpx.get(f"{BASE_URL}/api/v1/health", timeout=3)
+            r = httpx.get(f"{BASE_URL}/api/v2/health", timeout=3)
             if r.status_code == 200:
                 break
         except (httpx.ConnectError, httpx.ReadError, httpx.TimeoutException):
@@ -65,14 +65,14 @@ def client(docker_stack):
 
 def test_health(client):
     """App boots and connects to Redis."""
-    resp = client.get("/api/v1/health")
+    resp = client.get("/api/v2/health")
     assert resp.status_code == 200
     assert isinstance(resp.json(), list)
 
 
 def test_scrapers_loaded(client):
     """Scraper registry populated inside the container."""
-    resp = client.get("/api/v1/councils")
+    resp = client.get("/api/v2/councils")
     assert resp.status_code == 200
     data = resp.json()
     assert len(data) > 0

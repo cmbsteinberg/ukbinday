@@ -55,7 +55,7 @@ Once you have the server IP (shown after provision, or check with `status`):
 uv run python deploy/deployment.py status
 
 # Test the API
-curl https://ukbinday.co.uk/api/v1/health
+curl https://ukbinday.co.uk/api/v2/health
 
 # Check container logs
 uv run python deploy/deployment.py ssh "cd ~/bins && docker compose ps"

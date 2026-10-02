@@ -13,7 +13,7 @@ set -euo pipefail
 [ $# -ge 1 ] && [ $# -le 3 ] || { echo "usage: $0 <base-url> [shard] [of]" >&2; exit 2; }
 : "${CRON_SECRET:?set CRON_SECRET}"
 BASE="${1%/}"; SHARD="${2:-0}"; OF="${3:-1}"
-API="$BASE/api/v1"
+API="$BASE/api/v2"
 
 HDR=()
 [ -z "${VERCEL_BYPASS:-}" ] || HDR=(-H "x-vercel-protection-bypass: $VERCEL_BYPASS")

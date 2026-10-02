@@ -9,7 +9,7 @@ LAD this emits:
             address API the frontend uses. A postcode is picked from ONSUD
             (restricted to the LAD via ONSPD and to postcodes with 4-60 UPRNs,
             which screens out single-occupier commercial postcodes), then
-            /addresses supplies the UPRN plus the text fields the frontend
+            the address API (as /find) supplies the UPRN plus the text fields the frontend
             sends (address, house_number, street). Only addresses whose UPRN
             is also in ONSUD for that postcode and whose first line is a plain
             house number are kept, a proxy for "domestic" since neither

@@ -20,7 +20,7 @@ set -uo pipefail
 [ $# -eq 1 ] || { echo "usage: $0 <base-url>" >&2; exit 2; }
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 BASE="${1%/}"
-API="$BASE/api/v1"
+API="$BASE/api/v2"
 CASES="$ROOT/tests/lad_test_cases.json"
 REGION="${REGION:-lhr1}"
 CURL_MODULE="${CURL_MODULE:-ashford}"
@@ -74,15 +74,15 @@ n="$(get "$API/councils" | jq 'length' 2>/dev/null || echo 0)"
 check "/councils lists $n councils (want > 0)" test "${n:-0}" -gt 0
 
 # --- postcode -> LAD code -----------------------------------------------------------
-lad="$(get "$API/council/${POSTCODE// /%20}" | jq -r '.council_id // empty' 2>/dev/null)"
+lad="$(get --get --data-urlencode "postcode=$POSTCODE" "$API/find" | jq -r '.council // empty' 2>/dev/null)"
 case "$lad" in
-  [EWSN][0-9]*) pass "/council/$POSTCODE -> $lad" ;;
-  *) fail "/council/$POSTCODE returned no LAD code (got '${lad:-nothing}')" ;;
+  [EWSN][0-9]*) pass "/find?postcode=$POSTCODE -> $lad" ;;
+  *) fail "/find?postcode=$POSTCODE returned no LAD code (got '${lad:-nothing}')" ;;
 esac
 
-# --- /lookup per module ---------------------------------------------------------------
-# Try the module's cases in order until one returns >= 1 collection; echo the case's
-# LAD, uprn and query string pairs to $TMP/case for the calendar check.
+# --- /view per module -----------------------------------------------------------------
+# Try the module's cases in order until one returns >= 1 date; keep the case's LAD,
+# uprn and query string pairs in $TMP for the calendar check.
 lookup_module() {  # <label> <module>
   local label="$1" module="$2" lad id resp n=0 tried=0
   lad="$(jq -r --arg m "$module" 'to_entries[] | select(.value.scraper_id == $m) | .key' "$CASES" | head -n 1)"
@@ -90,22 +90,23 @@ lookup_module() {  # <label> <module>
   # sampled cases first, then fixtures
   while IFS=$'\t' read -r id; do
     tried=$((tried + 1))
-    local args=(--data-urlencode "council=$lad") uprn
+    local args=() uprn
     uprn="$(jq -r --arg l "$lad" --arg id "$id" '.[$l].cases[] | select(.id == $id) | .params.uprn // "0"' "$CASES")"
     while IFS= read -r kv; do args+=(--data-urlencode "$kv"); done < <(
       jq -r --arg l "$lad" --arg id "$id" '.[$l].cases[] | select(.id == $id) | .params | del(.uprn)
         | to_entries[] | select(.value != "" and .value != null) | "\(.key)=\(.value)"' "$CASES")
-    resp="$(get --get "${args[@]}" "$API/lookup/$uprn" 2>&1)" || resp=""
-    n="$(printf '%s' "$resp" | jq '.collections | length' 2>/dev/null || echo 0)"
+    resp="$(get --get ${args[@]+"${args[@]}"} "$API/$lad/view/$uprn" 2>&1)" || resp=""
+    n="$(printf '%s' "$resp" | jq '.dates | length' 2>/dev/null || echo 0)"
     if [ "${n:-0}" -ge 1 ]; then
-      pass "lookup ($label): $module $lad case $id -> $n collections (first: $(printf '%s' "$resp" | jq -r '.collections[0] | "\(.date) \(.type)"'))"
-      printf '%s\n' "$uprn" >"$TMP/uprn.$label"; printf '%s\n' "${args[@]}" >"$TMP/args.$label"
+      pass "lookup ($label): $module $lad case $id -> $n dates (first: $(printf '%s' "$resp" | jq -r '.dates[0] | "\(.date) \(.type.label)"'))"
+      printf '%s\n' "$uprn" >"$TMP/uprn.$label"; printf '%s\n' "$lad" >"$TMP/lad.$label"
+      printf '%s\n' ${args[@]+"${args[@]}"} >"$TMP/args.$label"
       return
     fi
     [ "$tried" -ge 3 ] || continue
     break
   done < <(jq -r --arg l "$lad" '.[$l].cases | sort_by(.source != "sampled") | .[].id' "$CASES")
-  fail "lookup ($label): $module $lad, $tried cases tried, none returned collections (last: $(printf '%s' "$resp" | head -c 200))"
+  fail "lookup ($label): $module $lad, $tried cases tried, none returned dates (last: $(printf '%s' "$resp" | head -c 200))"
 }
 lookup_module curl_cffi "$CURL_MODULE"
 lookup_module pdf "$PDF_MODULE"
@@ -118,12 +119,12 @@ check "static /static/favicon.svg -> $code" test "$code" = 200
 # --- calendar for the plain-httpx case (its lookup above cached it) ---------------------
 if [ -f "$TMP/uprn.httpx" ]; then
   cargs=()
-  while IFS= read -r a; do cargs+=("$a"); done <"$TMP/args.httpx"
-  uprn="$(cat "$TMP/uprn.httpx")"
-  ctype="$(get --get "${cargs[@]}" -o /dev/null -w '%{http_code} %{content_type}' "$API/calendar/$uprn")"
+  while IFS= read -r a; do [ -z "$a" ] || cargs+=("$a"); done <"$TMP/args.httpx"
+  uprn="$(cat "$TMP/uprn.httpx")"; clad="$(cat "$TMP/lad.httpx")"
+  ctype="$(get --get ${cargs[@]+"${cargs[@]}"} -o /dev/null -w '%{http_code} %{content_type}' "$API/$clad/subscribe/$uprn")"
   case "$ctype" in
-    "200 text/calendar"*) pass "calendar/$uprn -> $ctype" ;;
-    *) fail "calendar/$uprn -> $ctype (want 200 text/calendar)" ;;
+    "200 text/calendar"*) pass "$clad/subscribe/$uprn -> $ctype" ;;
+    *) fail "$clad/subscribe/$uprn -> $ctype (want 200 text/calendar)" ;;
   esac
 else
   fail "calendar: skipped, the httpx lookup did not succeed"

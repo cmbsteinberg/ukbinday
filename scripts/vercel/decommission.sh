@@ -20,11 +20,11 @@
 #   HCLOUD_TOKEN     for hcloud, unless a context is set (`hcloud context create bins`)
 #
 # Preflight (abort on any failure unless --force):
-#   1. $BASE_URL/api/v1/status answers 200 and the response came from Vercel. Cloudflare
+#   1. $BASE_URL/api/v2/status answers 200 and the response came from Vercel. Cloudflare
 #      passes origin headers through but rewrites `server:` to cloudflare, so the check is
 #      an x-vercel-id header (or x-vercel-cache, or `server: Vercel` when not proxied).
 #      Hetzner's Caddy sends none of them.
-#   2. $BASE_URL/api/v1/metrics .ics_cache.last_refresh_age_seconds is a number under 36 h
+#   2. $BASE_URL/api/v2/metrics .ics_cache.last_refresh_age_seconds is a number under 36 h
 #      (the oldest shard's last run, so the Vercel cron is really refreshing).
 #   3. git working tree clean (only when the repo stage runs), so the edits are a diff.
 #
@@ -47,7 +47,7 @@ cd "$ROOT"
 
 BASE="${BASE_URL:-https://ukbinday.co.uk}"
 BASE="${BASE%/}"
-API="$BASE/api/v1"
+API="$BASE/api/v2"
 MAX_AGE=$((36 * 3600))
 FW_NAME="${HCLOUD_FIREWALL:-bins-firewall}"
 KEY_NAME="${HCLOUD_SSH_KEY:-bins-deploy}"
@@ -358,7 +358,7 @@ EDITS = [
         'echo ""\n'
         'echo "--- Redis Connectivity ---"\n'
         "# Health endpoint should reflect redis status when REDIS_URL is set\n"
-        'assert_json_field "Health includes redis info" "$BASE_URL/api/v1/health" "isinstance(data, list)"\n\n',
+        'assert_json_field "Health includes redis info" "$BASE_URL/api/v2/health" "isinstance(data, list)"\n\n',
         "",
         "Redis Connectivity",
     ),
@@ -474,18 +474,16 @@ cat >&2 <<'TXT'
     - Infrastructure: now Vercel (lhr1) + Cloudflare (cache and rate-limit rules) + R2; compose
       is the api alone, for local runs
     - CI/CD: deploy.yml is smoke-test then deploy-vercel; no SSH job
-    - services/refresh_job.py: runs from the Vercel cron via /api/v1/internal/refresh, not a
+    - services/refresh_job.py: runs from the Vercel cron via /api/v2/internal/refresh, not a
       `worker` container; scrape_lock and ics_cache wording (R2, Redis optional)
     - drop `deploy/deployment.py`; test_deploy.py / test_deploy_docker.sh descriptions; ibis mentions
   VERCEL.md: mark phase 6 done and the Status line; fix the "Both deploy on every push" CI bullet
   README.md "Deployment" section: Redis/Caddy/Uptime Kuma wording and the link to deploy/deployment.md
   tests/battletest/README.md: goaccess / uptime-kuma rows
   .env.example: the REDIS_URL comment says "set automatically in docker-compose"; no longer true
-  tests/test_deploy_docker.sh: the "/api/councils (legacy prefix)" check expects 200, but routes
-    are mounted under /api/v1 only; run `uv run pytest -m docker` and the script with docker
   Monitoring (Uptime Kuma is gone with the box):
-    - UptimeRobot / Better Stack HTTP check on https://ukbinday.co.uk/api/v1/status (expect 200)
-    - second check on /api/v1/metrics: alert when .ics_cache.last_refresh_age_seconds is null or
+    - UptimeRobot / Better Stack HTTP check on https://ukbinday.co.uk/api/v2/status (expect 200)
+    - second check on /api/v2/metrics: alert when .ics_cache.last_refresh_age_seconds is null or
       > 129600 (36 h); Better Stack's JSON/keyword assertions can do it, else a small cron script
     - Cloudflare Web Analytics (dashboard -> Analytics & Logs) replaces GoAccess; Vercel keeps
       runtime logs for an hour only, so add a log drain or Sentry if errors need keeping

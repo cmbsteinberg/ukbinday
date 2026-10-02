@@ -3,7 +3,7 @@
 Requests from a Vercel function leave from AWS London, not the machine that
 produced tests/output/lad_integration_output.json. A council that blocks AWS
 ranges passes locally and fails from there. This runs the same cases through
-the deployment's `GET /api/v1/lookup/{uprn}` and lists the councils whose
+the deployment's `GET /api/v2/{lad}/view/{uprn}` and lists the councils whose
 status got worse.
 
 Usage:
@@ -59,7 +59,7 @@ from scripts.lad_cases import (
     NETWORKISH,
     job_key,
     load_lads,
-    lookup,
+    view,
 )
 from scripts.lad_status import LAD_OUTPUT_PATH, deciding_cases, lad_status
 
@@ -92,7 +92,7 @@ async def probe(
             jobs.setdefault(job_key(entry["scraper_id"], case["params"]), (code, case["params"]))
 
     async with httpx.AsyncClient(
-        base_url=base_url.rstrip("/") + "/api/v1", timeout=REQUEST_TIMEOUT, headers=headers, follow_redirects=True
+        base_url=base_url.rstrip("/") + "/api/v2", timeout=REQUEST_TIMEOUT, headers=headers, follow_redirects=True
     ) as client:
         done = 0
 
@@ -100,7 +100,7 @@ async def probe(
             nonlocal done
             council, params = jobs[key]
             async with sem:
-                result = await lookup(client, council, params)
+                result = await view(client, council, params)
             done += 1
             log(f"\r  {done}/{len(jobs)} requests")
             return key, result

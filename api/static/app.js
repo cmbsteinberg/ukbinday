@@ -1,5 +1,4 @@
-const API = "/api/v1";
-const API_V2 = "/api/v2";
+const API = "/api/v2";
 let currentData = null;
 
 let turnstileToken = null;
@@ -58,30 +57,33 @@ $("#postcode-form").addEventListener("submit", async (e) => {
 	btn.setAttribute("aria-busy", "true");
 
 	try {
-		const councilResp = await fetch(
-			`${API}/council/${encodeURIComponent(postcode)}`,
-		);
-
-		let council_id = null;
-		let council_name = null;
-		let councilDeeplink = null;
-		if (councilResp.ok) {
-			const councilData = await councilResp.json();
-			council_id = councilData.council_id;
-			council_name = councilData.council_name;
-			councilDeeplink = councilData.deeplink || null;
-		} else {
-			const err = await councilResp.json().catch(() => ({}));
+		const token = await getTurnstileToken();
+		if (window.turnstile && !token) {
 			showError(
-				err.detail ||
-					`We don't support this council yet (${councilResp.status}).`,
+				"Could not verify your browser. Please reload the page and try again.",
 			);
 			return;
 		}
+		const resp = await fetch(
+			`${API}/find?${new URLSearchParams({ postcode })}`,
+			token ? { headers: { "X-Turnstile-Token": token } } : {},
+		);
+		turnstileToken = null;
+		if (window.turnstile) {
+			try {
+				window.turnstile.reset();
+			} catch {}
+		}
+		if (!resp.ok) {
+			const err = await resp.json().catch(() => ({}));
+			showError(err.detail || `Postcode lookup failed (${resp.status}).`);
+			return;
+		}
+		const { council, council_name, deeplink, addresses } = await resp.json();
 
-		if (!council_id) {
-			if (councilDeeplink) {
-				renderDeeplink(councilDeeplink);
+		if (!council) {
+			if (deeplink) {
+				renderDeeplink(deeplink);
 				return;
 			}
 			showError(
@@ -92,32 +94,7 @@ $("#postcode-form").addEventListener("submit", async (e) => {
 			return;
 		}
 
-		const token = await getTurnstileToken();
-		if (window.turnstile && !token) {
-			showError(
-				"Could not verify your browser. Please reload the page and try again.",
-			);
-			return;
-		}
-		const addressResp = await fetch(
-			`${API}/addresses/${encodeURIComponent(postcode)}`,
-			token ? { headers: { "X-Turnstile-Token": token } } : {},
-		);
-		turnstileToken = null;
-		if (window.turnstile) {
-			try {
-				window.turnstile.reset();
-			} catch {}
-		}
-		if (!addressResp.ok) {
-			const err = await addressResp.json().catch(() => ({}));
-			throw new Error(
-				err.detail || `Address lookup failed (${addressResp.status})`,
-			);
-		}
-		const { addresses } = await addressResp.json();
-
-		currentData = { addresses, council_id, council_name };
+		currentData = { addresses, council, council_name };
 
 		if (addresses.length === 0) {
 			showError("No addresses found for that postcode.");
@@ -161,9 +138,9 @@ $("#address-btn").addEventListener("click", async () => {
 	if (!idx || !currentData) return;
 
 	const addr = currentData.addresses[idx];
-	const councilId = currentData.council_id;
+	const council = currentData.council;
 
-	if (!councilId) {
+	if (!council) {
 		showError(
 			"Could not determine council for this postcode. Council may not be supported yet.",
 		);
@@ -182,7 +159,7 @@ $("#address-btn").addEventListener("click", async () => {
 			params.set("house_number", addr.house_number_or_name);
 		if (addr.street) params.set("street", addr.street);
 		const resp = await fetch(
-			`${API_V2}/${encodeURIComponent(councilId)}/view/${encodeURIComponent(addr.uprn)}?${params}`,
+			`${API}/${encodeURIComponent(council)}/view/${encodeURIComponent(addr.uprn)}?${params}`,
 		);
 		if (!resp.ok) {
 			const err = await resp.json().catch(() => ({}));
@@ -221,10 +198,24 @@ function relativeDay(dateStr) {
 	return { text: `In ${diff} days`, past: false };
 }
 
-// The bin's colour as the API read it off the council's label; unset (a
-// neutral card) when the label names none, rather than guessing from the stream.
-function setBinColour(el, colour) {
-	if (colour) el.dataset.binColour = colour.toLowerCase();
+// Stream themes by the API's icon (api/councils/_base/collection.py Icon),
+// for labels that name no bin colour: garden/food/compost brown, recycling
+// streams green, anything else grey.
+const STREAM_COLOURS = {
+	"mdi:flower": "brown",
+	"mdi:food-apple": "brown",
+	"mdi:leaf": "brown",
+	"mdi:recycle": "green",
+	"mdi:recycle-variant": "green",
+	"mdi:package-variant": "green",
+	"mdi:bottle-soda": "green",
+	"mdi:nail": "green",
+};
+
+// The colour the API read off the council's label, else the stream's theme.
+function binColour(type) {
+	if (type.colour) return type.colour.toLowerCase();
+	return STREAM_COLOURS[type.icon] || "grey";
 }
 
 function dateWithHoliday(c) {
@@ -257,7 +248,7 @@ function renderCard(label, next) {
 	const displayType = toTitleCase(label);
 	const frag = tpl("tpl-bin-card");
 	const group = frag.querySelector(".bin-group");
-	setBinColour(group, next.type.colour);
+	group.dataset.binColour = binColour(next.type);
 	group.setAttribute("aria-label", `${displayType} collection`);
 	frag.querySelector('[data-slot="type"]').textContent = displayType;
 	frag.querySelector('[data-slot="date"]').textContent = dateWithHoliday(next);
@@ -273,7 +264,7 @@ function renderAccordion(items) {
 	const ul = frag.querySelector(".all-dates-list");
 	for (const c of items) {
 		const li = tpl("tpl-accordion-item");
-		setBinColour(li.querySelector("li"), c.type.colour);
+		li.querySelector("li").dataset.binColour = binColour(c.type);
 		li.querySelector('[data-slot="type"]').textContent = toTitleCase(
 			c.type.label,
 		);
@@ -323,17 +314,16 @@ function attachCopyHandler(icsUrl) {
 	});
 }
 
-// councilId is the LAD code /council/{postcode} returned (e.g. E06000001).
-function icsUrlFor(councilId, addr) {
+// council is the LAD code /find returned (e.g. E06000001).
+function icsUrlFor(council, addr) {
 	const params = new URLSearchParams({
-		council: councilId,
 		postcode: addr.postcode,
 		address: addr.full_address,
 	});
 	if (addr.house_number_or_name)
 		params.set("house_number", addr.house_number_or_name);
 	if (addr.street) params.set("street", addr.street);
-	return `${window.location.origin}${API}/calendar/${encodeURIComponent(addr.uprn)}?${params}`;
+	return `${window.location.origin}${API}/${encodeURIComponent(council)}/subscribe/${encodeURIComponent(addr.uprn)}?${params}`;
 }
 
 function renderDeeplink(deeplink) {
@@ -355,8 +345,7 @@ function renderResults(addr, data) {
 		return;
 	}
 	const council = currentData.council_name || data.council;
-	const councilId = currentData.council_id;
-	const icsUrl = icsUrlFor(councilId, addr);
+	const icsUrl = icsUrlFor(currentData.council, addr);
 
 	section.replaceChildren();
 	section.appendChild(renderHeader(addr.full_address, council));

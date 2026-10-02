@@ -14,15 +14,15 @@
     <p>
       The UK Bin Day API returns household waste and recycling schedules for UK
       addresses, given a UPRN. It is available at
-      <code>https://ukbinday.co.uk/api/v1</code> and is completely free
+      <code>https://ukbinday.co.uk/api/v2</code> and is completely free
     </p>
     <p>
       Full reference documentation is generated from the OpenAPI schema:
     </p>
     <ul>
-      <li><a href="/api/v1/docs">Swagger UI</a> - try endpoints in the browser.</li>
-      <li><a href="/api/v1/redoc">ReDoc</a> - single-page reference view.</li>
-      <li><a href="/api/v1/openapi.json">openapi.json</a> - raw schema.</li>
+      <li><a href="/api/v2/docs">Swagger UI</a> - try endpoints in the browser.</li>
+      <li><a href="/api/v2/redoc">ReDoc</a> - single-page reference view.</li>
+      <li><a href="/api/v2/openapi.json">openapi.json</a> - raw schema.</li>
     </ul>
 
     <section>
@@ -36,21 +36,24 @@
         Find your address on the <a href="/">home page</a> and click the subscribe link,
         or build one directly:
       </p>
-      <pre><code>https://ukbinday.co.uk/api/v1/calendar/{uprn}?council={lad_code}&amp;postcode={postcode}</code></pre>
+      <pre><code>https://ukbinday.co.uk/api/v2/{lad_code}/subscribe/{uprn}?postcode={postcode}</code></pre>
+      <p>
+        <code>/api/v2/{lad_code}/download/{uprn}</code> serves the same calendar as a file download.
+      </p>
     </section>
 
     <section>
       <h2>Programmatic access</h2>
       <p>
-        If you need JSON instead of a calendar feed, resolve a postcode to its council
-        with <code>/api/v1/council/{postcode}</code>, then call
-        <code>/api/v1/lookup/{uprn}?council={council_id}&amp;postcode={postcode}</code>.
+        If you need JSON instead of a calendar feed, call
+        <code>/api/v2/{lad_code}/view/{uprn}?postcode={postcode}</code>. It answers with the
+        collection dates in ascending order, each with its bin type, the bin colour where the
+        council's label names one, and the bank holiday the date falls on, if any.
       </p>
       <p>
-        The <code>council</code> parameter is the council's ONS LAD code, for example
-        <code>E06000001</code> for Hartlepool. <code>/council/{postcode}</code> returns it as
-        <code>council_id</code>, and <code>/api/v1/councils</code> lists every supported code
-        with the parameters each council needs. Some councils also need
+        <code>{lad_code}</code> is the council's ONS LAD code, for example
+        <code>E06000001</code> for Hartlepool. <code>/api/v2/councils</code> lists every
+        supported code with the parameters each council needs. Some councils also need
         <code>address</code>, <code>house_number</code> or <code>street</code>.
       </p>
       <p>
@@ -58,7 +61,8 @@
         seconds; subsequent requests return immediately.
       </p>
       <p>
-        Postcode-to-address resolution is handled client-side and is deliberately not exposed as a public API endpoint here, to avoid abuse.
+        Postcode-to-council and address resolution (<code>/api/v2/find</code>) is behind a
+        browser challenge and is meant for this site's own frontend, to avoid abuse.
       </p>
     </section>
 
@@ -73,7 +77,7 @@
       <h3>Local Authority District (LAD)</h3>
       <p>
         The council responsible for waste collection at an address, identified by its ONS
-        LAD code. It is the <code>council</code> parameter on every lookup. Councils that
+        LAD code. It is the <code>{lad_code}</code> segment of every lookup path. Councils that
         share one collection service (Adur and Worthing) keep separate codes.
       </p>
 

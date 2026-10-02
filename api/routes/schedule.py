@@ -1,29 +1,32 @@
-"""The lookup, calendar and address logic both API versions answer with.
-
-v1 (`lookup.py`) and v2 (`v2.py`) differ only in how they shape the answer;
-everything that decides it (registry resolution, unwired and NeedsBrowser
-deeplinks, cache-or-scrape, the upstream-failure fallback) lives here once.
+"""What the API answers: a postcode's council and addresses, a UPRN's schedule
+and its calendar. Registry resolution, unwired and NeedsBrowser deeplinks,
+cache-or-scrape and the upstream-failure fallback live here; `v2.py` is the
+routes over them.
 """
 
 from __future__ import annotations
 
 import logging
 import re
-from dataclasses import dataclass
-from datetime import datetime
+from collections.abc import Iterable
+from datetime import date
 
 import httpx
 from fastapi import HTTPException, Request
 from fastapi.responses import RedirectResponse, Response
 
 from api import config
+from api.councils._base import colour_of
 from api.services import address_lookup
 from api.services import deeplinks as deeplink_service
+from api.services.bank_holidays import holiday_name
 from api.services.models import (
-    AddressLookupResponse,
     AddressResult,
-    CollectionItem,
+    CollectionDate,
+    CollectionType,
     DeeplinkInfo,
+    FindResponse,
+    ScheduleResponse,
 )
 from api.services.rate_limiting import _get_client_ip
 from api.services.scrape_orchestrator import (
@@ -34,13 +37,14 @@ from api.services.scrape_orchestrator import (
     is_cacheable_uprn,
     live_scrape,
     needs_browser_deeplink,
+    resolve_council,
 )
 
 logger = logging.getLogger(__name__)
 
 _UPRN_RE = re.compile(r"^[0-9]{1,20}$")
 
-# On a lookup answered with the fallback deeplink because the council's site
+# On a schedule answered with the fallback deeplink because the council's site
 # failed: "network", "timeout" or "error" (see ScrapeHTTPException.failure).
 # The body is the frontend's deeplink shape; this keeps the failure visible to
 # the live test and to logs.
@@ -59,73 +63,73 @@ def _no_scraper() -> HTTPException:
     return HTTPException(
         status_code=404,
         detail="We don't have a scraper for this council yet. "
-        "Check /api/v1/councils for the list of supported councils.",
+        "Check /api/v2/councils for the list of supported councils.",
     )
 
 
-@dataclass(frozen=True)
-class Schedule:
-    """A lookup's answer before either version shapes it.
+def _dates(lad: str, collections: Iterable[tuple[date | str, str, str | None]]) -> list[CollectionDate]:
+    """(date, label, icon) rows as ascending dates, each with its bin colour and bank holiday."""
+    rows = sorted(
+        ((date.fromisoformat(d) if isinstance(d, str) else d, label, icon) for d, label, icon in collections),
+        key=lambda row: row[:2],
+    )
+    return [
+        CollectionDate(
+            date=d,
+            holiday=holiday_name(lad, d),
+            type=CollectionType(label=label, colour=colour_of(label), icon=icon),
+        )
+        for d, label, icon in rows
+    ]
 
-    `council` is the public ID (the LAD code) for a wired council, else the
-    council as the caller gave it. `failure` is the `X-Scrape-Failure` value
-    when the answer is the upstream-failure deeplink.
-    """
 
-    council: str
-    collections: list[CollectionItem]
-    cached: bool = False
-    cached_at: datetime | None = None
-    deeplink: DeeplinkInfo | None = None
-    failure: str | None = None
+async def get_schedule(request: Request, response: Response, uprn: str, council: str) -> ScheduleResponse:
+    """Collection dates for a UPRN: cache or scrape, or the deeplink to send the user to.
 
-
-async def get_schedule(request: Request, uprn: str, council: str) -> Schedule:
-    """Collections for a UPRN: cache or scrape, or the deeplink to send the user to.
-
-    Raises the mapped HTTP error (404 unknown council, 422 bad input, 503/504
-    when the site failed and there's no deeplink to fall back on).
+    `council` may be an old scraper ID; the answer carries the public one (the
+    LAD code) for a wired council. When the answer is the upstream-failure
+    deeplink, `X-Scrape-Failure` goes on `response`. Raises the mapped HTTP
+    error (404 unknown council, 422 bad input, 503/504 when the site failed
+    and there's no deeplink to fall back on).
     """
     meta = request.app.state.registry.get(council)
     if meta is None:
         target = deeplink_service.resolve_by_council_param(council)
         if target:
-            return Schedule(council=council, collections=[], deeplink=deeplink_info(target))
+            return ScheduleResponse(uprn=uprn, council=council, deeplink=deeplink_info(target))
         raise _no_scraper()
 
     try:
         if meta.needs_browser:
             raise needs_browser_deeplink(meta, meta.needs_browser)
 
-        # `council` may be an old ID; answer, cache and log under the public one (the LAD code)
+        # answer, cache and log under the public ID (the LAD code)
         params = build_scrape_params(meta, council, uprn, request.query_params)
 
         if not is_cacheable_uprn(uprn):
             collections = await live_scrape(request, meta.id, params)
-            return Schedule(
+            return ScheduleResponse(
+                uprn=uprn,
                 council=meta.id,
-                collections=[CollectionItem(date=c.date, type=c.type, icon=c.icon) for c in collections],
+                dates=_dates(meta.id, ((c.date, c.type, c.icon) for c in collections)),
             )
 
         entry, cached = await get_or_scrape(request, uprn, meta.id, params)
     except DeeplinkAnswer as answer:
-        return Schedule(council=meta.id, collections=[], deeplink=deeplink_info(answer.deeplink))
+        return ScheduleResponse(uprn=uprn, council=meta.id, deeplink=deeplink_info(answer.deeplink))
     except ScrapeHTTPException as error:
         # The council's site failed and nothing was cached (a cache hit never
         # scrapes): send the user to the council's page, as for an unwired council.
         if error.fallback is None:
             raise
-        return Schedule(
-            council=meta.id,
-            collections=[],
-            deeplink=deeplink_info(error.fallback),
-            failure=error.failure or "error",
-        )
-    return Schedule(
+        response.headers[SCRAPE_FAILURE_HEADER] = error.failure or "error"
+        return ScheduleResponse(uprn=uprn, council=meta.id, deeplink=deeplink_info(error.fallback))
+    return ScheduleResponse(
+        uprn=uprn,
         council=meta.id,
-        collections=[CollectionItem(**c) for c in entry.collections],
         cached=cached,
         cached_at=entry.last_success if cached else None,
+        dates=_dates(meta.id, ((c["date"], c["type"], c.get("icon")) for c in entry.collections)),
     )
 
 
@@ -199,7 +203,40 @@ async def verify_turnstile(request: Request) -> None:
         raise HTTPException(status_code=403, detail="Challenge failed.")
 
 
-async def search_addresses(postcode: str) -> AddressLookupResponse:
+async def find(request: Request, postcode: str) -> FindResponse:
+    """The postcode's council and, when we serve it, its addresses.
+
+    An unwired council, or a wired one whose scraper can never run without a
+    browser (captcha, login), answers with its deeplink and no address step,
+    so the address API is only called for a council we can look up.
+    """
+    council, council_name, candidates, lad_code = await resolve_council(
+        request, request.app.state.council_lookup, postcode
+    )
+
+    deeplink = None
+    if lad_code and not council:
+        target = deeplink_service.resolve(lad_code)
+        if target:
+            deeplink = deeplink_info(target)
+    elif council:
+        meta = request.app.state.registry.get(council)
+        if meta is not None and meta.needs_browser:
+            target = deeplink_service.for_needs_browser(meta, meta.needs_browser)
+            if target:
+                council, deeplink = None, deeplink_info(target)
+
+    return FindResponse(
+        postcode=postcode.strip().upper(),
+        council=council,
+        council_name=council_name,
+        candidates=candidates,
+        deeplink=deeplink,
+        addresses=await search_addresses(postcode) if council else [],
+    )
+
+
+async def search_addresses(postcode: str) -> list[AddressResult]:
     """Addresses for a postcode from the address API, with its failures as HTTP errors."""
     try:
         results = await address_lookup.search_addresses(postcode)
@@ -223,8 +260,4 @@ async def search_addresses(postcode: str) -> AddressLookupResponse:
             detail="Something went wrong during the address lookup. "
             "Please try again later.",
         )
-
-    return AddressLookupResponse(
-        postcode=postcode.strip().upper(),
-        addresses=[AddressResult(**r) for r in results],
-    )
+    return [AddressResult(**r) for r in results]

@@ -2,13 +2,13 @@
 Council-level live tests: one test per wired LAD, driven by tests/lad_test_cases.json
 (built by pipeline/shared/generate_lad_test_cases.py).
 
-Each case goes through the real /lookup/{uprn} route in-process, with the
+Each case goes through the real /{lad}/view/{uprn} route in-process, with the
 same query params the frontend sends. Outcomes:
 
-  pass            200 with at least one collection
-  empty           200 with no collections (wrong property or a parse break)
+  pass            200 with at least one date
+  empty           200 with no dates (wrong property or a parse break)
   input_rejected  422: the scraper refused the params
-  deeplink        200 with a deeplink instead of collections: the scraper
+  deeplink        200 with a deeplink instead of dates: the scraper
                   raised NeedsBrowser (captcha, login), so the user is sent
                   to the council's own page
 
@@ -60,7 +60,7 @@ import pytest_asyncio
 from asgi_lifespan import LifespanManager
 
 from api.main import app
-from scripts.lad_cases import FINAL_OUTCOMES, NETWORKISH, job_key, load_lads, lookup
+from scripts.lad_cases import FINAL_OUTCOMES, NETWORKISH, job_key, load_lads, view
 from scripts.lad_status import lad_status
 
 pytestmark = pytest.mark.live
@@ -70,7 +70,7 @@ CASES_PATH = Path(os.environ.get("LAD_CASES_PATH", ROOT / "tests" / "lad_test_ca
 OUTPUT_PATH = Path(
     os.environ.get("LAD_OUTPUT_PATH", ROOT / "tests" / "output" / "lad_integration_output.json")
 )
-BASE_URL = "http://testserver/api/v1"
+BASE_URL = "http://testserver/api/v2"
 CANARY_URL = "https://www.gov.uk/"
 
 MAX_CONCURRENCY = 40
@@ -138,7 +138,7 @@ async def lad_results() -> dict:
             async def run(key: str, sem: asyncio.Semaphore) -> tuple[str, dict]:
                 council, params = jobs[key]
                 async with sem:
-                    return key, await lookup(client, council, params)
+                    return key, await view(client, council, params)
 
             batch_start = time.monotonic()
             results = dict(await asyncio.gather(*(run(k, sem) for k in jobs)))

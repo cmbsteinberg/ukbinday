@@ -3,25 +3,10 @@ from datetime import date, datetime
 from pydantic import BaseModel
 
 
-class CollectionItem(BaseModel):
-    date: date
-    type: str
-    icon: str | None = None
-
-
 class DeeplinkInfo(BaseModel):
     url: str
     reason: str
     council_name: str
-
-
-class LookupResponse(BaseModel):
-    uprn: str
-    council: str
-    cached: bool = False
-    cached_at: datetime | None = None
-    collections: list[CollectionItem] = []
-    deeplink: DeeplinkInfo | None = None
 
 
 class AddressResult(BaseModel):
@@ -33,11 +18,6 @@ class AddressResult(BaseModel):
     street: str | None = None
 
 
-class AddressLookupResponse(BaseModel):
-    postcode: str
-    addresses: list[AddressResult]
-
-
 class CouncilInfo(BaseModel):
     id: str
     name: str
@@ -46,47 +26,49 @@ class CouncilInfo(BaseModel):
 
 
 class CouncilCandidate(BaseModel):
-    slug: str
+    council: str  # LAD code
     name: str
     homepage_url: str
 
 
-class CouncilLookupResponse(BaseModel):
+class FindResponse(BaseModel):
+    """A postcode's council and addresses.
+
+    `council` is the LAD code when we serve the council; otherwise `deeplink`
+    (unwired, or a scraper that needs a browser) or `candidates` (a postcode
+    straddling councils) says what to do instead, and `addresses` is empty.
+    """
+
     postcode: str
-    council_id: str | None = None
+    council: str | None = None
     council_name: str | None = None
     candidates: list[CouncilCandidate] = []
     deeplink: DeeplinkInfo | None = None
+    addresses: list[AddressResult] = []
 
 
-# --- v2: shaped after the LocalGov Drupal waste collection provider contract ---
+# Shaped after the LocalGov Drupal waste collection provider contract
 
 
-class CollectionTypeV2(BaseModel):
+class CollectionType(BaseModel):
     label: str  # the council's own bin name
     colour: str | None = None  # read off the label, when it names one
     icon: str | None = None
 
 
-class CollectionDateV2(BaseModel):
+class CollectionDate(BaseModel):
     date: date  # ISO (Drupal uses d-m-Y)
     holiday: str | None = None  # the bank holiday falling on this date, if any
-    type: CollectionTypeV2
+    type: CollectionType
 
 
-class ScheduleResponseV2(BaseModel):
+class ScheduleResponse(BaseModel):
     uprn: str
     council: str
     cached: bool = False
     cached_at: datetime | None = None
-    dates: list[CollectionDateV2] = []  # ascending
+    dates: list[CollectionDate] = []  # ascending
     deeplink: DeeplinkInfo | None = None
-
-
-class FindResponseV2(BaseModel):
-    council: str
-    postcode: str
-    addresses: list[AddressResult]
 
 
 class HealthEntry(BaseModel):

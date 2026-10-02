@@ -1,8 +1,8 @@
 """
-The v2 routes (/api/v2/{lad}/find|view|subscribe|download), shaped after the
-LocalGov Drupal waste collection module: the mapped schedule shape, LAD codes
-and old scraper IDs in the path, deeplinks, error mapping as v1, the ICS
-endpoints, and the address list.
+The schedule routes (/api/v2/find, /api/v2/{lad}/view|subscribe|download),
+shaped after the LocalGov Drupal waste collection module: the mapped schedule
+shape, LAD codes and old scraper IDs in the path, deeplinks, error mapping,
+the ICS endpoints, and the postcode's council and address list.
 
 Module `fetch` methods and the address API are stubbed per test; no network.
 
@@ -23,6 +23,7 @@ import pytest
 import pytest_asyncio
 from asgi_lifespan import LifespanManager
 
+from api import config
 from api.councils._base import (
     AddressNotFound,
     Collection,
@@ -44,6 +45,7 @@ HARTLEPOOL = "E06000001"  # module hartlepool
 HARTLEPOOL_OLD = "hacs_hartlepool_gov_uk"
 COVENTRY = "E08000026"  # module coventry sets needs_browser
 UNWIRED = "E07000119"  # Fylde, deliberately unwired
+UNWIRED_POSTCODE = "PR4 0YA"
 
 _uprns = itertools.count(900000500001)
 
@@ -136,17 +138,6 @@ async def test_view_maps_collections_to_dates(client, stub):
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_view_matches_v1_lookup(client, stub):
-    stub("hartlepool", [Collection(soon(5), "Refuse"), Collection(soon(2), "Recycling")])
-    uprn = fresh_uprn()
-    v1 = (await client.get(f"/v1/lookup/{uprn}", params={"council": HARTLEPOOL})).json()
-    v2 = (await client.get(f"/v2/{HARTLEPOOL}/view/{uprn}")).json()
-    assert [(c["date"], c["type"], c["icon"]) for c in v1["collections"]] == [
-        (d["date"], d["type"]["label"], d["type"]["icon"]) for d in v2["dates"]
-    ]
-
-
-@pytest.mark.asyncio(loop_scope="session")
 async def test_old_scraper_id_in_path_resolves(client, stub):
     calls = stub("hartlepool", [Collection(soon(), "Refuse")])
     uprn = fresh_uprn()
@@ -159,7 +150,7 @@ async def test_old_scraper_id_in_path_resolves(client, stub):
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_address_only_uprn_is_not_cached(client, stub):
-    """An address-only council (UPRN 0) scrapes live every time, as v1."""
+    """An address-only council (UPRN 0) scrapes live every time."""
     cotswold = load("cotswold").meta.lads[0]
     calls = stub("cotswold", [Collection(soon(), "Refuse")])
     for _ in range(2):
@@ -171,8 +162,9 @@ async def test_address_only_uprn_is_not_cached(client, stub):
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_unknown_council_is_404(client):
-    assert (await client.get(f"/v2/hacs_no_such_council/view/{fresh_uprn()}")).status_code == 404
-    assert (await client.get("/v2/hacs_no_such_council/find", params={"postcode": "TS26 0BL"})).status_code == 404
+    for kind in ("view", "subscribe", "download"):
+        r = await client.get(f"/v2/hacs_no_such_council/{kind}/{fresh_uprn()}")
+        assert r.status_code == 404 and "/api/v2/councils" in r.json()["detail"]
 
 
 # --- deeplinks ------------------------------------------------------------------
@@ -236,7 +228,7 @@ async def test_timeout_gives_deeplink_and_header(client, monkeypatch):
     assert r.headers["X-Scrape-Failure"] == "timeout"
 
 
-# --- error mapping, as v1 -----------------------------------------------------------
+# --- error mapping -----------------------------------------------------------------
 
 
 @pytest.mark.asyncio(loop_scope="session")
@@ -248,16 +240,16 @@ async def test_timeout_gives_deeplink_and_header(client, monkeypatch):
         (KeyError("results"), 503, "Something went wrong"),
     ],
 )
-async def test_view_error_mapping_matches_v1(client, stub, exc, status, detail):
+async def test_view_error_mapping(client, stub, exc, status, detail):
     stub("hartlepool", exc)
-    v2 = await client.get(f"/v2/{HARTLEPOOL}/view/{fresh_uprn()}")
-    v1 = await client.get(f"/v1/lookup/{fresh_uprn()}", params={"council": HARTLEPOOL})
-    assert v2.status_code == v1.status_code == status
-    assert v2.json() == v1.json() and detail in v2.json()["detail"]
+    r = await client.get(f"/v2/{HARTLEPOOL}/view/{fresh_uprn()}")
+    assert r.status_code == status
+    assert detail in r.json()["detail"]
+    assert r.json().get("suggestions") == (list(exc.suggestions) if isinstance(exc, AddressNotFound) else None)
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_calendar_error_mapping_matches_v1(client, stub, monkeypatch):
+async def test_calendar_error_mapping(client, stub, monkeypatch):
     stub("hartlepool", UpstreamError("down"))
     for path in (f"/v2/{HARTLEPOOL}/subscribe/{fresh_uprn()}", f"/v2/{HARTLEPOOL}/download/{fresh_uprn()}"):
         r = await client.get(path)
@@ -301,65 +293,130 @@ async def test_subscribe_and_download_serve_the_ics(client, stub):
     dl = await client.get(f"/v2/{HARTLEPOOL}/download/{uprn}")
     assert dl.status_code == 200
     assert dl.headers["content-disposition"] == f'attachment; filename="bins-{uprn}.ics"'
-    v1 = await client.get(f"/v1/calendar/{uprn}", params={"council": HARTLEPOOL})
-    assert dl.content == sub.content == v1.content
-    assert dl.headers["content-disposition"] == v1.headers["content-disposition"]
+    assert dl.content == sub.content
 
 
 # --- find ---------------------------------------------------------------------------
 
+ADDRESS = {
+    "uprn": "100110000001",
+    "full_address": "1 High Street, Hartlepool, TS26 0BL",
+    "postcode": "TS26 0BL",
+    "address_line_1": "1 High Street",
+    "house_number_or_name": "1",
+    "street": "High Street",
+}
 
-@pytest.mark.asyncio(loop_scope="session")
-async def test_find_returns_addresses(client, monkeypatch):
-    seen = []
+
+@pytest.fixture
+def addresses(monkeypatch):
+    """The address API, stubbed: returns `result` (or raises it) and records the postcodes asked for."""
+
+    class Stub:
+        result: object = [ADDRESS]
+        seen: list[str] = []
+
+    stub = Stub()
+    stub.seen = []
 
     async def search(postcode):
-        seen.append(postcode)
-        return [
-            {
-                "uprn": "100110000001",
-                "full_address": "1 High Street, Hartlepool, TS26 0BL",
-                "postcode": "TS26 0BL",
-                "address_line_1": "1 High Street",
-                "house_number_or_name": "1",
-                "street": "High Street",
-            }
-        ]
+        stub.seen.append(postcode)
+        if isinstance(stub.result, BaseException):
+            raise stub.result
+        return stub.result
 
     monkeypatch.setattr(address_lookup, "search_addresses", search)
-    r = await client.get(f"/v2/{HARTLEPOOL_OLD}/find", params={"postcode": "ts26 0bl"})
-    assert r.status_code == 200, r.text
-    body = r.json()
-    assert body["council"] == HARTLEPOOL and body["postcode"] == "TS26 0BL"
-    assert [a["uprn"] for a in body["addresses"]] == ["100110000001"]
-    assert body["addresses"][0]["street"] == "High Street"
-    assert seen == ["ts26 0bl"]
-
-    unwired = await client.get(f"/v2/{UNWIRED}/find", params={"postcode": "FY8 1AA"})
-    assert unwired.status_code == 200 and unwired.json()["council"] == UNWIRED
+    return stub
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_find_address_api_failure_is_503(client, monkeypatch):
-    async def broken(postcode):
-        raise httpx.HTTPStatusError("boom", request=httpx.Request("GET", "http://x"), response=httpx.Response(500))
+async def test_find_wired_council(client, addresses):
+    r = await client.get("/v2/find", params={"postcode": "ts26 0bl"})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body == {
+        "postcode": "TS26 0BL",
+        "council": HARTLEPOOL,
+        "council_name": LAD_LOOKUP[HARTLEPOOL]["name"],
+        "candidates": [],
+        "deeplink": None,
+        "addresses": [ADDRESS],
+    }
+    assert addresses.seen == ["ts26 0bl"]
 
-    monkeypatch.setattr(address_lookup, "search_addresses", broken)
-    r = await client.get(f"/v2/{HARTLEPOOL}/find", params={"postcode": "TS26 0BL"})
-    assert r.status_code == 503
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_find_unwired_council_gives_deeplink(client, addresses):
+    r = await client.get("/v2/find", params={"postcode": UNWIRED_POSTCODE})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["council"] is None and body["addresses"] == []
+    assert body["council_name"] == "Fylde"
+    assert body["deeplink"]["url"] == LAD_LOOKUP[UNWIRED]["url"]
+    assert body["deeplink"]["reason"]
+    assert addresses.seen == []  # no address step for a council we can't look up
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_find_needs_browser_council_gives_deeplink(client, addresses):
+    r = await client.get("/v2/find", params={"postcode": "CV3 2LS"})
+    assert r.status_code == 200, r.text
+    assert r.json()["council"] is None
+    assert r.json()["deeplink"]["url"] == load("coventry").meta.url
+    assert addresses.seen == []
+
+
+@pytest.mark.asyncio(loop_scope="session")
+@pytest.mark.parametrize(
+    ("error", "status"),
+    [
+        (httpx.HTTPStatusError("boom", request=httpx.Request("GET", "http://x"), response=httpx.Response(500)), 503),
+        (httpx.ReadTimeout("slow"), 504),
+        (KeyError("results"), 503),
+    ],
+)
+async def test_find_address_api_failure(client, addresses, error, status):
+    addresses.result = error
+    r = await client.get("/v2/find", params={"postcode": "TS26 0BL"})
+    assert r.status_code == status
+    assert "address lookup" in r.json()["detail"]
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_find_unknown_postcode_is_404(client, addresses):
+    r = await client.get("/v2/find", params={"postcode": "ZZ99 9ZZ"})
+    assert r.status_code == 404
+    assert addresses.seen == []
 
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_find_needs_a_postcode(client):
-    assert (await client.get(f"/v2/{HARTLEPOOL}/find")).status_code == 422
+    assert (await client.get("/v2/find")).status_code == 422
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_find_requires_turnstile_when_configured(client, addresses, monkeypatch):
+    monkeypatch.setattr(config, "TURNSTILE_SECRET", "secret")
+    r = await client.get("/v2/find", params={"postcode": "TS26 0BL"})
+    assert r.status_code == 403
+    assert addresses.seen == []
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_old_find_route_is_gone(client):
+    r = await client.get(f"/v2/{HARTLEPOOL}/find", params={"postcode": "TS26 0BL"})
+    assert r.status_code == 404
 
 
 # --- schema -------------------------------------------------------------------------
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_v2_is_in_the_openapi_schema(client):
-    paths = (await client.get("/v1/openapi.json")).json()["paths"]
-    for route in ("find", "view/{uprn}", "subscribe/{uprn}", "download/{uprn}"):
+async def test_routes_are_in_the_openapi_schema(client):
+    paths = (await client.get("/v2/openapi.json")).json()["paths"]
+    assert "/api/v2/find" in paths
+    for route in ("view/{uprn}", "subscribe/{uprn}", "download/{uprn}"):
         assert f"/api/v2/{{lad}}/{route}" in paths
-    assert "/api/v1/lookup/{uprn}" in paths and "/api/v1/calendar/{uprn}" in paths
+    for route in ("councils", "health", "status", "metrics"):
+        assert f"/api/v2/{route}" in paths
+    assert not [p for p in paths if not p.startswith("/api/v2/")]

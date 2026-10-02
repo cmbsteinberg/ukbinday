@@ -66,7 +66,7 @@ docker compose up --build -d
 
 echo "=== Waiting for API to be ready (max ${MAX_WAIT}s) ==="
 elapsed=0
-until curl -sf "$BASE_URL/api/v1/health" >/dev/null 2>&1; do
+until curl -sf "$BASE_URL/api/v2/health" >/dev/null 2>&1; do
     if [ "$elapsed" -ge "$MAX_WAIT" ]; then
         echo "FATAL: API did not become ready within ${MAX_WAIT}s"
         echo ""
@@ -87,10 +87,10 @@ echo "=== Running deployment tests ==="
 
 echo ""
 echo "--- Health & Infrastructure ---"
-assert_status "GET /api/v1/health returns 200" "$BASE_URL/api/v1/health" 200
-assert_status "GET /api/v1/docs returns 200" "$BASE_URL/api/v1/docs" 200
-assert_status "GET /api/v1/redoc returns 200" "$BASE_URL/api/v1/redoc" 200
-assert_status "GET /api/v1/openapi.json returns 200" "$BASE_URL/api/v1/openapi.json" 200
+assert_status "GET /api/v2/health returns 200" "$BASE_URL/api/v2/health" 200
+assert_status "GET /api/v2/docs returns 200" "$BASE_URL/api/v2/docs" 200
+assert_status "GET /api/v2/redoc returns 200" "$BASE_URL/api/v2/redoc" 200
+assert_status "GET /api/v2/openapi.json returns 200" "$BASE_URL/api/v2/openapi.json" 200
 
 echo ""
 echo "--- Frontend Pages ---"
@@ -100,27 +100,26 @@ assert_status "GET /api-docs returns 200" "$BASE_URL/api-docs" 200
 
 echo ""
 echo "--- API Endpoints ---"
-assert_status "GET /api/v1/councils returns 200" "$BASE_URL/api/v1/councils" 200
-assert_json_field "Councils list is non-empty" "$BASE_URL/api/v1/councils" "len(data) > 0"
-assert_json_field "Councils have id and name" "$BASE_URL/api/v1/councils" "'id' in data[0] and 'name' in data[0]"
+assert_status "GET /api/v2/councils returns 200" "$BASE_URL/api/v2/councils" 200
+assert_json_field "Councils list is non-empty" "$BASE_URL/api/v2/councils" "len(data) > 0"
+assert_json_field "Councils have id and name" "$BASE_URL/api/v2/councils" "'id' in data[0] and 'name' in data[0]"
 
 echo ""
-echo "--- API Prefix Compatibility ---"
-assert_status "GET /api/councils (legacy prefix)" "$BASE_URL/api/councils" 200
-assert_status "GET /api/v1/councils (v1 prefix)" "$BASE_URL/api/v1/councils" 200
+echo "--- API Prefix ---"
+assert_status "GET /api/councils (no version) returns 404" "$BASE_URL/api/councils" 404
 
 echo ""
 echo "--- Error Handling ---"
-assert_status "Lookup missing council param returns 422" "$BASE_URL/api/v1/lookup/123456" 422
-assert_status "Lookup nonexistent council returns 404" "$BASE_URL/api/v1/lookup/123456?council=nonexistent" 404
-assert_status "Unknown route returns 404" "$BASE_URL/api/v1/nonexistent" 404
+assert_status "Find missing postcode returns 422" "$BASE_URL/api/v2/find" 422
+assert_status "View nonexistent council returns 404" "$BASE_URL/api/v2/nonexistent/view/123456" 404
+assert_status "Unknown route returns 404" "$BASE_URL/api/v2/nonexistent" 404
 
 echo ""
 echo "--- CORS ---"
 cors_header=$(curl -s -o /dev/null -w "%{http_code}" -X OPTIONS \
     -H "Origin: http://example.com" \
     -H "Access-Control-Request-Method: GET" \
-    "$BASE_URL/api/v1/councils")
+    "$BASE_URL/api/v2/councils")
 # Just check OPTIONS doesn't error out (FastAPI returns 200 or 400 depending on config)
 if [ "$cors_header" = "200" ]; then
     echo "  PASS  CORS preflight returns 200"
@@ -133,7 +132,7 @@ fi
 echo ""
 echo "--- Redis Connectivity ---"
 # Health endpoint should reflect redis status when REDIS_URL is set
-assert_json_field "Health includes redis info" "$BASE_URL/api/v1/health" "isinstance(data, list)"
+assert_json_field "Health includes redis info" "$BASE_URL/api/v2/health" "isinstance(data, list)"
 
 # --- Summary ---
 

@@ -51,7 +51,7 @@ echo
 echo "--- Error Response Leakage ---"
 
 # 404 should not reveal stack traces
-body_404=$(curl -sS --max-time 10 "$BASE/api/v1/nonexistent" 2>/dev/null)
+body_404=$(curl -sS --max-time 10 "$BASE/api/v2/nonexistent" 2>/dev/null)
 if echo "$body_404" | grep -qiE "traceback|File \"|at line|stacktrace"; then
     check "404 leaks stack trace" "fail"
 else
@@ -59,7 +59,7 @@ else
 fi
 
 # Force an error with bad params — should not leak internals
-body_err=$(curl -sS --max-time 10 "$BASE/api/v1/lookup/%27%3B%20DROP%20TABLE--?council=test" 2>/dev/null)
+body_err=$(curl -sS --max-time 10 "$BASE/api/v2/test/view/%27%3B%20DROP%20TABLE--" 2>/dev/null)
 if echo "$body_err" | grep -qiE "traceback|File \"|internal server|stacktrace"; then
     check "Error response leaks internals" "fail"
 else
@@ -71,7 +71,7 @@ echo
 echo "--- Injection Attempts ---"
 
 # Path traversal
-status_traversal=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$BASE/api/v1/council/..%2F..%2Fetc%2Fpasswd" 2>/dev/null)
+status_traversal=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$BASE/api/v2/..%2F..%2Fetc%2Fpasswd/view/1" 2>/dev/null)
 if [[ "$status_traversal" =~ ^(400|404|422)$ ]]; then
     check "Path traversal rejected ($status_traversal)" "pass"
 else
@@ -79,7 +79,7 @@ else
 fi
 
 # Script injection in postcode
-body_xss=$(curl -sS --max-time 10 "$BASE/api/v1/council/<script>alert(1)</script>" 2>/dev/null)
+body_xss=$(curl -sS --max-time 10 --get --data-urlencode "postcode=<script>alert(1)</script>" "$BASE/api/v2/find" 2>/dev/null)
 if echo "$body_xss" | grep -q "<script>"; then
     check "XSS reflected in response" "fail"
 else
@@ -87,7 +87,7 @@ else
 fi
 
 # Oversized input
-status_large=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$BASE/api/v1/council/$(python3 -c "print('A'*10000)")" 2>/dev/null)
+status_large=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$BASE/api/v2/find?postcode=$(python3 -c "print('A'*10000)")" 2>/dev/null)
 if [[ "$status_large" =~ ^(400|404|414|422)$ ]]; then
     check "Oversized input rejected ($status_large)" "pass"
 else
@@ -95,7 +95,7 @@ else
 fi
 
 # Null bytes
-status_null=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$BASE/api/v1/council/SW1A%001AA" 2>/dev/null)
+status_null=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$BASE/api/v2/find?postcode=SW1A%001AA" 2>/dev/null)
 if [[ "$status_null" =~ ^(400|404|422)$ ]]; then
     check "Null byte rejected ($status_null)" "pass"
 else
@@ -107,7 +107,7 @@ echo
 echo "--- CORS ---"
 cors_headers=$(curl -sS -D - -o /dev/null --max-time 10 \
     -H "Origin: https://evil.example.com" \
-    "$BASE/api/v1/status" 2>/dev/null)
+    "$BASE/api/v2/status" 2>/dev/null)
 
 if echo "$cors_headers" | grep -qi "access-control-allow-origin: https://evil.example.com"; then
     check "CORS allows arbitrary origins" "fail"
