@@ -113,7 +113,7 @@ app = FastAPI(
 )
 
 # Calendars are mostly repeated VEVENT boilerplate; gzip cuts them ~10x, which is what
-# counts against Vercel Hobby's Fast Origin Transfer allowance (VERCEL.md, "Will it be free")
+# counts against Vercel Hobby's Fast Origin Transfer allowance
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 app.add_middleware(
     CORSMiddleware,

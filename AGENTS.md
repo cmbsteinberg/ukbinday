@@ -148,7 +148,7 @@ docker compose up --build
 **CI/CD** (`.github/workflows/deploy.yml`):
 - On push to `main`: runs `tests/test_ci.py` only → deploys to Vercel production (`vercel deploy --prod`, a remote build; Vercel's own Git deploys are off in `vercel.json`). `uptime.yml` checks `/status` and the refresh heartbeat every 30 min (a failed run emails). `coverage.yml` (weekly, Monday 06:00 UTC) probes production with `vercel_probe.py --all-sources --write-output`, runs `post_integration.sh`, commits the output, flags, coverage map, badge and sankey, and dispatches a deploy. The local live test (`tests/test_lad_integration.py`) is for development; a local run's output is overwritten by the next Coverage run
 
-**Infrastructure**: Production is Vercel (region lhr1, DNS on Cloudflare) with the ICS cache in Cloudflare R2; `vercel.json`, `[tool.vercel]` in `pyproject.toml` and `.vercelignore` configure it, and `scripts/vercel/` holds the CLI scripts used for the move (`VERCEL.md`, including `cutover.sh --rollback`). Docker Compose runs the API alone for local use, with the ICS cache on a named volume (`bins_data`) at `/app/data`. Pre-commit hooks via lefthook run ruff, ty (staged council modules), biome, the CI smoke tests and the daily upstream watch.
+**Infrastructure**: Production is Vercel (region lhr1, DNS on Cloudflare) with the ICS cache in Cloudflare R2; `vercel.json`, `[tool.vercel]` in `pyproject.toml` and `.vercelignore` configure it. Docker Compose runs the API alone for local use, with the ICS cache on a named volume (`bins_data`) at `/app/data`. Pre-commit hooks via lefthook run ruff, ty (staged council modules), biome, the CI smoke tests and the daily upstream watch.
 
 ## Key Patterns
 

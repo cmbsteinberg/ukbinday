@@ -1,5 +1,5 @@
-"""Minimal blob store behind the ICS cache: a local directory (dev, tests, Hetzner)
-or Cloudflare R2 over the S3 API (Vercel). Sync; callers are on worker threads."""
+"""Minimal blob store behind the ICS cache: a local directory (dev, tests, Docker)
+or Cloudflare R2 over the S3 API (production). Sync; callers are on worker threads."""
 
 from __future__ import annotations
 

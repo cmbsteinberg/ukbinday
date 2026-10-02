@@ -130,7 +130,7 @@ Upstream still fixes its scrapers when a council changes its site. `scripts/upst
 
 ## Deployment
 
-Production runs on Vercel, with the calendar cache in Cloudflare R2; every push to `main` deploys it (see [VERCEL.md](VERCEL.md)). Locally, Docker Compose runs the API alone:
+Production runs on Vercel, with the calendar cache in Cloudflare R2; every push to `main` deploys it. Locally, Docker Compose runs the API alone:
 
 ```bash
 docker compose up --build
