@@ -10,9 +10,9 @@
 # (scripts/vercel/cf_setup.sh writes them). rclone runs in a throwaway rclone/rclone
 # container on the box with the bins_data volume mounted read-only, so nothing is
 # installed there; credentials go over SSH stdin into a 0600 file that is deleted after.
-# `rclone sync` makes the bucket's calendars/ match the box, which is right while Hetzner
-# is the only writer. Once Hetzner runs on R2 (this script's last step) the box's own
-# directory goes stale: don't sync from it again.
+# `rclone copy --update` never deletes and never overwrites a newer object, so it is safe
+# while Vercel (a preview, the probe) also writes to the bucket. Once Hetzner runs on R2
+# (this script's last step) the box's own directory goes stale; copying again is harmless.
 # Env: HETZNER_HOST (default deploy@ukbinday.co.uk, which only reaches the box before the
 # DNS cutover), HETZNER_DIR (default /home/deploy/bins, as in deploy.yml), BINS_VOLUME
 # (default: the volume whose name ends in bins_data).
@@ -62,10 +62,10 @@ echo "volume \$VOLUME -> r2:\$BUCKET/calendars"
 echo "local:  \$(rc size /data/calendars | tr '\n' ' ')"
 echo "bucket: \$(rc size "r2:\$BUCKET/calendars" 2>/dev/null | tr '\n' ' ' || true)"
 if [ "\$MODE" = --dry-run ]; then
-  rc sync /data/calendars "r2:\$BUCKET/calendars" --dry-run --stats-one-line
+  rc copy /data/calendars "r2:\$BUCKET/calendars" --update --dry-run --stats-one-line
   exit 0
 fi
-rc sync /data/calendars "r2:\$BUCKET/calendars" --transfers 16 --stats-one-line -v
+rc copy /data/calendars "r2:\$BUCKET/calendars" --update --transfers 16 --stats-one-line -v
 echo "bucket: \$(rc size "r2:\$BUCKET/calendars" | tr '\n' ' ')"
 [ "\$MODE" = --sync-only ] && exit 0
 
