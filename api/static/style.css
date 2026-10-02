@@ -1,11 +1,5 @@
 :root {
     --bin-muted: #546e7a;
-    --colour-grey: #e0e3e6;
-    --colour-brown: #ead8c0;
-    --colour-green: #d6e9c2;
-    --colour-grey-strong: #6b7378;
-    --colour-brown-strong: #8a5a32;
-    --colour-green-strong: #4f8a3a;
 }
 body {
     max-width: 900px;
@@ -148,7 +142,6 @@ fieldset input {
     opacity: 0.85;
 }
 
-
 /* Bin group card */
 .bin-group {
     border-radius: 8px;
@@ -198,18 +191,90 @@ fieldset input {
     all: unset;
 }
 
-/* Bin colour backgrounds */
-.bin-group[data-bin-colour="grey"] {
-    background: var(--colour-grey);
-    border-left-color: var(--colour-grey-strong);
+/* Bin colours: the colour the API read off the council's label
+   (data-bin-colour). --bin is the bin itself, --bin-tint the card behind it.
+   No colour: a neutral card and an outline bin, so it doesn't read as grey. */
+[data-bin-colour="black"] {
+    --bin: #212121;
+    --bin-tint: #e4e4e4;
 }
-.bin-group[data-bin-colour="brown"] {
-    background: var(--colour-brown);
-    border-left-color: var(--colour-brown-strong);
+[data-bin-colour="blue"] {
+    --bin: #1e63b8;
+    --bin-tint: #dbe8f7;
 }
-.bin-group[data-bin-colour="green"] {
-    background: var(--colour-green);
-    border-left-color: var(--colour-green-strong);
+[data-bin-colour="brown"] {
+    --bin: #795548;
+    --bin-tint: #ece0d8;
+}
+[data-bin-colour="burgundy"] {
+    --bin: #7b1e3a;
+    --bin-tint: #f1dce2;
+}
+[data-bin-colour="green"] {
+    --bin: #3f8a3a;
+    --bin-tint: #dcefd6;
+}
+[data-bin-colour="grey"] {
+    --bin: #8a9196;
+    --bin-tint: #e9ebed;
+}
+[data-bin-colour="orange"] {
+    --bin: #ef8a00;
+    --bin-tint: #fdebd3;
+}
+[data-bin-colour="pink"] {
+    --bin: #e0567f;
+    --bin-tint: #fbe1e9;
+}
+[data-bin-colour="purple"] {
+    --bin: #7b3fa0;
+    --bin-tint: #ece0f3;
+}
+[data-bin-colour="red"] {
+    --bin: #d32f2f;
+    --bin-tint: #f9dddd;
+}
+[data-bin-colour="white"] {
+    --bin: #ffffff;
+    --bin-tint: #f7f7f7;
+}
+[data-bin-colour="yellow"] {
+    --bin: #f2c500;
+    --bin-tint: #fdf5cf;
+}
+
+.bin-group {
+    background: #f5f6f7;
+    border-left-color: #d5d9dc;
+}
+.bin-group[data-bin-colour] {
+    background: var(--bin-tint);
+    border-left-color: var(--bin);
+}
+/* White bins and tints need an edge to show against the card. */
+.bin-group[data-bin-colour="white"] {
+    border-left-color: #b0b6ba;
+}
+.bin-group:not([data-bin-colour]) .bin-body,
+.bin-group:not([data-bin-colour]) .bin-lid {
+    fill: none;
+}
+.bin-group[data-bin-colour] .bin-body,
+.bin-group[data-bin-colour] .bin-lid {
+    fill: var(--bin);
+}
+/* A dot per row; empty but still there without a colour, to keep the column aligned. */
+.all-dates-list li::before {
+    content: "";
+    flex-shrink: 0;
+    align-self: center;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+}
+.all-dates-list li[data-bin-colour]::before {
+    background: var(--bin);
+    box-shadow: 0 0 0 1px #b0b6ba;
 }
 
 /* All-dates accordion at the bottom */

@@ -1,4 +1,5 @@
 const API = "/api/v1";
+const API_V2 = "/api/v2";
 let currentData = null;
 
 let turnstileToken = null;
@@ -174,7 +175,6 @@ $("#address-btn").addEventListener("click", async () => {
 
 	try {
 		const params = new URLSearchParams({
-			council: councilId,
 			postcode: addr.postcode,
 			address: addr.full_address,
 		});
@@ -182,7 +182,7 @@ $("#address-btn").addEventListener("click", async () => {
 			params.set("house_number", addr.house_number_or_name);
 		if (addr.street) params.set("street", addr.street);
 		const resp = await fetch(
-			`${API}/lookup/${encodeURIComponent(addr.uprn)}?${params}`,
+			`${API_V2}/${encodeURIComponent(councilId)}/view/${encodeURIComponent(addr.uprn)}?${params}`,
 		);
 		if (!resp.ok) {
 			const err = await resp.json().catch(() => ({}));
@@ -221,22 +221,15 @@ function relativeDay(dateStr) {
 	return { text: `In ${diff} days`, past: false };
 }
 
-function binColour(type) {
-	const t = type.toLowerCase();
-	const colourMatch = t.match(
-		/\b(black|blue|green|brown|red|purple|grey|gray|orange|pink|white)\b/,
-	);
-	if (colourMatch) {
-		const c = colourMatch[1] === "gray" ? "grey" : colourMatch[1];
-		if (c === "brown") return "brown";
-		if (c === "green" || c === "blue") return "green";
-		return "grey";
-	}
-	if (/food|organic|compost|garden/.test(t)) return "brown";
-	if (/recycl|paper|card|plastic|glass|can|mixed dry/.test(t)) return "green";
-	if (/general|residual|refuse|rubbish|domestic|non.?recycl/.test(t))
-		return "grey";
-	return "grey";
+// The bin's colour as the API read it off the council's label; unset (a
+// neutral card) when the label names none, rather than guessing from the stream.
+function setBinColour(el, colour) {
+	if (colour) el.dataset.binColour = colour.toLowerCase();
+}
+
+function dateWithHoliday(c) {
+	const d = formatDate(c.date);
+	return c.holiday ? `${d} (${c.holiday})` : d;
 }
 
 function toTitleCase(str) {
@@ -260,14 +253,14 @@ function renderHeader(address, council) {
 	return frag;
 }
 
-function renderCard(type, next) {
-	const displayType = toTitleCase(type);
+function renderCard(label, next) {
+	const displayType = toTitleCase(label);
 	const frag = tpl("tpl-bin-card");
 	const group = frag.querySelector(".bin-group");
-	group.dataset.binColour = binColour(type);
+	setBinColour(group, next.type.colour);
 	group.setAttribute("aria-label", `${displayType} collection`);
 	frag.querySelector('[data-slot="type"]').textContent = displayType;
-	frag.querySelector('[data-slot="date"]').textContent = formatDate(next.date);
+	frag.querySelector('[data-slot="date"]').textContent = dateWithHoliday(next);
 	frag.querySelector('[data-slot="relative"]').textContent = relativeDay(
 		next.date,
 	).text;
@@ -280,8 +273,11 @@ function renderAccordion(items) {
 	const ul = frag.querySelector(".all-dates-list");
 	for (const c of items) {
 		const li = tpl("tpl-accordion-item");
-		li.querySelector('[data-slot="type"]').textContent = toTitleCase(c.type);
-		li.querySelector('[data-slot="date"]').textContent = formatDate(c.date);
+		setBinColour(li.querySelector("li"), c.type.colour);
+		li.querySelector('[data-slot="type"]').textContent = toTitleCase(
+			c.type.label,
+		);
+		li.querySelector('[data-slot="date"]').textContent = dateWithHoliday(c);
 		ul.appendChild(li);
 	}
 	return frag;
@@ -365,24 +361,22 @@ function renderResults(addr, data) {
 	section.replaceChildren();
 	section.appendChild(renderHeader(addr.full_address, council));
 
-	const futureCollections = data.collections.filter((c) => isToday(c.date));
+	const futureCollections = data.dates.filter((c) => isToday(c.date));
 	const groups = new Map();
 	for (const c of futureCollections) {
-		if (!groups.has(c.type)) groups.set(c.type, []);
-		groups.get(c.type).push(c);
+		if (!groups.has(c.type.label)) groups.set(c.type.label, []);
+		groups.get(c.type.label).push(c);
 	}
 
 	if (groups.size === 0) {
 		section.appendChild(tpl("tpl-empty-state"));
 	} else {
-		for (const [type, items] of groups) {
-			section.appendChild(renderCard(type, items[0]));
+		for (const [label, items] of groups) {
+			section.appendChild(renderCard(label, items[0]));
 		}
 
 		const allFuture = [];
-		for (const [type, items] of groups) {
-			for (const c of items.slice(1)) allFuture.push({ type, date: c.date });
-		}
+		for (const items of groups.values()) allFuture.push(...items.slice(1));
 		allFuture.sort((a, b) => a.date.localeCompare(b.date));
 		if (allFuture.length > 0) section.appendChild(renderAccordion(allFuture));
 	}

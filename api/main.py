@@ -19,6 +19,7 @@ from starlette.templating import Jinja2Templates
 from api import config
 from api.logging_config import setup_logging
 from api.routes import router as api_router
+from api.routes import v2_router
 from api.services.blob_store import from_config
 from api.services.council_lookup import CouncilLookup
 from api.services.ics_cache import IcsCache
@@ -183,6 +184,7 @@ async def log_requests(request: Request, call_next):
 
 # API routes
 app.include_router(api_router, prefix="/api/v1")
+app.include_router(v2_router, prefix="/api/v2")
 
 
 # Static files

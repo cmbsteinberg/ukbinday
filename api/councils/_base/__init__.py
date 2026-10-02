@@ -1,7 +1,7 @@
 """The framework every council module is written against. Import from here."""
 
 from api.councils._base.address import Address, Field
-from api.councils._base.collection import Collection, Icon, default_icon
+from api.councils._base.collection import Collection, Icon, colour_of, default_icon
 from api.councils._base.dates import every, next_weekday, parse_date, weekday_number
 from api.councils._base.errors import (
     AddressNotFound,
@@ -33,6 +33,7 @@ __all__ = [
     "ScraperError",
     "Transport",
     "UpstreamError",
+    "colour_of",
     "default_icon",
     "every",
     "match_address",

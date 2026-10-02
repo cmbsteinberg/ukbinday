@@ -59,6 +59,36 @@ class CouncilLookupResponse(BaseModel):
     deeplink: DeeplinkInfo | None = None
 
 
+# --- v2: shaped after the LocalGov Drupal waste collection provider contract ---
+
+
+class CollectionTypeV2(BaseModel):
+    label: str  # the council's own bin name
+    colour: str | None = None  # read off the label, when it names one
+    icon: str | None = None
+
+
+class CollectionDateV2(BaseModel):
+    date: date  # ISO (Drupal uses d-m-Y)
+    holiday: str | None = None  # the bank holiday falling on this date, if any
+    type: CollectionTypeV2
+
+
+class ScheduleResponseV2(BaseModel):
+    uprn: str
+    council: str
+    cached: bool = False
+    cached_at: datetime | None = None
+    dates: list[CollectionDateV2] = []  # ascending
+    deeplink: DeeplinkInfo | None = None
+
+
+class FindResponseV2(BaseModel):
+    council: str
+    postcode: str
+    addresses: list[AddressResult]
+
+
 class HealthEntry(BaseModel):
     id: str
     name: str

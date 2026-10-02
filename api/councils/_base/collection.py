@@ -71,3 +71,45 @@ def default_icon(bin_type: str) -> Icon | None:
         if pattern.search(bin_type):
             return icon
     return None
+
+
+_COLOURS = r"black|blue|brown|green|gr[ae]y|purple|red|white|yellow|orange|pink|burgundy|maroon"
+_CONTAINER = (
+    r"(?:wheel(?:ie|ed)[\s-]*)?"
+    r"(?:bins?|box(?:es)?|caddy|caddies|sacks?|bags?|containers?|lid(?:ded)?|top|\d+\s?l)\b"
+)
+
+# First match wins. A colour only counts when it plausibly names the container:
+# next to a container word ("Blue Bin", "red-lidded bin", "Bin BLUE 240"), in
+# brackets ("Mixed Recycling (Blue)"), a litre size ("Empty 180L Blue"), trailing
+# ("RECYCLING - BROWN") or leading the label ("Black refuse").
+# "Green waste" / "green garden waste" is the stream, not a green bin, so it
+# matches none of these.
+_COLOUR_RULES: tuple[re.Pattern[str], ...] = tuple(
+    re.compile(pattern, re.IGNORECASE)
+    for pattern in (
+        rf"\b({_COLOURS})[\s-]*(?:(?:recycling|top(?:ped)?)[\s-]*)?{_CONTAINER}",
+        rf"\bbin\s+({_COLOURS})\b",
+        rf"\b({_COLOURS})\b(?:[\s-]+[a-z]+){{1,2}}[\s-]+{_CONTAINER}",
+        rf"\(\s*({_COLOURS})\s*\)",
+        rf"\b\d+\s?l\s+({_COLOURS})\b",
+        rf"[-\u2013]\s*({_COLOURS})\s*$",
+        # A leading colour names the bin, except a stream ("Green waste") or a
+        # rota week ("Pink Week").
+        rf"^\s*({_COLOURS})\b(?!\s+week\b)(?!(?<=green)\s+(?:waste|garden)\b)",
+    )
+)
+
+_COLOUR_NAMES = {"gray": "Grey", "maroon": "Burgundy"}
+
+
+def colour_of(label: str) -> str | None:
+    """Pull a bin colour from the council's own label ("Recycling (Blue Bin)" -> "Blue").
+
+    Returns None when the label names no colour, or only as part of a stream
+    ("Green waste")."""
+    for pattern in _COLOUR_RULES:
+        if m := pattern.search(label):
+            word = m.group(1).lower()
+            return _COLOUR_NAMES.get(word, word.capitalize())
+    return None

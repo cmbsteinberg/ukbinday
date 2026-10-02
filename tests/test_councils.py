@@ -11,6 +11,7 @@ from api.councils._base import (
     Collection,
     Icon,
     Scraper,
+    colour_of,
     match_address,
     parse_date,
 )
@@ -66,3 +67,43 @@ def test_tidy_dedupes_sorts_and_fills_icons() -> None:
     d1, d2 = date(2026, 10, 2), date(2026, 10, 1)
     out = tidy([Collection(d1, " Garden  waste "), Collection(d1, "Garden waste"), Collection(d2, "Non-recyclable")], {})
     assert out == [Collection(d2, "Non-recyclable", Icon.GENERAL_WASTE), Collection(d1, "Garden waste", Icon.GARDEN)]
+
+
+@pytest.mark.parametrize(
+    ("label", "colour"),
+    [
+        ("Recycling (Blue Bin)", "Blue"),
+        ("Grey bin - general waste", "Grey"),
+        ("Brown garden waste bin", "Brown"),
+        ("Garden/Green Waste (Brown bin)", "Brown"),
+        ("Green bin (garden waste)", "Green"),
+        ("Mixed dry recycling (blue lidded bin) and glass (black box or basket)", "Blue"),
+        ("Food and garden waste (brown-lidded bin)", "Brown"),
+        ("Plastic and Cans (White Sack)", "White"),
+        ("Empty Bin BLUE 240", "Blue"),
+        ("Household Waste (Grey)", "Grey"),
+        ("Brown (Food Waste)", "Brown"),
+        ("Gray bin", "Grey"),
+        ("Burgundy bin (general waste)", "Burgundy"),
+        ("Brown garden waste wheeled bin", "Brown"),
+        ("BLACK 240L", "Black"),
+        ("Empty Bin 240L Black", "Black"),
+        ("Empty 180L Blue", "Blue"),
+        ("Blue 240L (paper and cardboard bin)", "Blue"),
+        ("RECYCLING - BROWN", "Brown"),
+        ("Black refuse", "Black"),
+        ("Brown Composting", "Brown"),
+        ("Grey food waste", "Grey"),
+        ("Green non-recyclable", "Green"),
+        ("Green Garden Waste", None),
+        ("Pink Week", None),
+        ("Green waste", None),
+        ("Green garden waste", None),
+        ("Garden waste", None),
+        ("Royal Greenwich black top bin schedule", "Black"),
+        ("Vale of White Horse collection", None),
+        ("Non-recyclable waste", None),
+    ],
+)
+def test_colour_of(label: str, colour: str | None) -> None:
+    assert colour_of(label) == colour
