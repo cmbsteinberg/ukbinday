@@ -32,7 +32,7 @@ def docker_stack():
     elapsed = 0
     while elapsed < MAX_WAIT:
         try:
-            r = httpx.get(f"{BASE_URL}/api/v2/health", timeout=3)
+            r = httpx.get(f"{BASE_URL}/api/v2/status", timeout=3)
             if r.status_code == 200:
                 break
         except (httpx.ConnectError, httpx.ReadError, httpx.TimeoutException):
@@ -63,11 +63,11 @@ def client(docker_stack):
         yield c
 
 
-def test_health(client):
-    """App boots and answers the health route."""
-    resp = client.get("/api/v2/health")
+def test_status(client):
+    """App boots and answers the status route."""
+    resp = client.get("/api/v2/status")
     assert resp.status_code == 200
-    assert isinstance(resp.json(), list)
+    assert resp.json()["scraper_count"] > 0
 
 
 def test_scrapers_loaded(client):

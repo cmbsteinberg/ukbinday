@@ -469,6 +469,6 @@ async def test_routes_are_in_the_openapi_schema(client):
     assert "/api/v2/find" in paths
     for route in ("view/{uprn}", "subscribe/{uprn}", "download/{uprn}"):
         assert f"/api/v2/{{lad}}/{route}" in paths
-    for route in ("councils", "health", "status", "metrics"):
+    for route in ("councils", "status", "metrics"):
         assert f"/api/v2/{route}" in paths
     assert not [p for p in paths if not p.startswith("/api/v2/")]

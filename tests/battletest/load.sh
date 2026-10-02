@@ -12,8 +12,8 @@ echo
 
 # --- Lightweight endpoints (high concurrency) ---
 
-echo "--- Burst: /api/v2/health (200 requests, 50 concurrent) ---"
-hey -n 200 -c 50 "$BASE/api/v2/health"
+echo "--- Burst: /api/v2/status (200 requests, 50 concurrent) ---"
+hey -n 200 -c 50 "$BASE/api/v2/status"
 echo
 
 echo "--- Burst: /api/v2/councils (200 requests, 50 concurrent) ---"

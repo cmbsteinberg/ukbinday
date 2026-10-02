@@ -14,13 +14,12 @@ reliably.
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Path, Query, Request
+from fastapi import APIRouter, Path, Query, Request
 from fastapi.responses import Response
 
 from api.routes import schedule
 from api.routes.internal import require_cron_secret
 from api.services.models import FindResponse, ScheduleResponse
-from api.services.rate_limiting import rate_limit
 
 router = APIRouter()
 
@@ -34,7 +33,6 @@ LAD_PATH = Path(
 async def find(
     request: Request,
     postcode: str = Query(description="The postcode to look up."),
-    _rate_limit: None = Depends(rate_limit),
 ):
     """The postcode's council and its addresses, each with the UPRN to pass to /view.
 
@@ -55,7 +53,6 @@ async def view(
     postcode: str | None = None,
     address: str | None = None,
     fresh: bool = Query(False, include_in_schema=False),
-    _rate_limit: None = Depends(rate_limit),
 ):
     """Collection dates, ascending; a deeplink instead when we can't fetch them.
 
@@ -74,7 +71,6 @@ async def subscribe(
     lad: str = LAD_PATH,
     postcode: str | None = None,
     address: str | None = None,
-    _rate_limit: None = Depends(rate_limit),
 ):
     """The ICS feed, for a calendar subscription (webcal)."""
     return await schedule.calendar_response(request, uprn, lad, attachment=False)
@@ -87,7 +83,6 @@ async def download(
     lad: str = LAD_PATH,
     postcode: str | None = None,
     address: str | None = None,
-    _rate_limit: None = Depends(rate_limit),
 ):
     """The ICS as a file download."""
     return await schedule.calendar_response(request, uprn, lad, attachment=True)

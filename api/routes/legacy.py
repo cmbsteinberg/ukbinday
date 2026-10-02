@@ -5,11 +5,10 @@ redirect, since not every calendar app follows redirects on a subscription.
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Query, Request
+from fastapi import APIRouter, Query, Request
 from fastapi.responses import Response
 
 from api.routes import schedule
-from api.services.rate_limiting import rate_limit
 
 router = APIRouter(include_in_schema=False)
 
@@ -19,6 +18,5 @@ async def calendar(
     request: Request,
     uprn: str,
     council: str = Query(),
-    _rate_limit: None = Depends(rate_limit),
 ):
     return await schedule.calendar_response(request, uprn, council, attachment=True)

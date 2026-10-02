@@ -79,19 +79,8 @@ class ScheduleResponse(BaseModel):
     deeplink: DeeplinkInfo | None = None
 
 
-class HealthEntry(BaseModel):
-    id: str
-    name: str
-    status: str  # "ok", "error", "unknown"
-    last_success: datetime | None = None
-    last_error: str | None = None
-    error_count: int = 0
-
-
 class SystemHealth(BaseModel):
     status: str  # "healthy", "degraded", "unhealthy"
     scraper_count: int
     postcode_lookup: bool
     lad_lookup: bool
-    redis_connected: bool
-    rate_limiting_active: bool

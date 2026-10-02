@@ -24,10 +24,9 @@ jobs:
       - name: Smoke tests
         run: uv run pytest tests/test_ci.py -v
 
-  # Vercel production deploy. Skips (green) until the VERCEL_TOKEN secret exists, so this
-  # can merge before the project is set up. Vercel's own Git deploys are off
-  # (vercel.json `git.deploymentEnabled`), so this job is the only way to production and
-  # needs a passing smoke test.
+  # Vercel production deploy. Vercel's own Git deploys are off (vercel.json
+  # `git.deploymentEnabled`), so this job is the only way to production and needs a
+  # passing smoke test. Missing credentials fail the job.
   deploy-vercel:
     needs: smoke-test
     runs-on: ubuntu-latest
@@ -38,25 +37,19 @@ jobs:
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
       - name: Check Vercel credentials
-        id: gate
         run: |
-          if [ -n "$VERCEL_TOKEN" ] && [ -n "$VERCEL_ORG_ID" ] && [ -n "$VERCEL_PROJECT_ID" ]; then
-            echo "enabled=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Skipping Vercel deploy: VERCEL_TOKEN, VERCEL_ORG_ID or VERCEL_PROJECT_ID is not set"
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::error::VERCEL_TOKEN, VERCEL_ORG_ID or VERCEL_PROJECT_ID is not set"
+            exit 1
           fi
 
       - uses: actions/checkout@v4
-        if: steps.gate.outputs.enabled == 'true'
 
       # Vercel builds from the upload, which honours .vercelignore (and never includes
       # .env* files); a local `vercel build` put ignored root files in the function.
       - uses: actions/setup-node@v4
-        if: steps.gate.outputs.enabled == 'true'
         with:
           node-version: 22
 
       - name: Deploy
-        if: steps.gate.outputs.enabled == 'true'
         run: npx vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN"

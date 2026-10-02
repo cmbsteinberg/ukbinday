@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import asyncio
 import logging
 
 import httpx
 from fastapi import HTTPException, Request
 
-from api import config
 from api.councils._base import (
     AddressNotFound,
     Blocker,
@@ -18,7 +16,6 @@ from api.services import deeplinks
 from api.services.blob_store import BlobStoreError
 from api.services.council_lookup import LookupDatabaseError, PostcodeNotFoundError
 from api.services.models import CouncilCandidate
-from api.services.scrape_lock import acquire, release
 from api.services.scraper_registry import ScraperTimeoutError
 
 logger = logging.getLogger(__name__)
@@ -124,7 +121,6 @@ async def get_or_scrape(
 ):
     cache = request.app.state.ics_cache
     registry = request.app.state.registry
-    redis_client = getattr(request.app.state, "redis", None)
 
     def _hit(entry) -> bool:
         # A sidecar written by a different scraper is not this council's data.
@@ -147,51 +143,28 @@ async def get_or_scrape(
     if _hit(entry):
         return entry, True
 
-    lock_acquired = await acquire(redis_client, uprn)
-    if not lock_acquired:
-        deadline = asyncio.get_event_loop().time() + config.SCRAPE_LOCK_MAX_WAIT_S
-        while asyncio.get_event_loop().time() < deadline:
-            await asyncio.sleep(config.SCRAPE_LOCK_POLL_INTERVAL_S)
-            entry = await read()
-            if _hit(entry):
-                return entry, True
-        raise HTTPException(
-            status_code=503,
-            detail="Another request is already fetching this schedule. "
-            "Please try again in a few seconds.",
-        )
+    try:
+        collections = await registry.invoke(council, params)
+    except Exception as exc:
+        try:
+            await cache.record_failure(uprn, str(exc), scraper_id=council, params=params)
+        except BlobStoreError:
+            logger.exception("ICS cache failure record failed for %s", uprn)
+        raise _answer_for(registry, council, exc) from exc
 
     try:
-        try:
-            collections = await registry.invoke(council, params)
-            registry.record_success(council)
-        except Exception as exc:
-            registry.record_failure(council, str(exc))
-            try:
-                await cache.record_failure(
-                    uprn, str(exc), scraper_id=council, params=params
-                )
-            except BlobStoreError:
-                logger.exception("ICS cache failure record failed for %s", uprn)
-            raise _answer_for(registry, council, exc) from exc
-
-        try:
-            entry = await cache.write(uprn, council, params, collections)
-        except BlobStoreError:
-            logger.exception("ICS cache write failed for %s; answering unsaved", uprn)
-            entry = cache.unsaved_entry(uprn, council, params, collections)
-        return entry, False
-    finally:
-        await release(redis_client, uprn)
+        entry = await cache.write(uprn, council, params, collections)
+    except BlobStoreError:
+        logger.exception("ICS cache write failed for %s; answering unsaved", uprn)
+        entry = cache.unsaved_entry(uprn, council, params, collections)
+    return entry, False
 
 
 async def live_scrape(request: Request, council: str, params: dict[str, str]):
     registry = request.app.state.registry
     try:
         collections = await registry.invoke(council, params)
-        registry.record_success(council)
     except Exception as exc:
-        registry.record_failure(council, str(exc))
         raise _answer_for(registry, council, exc) from exc
     return collections
 

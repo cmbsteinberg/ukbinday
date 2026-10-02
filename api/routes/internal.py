@@ -47,7 +47,6 @@ async def refresh(
     job = RefreshJob(
         state.ics_cache,
         state.registry,
-        state.redis,
         concurrency=config.ICS_REFRESH_CONCURRENCY,
         failure_threshold=config.ICS_FAILURE_THRESHOLD,
     )

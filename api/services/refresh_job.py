@@ -10,7 +10,6 @@ from datetime import UTC, date, datetime, timedelta
 from api import config
 from api.services.blob_store import from_config
 from api.services.ics_cache import IcsCache
-from api.services.scrape_lock import acquire, release
 from api.services.scraper_registry import ScraperRegistry
 
 logger = logging.getLogger(__name__)
@@ -34,14 +33,12 @@ class RefreshJob:
         self,
         cache: IcsCache,
         registry: ScraperRegistry,
-        redis_client=None,
         *,
         concurrency: int = 4,
         failure_threshold: int = 14,
     ) -> None:
         self.cache = cache
         self.registry = registry
-        self.redis = redis_client
         self.concurrency = concurrency
         self.failure_threshold = failure_threshold
 
@@ -60,49 +57,40 @@ class RefreshJob:
         return True
 
     async def _refresh_one(self, entry, stats: RefreshStats) -> None:
-        lock_acquired = await acquire(self.redis, entry.uprn)
-        if not lock_acquired:
-            stats.skipped += 1
-            return
         try:
-            try:
-                # entry.scraper may be an old scraper ID from before the switch to LAD
-                # codes: invoke resolves it and the write stores the LAD code, so the
-                # sidecar is migrated on its first successful refresh. An ID nothing
-                # answers to raises UnknownCouncilError and ages out as a failure.
-                collections = await self.registry.invoke(entry.scraper, entry.params)
-                self.registry.record_success(entry.scraper)
-                await self.cache.write(
-                    entry.uprn,
-                    self.registry.canonical_id(entry.scraper),
-                    entry.params,
-                    collections,
-                )
-                stats.refreshed += 1
-            except Exception as exc:
-                self.registry.record_failure(entry.scraper, str(exc))
-                await self.cache.record_failure(
-                    entry.uprn,
-                    str(exc),
-                    scraper_id=entry.scraper,
-                    params=entry.params,
-                )
-                stats.failed += 1
-                new_entry = await self.cache.read(entry.uprn)
-                if (
-                    new_entry is not None
-                    and new_entry.consecutive_failures >= self.failure_threshold
-                ):
-                    await self.cache.delete(entry.uprn)
-                    stats.deleted += 1
-                logger.warning(
-                    "Refresh failed for %s (%s): %s",
-                    entry.uprn,
-                    entry.scraper,
-                    exc,
-                )
-        finally:
-            await release(self.redis, entry.uprn)
+            # entry.scraper may be an old scraper ID from before the switch to LAD
+            # codes: invoke resolves it and the write stores the LAD code, so the
+            # sidecar is migrated on its first successful refresh. An ID nothing
+            # answers to raises UnknownCouncilError and ages out as a failure.
+            collections = await self.registry.invoke(entry.scraper, entry.params)
+            await self.cache.write(
+                entry.uprn,
+                self.registry.canonical_id(entry.scraper),
+                entry.params,
+                collections,
+            )
+            stats.refreshed += 1
+        except Exception as exc:
+            await self.cache.record_failure(
+                entry.uprn,
+                str(exc),
+                scraper_id=entry.scraper,
+                params=entry.params,
+            )
+            stats.failed += 1
+            new_entry = await self.cache.read(entry.uprn)
+            if (
+                new_entry is not None
+                and new_entry.consecutive_failures >= self.failure_threshold
+            ):
+                await self.cache.delete(entry.uprn)
+                stats.deleted += 1
+            logger.warning(
+                "Refresh failed for %s (%s): %s",
+                entry.uprn,
+                entry.scraper,
+                exc,
+            )
 
     async def run_once(
         self, *, shard: int = 0, of: int = 1, deadline: float | None = None
@@ -190,22 +178,10 @@ async def _main() -> None:
     setup_logging()
     registry = ScraperRegistry.build()
     cache = IcsCache(from_config(), canonical_id=registry.canonical_id)
-    redis_client = None
-    redis_url = os.getenv("REDIS_URL")
-    if redis_url:
-        try:
-            import redis.asyncio as aioredis
-
-            redis_client = aioredis.from_url(redis_url)
-            await redis_client.ping()
-        except Exception:
-            logger.warning("Redis unavailable for worker", exc_info=True)
-            redis_client = None
 
     job = RefreshJob(
         cache,
         registry,
-        redis_client,
         concurrency=config.ICS_REFRESH_CONCURRENCY,
         failure_threshold=config.ICS_FAILURE_THRESHOLD,
     )

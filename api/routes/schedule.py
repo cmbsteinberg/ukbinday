@@ -29,7 +29,6 @@ from api.services.models import (
     FindResponse,
     ScheduleResponse,
 )
-from api.services.rate_limiting import _get_client_ip
 from api.services.scrape_orchestrator import (
     DeeplinkAnswer,
     ScrapeHTTPException,
@@ -192,6 +191,13 @@ async def calendar_response(
     if attachment:
         headers["Content-Disposition"] = f'attachment; filename="bins-{_safe_uprn_filename(uprn)}.ics"'
     return Response(content=ics_bytes, media_type="text/calendar", headers=headers)
+
+
+def _get_client_ip(request: Request) -> str:
+    return (
+        request.headers.get("X-Forwarded-For", "").split(",")[0].strip()
+        or (request.client.host if request.client else "unknown")
+    )
 
 
 async def turnstile_passed(request: Request) -> bool:

@@ -45,8 +45,8 @@ export default function () {
 	const roll = Math.random();
 
 	if (roll < 0.5) {
-		// Lightweight: status, councils, health
-		const endpoints = ["/api/v2/status", "/api/v2/councils", "/api/v2/health"];
+		// Lightweight: status, councils
+		const endpoints = ["/api/v2/status", "/api/v2/councils"];
 		const endpoint = endpoints[Math.floor(Math.random() * endpoints.length)];
 		const res = http.get(`${BASE}${endpoint}`, { timeout: "10s" });
 		check(res, { "status 200": (r) => r.status === 200 }) || errorRate.add(1);

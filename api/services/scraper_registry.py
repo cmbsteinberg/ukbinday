@@ -20,7 +20,6 @@ import asyncio
 import json
 import logging
 from dataclasses import dataclass
-from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -67,24 +66,6 @@ class ScraperMeta:
         return self.scraper.blocker
 
 
-@dataclass
-class HealthRecord:
-    last_success: datetime | None = None
-    last_error: str | None = None
-    success_count: int = 0
-    error_count: int = 0
-
-    @property
-    def status(self) -> str:
-        if self.success_count == 0 and self.error_count == 0:
-            return "unknown"
-        return (
-            "ok"
-            if self.error_count == 0 or self.success_count > self.error_count
-            else "error"
-        )
-
-
 def _module_params(scraper: Scraper) -> tuple[list[str], list[str]]:
     """`/councils` metadata from `requires`, in query-param names."""
     required = sorted(_FIELD_TO_PARAM.get(r, r) for r in scraper.requires)
@@ -96,7 +77,6 @@ class ScraperRegistry:
     def __init__(self) -> None:
         self._scrapers: dict[str, ScraperMeta] = {}
         self._aliases: dict[str, str] = {}
-        self._health: dict[str, HealthRecord] = {}
 
     @classmethod
     def build(cls) -> ScraperRegistry:
@@ -167,16 +147,3 @@ class ScraperRegistry:
             raise ScraperTimeoutError(
                 f"Scraper {council_id} timed out after {SCRAPER_TIMEOUT}s"
             )
-
-    def record_success(self, council_id: str) -> None:
-        record = self._health.setdefault(self.canonical_id(council_id), HealthRecord())
-        record.last_success = datetime.now()
-        record.success_count += 1
-
-    def record_failure(self, council_id: str, error: str) -> None:
-        record = self._health.setdefault(self.canonical_id(council_id), HealthRecord())
-        record.last_error = error
-        record.error_count += 1
-
-    def get_health(self, council_id: str) -> HealthRecord:
-        return self._health.get(self.canonical_id(council_id), HealthRecord())

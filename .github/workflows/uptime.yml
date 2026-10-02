@@ -1,12 +1,14 @@
 name: Uptime
 
-# Production checks, every 30 minutes. A failed scheduled run emails whoever last
+# Production checks, every 30 minutes (the refresh-keeping-up check runs once a day, 07:15 UTC,
+# after the 05:00 Vercel cron refresh). A failed scheduled run emails whoever last
 # changed this schedule (GitHub's default notification), which is the alert.
 # GitHub disables schedules in a public repo after 60 days without commits; re-enable
 # it from the Actions tab if that happens.
 on:
   schedule:
     - cron: "*/30 * * * *"
+    - cron: "15 7 * * *"
   workflow_dispatch:
 
 jobs:
@@ -27,3 +29,11 @@ jobs:
             | jq -r '.ics_cache.last_refresh_age_seconds // empty')"
           echo "refresh heartbeat age: ${age:-none}s"
           [ -n "$age" ] && [ "$age" -lt 129600 ] || { echo "::error::refresh heartbeat missing or older than 36 h"; exit 1; }
+
+      - name: Nightly refresh reached every due calendar
+        if: github.event.schedule == '15 7 * * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          deferred="$(curl -sS --fail --retry 3 --retry-all-errors --retry-delay 20 --max-time 30 "$BASE/metrics" \
+            | jq -r '[.ics_cache.last_refresh_stats // {} | .[] | .deferred // 0] | add // 0')"
+          echo "deferred calendars across shards: $deferred"
+          [ "$deferred" -eq 0 ] || { echo "::error::nightly refresh hit its deadline with $deferred calendars deferred"; exit 1; }

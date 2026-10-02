@@ -66,7 +66,7 @@ docker compose up --build -d
 
 echo "=== Waiting for API to be ready (max ${MAX_WAIT}s) ==="
 elapsed=0
-until curl -sf "$BASE_URL/api/v2/health" >/dev/null 2>&1; do
+until curl -sf "$BASE_URL/api/v2/status" >/dev/null 2>&1; do
     if [ "$elapsed" -ge "$MAX_WAIT" ]; then
         echo "FATAL: API did not become ready within ${MAX_WAIT}s"
         echo ""
@@ -87,7 +87,7 @@ echo "=== Running deployment tests ==="
 
 echo ""
 echo "--- Health & Infrastructure ---"
-assert_status "GET /api/v2/health returns 200" "$BASE_URL/api/v2/health" 200
+assert_status "GET /api/v2/status returns 200" "$BASE_URL/api/v2/status" 200
 assert_status "GET /api/v2/docs returns 200" "$BASE_URL/api/v2/docs" 200
 assert_status "GET /api/v2/redoc returns 200" "$BASE_URL/api/v2/redoc" 200
 assert_status "GET /api/v2/openapi.json returns 200" "$BASE_URL/api/v2/openapi.json" 200

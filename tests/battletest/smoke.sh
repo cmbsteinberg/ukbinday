@@ -37,7 +37,7 @@ echo
 check "Landing page" "$BASE/"  200 "<title>"
 
 # Health / status
-check "Health endpoint" "$BASE/api/v2/health" 200
+check "Status endpoint" "$BASE/api/v2/status" 200
 check "System status"   "$BASE/api/v2/status" 200 '"scraper_count"'
 
 # Council list

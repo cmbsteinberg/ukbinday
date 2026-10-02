@@ -54,16 +54,16 @@ async def test_openapi_and_docs(client):
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_councils_and_health(client):
+async def test_councils_and_status(client):
     resp = await client.get("/api/v2/councils")
     assert resp.status_code == 200
     data = resp.json()
     assert len(data) > 0
     assert "id" in data[0] and "name" in data[0]
 
-    health = await client.get("/api/v2/health")
-    assert health.status_code == 200
-    assert isinstance(health.json(), list)
+    status = await client.get("/api/v2/status")
+    assert status.status_code == 200
+    assert status.json()["status"] == "healthy"
 
 
 @pytest.mark.asyncio(loop_scope="session")

@@ -34,17 +34,6 @@ R2_BUCKET: str = os.getenv("R2_BUCKET", "")
 CRON_SECRET: str = os.getenv("CRON_SECRET", "")
 REFRESH_DEADLINE_S: float = float(os.getenv("REFRESH_DEADLINE_S", "250"))
 
-# Scrape coalescing (API inline scrape on cache miss)
-SCRAPE_LOCK_POLL_INTERVAL_S: float = float(
-    os.getenv("SCRAPE_LOCK_POLL_INTERVAL_S", "0.5")
-)
-SCRAPE_LOCK_MAX_WAIT_S: float = float(
-    os.getenv("SCRAPE_LOCK_MAX_WAIT_S", "15")
-)
-
-# Rate limiting
-RATE_LIMIT_HOURLY: int = _int_env("RATE_LIMIT_HOURLY", 200)
-
 # Logging
 LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO").upper()
 LOG_FORMAT: str = os.getenv("LOG_FORMAT", "json")  # "json" or "text"

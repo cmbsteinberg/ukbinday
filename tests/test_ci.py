@@ -85,9 +85,8 @@ async def test_registry_loads_all_scrapers(client):
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_health_endpoint_returns_all(client):
-    """Health endpoint should return an entry for every loaded scraper."""
+async def test_status_counts_every_scraper(client):
     councils_resp = await client.get("/api/v2/councils")
-    health_resp = await client.get("/api/v2/health")
-    assert health_resp.status_code == 200
-    assert len(health_resp.json()) == len(councils_resp.json())
+    status_resp = await client.get("/api/v2/status")
+    assert status_resp.status_code == 200
+    assert status_resp.json()["scraper_count"] == len(councils_resp.json())

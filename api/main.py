@@ -55,22 +55,6 @@ async def lifespan(app: FastAPI):
             "council metadata will be unavailable"
         )
 
-    # Redis (optional)
-    redis_url = os.getenv("REDIS_URL")
-    if redis_url:
-        try:
-            import redis.asyncio as aioredis
-
-            app.state.redis = aioredis.from_url(redis_url)
-            await app.state.redis.ping()
-            logger.info("Redis connected at %s", redis_url)
-        except Exception:
-            logger.warning("Redis unavailable, rate limiting disabled", exc_info=True)
-            app.state.redis = None
-    else:
-        app.state.redis = None
-        logger.info("No REDIS_URL set, rate limiting disabled")
-
     app.state.ics_cache = IcsCache(from_config(), canonical_id=app.state.registry.canonical_id)
 
     app.state.refresh_job = None
@@ -79,7 +63,6 @@ async def lifespan(app: FastAPI):
         job = RefreshJob(
             app.state.ics_cache,
             app.state.registry,
-            app.state.redis,
             concurrency=config.ICS_REFRESH_CONCURRENCY,
             failure_threshold=config.ICS_FAILURE_THRESHOLD,
         )
@@ -98,8 +81,6 @@ async def lifespan(app: FastAPI):
 
     if getattr(app.state, "council_lookup", None):
         await app.state.council_lookup.close()
-    if getattr(app.state, "redis", None):
-        await app.state.redis.aclose()
 
 
 app = FastAPI(
@@ -161,8 +142,8 @@ async def log_requests(request: Request, call_next):
             or (request.client.host if request.client else "unknown"),
         },
     )
-    # A server error must never be pinned by the Cloudflare cache rule on the
-    # calendar routes (edge TTL override), so a 503 doesn't outlive the outage.
+    # The calendar routes set s-maxage for Vercel's CDN; a 5xx must never be
+    # cached there, so a 503 doesn't outlive the outage.
     if response.status_code >= 500:
         response.headers["Cache-Control"] = "no-store"
     # In dev, prevent stale static file caching so changes appear immediately
@@ -175,13 +156,6 @@ async def log_requests(request: Request, call_next):
         "max-age=31536000; includeSubDomains"
     )
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    # If Redis is available, increment a counter for analytics
-    redis_client = getattr(request.app.state, "redis", None)
-    if redis_client and request.url.path.startswith("/api"):
-        try:
-            await redis_client.hincrby("api:request_counts", request.url.path, 1)
-        except Exception:
-            logger.debug("Redis analytics increment failed", exc_info=True)
     return response
 
 
