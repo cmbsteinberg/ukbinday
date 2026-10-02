@@ -1,12 +1,17 @@
 from datetime import date, datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class DeeplinkInfo(BaseModel):
     url: str
     reason: str
     council_name: str
+    blocker: str = Field(
+        description="Why there are no bin days: captcha, login, bot_protection, browser_only, "
+        "no_lookup, site_down or not_supported."
+    )
+    blocker_label: str = Field(description="`blocker` in words, e.g. \"Requires a captcha\".")
 
 
 class AddressResult(BaseModel):

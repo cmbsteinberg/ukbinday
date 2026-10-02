@@ -26,11 +26,12 @@ def _load_overrides() -> dict:
     return json.loads(LAD_OVERRIDES_PATH.read_text())
 
 
-def load_unwired_lads() -> dict[str, str]:
-    """LAD code -> reason for councils deliberately left without a module.
+def load_unwired_lads() -> dict[str, dict[str, str]]:
+    """LAD code -> {blocker, reason} for councils deliberately left without a module.
 
-    The reason is recorded in lad_lookup.json as the entry's "status" and
-    shown in the deeplink. scripts/lookup/build_lad_lookup refuses a LAD
+    lad_lookup.json records the reason as the entry's "status" and the
+    blocker (an `api.councils._base.Blocker` value) as its "blocker"; both
+    are shown in the deeplink. scripts/lookup/build_lad_lookup refuses a LAD
     that is both listed here and claimed by a module.
     """
     return _load_overrides().get("unwired_lads", {})

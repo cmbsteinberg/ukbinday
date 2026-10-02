@@ -1,12 +1,14 @@
 """Deeplink targets for councils with no scraper.
 
 A deeplink is a structured "check on the council website instead" response:
-a URL plus a human-readable reason. It covers every unwired LAD in
-``lad_lookup.json`` (``scraper_id: null``: no council module claims it), with
-the reason from ``pipeline/lad_overrides.json`` where one is recorded.
+a URL, a human-readable reason and a ``Blocker`` naming what's in the way. It
+covers every unwired LAD in ``lad_lookup.json`` (``scraper_id: null``: no
+council module claims it), with the reason and blocker from
+``pipeline/lad_overrides.json`` where recorded.
 
 URL priority: council bin page (``url``) > GOV.UK page (``govuk_url``).
-Reason: the entry's ``status`` line, or a generic fallback.
+Reason: the entry's ``status`` line, or a generic fallback; blocker: the
+entry's ``blocker``, else NOT_SUPPORTED.
 
 Wired councils get the same response shape in two cases (see
 ``scrape_orchestrator``): the scraper raised ``NeedsBrowser``
@@ -20,6 +22,8 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from api.councils._base import Blocker
+
 _DATA_DIR = Path(__file__).parent.parent / "data"
 _LAD_JSON = _DATA_DIR / "lad_lookup.json"
 
@@ -32,6 +36,7 @@ class Deeplink:
     council_name: str
     url: str
     reason: str
+    blocker: Blocker
 
 
 def _lad_entries() -> dict:
@@ -54,10 +59,11 @@ def resolve(lad_code: str) -> Deeplink | None:
         council_name=entry.get("name", lad_code),
         url=url,
         reason=entry.get("status") or _GENERIC_REASON,
+        blocker=Blocker(entry.get("blocker") or Blocker.NOT_SUPPORTED),
     )
 
 
-def _for_scraper(meta, url: str | None, reason: str) -> Deeplink | None:
+def _for_scraper(meta, url: str | None, reason: str, blocker: Blocker) -> Deeplink | None:
     if not url:
         return None
     return Deeplink(
@@ -65,17 +71,20 @@ def _for_scraper(meta, url: str | None, reason: str) -> Deeplink | None:
         council_name=meta.title,
         url=url,
         reason=reason or _GENERIC_REASON,
+        blocker=blocker,
     )
 
 
-def for_needs_browser(meta, reason: str) -> Deeplink | None:
+def for_needs_browser(meta, reason: str, blocker: Blocker | None = None) -> Deeplink | None:
     """The deeplink for a wired council whose scraper raised ``NeedsBrowser``.
 
     ``meta`` is the registry's ``ScraperMeta``. URL: the scraper's ``url``
     (a council module's ``meta.url`` points at its lookup page), else the
-    LAD's GOV.UK page. Reason: the scraper's.
+    LAD's GOV.UK page. Reason: the scraper's. Blocker: the exception's, else
+    the module's, else BROWSER_ONLY.
     """
-    return _for_scraper(meta, meta.url or meta.govuk_url, reason)
+    blocker = blocker or meta.blocker or Blocker.BROWSER_ONLY
+    return _for_scraper(meta, meta.url or meta.govuk_url, reason, blocker)
 
 
 def for_upstream_failure(meta) -> Deeplink | None:
@@ -83,13 +92,22 @@ def for_upstream_failure(meta) -> Deeplink | None:
 
     URL: the LAD's GOV.UK page first (Local Links Manager is maintained
     centrally, so it outlives a council's site reshuffle), else the scraper's
-    ``url``.
+    ``url``. A module marked BOT_PROTECTION (its site blocks our host) says so;
+    any other failure is SITE_DOWN.
     """
-    reason = (
-        f"{meta.title}'s website isn't responding right now; "
-        "check your bin day on the council's site."
-    )
-    return _for_scraper(meta, meta.govuk_url or meta.url, reason)
+    if meta.blocker == Blocker.BOT_PROTECTION:
+        blocker = Blocker.BOT_PROTECTION
+        reason = (
+            f"{meta.title}'s website blocks automated lookups from our servers; "
+            "check your bin day on the council's site."
+        )
+    else:
+        blocker = Blocker.SITE_DOWN
+        reason = (
+            f"{meta.title}'s website isn't responding right now; "
+            "check your bin day on the council's site."
+        )
+    return _for_scraper(meta, meta.govuk_url or meta.url, reason, blocker)
 
 
 def resolve_by_council_param(param: str) -> Deeplink | None:

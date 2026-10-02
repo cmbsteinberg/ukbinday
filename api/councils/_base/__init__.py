@@ -5,6 +5,7 @@ from api.councils._base.collection import Collection, Icon, colour_of, default_i
 from api.councils._base.dates import every, next_weekday, parse_date, weekday_number
 from api.councils._base.errors import (
     AddressNotFound,
+    Blocker,
     InputError,
     NeedsBrowser,
     ScraperError,
@@ -19,6 +20,7 @@ from api.councils._base.scraper import Meta, Platform, Scraper, run
 __all__ = [
     "Address",
     "AddressNotFound",
+    "Blocker",
     "Collection",
     "Field",
     "Http",

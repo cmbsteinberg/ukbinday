@@ -14,7 +14,7 @@ from types import MappingProxyType
 
 from api.councils._base.address import Address
 from api.councils._base.collection import Collection, default_icon
-from api.councils._base.errors import InputError, NeedsBrowser
+from api.councils._base.errors import Blocker, InputError, NeedsBrowser
 from api.councils._base.http import Http, Transport, open_http
 
 
@@ -58,6 +58,11 @@ class Scraper(ABC):
     never work without a person at a browser. When set, `run` raises
     `NeedsBrowser` with it and makes no request; `fetch` is kept for if the
     council drops the barrier."""
+    blocker: Blocker | None = None
+    """What stands in the way, named in the deeplink. With `needs_browser`, the
+    kind of wall (default BROWSER_ONLY). Without it, what a failed scrape means:
+    BOT_PROTECTION for a site known to block our host's IPs, so the deeplink
+    says so rather than calling the site down."""
 
     @abstractmethod
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
@@ -103,7 +108,7 @@ async def run(scraper: Scraper, params: Mapping[str, object]) -> list[Collection
     The caller owns the overall timeout.
     """
     if scraper.needs_browser:
-        raise NeedsBrowser(scraper.needs_browser)
+        raise NeedsBrowser(scraper.needs_browser, scraper.blocker or Blocker.BROWSER_ONLY)
     address = Address.from_params(params)
     if missing := address.missing(scraper.requires):
         raise InputError(f"{scraper.meta.title} needs {', '.join(missing)}")

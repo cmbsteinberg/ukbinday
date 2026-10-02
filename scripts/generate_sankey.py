@@ -36,7 +36,7 @@ def classify(lad: dict, results: dict) -> dict[str, list[tuple[str, str, str]]]:
         name = info["name"]
         module = module_for.get(code)
         if module is None and not info.get("scraper_id"):
-            reason = (info.get("status") or "no scraper").removeprefix("deeplink-unwired: ")
+            reason = info.get("status") or "no scraper"
             out["deeplink"].append((code, name, reason))
         elif module is not None and module.needs_browser:
             out["deeplink"].append((code, name, module.needs_browser))

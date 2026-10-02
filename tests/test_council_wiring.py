@@ -192,6 +192,8 @@ async def test_needs_browser_module_answers_with_deeplink(client):
         "url": coventry.meta.url,
         "reason": coventry.needs_browser,
         "council_name": coventry.meta.title,
+        "blocker": "captcha",
+        "blocker_label": "Requires a captcha",
     }
     cal = await client.get(f"/{COVENTRY}/download/100070713054", follow_redirects=False)
     assert cal.status_code == 404 and coventry.needs_browser in cal.json()["detail"]

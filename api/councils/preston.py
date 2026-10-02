@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup, Tag
 from api.councils._base import (
     Address,
     AddressNotFound,
+    Blocker,
     Collection,
     Http,
     InputError,
@@ -90,6 +91,7 @@ class Preston(Scraper):
     )
     requires = frozenset()
     needs_browser = "Preston's bin-day search answers every automated request with an image captcha."
+    blocker = Blocker.CAPTCHA
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         search_text = address.street or address.postcode or address.first_line

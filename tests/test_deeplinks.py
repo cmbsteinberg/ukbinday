@@ -140,10 +140,12 @@ def test_deeplink_url_overrides_reach_the_lookup():
         assert LAD_LOOKUP[code]["url"] == url, f"{code} did not take the override"
 
 
-def test_unwired_lads_ship_their_reason_as_status():
-    for code, reason in load_unwired_lads().items():
+def test_unwired_lads_ship_their_reason_and_blocker():
+    for code, note in load_unwired_lads().items():
         if code not in LAD_LOOKUP:
             continue  # code ONSPD no longer returns — dropped at compose time
         assert LAD_LOOKUP[code]["scraper_id"] is None, f"{code} was re-wired"
-        assert LAD_LOOKUP[code]["status"] == reason
-        assert deeplinks.resolve(code).reason == reason
+        assert LAD_LOOKUP[code]["status"] == note["reason"]
+        target = deeplinks.resolve(code)
+        assert target.reason == note["reason"]
+        assert target.blocker == note["blocker"]

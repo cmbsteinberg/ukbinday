@@ -11,6 +11,7 @@ from typing import Any
 from api.councils._base import (
     Address,
     AddressNotFound,
+    Blocker,
     Collection,
     Http,
     Meta,
@@ -72,6 +73,7 @@ class Boston(Scraper):
         },
     )
     requires = frozenset({"postcode"})
+    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     # The WAF 403s httpx here (the harness sends lowercased header names); curl_cffi passes.
     transport = Transport.CURL_CFFI
 

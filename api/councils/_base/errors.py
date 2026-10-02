@@ -4,7 +4,8 @@ The orchestrator maps these to HTTP answers:
 
 - `InputError` (and `AddressNotFound`): 422, the council rejects what we sent.
 - `UpstreamError`: 503, the council site is down, erroring or blocking us.
-- `NeedsBrowser`: a deeplink to the council's own page (captcha, JS-only, login).
+- `NeedsBrowser`: a deeplink to the council's own page (captcha, JS-only, login),
+  with the `Blocker` that says why.
 
 `Http` raises `UpstreamError` itself for transport failures and 4xx/5xx
 responses, so scrapers never see backend-specific exception types.
@@ -13,6 +14,36 @@ responses, so scrapers never see backend-specific exception types.
 from __future__ import annotations
 
 from collections.abc import Sequence
+from enum import StrEnum
+
+
+class Blocker(StrEnum):
+    """Why a council answers with a link to its own site instead of bin days.
+
+    Public: deeplinks carry it as `blocker`, with `label` as `blocker_label`."""
+
+    CAPTCHA = "captcha"
+    LOGIN = "login"
+    BOT_PROTECTION = "bot_protection"
+    BROWSER_ONLY = "browser_only"
+    NO_LOOKUP = "no_lookup"
+    SITE_DOWN = "site_down"
+    NOT_SUPPORTED = "not_supported"
+
+    @property
+    def label(self) -> str:
+        return _BLOCKER_LABELS[self]
+
+
+_BLOCKER_LABELS = {
+    Blocker.CAPTCHA: "Requires a captcha",
+    Blocker.LOGIN: "Requires a council account login",
+    Blocker.BOT_PROTECTION: "Blocks automated lookups",
+    Blocker.BROWSER_ONLY: "Only works in a web browser",
+    Blocker.NO_LOOKUP: "No online address lookup",
+    Blocker.SITE_DOWN: "Website not responding",
+    Blocker.NOT_SUPPORTED: "Not supported yet",
+}
 
 
 class ScraperError(Exception):
@@ -41,3 +72,7 @@ class UpstreamError(ScraperError):
 
 class NeedsBrowser(ScraperError):
     """The council's service can't be scraped without a person at a browser."""
+
+    def __init__(self, message: str, blocker: Blocker = Blocker.BROWSER_ONLY) -> None:
+        super().__init__(message)
+        self.blocker = blocker

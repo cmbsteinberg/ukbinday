@@ -7,7 +7,13 @@ import httpx
 from fastapi import HTTPException, Request
 
 from api import config
-from api.councils._base import AddressNotFound, InputError, NeedsBrowser, UpstreamError
+from api.councils._base import (
+    AddressNotFound,
+    Blocker,
+    InputError,
+    NeedsBrowser,
+    UpstreamError,
+)
 from api.services import deeplinks
 from api.services.council_lookup import LookupDatabaseError, PostcodeNotFoundError
 from api.services.models import CouncilCandidate
@@ -174,10 +180,10 @@ async def live_scrape(request: Request, council: str, params: dict[str, str]):
     return collections
 
 
-def needs_browser_deeplink(meta, reason: str) -> DeeplinkAnswer | HTTPException:
+def needs_browser_deeplink(meta, reason: str, blocker: Blocker | None = None) -> DeeplinkAnswer | HTTPException:
     """What to raise for a council that needs a browser: its deeplink, or a 503
     when there's no URL to send anyone to."""
-    target = deeplinks.for_needs_browser(meta, reason)
+    target = deeplinks.for_needs_browser(meta, reason, blocker)
     if target is None:
         return HTTPException(
             status_code=503,
@@ -198,7 +204,7 @@ def _answer_for(registry, council: str, exc: Exception) -> Exception:
     meta = registry.get(council)
     if isinstance(exc, NeedsBrowser) and meta is not None:
         logger.info("Scraper %s needs a browser: %s", council, exc)
-        return needs_browser_deeplink(meta, str(exc))
+        return needs_browser_deeplink(meta, str(exc), exc.blocker)
     error = map_scrape_exception(council, exc)
     if isinstance(exc, (UpstreamError, ScraperTimeoutError)) and meta is not None:
         error.fallback = deeplinks.for_upstream_failure(meta)

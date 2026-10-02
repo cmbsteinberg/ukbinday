@@ -339,6 +339,8 @@ function renderDeeplink(deeplink) {
 	const frag = tpl("tpl-deeplink");
 	frag.querySelector('[data-slot="council"]').textContent =
 		deeplink.council_name;
+	frag.querySelector('[data-slot="blocker"]').textContent =
+		deeplink.blocker_label;
 	frag.querySelector('[data-slot="reason"]').textContent = deeplink.reason;
 	frag.querySelector('[data-slot="link"]').href = deeplink.url;
 	section.appendChild(frag);

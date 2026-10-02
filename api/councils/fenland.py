@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from api.councils._base import (
     Address,
     AddressNotFound,
+    Blocker,
     Collection,
     Http,
     Meta,
@@ -36,6 +37,7 @@ class Fenland(Scraper):
         },
     )
     requires = frozenset({"postcode", "house_number"})
+    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     headers = {"Accept": "application/json"}
     transport = Transport.CURL_CFFI
 

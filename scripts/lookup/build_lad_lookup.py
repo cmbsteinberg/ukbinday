@@ -40,6 +40,7 @@ from pathlib import Path
 
 import duckdb
 
+from api.councils._base import Blocker
 from pipeline.shared import normalise_domain
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -303,7 +304,8 @@ def compose() -> dict[str, dict]:
             "govuk_url": entry["govuk_url"],
         }
         if code in unwired:
-            record["status"] = unwired[code]
+            record["status"] = unwired[code]["reason"]
+            record["blocker"] = Blocker(unwired[code]["blocker"])  # a typo fails here
         # `working` is written by scripts.annotate_lad_working, which keeps the
         # previous flag for LADs a live run didn't decide. Carry it across, but
         # only for the same module: a flag earned by another scraper means nothing.

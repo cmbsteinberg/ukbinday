@@ -56,7 +56,13 @@ def _safe_uprn_filename(uprn: str) -> str:
 
 
 def deeplink_info(target: deeplink_service.Deeplink) -> DeeplinkInfo:
-    return DeeplinkInfo(url=target.url, reason=target.reason, council_name=target.council_name)
+    return DeeplinkInfo(
+        url=target.url,
+        reason=target.reason,
+        council_name=target.council_name,
+        blocker=target.blocker,
+        blocker_label=target.blocker.label,
+    )
 
 
 def _no_scraper() -> HTTPException:

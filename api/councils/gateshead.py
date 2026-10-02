@@ -11,6 +11,7 @@ from bs4 import Tag
 
 from api.councils._base import (
     Address,
+    Blocker,
     Collection,
     Http,
     Meta,
@@ -51,6 +52,7 @@ class Gateshead(Scraper):
         },
     )
     requires = frozenset({"uprn"})
+    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:

@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup, Tag
 from api.councils._base import (
     Address,
     AddressNotFound,
+    Blocker,
     Collection,
     Http,
     Meta,
@@ -66,6 +67,7 @@ class Sunderland(Scraper):
         },
     )
     requires = frozenset({"postcode"})
+    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     headers = _HEADERS
     transport = Transport.CURL_CFFI
 

@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup, Tag
 
 from api.councils._base import (
     Address,
+    Blocker,
     Collection,
     Http,
     InputError,
@@ -80,7 +81,7 @@ def _raise_for_unexpected_page(page: BeautifulSoup, stage: str) -> None:
     title = page.title.get_text(" ", strip=True).lower() if page.title else ""
     content = page.get_text(" ", strip=True).lower()
     if "just a moment" in title or "challenges.cloudflare.com" in content:
-        raise NeedsBrowser("Swale lookup was blocked by a Cloudflare challenge.")
+        raise NeedsBrowser("Swale lookup was blocked by a Cloudflare challenge.", Blocker.BOT_PROTECTION)
 
     # Empty aria-live regions are always present on the results page.
     errors = [
@@ -136,6 +137,7 @@ class Swale(Scraper):
         },
     )
     requires = frozenset({"uprn", "postcode"})
+    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:

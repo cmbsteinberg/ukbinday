@@ -8,6 +8,7 @@ import re
 
 from api.councils._base import (
     Address,
+    Blocker,
     Collection,
     Http,
     InputError,
@@ -30,6 +31,7 @@ class Havant(Scraper):
     )
     requires = frozenset({"username", "password"})
     needs_browser = "Havant's bin days are only shown after logging in to a council account."
+    blocker = Blocker.LOGIN
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         username = address.need("username")

@@ -4,7 +4,16 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, Transport, soup
+from api.councils._base import (
+    Address,
+    Blocker,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    Transport,
+    soup,
+)
 
 _API_URL = (
     "https://eastleigh.gov.uk/waste-bins-and-recycling/collection-dates/"
@@ -23,6 +32,7 @@ class Eastleigh(Scraper):
         },
     )
     requires = frozenset({"uprn"})
+    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:

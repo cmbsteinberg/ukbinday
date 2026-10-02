@@ -1,16 +1,49 @@
 {
   "unwired_lads": {
-    "N09000004": "deeplink-unwired: no address lookup exists, only 4 area calendar PDFs with colour-only week marking and no address-to-area mapping",
-    "N09000005": "deeplink-unwired: no address lookup exists, one generic calendar image; the Sentireal app backend is not publicly reachable",
-    "E06000046": "deeplink-unwired: Blazor Server app (state over a SignalR WebSocket, no HTTP data endpoint) and bin types only as PDF cell colours that change yearly (2026-10-01)",
-    "E07000119": "deeplink-unwired: Bartec portal behind mandatory login, no guest lookup (dead by redesign)",
-    "E06000045": "deeplink-unwired: whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API",
-    "E06000043": "deeplink-unwired: Mendix platform, no plain-HTTP path (reference case)",
-    "E06000006": "deeplink-unwired: ASP.NET WebForms behind reCAPTCHA v2, server-side validator rejects guest POSTs with no data endpoint",
-    "E06000017": "deeplink-unwired: bin lookup behind Salesforce MyAccount login wall, no guest flow",
-    "E09000001": "deeplink-unwired: no address lookup feed exists, estate-based collections via Veolia with static pages only",
-    "E06000053": "deeplink-unwired: no address lookup exists, static round map + area table only (no kerbside off St Mary's/St Martins)",
-    "E07000038": "deeplink-unwired: Firmstep Check_your_Bin_Day retired (302, button commented out), static Calendar A/B only; apibroker 403"
+    "N09000004": {
+      "blocker": "no_lookup",
+      "reason": "no address lookup exists, only 4 area calendar PDFs with colour-only week marking and no address-to-area mapping"
+    },
+    "N09000005": {
+      "blocker": "no_lookup",
+      "reason": "no address lookup exists, one generic calendar image; the Sentireal app backend is not publicly reachable"
+    },
+    "E06000046": {
+      "blocker": "browser_only",
+      "reason": "Blazor Server app (state over a SignalR WebSocket, no HTTP data endpoint) and bin types only as PDF cell colours that change yearly (2026-10-01)"
+    },
+    "E07000119": {
+      "blocker": "login",
+      "reason": "Bartec portal behind mandatory login, no guest lookup (dead by redesign)"
+    },
+    "E06000045": {
+      "blocker": "bot_protection",
+      "reason": "whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API"
+    },
+    "E06000043": {
+      "blocker": "browser_only",
+      "reason": "Mendix platform, no plain-HTTP path (reference case)"
+    },
+    "E06000006": {
+      "blocker": "captcha",
+      "reason": "ASP.NET WebForms behind reCAPTCHA v2, server-side validator rejects guest POSTs with no data endpoint"
+    },
+    "E06000017": {
+      "blocker": "login",
+      "reason": "bin lookup behind Salesforce MyAccount login wall, no guest flow"
+    },
+    "E09000001": {
+      "blocker": "no_lookup",
+      "reason": "no address lookup feed exists, estate-based collections via Veolia with static pages only"
+    },
+    "E06000053": {
+      "blocker": "no_lookup",
+      "reason": "no address lookup exists, static round map + area table only (no kerbside off St Mary's/St Martins)"
+    },
+    "E07000038": {
+      "blocker": "no_lookup",
+      "reason": "Firmstep Check_your_Bin_Day retired (302, button commented out), static Calendar A/B only; apibroker 403"
+    }
   },
   "deeplink_urls": {
     "E07000119": "https://new.fylde.gov.uk/wasteportal/",

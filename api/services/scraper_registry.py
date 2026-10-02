@@ -25,7 +25,7 @@ from pathlib import Path
 from typing import Any
 
 from api.config import SCRAPER_TIMEOUT
-from api.councils._base import Scraper, discovery, run
+from api.councils._base import Blocker, Scraper, discovery, run
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +61,10 @@ class ScraperMeta:
     @property
     def needs_browser(self) -> str | None:
         return self.scraper.needs_browser
+
+    @property
+    def blocker(self) -> Blocker | None:
+        return self.scraper.blocker
 
 
 @dataclass

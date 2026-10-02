@@ -26,6 +26,7 @@ from asgi_lifespan import LifespanManager
 from api import config
 from api.councils._base import (
     AddressNotFound,
+    Blocker,
     Collection,
     Icon,
     InputError,
@@ -191,6 +192,8 @@ async def test_needs_browser_gives_deeplink(client):
         "url": coventry.meta.url,
         "reason": coventry.needs_browser,
         "council_name": coventry.meta.title,
+        "blocker": "captcha",
+        "blocker_label": "Requires a captcha",
     }
     for kind in ("subscribe", "download"):
         cal = await client.get(f"/v2/{COVENTRY}/{kind}/100070713054", follow_redirects=False)
@@ -203,6 +206,11 @@ async def test_needs_browser_raised_mid_fetch(client, stub):
     r = await client.get(f"/v2/{HARTLEPOOL}/view/{fresh_uprn()}")
     assert r.status_code == 200
     assert r.json()["deeplink"]["reason"] == "Blocked by a Cloudflare challenge."
+    assert r.json()["deeplink"]["blocker"] == "browser_only"  # NeedsBrowser's default
+
+    stub("hartlepool", NeedsBrowser("Cloudflare challenge.", Blocker.BOT_PROTECTION))
+    r = await client.get(f"/v2/{HARTLEPOOL}/view/{fresh_uprn()}")
+    assert r.json()["deeplink"]["blocker"] == "bot_protection"
 
 
 @pytest.mark.asyncio(loop_scope="session")
@@ -213,6 +221,17 @@ async def test_upstream_failure_gives_deeplink_and_header(client, stub):
     assert r.headers["X-Scrape-Failure"] == "network"
     assert r.json()["dates"] == []
     assert r.json()["deeplink"]["url"] == LAD_LOOKUP[HARTLEPOOL]["govuk_url"]
+    assert r.json()["deeplink"]["blocker"] == "site_down"
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_upstream_failure_of_a_site_that_blocks_us_says_so(client, stub, monkeypatch):
+    monkeypatch.setattr(load("hartlepool"), "blocker", Blocker.BOT_PROTECTION)
+    stub("hartlepool", UpstreamError("HTTP 403 from the council"))
+    r = await client.get(f"/v2/{HARTLEPOOL}/view/{fresh_uprn()}")
+    deeplink = r.json()["deeplink"]
+    assert (deeplink["blocker"], deeplink["blocker_label"]) == ("bot_protection", "Blocks automated lookups")
+    assert "blocks automated lookups" in deeplink["reason"]
 
 
 @pytest.mark.asyncio(loop_scope="session")

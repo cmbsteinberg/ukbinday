@@ -9,6 +9,7 @@ from datetime import date, datetime
 from api.councils._base import (
     Address,
     AddressNotFound,
+    Blocker,
     Collection,
     Http,
     Meta,
@@ -41,6 +42,7 @@ class Coventry(Scraper):
     )
     requires = frozenset({"street"})
     needs_browser = "Coventry's bin-day search is behind a reCAPTCHA."
+    blocker = Blocker.CAPTCHA
     headers = {"user-agent": "Mozilla/5.0"}
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
