@@ -47,6 +47,7 @@ jobs:
           if git diff --cached --quiet; then echo "no changes"; exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -m "Coverage from production ($(date -u +%Y-%m-%d))"
+          git pull --rebase -q origin main  # main may have moved during the probe
           git push
           # A push with the workflow token doesn't trigger workflows; a dispatch does.
           # The coverage page and lad_lookup.json ship with the app.
