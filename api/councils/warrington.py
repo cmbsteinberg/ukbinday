@@ -4,11 +4,10 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper
+from api.councils._base import Address, Collection, Http, Meta, Scraper, Transport
 
 _URL = "https://www.warrington.gov.uk"
 _JOBS_URL = "https://www.warrington.gov.uk/bin-collections/get-jobs"
-_HEADERS = {"user-agent": "Mozilla/5.0"}
 
 
 def _get_type(name: str) -> str | None:
@@ -33,7 +32,8 @@ class Warrington(Scraper):
         },
     )
     requires = frozenset({"uprn"})
-    headers = _HEADERS
+    # Cloudflare fronts the site; a Chrome TLS fingerprint is the cheap hope for cloud IPs.
+    transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn").zfill(12)

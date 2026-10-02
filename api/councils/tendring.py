@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from datetime import datetime
 from time import time_ns
 
@@ -22,12 +23,13 @@ _HEADERS = {
     "X-Requested-With": "XMLHttpRequest",
     "Referer": f"{_HOST}/fillform/?iframe_id=fillform-frame-1&db_id=",
 }
+_RESULT_RE = re.compile(r'<result column="(\w+)"[^>]*>([^<]*)</result>')
 _DATE_FIELDS = {
-    "nextResidualCollection": "Residual waste",
-    "nextRedCollection": "Red recycling box",
-    "nextGreenCollection": "Green recycling box",
-    "nextFoodCollection": "Food waste",
-    "nextGardenCollection": "Garden waste",
+    "RefuseNextCol": "Residual waste",
+    "DMRNextCol": "Mixed recycling",
+    "PaperNextCol": "Paper and card",
+    "FoodNextCol": "Food waste",
+    "GardenNextCol": "Garden waste",
 }
 
 
@@ -65,13 +67,16 @@ class Tendring(Scraper):
         }
 
         response = await http.post(_API_URL, params=params, json=payload)
-        rows_data = response.json().get("integration", {}).get("transformed", {}).get("rows_data", {})
-        if not rows_data:
+        # The lookup answers {"status": "done", "data": "<Responses>...XML..."}.
+        xml = response.json().get("data") or ""
+        row = dict(_RESULT_RE.findall(xml))
+        if not row:
             return []
 
-        row = rows_data.get("0", {})
         collections = []
         for field, bin_type in _DATE_FIELDS.items():
+            if field == "GardenNextCol" and row.get("ActiveGardenCollection") == "0":
+                continue
             date_str = row.get(field)
             if not date_str:
                 continue
