@@ -225,10 +225,10 @@ async def test_upstream_failure_gives_deeplink_and_header(client, stub):
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_upstream_failure_of_a_site_that_blocks_us_says_so(client, stub, monkeypatch):
-    monkeypatch.setattr(load("hartlepool"), "blocker", Blocker.BOT_PROTECTION)
-    stub("hartlepool", UpstreamError("HTTP 403 from the council"))
+async def test_upstream_failure_of_a_site_that_blocks_us_says_so(client, stub):
+    stub("hartlepool", UpstreamError("HTTP 403 from the council", Blocker.BOT_PROTECTION))
     r = await client.get(f"/v2/{HARTLEPOOL}/view/{fresh_uprn()}")
+    assert r.headers["X-Scrape-Failure"] == "blocked"
     deeplink = r.json()["deeplink"]
     assert (deeplink["blocker"], deeplink["blocker_label"]) == ("bot_protection", "Blocks automated lookups")
     assert "blocks automated lookups" in deeplink["reason"]

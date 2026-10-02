@@ -137,7 +137,6 @@ class Swale(Scraper):
         },
     )
     requires = frozenset({"uprn", "postcode"})
-    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:

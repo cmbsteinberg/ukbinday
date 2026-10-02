@@ -12,12 +12,13 @@ same thing in both. Outcomes from `view`:
                   raised NeedsBrowser (captcha, login)
   network         the council's site couldn't be reached (503, or a 200
                   fallback deeplink with `X-Scrape-Failure: network`)
+  blocked         the site answered with a bot wall (`X-Scrape-Failure: blocked`)
   timeout         the scrape timed out (504, `X-Scrape-Failure: timeout`, or a
                   client-side timeout)
   lock_contention 503: another request holds the UPRN's scrape lock
   scraper_error   anything else
 
-`network`, `timeout` and `lock_contention` are provisional: each runner turns
+`network`, `blocked`, `timeout` and `lock_contention` are provisional: each runner turns
 them into `unreachable` or `upstream_error` for itself (the live test probes
 the host from the test machine; the Vercel probe has no such probe and calls
 them `upstream_error`). Both are then fed to scripts/lad_status.py.
@@ -36,7 +37,7 @@ import httpx
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CASES_PATH = ROOT / "tests" / "lad_test_cases.json"
 
-NETWORKISH = {"network", "timeout"}
+NETWORKISH = {"network", "blocked", "timeout"}
 # Outcomes that are final on the first attempt. 200-empty is cached as a
 # success by the app, so retrying it would only read it back; 422 is
 # deterministic; a deeplink is the scraper's own answer.
@@ -96,7 +97,7 @@ def classify_response(resp: httpx.Response) -> dict:
         return {**out, "outcome": "scraper_error", "error": "invalid json"}
     failure = resp.headers.get("X-Scrape-Failure")
     if resp.status_code == 200 and failure:
-        out["outcome"] = {"network": "network", "timeout": "timeout"}.get(failure, "scraper_error")
+        out["outcome"] = failure if failure in NETWORKISH else "scraper_error"
         out["error"] = str((body.get("deeplink") or {}).get("reason", ""))[:300]
         return out
     if resp.status_code == 200:

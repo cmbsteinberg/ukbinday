@@ -34,7 +34,7 @@ class ScrapeHTTPException(HTTPException):
     - `suggestions`: the council's own address labels (AddressNotFound); api/main.py
       renders them next to `detail` in the 422 body.
     - `failure`: for a 503/504, the kind: "network" (site unreachable or erroring),
-      "timeout", or "error" (the scraper itself failed: a bug).
+      "blocked" (it answered with a bot wall), "timeout", or "error" (the scraper itself failed: a bug).
     - `fallback`: the deeplink /lookup answers with instead of the 503/504, when
       the council's site failed and nothing was cached. /calendar can't show a
       deeplink, so it raises the error as is.
@@ -81,7 +81,7 @@ def map_scrape_exception(council: str, exc: Exception) -> ScrapeHTTPException:
             503,
             "We couldn't reach your council's website. "
             "The site may be temporarily down \u2014 please try again later.",
-            failure="network",
+            failure="blocked" if getattr(exc, "blocker", None) == Blocker.BOT_PROTECTION else "network",
         )
     logger.exception("Scraper %s failed", council)
     return ScrapeHTTPException(
@@ -207,7 +207,7 @@ def _answer_for(registry, council: str, exc: Exception) -> Exception:
         return needs_browser_deeplink(meta, str(exc), exc.blocker)
     error = map_scrape_exception(council, exc)
     if isinstance(exc, (UpstreamError, ScraperTimeoutError)) and meta is not None:
-        error.fallback = deeplinks.for_upstream_failure(meta)
+        error.fallback = deeplinks.for_upstream_failure(meta, exc)
     return error
 
 

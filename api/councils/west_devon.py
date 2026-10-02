@@ -7,7 +7,6 @@ from datetime import datetime
 
 from api.councils._base import (
     Address,
-    Blocker,
     Collection,
     Http,
     InputError,
@@ -37,7 +36,6 @@ class WestDevon(Scraper):
         },
     )
     requires = frozenset({"uprn"})
-    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     headers = _HEADERS
     verify_tls = False
 

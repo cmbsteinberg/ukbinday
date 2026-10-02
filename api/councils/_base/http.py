@@ -28,7 +28,7 @@ import httpx
 from curl_cffi.requests import AsyncSession
 from curl_cffi.requests.exceptions import RequestException as CurlRequestException
 
-from api.councils._base.errors import UpstreamError
+from api.councils._base.errors import Blocker, UpstreamError
 
 Method = Literal["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
 Params = Mapping[str, str | int | float | None]
@@ -69,8 +69,25 @@ class Response:
     def text(self) -> str:
         return self.content.decode(self.encoding, errors="replace")
 
+    @property
+    def blocker(self) -> Blocker | None:
+        """BOT_PROTECTION when this is a bot wall (Cloudflare challenge or block,
+        Incapsula), else None."""
+        h = self.headers
+        if (
+            h.get("cf-mitigated") == "challenge"
+            or "x-iinfo" in h
+            or any(c.startswith(("incap_ses", "visid_incap")) for c in h.get_list("set-cookie"))
+            or (self.status_code in (403, 429) and h.get("server", "").lower() == "cloudflare")
+        ):
+            return Blocker.BOT_PROTECTION
+        return None
+
     def json(self) -> Any:
-        return jsonlib.loads(self.text)
+        try:
+            return jsonlib.loads(self.text)
+        except ValueError as exc:
+            raise UpstreamError(f"Body from {self.url} wasn't JSON", self.blocker) from exc
 
     @property
     def ok(self) -> bool:
@@ -82,7 +99,7 @@ class Response:
 
     def raise_for_status(self) -> Self:
         if not self.ok:
-            raise UpstreamError(f"HTTP {self.status_code} from {self.url}")
+            raise UpstreamError(f"HTTP {self.status_code} from {self.url}", self.blocker)
         return self
 
 

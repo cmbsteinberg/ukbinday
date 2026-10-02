@@ -45,7 +45,7 @@ logger = logging.getLogger(__name__)
 _UPRN_RE = re.compile(r"^[0-9]{1,20}$")
 
 # On a schedule answered with the fallback deeplink because the council's site
-# failed: "network", "timeout" or "error" (see ScrapeHTTPException.failure).
+# failed: "network", "blocked", "timeout" or "error" (see ScrapeHTTPException.failure).
 # The body is the frontend's deeplink shape; this keeps the failure visible to
 # the live test and to logs.
 SCRAPE_FAILURE_HEADER = "X-Scrape-Failure"

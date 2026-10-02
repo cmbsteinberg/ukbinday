@@ -67,12 +67,19 @@ class AddressNotFound(InputError):
 
 
 class UpstreamError(ScraperError):
-    """The council's site failed: unreachable, timed out, HTTP error, or blocked us."""
+    """The council's site failed: unreachable, timed out, HTTP error, or blocked us.
+
+    `blocker` is BOT_PROTECTION when the site answered with a bot wall
+    (`Response` detects it), else None."""
+
+    def __init__(self, message: str, blocker: Blocker | None = None) -> None:
+        super().__init__(message)
+        self.blocker = blocker
 
 
 class NeedsBrowser(ScraperError):
     """The council's service can't be scraped without a person at a browser."""
 
-    def __init__(self, message: str, blocker: Blocker = Blocker.BROWSER_ONLY) -> None:
+    def __init__(self, message: str, blocker: Blocker | None = None) -> None:
         super().__init__(message)
         self.blocker = blocker

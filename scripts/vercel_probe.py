@@ -27,7 +27,7 @@ What it does:
   * The live test tells `unreachable` (this machine can't reach the host) from
     `upstream_error` with a local host probe. There is no such probe from here,
     and hiding an AWS block as "unverified" would defeat the point, so a
-    network or timeout failure reported by the deployment counts as
+    network, blocked or timeout failure reported by the deployment counts as
     `upstream_error`, which scripts/lad_status.py reads as broken. The raw
     failure is kept in each case as `failure`.
   * A LAD's status comes from scripts/lad_status.py, so "working" means what

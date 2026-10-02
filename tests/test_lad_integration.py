@@ -16,7 +16,7 @@ A 200 deeplink sent because the council's site failed (the X-Scrape-Failure
 header) is classified by that failure, as the 503/504 it replaces was.
   unreachable     network error/timeout AND the scraper's host failed a
                   plain connectivity probe from this machine
-  upstream_error  network error/timeout/HTTP error but the host answers
+  upstream_error  network error/blocked/timeout/HTTP error but the host answers
   scraper_error   the scraper raised something else
 
 The LAD's status (working / broken / unverified) comes from

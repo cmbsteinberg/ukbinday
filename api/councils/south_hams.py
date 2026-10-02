@@ -6,7 +6,6 @@ from datetime import datetime
 
 from api.councils._base import (
     Address,
-    Blocker,
     Collection,
     Http,
     Meta,
@@ -33,7 +32,6 @@ class SouthHams(Scraper):
         cases={},
     )
     requires = frozenset({"uprn"})
-    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         await http.get(_PAGE, check=False)

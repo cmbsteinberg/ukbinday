@@ -87,15 +87,15 @@ def for_needs_browser(meta, reason: str, blocker: Blocker | None = None) -> Deep
     return _for_scraper(meta, meta.url or meta.govuk_url, reason, blocker)
 
 
-def for_upstream_failure(meta) -> Deeplink | None:
+def for_upstream_failure(meta, exc: Exception) -> Deeplink | None:
     """The deeplink for a wired council whose site failed (down, erroring, timed out).
 
     URL: the LAD's GOV.UK page first (Local Links Manager is maintained
     centrally, so it outlives a council's site reshuffle), else the scraper's
-    ``url``. A module marked BOT_PROTECTION (its site blocks our host) says so;
-    any other failure is SITE_DOWN.
+    ``url``. Blocker: BOT_PROTECTION when the site answered with a bot wall
+    (the ``UpstreamError`` says so), else SITE_DOWN.
     """
-    if meta.blocker == Blocker.BOT_PROTECTION:
+    if getattr(exc, "blocker", None) == Blocker.BOT_PROTECTION:
         blocker = Blocker.BOT_PROTECTION
         reason = (
             f"{meta.title}'s website blocks automated lookups from our servers; "

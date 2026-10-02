@@ -9,7 +9,6 @@ from typing import Any
 from api.councils._base import (
     Address,
     AddressNotFound,
-    Blocker,
     Collection,
     Http,
     InputError,
@@ -76,7 +75,6 @@ class Enfield(Scraper):
         },
     )
     requires = frozenset()
-    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     headers = _HEADERS
     transport = Transport.CURL_CFFI
 

@@ -59,10 +59,9 @@ class Scraper(ABC):
     `NeedsBrowser` with it and makes no request; `fetch` is kept for if the
     council drops the barrier."""
     blocker: Blocker | None = None
-    """What stands in the way, named in the deeplink. With `needs_browser`, the
-    kind of wall (default BROWSER_ONLY). Without it, what a failed scrape means:
-    BOT_PROTECTION for a site known to block our host's IPs, so the deeplink
-    says so rather than calling the site down."""
+    """With `needs_browser`, the kind of wall named in the deeplink (default
+    BROWSER_ONLY). A blocked scrape is detected from the response instead
+    (`Response.blocker`)."""
 
     @abstractmethod
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
@@ -108,7 +107,7 @@ async def run(scraper: Scraper, params: Mapping[str, object]) -> list[Collection
     The caller owns the overall timeout.
     """
     if scraper.needs_browser:
-        raise NeedsBrowser(scraper.needs_browser, scraper.blocker or Blocker.BROWSER_ONLY)
+        raise NeedsBrowser(scraper.needs_browser, scraper.blocker)
     address = Address.from_params(params)
     if missing := address.missing(scraper.requires):
         raise InputError(f"{scraper.meta.title} needs {', '.join(missing)}")

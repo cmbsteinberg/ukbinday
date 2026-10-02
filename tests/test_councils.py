@@ -4,18 +4,22 @@ from __future__ import annotations
 
 from datetime import date
 
+import httpx
 import pytest
 
 from api.councils._base import (
     Address,
+    Blocker,
     Collection,
     Icon,
     Scraper,
+    UpstreamError,
     colour_of,
     match_address,
     parse_date,
 )
 from api.councils._base.discovery import by_lad, load, module_names
+from api.councils._base.http import Response
 from api.councils._base.scraper import tidy
 
 pytestmark = pytest.mark.ci
@@ -107,3 +111,30 @@ def test_tidy_dedupes_sorts_and_fills_icons() -> None:
 )
 def test_colour_of(label: str, colour: str | None) -> None:
     assert colour_of(label) == colour
+
+
+def _response(status: int, headers: dict[str, str] | None = None, body: bytes = b"") -> Response:
+    return Response(status, "https://example.test/x", httpx.Headers(headers or {}), body, "utf-8")
+
+
+def test_response_detects_bot_walls() -> None:
+    with pytest.raises(UpstreamError) as exc:
+        _response(403, {"cf-mitigated": "challenge"}).raise_for_status()
+    assert exc.value.blocker == Blocker.BOT_PROTECTION
+    assert _response(403, {"server": "cloudflare"}).blocker == Blocker.BOT_PROTECTION
+    assert _response(200, {"x-iinfo": "1-2-3"}).blocker == Blocker.BOT_PROTECTION
+    assert _response(200, {"set-cookie": "visid_incap_1=abc; path=/"}).blocker == Blocker.BOT_PROTECTION
+    with pytest.raises(UpstreamError) as exc:
+        _response(503).raise_for_status()
+    assert exc.value.blocker is None
+    assert _response(503, {"server": "cloudflare"}).blocker is None  # a plain outage behind Cloudflare
+
+
+def test_response_json_not_json_is_upstream_error() -> None:
+    with pytest.raises(UpstreamError) as exc:
+        _response(200, body=b"<html>").json()
+    assert "wasn't JSON" in str(exc.value) and exc.value.blocker is None
+    with pytest.raises(UpstreamError) as exc:
+        _response(200, {"cf-mitigated": "challenge"}, b"<html>").json()
+    assert exc.value.blocker == Blocker.BOT_PROTECTION
+    assert _response(200, body=b'{"a": 1}').json() == {"a": 1}
