@@ -17,7 +17,7 @@
 # everything else in the zone is left alone. Existing records are overwritten in place
 # where possible, so a name is never without an answer for more than one API call.
 # Env: CLOUDFLARE_API_TOKEN (Zone DNS Edit on the zone; see cf_setup.sh), DOMAIN (default
-# ukbinday.co.uk). Needs a linked project, vercel login, jq.
+# ukbinday.co.uk), VERCEL_BYPASS (Deployment Protection bypass, for the health check). Needs a linked project, vercel login, jq.
 set -euo pipefail
 
 DOMAIN="${DOMAIN:-ukbinday.co.uk}"
@@ -91,7 +91,9 @@ fi
 # Production must answer before any DNS moves
 PROD="$("${VERCEL[@]}" api "/v6/deployments?projectId=$PROJECT&target=production&state=READY&limit=1" --raw | jq -r '.deployments[0].url // empty')"
 [ -n "$PROD" ] || { echo "cutover: no ready production deployment; run the deploy-vercel job first" >&2; exit 1; }
-code="$(curl -s -o /dev/null -w '%{http_code}' "https://$PROD/api/v2/status")"
+# Standard Deployment Protection covers *.vercel.app URLs (not the custom domain), so
+# send the automation bypass secret when there is one, as spike.sh and probe.sh do
+code="$(curl -s -o /dev/null -w '%{http_code}' ${VERCEL_BYPASS:+-H "x-vercel-protection-bypass: $VERCEL_BYPASS"} "https://$PROD/api/v2/status")"
 echo "cutover: production $PROD /api/v2/status -> $code"
 [ "$code" = 200 ] || { echo "cutover: production isn't healthy (Deployment Protection on production would also do this)" >&2; exit 1; }
 
@@ -108,7 +110,10 @@ echo "cutover: Vercel wants $DOMAIN A $IP, www.$DOMAIN CNAME $CNAME"
 
 STAMP="$(date +%Y%m%d-%H%M%S)"
 SAVE=".vercel/dns_backup_$STAMP.json"
-jq -n --arg a "$DOMAIN" --arg w "www.$DOMAIN" --argjson ra "$(current "$DOMAIN")" --argjson rw "$(current "www.$DOMAIN")" \
+# Plain assignments, so a failed API call stops the script (set -e) before anything is saved
+REC_APEX="$(current "$DOMAIN")"
+REC_WWW="$(current "www.$DOMAIN")"
+jq -n --arg a "$DOMAIN" --arg w "www.$DOMAIN" --argjson ra "$REC_APEX" --argjson rw "$REC_WWW" \
   '{($a): $ra, ($w): $rw}' > "$SAVE"
 echo "cutover: current records saved to $SAVE"
 jq -r 'to_entries[] | .key as $n | .value[] | "  \($n): \(.type) \(.content) (proxied \(.proxied))"' "$SAVE"
