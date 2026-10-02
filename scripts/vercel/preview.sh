@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build locally and deploy a Vercel preview; the preview URL is the last line of stdout.
+# Deploy a Vercel preview (built remotely by Vercel); the preview URL is the last line of stdout.
 # Serves VERCEL.md phase 0 (spike) and phase 4 (council probe against a preview).
 #
 #   URL=$(scripts/vercel/preview.sh)
@@ -18,8 +18,8 @@ if [ ! -f .vercel/project.json ]; then
   exit 1
 fi
 
-# Env vars for the preview environment, then a local build into .vercel/output
-"${VERCEL[@]}" pull --yes --environment=preview >&2
-"${VERCEL[@]}" build >&2            # no --prod: a preview build
-# stdout of `deploy` is always the deployment URL (Vercel CLI docs)
-"${VERCEL[@]}" deploy --prebuilt | tail -n 1
+# Vercel builds from the upload, which honours .vercelignore and leaves out .env* files.
+# A local `vercel build` + `deploy --prebuilt` doesn't: the Python builder put .env.local
+# (and other ignored root files) in the function's file map, and the deploy then failed.
+# stdout of `deploy` carries the URL (now inside trailing JSON); pick it out
+"${VERCEL[@]}" deploy | grep -Eo 'https://[^" ]+\.vercel\.app' | tail -n 1

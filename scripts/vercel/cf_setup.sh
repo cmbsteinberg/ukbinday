@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 # Create the R2 bucket and a bucket-scoped S3 key, and write R2_* into an env file.
 # Serves VERCEL.md phase 1 (ICS cache to R2). Safe to re-run: an existing bucket is kept,
-# and a new key is minted each time (delete old ones under My Profile -> API Tokens).
+# and a new key is minted each time (delete old ones under Manage Account -> Account API Tokens).
 #
 #   CLOUDFLARE_API_TOKEN=... scripts/vercel/cf_setup.sh /tmp/vercel.env
 #
 # Before running, in the dashboard:
 #   1. R2 -> enable it (adds the payment method; R2 bills past the free tier).
-#   2. My Profile -> API Tokens -> Create Custom Token, with
+#   2. Manage Account -> Account API Tokens -> Create Token, with
 #        Account / Workers R2 Storage / Edit     (create the bucket)
-#        User    / API Tokens        / Edit      (mint the bucket-scoped key)
+#        Account / Account API Tokens / Edit     (mint the bucket-scoped key)
 #        Zone    / DNS               / Edit, zone ukbinday.co.uk   (for cutover.sh)
 #      That is CLOUDFLARE_API_TOKEN, used by this script and cutover.sh. The app never sees it.
 #
-# The S3 key comes from the Cloudflare docs (r2/api/tokens): a user token with
+# The S3 key comes from the Cloudflare docs (r2/api/tokens): an account token with
 # "Workers R2 Storage Bucket Item Write" on the bucket resource; Access Key ID is the token
 # id, Secret Access Key is the SHA-256 of the token value.
 # Env: CLOUDFLARE_API_TOKEN (required), R2_BUCKET (default bins), CF_ACCOUNT_ID (default:
@@ -58,12 +58,12 @@ else
   echo "cf_setup: created bucket $BUCKET (weur)"
 fi
 
-GROUP="$(cf GET /user/tokens/permission_groups | jq -r '.[] | select(.name == "Workers R2 Storage Bucket Item Write") | .id')"
+GROUP="$(cf GET "/accounts/$ACCOUNT/tokens/permission_groups" | jq -r '.[] | select(.name == "Workers R2 Storage Bucket Item Write") | .id')"
 [ -n "$GROUP" ] || { echo "cf_setup: permission group not found" >&2; exit 1; }
 BODY="$(jq -nc --arg g "$GROUP" --arg r "com.cloudflare.edge.r2.bucket.${ACCOUNT}_default_${BUCKET}" \
   --arg n "bins-r2-$BUCKET-$(date +%Y%m%d)" \
   '{name: $n, policies: [{effect: "allow", resources: {($r): "*"}, permission_groups: [{id: $g}]}]}')"
-token="$(cf POST /user/tokens "$BODY")"
+token="$(cf POST "/accounts/$ACCOUNT/tokens" "$BODY")"
 
 set_var R2_ACCOUNT_ID "$ACCOUNT"
 set_var R2_BUCKET "$BUCKET"

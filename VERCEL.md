@@ -31,7 +31,7 @@ scripts has run against real Vercel or R2 yet.
 
 | Script | Phase | What it does |
 |---|---|---|
-| `preview.sh` | 0 | `vercel pull` / `build` / `deploy --prebuilt` to a preview; prints only the URL, so `URL=$(scripts/vercel/preview.sh)` works. Needs `npx vercel@latest link` once |
+| `preview.sh` | 0 | `vercel deploy` to a preview, built remotely by Vercel (a local `vercel build` put `.env.local` and other ignored files in the function); prints only the URL, so `URL=$(scripts/vercel/preview.sh)` works. Needs `npx vercel@latest link` once |
 | `spike.sh <url>` | 0 | PASS/FAIL checks: cold start, `lhr1` in `x-vercel-id`, `/councils`, `/council`, a `/lookup` each for a curl_cffi, a PDF and a plain httpx council (cases read from `lad_test_cases.json`), a static file, `/calendar` |
 | `logs.sh <url>` | 0, 5 | `vercel inspect` plus recent error logs (Hobby keeps an hour) |
 | `env.example`, `env_push.sh <file> [production\|preview]` | 4 | Pushes the expected env vars to Vercel (unknown keys rejected, values on stdin, generates `CRON_SECRET` if absent). Vercel stores them as sensitive and won't show them again, so keep your own `CRON_SECRET` if you want to call `refresh_now.sh` |
@@ -402,7 +402,8 @@ Small changes, each independent:
 - **CI.** `.github/workflows/deploy.yml` runs `smoke-test`, then two deploy jobs: the
   Hetzner `appleboy/ssh-action` job (git reset, rewrite `.env` with the Turnstile secrets,
   `docker compose up -d --build`, flush rate-limit keys), unchanged, and `deploy-vercel`
-  (`vercel pull`, `vercel build --prod`, `vercel deploy --prebuilt --prod`). The Vercel
+  (`vercel deploy --prod`, built remotely: the upload honours `.vercelignore`, a local
+  `vercel build` didn't). The Vercel
   job skips itself until the `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`
   secrets exist. Both deploy on every push until phase 6, so either can serve the domain.
   `vercel.json` turns off Vercel's own Git deploys, so a failing smoke test still blocks

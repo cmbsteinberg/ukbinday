@@ -75,29 +75,13 @@ jobs:
       - uses: actions/checkout@v4
         if: steps.gate.outputs.enabled == 'true'
 
-      # The local `vercel build` resolves the Python runtime and installs dependencies
-      # with uv, so match the Vercel runtime (Python 3.13, x86_64 Linux).
-      - uses: actions/setup-python@v5
-        if: steps.gate.outputs.enabled == 'true'
-        with:
-          python-version: "3.13"
-
-      - uses: astral-sh/setup-uv@v4
-        if: steps.gate.outputs.enabled == 'true'
-
+      # Vercel builds from the upload, which honours .vercelignore (and never includes
+      # .env* files); a local `vercel build` put ignored root files in the function.
       - uses: actions/setup-node@v4
         if: steps.gate.outputs.enabled == 'true'
         with:
           node-version: 22
 
-      - name: Pull Vercel project settings
-        if: steps.gate.outputs.enabled == 'true'
-        run: npx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
-
-      - name: Build
-        if: steps.gate.outputs.enabled == 'true'
-        run: npx vercel@latest build --prod --token="$VERCEL_TOKEN"
-
       - name: Deploy
         if: steps.gate.outputs.enabled == 'true'
-        run: npx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+        run: npx vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN"
