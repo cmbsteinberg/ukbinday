@@ -129,11 +129,6 @@ else
     ((PASSED++))
 fi
 
-echo ""
-echo "--- Redis Connectivity ---"
-# Health endpoint should reflect redis status when REDIS_URL is set
-assert_json_field "Health includes redis info" "$BASE_URL/api/v2/health" "isinstance(data, list)"
-
 # --- Summary ---
 
 echo ""

@@ -64,7 +64,7 @@ def client(docker_stack):
 
 
 def test_health(client):
-    """App boots and connects to Redis."""
+    """App boots and answers the health route."""
     resp = client.get("/api/v2/health")
     assert resp.status_code == 200
     assert isinstance(resp.json(), list)

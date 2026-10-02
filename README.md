@@ -116,13 +116,11 @@ Upstream still fixes its scrapers when a council changes its site. `scripts/upst
 
 ## Deployment
 
-Docker Compose stack: API + Redis + Caddy (reverse proxy, auto TLS) + Uptime Kuma (monitoring).
+Production runs on Vercel, with the calendar cache in Cloudflare R2; every push to `main` deploys it (see [VERCEL.md](VERCEL.md)). Locally, Docker Compose runs the API alone:
 
 ```bash
 docker compose up --build
 ```
-
-See [deploy/deployment.md](deploy/deployment.md) for Hetzner provisioning and production setup.
 
 ## Linting
 

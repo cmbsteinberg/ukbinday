@@ -1,8 +1,9 @@
 # Moving off Hetzner: Vercel + Cloudflare
 
-Status: revised 2026-10-01. The tidy-up has landed, and the in-repo work (phases 1-4)
-is on `feature/vercel-migration`. What's left is outside the repo: the phase 0 spike,
-R2 and Vercel setup, the council probe against a preview, and the cutover.
+Status: done 2026-10-02. ukbinday.co.uk serves from Vercel (lhr1) with the calendars in
+R2; the Hetzner stack was stopped and decommissioned the same day as the cutover, not two
+weeks later, since traffic is low. Open: 14 councils that block Vercel's egress IPs
+answer with a deeplink (re-probe with `scripts/vercel_probe.py`), and the monitors below.
 
 The modules in `api/councils/` are the only scrapers. `ScraperRegistry.invoke()` has one
 path (`api.councils._base.run`), and every outbound request goes through the harness
