@@ -172,7 +172,9 @@ async def calendar_response(
             status_code=503,
             detail="Calendar temporarily unavailable. Please try again later.",
         )
-    headers = {}
+    # Shared caches (Vercel's CDN, Cloudflare) hold it for 12 h: the data only
+    # changes on the nightly refresh, and it keeps polls off the function.
+    headers = {"Cache-Control": "public, s-maxage=43200"}
     if attachment:
         headers["Content-Disposition"] = f'attachment; filename="bins-{_safe_uprn_filename(uprn)}.ics"'
     return Response(content=ics_bytes, media_type="text/calendar", headers=headers)
