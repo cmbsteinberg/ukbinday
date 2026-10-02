@@ -18,6 +18,7 @@ from fastapi import APIRouter, Depends, Path, Query, Request
 from fastapi.responses import Response
 
 from api.routes import schedule
+from api.routes.internal import require_cron_secret
 from api.services.models import FindResponse, ScheduleResponse
 from api.services.rate_limiting import rate_limit
 
@@ -53,13 +54,17 @@ async def view(
     lad: str = LAD_PATH,
     postcode: str | None = None,
     address: str | None = None,
+    fresh: bool = Query(False, include_in_schema=False),
     _rate_limit: None = Depends(rate_limit),
 ):
     """Collection dates, ascending; a deeplink instead when we can't fetch them.
 
     Councils that need more than the UPRN (postcode, address label,
     property_id, usrn...) take it as query params; /councils lists them."""
-    return await schedule.get_schedule(request, response, uprn, lad)
+    # `fresh` scrapes past the cache (scripts/vercel_probe.py), so it needs the cron secret
+    if fresh:
+        await require_cron_secret(request)
+    return await schedule.get_schedule(request, response, uprn, lad, fresh=fresh)
 
 
 @router.get("/{lad}/subscribe/{uprn}", response_class=Response)

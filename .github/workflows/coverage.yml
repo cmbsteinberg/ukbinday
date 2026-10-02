@@ -1,0 +1,53 @@
+name: Coverage
+
+# Weekly: run every council's test cases against production (live scrapes, past the
+# calendar cache), then rebuild the working flags, coverage map, README badge and
+# sankey from that run and commit them. Production is the truth here: a council that
+# blocks Vercel's IPs passes from a laptop and fails from there.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: coverage
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Probe production
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          [ -n "$CRON_SECRET" ] || { echo "::error::CRON_SECRET secret not set"; exit 1; }
+          uv run python -m scripts.vercel_probe --base-url https://ukbinday.co.uk \
+            --all-sources --concurrency 6 --write-output
+
+      - name: Rebuild flags, coverage map, badge and sankey
+        run: ./pipeline/ci/post_integration.sh
+
+      - name: Commit and redeploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -A tests/output api/data/lad_lookup.json api/static README.md badge_coverage.json
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -m "Coverage from production ($(date -u +%Y-%m-%d))"
+          git push
+          # A push with the workflow token doesn't trigger workflows; a dispatch does.
+          # The coverage page and lad_lookup.json ship with the app.
+          gh workflow run deploy.yml --ref main

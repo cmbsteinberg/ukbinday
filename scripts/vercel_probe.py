@@ -34,9 +34,18 @@ What it does:
     it means in the live test. It is compared with the status in
     tests/output/lad_integration_output.json (--baseline to use another file).
 
+  * Production answers /view from its calendar cache, which would report a
+    council as working for as long as its cached data lasts. --cron-secret
+    (env CRON_SECRET) sends `fresh=1` with the secret, so every case is a
+    live scrape that neither reads nor writes the cache.
+
 Output: regressions (working locally, not from the deployment) with each
 case's outcome, improvements, and a count of the unchanged. Exit code 1 if
 there are any regressions. --json writes the full per-LAD results.
+--write-output replaces tests/output/lad_integration_output.json with this
+run, in the live test's shape, so ./pipeline/ci/post_integration.sh builds
+the flags, coverage map, badge and sankey from production (the Coverage
+workflow does this weekly); the exit code is then 0.
 """
 
 from __future__ import annotations
@@ -83,16 +92,20 @@ async def probe(
     concurrency: int,
     bypass_secret: str | None = None,
     log=lambda _msg: None,
+    cron_secret: str | None = None,
 ) -> dict[str, dict]:
-    """LAD code -> {name, scraper_id, fixture_only, status, reason, cases} for the deployment."""
+    """LAD code -> {name, scraper_id, fixture_only, status, reason, passed_sources, cases} for the deployment."""
     headers = {"x-vercel-protection-bypass": bypass_secret} if bypass_secret else {}
+    if cron_secret:
+        headers["Authorization"] = f"Bearer {cron_secret}"
     jobs: dict[str, tuple[str, dict]] = {}
     for code, entry in lads.items():
         for case in entry["cases"]:
             jobs.setdefault(job_key(entry["scraper_id"], case["params"]), (code, case["params"]))
 
     async with httpx.AsyncClient(
-        base_url=base_url.rstrip("/") + "/api/v2", timeout=REQUEST_TIMEOUT, headers=headers, follow_redirects=True
+        base_url=base_url.rstrip("/") + "/api/v2", timeout=REQUEST_TIMEOUT, headers=headers,
+        params={"fresh": "1"} if cron_secret else None, follow_redirects=True,
     ) as client:
         done = 0
 
@@ -133,9 +146,28 @@ async def probe(
             "fixture_only": fixture_only,
             "status": status,
             "reason": reason,
+            "passed_sources": sorted({c["source"] for c in cases if c["outcome"] == "pass"}),
             "cases": cases,
         }
     return out
+
+
+def write_output(remote: dict[str, dict], path: Path, meta: dict) -> None:
+    """This run as the live test's output file (meta, summary, lads)."""
+    summary = {
+        "lads": len(remote),
+        "status": dict(Counter(r["status"] for r in remote.values())),
+        "outcomes_by_source": {
+            s: dict(Counter(c["outcome"] for r in remote.values() for c in r["cases"] if c["source"] == s))
+            for s in ("sampled", "fixture")
+        },
+        "passed_sources": dict(Counter("+".join(r["passed_sources"]) or "-" for r in remote.values())),
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps({"meta": meta, "summary": summary, "lads": dict(sorted(remote.items()))}, indent=2, default=str)
+        + "\n"
+    )
 
 
 def diff(remote: dict[str, dict], baseline: dict[str, dict]) -> dict[str, list[str]]:
@@ -201,6 +233,12 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         default=os.environ.get("VERCEL_AUTOMATION_BYPASS_SECRET"),
         help="Vercel Deployment Protection bypass secret (env VERCEL_AUTOMATION_BYPASS_SECRET)",
     )
+    p.add_argument(
+        "--cron-secret",
+        default=os.environ.get("CRON_SECRET"),
+        help="the deployment's CRON_SECRET (env CRON_SECRET): scrape live, past the calendar cache",
+    )
+    p.add_argument("--write-output", action="store_true", help=f"replace {LAD_OUTPUT_PATH.name} with this run")
     return p.parse_args(argv)
 
 
@@ -219,7 +257,12 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"Probing {args.base_url}: {len(lads)} LADs, concurrency {args.concurrency}")
     started, t0 = datetime.now(UTC), time.monotonic()
-    remote = asyncio.run(probe(args.base_url, lads, args.concurrency, args.bypass_secret, log=lambda m: print(m, end="", file=sys.stderr)))
+    remote = asyncio.run(
+        probe(
+            args.base_url, lads, args.concurrency, args.bypass_secret,
+            log=lambda m: print(m, end="", file=sys.stderr), cron_secret=args.cron_secret,
+        )
+    )
     groups = diff(remote, baseline)
     report(remote, baseline, groups)
 
@@ -243,6 +286,22 @@ def main(argv: list[str] | None = None) -> int:
             + "\n"
         )
         print(f"\nWrote {args.json_out}")
+    if args.write_output:
+        write_output(
+            remote,
+            LAD_OUTPUT_PATH,
+            {
+                "started_at": started.isoformat(timespec="seconds"),
+                "wall_clock_s": round(time.monotonic() - t0, 1),
+                "base_url": args.base_url,
+                "cases_file": str(args.cases),
+                "fresh": bool(args.cron_secret),
+                "partial": bool(args.lad),
+                "lads_run": sorted(remote) if args.lad else "all",
+            },
+        )
+        print(f"Wrote {LAD_OUTPUT_PATH}")
+        return 0
     return 1 if groups["regressions"] else 0
 
 

@@ -3,6 +3,7 @@ name: Deploy
 on:
   push:
     branches: [main]
+  workflow_dispatch:  # the Coverage workflow redeploys after committing its results
 
 concurrency:
   group: deploy

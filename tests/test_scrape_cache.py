@@ -89,3 +89,23 @@ async def test_calendar_rejects_placeholder_uprn(client):
     for kind in ("subscribe", "download"):
         r = await client.get(f"/{A}/{kind}/0", params={"postcode": "CB1 1AA", "house_number": "1"})
         assert r.status_code == 422
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_fresh_scrapes_past_the_cache_with_the_cron_secret(client, monkeypatch):
+    from api import config
+
+    monkeypatch.setattr(config, "CRON_SECRET", "s3cret")
+    uprn, params = "999000333444", {"postcode": "CB1 1AA", "house_number": "7"}
+    assert not (await client.get(f"/{A}/view/{uprn}", params=params)).json()["cached"]
+    assert (await client.get(f"/{A}/view/{uprn}", params=params)).json()["cached"]
+
+    # Without the secret, fresh is refused rather than ignored
+    assert (await client.get(f"/{A}/view/{uprn}", params={**params, "fresh": "1"})).status_code == 401
+
+    calls = len(client.calls)
+    r = await client.get(
+        f"/{A}/view/{uprn}", params={**params, "fresh": "1"}, headers={"Authorization": "Bearer s3cret"}
+    )
+    assert r.status_code == 200 and not r.json()["cached"]
+    assert len(client.calls) == calls + 1

@@ -83,14 +83,17 @@ def _dates(lad: str, collections: Iterable[tuple[date | str, str, str | None]]) 
     ]
 
 
-async def get_schedule(request: Request, response: Response, uprn: str, council: str) -> ScheduleResponse:
+async def get_schedule(
+    request: Request, response: Response, uprn: str, council: str, *, fresh: bool = False
+) -> ScheduleResponse:
     """Collection dates for a UPRN: cache or scrape, or the deeplink to send the user to.
 
     `council` may be an old scraper ID; the answer carries the public one (the
     LAD code) for a wired council. When the answer is the upstream-failure
     deeplink, `X-Scrape-Failure` goes on `response`. Raises the mapped HTTP
     error (404 unknown council, 422 bad input, 503/504 when the site failed
-    and there's no deeplink to fall back on).
+    and there's no deeplink to fall back on). `fresh` scrapes without reading
+    or writing the cache, as for UPRN 0.
     """
     meta = request.app.state.registry.get(council)
     if meta is None:
@@ -106,7 +109,7 @@ async def get_schedule(request: Request, response: Response, uprn: str, council:
         # answer, cache and log under the public ID (the LAD code)
         params = build_scrape_params(meta, council, uprn, request.query_params)
 
-        if not is_cacheable_uprn(uprn):
+        if fresh or not is_cacheable_uprn(uprn):
             collections = await live_scrape(request, meta.id, params)
             return ScheduleResponse(
                 uprn=uprn,
