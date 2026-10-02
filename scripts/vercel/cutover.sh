@@ -5,6 +5,7 @@
 #
 #   scripts/vercel/cutover.sh --dry-run          # print the record changes, change nothing
 #   scripts/vercel/cutover.sh                    # add domains to Vercel, swap the records
+#   scripts/vercel/cutover.sh --yes              # the same without the typed confirmation (no tty, e.g. `!`)
 #   scripts/vercel/cutover.sh --rollback .vercel/dns_backup_<stamp>.json
 #
 # Steps: check the latest production deployment answers /api/v2/status; `vercel domains add`
@@ -22,18 +23,21 @@ set -euo pipefail
 
 DOMAIN="${DOMAIN:-ukbinday.co.uk}"
 NAMES=("$DOMAIN" "www.$DOMAIN")
-MODE=run BACKUP=""
+MODE=run BACKUP="" YES=""
 case "${1:-}" in
   '') ;;
+  --yes) YES=1 ;;
   --dry-run) MODE=dry ;;
   --rollback) MODE=rollback; BACKUP="${2:?usage: $0 --rollback <backup.json>}"; [ -f "$BACKUP" ] || { echo "cutover: $BACKUP not found" >&2; exit 2; } ;;
-  *) echo "usage: $0 [--dry-run | --rollback <backup.json>]" >&2; exit 2 ;;
+  *) echo "usage: $0 [--dry-run | --yes | --rollback <backup.json> [--yes]]" >&2; exit 2 ;;
 esac
+[ "${3:-}" = --yes ] && YES=1
 : "${CLOUDFLARE_API_TOKEN:?set CLOUDFLARE_API_TOKEN}"
 cd "$(dirname "${BASH_SOURCE[0]}")/../.."
 [ -f .vercel/project.json ] || { echo "cutover: project not linked; run: npx vercel@latest link" >&2; exit 1; }
 VERCEL=(npx --yes vercel@latest)
 PROJECT="$(jq -r .projectId .vercel/project.json)"
+ORG="$(jq -r .orgId .vercel/project.json)"
 API=https://api.cloudflare.com/client/v4
 
 cf() {  # cf METHOD PATH [JSON]; prints .result, exits on API errors
@@ -73,6 +77,7 @@ apply() {  # apply NAME DESIRED_JSON_ARRAY: make NAME's A/AAAA/CNAME records exa
 }
 
 confirm() {
+  [ -n "$YES" ] && return 0
   local reply; read -r -p "Type $1 to go ahead: " reply </dev/tty
   [ "$reply" = "$1" ] || { echo "cutover: not confirmed, nothing changed" >&2; exit 1; }
 }
@@ -99,7 +104,9 @@ echo "cutover: production $PROD /api/v2/status -> $code"
 
 if [ "$MODE" = run ]; then
   for name in "${NAMES[@]}"; do
-    "${VERCEL[@]}" domains add "$name" >&2 || echo "cutover: domains add $name failed (fine if it's already on the project)" >&2
+    # The API rather than `vercel domains add`, which answered "User not found" for a team project
+    "${VERCEL[@]}" api "/v10/projects/$PROJECT/domains?teamId=$ORG" -X POST -F "name=$name" --raw >/dev/null 2>&1 \
+      || echo "cutover: adding $name to the project failed (fine if it's already there)" >&2
   done
 fi
 
