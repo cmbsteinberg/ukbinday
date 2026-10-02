@@ -68,12 +68,12 @@ async def test_councils_and_health(client):
 
 @pytest.mark.asyncio(loop_scope="session")
 async def test_only_v2_is_mounted(client):
+    # /api/v1/calendar stays, for old subscriptions (test_v2_routes covers it)
     assert (await client.get("/api/v2/councils")).status_code == 200
     assert (await client.get("/api/councils")).status_code == 404
     for path in (
         "/api/v1/councils",
         "/api/v1/lookup/123456?council=E06000001",
-        "/api/v1/calendar/123456?council=E06000001",
         "/api/v1/council/TS260BL",
         "/api/v1/docs",
     ):

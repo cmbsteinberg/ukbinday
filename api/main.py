@@ -19,6 +19,7 @@ from starlette.templating import Jinja2Templates
 from api import config
 from api.logging_config import setup_logging
 from api.routes import router as api_router
+from api.routes.legacy import router as legacy_router
 from api.services.blob_store import from_config
 from api.services.council_lookup import CouncilLookup
 from api.services.ics_cache import IcsCache
@@ -186,6 +187,8 @@ async def log_requests(request: Request, call_next):
 
 # API routes
 app.include_router(api_router, prefix="/api/v2")
+# Old calendar subscriptions (/api/v1/calendar/{uprn}?council=) keep updating
+app.include_router(legacy_router, prefix="/api/v1")
 
 
 # Static files

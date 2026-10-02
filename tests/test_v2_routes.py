@@ -298,6 +298,19 @@ async def test_subscribe_and_download_serve_the_ics(client, stub):
     assert dl.content == sub.content
 
 
+@pytest.mark.asyncio(loop_scope="session")
+async def test_v1_calendar_subscriptions_still_serve_the_feed(client, stub):
+    # Pre-v2 subscriptions carry /api/v1/calendar/{uprn}?council=<LAD or old ID>
+    stub("hartlepool", [Collection(soon(), "Refuse")])
+    uprn = fresh_uprn()
+    sub = await client.get(f"/v2/{HARTLEPOOL}/subscribe/{uprn}")
+    for council in (HARTLEPOOL, HARTLEPOOL_OLD):
+        old = await client.get(f"/v1/calendar/{uprn}", params={"council": council})
+        assert old.status_code == 200, old.text
+        assert old.headers["content-type"].startswith("text/calendar")
+        assert old.content == sub.content
+
+
 # --- find ---------------------------------------------------------------------------
 
 ADDRESS = {
