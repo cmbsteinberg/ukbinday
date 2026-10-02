@@ -90,7 +90,10 @@ class Bolsover(Scraper):
             params=params,
         )
 
-        rows_data = r.json()["integration"]["transformed"]["rows_data"]["0"]
+        body = r.json()
+        if body.get("status") == "error" or "integration" not in body:
+            raise UpstreamError(f"Bolsover's lookup backend returned an error: {str(body)[:200]}")
+        rows_data = body["integration"]["transformed"]["rows_data"].get("0")
         if not isinstance(rows_data, dict):
             raise UpstreamError("Invalid data returned from Bolsover's API")
 

@@ -35,6 +35,8 @@ class ArdsAndNorthDown(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         r = await http.get(_API_URL.format(uprn=address.need("uprn").strip()))
         html = r.json().get("calendarHTML", "")
+        if html.startswith("UnableToContinue"):  # the calendar service's own backend refused it
+            raise UpstreamError(f"Ards and North Down calendar backend error: {html.split('<', 1)[0]}")
         page = soup(html)
 
         bin_type_translation: dict[str, str] = {}

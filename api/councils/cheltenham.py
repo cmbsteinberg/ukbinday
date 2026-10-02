@@ -38,6 +38,10 @@ _HEADERS = {
 }
 
 
+def _has_rows(html: str) -> bool:
+    return soup(html).find("tr", attrs={"data-base_object_id": _SCHEDULE_OBJECT_ID, "data-record_id": True}) is not None
+
+
 def _parse_schedule(html: str, property_id: str) -> list[Collection]:
     page = soup(html)
     rows = page.find_all("tr", attrs={"data-base_object_id": _SCHEDULE_OBJECT_ID})
@@ -81,7 +85,6 @@ class Cheltenham(Scraper):
             "Second property": {"property_id": "55297"},
         },
     )
-    needs_browser = "Cheltenham's bin lookup now needs an interactive page flow."
     requires = frozenset({"property_id"})
     headers = _HEADERS
 
@@ -92,32 +95,45 @@ class Cheltenham(Scraper):
             f"?webpage_subpage_id={_SUBPAGE_ID}&webpage_token={_WEBPAGE_TOKEN}"
         )
 
-        r1 = await http.get(page_url)
-        data1 = r1.json().get("data", "")
+        async def search() -> str:
+            r1 = await http.get(page_url)
+            data1 = r1.json().get("data", "")
 
-        form_check_match = re.search(r'name="form_check" value="([a-f0-9]+)"', data1)
-        if not form_check_match:
-            raise UpstreamError("Could not extract CSRF token from Cheltenham's form response")
-        form_check = form_check_match.group(1)
+            form_check_match = re.search(r'name="form_check" value="([a-f0-9]+)"', data1)
+            if not form_check_match:
+                raise UpstreamError("Could not extract CSRF token from Cheltenham's form response")
+            collection_key_match = re.search(r'data-unique_key="(C_[a-f0-9]+)"', data1)
+            if not collection_key_match:
+                raise UpstreamError(
+                    "Could not extract collection key from Cheltenham's form response"
+                )
+            key = collection_key_match.group(1)
+            prefix = f"payload[{_SUBPAGE_ID}][{_WIDGET_GROUP_ID}][{_CELL_ID}][search][{key}]"
+            r2 = await http.post(
+                page_url,
+                data={
+                    "form_check": form_check_match.group(1),
+                    "submitted_page_storage_key": "/w/webpage/collection-lookup",
+                    "submitted_page_id": _SUBPAGE_ID,
+                    "submitted_widget_group_id": _WIDGET_GROUP_ID,
+                    "submitted_widget_group_type": "search",
+                    f"{prefix}[{_FRAGMENT_ID}]": property_id,
+                    f"{prefix}[{_SUBMIT_FRAGMENT_ID}]": "Next",
+                },
+            )
+            return r2.json().get("data", "")
 
-        collection_key_match = re.search(r'data-unique_key="(C_[a-f0-9]+)"', data1)
-        if not collection_key_match:
-            raise UpstreamError("Could not extract collection key from Cheltenham's form response")
-        collection_key = collection_key_match.group(1)
-
-        r2 = await http.post(
-            page_url,
-            data={
-                "form_check": form_check,
-                "submitted_page_storage_key": "/w/webpage/collection-lookup",
-                "submitted_page_id": _SUBPAGE_ID,
-                "submitted_widget_group_id": _WIDGET_GROUP_ID,
-                "submitted_widget_group_type": "search",
-                f"payload[{_SUBPAGE_ID}][{_WIDGET_GROUP_ID}][{_CELL_ID}][search][{collection_key}][{_FRAGMENT_ID}]": property_id,
-                f"payload[{_SUBPAGE_ID}][{_WIDGET_GROUP_ID}][{_CELL_ID}][search][{collection_key}][{_SUBMIT_FRAGMENT_ID}]": "Next",
-            },
-        )
-        data2 = r2.json().get("data", "")
+        data2 = await search()
+        if not _has_rows(data2):
+            # The schedule table is filled from a remote system that only loads
+            # a property when its "Search for bin collection dates" button
+            # (a trigger_event link on the address row) has been followed; the
+            # result is cached server-side, so a second search then has rows.
+            trigger = soup(data2).find("a", class_="action_link")
+            href = trigger.get("href") if isinstance(trigger, Tag) else None
+            if isinstance(href, str):
+                await http.get(_BASE_URL + href, follow_redirects=False, check=False)
+                data2 = await search()
 
         return _parse_schedule(data2, property_id)
 

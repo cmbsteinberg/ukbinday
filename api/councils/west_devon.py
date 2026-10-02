@@ -18,11 +18,6 @@ from api.councils._base import (
 
 BASE = "https://westdevon.fccenvironment.co.uk"
 _DATE_RE = re.compile(r"(\d{1,2}\s+[A-Za-z]+\s+\d{4})")
-_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/120.0.0.0 Safari/537.36",
-}
 
 
 class WestDevon(Scraper):
@@ -36,7 +31,8 @@ class WestDevon(Scraper):
         },
     )
     requires = frozenset({"uprn"})
-    headers = _HEADERS
+    # No browser User-Agent: the CDN 403s a bare Chrome UA from datacentre IPs
+    # (Harborough, same platform, works from Vercel with httpx's default).
     verify_tls = False
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
