@@ -81,6 +81,7 @@ class Cheltenham(Scraper):
             "Second property": {"property_id": "55297"},
         },
     )
+    needs_browser = "Cheltenham's bin lookup now needs an interactive page flow."
     requires = frozenset({"property_id"})
     headers = _HEADERS
 

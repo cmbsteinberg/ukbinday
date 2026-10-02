@@ -13,6 +13,7 @@ from bs4 import Tag
 from api.councils._base import (
     Address,
     AddressNotFound,
+    Blocker,
     Collection,
     Http,
     InputError,
@@ -90,6 +91,7 @@ class SouthAyrshire(Scraper):
         },
     )
     requires = frozenset({"postcode", "uprn"})
+    blocker = Blocker.BOT_PROTECTION  # its site blocks Vercel's IPs (scripts/vercel_probe.py)
     transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:

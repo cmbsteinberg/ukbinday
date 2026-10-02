@@ -51,11 +51,14 @@ class SouthHams(Scraper):
                 "uprn": address.need("uprn"),
             },
             headers=_HEADERS,
-            check=False,
         )
 
         collections: list[Collection] = []
-        for tile in response.json()["binCollections"]["tile"]:
+        try:
+            tiles = response.json()["binCollections"]["tile"]
+        except (ValueError, KeyError, TypeError) as exc:
+            raise UpstreamError("South Hams: unexpected collection details response") from exc
+        for tile in tiles:
             page = soup(tile[0])
             for item in page.find_all("div", class_="collectionDiv"):
                 # Plain .text: text_of's " " separator would split "date." across tags.
@@ -63,7 +66,9 @@ class SouthHams(Scraper):
                 det = item.find("div", class_="detWrap")
                 service_name = h3.text.strip() if h3 else ""
                 details = det.text.strip() if det else ""
-                next_collection = details.split("Your next scheduled collection is ")[1].split(".")[0]
+                if "Your next scheduled collection is " not in details:
+                    continue
+                next_collection = details.split("Your next scheduled collection is ", 1)[1].split(".")[0]
 
                 if next_collection.startswith("today"):
                     next_collection = next_collection.split("today, ")[1]
