@@ -94,6 +94,13 @@ $("#postcode-form").addEventListener("submit", async (e) => {
 			return;
 		}
 
+		if (addresses === null) {
+			showError(
+				"Could not verify your browser. Please reload the page and try again.",
+			);
+			return;
+		}
+
 		currentData = { addresses, council, council_name };
 
 		if (addresses.length === 0) {

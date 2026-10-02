@@ -160,8 +160,12 @@ async def log_requests(request: Request, call_next):
             or (request.client.host if request.client else "unknown"),
         },
     )
+    # A server error must never be pinned by the Cloudflare cache rule on the
+    # calendar routes (edge TTL override), so a 503 doesn't outlive the outage.
+    if response.status_code >= 500:
+        response.headers["Cache-Control"] = "no-store"
     # In dev, prevent stale static file caching so changes appear immediately
-    if request.url.path.startswith("/static") and os.getenv("ENV") != "production":
+    elif request.url.path.startswith("/static") and os.getenv("ENV") != "production":
         response.headers["Cache-Control"] = "no-cache"
     # Security headers
     response.headers["X-Content-Type-Options"] = "nosniff"

@@ -61,8 +61,9 @@
         seconds; subsequent requests return immediately.
       </p>
       <p>
-        Postcode-to-council and address resolution (<code>/api/v2/find</code>) is behind a
-        browser challenge and is meant for this site's own frontend, to avoid abuse.
+        <code>/api/v2/find</code> resolves a postcode to its council for anyone. Its address
+        list (the UPRNs) is behind a browser challenge and is meant for this site's own
+        frontend; without the challenge token <code>addresses</code> is <code>null</code>.
       </p>
     </section>
 

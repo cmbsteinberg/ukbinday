@@ -34,13 +34,14 @@ async def find(
     request: Request,
     postcode: str = Query(description="The postcode to look up."),
     _rate_limit: None = Depends(rate_limit),
-    _turnstile: None = Depends(schedule.verify_turnstile),
 ):
     """The postcode's council and its addresses, each with the UPRN to pass to /view.
 
     `council` is the LAD code when we serve the council. Otherwise `addresses`
     is empty and `deeplink` points at the council's own page, or `candidates`
-    lists the councils a postcode straddles."""
+    lists the councils a postcode straddles. Where Turnstile is configured the
+    address list needs an `X-Turnstile-Token` header; without one `addresses`
+    is null and the rest still answers."""
     return await schedule.find(request, postcode)
 
 

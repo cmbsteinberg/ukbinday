@@ -254,6 +254,7 @@ async def test_calendar_error_mapping(client, stub, monkeypatch):
     for path in (f"/v2/{HARTLEPOOL}/subscribe/{fresh_uprn()}", f"/v2/{HARTLEPOOL}/download/{fresh_uprn()}"):
         r = await client.get(path)
         assert r.status_code == 503 and "couldn't reach" in r.json()["detail"]
+        assert r.headers["cache-control"] == "no-store"  # never pinned by the edge cache
 
     async def slow(address, http):
         await asyncio.sleep(5)
@@ -263,6 +264,7 @@ async def test_calendar_error_mapping(client, stub, monkeypatch):
     monkeypatch.setattr(load("hartlepool"), "fetch", slow)
     r = await client.get(f"/v2/{HARTLEPOOL}/subscribe/{fresh_uprn()}")
     assert r.status_code == 504
+    assert r.headers["cache-control"] == "no-store"
 
 
 @pytest.mark.asyncio(loop_scope="session")
@@ -395,9 +397,27 @@ async def test_find_needs_a_postcode(client):
 
 
 @pytest.mark.asyncio(loop_scope="session")
-async def test_find_requires_turnstile_when_configured(client, addresses, monkeypatch):
+async def test_find_without_turnstile_token_answers_council_only(client, addresses, monkeypatch):
     monkeypatch.setattr(config, "TURNSTILE_SECRET", "secret")
     r = await client.get("/v2/find", params={"postcode": "TS26 0BL"})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["council"] == HARTLEPOOL
+    assert body["addresses"] is None
+    assert addresses.seen == []
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_find_with_failed_turnstile_token_is_403(client, addresses, monkeypatch):
+    monkeypatch.setattr(config, "TURNSTILE_SECRET", "secret")
+
+    async def siteverify(self, url, **kwargs):
+        return httpx.Response(200, json={"success": False}, request=httpx.Request("POST", url))
+
+    monkeypatch.setattr(httpx.AsyncClient, "post", siteverify)
+    r = await client.get(
+        "/v2/find", params={"postcode": "TS26 0BL"}, headers={"X-Turnstile-Token": "bad"}
+    )
     assert r.status_code == 403
     assert addresses.seen == []
 

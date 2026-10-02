@@ -161,8 +161,11 @@ R2 pricing page on 2026-10-01.
    method when you enable R2; confirm this when you enable it. Overage is $4.50 per
    million writes and $0.36 per million reads, so even 10x the 10k-calendar figures is
    pennies.
-4. **Unchanged costs:** the domain and the address API (`ADDRESS_API_URL`), which is paid
-   per postcode lookup and doesn't depend on the host. Cloudflare's free plan covers DNS,
+4. **Unchanged costs:** the domain. The address API (`ADDRESS_API_URL`) costs nothing: it
+   is Mid Suffolk council's own address search on midsuffolk.gov.uk (a session-page GET for
+   the CSRF token, then the search POST), used without an agreement. The risk is theirs to
+   end, not a bill: if they rate-limit or block us, the address step fails for every
+   council. Cloudflare's free plan covers DNS,
    proxy, cache and one rate-limiting rule. Uptime monitoring (UptimeRobot / Better Stack
    free tiers) is free.
 5. **Not free:** Upstash is free only up to its own limits (not used by default), and
@@ -299,8 +302,8 @@ Small changes, each independent:
 - **Redis becomes optional in practice, not just in code.** Without `REDIS_URL`:
   - `scrape_lock.acquire` already returns `True`. Cross-instance coalescing is lost; see the
     concurrency note in phase 1.
-  - `rate_limit` is already a no-op. `/find` (the costly route, which calls the paid address
-    API) stays behind Turnstile. Add a Cloudflare rate-limiting rule on `/api/*` in
+  - `rate_limit` is already a no-op. The address step of `/find` (two requests to Mid
+    Suffolk's site per lookup) stays behind Turnstile; the council answer is open. Add a Cloudflare rate-limiting rule on `/api/*` in
     phase 5 to replace the per-IP hourly limit.
   - The `api:request_counts` analytics hash and `/status`'s `redis_connected` fall away.
     Cloudflare and Vercel analytics replace GoAccess.
@@ -384,7 +387,10 @@ Small changes, each independent:
    Cloudflare proxy. Cloudflare SSL mode is "Full (strict)".
 3. Cloudflare rules:
    - Cache rule: `/api/v2/*/subscribe/*` and `/api/v2/*/download/*`, eligible for cache, edge TTL 12 h (longer than the gap between a calendar app's polls; see "Will it be free"), cache key includes
-     the query string (the default). Only 200s are cached, so a 503 isn't pinned.
+     the query string (the default). Expression: `(http.request.uri.path wildcard "/api/v2/*/subscribe/*") or (http.request.uri.path wildcard "/api/v2/*/download/*")`; if the
+     dashboard rejects `wildcard` on Free, `starts_with(http.request.uri.path, "/api/v2/") and (http.request.uri.path contains "/subscribe/" or http.request.uri.path contains "/download/")`
+     (`matches` regex needs Business). Free allows 10 cache rules and a 2 h minimum edge TTL. Add a status-code TTL of no-cache for 500-599: the docs don't say whether the
+     TTL override caches 5xx. The API also sends `Cache-Control: no-store` on every 5xx.
    - Cache rule: `/static/*`, edge TTL 1 day.
    - Rate-limiting rule on `/api/*`, per IP, to replace `RATE_LIMIT_HOURLY`.
 4. Watch for a few days: Vercel usage (invocations, active CPU), the refresh heartbeat,

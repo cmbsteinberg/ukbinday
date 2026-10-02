@@ -178,12 +178,15 @@ async def calendar_response(
     return Response(content=ics_bytes, media_type="text/calendar", headers=headers)
 
 
-async def verify_turnstile(request: Request) -> None:
+async def turnstile_passed(request: Request) -> bool:
+    """Whether the request may use the address API: always without
+    TURNSTILE_SECRET, else only with a valid `X-Turnstile-Token`. No token is
+    False; a token that fails is a 403, so the frontend can retry the widget."""
     if not config.TURNSTILE_SECRET:
-        return
+        return True
     token = request.headers.get("X-Turnstile-Token")
     if not token:
-        raise HTTPException(status_code=403, detail="Missing challenge token.")
+        return False
     try:
         async with httpx.AsyncClient(timeout=5) as client:
             resp = await client.post(
@@ -201,6 +204,7 @@ async def verify_turnstile(request: Request) -> None:
     if not data.get("success"):
         logger.info("Turnstile verification failed: %s", data.get("error-codes"))
         raise HTTPException(status_code=403, detail="Challenge failed.")
+    return True
 
 
 async def find(request: Request, postcode: str) -> FindResponse:
@@ -208,7 +212,9 @@ async def find(request: Request, postcode: str) -> FindResponse:
 
     An unwired council, or a wired one whose scraper can never run without a
     browser (captcha, login), answers with its deeplink and no address step,
-    so the address API is only called for a council we can look up.
+    so the address API is only called for a council we can look up. The
+    address step alone sits behind Turnstile: without a token `addresses` is
+    None and the council still answers.
     """
     council, council_name, candidates, lad_code = await resolve_council(
         request, request.app.state.council_lookup, postcode
@@ -232,8 +238,14 @@ async def find(request: Request, postcode: str) -> FindResponse:
         council_name=council_name,
         candidates=candidates,
         deeplink=deeplink,
-        addresses=await search_addresses(postcode) if council else [],
+        addresses=await _addresses_for(request, postcode) if council else [],
     )
+
+
+async def _addresses_for(request: Request, postcode: str) -> list[AddressResult] | None:
+    if not await turnstile_passed(request):
+        return None
+    return await search_addresses(postcode)
 
 
 async def search_addresses(postcode: str) -> list[AddressResult]:

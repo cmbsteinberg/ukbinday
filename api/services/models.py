@@ -37,6 +37,7 @@ class FindResponse(BaseModel):
     `council` is the LAD code when we serve the council; otherwise `deeplink`
     (unwired, or a scraper that needs a browser) or `candidates` (a postcode
     straddling councils) says what to do instead, and `addresses` is empty.
+    `addresses` is None when the request had no Turnstile token.
     """
 
     postcode: str
@@ -44,7 +45,7 @@ class FindResponse(BaseModel):
     council_name: str | None = None
     candidates: list[CouncilCandidate] = []
     deeplink: DeeplinkInfo | None = None
-    addresses: list[AddressResult] = []
+    addresses: list[AddressResult] | None = []
 
 
 # Shaped after the LocalGov Drupal waste collection provider contract
