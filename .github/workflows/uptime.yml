@@ -1,0 +1,29 @@
+name: Uptime
+
+# Production checks, every 30 minutes. A failed scheduled run emails whoever last
+# changed this schedule (GitHub's default notification), which is the alert.
+# GitHub disables schedules in a public repo after 60 days without commits; re-enable
+# it from the Actions tab if that happens.
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BASE: https://ukbinday.co.uk/api/v2
+    steps:
+      - name: Site answers
+        run: |
+          # Retry so one slow cold start doesn't send an email
+          curl -sS --fail --retry 3 --retry-all-errors --retry-delay 20 --max-time 30 -o /dev/null "$BASE/status"
+
+      - name: Nightly refresh ran in the last 36 h
+        run: |
+          age="$(curl -sS --fail --retry 3 --retry-all-errors --retry-delay 20 --max-time 30 "$BASE/metrics" \
+            | jq -r '.ics_cache.last_refresh_age_seconds // empty')"
+          echo "refresh heartbeat age: ${age:-none}s"
+          [ -n "$age" ] && [ "$age" -lt 129600 ] || { echo "::error::refresh heartbeat missing or older than 36 h"; exit 1; }
