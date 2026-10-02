@@ -15,6 +15,7 @@ from api.councils._base import (
     UpstreamError,
 )
 from api.services import deeplinks
+from api.services.blob_store import BlobStoreError
 from api.services.council_lookup import LookupDatabaseError, PostcodeNotFoundError
 from api.services.models import CouncilCandidate
 from api.services.scrape_lock import acquire, release
@@ -134,7 +135,15 @@ async def get_or_scrape(
             and registry.canonical_id(entry.scraper) == registry.canonical_id(council)
         )
 
-    entry = await cache.read(uprn)
+    async def read():
+        # A broken store (R2 refusing our key) is a miss: scrape and answer live.
+        try:
+            return await cache.read(uprn)
+        except BlobStoreError:
+            logger.exception("ICS cache read failed for %s; scraping live", uprn)
+            return None
+
+    entry = await read()
     if _hit(entry):
         return entry, True
 
@@ -143,7 +152,7 @@ async def get_or_scrape(
         deadline = asyncio.get_event_loop().time() + config.SCRAPE_LOCK_MAX_WAIT_S
         while asyncio.get_event_loop().time() < deadline:
             await asyncio.sleep(config.SCRAPE_LOCK_POLL_INTERVAL_S)
-            entry = await cache.read(uprn)
+            entry = await read()
             if _hit(entry):
                 return entry, True
         raise HTTPException(
@@ -158,12 +167,19 @@ async def get_or_scrape(
             registry.record_success(council)
         except Exception as exc:
             registry.record_failure(council, str(exc))
-            await cache.record_failure(
-                uprn, str(exc), scraper_id=council, params=params
-            )
+            try:
+                await cache.record_failure(
+                    uprn, str(exc), scraper_id=council, params=params
+                )
+            except BlobStoreError:
+                logger.exception("ICS cache failure record failed for %s", uprn)
             raise _answer_for(registry, council, exc) from exc
 
-        entry = await cache.write(uprn, council, params, collections)
+        try:
+            entry = await cache.write(uprn, council, params, collections)
+        except BlobStoreError:
+            logger.exception("ICS cache write failed for %s; answering unsaved", uprn)
+            entry = cache.unsaved_entry(uprn, council, params, collections)
         return entry, False
     finally:
         await release(redis_client, uprn)

@@ -1,5 +1,8 @@
 """Minimal blob store behind the ICS cache: a local directory (dev, tests, Docker)
-or Cloudflare R2 over the S3 API (production). Sync; callers are on worker threads."""
+or Cloudflare R2 over the S3 API (production). Sync; callers are on worker threads.
+
+A missing key is `None`; any other failure (R2 refusing our key, a full disk) is
+`BlobStoreError`, so callers can tell "not cached" from "the store is broken"."""
 
 from __future__ import annotations
 
@@ -9,6 +12,10 @@ from pathlib import Path
 from typing import Protocol
 
 from api import config
+
+
+class BlobStoreError(Exception):
+    """The store couldn't be read or written."""
 
 
 class BlobStore(Protocol):
@@ -33,16 +40,24 @@ class LocalBlobStore:
             return (self.root / key).read_bytes()
         except FileNotFoundError:
             return None
+        except OSError as exc:
+            raise BlobStoreError(f"get {key}: {exc}") from exc
 
     def put(self, key: str, data: bytes) -> None:
         path = self.root / key
-        path.parent.mkdir(parents=True, exist_ok=True)
-        tmp = path.with_name(f"{path.name}.{os.getpid()}.tmp")
-        tmp.write_bytes(data)
-        os.replace(tmp, path)
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            tmp = path.with_name(f"{path.name}.{os.getpid()}.tmp")
+            tmp.write_bytes(data)
+            os.replace(tmp, path)
+        except OSError as exc:
+            raise BlobStoreError(f"put {key}: {exc}") from exc
 
     def delete(self, key: str) -> None:
-        (self.root / key).unlink(missing_ok=True)
+        try:
+            (self.root / key).unlink(missing_ok=True)
+        except OSError as exc:
+            raise BlobStoreError(f"delete {key}: {exc}") from exc
 
     def keys(self, prefix: str = "") -> Iterator[str]:
         base = self.root / prefix.rpartition("/")[0]
@@ -60,8 +75,10 @@ class R2BlobStore:
     ) -> None:
         import boto3
         from botocore.config import Config
+        from botocore.exceptions import BotoCoreError, ClientError
 
         self.bucket = bucket
+        self._errors = (BotoCoreError, ClientError)
         self._s3 = boto3.client(
             "s3",
             endpoint_url=f"https://{account_id}.r2.cloudflarestorage.com",
@@ -80,20 +97,31 @@ class R2BlobStore:
             return self._s3.get_object(Bucket=self.bucket, Key=key)["Body"].read()
         except self._s3.exceptions.NoSuchKey:
             return None
+        except self._errors as exc:
+            raise BlobStoreError(f"get {key}: {exc}") from exc
 
     def put(self, key: str, data: bytes) -> None:
-        self._s3.put_object(Bucket=self.bucket, Key=key, Body=data)
+        try:
+            self._s3.put_object(Bucket=self.bucket, Key=key, Body=data)
+        except self._errors as exc:
+            raise BlobStoreError(f"put {key}: {exc}") from exc
 
     def delete(self, key: str) -> None:
-        self._s3.delete_object(Bucket=self.bucket, Key=key)
+        try:
+            self._s3.delete_object(Bucket=self.bucket, Key=key)
+        except self._errors as exc:
+            raise BlobStoreError(f"delete {key}: {exc}") from exc
 
     def keys(self, prefix: str = "") -> Iterator[str]:
         pages = self._s3.get_paginator("list_objects_v2").paginate(
             Bucket=self.bucket, Prefix=prefix
         )
-        for page in pages:
-            for obj in page.get("Contents", []):
-                yield obj["Key"]
+        try:
+            for page in pages:
+                for obj in page.get("Contents", []):
+                    yield obj["Key"]
+        except self._errors as exc:
+            raise BlobStoreError(f"keys {prefix}: {exc}") from exc
 
 
 def from_config() -> BlobStore:

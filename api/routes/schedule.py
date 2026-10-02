@@ -20,6 +20,7 @@ from api.councils._base import colour_of
 from api.services import address_lookup
 from api.services import deeplinks as deeplink_service
 from api.services.bank_holidays import holiday_name
+from api.services.blob_store import BlobStoreError
 from api.services.models import (
     AddressResult,
     CollectionDate,
@@ -175,7 +176,11 @@ async def calendar_response(
         ) from None
 
     cache = request.app.state.ics_cache
-    ics_bytes = await cache.read_ics_bytes(uprn)
+    try:
+        ics_bytes = await cache.read_ics_bytes(uprn)
+    except BlobStoreError:
+        logger.exception("ICS cache read failed for %s", uprn)
+        ics_bytes = None
     if ics_bytes is None:
         raise HTTPException(
             status_code=503,

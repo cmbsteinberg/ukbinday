@@ -17,6 +17,7 @@ from asgi_lifespan import LifespanManager
 
 from api.councils._base import Collection
 from api.main import app
+from api.services.blob_store import BlobStoreError
 from api.services.scrape_orchestrator import is_cacheable_uprn
 
 pytestmark = pytest.mark.api
@@ -109,3 +110,31 @@ async def test_fresh_scrapes_past_the_cache_with_the_cron_secret(client, monkeyp
     )
     assert r.status_code == 200 and not r.json()["cached"]
     assert len(client.calls) == calls + 1
+
+
+class _BrokenStore:
+    def get(self, key):
+        raise BlobStoreError(f"get {key}: Unauthorized")
+
+    def put(self, key, data):
+        raise BlobStoreError(f"put {key}: Unauthorized")
+
+    def delete(self, key):
+        raise BlobStoreError(f"delete {key}: Unauthorized")
+
+    def keys(self, prefix=""):
+        raise BlobStoreError(f"keys {prefix}: Unauthorized")
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_a_broken_store_is_a_cache_miss(client, monkeypatch):
+    """R2 refusing our key must not take lookups down: view scrapes and answers
+    unsaved, and a calendar feed says it's unavailable rather than a 500."""
+    monkeypatch.setattr(app.state.ics_cache, "store", _BrokenStore())
+    params = {"postcode": "CB1 1AA", "house_number": "7"}
+    r = await client.get(f"/{A}/view/999000333444", params=params)
+    assert r.status_code == 200
+    assert r.json()["dates"][0]["type"]["label"] == f"{A}:7"
+    assert not r.json()["cached"]
+    cal = await client.get(f"/{A}/subscribe/999000333444", params=params)
+    assert cal.status_code == 503

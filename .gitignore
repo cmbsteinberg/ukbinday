@@ -223,3 +223,4 @@ scripts/upstream_watch.json
 # Vercel CLI link + build output
 .vercel
 .env*
+!.env.example

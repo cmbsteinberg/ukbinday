@@ -321,13 +321,40 @@ class IcsCache:
         )
         # ICS first, sidecar last: a sidecar never points at a missing calendar
         self.store.put(ics_key, cal.to_ical())
+        sidecar = self._sidecar(uprn, scraper_id, params, cal, existing, today)
+        self.store.put(sidecar_key, json.dumps(sidecar, indent=2, default=str).encode())
+        return self._build_entry(sidecar)
 
+    def unsaved_entry(
+        self,
+        uprn: str,
+        scraper_id: str,
+        params: dict[str, str],
+        collections: list[Collection],
+    ) -> CacheEntry:
+        """The entry `write` would return, without touching the store: what a
+        scrape answers with when the store is down."""
+        today = date.today()
+        cal = self._merge_and_prune(
+            None, "", uprn, _collection_dicts(collections, uprn), config.ICS_RETENTION_DAYS, today
+        )
+        return self._build_entry(self._sidecar(uprn, scraper_id, params, cal, {}, today))
+
+    def _sidecar(
+        self,
+        uprn: str,
+        scraper_id: str,
+        params: dict[str, str],
+        cal: Calendar,
+        existing: dict,
+        today: date,
+    ) -> dict:
         upcoming = self._extract_upcoming(cal, uprn, today)
         next_collection = upcoming[0]["date"] if upcoming else None
 
         now = datetime.now(UTC)
 
-        sidecar = {
+        return {
             "uprn": uprn,
             "scraper": scraper_id,
             "params": params,
@@ -339,8 +366,6 @@ class IcsCache:
             "next_collection": next_collection,
             "collections": upcoming,
         }
-        self.store.put(sidecar_key, json.dumps(sidecar, indent=2, default=str).encode())
-        return self._build_entry(sidecar)
 
     async def record_failure(
         self,
