@@ -20,12 +20,12 @@ config:
 ---
 sankey-beta
 
-"Councils","Bin dates",344
+"Councils","Bin dates",330
 "Councils","Deeplink (no scraper possible)",14
-"Councils","Broken (being fixed)",3
+"Councils","Broken (being fixed)",17
 ```
 
-Of 361 councils, 344 return bin dates. The other 17 send users to the council's own bin-day page:
+Of 361 councils, 330 return bin dates. The other 31 send users to the council's own bin-day page:
 
 **Deeplinked by design (14)**: the council's lookup can't be scraped.
 
@@ -46,13 +46,27 @@ Of 361 councils, 344 return bin dates. The other 17 send users to the council's 
 | Rutland | bin lookup behind Salesforce MyAccount login wall, no guest flow |
 | Southampton | whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API |
 
-**Broken (3)**: a scraper exists but failed the last live run, usually because the council's site is down.
+**Broken (17)**: a scraper exists but failed the last live run, usually because the council's site is down.
 
 | Council | Last run |
 |---|---|
 | Ards and North Down | broken / upstream_error |
-| North Norfolk | unverified / unreachable |
-| Telford and Wrekin | broken / upstream_error |
+| Bolsover | broken / upstream_error |
+| Boston | broken / upstream_error |
+| Cheltenham | broken / upstream_error |
+| Chichester | broken / upstream_error |
+| East Lindsey | broken / upstream_error |
+| Eastleigh | broken / upstream_error |
+| Enfield | broken / upstream_error |
+| Fenland | broken / upstream_error |
+| Gateshead | broken / upstream_error |
+| Great Yarmouth | broken / upstream_error |
+| South Ayrshire | broken / upstream_error |
+| South Hams | broken / scraper_error |
+| Stockton-on-Tees | broken / upstream_error |
+| Sunderland | broken / upstream_error |
+| Swale | broken / upstream_error |
+| West Devon | broken / upstream_error |
 <!-- coverage:end -->
 
 The [coverage map](https://ukbinday.co.uk/coverage) shows each council on a map.

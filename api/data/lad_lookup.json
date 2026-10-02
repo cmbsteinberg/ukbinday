@@ -200,7 +200,7 @@
     "scraper_id": "bolsover",
     "url": "https://bolsover.gov.uk",
     "govuk_url": "https://www.bolsover.gov.uk/index.php?option=com_content&view=article&id=139",
-    "working": true
+    "working": false
   },
   "E08000001": {
     "name": "Bolton",
@@ -214,7 +214,7 @@
     "scraper_id": "boston",
     "url": "https://www.boston.gov.uk/article/27449/Your-Waste-Collections",
     "govuk_url": "https://www.mybostonuk.com/find-your-bin-day/",
-    "working": true
+    "working": false
   },
   "E06000058": {
     "name": "Bournemouth, Christchurch and Poole",
@@ -447,7 +447,7 @@
     "scraper_id": "cheltenham",
     "url": "https://www.cheltenham.gov.uk",
     "govuk_url": "http://www.cheltenham.gov.uk/recycling",
-    "working": true
+    "working": false
   },
   "E07000177": {
     "name": "Cherwell",
@@ -482,7 +482,7 @@
     "scraper_id": "chichester",
     "url": "https://www.chichester.gov.uk/checkyourbinday",
     "govuk_url": "http://www.chichester.gov.uk/wastecollectioncalendar",
-    "working": true
+    "working": false
   },
   "E07000118": {
     "name": "Chorley",
@@ -722,7 +722,7 @@
     "scraper_id": "east_lindsey",
     "url": "https://www.e-lindsey.gov.uk/mywastecollections",
     "govuk_url": "https://www.e-lindsey.gov.uk/mywastecollections",
-    "working": true
+    "working": false
   },
   "S12000010": {
     "name": "East Lothian",
@@ -771,7 +771,7 @@
     "scraper_id": "eastleigh",
     "url": "https://eastleigh.gov.uk",
     "govuk_url": "https://www.eastleigh.gov.uk/waste-bins-and-recycling",
-    "working": true
+    "working": false
   },
   "E07000207": {
     "name": "Elmbridge",
@@ -785,7 +785,7 @@
     "scraper_id": "enfield",
     "url": "https://www.enfield.gov.uk/services/rubbish-and-recycling/find-my-collection-day",
     "govuk_url": "https://new.enfield.gov.uk/services/rubbish-and-recycling/household-collections/rubbish-and-recycling-collections/",
-    "working": true
+    "working": false
   },
   "E07000072": {
     "name": "Epping Forest",
@@ -834,7 +834,7 @@
     "scraper_id": "fenland",
     "url": "https://www.fenland.gov.uk/",
     "govuk_url": "http://www.fenland.gov.uk/findyournearest",
-    "working": true
+    "working": false
   },
   "N09000006": {
     "name": "Fermanagh and Omagh",
@@ -884,7 +884,7 @@
     "scraper_id": "gateshead",
     "url": "https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker",
     "govuk_url": "https://www.gateshead.gov.uk/article/1785/Bins-and-recycling",
-    "working": true
+    "working": false
   },
   "E07000173": {
     "name": "Gedling",
@@ -926,7 +926,7 @@
     "scraper_id": "great_yarmouth",
     "url": "https://myaccount.great-yarmouth.gov.uk/find-my-waste-collection-days",
     "govuk_url": "http://www.great-yarmouth.gov.uk/rubbish-and-recycling",
-    "working": true
+    "working": false
   },
   "E09000011": {
     "name": "Greenwich",
@@ -1532,7 +1532,7 @@
     "scraper_id": "north_norfolk",
     "url": "https://www.north-norfolk.gov.uk/tasks/environmental-services/view-bin-collections-days/",
     "govuk_url": "http://www.northnorfolk.org/bincollection/",
-    "working": false
+    "working": true
   },
   "E06000061": {
     "name": "North Northamptonshire",
@@ -1904,7 +1904,7 @@
     "scraper_id": "south_ayrshire",
     "url": "https://www.south-ayrshire.gov.uk",
     "govuk_url": "http://www.south-ayrshire.gov.uk/bin-day/",
-    "working": true
+    "working": false
   },
   "E07000012": {
     "name": "South Cambridgeshire",
@@ -1932,7 +1932,7 @@
     "scraper_id": "south_hams",
     "url": "https://www.southhams.gov.uk",
     "govuk_url": "https://www.southhams.gov.uk/recyclingwaste",
-    "working": true
+    "working": false
   },
   "E07000140": {
     "name": "South Holland",
@@ -2073,7 +2073,7 @@
     "scraper_id": "stockton_on_tees",
     "url": "https://www.stockton.gov.uk/",
     "govuk_url": "https://www.stockton.gov.uk/bins-rubbish-and-recycling",
-    "working": true
+    "working": false
   },
   "E06000021": {
     "name": "Stoke-on-Trent",
@@ -2101,7 +2101,7 @@
     "scraper_id": "sunderland",
     "url": "https://www.sunderland.gov.uk/",
     "govuk_url": "http://www.sunderland.gov.uk/bindays",
-    "working": true
+    "working": false
   },
   "E07000214": {
     "name": "Surrey Heath",
@@ -2122,7 +2122,7 @@
     "scraper_id": "swale",
     "url": "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
     "govuk_url": "http://www.swale.gov.uk/my-collection-day/",
-    "working": true
+    "working": false
   },
   "W06000011": {
     "name": "Swansea",
@@ -2171,7 +2171,7 @@
     "scraper_id": "telford_and_wrekin",
     "url": "https://www.telford.gov.uk/bins-and-recycling/check-your-collection-day/",
     "govuk_url": "http://www.telford.gov.uk/info/1003/bins_and_recycling/221/report_a_missed_bin_collection",
-    "working": false
+    "working": true
   },
   "E07000076": {
     "name": "Tendring",
@@ -2367,7 +2367,7 @@
     "scraper_id": "west_devon",
     "url": "https://westdevon.fccenvironment.co.uk",
     "govuk_url": "https://www.westdevon.gov.uk/article/4526/Find-your-Recycling-Waste-collection-day",
-    "working": true
+    "working": false
   },
   "S12000039": {
     "name": "West Dunbartonshire",
