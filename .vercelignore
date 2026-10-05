@@ -1,5 +1,5 @@
 # Patterns are anchored with a leading slash so /data (the local ICS cache) doesn't also
-# match api/data, which holds postcode_lookup.parquet and lad_lookup.json at runtime.
+# match api/data, which holds the postcodes/ shards and lad_lookup.json at runtime.
 # Runtime needs: api/ (incl. api/data, api/static, api/templates, api/councils/_aliases.json),
 # pyproject.toml, uv.lock, .python-version and README.md (pyproject's `readme`, which the
 # hatchling build of the project reads).

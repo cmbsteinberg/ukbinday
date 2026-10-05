@@ -22,7 +22,7 @@ jobs:
         run: uv sync
 
       - name: Smoke tests
-        run: uv run pytest tests/test_ci.py -v
+        run: uv run pytest tests/test_ci.py tests/test_postcode_lookup.py -v
 
   # Vercel production deploy. Vercel's own Git deploys are off (vercel.json
   # `git.deploymentEnabled`), so this job is the only way to production and needs a

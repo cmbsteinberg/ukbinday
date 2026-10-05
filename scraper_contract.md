@@ -230,7 +230,7 @@ nothing else.
 
 Today's IDs (`hacs_south_norfolk_and_broadland_gov_uk`, `ukbcd_...`, `port_...`) encode
 provenance, which is meaningless once upstream is cut. The new ID is the LAD code
-(`E07000144`), which `postcode_lookup.parquet` already returns:
+(`E07000144`), which the postcode lookup already returns:
 
 - `lad_lookup.json` maps each LAD to at most one scraper today, so the code is a valid key.
   `pipeline/data/scraper_lad_map.json` and `lad_overrides.json`'s wiring go away: a module

@@ -1,9 +1,10 @@
-"""Build the postcode → LAD parquet the API queries, and its ONSUD companion.
+"""Build the postcode → LAD lookup the API reads, and its ONSUD companion.
 
-Default run publishes the committed pipeline parquet to api/data/, which is all
-a normal sync needs:
+Default run shards the committed pipeline parquet into api/data/postcodes/
+(one JSON file per outward code), which is all a normal sync needs:
 
     uv run python -m scripts.lookup.create_lookup_table
+    uv run python -m scripts.lookup.create_lookup_table --check  # pre-commit/CI
 
 The --from-onspd / --from-onsud modes rebuild the pipeline parquets from an
 unpacked ONS release and are driven by scripts/lookup/fetch_latest.sh, which
@@ -15,8 +16,10 @@ where it came from:
 """
 
 import argparse
+import json
 import logging
 import shutil
+from collections import defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -27,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).parent.parent.parent
 DATA_DIR = ROOT_DIR / "api" / "data"
-POSTCODE_PARQUET_PATH = DATA_DIR / "postcode_lookup.parquet"
+POSTCODES_DIR = DATA_DIR / "postcodes"
 PIPELINE_DATA = ROOT_DIR / "pipeline" / "data"
 ONSPD_SOURCE = PIPELINE_DATA / "onspd_postcode_lad.parquet"
 ONSUD_SOURCE = PIPELINE_DATA / "onsud_uprn_postcode.parquet"
@@ -107,16 +110,86 @@ def stamp_edition(parquet: Path, edition: str) -> None:
     logger.info("Stamped %s as edition %s", parquet, edition)
 
 
-def publish() -> int:
-    """Copy the committed pipeline ONSPD parquet to where the API reads it."""
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
+def build_shards(source: Path) -> dict[str, bytes]:
+    """One JSON file per outward code: `{"lads": [...], "pc": {inward: index}}`.
+
+    Every postcode is listed, even where the outward code is one council, so a
+    made-up inward code is still not found. The inward code is always the last
+    three characters of a normalised postcode, so the file and key come straight
+    from the postcode (see `CouncilLookup`). Output is deterministic, so
+    `--check` can compare it byte for byte with what's committed.
+    """
+    con = duckdb.connect()
+    try:
+        rows = con.execute(
+            "SELECT postcode, lad_code FROM read_parquet(?)", [str(source)]
+        ).fetchall()
+    finally:
+        con.close()
+
+    by_outward: dict[str, dict[str, str]] = defaultdict(dict)
+    for postcode, lad in rows:
+        by_outward[postcode[:-3]][postcode[-3:]] = lad
+
+    shards = {}
+    for outward, inward_to_lad in sorted(by_outward.items()):
+        lads = sorted(set(inward_to_lad.values()))
+        index = {lad: i for i, lad in enumerate(lads)}
+        shard = {
+            "lads": lads,
+            "pc": {k: index[v] for k, v in sorted(inward_to_lad.items())},
+        }
+        shards[f"{outward}.json"] = json.dumps(shard, separators=(",", ":")).encode()
+    return shards
+
+
+def write_shards(shards: dict[str, bytes], dest: Path) -> None:
+    """Replace `dest` with exactly `shards`, via a sibling temp dir."""
+    tmp = dest.with_name(dest.name + ".tmp")
+    shutil.rmtree(tmp, ignore_errors=True)
+    tmp.mkdir(parents=True)
+    for name, data in shards.items():
+        (tmp / name).write_bytes(data)
+    shutil.rmtree(dest, ignore_errors=True)
+    tmp.replace(dest)
+    logger.info("Wrote %d shards to %s", len(shards), dest)
+
+
+def stale_shards(shards: dict[str, bytes], dest: Path) -> list[str]:
+    """Names of shards that are missing, extra or different in `dest`."""
+    on_disk = {p.name for p in dest.glob("*.json")} if dest.is_dir() else set()
+    return sorted(
+        name
+        for name in on_disk | shards.keys()
+        if name not in shards
+        or name not in on_disk
+        or (dest / name).read_bytes() != shards[name]
+    )
+
+
+def publish(check: bool = False) -> int:
+    """Shard the committed pipeline ONSPD parquet into where the API reads it.
+
+    With `check`, write nothing and fail if the committed shards are out of date.
+    """
     if not ONSPD_SOURCE.exists():
         logger.error(_MISSING_SOURCE_HINT, ONSPD_SOURCE)
         return 1
-    logger.info("Copying ONSPD parquet to %s", POSTCODE_PARQUET_PATH)
-    # copy2 preserves the parquet's edition metadata along with the bytes.
-    shutil.copy2(ONSPD_SOURCE, POSTCODE_PARQUET_PATH)
-    logger.info("Done!")
+    shards = build_shards(ONSPD_SOURCE)
+    if not check:
+        write_shards(shards, POSTCODES_DIR)
+        return 0
+    stale = stale_shards(shards, POSTCODES_DIR)
+    if stale:
+        logger.error(
+            "%d postcode shards are out of date with %s (e.g. %s). Run: "
+            "uv run python -m scripts.lookup.create_lookup_table",
+            len(stale),
+            ONSPD_SOURCE.relative_to(ROOT_DIR),
+            ", ".join(stale[:5]),
+        )
+        return 1
+    logger.info("%d postcode shards match %s", len(shards), ONSPD_SOURCE.name)
     return 0
 
 
@@ -137,7 +210,15 @@ def main() -> int:
         "--edition",
         help="ONS edition label, e.g. ONSPD_AUG_2026 (required when rebuilding)",
     )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="write nothing; exit 1 if api/data/postcodes/ is out of date",
+    )
     args = parser.parse_args()
+
+    if args.check:
+        return publish(check=True)
 
     rebuilding = args.from_onspd or args.from_onsud or args.stamp_edition
     if rebuilding and not args.edition:

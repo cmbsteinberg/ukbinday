@@ -44,9 +44,9 @@ async def lifespan(app: FastAPI):
     logger.info("Registry ready: %d council IDs", len(app.state.registry.list_all()))
 
     app.state.council_lookup = CouncilLookup()
-    if not app.state.council_lookup.parquet_loaded:
+    if not app.state.council_lookup.postcodes_loaded:
         logger.error(
-            "STARTUP WARNING: postcode_lookup.parquet not loaded — "
+            "STARTUP WARNING: api/data/postcodes/ not found — "
             "postcode-to-council lookups will not work"
         )
     if not app.state.council_lookup.lad_loaded:
@@ -78,9 +78,6 @@ async def lifespan(app: FastAPI):
         app.state.refresh_task.cancel()
         with contextlib.suppress(asyncio.CancelledError):
             await app.state.refresh_task
-
-    if getattr(app.state, "council_lookup", None):
-        await app.state.council_lookup.close()
 
 
 app = FastAPI(

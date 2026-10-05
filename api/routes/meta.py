@@ -54,10 +54,10 @@ async def list_councils(request: Request):
 async def system_status(request: Request):
     registry = request.app.state.registry
     lookup = request.app.state.council_lookup
-    all_ok = lookup.parquet_loaded and lookup.lad_loaded
+    all_ok = lookup.postcodes_loaded and lookup.lad_loaded
     if all_ok:
         status = "healthy"
-    elif lookup.parquet_loaded or lookup.lad_loaded:
+    elif lookup.postcodes_loaded or lookup.lad_loaded:
         status = "degraded"
     else:
         status = "unhealthy"
@@ -65,7 +65,7 @@ async def system_status(request: Request):
     return SystemHealth(
         status=status,
         scraper_count=len(registry.list_all()),
-        postcode_lookup=lookup.parquet_loaded,
+        postcode_lookup=lookup.postcodes_loaded,
         lad_lookup=lookup.lad_loaded,
     )
 

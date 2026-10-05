@@ -94,7 +94,6 @@ dependencies = [
     { name = "boto3" },
     { name = "cryptography" },
     { name = "curl-cffi" },
-    { name = "duckdb" },
     { name = "fastapi" },
     { name = "httpx" },
     { name = "icalendar" },
@@ -111,6 +110,7 @@ dependencies = [
 dev = [
     { name = "ai", extra = ["openai"] },
     { name = "asgi-lifespan" },
+    { name = "duckdb" },
     { name = "lefthook" },
     { name = "moto", extra = ["s3"] },
     { name = "psutil" },
@@ -126,7 +126,6 @@ requires-dist = [
     { name = "boto3", specifier = ">=1.43.106" },
     { name = "cryptography", specifier = ">=46.0.5" },
     { name = "curl-cffi", specifier = ">=0.14.0" },
-    { name = "duckdb", specifier = ">=1.5.1" },
     { name = "fastapi", specifier = ">=0.135.1" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "icalendar", specifier = ">=7.0.3" },
@@ -143,6 +142,7 @@ requires-dist = [
 dev = [
     { name = "ai", extras = ["openai"], specifier = ">=0.8.0" },
     { name = "asgi-lifespan", specifier = ">=2.1.0" },
+    { name = "duckdb", specifier = ">=1.5.1" },
     { name = "lefthook", specifier = ">=2.1.4" },
     { name = "moto", extras = ["s3"], specifier = ">=5.2.3" },
     { name = "psutil", specifier = ">=7.2.2" },

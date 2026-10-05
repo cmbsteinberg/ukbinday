@@ -31,11 +31,17 @@ pre-commit:
     upstream-watch:
       run: scripts/upstream_watch.sh --hook
 
+    # The API reads api/data/postcodes/, generated from the committed ONSPD parquet.
+    # Fails if they've drifted; the fix is `uv run python -m scripts.lookup.create_lookup_table`.
+    postcode-shards:
+      glob: "{pipeline/data/onspd_postcode_lad.parquet,api/data/postcodes/*,scripts/lookup/create_lookup_table.py}"
+      run: uv run python -m scripts.lookup.create_lookup_table --check
+
     # 3. CI smoke tests — council modules load, app starts
     ci-tests:
       tags: test
       glob: "*.py"
-      run: uv run pytest tests/test_ci.py tests/test_councils.py -x -q --tb=short
+      run: uv run pytest tests/test_ci.py tests/test_councils.py tests/test_postcode_lookup.py -x -q --tb=short
     # Opt-in: RUN_INTEGRATION=1 git commit ...
     integration-tests:
       tags: integration
