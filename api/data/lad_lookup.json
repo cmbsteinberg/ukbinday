@@ -200,7 +200,7 @@
     "scraper_id": "bolsover",
     "url": "https://bolsover.gov.uk",
     "govuk_url": "https://www.bolsover.gov.uk/index.php?option=com_content&view=article&id=139",
-    "working": false
+    "working": true
   },
   "E08000001": {
     "name": "Bolton",
@@ -449,7 +449,7 @@
     "scraper_id": "cheltenham",
     "url": "https://www.cheltenham.gov.uk",
     "govuk_url": "http://www.cheltenham.gov.uk/recycling",
-    "working": false
+    "working": true
   },
   "E07000177": {
     "name": "Cherwell",
@@ -514,7 +514,7 @@
     "scraper_id": "clackmannanshire",
     "url": "https://www.clacks.gov.uk",
     "govuk_url": "http://www.clacks.gov.uk/environment/wastecollection/",
-    "working": true
+    "working": false
   },
   "E07000071": {
     "name": "Colchester",
@@ -740,7 +740,7 @@
     "scraper_id": "east_renfrewshire",
     "url": "https://eastrenfrewshire.gov.uk",
     "govuk_url": "http://www.eastrenfrewshire.gov.uk/article/1555/When-is-my-bin-emptied",
-    "working": true
+    "working": false
   },
   "E06000011": {
     "name": "East Riding of Yorkshire",
@@ -2378,7 +2378,7 @@
     "scraper_id": "west_devon",
     "url": "https://westdevon.fccenvironment.co.uk",
     "govuk_url": "https://www.westdevon.gov.uk/article/4526/Find-your-Recycling-Waste-collection-day",
-    "working": false
+    "working": true
   },
   "S12000039": {
     "name": "West Dunbartonshire",
