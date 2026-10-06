@@ -14,6 +14,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     parse_date,
     soup,
 )
@@ -82,15 +83,11 @@ class WestLindsey(Scraper):
             raise UpstreamError("West Lindsey returned invalid schedule HTML") from exc
 
         page = soup(html)
-        listing = page.find("li", class_="auroraListItem")
-        if listing is None:
-            raise UpstreamError("West Lindsey's schedule contains no collection list")
+        listing = find_tag(page, "li", class_="auroraListItem", what="West Lindsey's schedule contains no collection list")
 
         collections: list[Collection] = []
         for row in listing.find_all("li"):
-            bin_name = row.find("span")
-            if bin_name is None:
-                raise UpstreamError("West Lindsey's schedule contains a row with no bin type")
+            bin_name = find_tag(row, "span", what="West Lindsey's schedule contains a row with no bin type")
             bin_type = bin_name.text.title()
 
             for bin_date in _BIN_DATE.findall(row.text):
