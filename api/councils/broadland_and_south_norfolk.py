@@ -208,7 +208,9 @@ class BroadlandAndSouthNorfolk(Scraper):
 
         namespace = f"{{{_SNC_SOAP_NS}}}"
         result_el = root.find(f".//{namespace}getRoundCalendarForUPRNResult")
-        if result_el is None or not result_el.text:
+        if result_el is None:
+            raise UpstreamError("South Norfolk calendar response has no getRoundCalendarForUPRNResult")
+        if not result_el.text:
             return []
 
         calendar_page = soup(unescape(result_el.text))
