@@ -15,6 +15,7 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
+    UpstreamError,
     match_address,
     soup,
     text_of,
@@ -48,7 +49,7 @@ def _property_id(link: Tag) -> str:
     href = str(link.get("href", ""))
     match = re.search(r"id=(\d+)", href)
     if match is None:
-        raise ValueError(f"Moray property link has no ID: {href}")
+        raise UpstreamError(f"Moray property link has no ID: {href}")
     return match.group(1)
 
 
