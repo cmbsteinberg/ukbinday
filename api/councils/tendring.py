@@ -2,18 +2,15 @@
 
 from __future__ import annotations
 
-import re
 from datetime import datetime
-from time import time_ns
 
 from api.councils._base import Address, Collection, Http, Meta, Scraper
+from api.councils._platforms.achieveforms import data_rows, init_session, run_lookup
 
-_HOST = "https://tendring-self.achieveservice.com"
-_AUTH_URL = (
-    f"{_HOST}/authapi/isauthenticated"
-    "?uri=https%253A%252F%252Ftendring-self.achieveservice.com%252Fen%252Fservice%252FRubbish_and_recycling_collection_days"
-    "&hostname=tendring-self.achieveservice.com&withCredentials=true"
-)
+_HOSTNAME = "tendring-self.achieveservice.com"
+_HOST = f"https://{_HOSTNAME}"
+_AUTH_URL = f"{_HOST}/authapi/isauthenticated"
+_FORM_URI = f"{_HOST}/en/service/Rubbish_and_recycling_collection_days"
 _API_URL = f"{_HOST}/apibroker/runLookup"
 _SCHEDULE_LOOKUP_ID = "6347acbadc425"
 _HEADERS = {
@@ -23,7 +20,6 @@ _HEADERS = {
     "X-Requested-With": "XMLHttpRequest",
     "Referer": f"{_HOST}/fillform/?iframe_id=fillform-frame-1&db_id=",
 }
-_RESULT_RE = re.compile(r'<result column="(\w+)"[^>]*>([^<]*)</result>')
 _DATE_FIELDS = {
     "RefuseNextCol": "Residual waste",
     "DMRNextCol": "Mixed recycling",
@@ -44,34 +40,23 @@ class Tendring(Scraper):
     headers = _HEADERS
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
-        auth = await http.get(_AUTH_URL)
-        sid = auth.json()["auth-session"]
+        uprn = address.need("uprn")
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URI)
 
-        payload = {
-            "formValues": {
-                "Select address": {
-                    "selectedUPRN": {"value": address.need("uprn")},
-                    "selectAddress": {"value": address.need("uprn")},
-                }
-            }
-        }
-        params = {
-            "id": _SCHEDULE_LOOKUP_ID,
-            "repeat_against": "",
-            "noRetry": "true",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(time_ns() // 1_000_000),
-            "sid": sid,
-        }
-
-        response = await http.post(_API_URL, params=params, json=payload)
         # The lookup answers {"status": "done", "data": "<Responses>...XML..."}.
-        xml = response.json().get("data") or ""
-        row = dict(_RESULT_RE.findall(xml))
-        if not row:
-            return []
+        reply_rows = data_rows(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                _SCHEDULE_LOOKUP_ID,
+                {"Select address": {"selectedUPRN": {"value": uprn}, "selectAddress": {"value": uprn}}},
+                no_retry="true",
+            )
+        )
+        if not reply_rows:
+            return []  # the council lists nothing for this property
+        row = reply_rows[0]
 
         collections = []
         for field, bin_type in _DATE_FIELDS.items():
