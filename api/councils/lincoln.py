@@ -3,13 +3,21 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta
-from time import time_ns
 
 from api.councils._base import Address, Collection, Http, Meta, Scraper
+from api.councils._platforms.achieveforms import init_session, rows, run_lookup
 
-_AUTH_URL = "https://contact.lincoln.gov.uk/authapi/isauthenticated"
-_DOMAIN_URL = "https://contact.lincoln.gov.uk/apibroker/domain/contact.lincoln.gov.uk"
-_LOOKUP_URL = "https://contact.lincoln.gov.uk/apibroker/runLookup"
+_HOSTNAME = "contact.lincoln.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_DOMAIN_URL = f"https://{_HOSTNAME}/apibroker/domain/{_HOSTNAME}"
+_LOOKUP_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
+_FORM_URI = (
+    f"https://{_HOSTNAME}/AchieveForms/?mode=fill&consentMessage=yes"
+    "&form_uri=sandbox-publish://AF-Process-503f9daf-4db9-4dd8-876a-6f2029f11196/"
+    "AF-Stage-a1c0af0f-fec1-4419-80c0-0dd4e1d965c9/definition.json&process=1"
+    "&process_uri=sandbox-processes://AF-Process-503f9daf-4db9-4dd8-876a-6f2029f11196"
+    "&process_id=AF-Process-503f9daf-4db9-4dd8-876a-6f2029f11196"
+)
 _HEADERS = {"user-agent": "Mozilla/5.0"}
 _BIN_TYPES = (
     ("refusenextdate", "Refuse", "refuse_freq"),
@@ -37,57 +45,24 @@ class Lincoln(Scraper):
         postcode = postcode[:3] + " " + postcode[3:]
         uprn = address.need("uprn").zfill(12)
 
-        sid_request = await http.get(
-            _AUTH_URL,
-            params={
-                "uri": (
-                    "https://contact.lincoln.gov.uk/AchieveForms/?mode=fill&consentMessage=yes"
-                    "&form_uri=sandbox-publish://AF-Process-503f9daf-4db9-4dd8-876a-6f2029f11196/"
-                    "AF-Stage-a1c0af0f-fec1-4419-80c0-0dd4e1d965c9/definition.json&process=1"
-                    "&process_uri=sandbox-processes://AF-Process-503f9daf-4db9-4dd8-876a-6f2029f11196"
-                    "&process_id=AF-Process-503f9daf-4db9-4dd8-876a-6f2029f11196"
-                ),
-                "hostname": "contact.lincoln.gov.uk",
-                "withCredentials": True,
-            },
-            timeout=30,
-        )
-        sid = sid_request.json()["auth-session"]
-
-        timestamp = time_ns() // 1_000_000
-        await http.get(
-            _DOMAIN_URL,
-            params={"_": timestamp, "sid": sid},
-            timeout=30,
+        sid = await init_session(
+            http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URI, auth_test_url=_DOMAIN_URL
         )
 
-        timestamp = time_ns() // 1_000_000
-        payload = {
-            "formValues": {
-                "Section 1": {
-                    "chooseaddress": {"value": uprn},
-                    "postcode": {"value": postcode},
-                }
-            }
-        }
-        params = {
-            "id": "62aafd258f72c",
-            "repeat_against": "",
-            "noRetry": False,
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": timestamp,
-            "sid": sid,
-        }
-        schedule_request = await http.post(
-            _LOOKUP_URL,
-            params=params,
-            json=payload,
-            timeout=30,
+        rowdata = rows(
+            await run_lookup(
+                http,
+                _LOOKUP_URL,
+                sid,
+                "62aafd258f72c",
+                {
+                    "Section 1": {
+                        "chooseaddress": {"value": uprn},
+                        "postcode": {"value": postcode},
+                    }
+                },
+            )
         )
-
-        rowdata = schedule_request.json()["integration"]["transformed"]["rows_data"]
 
         entries: list[Collection] = []
         for row_uprn, data in rowdata.items():
