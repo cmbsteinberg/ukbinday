@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 
 from api.councils._base import (
     Address,
@@ -13,6 +13,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -26,9 +27,7 @@ _USER_AGENT = (
 
 
 def _token(page: BeautifulSoup) -> str:
-    node = page.find("input", {"name": "__token"})
-    if not isinstance(node, Tag):
-        raise UpstreamError("Chorley's form page has no token")
+    node = find_tag(page, "input", {"name": "__token"}, what="Chorley's form page has no token")
     value = node.get("value")
     if not isinstance(value, str):
         raise UpstreamError("Chorley's form page has an invalid token")
