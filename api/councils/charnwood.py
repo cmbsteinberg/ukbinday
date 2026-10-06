@@ -13,7 +13,7 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
-    UpstreamError,
+    find_tag,
     match_address,
     parse_date,
     soup,
@@ -72,9 +72,7 @@ class Charnwood(Scraper):
         address_id = candidate["value"]
 
         r = await http.get(API_URL, params={"address_id": address_id})
-        collection_panel = soup(r.text).find("div", {"class": "refusecollectiondates"})
-        if collection_panel is None:
-            raise UpstreamError("Charnwood response has no collection panel")
+        collection_panel = find_tag(soup(r.text), "div", {"class": "refusecollectiondates"}, what="Charnwood response has no collection panel")
 
         collections = []
         for li in collection_panel.select("li"):
