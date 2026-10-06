@@ -33,14 +33,12 @@ class Dorset(Scraper):
         for bin_type, url in _API_URLS.items():
             r = await http.get(url.format(uprn=uprn))
             json_data = r.json()
-            try:
-                day = datetime.strptime(
-                    json_data["values"][0]["dateNextVisit"], "%Y-%m-%d"
-                ).date()
-                collections.append(Collection(day, bin_type))
-            except IndexError:
-                # This service is not used at the address.
-                pass
+            if not json_data["values"]:
+                continue  # This service is not used at the address.
+            day = datetime.strptime(
+                json_data["values"][0]["dateNextVisit"], "%Y-%m-%d"
+            ).date()
+            collections.append(Collection(day, bin_type))
         return collections
 
 
