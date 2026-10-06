@@ -12,6 +12,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
+    UpstreamError,
     match_address,
     parse_date,
     soup,
@@ -122,13 +123,13 @@ class Ceredigion(Scraper):
         r = await http.get(FORM_URL, timeout=30.0)
         ebz_match = re.search(r'ebz=([^&"\']+)', r.text)
         if not ebz_match:
-            return []
+            raise UpstreamError("Ceredigion: no session token (ebz) on form page")
         ebz = ebz_match.group(1)
 
         postcode_ctrl = _find_ctrl(r.text, "Postcode")
         find_btn_ctrl = _find_ctrl_button(r.text, "Find Address")
         if not postcode_ctrl or not find_btn_ctrl:
-            return []
+            raise UpstreamError("Ceredigion: postcode field or Find Address button missing from form")
 
         base_data = {
             "formid": "/Forms/REFUSE_ROUTES",
@@ -168,7 +169,7 @@ class Ceredigion(Scraper):
         html_parts = _extract_html(resp_json)
         dropdown_ctrl = _find_select_ctrl(html_parts)
         if not dropdown_ctrl:
-            return []
+            raise UpstreamError("Ceredigion: no address dropdown after postcode search")
 
         candidates = _address_options(html_parts)
         selected = match_address(
@@ -202,7 +203,7 @@ class Ceredigion(Scraper):
         html_parts = _extract_html(resp_json)
         next_ctrl = _find_ctrl_button_in_html(html_parts, "Next")
         if not next_ctrl:
-            return []
+            raise UpstreamError("Ceredigion: Next button missing after address selection")
 
         post_data = {
             **base_data,
