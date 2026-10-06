@@ -17,6 +17,7 @@ from api.councils._base import (
     Scraper,
     Transport,
     UpstreamError,
+    find_tag,
     parse_date,
     soup,
 )
@@ -79,9 +80,7 @@ class Gateshead(Scraper):
 
         r = await http.post(form_url, data=form_data)
         page = soup(r.text)
-        script = page.find("script", string=_FORM_DATA_PATTERN)
-        if not isinstance(script, Tag):
-            raise UpstreamError("Could not find BINCOLLECTIONCHECKERFormData in response")
+        script = find_tag(page, "script", string=_FORM_DATA_PATTERN, what="Could not find BINCOLLECTIONCHECKERFormData in response")
 
         match = _FORM_DATA_PATTERN.search(script.text)
         if match is None:
