@@ -2,15 +2,20 @@
 
 from __future__ import annotations
 
-import logging
 import re
-from datetime import datetime
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    parse_date,
+    soup,
+)
 
 _URL = "https://myaccount.stockport.gov.uk/bin-collections/show"
 _DATE_PATTERN = re.compile(r"(?:\w+,\s*)?(\d{1,2}\s+\w+\s+\d{4})", re.IGNORECASE)
-_LOGGER = logging.getLogger(__name__)
 
 
 class Stockport(Scraper):
@@ -47,20 +52,8 @@ class Stockport(Scraper):
             bin_name = bin_name.capitalize()
             date_match = _DATE_PATTERN.search(bin_div.get_text())
 
-            if date_match:
-                date_string = date_match.group(1)
-                try:
-                    bin_date = datetime.strptime(date_string, "%d %B %Y").date()
-                    collections.append(Collection(bin_date, bin_name))
-                except ValueError as exc:
-                    _LOGGER.warning(
-                        "Could not parse date '%s' for %s: %s",
-                        date_string,
-                        bin_name,
-                        exc,
-                    )
-            else:
-                _LOGGER.warning("No date found for %s", bin_name)
+            if date_match:  # a bin with no date has no upcoming collection
+                collections.append(Collection(parse_date(date_match.group(1)), bin_name))
 
         return collections
 
