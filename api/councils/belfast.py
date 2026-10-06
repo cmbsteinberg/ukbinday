@@ -13,7 +13,7 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
-    UpstreamError,
+    find_tag,
     match_address,
     soup,
     text_of,
@@ -27,9 +27,7 @@ REQUEST_TIMEOUT = 30
 
 def _parse_schedule(html: str) -> list[Collection]:
     page = soup(html)
-    table = page.find("table", {"id": "ItemsGrid"})
-    if table is None:
-        raise UpstreamError("Could not find Belfast's bin collection schedule table")
+    table = find_tag(page, "table", {"id": "ItemsGrid"}, what="Could not find Belfast's bin collection schedule table")
 
     collections: list[Collection] = []
     for row in table.find_all("tr")[1:]:
@@ -67,9 +65,9 @@ class Belfast(Scraper):
 
         response = await http.get(API_URL, timeout=REQUEST_TIMEOUT)
         page = soup(response.text)
-        viewstate = page.find("input", {"name": "__VIEWSTATE"})["value"]
-        viewstate_generator = page.find("input", {"name": "__VIEWSTATEGENERATOR"})["value"]
-        event_validation = page.find("input", {"name": "__EVENTVALIDATION"})["value"]
+        viewstate = find_tag(page, "input", {"name": "__VIEWSTATE"})["value"]
+        viewstate_generator = find_tag(page, "input", {"name": "__VIEWSTATEGENERATOR"})["value"]
+        event_validation = find_tag(page, "input", {"name": "__EVENTVALIDATION"})["value"]
 
         postcode_data = {
             "__EVENTTARGET": "",
@@ -91,9 +89,9 @@ class Belfast(Scraper):
         if error_message and error_message.get("style") != "display:none":
             raise InputError(f"Error from Belfast's website: {text_of(error_message)}")
 
-        viewstate = page.find("input", {"name": "__VIEWSTATE"})["value"]
-        viewstate_generator = page.find("input", {"name": "__VIEWSTATEGENERATOR"})["value"]
-        event_validation = page.find("input", {"name": "__EVENTVALIDATION"})["value"]
+        viewstate = find_tag(page, "input", {"name": "__VIEWSTATE"})["value"]
+        viewstate_generator = find_tag(page, "input", {"name": "__VIEWSTATEGENERATOR"})["value"]
+        event_validation = find_tag(page, "input", {"name": "__EVENTVALIDATION"})["value"]
 
         address_select = page.find("select", {"id": "lstAddresses"})
         if address_select is None:
