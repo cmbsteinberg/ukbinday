@@ -2,22 +2,27 @@
 
 from __future__ import annotations
 
-from time import time_ns
-
-from api.councils._base import Address, Collection, Http, Meta, Scraper, parse_date
-
-_AUTH_URL = (
-    "https://portal.walthamforest.gov.uk/authapi/isauthenticated?"
-    "uri=https%253A%252F%252Fportal.walthamforest.gov.uk%252FAchieveForms%252F"
-    "%253Fmode%253Dfill%2526consentMessage%253Dyes%2526form_uri%253Dsandbox-publish%253A"
-    "%252F%252FAF-Process-d62ccdd2-3de9-48eb-a229-8e20cbdd6393%252FAF-Stage-"
-    "8bf39bf9-5391-4c24-857f-0dc2025c67f4%252Fdefinition.json%2526process%253D1"
-    "%2526process_uri%253Dsandbox-processes%253A%252F%252FAF-Process-"
-    "d62ccdd2-3de9-48eb-a229-8e20cbdd6393%2526process_id%253DAF-Process-"
-    "d62ccdd2-3de9-48eb-a229-8e20cbdd6393&hostname=portal.walthamforest.gov.uk"
-    "&withCredentials=true"
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    UpstreamError,
+    parse_date,
 )
-_LOOKUP_URL = "https://portal.walthamforest.gov.uk/apibroker/runLookup"
+from api.councils._platforms.achieveforms import init_session, rows, run_lookup
+
+_HOSTNAME = "portal.walthamforest.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_FORM_URI = (
+    f"https://{_HOSTNAME}/AchieveForms/?mode=fill&consentMessage=yes"
+    "&form_uri=sandbox-publish://AF-Process-d62ccdd2-3de9-48eb-a229-8e20cbdd6393/"
+    "AF-Stage-8bf39bf9-5391-4c24-857f-0dc2025c67f4/definition.json&process=1"
+    "&process_uri=sandbox-processes://AF-Process-d62ccdd2-3de9-48eb-a229-8e20cbdd6393"
+    "&process_id=AF-Process-d62ccdd2-3de9-48eb-a229-8e20cbdd6393"
+)
+_LOOKUP_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
 _HEADERS = {"user-agent": "Mozilla/5.0"}
 
 
@@ -35,38 +40,37 @@ class WalthamForest(Scraper):
     headers = _HEADERS
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
-        sid_response = await http.get(_AUTH_URL)
-        sid = sid_response.json()["auth-session"]
-
-        timestamp = time_ns() // 1_000_000
         uprn = address.need("uprn")
-        payload = {
-            "formValues": {
-                "Property": {
-                    key: {"value": uprn}
-                    for key in (
-                        "AccountSiteUprn",
-                        "UPRNSearch",
-                        "calcUPRN",
-                        "customerUPRN",
-                        "inputUPRN",
-                    )
-                }
-            }
-        }
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URI)
 
-        schedule_response = await http.post(
-            f"{_LOOKUP_URL}?id=5e208cda0d0a0&repeat_against=&noRetry=False"
-            f"&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self"
-            f"&_={timestamp}sid={sid}",
-            json=payload,
+        reply_rows = rows(
+            await run_lookup(
+                http,
+                _LOOKUP_URL,
+                sid,
+                "5e208cda0d0a0",
+                {
+                    "Property": {
+                        key: {"value": uprn}
+                        for key in (
+                            "AccountSiteUprn",
+                            "UPRNSearch",
+                            "calcUPRN",
+                            "customerUPRN",
+                            "inputUPRN",
+                        )
+                    }
+                },
+            )
         )
-        rowdata = schedule_response.json()["integration"]["transformed"]["rows_data"]
 
         collections = []
-        for item in rowdata.values():
-            bin_type = item["ServiceName"]
-            next_date = item["NextCollectionDate"]
+        for item in reply_rows.values():
+            try:
+                bin_type = item["ServiceName"]
+                next_date = item["NextCollectionDate"]
+            except (KeyError, TypeError) as exc:
+                raise UpstreamError(f"Waltham Forest returned an unexpected row: {str(item)[:200]}") from exc
             if next_date == " NaN ":
                 continue
             try:
