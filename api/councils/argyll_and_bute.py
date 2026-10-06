@@ -11,6 +11,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
+    UpstreamError,
     parse_date,
     soup,
 )
@@ -29,7 +30,7 @@ def _extract_form_build_id(html: str) -> str:
 def _parse_schedule(html: str) -> list[Collection]:
     table = soup(html).find("table", class_="table")
     if not table:
-        return []
+        raise UpstreamError("Argyll and Bute: no collections table in response")
 
     collections = []
     today = datetime.now().date()
