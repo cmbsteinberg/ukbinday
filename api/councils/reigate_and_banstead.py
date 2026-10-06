@@ -2,20 +2,24 @@
 
 from __future__ import annotations
 
-import json
-import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
-from time import time_ns
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    UpstreamError,
+    soup,
+)
+from api.councils._platforms.achieveforms import data_rows, init_session, run_lookup
 
 _HEADERS = {"user-agent": "Mozilla/5.0"}
-_AUTH_URL = (
-    "https://my.reigate-banstead.gov.uk/authapi/isauthenticated"
-    "?uri=https%3A%2F%2Fmy.reigate-banstead.gov.uk%2Fservice%2FBins_and_recycling___collections_calendar"
-    "&hostname=my.reigate-banstead.gov.uk&withCredentials=true"
-)
-_BASE = "https://my.reigate-banstead.gov.uk/apibroker/runLookup"
+_HOSTNAME = "my.reigate-banstead.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_FORM_URI = f"https://{_HOSTNAME}/service/Bins_and_recycling___collections_calendar"
+_API_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
 
 
 class ReigateAndBanstead(Scraper):
@@ -32,40 +36,35 @@ class ReigateAndBanstead(Scraper):
     headers = _HEADERS
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
-        sid_request = await http.get(_AUTH_URL)
-        sid = sid_request.json()["auth-session"]
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URI)
 
-        timestamp = time_ns() // 1_000_000
-        token_request = await http.get(
-            f"{_BASE}?id=595ce0f243541&repeat_against=&noRetry=true&getOnlyTokens=undefined"
-            f"&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}"
-        )
-        token_data = token_request.json()
-        token_string = ET.fromstring(token_data["data"])[0][0][1][0][0].text
+        # Both lookups answer XML in `data`: a token, then the schedule as escaped HTML.
+        token_rows = data_rows(await run_lookup(http, _API_URL, sid, "595ce0f243541", None, no_retry="true"))
+        if not token_rows or "Token" not in token_rows[0]:
+            raise UpstreamError("Reigate & Banstead gave no token")
 
-        timestamp = time_ns() // 1_000_000
         min_date = datetime.today().strftime("%Y-%m-%d")
         max_date = (datetime.today() + timedelta(days=28)).strftime("%Y-%m-%d")
-        payload = {
-            "formValues": {
-                "Section 1": {
-                    "uprnPWB": {"value": address.need("uprn")},
-                    "minDate": {"value": min_date},
-                    "maxDate": {"value": max_date},
-                    "tokenString": {"value": token_string},
-                }
-            }
-        }
-
-        schedule_request = await http.post(
-            f"{_BASE}?id=609d41ca89251&repeat_against=&noRetry=true&getOnlyTokens=undefined"
-            f"&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
-            json=payload,
+        schedule_rows = data_rows(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                "609d41ca89251",
+                {
+                    "Section 1": {
+                        "uprnPWB": {"value": address.need("uprn")},
+                        "minDate": {"value": min_date},
+                        "maxDate": {"value": max_date},
+                        "tokenString": {"value": token_rows[0]["Token"]},
+                    }
+                },
+                no_retry="true",
+            )
         )
-
-        rowdata = json.loads(schedule_request.content)["data"]
-        html_rowdata = ET.fromstring(rowdata)[0][0][1][0][0].text
-        rowdata = soup(html_rowdata)
+        if not schedule_rows or "root" not in schedule_rows[0]:
+            raise UpstreamError("Reigate & Banstead returned no collection schedule")
+        rowdata = soup(schedule_rows[0]["root"])
         datedata = rowdata.find_all("h3")
         bindata = rowdata.find_all("ul")
 
