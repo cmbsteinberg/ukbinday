@@ -2,24 +2,21 @@
 
 from __future__ import annotations
 
-import time
 from datetime import datetime
 
 from api.councils._base import Address, Collection, Http, Meta, Scraper, UpstreamError
+from api.councils._platforms.achieveforms import init_session, rows, run_lookup
 
-_SESSION_URL = (
-    "https://mycouncil.milton-keynes.gov.uk/authapi/isauthenticated"
-    "?uri=https%253A%252F%252Fmycouncil.milton-keynes.gov.uk%252Fen%252Fservice"
-    "%252FWaste_Collection_Round_Checker&hostname=mycouncil.milton-keynes.gov.uk"
-    "&withCredentials=true"
-)
-_API_URL = "https://mycouncil.milton-keynes.gov.uk/apibroker/runLookup"
+_HOSTNAME = "mycouncil.milton-keynes.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_FORM_URI = f"https://{_HOSTNAME}/en/service/Waste_Collection_Round_Checker"
+_API_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
 _HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "User-Agent": "Mozilla/5.0",
     "X-Requested-With": "XMLHttpRequest",
-    "Referer": "https://mycouncil.milton-keynes.gov.uk/fillform/?iframe_id=fillform-frame-1&db_id=",
+    "Referer": f"https://{_HOSTNAME}/fillform/?iframe_id=fillform-frame-1&db_id=",
 }
 
 
@@ -34,33 +31,19 @@ class MiltonKeynes(Scraper):
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn")
-        session_response = await http.get(_SESSION_URL)
-        sid = session_response.json()["auth-session"]
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URI)
 
-        params = {
-            "id": "64d9feda3a507",
-            "repeat_against": "",
-            "noRetry": "false",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-        response = await http.post(
-            _API_URL,
-            json={"formValues": {"Section 1": {"uprnCore": {"value": uprn}}}},
-            headers=_HEADERS,
-            params=params,
+        rows_data = rows(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                "64d9feda3a507",
+                {"Section 1": {"uprnCore": {"value": uprn}}},
+                headers=_HEADERS,
+            )
         )
-
-        data = response.json()
-        if data.get("status") == "error":
-            message = data.get("error", {}).get("message", "Unknown API error")
-            raise UpstreamError(f"Milton Keynes API error: {message}")
-
-        rows_data = data.get("integration", {}).get("transformed", {}).get("rows_data")
-        if not rows_data or not isinstance(rows_data, dict):
+        if not rows_data:
             raise UpstreamError("No collection data returned from API")
 
         collections = []
