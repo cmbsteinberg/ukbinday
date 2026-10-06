@@ -13,7 +13,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
-    UpstreamError,
+    find_tag,
     match_address,
     soup,
     text_of,
@@ -64,19 +64,13 @@ class TonbridgeAndMalling(Scraper):
         form_data["next"] = (None, "Next")
         collection_lookup = await http.post(_FORM_URL, data=form_data)
 
-        table = soup(collection_lookup.text).find("table", class_="waste-collections-table")
-        if not isinstance(table, Tag):
-            raise UpstreamError("Tonbridge and Malling's collection table was not found")
-        tbody = table.find("tbody")
-        if not isinstance(tbody, Tag):
-            raise UpstreamError("Tonbridge and Malling's collection table has no body")
+        table = find_tag(soup(collection_lookup.text), "table", class_="waste-collections-table", what="Tonbridge and Malling's collection table was not found")
+        tbody = find_tag(table, "tbody", what="Tonbridge and Malling's collection table has no body")
 
         collections: list[Collection] = []
         for row in tbody.find_all("tr"):
             cells = row.find_all("td")
-            collection_container = cells[1].find("div", class_="collections")
-            if not isinstance(collection_container, Tag):
-                raise UpstreamError("Tonbridge and Malling's collection row has no bins")
+            collection_container = find_tag(cells[1], "div", class_="collections", what="Tonbridge and Malling's collection row has no bins")
 
             day = dateutil_parser.parse(cells[0].get_text().strip(), dayfirst=True).date()
             if datetime.now().month == 12 and day.month in (1, 2):
