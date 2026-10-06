@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import datetime
-import time
 
 from api.councils._base import (
     Address,
@@ -14,12 +13,20 @@ from api.councils._base import (
     Meta,
     Scraper,
 )
+from api.councils._platforms.achieveforms import init_session, rows, run_lookup
 
-_AUTH_URL = "https://my.midlothian.gov.uk/authapi/isauthenticated"
-_DOMAIN_URL = "https://my.midlothian.gov.uk/apibroker/domain/my.midlothian.gov.uk"
-_RUN_LOOKUP_URL = "https://my.midlothian.gov.uk/apibroker/runLookup"
+_HOSTNAME = "my.midlothian.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_DOMAIN_URL = f"https://{_HOSTNAME}/apibroker/domain/{_HOSTNAME}"
+_RUN_LOOKUP_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
 _LOOKUP_ID = "69948bdca6012"
-_NO_RETRY = "false"
+_FORM = {
+    "stopOnFailure": True,
+    "usePHPIntegrations": True,
+    "stage_id": "AF-Stage-a0bdbc4e-b9fc-46f0-bb0c-14a12cd927ed",
+    "stage_name": "Stage 1",
+    "formId": "AF-Form-033371a6-b0e4-4e16-a3b5-f68f592d8bf1",
+}
 
 
 class Midlothian(Scraper):
@@ -35,67 +42,37 @@ class Midlothian(Scraper):
         uprn = address.need("uprn")
         postcode = address.need("postcode")
 
-        auth_response = await http.get(_AUTH_URL, timeout=30)
-        try:
-            auth_data = auth_response.json()
-        except ValueError as err:
-            raise InputError(f"Invalid response while creating session: {err}") from err
-
-        sid = auth_data.get("auth-session")
-        if not sid:
-            raise InputError("Could not establish session with council form.")
-
-        await http.get(
-            _DOMAIN_URL,
-            params={"_": time.time_ns() // 1_000_000, "sid": sid},
-            timeout=30,
+        sid = await init_session(
+            http, None, _AUTH_URL, _HOSTNAME, uri=f"https://{_HOSTNAME}/", auth_test_url=_DOMAIN_URL
         )
 
         today = datetime.date.today()
         from_date = today.strftime("%Y-%m-%d")
         to_date = (today + datetime.timedelta(days=365)).strftime("%Y-%m-%d")
-        payload = {
-            "stopOnFailure": True,
-            "usePHPIntegrations": True,
-            "stage_id": "AF-Stage-a0bdbc4e-b9fc-46f0-bb0c-14a12cd927ed",
-            "stage_name": "Stage 1",
-            "formId": "AF-Form-033371a6-b0e4-4e16-a3b5-f68f592d8bf1",
-            "formValues": {
-                "Section 1": {
-                    "postcode": {"value": postcode},
-                    "UPRN": {"value": uprn},
-                    "uprn": {"value": uprn},
-                    "fromDate": {"value": from_date},
-                    "toDate": {"value": to_date},
-                }
-            },
-        }
-        params = {
-            "id": _LOOKUP_ID,
-            "repeat_against": "",
-            "noRetry": _NO_RETRY,
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": time.time_ns() // 1_000_000,
-            "sid": sid,
-        }
-        response = await http.post(_RUN_LOOKUP_URL, params=params, json=payload, timeout=30)
-        try:
-            data = response.json()
-        except ValueError as err:
-            raise InputError(f"Council lookup returned invalid JSON: {err}") from err
-
-        if data.get("result") == "logout":
-            raise InputError("Session expired while querying collection data.")
-
-        rows = data.get("integration", {}).get("transformed", {}).get("rows_data", {})
-        if not rows:
+        lookup_rows = rows(
+            await run_lookup(
+                http,
+                _RUN_LOOKUP_URL,
+                sid,
+                _LOOKUP_ID,
+                {
+                    "Section 1": {
+                        "postcode": {"value": postcode},
+                        "UPRN": {"value": uprn},
+                        "uprn": {"value": uprn},
+                        "fromDate": {"value": from_date},
+                        "toDate": {"value": to_date},
+                    }
+                },
+                body=_FORM,
+            )
+        )
+        if not lookup_rows:
             raise AddressNotFound(f"No collection data returned for UPRN {uprn}.")
 
         collections: list[Collection] = []
         failed_rows: list[str] = []
-        for row in rows.values():
+        for row in lookup_rows.values():
             date_str = row.get("Date") or row.get("date")
             try:
                 collection_date = datetime.datetime.strptime(
@@ -108,9 +85,9 @@ class Midlothian(Scraper):
             waste_type = row.get("Service") or row.get("service")
             collections.append(Collection(collection_date, waste_type))
 
-        if rows and not collections:
+        if not collections:
             raise InputError(
-                f"Failed to parse any collection dates from {len(rows)} rows. "
+                f"Failed to parse any collection dates from {len(lookup_rows)} rows. "
                 f"API format may have changed. Failures: {failed_rows[:3]}"
             )
 
