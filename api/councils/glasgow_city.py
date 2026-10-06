@@ -5,7 +5,15 @@ from __future__ import annotations
 import re
 from datetime import datetime
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    find_tag,
+    soup,
+)
 
 _API_URL = (
     "https://onlineservices.glasgow.gov.uk/forms/refuseandrecyclingcalendar/"
@@ -61,8 +69,8 @@ class GlasgowCity(Scraper):
             data = {
                 "__EVENTTARGET": match.group(1),
                 "__EVENTARGUMENT": match.group(2),
-                "__EVENTVALIDATION": page.find("input", id="__EVENTVALIDATION")["value"],
-                "__VIEWSTATE": page.find("input", id="__VIEWSTATE")["value"],
+                "__EVENTVALIDATION": find_tag(page, "input", id="__EVENTVALIDATION")["value"],
+                "__VIEWSTATE": find_tag(page, "input", id="__VIEWSTATE")["value"],
             }
             response = await http.post(url, data=data)
             entries.extend(_parse_bins(response.text))
