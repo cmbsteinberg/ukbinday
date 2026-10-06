@@ -16,6 +16,7 @@ from api.councils._base import (
     Scraper,
     UpstreamError,
 )
+from api.councils._platforms.achieveforms import page_session_id, rows, run_lookup
 
 _BASE_URL = "https://towerhamlets-self.achieveservice.com"
 _SERVICE_PATH = "/service/Check_your_waste_and_recycling_collection_days"
@@ -69,20 +70,14 @@ class TowerHamlets(Scraper):
         )
         html_content = response.text
 
-        sid_match = re.search(
-            r'["\']auth-session["\']\s*:\s*["\']([^"\']+)["\']',
-            html_content,
-        )
         uri_match = re.search(
             r'["\']publish-uri["\']\s*:\s*["\']([^"\']+)["\']',
             html_content,
         )
-        if not sid_match or not uri_match:
-            raise UpstreamError(
-                "Handshake failed: Could not find auth-session or publish-uri."
-            )
+        if not uri_match:
+            raise UpstreamError("Handshake failed: Could not find publish-uri.")
 
-        sid = sid_match.group(1)
+        sid = page_session_id(html_content, who="the Tower Hamlets service page")
         stage_uri = urllib.parse.unquote(uri_match.group(1)).replace("\\/", "/")
 
         try:
@@ -126,51 +121,39 @@ class TowerHamlets(Scraper):
         csrf = token_response.json()["data"]["csrfToken"]
 
         now_str = datetime.datetime.now().strftime("%Y-%m-%d")
-        payload = {
-            "stopOnFailure": True,
-            "usePHPIntegrations": True,
-            "stage_id": stage_id,
-            "stage_name": "Stage 1",
-            "formId": form_id,
-            "formValues": {
-                "Section 2": {
-                    "howCheck": {"value": "property"},
-                    "NextCollectionFromDate": {"value": now_str},
-                    "addressDetails": {
-                        "value": {"Section 1": {"Address": {"value": uprn}}}
-                    },
-                    "AccountSiteUPRN": {"value": uprn},
-                    "TH_uprn": {"value": uprn},
-                }
-            },
-        }
-
-        result = await http.post(
-            f"{_BASE_URL}/apibroker/runLookup",
-            params={
-                "id": lookup_id,
-                "sid": sid,
-                "noRetry": "false",
-                "app_name": "AF-Renderer::Self",
-            },
-            json=payload,
-            headers={"X-CSRF-Token": csrf},
-            timeout=30,
+        reply_rows = rows(
+            await run_lookup(
+                http,
+                f"{_BASE_URL}/apibroker/runLookup",
+                sid,
+                lookup_id,
+                {
+                    "Section 2": {
+                        "howCheck": {"value": "property"},
+                        "NextCollectionFromDate": {"value": now_str},
+                        "addressDetails": {
+                            "value": {"Section 1": {"Address": {"value": uprn}}}
+                        },
+                        "AccountSiteUPRN": {"value": uprn},
+                        "TH_uprn": {"value": uprn},
+                    }
+                },
+                body={
+                    "stopOnFailure": True,
+                    "usePHPIntegrations": True,
+                    "stage_id": stage_id,
+                    "stage_name": "Stage 1",
+                    "formId": form_id,
+                },
+                headers={"X-CSRF-Token": csrf},
+            )
         )
-        data = result.json()
-
-        integration = data.get("integration", {}).get("transformed", {})
-        if integration.get("error"):
-            raise UpstreamError(f"Council API Error: {integration.get('error')}")
-
-        rows_data = integration.get("rows_data", {})
-        rows = rows_data.values() if isinstance(rows_data, dict) else rows_data
-        if not rows:
-            return []
+        if not reply_rows:
+            return []  # the council lists nothing for this property
 
         collections: list[Collection] = []
         today = datetime.date.today()
-        for row in rows:
+        for row in reply_rows.values():
             service = row.get("CollectionService")
             date_str = row.get("CollectionDate")
             if not service or not date_str or service not in _ALLOWED_SERVICES:
