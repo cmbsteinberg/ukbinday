@@ -11,7 +11,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
-    UpstreamError,
+    find_tag,
     match_address,
     next_weekday,
     soup,
@@ -84,9 +84,7 @@ class ShetlandIslands(Scraper):
 
         response = await http.get(f"{_BASE_URL}{selected_link[0]}")
         record_page = soup(response.text)
-        definition_list = record_page.find("dl")
-        if not isinstance(definition_list, Tag):
-            raise UpstreamError("Could not parse collection data from the record page.")
+        definition_list = find_tag(record_page, "dl", what="Could not parse collection data from the record page.")
 
         collections: list[Collection] = []
         for term, description in zip(
