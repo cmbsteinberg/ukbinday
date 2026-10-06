@@ -12,7 +12,7 @@ from weakref import WeakValueDictionary
 from icalendar import Calendar, Event
 
 from api import config
-from api.councils._base import Collection
+from api.councils._base import Collection, colour_of
 from api.services.blob_store import BlobStore
 
 logger = logging.getLogger(__name__)
@@ -31,6 +31,44 @@ class CacheEntry:
     next_collection: date | None
     collections: list[dict]
     consecutive_failures: int
+
+
+# Bin colour -> (RFC 7986 COLOR, a CSS name; emoji prefixed to SUMMARY, where
+# Unicode has a matching circle). Most apps ignore COLOR, so the emoji is what
+# Google/Apple/Outlook subscribers actually see.
+_EVENT_COLOURS: dict[str, tuple[str, str | None]] = {
+    "Black": ("black", "\u26ab"),
+    "Blue": ("blue", "\U0001f535"),
+    "Brown": ("brown", "\U0001f7e4"),
+    "Green": ("green", "\U0001f7e2"),
+    "Grey": ("grey", None),
+    "Purple": ("purple", "\U0001f7e3"),
+    "Red": ("red", "\U0001f534"),
+    "White": ("white", "\u26aa"),
+    "Yellow": ("yellow", "\U0001f7e1"),
+    "Orange": ("orange", "\U0001f7e0"),
+    "Pink": ("pink", None),
+    "Burgundy": ("maroon", None),
+}
+_EMOJI_PREFIXES = tuple(f"{e} " for _, e in _EVENT_COLOURS.values() if e)
+
+
+def _strip_emoji(summary: str) -> str:
+    for prefix in _EMOJI_PREFIXES:
+        if summary.startswith(prefix):
+            return summary[len(prefix) :]
+    return summary
+
+
+def _set_label(ev: Event, type_: str) -> None:
+    """SUMMARY (emoji-prefixed when the label names a bin colour) and COLOR."""
+    for key in ("SUMMARY", "COLOR"):
+        if key in ev:
+            del ev[key]
+    css, emoji = _EVENT_COLOURS.get(colour_of(type_) or "", (None, None))
+    ev.add("summary", f"{emoji} {type_}" if emoji else type_)
+    if css:
+        ev.add("color", css)
 
 
 def _stable_uid(uprn: str, date_iso: str, type_: str) -> str:
@@ -193,6 +231,7 @@ class IcsCache:
             if "DTSTAMP" in ev:
                 del ev["DTSTAMP"]
             ev.add("dtstamp", now)
+            _set_label(ev, _strip_emoji(str(ev.get("SUMMARY", ""))))
             merged[uid] = ev
         return merged
 
@@ -211,7 +250,7 @@ class IcsCache:
             if d < cutoff:
                 continue
             ev = Event()
-            ev.add("summary", c["type"])
+            _set_label(ev, c["type"])
             ev.add("dtstart", d)
             ev.add("dtend", d + timedelta(days=1))
             ev.add("uid", uid)
@@ -270,7 +309,7 @@ class IcsCache:
                 d = d.date()
             if d < today:
                 continue
-            summary = str(comp.get("SUMMARY", ""))
+            summary = _strip_emoji(str(comp.get("SUMMARY", "")))
             description = comp.get("DESCRIPTION")
             icon = str(description) if description else None
             date_iso = d.isoformat()
