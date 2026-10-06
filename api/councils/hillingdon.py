@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date
 
 from api.councils._base import (
     Address,
@@ -12,15 +12,16 @@ from api.councils._base import (
     Scraper,
     UpstreamError,
     next_weekday,
+    parse_date,
+    weekday_number,
 )
 
 _ENDPOINT = "https://www.hillingdon.gov.uk/apiserver/ajaxlibrary"
-_DAYS = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
 
 def _next_weekday(day_name: str) -> date:
     try:
-        day_number = _DAYS.index(day_name)
+        day_number = weekday_number(day_name)
     except ValueError as exc:
         raise UpstreamError(f"Hillingdon returned an unknown collection day: {day_name!r}") from exc
     return next_weekday(day_number, include_today=False)
@@ -49,7 +50,9 @@ class Hillingdon(Scraper):
                 "params": {"UPRN": address.need("uprn")},
             },
         )
-        result = response.json().get("result", {})
+        result = response.json().get("result")
+        if not isinstance(result, dict) or "collectionDay" not in result:
+            raise UpstreamError("Hillingdon: no collectionDay in response")
         day_name = result.get("collectionDay", "")
         bin_types = result.get("collection", [])
         garden_date_str = result.get("gardenWasteCollectionDate", "")
@@ -61,11 +64,7 @@ class Hillingdon(Scraper):
         collections = [Collection(next_date, bin_type) for bin_type in bin_types]
 
         if garden_date_str:
-            try:
-                garden_date = datetime.strptime(garden_date_str, "%d/%m/%Y").date()
-                collections.append(Collection(garden_date, "Garden Waste"))
-            except ValueError:
-                pass
+            collections.append(Collection(parse_date(garden_date_str), "Garden Waste"))
 
         return collections
 
