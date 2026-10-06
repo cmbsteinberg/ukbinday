@@ -5,8 +5,6 @@ from __future__ import annotations
 import re
 from datetime import datetime
 
-from bs4 import Tag
-
 from api.councils._base import (
     Address,
     Collection,
@@ -15,6 +13,7 @@ from api.councils._base import (
     Scraper,
     Transport,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -39,9 +38,7 @@ class Chichester(Scraper):
         r = await http.get(PAGE)
         page = soup(r.text)
 
-        form = page.find("form", attrs={"id": re.compile(r"WASTECOLLECTIONCALENDARV\d+_FORM")})
-        if not isinstance(form, Tag):
-            raise UpstreamError("Chichester bin-day form was not found")
+        form = find_tag(page, "form", attrs={"id": re.compile(r"WASTECOLLECTIONCALENDARV\d+_FORM")}, what="Chichester bin-day form was not found")
 
         form_id = form.get("id")
         form_url = form.get("action")
