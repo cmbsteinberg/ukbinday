@@ -2,9 +2,6 @@
 
 from __future__ import annotations
 
-import logging
-from datetime import datetime
-
 from api.councils._base import (
     Address,
     Collection,
@@ -12,11 +9,12 @@ from api.councils._base import (
     Meta,
     Scraper,
     Transport,
+    find_tag,
+    parse_date,
     soup,
 )
 
 _URL = "https://www.basingstoke.gov.uk/bincollections"
-_LOGGER = logging.getLogger(__name__)
 
 
 class BasingstokeAndDeane(Scraper):
@@ -46,21 +44,10 @@ class BasingstokeAndDeane(Scraper):
         entries: list[Collection] = []
 
         for service in services:
-            waste_type = service.find("h2").text.split(" ")[0]
+            waste_type = find_tag(service, "h2").text.split(" ")[0]
             for schedule in service.find_all("li"):
                 date_str = schedule.text.split("(")[0].strip()
-                try:
-                    day = datetime.strptime(date_str, "%A, %d %B %Y").date()
-                except ValueError as exc:
-                    _LOGGER.warning(
-                        "Failed to parse date '%s' for wastetype %s: %s",
-                        date_str,
-                        waste_type,
-                        exc,
-                    )
-                    continue
-
-                entries.append(Collection(day, waste_type))
+                entries.append(Collection(parse_date(date_str), waste_type))
 
         return entries
 
