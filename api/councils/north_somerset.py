@@ -63,16 +63,13 @@ class NorthSomerset(Scraper):
 
         entries: list[Collection] = []
         for collection in table_data:
-            try:
-                for day in [
-                    collection["Next collection date"],
-                    collection.get("Following collection date"),
-                ]:
-                    if not day:
-                        continue
-                    entries.append(Collection(parse_date(day), collection["Service"]))
-            except ValueError:
-                pass
+            for day in [
+                collection["Next collection date"],
+                collection.get("Following collection date"),
+            ]:
+                if not day:
+                    continue  # no following collection listed
+                entries.append(Collection(parse_date(day), collection["Service"]))
 
         return entries
 
