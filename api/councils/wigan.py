@@ -13,6 +13,7 @@ from api.councils._base import (
     Scraper,
     Transport,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -76,8 +77,8 @@ class Wigan(Scraper):
 
         collections = []
         for bin_node in page.find_all("div", {"class": "BinsRecycling"}):
-            waste_type = bin_node.find("h2").text
-            waste_date = bin_node.find("div", {"class": "dateWrapper-next"}).get_text(
+            waste_type = find_tag(bin_node, "h2").text
+            waste_date = find_tag(bin_node, "div", {"class": "dateWrapper-next"}).get_text(
                 strip=True
             )
             waste_date = _ORDINALS.sub("", waste_date.split("day")[1])
