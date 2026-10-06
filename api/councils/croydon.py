@@ -14,6 +14,7 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
+    find_tag,
     match_address,
     soup,
     text_of,
@@ -112,7 +113,7 @@ class Croydon(Scraper):
         r0 = await http.get(url, headers=_GET_HEADERS)
 
         page = soup(r0.text)
-        app_body = page.find("div", {"class": "app-body"})
+        app_body = find_tag(page, "div", {"class": "app-body"})
         script = text_of(app_body.find("script", {"type": "text/javascript"}))
         match = re.search(r"var CSRF = ('|\")(.*?)('|\" );", script)
         if match is None:
@@ -142,8 +143,8 @@ class Croydon(Scraper):
         submitted_widget_group_id = page.find_all(
             "input", {"name": "submitted_widget_group_id"}
         )[-1].attrs["value"]
-        submission_token = page.find("input", {"name": "submission_token"}).attrs["value"]
-        submitted_page_id = page.find("input", {"name": "submitted_page_id"}).attrs["value"]
+        submission_token = find_tag(page, "input", {"name": "submission_token"}).attrs["value"]
+        submitted_page_id = find_tag(page, "input", {"name": "submitted_page_id"}).attrs["value"]
 
         # Use postcode and address to find address
         url = _BASE_URL + _SEARCH_PATH
@@ -211,7 +212,7 @@ class Croydon(Scraper):
             waste_type = pickup.find_all(
                 "div", {"class": "fragment_presenter_template_show"}
             )[0].text.strip()
-            waste_date = pickup.find("span", {"class": "value-as-text"}).get_text(
+            waste_date = find_tag(pickup, "span", {"class": "value-as-text"}).get_text(
                 strip=True
             )
             collections.append(
