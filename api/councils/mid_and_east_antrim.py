@@ -4,15 +4,13 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from bs4 import Tag
-
 from api.councils._base import (
     Address,
     Collection,
     Http,
     Meta,
     Scraper,
-    UpstreamError,
+    find_tag,
     soup,
     text_of,
 )
@@ -87,9 +85,7 @@ class MidAndEastAntrim(Scraper):
         page = soup(response_text)
         translations = _bin_type_translation(page)
 
-        calendar = page.find("div", {"id": "NewCalendar"})
-        if not isinstance(calendar, Tag):
-            raise UpstreamError("Mid and East Antrim response has no calendar")
+        calendar = find_tag(page, "div", {"id": "NewCalendar"}, what="Mid and East Antrim response has no calendar")
 
         collections: list[Collection] = []
         for table in calendar.find_all("table"):
