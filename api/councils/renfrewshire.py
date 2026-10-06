@@ -12,6 +12,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -42,11 +43,7 @@ class Renfrewshire(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         r = await http.get(f"{_API_URL}{address.need('uprn')}")
         page = soup(r.text)
-        collections_data = page.find(
-            "script", {"type": "application/json", "id": "collections-data"}
-        )
-        if collections_data is None:
-            raise UpstreamError("Renfrewshire did not provide bin collection data")
+        collections_data = find_tag(page, "script", {"type": "application/json", "id": "collections-data"}, what="Renfrewshire did not provide bin collection data")
 
         try:
             bin_data = json.loads(collections_data.get_text(strip=True))
