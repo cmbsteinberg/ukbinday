@@ -44,8 +44,8 @@ class NewarkAndSherwood(Scraper):
         collections = await _get_data(http, {"pid": uprn})
         try:
             collections += await _get_data(http, {"pid": uprn, "nc": "1"})
-        except (UpstreamError, AttributeError, IndexError, KeyError, TypeError, ValueError):
-            pass
+        except UpstreamError:
+            pass  # the "nc" (extra collections) request is optional; the main schedule stands without it
         return collections
 
 
