@@ -7,7 +7,15 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    UpstreamError,
+    soup,
+)
 
 _URL = "https://www.armaghbanbridgecraigavon.gov.uk/"
 _RESULT_URL = "https://www.armaghbanbridgecraigavon.gov.uk/resident/binday-result/?address={uprn}"
@@ -63,6 +71,8 @@ class ArmaghCity(Scraper):
                 except ValueError:
                     continue
                 collections.append(Collection(day, bin_type))
+        if not collections:
+            raise UpstreamError("Armagh City: no collection sections found in result page")
         return collections
 
 
