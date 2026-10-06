@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
-from typing import Any
 
 from api.councils._base import (
     Address,
@@ -13,56 +12,35 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
-    UpstreamError,
     match_address,
     parse_date,
 )
+from api.councils._platforms.achieveforms import init_session, rows, run_lookup
 
-_BASE_URL = "https://myaccount.anglesey.gov.wales"
-_SESSION_URL = (
-    f"{_BASE_URL}/authapi/isauthenticated"
-    "?uri=https%3A%2F%2Fmyaccount.anglesey.gov.wales"
-    "&hostname=myaccount.anglesey.gov.wales&withCredentials=true"
-)
+_HOSTNAME = "myaccount.anglesey.gov.wales"
+_BASE_URL = f"https://{_HOSTNAME}"
+_AUTH_URL = f"{_BASE_URL}/authapi/isauthenticated"
 _LOOKUP_URL = f"{_BASE_URL}/apibroker/runLookup"
+_TIMEOUT = 60
 
 _ADDRESS_LOOKUP_ID = "61c43f6dabddb"
 _SCHEDULE_LOOKUP_ID = "6362261cd6bd9"
 
 
-async def _initialise_session(http: Http) -> None:
-    response = await http.get(_SESSION_URL, timeout=60)
-    try:
-        if not response.json().get("auth-session"):
-            raise UpstreamError("Failed to obtain an Isle of Anglesey session")
-    except ValueError as exc:
-        raise UpstreamError("Failed to decode Isle of Anglesey session response") from exc
-
-
-async def _run_lookup(http: Http, lookup_id: str, payload: dict[str, Any]) -> Any:
-    response = await http.post(
-        _LOOKUP_URL,
-        params={"id": lookup_id},
-        json=payload,
-        timeout=60,
-    )
-    try:
-        return response.json()["integration"]["transformed"]["rows_data"]
-    except ValueError as exc:
-        raise UpstreamError("Failed to decode Isle of Anglesey lookup response") from exc
-    except KeyError as exc:
-        raise UpstreamError("Unexpected Isle of Anglesey lookup response structure") from exc
-
-
 async def _get_uprn_from_postcode_and_paon(
-    http: Http, postcode: str, paon: str
+    http: Http, sid: str, postcode: str, paon: str
 ) -> str:
-    addresses = await _run_lookup(
-        http,
-        _ADDRESS_LOOKUP_ID,
-        {"formValues": {"Section 1": {"postcode_search": {"value": postcode}}}},
+    addresses = rows(
+        await run_lookup(
+            http,
+            _LOOKUP_URL,
+            sid,
+            _ADDRESS_LOOKUP_ID,
+            {"Section 1": {"postcode_search": {"value": postcode}}},
+            timeout=_TIMEOUT,
+        )
     )
-    if not isinstance(addresses, dict) or not addresses:
+    if not addresses:
         raise AddressNotFound(f"No addresses found for postcode {postcode}")
 
     candidates = [
@@ -93,31 +71,36 @@ class IsleOfAnglesey(Scraper):
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         user_uprn = address.uprn
+        postcode = address.postcode
+        paon = address.house_number
+        if user_uprn is None and postcode is None:
+            raise InputError("Either 'uprn' or 'postcode' is required")
+        if user_uprn is None and paon is None:
+            raise InputError("A house number or name is required with postcode")
+
+        sid = await init_session(
+            http, None, _AUTH_URL, _HOSTNAME, uri=_BASE_URL, timeout=_TIMEOUT
+        )
         if user_uprn is None:
-            if address.postcode is None:
-                raise InputError("Either 'uprn' or 'postcode' is required")
-            paon = address.house_number
-            if paon is None:
-                raise InputError("A house number or name is required with postcode")
             user_uprn = await _get_uprn_from_postcode_and_paon(
-                http, address.postcode, paon
+                http, sid, str(postcode), str(paon)
             )
 
-        await _initialise_session(http)
-        schedule = await _run_lookup(
-            http,
-            _SCHEDULE_LOOKUP_ID,
-            {
-                "formValues": {
+        schedule = rows(
+            await run_lookup(
+                http,
+                _LOOKUP_URL,
+                sid,
+                _SCHEDULE_LOOKUP_ID,
+                {
                     "Section 1": {
                         "calcUPRN": {"value": user_uprn},
-                        "calcDate": {
-                            "value": datetime.now(UTC).strftime("%d/%m/%Y")
-                        },
+                        "calcDate": {"value": datetime.now(UTC).strftime("%d/%m/%Y")},
                         "calcLang": {"value": "en"},
                     }
-                }
-            },
+                },
+                timeout=_TIMEOUT,
+            )
         )
         if not schedule:
             raise AddressNotFound("No collection data found")
