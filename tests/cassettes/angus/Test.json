@@ -1,0 +1,202 @@
+{
+ "exchanges": [
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": null,
+    "url": "https://myangus.angus.gov.uk/service/Bin_collection_dates_V3"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "text/html; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=9RypxQwfiIUNsMqEsChi2SSNO6Q7IsWAmX54tAUbsSWAZlTSQBHOBfLvF8ORGtzpdCczIWKy28pMX5qkKOpLwM6zBu+AQjz454qX/N/4+AIBxAK0TmOR7vVOaaJR; Expires=Tue, 13 Oct 2026 09:20:23 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=9RypxQwfiIUNsMqEsChi2SSNO6Q7IsWAmX54tAUbsSWAZlTSQBHOBfLvF8ORGtzpdCczIWKy28pMX5qkKOpLwM6zBu+AQjz454qX/N/4+AIBxAK0TmOR7vVOaaJR; Expires=Tue, 13 Oct 2026 09:20:23 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ],
+     [
+      "set-cookie",
+      "PHPSESSID=1ohfo0vpt5d23eos3o08vm1v9a; path=/; secure; HttpOnly"
+     ]
+    ],
+    "status": 200,
+    "text": "<!DOCTYPE html><html lang=\"en\"><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" /><title>Bin collection dates - MyAngus</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes\" /><script type=\"text/javascript\" src=\"/shared/js/toggle/feature_toggle_module.js?v=5970928\"></script><script type=\"text/javascript\" src=\"/shared/js/toggle/feature_toggle.js?v=5970928\"></script><script type=\"text/javascript\" src=\"/js/core/timer.js\"></script><script type=\"text/javascript\" src=\"/cpnm/jquery/dist/jquery.min.js\"></script><script type=\"text/javascript\" src=\"/cpnm/@pnotify/core/dist/PNotify.js\"></script><script type=\"text/javascript\" src=\"/cpnm/@pnotify/bootstrap4/dist/PNotifyBootstrap4.js\"></script><script type=\"text/javascript\" src=\"/cpnm/@pnotify/font-awesome5/dist/PNotifyFontAwesome5.js\"></script><script type=\"text/javascript\" src=\"/cpnm/@pnotify/font-awesome5-fix/dist/PNotifyFontAwesome5Fix.js\"></script><script type=\"text/javascript\" src=\"/shared/js/pnotifyConfig.js\"></script><link rel=\"stylesheet\" type=\"text/css\" href=\"/libraries/css/bootstrap.css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/libraries/bootstrap4/modal.css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/libraries/css/datepicker.css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/libraries/css/jqueryui.css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/css/self.css\" id=\"MasterStylesheet\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/css/bye-bye-ie8-9-10.css\"/><link rel=\"stylesheet\" type=\"text/css\" href=\"/css/forms_landing_page.css\"/><link rel=\"stylesheet\" href=\"/cpnm/@fortawesome/fontawesome-free/css/all.css\" /><link rel=\"stylesheet\" href=\"/cpnm/@pnotify/core/dist/PNotify.css\" /><link rel=\"stylesheet\" href=\"/css/pnotify.css\" /><link href=\"//myangus.angus.gov.uk/apibroker/self-files/73ce296ea4474e2636e2f31574e07686?app_name=Self&sid=0cc5fb7c78554975a7fde8c9b6126085\" rel=\"shortcut icon\" type=\"image/x-icon\"/><link rel=\"apple-touch-icon\" sizes=\"137x137\" href=\"//myangus.angus.gov.uk/apibroker/self-files/73ce296ea4474e2636e2f31574e07686?app_name=Self&sid=0cc5fb7c78554975a7fde8c9b6126085\" /><link rel=\"apple-touch-icon-precomposed\" sizes=\"137x137\" href=\"//myangus.angus.gov.uk/apibroker/self-files/73ce296ea4474e2636e2f31574e07686?app_name=Self&sid=0cc5fb7c78554975a7fde8c9b6126085\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"//fs-filestore-eu.s3.amazonaws.com/angus/css/angusself.css\"/><script type=\"text/javascript\">\n/*<![CDATA[*/\n(function() {\nvar sz = document.createElement('script'); sz.type = 'text/javascript'; sz.async = true;\nsz.src = '//siteimproveanalytics.com/js/siteanalyze_360895.js';\nvar s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sz, s);\n})();\n/*]]>*/\n</script>\n<meta name=\"google-site-verification\" content=\"QMOsBNtuHI5j1xJaAKBNOB1xED9uLN61KO5SHdhKVdQ\" />\n<meta name=\"google-site-verification\" content=\"OZToDtgL_oIiGnmNyAC3-PMBXzhJCwtHLwvBSuzyLo4\" /><script src=\"/cpnm/bluebird/js/browser/bluebird.js\" type=\"text/javascript\"></script></head><body id=\"self-body\" class=\"not-ie no-js gt-ie9  AF-Category-No-Authentication-Skip-Login\" lang=\"en\"><a role=\"link\" href=\"#self-content\" class=\"skip\">Skip to content</a><div role=\"alertdialog\" aria-label=\"Cookie policy notice\" id=\"cookie-message\" class=\"cookie-message-force-onpage-display\"><div tabindex=\"0\" class=\"container\"><p>This site is powered by Granicus.</p><p>To provide you with the best online experience we use a\nrange of essential site cookies. These essential cookies enable you to remain logged in and for your site preferences\nto be remembered, in addition to other essential functions. Granicus does not use analytics, advertising or tracking\ncookies. In addition to these essential cookies, the organisation which owns this site may choose to place\nsupplementary cookies, for example to support analytics. Should they choose to do this, they have an obligation to\nlet you know where this is the case, and what the benefits and costs are, who they share it with, and what options\nyou have.</p><p>More information on <a href=\"https://support.granicus.com/s/article/govService-Cookie-Statement\"\ntarget=\"_blank\">Granicus' cookie policy.</a></p><button type=\"button\" class=\"btn btn-primary\" id=\"close-cookie-message\">Close</button></div></div><div id=\"toolbar\"><div class=\"navbar main navbar-static-top navbar-inverse\">\n        <div class=\"container\">\n            <div class=\"row\">\n                <div class=\"navbar-header\">\n                    <a class=\"navbar-brand\" href=\n                    \"https://www.angus.gov.uk\"><img src=\"https://fs-filestore-eu.s3.amazonaws.com/angus/images/angus-logo-header175w.png\" alt=\"Angus Council logo with link to website\" /></a>\n                </div>\n                <ul id=\"session-badge\" class=\"nav navbar-nav navbar-right\">\n                  <li><a href=\"/login/?return_url=https%3A%2F%2Fmyangus.angus.gov.uk%2Fen&amp;lang=en&amp;appName=Self\" id=\"loginLink\" class=\"login-link register-link-ignoreme\">Sign-in<div class=\"caret\" style=\"display: none;\"></div></a></li>\n                </ul>\n            </div>\n        </div>\n    </div></div><div id=\"header\" role=\"banner\"><div class=\"container\"><div class=\"row\"><div class=\"col-md-8\"> \n\n</div></div></div></div><div id=\"navigation\" role=\"navigation\" class=\"container\"><div class=\"row\"><div class=\"navbar clearfix\" style=\"padding: 0px\"><div class=\"btn-group hidden-xs clearfix\" style=\"margin-top:0; width:100%\"><a href=\"/en\" class=\"btn btn-lg btn-primary top \" role=\"link\" aria-label=\"MyAngus Home\" alt-text= \"MyAngus Home\">MyAngus Home<span class=\"caret\" style=\"display:none\"></span></a><a href=\"/accounts\" class=\"btn btn-lg btn-primary top \" role=\"link\" aria-label=\"My Accounts\" alt-text= \"My Accounts\">My Accounts<span class=\"caret\" style=\"display:none\"></span></a><a href=\"/MyServices\" class=\"btn btn-lg btn-primary top \" role=\"link\" aria-label=\"Services\" alt-text= \"Services\">Services<span class=\"caret\" style=\"display:none\"></span></a></div><div class=\"btn-group visible-xs col-xs-12 clearfix\"><div class=\"navbar-header\"><button type=\"button\" class=\"btn btn-primary btn-lg dropdown-toggle col-xs-12\" data-toggle=\"collapse\" id=\"navDropdownToggle\" data-target=\"#navbar-collapse\" aria-label=\"press enter or space to open and close menu\" tabindex=\"0\">MyAngus Home<i class=\"pull-right fa fa-ellipsis-v\"></i></button></div><div class=\"collapse navbar-collapse\" id=\"navbar-collapse\"><ul class=\"nav navbar-nav\"><li><a href=\"/en\" tabindex=\"0\">MyAngus Home</a></li><li><a href=\"/accounts\" tabindex=\"0\">My Accounts</a></li><li><a href=\"/MyServices\" tabindex=\"0\">Services</a></li></ul></div></div></div></div></div><section id=\"main-content\"><div id=\"self-content\" class=\"container\"><div id=\"IE8Message\" class=\"alert alert-warning\">This browser version is not supported. Please use Internet Explorer 9 or higher.</div><div id=\"form-instance-1\"><div class=\"loading row\"><div class=\"loading center lead AchieveFormsLoading\"></div></div><div class=\"row\"><div class=\"renderForm col-xs-12 col-sm-12\"><iframe id=\"fillform-frame-1\" title=\"Bin collection dates\" data-category=\"AF-Category-No-Authentication-Skip-Login\" class=\"achieveforms-iframe\" scrolling=\"no\" src=\"\" style=\"overflow:hidden;height: 250px;border: 0;\"></iframe></div></div></div><script type=\"text/javascript\"> var submission_data=null</script><script type=\"text/javascript\">FS.FormDefinition = {\"fillform-frame-1\":{\"data\":{\"product\":\"Self\",\"local\":false,\"mode\":\"render\",\"form_uri\":\"sandbox-publish:\\/\\/AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\\/AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933\\/definition.json\",\"process\":\"1\",\"iframeId\":1,\"language\":\"en\",\"process_uri\":\"sandbox-processes:\\/\\/AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\",\"process_id\":\"AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\",\"domain_id\":\"b8435d84-c82f-11e6-b9ba-22000b0c6ed2\",\"custom_css\":[\"\\/\\/fs-filestore-eu.s3.amazonaws.com\\/angus\\/css\\/angusself-iframe.css\"],\"session\":{\"auth-session\":\"1ohfo0vpt5d23eos3o08vm1v9a\",\"cookie-domain\":\"\",\"is_authenticated\":false,\"providers\":[]},\"formID\":\"AF-Form-37d4dfe5-4407-4f21-848e-ef456949faf2\",\"processID\":\"AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\",\"isInServiceRegisterBlacklist\":false,\"isInServiceRatingBlacklist\":false,\"gaFormsEventPrefix\":\"\",\"gaProcessEventPrefix\":\"\",\"gaStageEventPrefix\":\"\",\"redirectlink\":\"\\/en\",\"cancelRedirectLink\":\"\\/en\"}},\"metadata\":{\"itemName\":\"anguscouncil\\/AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\\/AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933\\/definition.json\",\"category\":\"AF-Category-422463cf-5ee6-40ed-b509-91e5e2aa17a4\",\"filename\":\"AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\\/AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933\\/definition.json\",\"form-category\":\"\",\"form-description\":\"\",\"form-id\":\"AF-Form-37d4dfe5-4407-4f21-848e-ef456949faf2\",\"form-name\":\"Bin collection dates\",\"form-uri\":\"AF-Form-37d4dfe5-4407-4f21-848e-ef456949faf2\",\"last_edited_by\":\"\",\"last_modified\":\"2026-03-04 12:07:17\",\"main\":\"1\",\"process-category\":\"AF-Category-422463cf-5ee6-40ed-b509-91e5e2aa17a4\",\"process-description\":\"\",\"process-id\":\"AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\",\"process-name\":\"Bin collection dates V3\",\"process-publish-uri\":\"sandbox-publish:\\/\\/AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\\/definition.json\",\"process-uri\":\"sandbox-processes:\\/\\/AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\",\"publish-uri\":\"sandbox-publish:\\/\\/AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496\\/AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933\\/definition.json\",\"stage-id\":\"AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933\",\"stage-name\":\"Stage 1\",\"sub-type\":\"stage-form\",\"submission-api\":\"\\/form\\/submit\\/\",\"type\":\"form\"}};FS.dbID = '';FS.SITE_TITLE = \"MyAngus\";</script><script src=\"/js/selfR4Renderer.js\" type=\"text/javascript\"></script></div></section><div class=\"container\" id=\"footer\" style=\"background-color:#008672;border-top:5px solid #006D5C;\">\n   <div class=\"span12\" style=\"margin-left: 0;color:#fff;\">\n   <p><strong>Angus Council &copy; 2026</strong></p>\n      <p><small><a href=\"https://www.angus.gov.uk/terms\">Terms and disclaimer</a></small><br />\n      <small><a href=\"https://www.angus.gov.uk/privacy\">Privacy</a></small><br />\n      <small><a href=\"https://www.angus.gov.uk/cookies\">Cookies</a></small></p>\n    </div>\n</div><noscript><div style=\"border: 1px solid purple; padding: 10px; text-align: center;\">\n    <span style=\"color:red; font-size: 30px;\">JavaScript is not enabled!</span></br>\n    <span style=\"color:black; font-size: 16px;\">Some page elements may not display correctly or not display at all!</span></br>\n    <span style=\"color:black; font-size: 16px;\">Please enable JavaScript in the browser settings.</span></br>\n    <span style=\"color:black; font-size: 16px;\">Here is more information about how to enable it in your browser:</span></br>\n    <ul style=\"list-style: none;\">\n        <li><a href=\"https://support.google.com/adsense/answer/12654?hl=en\">Google Chrome</a></li>\n        <li><a href=\"https://www.whatismybrowser.com/guides/how-to-enable-javascript/internet-explorer\">Microsoft Internet Explorer</a></li>\n        <li><a href=\"https://support.mozilla.org/en-US/questions/967344\">Mozilla Firefox</a></li>\n        <li><a href=\"https://support.apple.com/kb/PH21449?viewlocale=en_US&locale=en_US\">Apple Safari</a></li>\n    </ul>\n</div></noscript><script>(function(){function cookieCheck() {if (navigator.cookieEnabled) return true;document.cookie = \"cookietest=1\";var ret = document.cookie.indexOf(\"cookietest=\") != -1;document.cookie = \"cookietest=1; expires=Thu, 01-Jan-1970 00:00:01 GMT\";return ret;}if( !cookieCheck() ){window.location.href = window.location.origin + \"/cookie.php\";}})();</script><script>(function(){try{sessionStorage.sessionStorageTest = \"pass\";}catch(e){window.location.href = window.location.origin + \"/browser.php\";}})();</script><script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script><script type=\"text/javascript\" src=\"https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit\"></script><script type=\"text/javascript\" src=\"/libraries/js/es5-shim.js\"></script><script type=\"text/javascript\" src=\"/libraries/js/es5-sham.js\"></script><script type=\"text/javascript\" src=\"/cpnm/lodash/lodash.js\"></script><script type=\"text/javascript\" src=\"/cpnm/bootstrap/dist/js/bootstrap.min.js\"></script><script type=\"text/javascript\" src=\"/cpnm/dustjs-linkedin/dist/dust-full.min.js\"></script><script type=\"text/javascript\" src=\"/libraries/js/dust-helpers.js\"></script><script type=\"text/javascript\" src=\"/cpnm/oboe/dist/oboe-browser.min.js\"></script><script type=\"text/javascript\" src=\"/js/config/config.js\"></script><script type=\"text/javascript\" src=\"/js/core/firmsteputil.js\"></script><script type=\"text/javascript\" src=\"/js/core/userProfile.js\"></script><script type=\"text/javascript\" src=\"/shared/js/utils.js\"></script><script type=\"text/javascript\" src=\"/shared/js/auth.js\"></script><script type=\"text/javascript\" src=\"/shared/js/api.js\"></script><script type=\"text/javascript\" src=\"/libraries/js/template.js\"></script><script type=\"text/javascript\" src=\"/js/FS/build/src/achieveforms-render.js\"></script><script type=\"text/javascript\" src=\"/js/core/siteSettings.js\"></script><script type=\"text/javascript\" src=\"/js/core/forms.js\"></script><script type=\"text/javascript\" src=\"/js/core/customCss.js\"></script><script type=\"text/javascript\" src=\"/js/self.js?clearCache=060121\"></script><script type=\"text/javascript\" src=\"/libraries/js/ga.js\"></script><script type=\"text/javascript\" src=\"/js/sessionExpirationCheck.js?v=20260722\"></script><script type=\"text/javascript\" src=\"/js/emailReadOnly.js\"></script><script>\n\n        function twoDigits(d) {\n            if(d < 10) {\n\t\t\t\treturn \"0\" + d.toString();\n\t\t\t}\n            return d.toString();\n        }\n\n        function setOrUpdateLocalTimeCookie(){\n            var localDate = new Date();\n            var localDateFormatted = String(localDate.getFullYear())  + \"-\" +  twoDigits(localDate.getMonth() + 1)  + \"-\" + twoDigits(localDate.getDate());\n            localDateFormatted += \" \" + twoDigits(localDate.getHours())  + \":\" +  twoDigits(localDate.getMinutes())  + \":\" + twoDigits(localDate.getSeconds());\n            document.cookie = \"localtime=\" + localDateFormatted  + \";path=/\";\n        }\n\n        function setTimeZone() {\n\t\t    var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;\n\t\t    document.cookie = \"fs-timezone=\" + timezone + \";path=/\";\n\t    }\n\n\t    setOrUpdateLocalTimeCookie();\n        if (typeof JSFT !== 'undefined' && typeof JSFT.isToggled === 'function' && !JSFT.isToggled('FS-11748-timezone')) {\n\t        setTimeZone();\n        }\n\n        setInterval(function() {\n            setOrUpdateLocalTimeCookie();\n        }, 60 * 2000);\n\n        </script></body></html>",
+    "url": "https://myangus.angus.gov.uk/AchieveForms/?mode=fill&consentMessage=yes&form_uri=sandbox-publish://AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496/AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933/definition.json&process=1&process_uri=sandbox-processes://AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496&process_id=AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-37d4dfe5-4407-4f21-848e-ef456949faf2",
+      "formValues": {
+       "Section 3": {
+        "search": {
+         "value": "dd112rh",
+         "value_changed": true
+        },
+        "select_NewAddress": {
+         "value": ""
+        }
+       }
+      },
+      "processId": "AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496",
+      "stage_id": "AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933",
+      "stage_name": "Stage 1"
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278426351,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "686cdfffd9945",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "0cc5fb7c78554975a7fde8c9b6126085"
+    },
+    "url": "https://myangus.angus.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=hu+HKRONXdVthh8hx3f/73OhXzuKCtawqVTachndTIWSRS+5DfjP5FEoXMdAuYM/QU8wJQwFPsEVkqBjhzn0ClCh22k+bfTFO2xFfabaANepcpsx8xKD+1e2jjfp; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=hu+HKRONXdVthh8hx3f/73OhXzuKCtawqVTachndTIWSRS+5DfjP5FEoXMdAuYM/QU8wJQwFPsEVkqBjhzn0ClCh22k+bfTFO2xFfabaANepcpsx8xKD+1e2jjfp; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<Responses><RequestResponse id=\\\"6ac4bd5a7681d\\\"><DatabaseResponse><Fields><Field Name=\\\"formatted_search\\\" Type=\\\"ntext\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"formatted_search\\\" IsNull=\\\"false\\\">DD11 2RH<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"integration\":{\"id\":\"686cdfffd9945\",\"type\":\"database\",\"transformed\":{\"error\":null,\"xml_data\":\"<Responses><RequestResponse id=\\\"6ac4bd5a7681d\\\"><DatabaseResponse><Fields><Field Name=\\\"formatted_search\\\" Type=\\\"ntext\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"formatted_search\\\" IsNull=\\\"false\\\">DD11 2RH<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"formatted_search\":\"DD11 2RH\"}},\"fields_data\":{\"formatted_search\":{\"name\":\"formatted_search\",\"type\":\"ntext\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null},\"tokens\":[\"{search}\"],\"runtimes\":{\"integration\":{\"template\":\"16ms\",\"lim\":\"11ms\",\"SYSTEM\":\"13ms\",\"database\":\"107ms\"},\"api\":\"107ms\",\"lim\":\"11ms\"},\"log_id\":\"c3c74e15-a431-45c9-8a22-03b9feb82d3d\"},\"hash\":\"4A60933E448060431DDF29B8C9DF7642E2A8A088F764549D28183B1BB3C7C4C1\"}",
+    "url": "https://myangus.angus.gov.uk/apibroker/runLookup?id=686cdfffd9945&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278426351&sid=0cc5fb7c78554975a7fde8c9b6126085"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-37d4dfe5-4407-4f21-848e-ef456949faf2",
+      "formValues": {
+       "Section 3": {
+        "chooseADate": {
+         "value": "2026-10-06",
+         "value_changed": true
+        },
+        "currentDate": {
+         "value": "2026-10-06",
+         "value_changed": true
+        },
+        "formatted_search": {
+         "value": "DD11 2RH",
+         "value_changed": true
+        },
+        "search": {
+         "value": "dd112rh",
+         "value_changed": true
+        },
+        "select_NewAddress": {
+         "value": "117097214",
+         "value_changed": true
+        },
+        "serviceUPRN": {
+         "value": "117097214",
+         "value_changed": true
+        }
+       }
+      },
+      "processId": "AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496",
+      "stage_id": "AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933",
+      "stage_name": "Stage 1"
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278426699,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "66587d491feab",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "0cc5fb7c78554975a7fde8c9b6126085"
+    },
+    "url": "https://myangus.angus.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=EyzVMQxrw4HNbYynCCL2GcYjrlF8vODR4XSaCsM0TvqxvSzOEVA8iNr2uiukmuAxvx2I0NxAbb3XyHOq9ekLj75Yc4Iwtx/Q20h00uEEIAQLdFfK9kzaG4eOILQ9; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=EyzVMQxrw4HNbYynCCL2GcYjrlF8vODR4XSaCsM0TvqxvSzOEVA8iNr2uiukmuAxvx2I0NxAbb3XyHOq9ekLj75Yc4Iwtx/Q20h00uEEIAQLdFfK9kzaG4eOILQ9; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<Responses><RequestResponse id=\\\"6ac4bd5acb150\\\"><DatabaseResponse><Fields><Field Name=\\\"greenRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"greyRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"purpleRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"brownRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"blueRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"binDate\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"binTypeList\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"binCollected\\\" Type=\\\"nvarchar\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-06<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Brown<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> weekly<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-06<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Purple<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> every 2 weeks<\\/result><\\/Row><Row id=\\\"2\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-12<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Green<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> every 2 weeks<\\/result><\\/Row><Row id=\\\"3\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-13<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Grey<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> every 4 weeks<\\/result><\\/Row><Row id=\\\"4\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-27<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Blue<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> every 4 weeks<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"integration\":{\"id\":\"66587d491feab\",\"type\":\"database\",\"transformed\":{\"error\":null,\"xml_data\":\"<Responses><RequestResponse id=\\\"6ac4bd5acb150\\\"><DatabaseResponse><Fields><Field Name=\\\"greenRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"greyRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"purpleRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"brownRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"blueRoute\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"binDate\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"binTypeList\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"binCollected\\\" Type=\\\"nvarchar\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-06<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Brown<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> weekly<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-06<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Purple<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> every 2 weeks<\\/result><\\/Row><Row id=\\\"2\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-12<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Green<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> every 2 weeks<\\/result><\\/Row><Row id=\\\"3\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-13<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Grey<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> every 4 weeks<\\/result><\\/Row><Row id=\\\"4\\\"><result column=\\\"greenRoute\\\" IsNull=\\\"false\\\">AC2_Mon_Ev<\\/result><result column=\\\"greyRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"purpleRoute\\\" IsNull=\\\"false\\\">AC3_Tue_Od<\\/result><result column=\\\"brownRoute\\\" IsNull=\\\"false\\\">AF2_Tue<\\/result><result column=\\\"blueRoute\\\" IsNull=\\\"false\\\">Tuesday_Even_1<\\/result><result column=\\\"binDate\\\" IsNull=\\\"false\\\">2026-10-27<\\/result><result column=\\\"binTypeList\\\" IsNull=\\\"false\\\">Blue<\\/result><result column=\\\"binCollected\\\" IsNull=\\\"false\\\"> every 4 weeks<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"greenRoute\":\"AC2_Mon_Ev\",\"greyRoute\":\"AC3_Tue_Od\",\"purpleRoute\":\"AC3_Tue_Od\",\"brownRoute\":\"AF2_Tue\",\"blueRoute\":\"Tuesday_Even_1\",\"binDate\":\"2026-10-06\",\"binTypeList\":\"Brown\",\"binCollected\":\" weekly\"},\"1\":{\"greenRoute\":\"AC2_Mon_Ev\",\"greyRoute\":\"AC3_Tue_Od\",\"purpleRoute\":\"AC3_Tue_Od\",\"brownRoute\":\"AF2_Tue\",\"blueRoute\":\"Tuesday_Even_1\",\"binDate\":\"2026-10-06\",\"binTypeList\":\"Purple\",\"binCollected\":\" every 2 weeks\"},\"2\":{\"greenRoute\":\"AC2_Mon_Ev\",\"greyRoute\":\"AC3_Tue_Od\",\"purpleRoute\":\"AC3_Tue_Od\",\"brownRoute\":\"AF2_Tue\",\"blueRoute\":\"Tuesday_Even_1\",\"binDate\":\"2026-10-12\",\"binTypeList\":\"Green\",\"binCollected\":\" every 2 weeks\"},\"3\":{\"greenRoute\":\"AC2_Mon_Ev\",\"greyRoute\":\"AC3_Tue_Od\",\"purpleRoute\":\"AC3_Tue_Od\",\"brownRoute\":\"AF2_Tue\",\"blueRoute\":\"Tuesday_Even_1\",\"binDate\":\"2026-10-13\",\"binTypeList\":\"Grey\",\"binCollected\":\" every 4 weeks\"},\"4\":{\"greenRoute\":\"AC2_Mon_Ev\",\"greyRoute\":\"AC3_Tue_Od\",\"purpleRoute\":\"AC3_Tue_Od\",\"brownRoute\":\"AF2_Tue\",\"blueRoute\":\"Tuesday_Even_1\",\"binDate\":\"2026-10-27\",\"binTypeList\":\"Blue\",\"binCollected\":\" every 4 weeks\"}},\"fields_data\":{\"greenRoute\":{\"name\":\"greenRoute\",\"type\":\"nvarchar\"},\"greyRoute\":{\"name\":\"greyRoute\",\"type\":\"nvarchar\"},\"purpleRoute\":{\"name\":\"purpleRoute\",\"type\":\"nvarchar\"},\"brownRoute\":{\"name\":\"brownRoute\",\"type\":\"nvarchar\"},\"blueRoute\":{\"name\":\"blueRoute\",\"type\":\"nvarchar\"},\"binDate\":{\"name\":\"binDate\",\"type\":\"nvarchar\"},\"binTypeList\":{\"name\":\"binTypeList\",\"type\":\"nvarchar\"},\"binCollected\":{\"name\":\"binCollected\",\"type\":\"nvarchar\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"},{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null},\"tokens\":[\"{serviceUPRN}\",\"{currentDate}\",\"{servicePostcode}\"],\"runtimes\":{\"integration\":{\"template\":\"14ms\",\"lim\":\"13ms\",\"SYSTEM\":\"12ms\",\"database\":\"313ms\"},\"api\":\"313ms\",\"lim\":\"13ms\"},\"log_id\":\"0b89d0ee-a461-464e-b9fe-83813b81a407\"},\"hash\":\"C58803D8006BB5CED07C0313A46E5D1C5E8777E0FC63DBF5EC10166EE31B8063\"}",
+    "url": "https://myangus.angus.gov.uk/apibroker/runLookup?id=66587d491feab&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278426699&sid=0cc5fb7c78554975a7fde8c9b6126085"
+   }
+  }
+ ],
+ "golden": [
+  [
+   "2026-10-06",
+   "Brown"
+  ],
+  [
+   "2026-10-06",
+   "Purple"
+  ],
+  [
+   "2026-10-12",
+   "Green"
+  ],
+  [
+   "2026-10-13",
+   "Grey"
+  ],
+  [
+   "2026-10-27",
+   "Blue"
+  ]
+ ],
+ "params": {
+  "postcode": "DD11 2RH",
+  "uprn": "117097214"
+ },
+ "recorded": "2026-10-06"
+}

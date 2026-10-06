@@ -2,11 +2,8 @@
 
 from __future__ import annotations
 
-import logging
 import re
 from datetime import datetime
-
-from bs4 import BeautifulSoup
 
 from api.councils._base import (
     Address,
@@ -16,15 +13,18 @@ from api.councils._base import (
     Scraper,
     UpstreamError,
 )
-
-_LOGGER = logging.getLogger(__name__)
+from api.councils._platforms.achieveforms import data_rows, run_lookup
 
 _START_URL = "https://myangus.angus.gov.uk/service/Bin_collection_dates_V3"
-_API_BASE = (
-    "https://myangus.angus.gov.uk/apibroker/runLookup"
-    "?id={}&repeat_against=&noRetry=false&getOnlyTokens=undefined"
-    "&log_id=&app_name=AF-Renderer::Self&sid={}"
-)
+_API_URL = "https://myangus.angus.gov.uk/apibroker/runLookup"
+_SEARCH_LOOKUP_ID = "686cdfffd9945"
+_SCHEDULE_LOOKUP_ID = "66587d491feab"
+_FORM = {
+    "formId": "AF-Form-37d4dfe5-4407-4f21-848e-ef456949faf2",
+    "processId": "AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496",
+    "stage_id": "AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933",
+    "stage_name": "Stage 1",
+}
 _SESSION_ID = re.compile(r"[?&]sid=([a-f0-9]{32})")
 _HEADERS = {
     "User-Agent": (
@@ -77,92 +77,55 @@ class Angus(Scraper):
         )
 
         post_headers = {**_POST_HEADERS, "Referer": r1.url}
-        await http.post(
-            _API_BASE.format("686cdfffd9945", sid),
-            headers=post_headers,
-            json={
-                "formId": "AF-Form-37d4dfe5-4407-4f21-848e-ef456949faf2",
-                "processId": "AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496",
-                "stage_id": "AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933",
-                "stage_name": "Stage 1",
-                "formValues": {
-                    "Section 3": {
-                        "search": {
-                            "value": postcode_search,
-                            "value_changed": True,
-                        },
-                        "select_NewAddress": {"value": ""},
-                    }
-                },
+        # The form runs the postcode search first. Its reply isn't read, but the
+        # schedule lookup is made in the session that has asked.
+        await run_lookup(
+            http,
+            _API_URL,
+            sid,
+            _SEARCH_LOOKUP_ID,
+            {
+                "Section 3": {
+                    "search": {"value": postcode_search, "value_changed": True},
+                    "select_NewAddress": {"value": ""},
+                }
             },
+            headers=post_headers,
+            body=_FORM,
             check=False,
         )
 
         today_str = now.strftime("%Y-%m-%d")
-        r_select = await http.post(
-            _API_BASE.format("66587d491feab", sid),
-            headers=post_headers,
-            json={
-                "formId": "AF-Form-37d4dfe5-4407-4f21-848e-ef456949faf2",
-                "processId": "AF-Process-a15a2788-7daa-46f0-96c4-75acb62d4496",
-                "stage_id": "AF-Stage-6d652139-a8ac-4e28-97b6-0e02ed369933",
-                "stage_name": "Stage 1",
-                "formValues": {
-                    "Section 3": {
-                        "select_NewAddress": {
-                            "value": uprn,
-                            "value_changed": True,
-                        },
-                        "search": {
-                            "value": postcode_search,
-                            "value_changed": True,
-                        },
-                        "serviceUPRN": {
-                            "value": uprn,
-                            "value_changed": True,
-                        },
-                        "formatted_search": {
-                            "value": postcode,
-                            "value_changed": True,
-                        },
-                        "chooseADate": {
-                            "value": today_str,
-                            "value_changed": True,
-                        },
-                        "currentDate": {
-                            "value": today_str,
-                            "value_changed": True,
-                        },
-                    }
-                },
+        result = await run_lookup(
+            http,
+            _API_URL,
+            sid,
+            _SCHEDULE_LOOKUP_ID,
+            {
+                "Section 3": {
+                    "select_NewAddress": {"value": uprn, "value_changed": True},
+                    "search": {"value": postcode_search, "value_changed": True},
+                    "serviceUPRN": {"value": uprn, "value_changed": True},
+                    "formatted_search": {"value": postcode, "value_changed": True},
+                    "chooseADate": {"value": today_str, "value_changed": True},
+                    "currentDate": {"value": today_str, "value_changed": True},
+                }
             },
+            headers=post_headers,
+            body=_FORM,
         )
 
-        data = r_select.json()
-        if data.get("result") == "logout":
-            raise UpstreamError("Session Rejected (Logout)")
+        reply_rows = data_rows(result)
+        if not reply_rows:
+            return []  # the council lists nothing for this property
 
-        raw_xml = data.get("data", "")
-        if "<Rows>" not in raw_xml:
-            _LOGGER.warning("No rows found in response data")
-            return []
-
-        root = BeautifulSoup(f"<root>{raw_xml}</root>", "xml")
         collections: list[Collection] = []
-        for row in root.find_all("Row"):
-            row_data: dict[str, str] = {}
-            for result in row.find_all("result"):
-                key = result.get("column")
-                if key:
-                    row_data[key] = result.text
-
-            date_str = row_data.get("binDate")
-            bin_type = row_data.get("binTypeList")
+        for row in reply_rows:
+            date_str = row.get("binDate")
+            bin_type = row.get("binTypeList")
+            # 1900 is the placeholder date for a bin type with nothing scheduled.
             if date_str and bin_type and "1900" not in date_str:
-                try:
-                    day = datetime.strptime(date_str, "%Y-%m-%d").date()
-                except ValueError:
-                    continue
+                day = datetime.strptime(date_str, "%Y-%m-%d").date()
                 collections.append(Collection(day, bin_type))
 
         return collections
