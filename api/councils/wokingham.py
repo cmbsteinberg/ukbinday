@@ -83,7 +83,7 @@ class Wokingham(Scraper):
             if holiday_response.ok:
                 revised_schedules = _revised_schedules(holiday_response.text)
         except UpstreamError:
-            pass
+            pass  # optional Christmas revisions page; the regular schedule stands without it
 
         response = await http.get(_API_URL)
         form_id = _form_id(response.text)
