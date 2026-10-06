@@ -3,22 +3,28 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta
-from time import time_ns
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper
-
-_HOST = "https://my.threerivers.gov.uk"
-_AUTH_URL = (
-    f"{_HOST}/authapi/isauthenticated?uri=https%253A%252F%252Fmy.threerivers.gov.uk"
-    "%252Fen%252FAchieveForms%252F%253Fmode%253Dfill%2526consentMessage%253Dyes"
-    "%2526form_uri%253Dsandbox-publish%253A%252F%252FAF-Process-52df96e3-992a-4b39"
-    "-bba3-06cfaabcb42b%252FAF-Stage-01ee28aa-1584-442c-8d1f-119b6e27114a"
-    "%252Fdefinition.json%2526process%253D1%2526process_uri%253Dsandbox-processes"
-    "%253A%252F%252FAF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b"
-    "%2526process_id%253DAF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b"
-    "%2526noLoginPrompt%253D1&hostname=my.threerivers.gov.uk&withCredentials=true"
+from api.councils._base import Address, Collection, Http, Meta, Scraper, UpstreamError
+from api.councils._platforms.achieveforms import (
+    first_row,
+    init_session,
+    rows,
+    run_lookup,
 )
+
+_HOSTNAME = "my.threerivers.gov.uk"
+_HOST = f"https://{_HOSTNAME}"
+_AUTH_URL = f"{_HOST}/authapi/isauthenticated"
+_FORM_URI = (
+    f"{_HOST}/en/AchieveForms/?mode=fill&consentMessage=yes"
+    "&form_uri=sandbox-publish://AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b/"
+    "AF-Stage-01ee28aa-1584-442c-8d1f-119b6e27114a/definition.json&process=1"
+    "&process_uri=sandbox-processes://AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b"
+    "&process_id=AF-Process-52df96e3-992a-4b39-bba3-06cfaabcb42b&noLoginPrompt=1"
+)
+# This portal serves lookups from /apibroker/?api=RunLookup rather than /apibroker/runLookup.
 _API_URL = f"{_HOST}/apibroker/"
+_API_PARAMS = {"api": "RunLookup"}
 _TOKEN_LOOKUP_ID = "58986058d4be0"
 _SCHEDULE_LOOKUP_ID = "58ac332f9e831"
 _HEADERS = {
@@ -28,20 +34,6 @@ _HEADERS = {
     "X-Requested-With": "XMLHttpRequest",
     "Referer": f"{_HOST}/fillform/?iframe_id=fillform-frame-1&db_id=",
 }
-
-
-def _api_params(lookup_id: str, sid: str, *, no_retry: str = "true") -> dict[str, str]:
-    return {
-        "api": "RunLookup",
-        "id": lookup_id,
-        "repeat_against": "",
-        "noRetry": no_retry,
-        "getOnlyTokens": "undefined",
-        "log_id": "",
-        "app_name": "AF-Renderer::Self",
-        "_": str(time_ns() // 1_000_000),
-        "sid": sid,
-    }
 
 
 class ThreeRivers(Scraper):
@@ -59,50 +51,46 @@ class ThreeRivers(Scraper):
         now = datetime.now()
         two_weeks = now + timedelta(days=14)
 
-        r = await http.get(_AUTH_URL)
-        sid = r.json()["auth-session"]
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URI)
 
-        base_form = {
-            "Your address details": {
-                "UPRN": {"value": uprn},
-                "todaysdate": {"value": now.strftime("%Y-%m-%dT00:00:00")},
-            }
-        }
-
-        r = await http.post(
-            _API_URL,
-            params=_api_params(_TOKEN_LOOKUP_ID, sid),
-            json={"formValues": base_form},
+        token_row = first_row(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                _TOKEN_LOOKUP_ID,
+                {
+                    "Your address details": {
+                        "UPRN": {"value": uprn},
+                        "todaysdate": {"value": now.strftime("%Y-%m-%dT00:00:00")},
+                    }
+                },
+                no_retry="true",
+                params=_API_PARAMS,
+            )
         )
-        token_data = r.json()
-        token = (
-            token_data.get("integration", {})
-            .get("transformed", {})
-            .get("rows_data", {})
-            .get("0", {})
-            .get("token", "")
-        )
+        if token_row is None or "token" not in token_row:
+            raise UpstreamError("Three Rivers gave no token")
 
-        schedule_form = {
-            "Your address details": {
-                "UPRN": {"value": uprn},
-                "todaysdate": {"value": now.strftime("%Y-%m-%dT00:00:00")},
-                "twoweeks": {"value": two_weeks.strftime("%Y-%m-%dT00:00:00")},
-            },
-            "Your collection dates": {
-                "token": {"value": token},
-            },
-        }
-        r = await http.post(
-            _API_URL,
-            params=_api_params(_SCHEDULE_LOOKUP_ID, sid, no_retry="false"),
-            json={"formValues": schedule_form},
+        rows_data = rows(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                _SCHEDULE_LOOKUP_ID,
+                {
+                    "Your address details": {
+                        "UPRN": {"value": uprn},
+                        "todaysdate": {"value": now.strftime("%Y-%m-%dT00:00:00")},
+                        "twoweeks": {"value": two_weeks.strftime("%Y-%m-%dT00:00:00")},
+                    },
+                    "Your collection dates": {"token": {"value": token_row["token"]}},
+                },
+                params=_API_PARAMS,
+            )
         )
-        data = r.json()
-
-        rows_data = data.get("integration", {}).get("transformed", {}).get("rows_data", {})
         if not rows_data:
-            return []
+            return []  # the council lists nothing for this property
 
         collections: list[Collection] = []
         for row in rows_data.values():
