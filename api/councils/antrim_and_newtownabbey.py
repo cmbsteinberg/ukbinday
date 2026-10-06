@@ -11,7 +11,7 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
-    UpstreamError,
+    find_tag,
     match_address,
     soup,
     text_of,
@@ -51,9 +51,7 @@ class AntrimAndNewtownabbey(Scraper):
                 raise InputError("An id or a postcode and address is required")
 
             r = await http.get(_PAGE, timeout=30.0)
-            form = soup(r.text).find("form", id="form")
-            if form is None:
-                raise UpstreamError("Antrim and Newtownabbey bin search form not found")
+            form = find_tag(soup(r.text), "form", id="form", what="Antrim and Newtownabbey bin search form not found")
 
             data = {
                 item["name"]: item.get("value", "")
