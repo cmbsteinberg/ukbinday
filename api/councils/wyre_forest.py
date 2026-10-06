@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 from api.councils._base import (
     Address,
@@ -12,14 +12,18 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    every,
+    find_tag,
+    next_weekday,
+    parse_date,
     soup,
+    weekday_number,
 )
 
 _API_URLS = {
     "waste": "https://forms.wyreforestdc.gov.uk/querybin.asp",
     "garden_waste": "https://forms.wyreforestdc.gov.uk/GardenWasteChecker/Home/Details",
 }
-_DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 
 # Next Rubbish Collection
 _REGEX_GET_BIN_TYPE = re.compile(r"Next (.*?) Collection")
@@ -41,30 +45,14 @@ def _get_date_by_weekday(weekday: str) -> date:
     this_week = re.match(r"This (.*?)$", weekday, re.IGNORECASE)
     next_week = re.match(r"Next (.*?)$", weekday, re.IGNORECASE)
     if this_week:
-        weekday_idx = _DAYS.index(this_week.group(1).upper())
-        offset = 0
-    elif next_week:
-        weekday_idx = _DAYS.index(next_week.group(1).upper())
-        offset = 7
-    else:
-        try:
-            return datetime.strptime(weekday.strip(), "%d %B %Y").date()
-        except ValueError:
-            pass
-        try:
-            return datetime.strptime(weekday.strip(), "%d %b %Y").date()
-        except ValueError:
-            pass
-        raise ValueError(f"Invalid weekday: {weekday}")
-
-    day = date.today() + timedelta(days=offset)
-    while day.weekday() != weekday_idx:
-        day += timedelta(days=1)
-    return day
+        return next_weekday(this_week.group(1))
+    if next_week:
+        return next_weekday(next_week.group(1), after=date.today() + timedelta(days=7))
+    return parse_date(weekday)
 
 
 def _predict_next_collections(first_date: date, day_interval: int = 14) -> list[date]:
-    return [first_date + timedelta(days=i * day_interval) for i in range(5)]
+    return every(first_date, days=day_interval, count=5)
 
 
 class WyreForest(Scraper):
@@ -96,10 +84,7 @@ class WyreForest(Scraper):
         }
         r = await http.post(_API_URLS["waste"], params=params)
         page = soup(r.text)
-        collection_day_header = page.find("p", string="Collection Day")
-
-        if collection_day_header is None:
-            raise UpstreamError("Could not find collection day header")
+        collection_day_header = find_tag(page, "p", string="Collection Day", what="Could not find collection day header")
         collection_day_table = collection_day_header.find_parent("table")
         if collection_day_table is None:
             raise UpstreamError("Could not find collection day table")
@@ -145,7 +130,7 @@ class WyreForest(Scraper):
                     days=relevant_collection_date.weekday()
                 )
                 garden_collection_day = monday_of_garden_week + timedelta(
-                    _DAYS.index(garden_day.group(1).upper())
+                    weekday_number(garden_day.group(1))
                 )
             except (KeyError, ValueError) as exc:
                 raise UpstreamError("Could not parse garden waste collection days") from exc
