@@ -14,7 +14,9 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     match_address,
+    next_weekday,
     parse_date,
     soup,
 )
@@ -35,7 +37,6 @@ _BANK_HOLIDAY_URL = (
     "https://www.royalgreenwich.gov.uk/recycling-and-rubbish/bins-and-collections/"
     "bank-holiday-collection-dates"
 )
-_DAYS = ("MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY")
 _HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) "
@@ -70,9 +71,7 @@ async def _black_top_next_date(
 ) -> date:
     response = await http.get(_BLACK_TOP_URL)
     page = soup(response.text)
-    table = page.find("table")
-    if table is None:
-        raise UpstreamError("Royal Greenwich black top bin schedule has no table")
+    table = find_tag(page, "table", what="Royal Greenwich black top bin schedule has no table")
 
     headers = table.find_all("th")
     try:
@@ -156,14 +155,10 @@ class Greenwich(Scraper):
         collection_day = data["Day"]
         black_top_bin_week = data["Frequency"]
 
-        today = date.today()
         try:
-            collection_day_index = _DAYS.index(collection_day.upper()) + 1
+            this_week_collection_date = next_weekday(collection_day)
         except ValueError as exc:
             raise UpstreamError(f"Unknown Royal Greenwich collection day: {collection_day!r}") from exc
-        this_week_collection_date = today + timedelta(
-            (collection_day_index - today.isoweekday()) % 7
-        )
 
         next_food_collection_date = await _black_top_next_date(
             http, black_top_bin_week, this_week_collection_date
