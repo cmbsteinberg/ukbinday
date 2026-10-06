@@ -11,7 +11,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     Transport,
-    UpstreamError,
+    find_tag,
     match_address,
     parse_ics,
     soup,
@@ -70,9 +70,7 @@ class EastLothian(Scraper):
             raise InputError("East Lothian needs a UPRN or address")
 
         r = await http.get(_SCHEDULE_URL)
-        form = soup(r.text).find("input", {"name": "form_build_id"})
-        if form is None:
-            raise UpstreamError("Could not find form_build_id on East Lothian schedule page")
+        form = find_tag(soup(r.text), "input", {"name": "form_build_id"}, what="Could not find form_build_id on East Lothian schedule page")
         form_build_id = form["value"]
 
         r = await http.post(
