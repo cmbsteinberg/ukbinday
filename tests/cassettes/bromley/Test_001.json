@@ -1,0 +1,212 @@
+{
+ "exchanges": [
+  {
+   "request": {
+    "body": {
+     "data": {
+      "postcode": "BR1 3PU"
+     }
+    },
+    "method": "POST",
+    "params": null,
+    "url": "https://recyclingservices.bromley.gov.uk/waste"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "server",
+      "nginx"
+     ],
+     [
+      "content-type",
+      "text/html; charset=utf-8"
+     ],
+     [
+      "set-cookie",
+      "fixmystreet_app_session=cf848d169748d24ed6910173d03f45e4c348d1cf; path=/; expires=Tue, 03-Nov-2026 09:20:21 GMT; secure; HttpOnly"
+     ]
+    ],
+    "status": 200,
+    "text": "<!doctype html>\n<!--[if IE 9]>   <html class=\"no-js ie9\" lang=\"en-gb\"><![endif]-->\n<!--[if gt IE 9]><!--><html class=\"no-js\" lang=\"en-gb\"><!--<![endif]-->\n    <head>\n        <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"initial-scale=1.0, width=device-width, viewport-fit=cover\">\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\n\n<title>\n    \n    WasteWorks</title>\n\n\n\n\n<link rel=\"stylesheet\" href=\"/static/cobrands/bromley/base.e303eda300da.css\">\n<link rel=\"stylesheet\" href=\"/static/cobrands/bromley/layout.fab705bae09b.css\" media=\"screen and (min-width:48em)\">\n<!--[if (lt IE 9) & (!IEMobile)]>\n    <link rel=\"stylesheet\" href=\"/static/cobrands/bromley/layout.fab705bae09b.css\">\n<![endif]-->\n<link rel=\"stylesheet\" href=\"/static/vendor/OpenLayers/theme/default/style.836778f74ad9.css\">\n\n\n\n\n\n    <link rel=\"manifest\" href=\"/.well-known/manifest-waste.webmanifest\">\n\n\n    <meta name='theme-color' content='#006a38'>\n    \n        <link rel=\"apple-touch-icon\" sizes=\"192x192\" href=\"/theme/bromley/5a36df643dfeb97b8c7851223e3e132c2f656a69.png\">\n    \n        <link rel=\"apple-touch-icon\" sizes=\"512x512\" href=\"/theme/bromley/9cad32e0f005311ec7b8ef2bad8edf85dd56d5a3.png\">\n    \n\n\n\n\n<!--[if (lt IE 9)]>\n    <script src=\"/static/vendor/html5shiv.4614227df64d.js\"></script>\n<![endif]-->\n<script nonce=\"c3fb49ab674da123138a5923eefe6fe2\">\n(function(d,e,k){function m(b,n,a,l){var f=e.createElement(\"div\");var c=e.body;c||(c=e.createElement(\"body\"),c.fake=!0);if(parseInt(a,10))for(;a--;){var d=e.createElement(\"div\");d.id=l?l[a]:\"modernizr\"+(a+1);f.appendChild(d)}a=e.createElement(\"style\");a.type=\"text/css\";a.id=\"smodernizr\";(c.fake?c:f).appendChild(a);c.appendChild(f);a.styleSheet?a.styleSheet.cssText=b:a.appendChild(e.createTextNode(b));f.id=\"modernizr\";if(c.fake){c.style.background=\"\";c.style.overflow=\"hidden\";var g=h.style.overflow;\nh.style.overflow=\"hidden\";h.appendChild(c)}b=n(f,b);c.fake?(c.parentNode.removeChild(c),h.style.overflow=g,h.offsetHeight):f.parentNode.removeChild(f);return!!b}k={_version:\"3.11.4\"};var g=function(){};g.prototype=k;g=new g;var h=e.documentElement,p=function(){var b=d.matchMedia||d.msMatchMedia;return b?function(d){return(d=b(d))&&d.matches||!1}:function(b){var a=!1;m(\"@media \"+b+\" { #modernizr { position: absolute; } }\",function(b){a=\"absolute\"===(\"getComputedStyle\"in d?getComputedStyle(b):b.currentStyle).position});\nreturn a}}();k.mq=p;d.Modernizr=g})(window,document);\n    var fixmystreet=fixmystreet||{};fixmystreet.page=\"\";fixmystreet.cobrand=\"bromley\";fixmystreet.password_minimum_length=8;fixmystreet.photo_first=0;\n    (function(a){a=a.documentElement;a.className=a.className.replace(/\\bno-js\\b/,\"js\");var b=Modernizr.mq(\"(min-width: 48em)\")?\"desktop\":\"mobile\";\"IntersectionObserver\"in window&&(a.className+=\" lazyload\");\"mobile\"===b&&(a.className+=\" mobile\")})(document);\n</script>\n\n<script nonce=\"c3fb49ab674da123138a5923eefe6fe2\">\nif ('serviceWorker' in navigator) {\n    window.addEventListener('load', function() {\n        navigator.serviceWorker.register('/service-worker.js');\n    });\n}\n</script>\n\n\n\n<meta name=\"format-detection\" content=\"telephone=no\">\n<meta name=\"google\" content=\"notranslate\">\n\n\n\n\n\n\n    \n        <link rel=\"prefetch\" href=\"/static/vendor/OpenLayers/OpenLayers.wfs.c20e25c9d659.js\">\n    \n        <link rel=\"prefetch\" href=\"/static/js/map-OpenLayers.auto.min.27ef1b53654a.js\">\n    \n        <link rel=\"prefetch\" href=\"/static/js/map-OpenStreetMap.auto.min.d5abe766033c.js\">\n    \n        <link rel=\"prefetch\" href=\"/static/js/map-os-bng.auto.min.9c5826149bce.js\">\n    \n    <link rel=\"prefetch\" href=\"/static/cobrands/fixmystreet/map.auto.min.ea73f7151bdc.js\">\n    <link rel=\"prefetch\" href=\"/static/vendor/dropzone.min.1c52d40bf872.js\">\n    <link rel=\"prefetch\" href=\"/static/vendor/fancybox/jquery.fancybox-1.3.4.pack.d243d1742854.js\">\n\n\n\n\n        <meta property=\"og:url\" content=\"https://fix.bromley.gov.uk/waste\">\n        <meta property=\"og:title\" content=\"WasteWorks\">\n        <meta property=\"og:site_name\" content=\"WasteWorks\">\n        \n        <meta property=\"og:type\" content=\"website\">\n                \n        \n        <meta property=\"og:image\" content=\"https://fix.bromley.gov.uk/cobrands/fixmystreet/images/fms-og_image.jpg\">\n        <meta property=\"og:image:type\" content=\"image/jpeg\">\n        <meta property=\"og:image:width\" content=\"1200\">\n        <meta property=\"og:image:height\" content=\"630\">\n        \n\n\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"> \n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin> \n<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap\" rel=\"stylesheet\">\n\n<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/cobrands/bromley/images/favicon-32x32.png\">\n<link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/cobrands/bromley/images/favicon-16x16.png\">\n\n\n<script src=\"https://cc.cdn.civiccomputing.com/9/cookieControl-9.11.min.js\" type=\"text/javascript\"></script>\n<script nonce=\"c3fb49ab674da123138a5923eefe6fe2\">\n  var config = {\n      apiKey: \"d92680d5a72175b87ad26cc91e1c4f41994ee659\",\n      product: \"PRO\",\n      subDomains: true,\n      accessibility: {\n          highlightFocus: true,\n          outline: true\n      },\n      initialState: \"NOTIFY\",\n      layout: \"POPUP\",\n      rejectButton: !0,\n      theme: \"light\",\n      statement: {\n          description: \"For more information visit our\",\n          name: \"Cookies statement\",\n          url: \"https://www.bromley.gov.uk/data-protection-freedom-information/subject-access-requests-privacy-cookies-statement14/04/2022\"\n      },\n      text: {\n          necessaryTitle: \"Necessary cookies\",\n          acceptRecommended: \"Accept recommended settings\",\n          closeLabel: \"Save settings\"\n      },\n      consentCookieExpiry: 365,\n      closeStyle: \"button\",\n      optionalCookies: [\n          {\n              name: \"analytics\",\n              label: \"Anonymous performance cookies\",\n              description: \"Performance cookies help us to improve our website by anonymously collecting and reporting information on its usage.\",\n              cookies: [\"_ga\", \"_gid\", \"_gat\", \"__utma\", \"__utmt\", \"__utmb\", \"__utmc\", \"__utmz\", \"__utmv\",],\n              recommendedState: !1,\n              onAccept: function () {\n                  (function (w, d, s, l, i) {\n                      w[l] = w[l] || [];\n                      function gtag(){w[l].push(arguments);}\n                      gtag('js', new Date());\n                      gtag('config', i);\n                      var f = d.getElementsByTagName(s)[0], j = d.createElement(s);\n                      j.async = true;\n                      j.src = 'https://www.googletagmanager.com/gtag/js?id=' + i;\n                      j.setAttribute('nonce', 'c3fb49ab674da123138a5923eefe6fe2');\n                      f.parentNode.insertBefore(j, f);\n                  })(window, document, 'script', 'dataLayer', 'G-252ZXQNTWV');\n              },\n              onRevoke: function () {\n                  window[\"ga-disable-G-252ZXQNTWV\"] = !0;\n              }\n          },\n      ],\n      branding: {\n          fontFamily: '\"Droid Sans\", sans-serif',\n          fontColor: \"#111\",\n          fontSizeTitle: \"26px\",\n          fontSizeIntro: \"1em\",\n          fontSizeHeaders: \"22px\",\n          fontSize: \"1em\",\n          backgroundColor: \"#FFF\",\n          toggleText: \"#235e1c\",\n          toggleColor: \"#647890\",\n          toggleBackground: \"#e7e7e7\",\n          buttonIcon: null,\n          buttonIconWidth: \"64px\",\n          buttonIconHeight: \"64px\",\n          closeText: \"#fff\",\n          closeBackground: \"#333\",\n          removeIcon: !1,\n          removeAbout: !0\n      }\n  };\n  CookieControl.load(config);\n</script>\n\n\n\n\n    </head>\n    \n    <body class=\"waste govuk bulky\">\n\n        <a class=\"skiplink\" href=\"#content\">Skip to main content</a>\n\n    \n\n    \n\n    <div class=\"wrapper\">\n        <div class=\"table-cell\">\n            <header id=\"site-header\" role=\"banner\">\n    <div class=\"container\">\n        <a href=\"https://www.bromley.gov.uk/\" id=\"site-logo\">Bromley Council</a>\n<a href=\"/\" id=\"report-cta\" title=\"Report a problem\">Report</a>\n\n        <label id=\"nav-link\" for=\"main-nav-btn\" aria-label=\"Open main navigation\">Menu</label>\n    </div>\n</header>\n\n<div class=\"nav-wrapper\">\n    <div class=\"container\">\n        \n\n\n\n    <div id=\"js-menu-open-modal\"></div>\n    <input role=\"button\" type=\"checkbox\" id=\"main-nav-btn\" autocomplete=\"off\" aria-expanded=\"false\">\n    <nav id=\"main-nav\" role=\"navigation\">\n\n\n    <ul class=\"nav-menu nav-menu--main\">\n        <li ><a href=\"/auth?r=/waste\" >Sign in</a></li>\n    </ul>\n\n\n    </nav>\n\n\n    </div>\n</div>\n\n\n            \n\n            <a name=\"content\"></a>\n            \n\n\n            <div class=\"container\">\n              \n                <div class=\"content\" role=\"main\">\n\n\n<div class=\"site-message\">\n  <p>\nA bulky waste collection service is available. If you have a booked a collection, please have your bulky waste items available from 7.00am on the day of collection, in an easily accessible location at the front of your property. Items are removed from outside your property only, but please do not place items on the public highway.\n</p>\n\n<p>\nRemember, you need to book a slot before you visit Churchfields Road Reuse and Recycling Centre.  You can <a href=\"https://wastebooking.bromley.gov.uk/renderform?t=1&amp;k=AE6EAA1294DBC7A9ED6917660B8F685F43E67050\">book your visit here</a>.</p>\n\n</div>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  <h1 class=\"govuk-heading-xl\"></h1>\n\n\n\n\n\n<form class=\"waste waste--form240\" method=\"post\"\n    >\n  \n  \n  \n    \n    \n\n    \n\n    <div class=\"govuk-form-group\" id=\"form-address-row\">\n    \n        \n    <label class=\"govuk-label\" for=\"address\">\n      \n        Select an address\n      \n    </label>\n  \n  \n\n  <select class=\"govuk-select js-autocomplete\" id=\"address\" name=\"address\" required>\n    <option value=\"\"></option>\n    \n      \n      \n        \n        \n        <option value=\"6268162\">Rear Of 47, College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6208050\">17 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6126158\">19a College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6126159\">19b College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6126160\">21a College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6126161\">21b College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6126162\">21c College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6126163\">First Floor And Second Floor Flat, 23 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6126164\">Ground Floor Flat, 23 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"18571479\">Flat 1, 27 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"18571480\">Flat 2, 27 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"18571481\">Flat 3, 27 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"18571482\">Flat 4, 27 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6351384\">29 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6351666\">31 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6351385\">33 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6351320\">Flat 2, 33 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6351667\">35 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6157660\">39 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6157846\">39a College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6157623\">41 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6082671\">43 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6157661\">45 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6083066\">45a College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6082999\">First Floor Flat, 45a College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6157903\">Ground Floor Flat, 45 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6268445\">47 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6268402\">Flat 1, 47 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6268403\">Flat 2, 47 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6268404\">Flat 3, 47 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6268405\">Flat 4, 47 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6268133\">47a College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6268161\">First Floor, 47a College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6268443\">49 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"6268444\">51 College Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"22829197\">38 Farwig Lane, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"22829198\">40 Farwig Lane, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"22829199\">42 Farwig Lane, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"22626457\">Flat 1, 2 Scotts Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"22626458\">Flat 2, 2 Scotts Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"22626459\">Flat 3, 2 Scotts Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"22626461\">Flat 5, 2 Scotts Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"22626462\">Flat 6, 2 Scotts Road, Bromley, BR1 3PU</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"missing\">I can’t find my address</option>\n      \n\t\n  </select>\n\n    \n    </div>\n  \n    \n    \n\n    \n\n    <div class=\"govuk-form-group\" id=\"form-go-row\">\n    \n        \n  \n  <input type=\"submit\" name=\"go\" id=\"go\" value=\"Continue\" class=\"govuk-button\" />\n\n    \n    </div>\n  \n\n</form>\n\n</div><!-- .content role=main -->\n            </div><!-- .container -->\n        </div><!-- .table-cell -->\n    </div> <!-- .wrapper -->\n\n    \n\n<footer class=\"site-footer\">\n    <div class=\"container container--flex\">\n        <nav class=\"site-footer__group\" aria-label=\"Footer Navigation\">\n            <ul class=\"list\">\n                <li class=\"list__item\">\n                    <a class=\"list__link\" href=\"https://www.bromley.gov.uk/privacy\">Privacy</a>\n                </li>\n                <li class=\"list__item\">\n                    <a class=\"list__link\" href=\"https://www.bromley.gov.uk/accessibility\">Accessibility\n                    </a>\n                </li>\n                <li class=\"list__item\">\n                    <a class=\"list__link\" href=\"https://www.bromley.gov.uk/terms\">Disclaimer</a>\n                </li>\n                <li class=\"list__item\">\n                    <a class=\"list__link\" href=\"https://www.bromley.gov.uk/privacy\">Cookies</a>\n                </li>\n            </ul>\n        </nav>\n    </div>\n    <div class=\"container\">\n        <div class=\"site-footer__content-left\">\n            <p class=\"site-footer__text site-footer__rights\">© London Borough of Bromley.\n                <span class=\"site-footer__rights-tag\">All Rights Reserved.</span>\n            </p>\n        </div>\n    </div>\n    <div class=\"site-footer__content-right\">\n        <nav class=\"nav nav--social-links\" aria-label=\"social links\">\n            <span class=\"h4 nav__heading\">Stay connected</span>\n            <div class=\"social-wrapper\">\n                    <a class=\"list__link twitter\" href=\"https://twitter.com/LBofBromley\" title=\"Twitter\" target=\"_blank\" aria-label=\"Follow us on Facebook\"></a>\n                    <a class=\"list__link facebook\" href=\"http://facebook.com/LBBromley\" title=\"Facebook\" target=\"_blank\" aria-label=\"Follow us on Facebook\"></a>\n                    <a class=\"list__link youtube\" href=\"https://www.youtube.com/user/LBBromley\" title=\"Youtube\" target=\"_blank\" aria-label=\"Follow us on Youtube\"></a>\n            </div>\n        </nav>\n    </div>\n</footer>\n<div class=\"footer-main-nav\">\n    <div class=\"container\">\n        \n\n\n\n\n    <ul class=\"nav-footer\">\n        <li ><a href=\"/auth?r=/waste\" >Sign in</a></li>\n    </ul>\n\n\n\n    </div>\n</div>\n\n<div class=\"societyworks-footer\">\n  <div class=\"container\">\n      <p>\n          Powered by\n        \n          <a class=\"societyworks-footer__logo\" href=\"https://www.societyworks.org/services/waste/\">SocietyWorks</a>\n        \n      </p>\n  </div>\n</div>\n\n\n\n\n\n\n\n\n\n<!--[if lte IE 9]>\n  <script src=\"/static/vendor/history.polyfill.min.a514228c8898.js\"></script>\n<![endif]-->\n<script src=\"/static/js/translation_strings.en-gb.ba9c23ce46b4.js\"></script>\n<script src=\"/static/js/validation_rules.auto.min.9617a6ea5034.js\"></script>\n<script src=\"/static/vendor/jquery-3.7.1.min.2c872dbe60f4.js\"></script>\n<script src=\"/static/vendor/jquery.multi-select.min.9788b7bbb1e3.js\"></script>\n<script src=\"/static/vendor/jquery.validate.min.f15265a2f8ea.js\"></script>\n<script src=\"/static/vendor/jquery.validate.additional-methods.require-from-group.min.85bcc61adad9.js\"></script>\n<script src=\"/static/vendor/idb-keyval-iife.min.08bfe56c11c7.js\"></script>\n<script src=\"/static/js/offline_draft.auto.min.d1bdd2d1353a.js\"></script>\n<script src=\"/static/cobrands/fixmystreet/offline_report.auto.min.93522809286b.js\"></script>\n<script src=\"/static/cobrands/fixmystreet/fixmystreet.auto.min.45ca2b20bbc5.js\"></script>\n<script src=\"/static/vendor/accessible-autocomplete.min.dfdb712af90e.js\"></script>\n<script src=\"/static/js/waste.auto.min.3c8e4d543a00.js\"></script>\n<script src=\"/static/cobrands/fixmystreet/prefetch-polyfill.auto.min.2da37c91514a.js\"></script>\n<script src=\"/static/vendor/dropzone.min.1c52d40bf872.js\"></script>\n\n\n\n\n\n</body>\n</html>\n\n",
+    "url": "https://recyclingservices.bromley.gov.uk/waste"
+   }
+  },
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": null,
+    "url": "https://recyclingservices.bromley.gov.uk/waste/6208050/calendar.ics"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "server",
+      "nginx"
+     ],
+     [
+      "content-type",
+      "text/calendar; charset=UTF-8"
+     ]
+    ],
+    "status": 200,
+    "text": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nCALSCALE:GREGORIAN\r\nMETHOD:PUBLISH\r\nPRODID://FixMyStreet//Bin Collection Calendars//EN\r\nREFRESH-INTERVAL;VALUE=DURATION:P1D\r\nSOURCE;VALUE=URI:https://recyclingservices.bromley.gov.uk/waste/6208050/cal\r\n endar.ics\r\nURL:https://recyclingservices.bromley.gov.uk/waste/6208050\r\nX-PUBLISHED-TTL:P1D\r\nX-WR-CALNAME:Bin calendar\r\nX-WR-TIMEZONE:Europe/London\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261016\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261015\r\nSUMMARY:Non-Recyclable Refuse collection\r\nUID:07fe93a7bb469d5a2cc2582a2610087f6f1ae46b@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261030\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261029\r\nSUMMARY:Non-Recyclable Refuse collection\r\nUID:28e141fc866157004b06d40ca2976ae8b04823f1@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261113\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261112\r\nSUMMARY:Non-Recyclable Refuse collection\r\nUID:a51f6502e1e3614df1ae12dadaf70956ece3796f@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261127\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261126\r\nSUMMARY:Non-Recyclable Refuse collection\r\nUID:9f738a45c1fe5aa3007823234d643bf16c83642d@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261211\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261210\r\nSUMMARY:Non-Recyclable Refuse collection\r\nUID:2753a36a6ab5f01597d4a4ae8960a5918bc06121@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261225\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261224\r\nSUMMARY:Non-Recyclable Refuse collection\r\nUID:7f4e917cbb33fd37efa3f26bec95d29bb14d5654@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261016\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261015\r\nSUMMARY:Paper & Cardboard collection\r\nUID:3ce7b71fa7ddc453d19a72de0a1abf952cd4f6a1@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261030\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261029\r\nSUMMARY:Paper & Cardboard collection\r\nUID:fc1aab5c20bd22dcb4041660c433f961af6b96a3@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261113\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261112\r\nSUMMARY:Paper & Cardboard collection\r\nUID:8742f1bf3eda8c657986383f47af2432e5b1e869@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261127\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261126\r\nSUMMARY:Paper & Cardboard collection\r\nUID:8e0ab2356743936989d79d9a881c18c577e6ba01@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261211\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261210\r\nSUMMARY:Paper & Cardboard collection\r\nUID:3caecc126795424c18f325f33ae5453dac96c331@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261225\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261224\r\nSUMMARY:Paper & Cardboard collection\r\nUID:d495ce74370966f4dd8c0cc3fe40465de4012b0b@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261027\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261026\r\nSUMMARY:Garden Waste collection\r\nUID:9fdc9e897d07b8cc57a96bfbd744672ae30db6fa@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261110\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261109\r\nSUMMARY:Garden Waste collection\r\nUID:d5cdf6591ae5e7b827f8c748454f4a6ca19df55f@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261124\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261123\r\nSUMMARY:Garden Waste collection\r\nUID:9986d430d0891b50a704f9532d217befdec3fc0e@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261013\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261012\r\nSUMMARY:Garden Waste collection\r\nUID:4b7d42282a1c1076287cfdfff3c90193ed9a37a7@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261009\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261008\r\nSUMMARY:Mixed Recycling (Cans\\, Plastics & Glass) collection\r\nUID:439b1a8da6ca76e90f50cacb2bcefe62a58889f0@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261023\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261022\r\nSUMMARY:Mixed Recycling (Cans\\, Plastics & Glass) collection\r\nUID:03b76062bcde1b817099cbce5cc6d6b4fcf8fa1f@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261106\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261105\r\nSUMMARY:Mixed Recycling (Cans\\, Plastics & Glass) collection\r\nUID:6dc81a347696104af84835d73592861268d55128@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261120\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261119\r\nSUMMARY:Mixed Recycling (Cans\\, Plastics & Glass) collection\r\nUID:f89341bf832db4a21ef90731bbab121a434292f2@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261204\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261203\r\nSUMMARY:Mixed Recycling (Cans\\, Plastics & Glass) collection\r\nUID:2886d7d974777e78c8b7631c4b086baf7ca25e27@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261218\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261217\r\nSUMMARY:Mixed Recycling (Cans\\, Plastics & Glass) collection\r\nUID:00654317b8ff53ea3acab2db5e45bfee5a06b0ba@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20270101\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261231\r\nSUMMARY:Mixed Recycling (Cans\\, Plastics & Glass) collection\r\nUID:8b4c6698d0fe59ed6fe55202c1ed679c438694e8@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261009\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261008\r\nSUMMARY:Food Waste collection\r\nUID:601a88d2755a8f1711b4113fb404ae690c6cf629@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261016\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261015\r\nSUMMARY:Food Waste collection\r\nUID:4a14174e4d2d9692ba01d98ff52b1cea96e8f896@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261023\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261022\r\nSUMMARY:Food Waste collection\r\nUID:c4d9d92d4aef695ac69263b86cb58f6b87d730f5@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261030\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261029\r\nSUMMARY:Food Waste collection\r\nUID:050c2c7852415c82459e4c2c7034ec681aedafc7@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261106\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261105\r\nSUMMARY:Food Waste collection\r\nUID:0b748a932d8cf36658beec9198afb567ca19c3f5@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261113\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261112\r\nSUMMARY:Food Waste collection\r\nUID:5e5600c2f97b50f79598d232ab216018742c8343@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261120\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261119\r\nSUMMARY:Food Waste collection\r\nUID:334f91885cf2d24ed8dbbefd655409f1f46bbec5@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261127\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261126\r\nSUMMARY:Food Waste collection\r\nUID:29015fd1cf54850b6bec997293c8a56a0c46b388@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261204\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261203\r\nSUMMARY:Food Waste collection\r\nUID:c8f3a12e2cdb608201588ed726b94181957722b7@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261211\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261210\r\nSUMMARY:Food Waste collection\r\nUID:780be83a4abf720fec54b45c8370788b2d92cb60@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261218\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261217\r\nSUMMARY:Food Waste collection\r\nUID:3d57fd9e687643cfb30e4ae95998deb0b5c01266@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261225\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261224\r\nSUMMARY:Food Waste collection\r\nUID:a246315ec6e577be7f2b24316a018b2fbc9b9c88@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20270101\r\nDTSTAMP:20261006T090549Z\r\nDTSTART;VALUE=DATE:20261231\r\nSUMMARY:Food Waste collection\r\nUID:98e3afb964a58e1a803ae33d9f77422548dea472@recyclingservices.bromley.gov.\r\n uk\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
+    "url": "https://recyclingservices.bromley.gov.uk/waste/6208050/calendar.ics"
+   }
+  }
+ ],
+ "golden": [
+  [
+   "2026-10-08",
+   "Food Waste"
+  ],
+  [
+   "2026-10-08",
+   "Mixed Recycling (Cans, Plastics & Glass)"
+  ],
+  [
+   "2026-10-12",
+   "Garden Waste"
+  ],
+  [
+   "2026-10-15",
+   "Food Waste"
+  ],
+  [
+   "2026-10-15",
+   "Non-Recyclable Refuse"
+  ],
+  [
+   "2026-10-15",
+   "Paper & Cardboard"
+  ],
+  [
+   "2026-10-22",
+   "Food Waste"
+  ],
+  [
+   "2026-10-22",
+   "Mixed Recycling (Cans, Plastics & Glass)"
+  ],
+  [
+   "2026-10-26",
+   "Garden Waste"
+  ],
+  [
+   "2026-10-29",
+   "Food Waste"
+  ],
+  [
+   "2026-10-29",
+   "Non-Recyclable Refuse"
+  ],
+  [
+   "2026-10-29",
+   "Paper & Cardboard"
+  ],
+  [
+   "2026-11-05",
+   "Food Waste"
+  ],
+  [
+   "2026-11-05",
+   "Mixed Recycling (Cans, Plastics & Glass)"
+  ],
+  [
+   "2026-11-09",
+   "Garden Waste"
+  ],
+  [
+   "2026-11-12",
+   "Food Waste"
+  ],
+  [
+   "2026-11-12",
+   "Non-Recyclable Refuse"
+  ],
+  [
+   "2026-11-12",
+   "Paper & Cardboard"
+  ],
+  [
+   "2026-11-19",
+   "Food Waste"
+  ],
+  [
+   "2026-11-19",
+   "Mixed Recycling (Cans, Plastics & Glass)"
+  ],
+  [
+   "2026-11-23",
+   "Garden Waste"
+  ],
+  [
+   "2026-11-26",
+   "Food Waste"
+  ],
+  [
+   "2026-11-26",
+   "Non-Recyclable Refuse"
+  ],
+  [
+   "2026-11-26",
+   "Paper & Cardboard"
+  ],
+  [
+   "2026-12-03",
+   "Food Waste"
+  ],
+  [
+   "2026-12-03",
+   "Mixed Recycling (Cans, Plastics & Glass)"
+  ],
+  [
+   "2026-12-10",
+   "Food Waste"
+  ],
+  [
+   "2026-12-10",
+   "Non-Recyclable Refuse"
+  ],
+  [
+   "2026-12-10",
+   "Paper & Cardboard"
+  ],
+  [
+   "2026-12-17",
+   "Food Waste"
+  ],
+  [
+   "2026-12-17",
+   "Mixed Recycling (Cans, Plastics & Glass)"
+  ],
+  [
+   "2026-12-24",
+   "Food Waste"
+  ],
+  [
+   "2026-12-24",
+   "Non-Recyclable Refuse"
+  ],
+  [
+   "2026-12-24",
+   "Paper & Cardboard"
+  ],
+  [
+   "2026-12-31",
+   "Food Waste"
+  ],
+  [
+   "2026-12-31",
+   "Mixed Recycling (Cans, Plastics & Glass)"
+  ]
+ ],
+ "params": {
+  "house_number": "17",
+  "postcode": "BR1 3PU",
+  "street": "College Road"
+ },
+ "recorded": "2026-10-06"
+}
