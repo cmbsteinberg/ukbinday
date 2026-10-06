@@ -13,7 +13,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
-    UpstreamError,
+    find_tag,
     match_address,
     soup,
     text_of,
@@ -71,16 +71,12 @@ class Dacorum(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         r = await http.get(_API_URL)
         page = soup(r.text)
-        postcode_input = page.find(id="txtBxPCode")
-        if not isinstance(postcode_input, Tag):
-            raise UpstreamError("Dacorum postcode input was not found")
+        postcode_input = find_tag(page, id="txtBxPCode", what="Dacorum postcode input was not found")
 
         postcode_input["value"] = address.need("postcode")
         r = await http.post(_API_URL, data=_get_form_args(page))
         page = soup(r.text)
-        address_input = page.find(id="lstBxAddrList")
-        if not isinstance(address_input, Tag):
-            raise UpstreamError("Dacorum address list was not found")
+        address_input = find_tag(page, id="lstBxAddrList", what="Dacorum address list was not found")
 
         options = _address_options(address_input)
         selected = match_address(
@@ -93,9 +89,7 @@ class Dacorum(Scraper):
 
         r = await http.post(_API_URL, data=_get_form_args(page))
         page = soup(r.text)
-        collection_content = page.find("div", id="MainContent_updPnl")
-        if not isinstance(collection_content, Tag):
-            raise UpstreamError("Dacorum collection schedule was not found")
+        collection_content = find_tag(page, "div", id="MainContent_updPnl", what="Dacorum collection schedule was not found")
 
         collections: list[Collection] = []
         for entry in collection_content.find_all("div", recursive=False):
