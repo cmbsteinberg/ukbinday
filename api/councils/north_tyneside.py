@@ -10,7 +10,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
-    UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -30,9 +30,7 @@ class NorthTyneside(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn")
         r = await http.get(f"{SCHEDULE_URL}/{uprn}")
-        schedule = soup(r.text).find("div", class_="waste-collection__schedule")
-        if schedule is None:
-            raise UpstreamError("No waste-collection schedule found. The page structure may have changed.")
+        schedule = find_tag(soup(r.text), "div", class_="waste-collection__schedule", what="No waste-collection schedule found. The page structure may have changed.")
 
         collections: list[Collection] = []
         for day in schedule.find_all("li", class_="waste-collection__day"):
