@@ -5,7 +5,15 @@ from __future__ import annotations
 import re
 from datetime import datetime
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    find_tag,
+    soup,
+)
 
 _API_URL = "https://public.tameside.gov.uk/forms/bin-dates.asp"
 _REGEX = r"(st|nd|rd|th)"
@@ -48,10 +56,10 @@ class Tameside(Scraper):
 
         collections = []
         for year in page.find_all("fieldset", {"class": "year"}):
-            year_text = year.find("h3").text
+            year_text = find_tag(year, "h3").text
 
             for month in year.find_all("tr", {"class": "month"}):
-                month_text = month.find("td", {"class": "month"}).text
+                month_text = find_tag(month, "td", {"class": "month"}).text
 
                 for day in month.find_all("td", {"class": "day"}):
                     day_text = re.sub(_REGEX, "", day.text)
