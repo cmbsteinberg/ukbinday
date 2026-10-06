@@ -4,7 +4,15 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, UpstreamError
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    UpstreamError,
+    find_tag,
+)
 
 _API_URL = (
     "https://www.stoke.gov.uk/jadu/custom/webserviceLookUps/"
@@ -48,8 +56,8 @@ class StokeOnTrent(Scraper):
         collections = []
 
         for bin_round in document.find_all("BinRound"):
-            bin_name = bin_round.find("Bin").text
-            date_time = bin_round.find("DateTime").text.split(" ")[0]
+            bin_name = find_tag(bin_round, "Bin").text
+            date_time = find_tag(bin_round, "DateTime").text.split(" ")[0]
             day = datetime.strptime(date_time, _DATE_FORMAT).date()
             collections.append(Collection(day, bin_name))
 
