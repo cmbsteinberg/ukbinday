@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import logging
 import re
 
 from api.councils._base import (
@@ -14,13 +13,13 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     next_weekday,
     soup,
 )
 
 PAGE_URL = "https://www.rbkc.gov.uk/bincollections/default.aspx"
 _DAYS = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-_LOGGER = logging.getLogger(__name__)
 
 
 def _range_matches(spec: str, number: int) -> bool:
@@ -104,9 +103,7 @@ class KensingtonAndChelsea(Scraper):
         return self._parse(r2.text, address)
 
     def _parse(self, html: str, address: Address) -> list[Collection]:
-        table = soup(html).find("table", class_="table")
-        if table is None:
-            raise UpstreamError("No collection table returned")
+        table = find_tag(soup(html), "table", class_="table", what="No collection table returned")
 
         rows = []
         for tr in table.find_all("tr")[1:]:
@@ -129,9 +126,10 @@ class KensingtonAndChelsea(Scraper):
                 else None
             )
             if match is None:
-                _LOGGER.warning("Several number ranges; using first (%s)", rows[0][1])
-            else:
-                chosen = match
+                raise AddressNotFound(
+                    f"No number range for this street matches house number {number_text or address.label!r}"
+                )
+            chosen = match
 
         collections = []
         for cell, label in (
