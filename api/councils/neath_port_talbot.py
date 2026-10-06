@@ -14,6 +14,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     parse_date,
     soup,
     text_of,
@@ -63,9 +64,7 @@ def _base_post_payload(raw_html: str) -> dict[str, str | None]:
 
 def _parse_collections(raw_html: str) -> list[Collection]:
     page = soup(raw_html)
-    root = page.find(id="contentInner")
-    if not isinstance(root, Tag):
-        raise UpstreamError("Neath Port Talbot bin page has no contentInner element.")
+    root = find_tag(page, id="contentInner", what="Neath Port Talbot bin page has no contentInner element.")
 
     headers = [
         header
