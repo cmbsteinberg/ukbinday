@@ -1,0 +1,169 @@
+{
+ "exchanges": [
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": null,
+    "url": "https://online.hartlepool.gov.uk/apibroker/domain/online.hartlepool.gov.uk"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=KRKW3bgPbU528L66H6fLNYRfASk+HROwsMGDaA+wLY1l8BUbXN+vtWikRj1Lk0rmUfs03XeN+toYUB4lsREMKXK+5yd2Yi96RoOgIhtkfE2jtDZsYrjS1a5Nb/3M; Expires=Tue, 13 Oct 2026 09:13:04 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=KRKW3bgPbU528L66H6fLNYRfASk+HROwsMGDaA+wLY1l8BUbXN+vtWikRj1Lk0rmUfs03XeN+toYUB4lsREMKXK+5yd2Yi96RoOgIhtkfE2jtDZsYrjS1a5Nb/3M; Expires=Tue, 13 Oct 2026 09:13:04 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"host\":\"online.hartlepool.gov.uk\",\"domain_id\":\"911b2e6f-c696-11e6-b9ba-22000b0c6ed2\",\"ga_id\":\"UA-117668327-1\",\"customer_id\":\"da5027bc-7463-4ac2-897d-b7d33c9f7705\",\"name\":\"hartlepool\",\"domain_language\":\"en\",\"min_ie_version\":9,\"product\":\"Self-Dash\"}",
+    "url": "https://online.hartlepool.gov.uk/apibroker/domain/online.hartlepool.gov.uk"
+   }
+  },
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": {
+     "hostname": "online.hartlepool.gov.uk",
+     "uri": "https://online.hartlepool.gov.uk/service/Refuse_and_recycling___check_bin_day",
+     "withCredentials": "true"
+    },
+    "url": "https://online.hartlepool.gov.uk/authapi/isauthenticated"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=utf-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=eSfwAxq4zwpAspvk8lqTyBOoYU4Or1SGU3n1b4jJ6rI1lkTNs29fkgN1jCQbDuY/A3TexuMrLWuCe84aU7mdAnkBcKsarbs3svs2treAUZxp5wd9jQKsctZ4bSES; Expires=Tue, 13 Oct 2026 09:13:04 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=eSfwAxq4zwpAspvk8lqTyBOoYU4Or1SGU3n1b4jJ6rI1lkTNs29fkgN1jCQbDuY/A3TexuMrLWuCe84aU7mdAnkBcKsarbs3svs2treAUZxp5wd9jQKsctZ4bSES; Expires=Tue, 13 Oct 2026 09:13:04 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ],
+     [
+      "set-cookie",
+      "PHPSESSID=3qtt6kqksifc80skok1jrn5ms7; path=/; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSIONCHECK=300c69e3eee52e8dec157549a0a29da6550595f3b1e20fd2bbc3cdc075dd1e99dc584bc2d357bfab3eec6a92ead692f8d87fecd8e85928330506e0d3a01c15d4; expires=Tue, 06-Oct-2026 15:13:04 GMT; Max-Age=21600; path=/api/; domain=online.hartlepool.gov.uk; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SimpleSAMLSessionID=73bd42b626bf4e542152d8eaaeeb7f61; path=/; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSfsauthsession=0; path=/; secure; HttpOnly"
+     ]
+    ],
+    "status": 200,
+    "text": "\n    {\"auth-session\":\"0a77197b61f3c1f0934a6a1af9ff3c00\",\"cookie-domain\":\"\",\"is_authenticated\":false,\"providers\":[{\"name\":\"Azure___Login__self_\",\"displayname\":\"Azure - Login (self)\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/network.png\",\"supportonly\":\"true\",\"mapping\":\"{\\\"username\\\" : \\\"sAMAccountName\\\",\\\"email\\\" : \\\"emailaddress\\\",\\\"memberof\\\" :\\\"memberof\\\",\\\"name\\\":\\\"displayName\\\",\\\"first_name\\\" : \\\"givenName\\\",\\\"last_name\\\" :\\\"surname\\\",\\\"groupof\\\" :\\\"http:\\/\\/schemas.microsoft.com\\/ws\\/2008\\/06\\/identity\\/claims\\/groups\\\"}\",\"url\":\"https:\\/\\/online.hartlepool.gov.uk\\/authapi\\/auth?provider=Azure___Login__self_&uri=https%3A%2F%2Fonline.hartlepool.gov.uk%2Fservice%2FRefuse_and_recycling___check_bin_day\"},{\"name\":\"google_admin\",\"displayname\":\"Firmstep Admin\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Googlethumb.jpg\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/online.hartlepool.gov.uk\\/authapi\\/auth?provider=google_admin&uri=https%3A%2F%2Fonline.hartlepool.gov.uk%2Fservice%2FRefuse_and_recycling___check_bin_day\"},{\"name\":\"google_fam\",\"displayname\":\"Firmstep Google FAM\",\"image\":\"\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Logo_icon_round_100px.png\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/online.hartlepool.gov.uk\\/authapi\\/auth?provider=google_fam&uri=https%3A%2F%2Fonline.hartlepool.gov.uk%2Fservice%2FRefuse_and_recycling___check_bin_day\"},{\"name\":\"ssauth\",\"displayname\":\"Self-service\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/network.png\",\"url\":\"https:\\/\\/online.hartlepool.gov.uk\\/authapi\\/auth?provider=ssauth&uri=https%3A%2F%2Fonline.hartlepool.gov.uk%2Fservice%2FRefuse_and_recycling___check_bin_day\",\"register_url\":\"https:\\/\\/online.hartlepool.gov.uk\\/authapi\\/register?provider=ssauth&uri=https%3A%2F%2Fonline.hartlepool.gov.uk%2Fservice%2FRefuse_and_recycling___check_bin_day\"},{\"name\":\"Web_Login___Self\",\"displayname\":\"Web Login - Self\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/network.png\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/online.hartlepool.gov.uk\\/authapi\\/auth?provider=Web_Login___Self&uri=https%3A%2F%2Fonline.hartlepool.gov.uk%2Fservice%2FRefuse_and_recycling___check_bin_day\",\"register_url\":\"https:\\/\\/online.hartlepool.gov.uk\\/authapi\\/register?provider=Web_Login___Self&uri=https%3A%2F%2Fonline.hartlepool.gov.uk%2Fservice%2FRefuse_and_recycling___check_bin_day\"}]}",
+    "url": "https://online.hartlepool.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fonline.hartlepool.gov.uk%2Fservice%2FRefuse_and_recycling___check_bin_day&hostname=online.hartlepool.gov.uk&withCredentials=true"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formValues": {
+       "Section 1": {
+        "collectionLocationUPRN": {
+         "value": "100110021946"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791277984297,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "5ec67e019ffdd",
+     "log_id": "",
+     "noRetry": "true",
+     "repeat_against": "",
+     "sid": "0a77197b61f3c1f0934a6a1af9ff3c00"
+    },
+    "url": "https://online.hartlepool.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=Lzx0/VMriftBEHlrcatB6wqIHr0YolsKdLbg8UZ0Qt+KdOmGg2QggeouTchJkhzzsbfoxZkgaNXgrqr4TnX6pCSQLto9k8mcyPI2+Ga8u0CyfsKYB4t/LXCfwnsl; Expires=Tue, 13 Oct 2026 09:13:04 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=Lzx0/VMriftBEHlrcatB6wqIHr0YolsKdLbg8UZ0Qt+KdOmGg2QggeouTchJkhzzsbfoxZkgaNXgrqr4TnX6pCSQLto9k8mcyPI2+Ga8u0CyfsKYB4t/LXCfwnsl; Expires=Tue, 13 Oct 2026 09:13:04 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<Responses><RequestResponse id=\\\"6ac4bba0777bc\\\"><DatabaseResponse><Fields><Field Name=\\\"HTMLCollectionDatesText\\\" Type=\\\"text\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"HTMLCollectionDatesText\\\" IsNull=\\\"false\\\">&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/food_waste_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Food Waste (caddy) 06\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/grey_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Recycling (grey) 06\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/food_waste_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Food Waste (caddy) 13\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/green_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; General Waste (green) 13\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/food_waste_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Food Waste (caddy) 20\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/grey_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Recycling (grey) 20\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"integration\":{\"id\":\"5ec67e019ffdd\",\"type\":\"database\",\"transformed\":{\"error\":null,\"xml_data\":\"<Responses><RequestResponse id=\\\"6ac4bba0777bc\\\"><DatabaseResponse><Fields><Field Name=\\\"HTMLCollectionDatesText\\\" Type=\\\"text\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"HTMLCollectionDatesText\\\" IsNull=\\\"false\\\">&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/food_waste_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Food Waste (caddy) 06\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/grey_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Recycling (grey) 06\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/food_waste_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Food Waste (caddy) 13\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/green_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; General Waste (green) 13\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/food_waste_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Food Waste (caddy) 20\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;&lt;\\/br&gt;&lt;div&gt;&lt;img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/grey_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/&gt;&lt;strong&gt;&lt;span style=\\\"font-size: 11pt;\\\"&gt; Recycling (grey) 20\\/10\\/2026&lt;\\/span&gt;&lt;\\/strong&gt;&lt;\\/div&gt;<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"HTMLCollectionDatesText\":\"<\\/br><div><img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/food_waste_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/><strong><span style=\\\"font-size: 11pt;\\\"> Food Waste (caddy) 06\\/10\\/2026<\\/span><\\/strong><\\/div><\\/br><div><img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/grey_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/><strong><span style=\\\"font-size: 11pt;\\\"> Recycling (grey) 06\\/10\\/2026<\\/span><\\/strong><\\/div><\\/br><div><img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/food_waste_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/><strong><span style=\\\"font-size: 11pt;\\\"> Food Waste (caddy) 13\\/10\\/2026<\\/span><\\/strong><\\/div><\\/br><div><img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/green_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/><strong><span style=\\\"font-size: 11pt;\\\"> General Waste (green) 13\\/10\\/2026<\\/span><\\/strong><\\/div><\\/br><div><img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/food_waste_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/><strong><span style=\\\"font-size: 11pt;\\\"> Food Waste (caddy) 20\\/10\\/2026<\\/span><\\/strong><\\/div><\\/br><div><img src=\\\"https:\\/\\/fs-filestore-eu.s3.eu-west-1.amazonaws.com\\/hartlepool\\/images\\/Bins\\/grey_bin.png\\\" width=\\\"40\\\" height=\\\"60\\\" \\/><strong><span style=\\\"font-size: 11pt;\\\"> Recycling (grey) 20\\/10\\/2026<\\/span><\\/strong><\\/div>\"}},\"fields_data\":{\"HTMLCollectionDatesText\":{\"name\":\"HTMLCollectionDatesText\",\"type\":\"text\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null},\"tokens\":[\"{collectionLocationUPRN}\"],\"runtimes\":{\"integration\":{\"template\":\"12ms\",\"lim\":\"28ms\",\"SYSTEM\":\"23ms\",\"database\":\"263ms\"},\"api\":\"263ms\",\"lim\":\"28ms\"},\"log_id\":\"e83a9ea2-4fc3-44d3-bfd4-1e6125eecf17\"},\"hash\":\"D82526A797085BF95842C1DFE368205CD8C5BF163D6A55A8549217EAF6921E68\"}",
+    "url": "https://online.hartlepool.gov.uk/apibroker/runLookup?id=5ec67e019ffdd&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791277984297&sid=0a77197b61f3c1f0934a6a1af9ff3c00"
+   }
+  }
+ ],
+ "golden": [
+  [
+   "2026-10-06",
+   "Caddy"
+  ],
+  [
+   "2026-10-06",
+   "Grey"
+  ],
+  [
+   "2026-10-13",
+   "Caddy"
+  ],
+  [
+   "2026-10-13",
+   "Green"
+  ],
+  [
+   "2026-10-20",
+   "Caddy"
+  ],
+  [
+   "2026-10-20",
+   "Grey"
+  ]
+ ],
+ "params": {
+  "uprn": "100110021946"
+ },
+ "recorded": "2026-10-06"
+}
