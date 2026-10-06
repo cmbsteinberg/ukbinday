@@ -12,6 +12,7 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
+    UpstreamError,
     match_address,
     soup,
 )
@@ -76,7 +77,7 @@ class FermanaghAndOmagh(Scraper):
         try:
             collections_by_date = response.json()["nextCollections"]["collections"]
         except (AttributeError, KeyError, TypeError, ValueError):
-            raise ValueError("No collection data in response") from None
+            raise UpstreamError("Fermanagh and Omagh: no collection data in response") from None
 
         collections = []
         for collection in collections_by_date.values():
