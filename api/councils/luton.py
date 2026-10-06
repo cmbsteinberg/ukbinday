@@ -2,23 +2,29 @@
 
 from __future__ import annotations
 
-import time
 from datetime import datetime
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
-
-_SESSION_URL = (
-    "https://myforms.luton.gov.uk/authapi/isauthenticated"
-    "?uri=https%253A%252F%252Fmyforms.luton.gov.uk%252Fservice%252FFind_my_bin_collection_date"
-    "&hostname=myforms.luton.gov.uk&withCredentials=true"
+from api.councils._base import (
+    Address,
+    AddressNotFound,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    soup,
 )
-_API_URL = "https://myforms.luton.gov.uk/apibroker/runLookup"
+from api.councils._platforms.achieveforms import init_session, rows, run_lookup
+
+_HOSTNAME = "myforms.luton.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_FORM_URI = f"https://{_HOSTNAME}/service/Find_my_bin_collection_date"
+_API_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
 _HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "User-Agent": "Mozilla/5.0",
     "X-Requested-With": "XMLHttpRequest",
-    "Referer": "https://myforms.luton.gov.uk/fillform/?iframe_id=fillform-frame-1&db_id=",
+    "Referer": f"https://{_HOSTNAME}/fillform/?iframe_id=fillform-frame-1&db_id=",
 }
 
 
@@ -34,28 +40,22 @@ class Luton(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn")
 
-        session_response = await http.get(_SESSION_URL)
-        sid = session_response.json()["auth-session"]
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URI)
 
-        params = {
-            "id": "65cb710f8d525",
-            "repeat_against": "",
-            "noRetry": "true",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-        payload = {
-            "formValues": {
-                "Find my bin collection date": {
-                    "id": {"value": f"1-{uprn}"},
-                },
-            }
-        }
-        response = await http.post(_API_URL, json=payload, headers=_HEADERS, params=params)
-        rows_data = response.json()["integration"]["transformed"]["rows_data"][uprn]
+        reply_rows = rows(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                "65cb710f8d525",
+                {"Find my bin collection date": {"id": {"value": f"1-{uprn}"}}},
+                no_retry="true",
+                headers=_HEADERS,
+            )
+        )
+        rows_data = reply_rows.get(uprn)
+        if rows_data is None:
+            raise AddressNotFound(f"Luton has no collection data for UPRN {uprn}")
 
         collections = []
         for row in soup(rows_data["html"]).find_all("tr"):
