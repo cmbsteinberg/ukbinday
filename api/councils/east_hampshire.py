@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-import logging
 import re
 from datetime import date
 from io import BytesIO
@@ -25,8 +24,6 @@ from api.councils._base import (
     UpstreamError,
     soup,
 )
-
-_LOGGER = logging.getLogger(__name__)
 
 _URL = "https://www.easthants.gov.uk"
 _SCHEDULE_URL = f"{_URL}/bin-collections/find-your-bin-calendar"
@@ -235,13 +232,7 @@ def _normalise_heading_year(
     previous_year, previous_month = previous
     expected_year = previous_year + int(month < previous_month)
     if printed_year != expected_year:
-        _LOGGER.warning(
-            "Calendar PDF labels month %d as %d; using %d based on the "
-            "surrounding months",
-            month,
-            printed_year,
-            expected_year,
-        )
+        # The printed year is wrong; the month sequence is authoritative.
         return expected_year
     return printed_year
 
