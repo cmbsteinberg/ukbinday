@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import logging
 import re
 from datetime import date, datetime, timedelta
 from typing import Any
@@ -16,6 +15,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     match_address,
+    next_weekday,
 )
 
 _MAP_CONFIG_URL = "https://opus4.co.uk/api/v1/map-configs/{map_id}"
@@ -37,7 +37,6 @@ _WEEKDAYS = {
     "saturday": 5,
     "sunday": 6,
 }
-_LOGGER = logging.getLogger(__name__)
 
 
 def _normalise(value: str | None) -> str:
@@ -67,9 +66,7 @@ def _parse_relative_date(value: str | None) -> date | None:
     )
     if match:
         weeks = int(match.group(1))
-        target = _WEEKDAYS[match.group(2)]
-        days_ahead = (target - today.weekday()) % 7
-        return today + timedelta(days=days_ahead, weeks=weeks)
+        return next_weekday(match.group(2), after=today) + timedelta(weeks=weeks)
 
     match = re.search(r"\bin (\d+) weeks?\b", text)
     if match:
@@ -85,11 +82,7 @@ def _parse_relative_date(value: str | None) -> date | None:
         text,
     )
     if match:
-        target = _WEEKDAYS[match.group(1)]
-        days_ahead = (target - today.weekday()) % 7
-        if days_ahead == 0:
-            days_ahead = 7
-        return today + timedelta(days=days_ahead)
+        return next_weekday(match.group(1), after=today, include_today=False)
 
     return None
 
@@ -136,37 +129,10 @@ def _resolve_next_collection_date(
     weekday = _parse_weekday(item.get("day"))
 
     if actual_date is not None and weekday is not None and actual_date.weekday() != weekday:
-        _LOGGER.warning(
-            "Pendle parsed when mismatch for %s: parsed %s but council day is %s. "
-            "Ignoring parsed date and falling back to schedule anchor.",
-            title,
-            actual_date.isoformat(),
-            item.get("day"),
-        )
+        # The parsed "when" contradicts the council's weekday: fall back to the schedule anchor.
         actual_date = None
 
-    next_date = actual_date or expected_date
-    if next_date is None:
-        return None
-
-    if actual_date is not None and expected_date is not None and actual_date != expected_date:
-        _LOGGER.warning(
-            "Pendle schedule override for %s: expected %s from startDate/frequency, "
-            "but council when says %s. Using council date.",
-            title,
-            expected_date.isoformat(),
-            actual_date.isoformat(),
-        )
-
-    if weekday is not None and next_date.weekday() != weekday:
-        _LOGGER.warning(
-            "Pendle weekday mismatch for %s: resolved %s but council day is %s.",
-            title,
-            next_date.isoformat(),
-            item.get("day"),
-        )
-
-    return next_date
+    return actual_date or expected_date
 
 
 def _enabled(value: str | None) -> bool:
