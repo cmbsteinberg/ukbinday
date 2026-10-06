@@ -15,6 +15,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -39,11 +40,7 @@ class Havant(Scraper):
 
         login_url = f"{_URL}/Identity/Account/Login"
         response = await http.get(login_url)
-        token_element = soup(response.text).find(
-            "input", attrs={"name": "__RequestVerificationToken"}
-        )
-        if token_element is None:
-            raise UpstreamError("Unable to find anti-forgery token")
+        token_element = find_tag(soup(response.text), "input", attrs={"name": "__RequestVerificationToken"}, what="Unable to find anti-forgery token")
         token = token_element.get("value")
         if not token:
             raise UpstreamError("Unable to find anti-forgery token")
