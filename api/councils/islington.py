@@ -14,6 +14,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -64,8 +65,8 @@ class Islington(Scraper):
         waste_table = content.find("table")
         if waste_table:
             for row in waste_table.find_all("tr"):
-                waste_type = row.find("td").text.strip().split(",")[0].split(" - ")[0]
-                collection_day = row.find("td").text.strip().split(",")[1].split(" on ")[1]
+                waste_type = find_tag(row, "td").text.strip().split(",")[0].split(" - ")[0]
+                collection_day = find_tag(row, "td").text.strip().split(",")[1].split(" on ")[1]
                 entries.append(Collection(parse(collection_day).date(), waste_type))
             return entries
 
