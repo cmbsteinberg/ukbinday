@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta
-from time import time_ns
 
 from api.councils._base import (
     Address,
@@ -12,10 +11,13 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
-    UpstreamError,
 )
+from api.councils._platforms.achieveforms import first_row, init_session, run_lookup
 
-_BASE_URL = "https://rochdale-self.achieveservice.com"
+_HOSTNAME = "rochdale-self.achieveservice.com"
+_BASE_URL = f"https://{_HOSTNAME}"
+_API_URL = f"{_BASE_URL}/apibroker/runLookup"
+_FORM = {"formId": "AF-Form-d7812e2d-2876-47c2-9802-8a4a3b1a2264"}
 _REFERER = f"{_BASE_URL}/service/Bins___view_your_waste_collection_calendar"
 
 
@@ -41,65 +43,49 @@ class Rochdale(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn")
 
-        timestamp = time_ns() // 1_000_000
-        await http.get(
-            f"{_BASE_URL}/apibroker/domain/rochdale-self.achieveservice.com?_={timestamp}",
-            timeout=30,
+        sid = await init_session(
+            http,
+            None,
+            f"{_BASE_URL}/authapi/isauthenticated",
+            _HOSTNAME,
+            uri=_REFERER,
+            domain_url=f"{_BASE_URL}/apibroker/domain/{_HOSTNAME}",
         )
 
-        auth_url = (
-            f"{_BASE_URL}/authapi/isauthenticated?"
-            "uri=https%3A%2F%2Frochdale-self.achieveservice.com%2Fservice%2F"
-            "Bins___view_your_waste_collection_calendar"
-            "&hostname=rochdale-self.achieveservice.com&withCredentials=true"
+        token_row = first_row(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                "6846c784a46b5",
+                {"Location details": {"propertyUPRN": {"value": uprn}}},
+                body=_FORM,
+            )
         )
-        sid_response = await http.get(auth_url, timeout=30)
-        sid = sid_response.json().get("auth-session")
-        if not sid:
-            raise UpstreamError("Rochdale API: Failed to obtain a session ID.")
-
-        payload_token = {
-            "formId": "AF-Form-d7812e2d-2876-47c2-9802-8a4a3b1a2264",
-            "formValues": {"Location details": {"propertyUPRN": {"value": uprn}}},
-        }
-        timestamp = time_ns() // 1_000_000
-        token_url = (
-            f"{_BASE_URL}/apibroker/runLookup?id=6846c784a46b5&repeat_against="
-            f"&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self"
-            f"&_={timestamp}&sid={sid}"
-        )
-        token_response = await http.post(token_url, json=payload_token, timeout=30)
-
-        try:
-            bartec_token = token_response.json()["integration"]["transformed"]["rows_data"]["0"]["bartecToken"]
-        except KeyError:
-            raise InputError(f"Rochdale API: Failed to retrieve bartecToken for UPRN {uprn}.") from None
+        if token_row is None or "bartecToken" not in token_row:
+            raise InputError(f"Rochdale API: Failed to retrieve bartecToken for UPRN {uprn}.")
 
         now = datetime.now()
         min_date = now.strftime("%Y-%m-%dT00:00:00")
         max_date = (now + timedelta(days=365)).strftime("%Y-%m-%dT23:59:59")
-        payload_data = {
-            "formId": "AF-Form-d7812e2d-2876-47c2-9802-8a4a3b1a2264",
-            "formValues": {
-                "Location details": {
-                    "propertyUPRN": {"value": uprn},
-                    "bartecToken": {"value": bartec_token},
-                    "dateAnnualMinimum": {"value": min_date},
-                    "dateAnnualMaximum": {"value": max_date},
-                }
-            },
-        }
-        timestamp = time_ns() // 1_000_000
-        api_url = (
-            f"{_BASE_URL}/apibroker/runLookup?id=68b58a1364572&repeat_against="
-            f"&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self"
-            f"&_={timestamp}&sid={sid}"
+        row = first_row(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                "68b58a1364572",
+                {
+                    "Location details": {
+                        "propertyUPRN": {"value": uprn},
+                        "bartecToken": {"value": token_row["bartecToken"]},
+                        "dateAnnualMinimum": {"value": min_date},
+                        "dateAnnualMaximum": {"value": max_date},
+                    }
+                },
+                no_retry="true",
+                body=_FORM,
+            )
         )
-        data_response = await http.post(api_url, json=payload_data, timeout=30)
-        data = data_response.json()
-
-        rows_data = data.get("integration", {}).get("transformed", {}).get("rows_data", {})
-        row = rows_data.get("0")
         if not row or "bartecAnnualBin1Type" not in row:
             raise InputError("Rochdale API: Failed to fetch calendar data or missing required fields.")
 
