@@ -10,6 +10,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
+    find_tag,
     next_weekday,
     soup,
     weekday_number,
@@ -36,8 +37,8 @@ class HammersmithAndFulham(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         postcode = address.need("postcode").strip().replace(" ", "")
         response = await http.get(f"{_RESULTS_URL}?postcode={postcode}")
-        results = soup(response.text).find("div", {"class": "nearest-search-results"})
-        links = results.find("ol").find_all("a")
+        results = find_tag(soup(response.text), "div", {"class": "nearest-search-results"})
+        links = find_tag(results, "ol").find_all("a")
 
         today = date.today()
         collections = []
