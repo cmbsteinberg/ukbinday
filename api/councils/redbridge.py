@@ -56,12 +56,9 @@ def _extract_collections_from_text(text: str) -> list[Collection]:
         if current_month_name and current_year and _DAY_GROUP_REGEX.match(line):
             days: list[int] = []
             for token in line.split():
-                try:
-                    day = int(token)
-                    if 1 <= day <= 31:
-                        days.append(day)
-                except ValueError:
-                    pass
+                day = int(token)  # _DAY_GROUP_REGEX: every token is 1-2 digits
+                if 1 <= day <= 31:
+                    days.append(day)
 
             services: list[str] = []
             j = i + 1
