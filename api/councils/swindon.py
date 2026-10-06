@@ -55,18 +55,15 @@ class Swindon(Scraper):
 
         collections = []
         for results in soup(r.text).find_all("div", class_="bin-collection-content"):
-            try:
-                recyclingdate = results.find("span", class_="nextCollectionDate")
-                if recyclingdate is not None:
-                    recyclingtype = results.find("div", class_="content-left").find("h3")
-                    collections.append(
-                        Collection(
-                            date=parser.parse(recyclingdate.text, dayfirst=True).date(),
-                            type=recyclingtype.text,
-                        )
+            recyclingdate = results.find("span", class_="nextCollectionDate")
+            if recyclingdate is not None:
+                recyclingtype = results.find("div", class_="content-left").find("h3")
+                collections.append(
+                    Collection(
+                        date=parser.parse(recyclingdate.text, dayfirst=True).date(),
+                        type=recyclingtype.text,
                     )
-            except (StopIteration, TypeError):
-                pass
+                )
         return collections
 
 
