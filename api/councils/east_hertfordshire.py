@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import re
-import time
 
 from api.councils._base import (
     Address,
@@ -18,11 +17,13 @@ from api.councils._base import (
     soup,
     text_of,
 )
+from api.councils._platforms.achieveforms import first_row, run_lookup
 
 _SERVICE_URL = (
     "https://eastherts-self.achieveservice.com/service/"
     "Bins___When_are_my_Bin_Collection_days"
 )
+_API_URL = "https://eastherts-self.achieveservice.com/apibroker/runLookup"
 _UPRN_URL = "https://uprn.uk/postcode/{postcode}"
 _HEADERS = {"user-agent": "Mozilla/5.0"}
 _SID_PATTERN = r"sid=(.+)"
@@ -78,19 +79,19 @@ class EastHertfordshire(Scraper):
         if sid is None:
             raise UpstreamError("East Herts page did not provide an API session ID")
 
-        timestamp = time.time_ns() // 1_000_000
-        payload = {
-            "formValues": {"Collection Days": {"inputUPRN": {"value": uprn}}}
-        }
-        schedule = await http.post(
-            "https://eastherts-self.achieveservice.com/apibroker/runLookup"
-            f"?id=683d9ff0e299d&repeat_against=&noRetry=true"
-            f"&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self"
-            f"&_={timestamp}&sid={sid}",
-            headers=_HEADERS,
-            json=payload,
+        rowdata = first_row(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                "683d9ff0e299d",
+                {"Collection Days": {"inputUPRN": {"value": uprn}}},
+                no_retry="true",
+                headers=_HEADERS,
+            )
         )
-        rowdata = schedule.json()["integration"]["transformed"]["rows_data"]["0"]
+        if rowdata is None:
+            raise AddressNotFound(f"East Herts has no collection data for UPRN {uprn}")
 
         dates = {}
         for item in rowdata:
