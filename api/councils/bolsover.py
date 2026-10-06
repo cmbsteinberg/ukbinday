@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import time
 from datetime import date, datetime, timedelta
 
 from api.councils._base import (
@@ -13,13 +12,12 @@ from api.councils._base import (
     Scraper,
     UpstreamError,
 )
+from api.councils._platforms.achieveforms import first_row, init_session, run_lookup
 
-_SESSION_URL = (
-    "https://selfservice.bolsover.gov.uk/authapi/isauthenticated"
-    "?uri=https%253A%252F%252Fselfservice.bolsover.gov.uk%252Fservice%252FCheck_your_Bin_Day"
-    "&hostname=selfservice.bolsover.gov.uk&withCredentials=true"
-)
-_API_URL = "https://selfservice.bolsover.gov.uk/apibroker/runLookup"
+_HOSTNAME = "selfservice.bolsover.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_FORM_URL = f"https://{_HOSTNAME}/service/Check_your_Bin_Day"
+_API_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
 _HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -70,31 +68,20 @@ class Bolsover(Scraper):
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn")
-        r = await http.get(_SESSION_URL)
-        sid = r.json()["auth-session"]
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URL)
 
-        params = {
-            "id": "6023d37e037c3",
-            "repeat_against": "",
-            "noRetry": "true",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-        r = await http.post(
-            _API_URL,
-            json={"formValues": {"Bin Collection": {"uprnLoggedIn": {"value": uprn}}}},
-            headers=_HEADERS,
-            params=params,
+        rows_data = first_row(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                "6023d37e037c3",
+                {"Bin Collection": {"uprnLoggedIn": {"value": uprn}}},
+                no_retry="true",
+                headers=_HEADERS,
+            )
         )
-
-        body = r.json()
-        if body.get("status") == "error" or "integration" not in body:
-            raise UpstreamError(f"Bolsover's lookup backend returned an error: {str(body)[:200]}")
-        rows_data = body["integration"]["transformed"]["rows_data"].get("0")
-        if not isinstance(rows_data, dict):
+        if rows_data is None:
             raise UpstreamError("Invalid data returned from Bolsover's API")
 
         route = rows_data["Route"]

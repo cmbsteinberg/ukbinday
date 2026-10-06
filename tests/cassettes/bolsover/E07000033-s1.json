@@ -1,0 +1,137 @@
+{
+ "exchanges": [
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": {
+     "hostname": "selfservice.bolsover.gov.uk",
+     "uri": "https://selfservice.bolsover.gov.uk/service/Check_your_Bin_Day",
+     "withCredentials": "true"
+    },
+    "url": "https://selfservice.bolsover.gov.uk/authapi/isauthenticated"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=utf-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=hukA4QbJ1e8Co2tpL1Z6gF+JZt2mpXERbZnMzWabWsxd+/NkDcdcrT+kVngGE7QKK19FwlZbkjRAFFDlgZroap8dVOx9IiZq0tn6tRcdY9kG/pVcgWKLcpAPin87; Expires=Tue, 13 Oct 2026 09:20:21 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=hukA4QbJ1e8Co2tpL1Z6gF+JZt2mpXERbZnMzWabWsxd+/NkDcdcrT+kVngGE7QKK19FwlZbkjRAFFDlgZroap8dVOx9IiZq0tn6tRcdY9kG/pVcgWKLcpAPin87; Expires=Tue, 13 Oct 2026 09:20:21 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ],
+     [
+      "set-cookie",
+      "PHPSESSID=r2fot4qark01mjsosqp950hcdt; path=/; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSIONCHECK=eff76f295fd38a2a8142d284fe6e137b20ac65ec6c093845f1d355b14326ea3c2ce763cc6e74c35fb5f690617e58fbea4e705413ce92b707de9c9ab884aa862a; expires=Tue, 06-Oct-2026 15:20:21 GMT; Max-Age=21600; path=/api/; domain=selfservice.bolsover.gov.uk; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSfsauthsession=0; path=/; secure; HttpOnly"
+     ]
+    ],
+    "status": 200,
+    "text": "\n    {\"auth-session\":\"ff385bc8c13533c88327a0b14d861c56\",\"cookie-domain\":\"\",\"is_authenticated\":false,\"providers\":[{\"name\":\"google_admin\",\"displayname\":\"Firmstep Admin\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Googlethumb.jpg\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/selfservice.bolsover.gov.uk\\/authapi\\/auth?provider=google_admin&uri=https%3A%2F%2Fselfservice.bolsover.gov.uk%2Fservice%2FCheck_your_Bin_Day\"},{\"name\":\"google_fam\",\"displayname\":\"Firmstep Google FAM\",\"image\":\"\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Logo_icon_round_100px.png\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/selfservice.bolsover.gov.uk\\/authapi\\/auth?provider=google_fam&uri=https%3A%2F%2Fselfservice.bolsover.gov.uk%2Fservice%2FCheck_your_Bin_Day\"},{\"name\":\"ssauth\",\"displayname\":\"Self-service\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/network.png\",\"url\":\"https:\\/\\/selfservice.bolsover.gov.uk\\/authapi\\/auth?provider=ssauth&uri=https%3A%2F%2Fselfservice.bolsover.gov.uk%2Fservice%2FCheck_your_Bin_Day\",\"register_url\":\"https:\\/\\/selfservice.bolsover.gov.uk\\/authapi\\/register?provider=ssauth&uri=https%3A%2F%2Fselfservice.bolsover.gov.uk%2Fservice%2FCheck_your_Bin_Day\"}]}",
+    "url": "https://selfservice.bolsover.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fselfservice.bolsover.gov.uk%2Fservice%2FCheck_your_Bin_Day&hostname=selfservice.bolsover.gov.uk&withCredentials=true"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formValues": {
+       "Bin Collection": {
+        "uprnLoggedIn": {
+         "value": "100030071638"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278421794,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "6023d37e037c3",
+     "log_id": "",
+     "noRetry": "true",
+     "repeat_against": "",
+     "sid": "ff385bc8c13533c88327a0b14d861c56"
+    },
+    "url": "https://selfservice.bolsover.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=EhbkgiSzdsIg8uiBHS3MkS3+6OI6c0cBs7q1+VqBomRO5iuhKvsNbFYqAQGh0Bh5RZbJZFxFvNkYY5BwxB5pgnMidixWm9Kfh3Jwd4zKxY9dO8dq7HdKfHNv3Cc5; Expires=Tue, 13 Oct 2026 09:20:21 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=EhbkgiSzdsIg8uiBHS3MkS3+6OI6c0cBs7q1+VqBomRO5iuhKvsNbFYqAQGh0Bh5RZbJZFxFvNkYY5BwxB5pgnMidixWm9Kfh3Jwd4zKxY9dO8dq7HdKfHNv3Cc5; Expires=Tue, 13 Oct 2026 09:20:21 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<Responses><RequestResponse id=\\\"6ac4bd55e7364\\\"><DatabaseResponse><Fields><Field Name=\\\"UPRN\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"Addresses\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"Route\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"WeekBlack\\\" Type=\\\"int\\\" \\/><Field Name=\\\"WeekBandG\\\" Type=\\\"int\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"UPRN\\\" IsNull=\\\"false\\\">100030071638<\\/result><result column=\\\"Addresses\\\" IsNull=\\\"false\\\">16 Doles Lane Whitwell Worksop S80 4SW <\\/result><result column=\\\"Route\\\" IsNull=\\\"false\\\">ThN<\\/result><result column=\\\"WeekBlack\\\" IsNull=\\\"false\\\">1<\\/result><result column=\\\"WeekBandG\\\" IsNull=\\\"false\\\">2<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"integration\":{\"id\":\"6023d37e037c3\",\"type\":\"database\",\"transformed\":{\"error\":null,\"xml_data\":\"<Responses><RequestResponse id=\\\"6ac4bd55e7364\\\"><DatabaseResponse><Fields><Field Name=\\\"UPRN\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"Addresses\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"Route\\\" Type=\\\"nvarchar\\\" \\/><Field Name=\\\"WeekBlack\\\" Type=\\\"int\\\" \\/><Field Name=\\\"WeekBandG\\\" Type=\\\"int\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"UPRN\\\" IsNull=\\\"false\\\">100030071638<\\/result><result column=\\\"Addresses\\\" IsNull=\\\"false\\\">16 Doles Lane Whitwell Worksop S80 4SW <\\/result><result column=\\\"Route\\\" IsNull=\\\"false\\\">ThN<\\/result><result column=\\\"WeekBlack\\\" IsNull=\\\"false\\\">1<\\/result><result column=\\\"WeekBandG\\\" IsNull=\\\"false\\\">2<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"UPRN\":\"100030071638\",\"Addresses\":\"16 Doles Lane Whitwell Worksop S80 4SW \",\"Route\":\"ThN\",\"WeekBlack\":\"1\",\"WeekBandG\":\"2\"}},\"fields_data\":{\"UPRN\":{\"name\":\"UPRN\",\"type\":\"nvarchar\"},\"Addresses\":{\"name\":\"Addresses\",\"type\":\"nvarchar\"},\"Route\":{\"name\":\"Route\",\"type\":\"nvarchar\"},\"WeekBlack\":{\"name\":\"WeekBlack\",\"type\":\"int\"},\"WeekBandG\":{\"name\":\"WeekBandG\",\"type\":\"int\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null},\"tokens\":[\"{uprnLoggedIn}\"],\"runtimes\":{\"integration\":{\"template\":\"21ms\",\"lim\":\"15ms\",\"SYSTEM\":\"15ms\",\"database\":\"91ms\"},\"api\":\"91ms\",\"lim\":\"15ms\"},\"log_id\":\"a838a3b2-f829-402a-a170-287d81a30f9a\"},\"hash\":\"DA277B2316566BE9D4D8531BC376A37532644CE88393FBAE26F4A2BAB8EC1F38\"}",
+    "url": "https://selfservice.bolsover.gov.uk/apibroker/runLookup?id=6023d37e037c3&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278421794&sid=ff385bc8c13533c88327a0b14d861c56"
+   }
+  }
+ ],
+ "golden": [
+  [
+   "2026-10-08",
+   "Black Bin"
+  ],
+  [
+   "2026-10-15",
+   "Burgundy Bin"
+  ],
+  [
+   "2026-10-15",
+   "Green Bin"
+  ],
+  [
+   "2026-10-22",
+   "Black Bin"
+  ],
+  [
+   "2026-10-29",
+   "Burgundy Bin"
+  ],
+  [
+   "2026-10-29",
+   "Green Bin"
+  ]
+ ],
+ "params": {
+  "address": "16, Doles Lane, Whitwell, Worksop, S80 4SW",
+  "house_number": "16",
+  "postcode": "S80 4SW",
+  "street": "Doles Lane",
+  "uprn": "100030071638"
+ },
+ "recorded": "2026-10-06"
+}
