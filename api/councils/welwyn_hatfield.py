@@ -4,7 +4,15 @@ from __future__ import annotations
 
 from dateutil import parser
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    find_tag,
+    soup,
+)
 
 _PAGE = "https://www.welhat.gov.uk/xfp/form/214"
 _BOUNDARY = "----WebKitFormBoundaryuNcUUJl6BCDBZ9JO"
@@ -58,8 +66,8 @@ class WelwynHatfield(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         response = await http.get(_PAGE)
         page = soup(response.text)
-        form = page.find("form", action="/xfp/form/214")
-        token = form.find("input", {"name": "__token"})["value"]
+        form = find_tag(page, "form", action="/xfp/form/214")
+        token = find_tag(form, "input", {"name": "__token"})["value"]
 
         response = await http.post(
             _PAGE,
