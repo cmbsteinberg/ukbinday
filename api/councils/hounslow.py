@@ -3,23 +3,21 @@
 from __future__ import annotations
 
 import json
-import time
 from datetime import datetime, timedelta
 
 from api.councils._base import Address, Collection, Http, Meta, Scraper, UpstreamError
+from api.councils._platforms.achieveforms import first_row, init_session, run_lookup
 
-_SESSION_URL = (
-    "https://my.hounslow.gov.uk/authapi/isauthenticated"
-    "?uri=https%253A%252F%252Fmy.hounslow.gov.uk%252Fservice%252FWaste_and_recycling_collections"
-    "&hostname=my.hounslow.gov.uk&withCredentials=true"
-)
-_API_URL = "https://my.hounslow.gov.uk/apibroker/runLookup"
+_HOSTNAME = "my.hounslow.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_FORM_URI = f"https://{_HOSTNAME}/service/Waste_and_recycling_collections"
+_API_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
 _HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "User-Agent": "Mozilla/5.0",
     "X-Requested-With": "XMLHttpRequest",
-    "Referer": "https://my.hounslow.gov.uk/fillform/?iframe_id=fillform-frame-1&db_id=",
+    "Referer": f"https://{_HOSTNAME}/fillform/?iframe_id=fillform-frame-1&db_id=",
 }
 
 
@@ -34,57 +32,37 @@ class Hounslow(Scraper):
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn")
-        r = await http.get(_SESSION_URL)
-        sid = r.json()["auth-session"]
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URI)
 
-        params = {
-            "id": "655f4290810cf",
-            "repeat_against": "",
-            "noRetry": "true",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-        r = await http.post(_API_URL, headers=_HEADERS, params=params)
+        token_row = first_row(
+            await run_lookup(http, _API_URL, sid, "655f4290810cf", None, no_retry="true", headers=_HEADERS)
+        )
+        if token_row is None or "bartecToken" not in token_row:
+            raise UpstreamError("Hounslow gave no Bartec token")
 
-        rows_data = r.json()["integration"]["transformed"]["rows_data"]["0"]
-        if not isinstance(rows_data, dict):
-            raise UpstreamError("Invalid data returned from Hounslow API")
-        token = rows_data["bartecToken"]
-
-        payload = {
-            "formValues": {
-                "Your address": {
-                    "searchUPRN": {"value": uprn},
-                    "bartecToken": {"value": token},
-                    "searchFromDate": {"value": datetime.now().strftime("%Y-%m-%d")},
-                    "searchToDate": {
-                        "value": (datetime.now() + timedelta(days=30)).strftime("%Y-%m-%d")
+        now = datetime.now()
+        row = first_row(
+            await run_lookup(
+                http,
+                _API_URL,
+                sid,
+                "659eb39b66d5a",
+                {
+                    "Your address": {
+                        "searchUPRN": {"value": uprn},
+                        "bartecToken": {"value": token_row["bartecToken"]},
+                        "searchFromDate": {"value": now.strftime("%Y-%m-%d")},
+                        "searchToDate": {"value": (now + timedelta(days=30)).strftime("%Y-%m-%d")},
                     },
                 },
-            },
-        }
-        params = {
-            "id": "659eb39b66d5a",
-            "repeat_against": "",
-            "noRetry": "false",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-        r = await http.post(_API_URL, json=payload, headers=_HEADERS, params=params)
+                headers=_HEADERS,
+            )
+        )
+        if row is None or "jobsJSON" not in row:
+            raise UpstreamError("Hounslow returned no collection jobs")
 
-        rows_data = r.json()["integration"]["transformed"]["rows_data"]["0"]
-        if not isinstance(rows_data, dict):
-            raise UpstreamError("Invalid data returned from Hounslow API")
-
-        collections = json.loads(rows_data["jobsJSON"])
         result: list[Collection] = []
-        for collection in collections:
+        for collection in json.loads(row["jobsJSON"]):
             bin_type = collection["jobType"]
             if not bin_type:
                 continue
