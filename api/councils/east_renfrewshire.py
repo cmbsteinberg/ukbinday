@@ -16,6 +16,7 @@ from api.councils._base import (
     Scraper,
     Transport,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -52,9 +53,7 @@ def _form_values(form: Tag) -> tuple[str, str, str]:
 
 def _results(html: str) -> list[Collection]:
     page = soup(html)
-    table = page.find("div", id="BINDAYSV2_RESULTS_NEXTCOLLECTIONLISTV4")
-    if not isinstance(table, Tag):
-        raise UpstreamError("Could not find bin collection results table.")
+    table = find_tag(page, "div", id="BINDAYSV2_RESULTS_NEXTCOLLECTIONLISTV4", what="Could not find bin collection results table.")
 
     collections: list[Collection] = []
     for row in table.find_all("tr")[1:]:
