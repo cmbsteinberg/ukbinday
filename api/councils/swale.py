@@ -21,6 +21,7 @@ from api.councils._base import (
     Scraper,
     Transport,
     UpstreamError,
+    find_tag,
     parse_date,
     soup,
 )
@@ -60,9 +61,7 @@ def _field_name(form: Tag, label_text: str, fallback_tag: str | None = None) -> 
 
 
 def _submit_control(form: Tag) -> tuple[str, str]:
-    control = form.find("input", {"type": "submit", "name": True, "value": True})
-    if not isinstance(control, Tag):
-        raise UpstreamError("Swale lookup form is missing its submit control.")
+    control = find_tag(form, "input", {"type": "submit", "name": True, "value": True}, what="Swale lookup form is missing its submit control.")
     name, value = control.get("name"), control.get("value")
     if not isinstance(name, str) or not isinstance(value, str):
         raise UpstreamError("Swale lookup form is missing its submit control.")
@@ -174,13 +173,9 @@ class Swale(Scraper):
         if _lookup_form(page):
             raise UpstreamError("Swale UPRN submission returned an input form instead of results.")
 
-        next_date = page.find("strong", {"id": "SBC-YBD-collectionDate"})
-        if not isinstance(next_date, Tag):
-            raise UpstreamError("Could not find next collection date on the Swale page.")
+        next_date = find_tag(page, "strong", {"id": "SBC-YBD-collectionDate"}, what="Could not find next collection date on the Swale page.")
 
-        waste_list = page.find("div", {"id": "SBCFirstBins"})
-        if not isinstance(waste_list, Tag):
-            raise UpstreamError("Could not find the Swale waste list.")
+        waste_list = find_tag(page, "div", {"id": "SBCFirstBins"}, what="Could not find the Swale waste list.")
 
         collections: list[Collection] = []
         next_day = _collection_date(next_date.get_text(" ", strip=True))
@@ -189,17 +184,11 @@ class Swale(Scraper):
                 Collection(next_day, item.get_text(strip=True))
             )
 
-        future_collection = page.find("div", {"id": "FutureCollections"})
-        if not isinstance(future_collection, Tag):
-            raise UpstreamError("Could not find future collections on the Swale page.")
+        future_collection = find_tag(page, "div", {"id": "FutureCollections"}, what="Could not find future collections on the Swale page.")
 
-        future_date = future_collection.find("p")
-        if not isinstance(future_date, Tag):
-            raise UpstreamError("Could not find the future collection date on the Swale page.")
+        future_date = find_tag(future_collection, "p", what="Could not find the future collection date on the Swale page.")
 
-        future_list = page.find("ul", {"id": "FirstFutureBins"})
-        if not isinstance(future_list, Tag):
-            raise UpstreamError("Could not find the future bins list on the Swale page.")
+        future_list = find_tag(page, "ul", {"id": "FirstFutureBins"}, what="Could not find the future bins list on the Swale page.")
 
         future_day = _collection_date(future_date.get_text(" ", strip=True))
         for item in future_list.find_all("li"):
