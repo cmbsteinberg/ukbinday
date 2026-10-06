@@ -1,0 +1,639 @@
+{
+ "exchanges": [
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": {
+     "_": 1791278426349
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/domain/my.kirklees.gov.uk"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=bDjO9NSLDb6A8BCPafAoKHy7ST360wIYjyVOKxdPw6X95T/I7vFFKb6aHMfbH14D2KYI8UEx9Om5x5S/yAy53JGLqrKT4N5WDxaXmtzEwmWJubmseaGiVIRuIA+p; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=bDjO9NSLDb6A8BCPafAoKHy7ST360wIYjyVOKxdPw6X95T/I7vFFKb6aHMfbH14D2KYI8UEx9Om5x5S/yAy53JGLqrKT4N5WDxaXmtzEwmWJubmseaGiVIRuIA+p; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"host\":\"my.kirklees.gov.uk\",\"domain_id\":\"f91b9914-0e62-11e4-9645-22000a600e0c\",\"ga_id\":\"UA-98467549-1\",\"customer_id\":\"89d52200-ed15-4ffb-8e66-84ffc1a0644e\",\"name\":\"kirklees\",\"domain_language\":\"en\",\"min_ie_version\":9,\"product\":\"Self-Dash\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/domain/my.kirklees.gov.uk?_=1791278426349"
+   }
+  },
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": {
+     "hostname": "my.kirklees.gov.uk",
+     "uri": "https://my.kirklees.gov.uk/service/Bins_and_recycling___Manage_your_bins",
+     "withCredentials": "true"
+    },
+    "url": "https://my.kirklees.gov.uk/authapi/isauthenticated"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=utf-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=NJuXyKKaHeZ3eLNCfBjgeCulgny/5t4ddBsvVj6LH5mzh8/CbsIFxHRDEd6Qv8Hwyyn43beTMRReDUMQuD99bZDYWKFtD8TQabMgFjLsOsqy7EP1tNhKLETcQpUf; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=NJuXyKKaHeZ3eLNCfBjgeCulgny/5t4ddBsvVj6LH5mzh8/CbsIFxHRDEd6Qv8Hwyyn43beTMRReDUMQuD99bZDYWKFtD8TQabMgFjLsOsqy7EP1tNhKLETcQpUf; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ],
+     [
+      "set-cookie",
+      "PHPSESSID=9qacnamvno39bd2pq1sfhp7bsj; path=/; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSIONCHECK=c266b6ebde30639348cb60f113c2bd58347ea8a0fb86eda4e62a70e25a7f6b0a0f4327adadcedd5a5a20ca4579ac727de9b0d586e3868ceb2ef6b3de0ad1accc; expires=Tue, 06-Oct-2026 15:20:26 GMT; Max-Age=21600; path=/api/; domain=my.kirklees.gov.uk; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SimpleSAMLSessionID=a89b3c4375b3edb845c262d012e2a87d; path=/; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSfsauthsession=0; path=/; domain=.kirklees.gov.uk; secure; HttpOnly"
+     ]
+    ],
+    "status": 200,
+    "text": "\n    {\"auth-session\":\"3e6164d8fc5d75c6f19083823578e6a2\",\"cookie-domain\":\".kirklees.gov.uk\",\"is_authenticated\":false,\"providers\":[{\"name\":\"Azure___Login__self_\",\"displayname\":\"Azure - Login (self)\",\"image\":\"https:\\/\\/fs-filestore-eu.s3-eu-west-1.amazonaws.com\\/resources\\/azure.png\",\"supportonly\":\"true\",\"mapping\":\"{\\\"username\\\" : \\\"sAMAccountName\\\",\\\"email\\\" : \\\"emailaddress\\\",\\\"memberof\\\" :\\\"memberof\\\",\\\"name\\\":\\\"displayName\\\",\\\"first_name\\\" : \\\"givenName\\\",\\\"last_name\\\" :\\\"surname\\\",\\\"groupof\\\" :\\\"groups\\\"}\",\"url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/auth?provider=Azure___Login__self_&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\"},{\"name\":\"google_admin\",\"displayname\":\"Firmstep Admin\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Googlethumb.jpg\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/auth?provider=google_admin&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\"},{\"name\":\"google_fam\",\"displayname\":\"Firmstep Google FAM\",\"image\":\"\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Logo_icon_round_100px.png\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/auth?provider=google_fam&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\"},{\"name\":\"ssauth\",\"displayname\":\"Self-service\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/network.png\",\"url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/auth?provider=ssauth&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\",\"register_url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/register?provider=ssauth&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\"}]}",
+    "url": "https://my.kirklees.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins&hostname=my.kirklees.gov.uk&withCredentials=true"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6",
+      "formValues": {
+       "Section 1": {
+        "Postcode": {
+         "value": "HD9 7HA"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278426484,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "58049013ca4c9",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "3e6164d8fc5d75c6f19083823578e6a2"
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "UTF-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=HuFcOPBbaW5+H62NoSVmdOAMXKMNIacUIgJxkLtiY9U61TV3ELiPqmQRxypeiCgC0HINsTBgQbDLWY1lU7TswvQ40ZWr4S5QbCWWbVjnvmKwQa6AU+fDACCCFPLO; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=HuFcOPBbaW5+H62NoSVmdOAMXKMNIacUIgJxkLtiY9U61TV3ELiPqmQRxypeiCgC0HINsTBgQbDLWY1lU7TswvQ40ZWr4S5QbCWWbVjnvmKwQa6AU+fDACCCFPLO; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<?xml version=\\\"1.0\\\"?>\\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"PropertyReference\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Premise\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"subBuilding\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Street\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Location\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Town\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Postcode\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"name\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"display\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Easting\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Northing\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009200<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mayfield<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074230<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mayfield,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416340<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407964<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51440002071<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Midgebottom House<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074265<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416336<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407666<\\/result><\\/Row><Row id=\\\"2\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450008500<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Grange Cote<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074228<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Grange Cote,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416325<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407907<\\/result><\\/Row><Row id=\\\"3\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450008700<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Grenmere<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074229<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Grenmere,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416326<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407914<\\/result><\\/Row><Row id=\\\"4\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009300<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mearhouse Cottage<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074225<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mearhouse Cottage,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416363<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407919<\\/result><\\/Row><Row id=\\\"5\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009330<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mearhouse Farm<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074226<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mearhouse Farm,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416359<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407887<\\/result><\\/Row><Row id=\\\"6\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009400<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Monrita<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074231<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Monrita,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416332<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407940<\\/result><\\/Row><Row id=\\\"7\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009500<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mount View<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074232<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mount View,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416335<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407955<\\/result><\\/Row><Row id=\\\"8\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009600N<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mearhouse Farm<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">The Barn<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83232659<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">The Barn Mearhouse Farm,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416374<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407907<\\/result><\\/Row><Row id=\\\"9\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450010200<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Brentwood, 37D<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074227<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Brentwood, 37D Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416330<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407929<\\/result><\\/Row><Row id=\\\"10\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000390<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">39<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074131<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">39 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416346<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407623<\\/result><\\/Row><Row id=\\\"11\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000410<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">41<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074132<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">41 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416348<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407611<\\/result><\\/Row><Row id=\\\"12\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000430<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">43<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074133<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">43 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416348<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407611<\\/result><\\/Row><Row id=\\\"13\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000450<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">45<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074134<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">45 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416348<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407611<\\/result><\\/Row><Row id=\\\"14\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000470<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">47<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074135<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">47 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416346<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407623<\\/result><\\/Row><Row id=\\\"15\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">37210000500<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">50<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074136<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">50 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416387<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407959<\\/result><\\/Row><Row id=\\\"16\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">37210000520<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">52<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074137<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">52 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416384<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407951<\\/result><\\/Row><Row id=\\\"17\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">37210000540<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">54<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074290<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">54 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416381<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407944<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\\n\",\"integration\":{\"id\":\"58049013ca4c9\",\"type\":\"webservice\",\"transformed\":{\"error\":null,\"xml_data\":\"<?xml version=\\\"1.0\\\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"PropertyReference\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Premise\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"subBuilding\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Street\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Location\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Town\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Postcode\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"name\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"display\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Easting\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Northing\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009200<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mayfield<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074230<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mayfield,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416340<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407964<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51440002071<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Midgebottom House<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074265<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416336<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407666<\\/result><\\/Row><Row id=\\\"2\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450008500<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Grange Cote<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074228<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Grange Cote,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416325<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407907<\\/result><\\/Row><Row id=\\\"3\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450008700<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Grenmere<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074229<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Grenmere,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416326<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407914<\\/result><\\/Row><Row id=\\\"4\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009300<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mearhouse Cottage<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074225<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mearhouse Cottage,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416363<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407919<\\/result><\\/Row><Row id=\\\"5\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009330<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mearhouse Farm<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074226<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mearhouse Farm,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416359<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407887<\\/result><\\/Row><Row id=\\\"6\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009400<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Monrita<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074231<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Monrita,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416332<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407940<\\/result><\\/Row><Row id=\\\"7\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009500<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mount View<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074232<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mount View,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416335<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407955<\\/result><\\/Row><Row id=\\\"8\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450009600N<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mearhouse Farm<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">The Barn<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83232659<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">The Barn Mearhouse Farm,  Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416374<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407907<\\/result><\\/Row><Row id=\\\"9\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450010200<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Brentwood, 37D<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074227<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Brentwood, 37D Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416330<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407929<\\/result><\\/Row><Row id=\\\"10\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000390<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">39<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074131<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">39 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416346<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407623<\\/result><\\/Row><Row id=\\\"11\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000410<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">41<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074132<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">41 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416348<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407611<\\/result><\\/Row><Row id=\\\"12\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000430<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">43<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074133<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">43 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416348<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407611<\\/result><\\/Row><Row id=\\\"13\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000450<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">45<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074134<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">45 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416348<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407611<\\/result><\\/Row><Row id=\\\"14\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">51450000470<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">47<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074135<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">47 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416346<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407623<\\/result><\\/Row><Row id=\\\"15\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">37210000500<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">50<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074136<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">50 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416387<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407959<\\/result><\\/Row><Row id=\\\"16\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">37210000520<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">52<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074137<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">52 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416384<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407951<\\/result><\\/Row><Row id=\\\"17\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">37210000540<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">54<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Sheffield Road<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">New Mill<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Holmfirth<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD9 7HA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83074290<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">54 Sheffield Road, New Mill, Holmfirth, HD9 7HA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">416381<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">407944<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"83074230\":{\"PropertyReference\":\"51450009200\",\"Premise\":\"Mayfield\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074230\",\"display\":\"Mayfield,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416340\",\"Northing\":\"407964\"},\"83074265\":{\"PropertyReference\":\"51440002071\",\"Premise\":\"Midgebottom House\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074265\",\"display\":\"Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416336\",\"Northing\":\"407666\"},\"83074228\":{\"PropertyReference\":\"51450008500\",\"Premise\":\"Grange Cote\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074228\",\"display\":\"Grange Cote,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416325\",\"Northing\":\"407907\"},\"83074229\":{\"PropertyReference\":\"51450008700\",\"Premise\":\"Grenmere\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074229\",\"display\":\"Grenmere,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416326\",\"Northing\":\"407914\"},\"83074225\":{\"PropertyReference\":\"51450009300\",\"Premise\":\"Mearhouse Cottage\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074225\",\"display\":\"Mearhouse Cottage,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416363\",\"Northing\":\"407919\"},\"83074226\":{\"PropertyReference\":\"51450009330\",\"Premise\":\"Mearhouse Farm\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074226\",\"display\":\"Mearhouse Farm,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416359\",\"Northing\":\"407887\"},\"83074231\":{\"PropertyReference\":\"51450009400\",\"Premise\":\"Monrita\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074231\",\"display\":\"Monrita,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416332\",\"Northing\":\"407940\"},\"83074232\":{\"PropertyReference\":\"51450009500\",\"Premise\":\"Mount View\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074232\",\"display\":\"Mount View,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416335\",\"Northing\":\"407955\"},\"83232659\":{\"PropertyReference\":\"51450009600N\",\"Premise\":\"Mearhouse Farm\",\"subBuilding\":\"The Barn\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83232659\",\"display\":\"The Barn Mearhouse Farm,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416374\",\"Northing\":\"407907\"},\"83074227\":{\"PropertyReference\":\"51450010200\",\"Premise\":\"Brentwood, 37D\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074227\",\"display\":\"Brentwood, 37D Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416330\",\"Northing\":\"407929\"},\"83074131\":{\"PropertyReference\":\"51450000390\",\"Premise\":\"39\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074131\",\"display\":\"39 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416346\",\"Northing\":\"407623\"},\"83074132\":{\"PropertyReference\":\"51450000410\",\"Premise\":\"41\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074132\",\"display\":\"41 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416348\",\"Northing\":\"407611\"},\"83074133\":{\"PropertyReference\":\"51450000430\",\"Premise\":\"43\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074133\",\"display\":\"43 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416348\",\"Northing\":\"407611\"},\"83074134\":{\"PropertyReference\":\"51450000450\",\"Premise\":\"45\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074134\",\"display\":\"45 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416348\",\"Northing\":\"407611\"},\"83074135\":{\"PropertyReference\":\"51450000470\",\"Premise\":\"47\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074135\",\"display\":\"47 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416346\",\"Northing\":\"407623\"},\"83074136\":{\"PropertyReference\":\"37210000500\",\"Premise\":\"50\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074136\",\"display\":\"50 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416387\",\"Northing\":\"407959\"},\"83074137\":{\"PropertyReference\":\"37210000520\",\"Premise\":\"52\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074137\",\"display\":\"52 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416384\",\"Northing\":\"407951\"},\"83074290\":{\"PropertyReference\":\"37210000540\",\"Premise\":\"54\",\"subBuilding\":\"\",\"Street\":\"Sheffield Road\",\"Location\":\"New Mill\",\"Town\":\"Holmfirth\",\"Postcode\":\"HD9 7HA\",\"name\":\"83074290\",\"display\":\"54 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"Easting\":\"416381\",\"Northing\":\"407944\"}},\"fields_data\":{\"PropertyReference\":{\"type\":\"varchar\",\"name\":\"PropertyReference\"},\"Premise\":{\"type\":\"varchar\",\"name\":\"Premise\"},\"subBuilding\":{\"type\":\"varchar\",\"name\":\"subBuilding\"},\"Street\":{\"type\":\"varchar\",\"name\":\"Street\"},\"Location\":{\"type\":\"varchar\",\"name\":\"Location\"},\"Town\":{\"type\":\"varchar\",\"name\":\"Town\"},\"Postcode\":{\"type\":\"varchar\",\"name\":\"Postcode\"},\"name\":{\"type\":\"varchar\",\"name\":\"name\"},\"display\":{\"type\":\"varchar\",\"name\":\"display\"},\"Easting\":{\"type\":\"varchar\",\"name\":\"Easting\"},\"Northing\":{\"type\":\"varchar\",\"name\":\"Northing\"}},\"select_data\":[{\"label\":\"Mayfield,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074230\"},{\"label\":\"Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074265\"},{\"label\":\"Grange Cote,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074228\"},{\"label\":\"Grenmere,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074229\"},{\"label\":\"Mearhouse Cottage,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074225\"},{\"label\":\"Mearhouse Farm,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074226\"},{\"label\":\"Monrita,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074231\"},{\"label\":\"Mount View,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074232\"},{\"label\":\"The Barn Mearhouse Farm,  Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83232659\"},{\"label\":\"Brentwood, 37D Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074227\"},{\"label\":\"39 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074131\"},{\"label\":\"41 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074132\"},{\"label\":\"43 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074133\"},{\"label\":\"45 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074134\"},{\"label\":\"47 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074135\"},{\"label\":\"50 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074136\"},{\"label\":\"52 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074137\"},{\"label\":\"54 Sheffield Road, New Mill, Holmfirth, HD9 7HA\",\"value\":\"83074290\"}],\"meta_data\":[],\"results_page\":null,\"post_transform\":null,\"pre_transform\":null},\"tokens\":[\"{Postcode}\"],\"runtimes\":{\"integration\":{\"template\":\"12ms\",\"lim\":\"12ms\",\"webservice\":\"333ms\"},\"api\":\"333ms\",\"lim\":\"12ms\"},\"log_id\":null},\"hash\":\"1431204CB42715D273FDACC2C17F61764852F02C12AF152CE0DF58BD7C47B866\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup?id=58049013ca4c9&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278426484&sid=3e6164d8fc5d75c6f19083823578e6a2"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6",
+      "formValues": {
+       "Search": {
+        "PowerSuite_Available": {
+         "value": "True"
+        },
+        "PowerSuite_Available1": {
+         "value": "True"
+        },
+        "customerAddress": {
+         "value": {
+          "Section 1": {
+           "House": {
+            "value": "Midgebottom House"
+           },
+           "List": {
+            "value": "83074265"
+           },
+           "Postcode": {
+            "value": "HD9 7HA"
+           },
+           "PropertyReference": {
+            "value": "51440002071"
+           },
+           "Street": {
+            "value": "Sheffield Road"
+           },
+           "Town": {
+            "value": "Holmfirth"
+           },
+           "UPRN": {
+            "value": "83074265"
+           },
+           "flat": {
+            "value": ""
+           },
+           "fullAddress": {
+            "value": "Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA"
+           },
+           "house": {
+            "value": ""
+           },
+           "lengthPostCode": {
+            "value": "7"
+           },
+           "postcode": {
+            "value": ""
+           },
+           "searchForAddress": {
+            "value": "yes"
+           },
+           "street": {
+            "value": ""
+           },
+           "town": {
+            "value": ""
+           }
+          }
+         }
+        },
+        "flatOrSubBuildingFinal": {
+         "value": ""
+        },
+        "fullAddressFinal": {
+         "value": "Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA"
+        },
+        "houseFinal": {
+         "value": "Midgebottom House"
+        },
+        "postcodeFinal": {
+         "value": "HD9 7HA"
+        },
+        "productName": {
+         "value": "Self"
+        },
+        "sSection": {
+         "value": "1"
+        },
+        "streetFinal": {
+         "value": "Sheffield Road"
+        },
+        "suppliedUPRN": {
+         "value": "83074265"
+        },
+        "townFinal": {
+         "value": "Holmfirth"
+        },
+        "uprn2": {
+         "value": "83074265"
+        },
+        "uprnFinal": {
+         "value": "83074265"
+        },
+        "validPropertyFlag": {
+         "value": "yes"
+        },
+        "validatedUPRN": {
+         "value": "83074265"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278426957,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "659c2c2386104",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "3e6164d8fc5d75c6f19083823578e6a2"
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "UTF-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=gRScaV1jzAUSTIOZOdi2wJtp2saPvOGT/HkWnBg7Qw1vgSq/H2LCsF1D5No+RaEIh2uPzRwIVhyOSFSD3an+qXaIRVDwc7dkq2cWhwcAYZ9tDQRVuwD9EiM56/LY; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=gRScaV1jzAUSTIOZOdi2wJtp2saPvOGT/HkWnBg7Qw1vgSq/H2LCsF1D5No+RaEIh2uPzRwIVhyOSFSD3an+qXaIRVDwc7dkq2cWhwcAYZ9tDQRVuwD9EiM56/LY; Expires=Tue, 13 Oct 2026 09:20:26 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<Responses><RequestResponse id=\\\"6ac4bd5b1442d\\\"><DatabaseResponse><Fields><Field Name=\\\"PropertyType\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"KMC\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"MultiOccupancy\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"GovDeliveryCategorye\\\" Type=\\\"varchar\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"PropertyType\\\" IsNull=\\\"false\\\">Residential<\\/result><result column=\\\"KMC\\\" IsNull=\\\"false\\\">N<\\/result><result column=\\\"MultiOccupancy\\\" IsNull=\\\"false\\\">N<\\/result><result column=\\\"GovDeliveryCategorye\\\" IsNull=\\\"false\\\">DV08MON_RV08MON<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"integration\":{\"id\":\"659c2c2386104\",\"type\":\"database\",\"transformed\":{\"error\":null,\"xml_data\":\"<Responses><RequestResponse id=\\\"6ac4bd5b1442d\\\"><DatabaseResponse><Fields><Field Name=\\\"PropertyType\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"KMC\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"MultiOccupancy\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"GovDeliveryCategorye\\\" Type=\\\"varchar\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"PropertyType\\\" IsNull=\\\"false\\\">Residential<\\/result><result column=\\\"KMC\\\" IsNull=\\\"false\\\">N<\\/result><result column=\\\"MultiOccupancy\\\" IsNull=\\\"false\\\">N<\\/result><result column=\\\"GovDeliveryCategorye\\\" IsNull=\\\"false\\\">DV08MON_RV08MON<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"PropertyType\":\"Residential\",\"KMC\":\"N\",\"MultiOccupancy\":\"N\",\"GovDeliveryCategorye\":\"DV08MON_RV08MON\"}},\"fields_data\":{\"PropertyType\":{\"name\":\"PropertyType\",\"type\":\"varchar\"},\"KMC\":{\"name\":\"KMC\",\"type\":\"varchar\"},\"MultiOccupancy\":{\"name\":\"MultiOccupancy\",\"type\":\"varchar\"},\"GovDeliveryCategorye\":{\"name\":\"GovDeliveryCategorye\",\"type\":\"varchar\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null},\"tokens\":[\"{uprnFinal}\"],\"runtimes\":{\"integration\":{\"template\":\"11ms\",\"lim\":\"11ms\",\"SYSTEM\":\"11ms\",\"database\":\"549ms\"},\"api\":\"549ms\",\"lim\":\"11ms\"},\"log_id\":\"c57b88ef-c432-479f-85c6-73a646606d3c\"},\"hash\":\"CE7AFC9F4E29B29BF6ED4EF7E5A517D3898D109F33D68E42DF980A4828BAC4B5\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup?id=659c2c2386104&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278426957&sid=3e6164d8fc5d75c6f19083823578e6a2"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6",
+      "formValues": {
+       "Search": {
+        "GovDeliveryCategorye": {
+         "value": "DV08MON_RV08MON"
+        },
+        "PowerSuite_Available": {
+         "value": "True"
+        },
+        "PowerSuite_Available1": {
+         "value": "True"
+        },
+        "PropertyType": {
+         "value": "Residential"
+        },
+        "binsPropertyType": {
+         "value": {
+          "Section 1": {
+           "GovDeliveryCategorye": {
+            "value": "DV08MON_RV08MON"
+           },
+           "PropertyType": {
+            "value": "Residential"
+           }
+          }
+         }
+        },
+        "customerAddress": {
+         "value": {
+          "Section 1": {
+           "House": {
+            "value": "Midgebottom House"
+           },
+           "List": {
+            "value": "83074265"
+           },
+           "Postcode": {
+            "value": "HD9 7HA"
+           },
+           "PropertyReference": {
+            "value": "51440002071"
+           },
+           "Street": {
+            "value": "Sheffield Road"
+           },
+           "Town": {
+            "value": "Holmfirth"
+           },
+           "UPRN": {
+            "value": "83074265"
+           },
+           "flat": {
+            "value": ""
+           },
+           "fullAddress": {
+            "value": "Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA"
+           },
+           "house": {
+            "value": ""
+           },
+           "lengthPostCode": {
+            "value": "7"
+           },
+           "postcode": {
+            "value": ""
+           },
+           "searchForAddress": {
+            "value": "yes"
+           },
+           "street": {
+            "value": ""
+           },
+           "town": {
+            "value": ""
+           }
+          }
+         }
+        },
+        "flatOrSubBuildingFinal": {
+         "value": ""
+        },
+        "fullAddressFinal": {
+         "value": "Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA"
+        },
+        "houseFinal": {
+         "value": "Midgebottom House"
+        },
+        "postcodeFinal": {
+         "value": "HD9 7HA"
+        },
+        "productName": {
+         "value": "Self"
+        },
+        "sSection": {
+         "value": "1"
+        },
+        "streetFinal": {
+         "value": "Sheffield Road"
+        },
+        "suppliedUPRN": {
+         "value": "83074265"
+        },
+        "townFinal": {
+         "value": "Holmfirth"
+        },
+        "uprn2": {
+         "value": "83074265"
+        },
+        "uprnFinal": {
+         "value": "83074265"
+        },
+        "validPropertyFlag": {
+         "value": "yes"
+        },
+        "validatedUPRN": {
+         "value": "83074265"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278427690,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "631615c4bd3b7",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "3e6164d8fc5d75c6f19083823578e6a2"
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "UTF-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=s7KvgN7b72wVFmx6asYmxJIYogad0q4zbh/cJdMeaMyguiJ8LtZN/KnItXBpsRMXJvQDaASmGPmGhY34X5QAUCMpXdZFD9PwgJyauX3SfKnE16Ffmat7iV1QpNgc; Expires=Tue, 13 Oct 2026 09:20:27 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=s7KvgN7b72wVFmx6asYmxJIYogad0q4zbh/cJdMeaMyguiJ8LtZN/KnItXBpsRMXJvQDaASmGPmGhY34X5QAUCMpXdZFD9PwgJyauX3SfKnE16Ffmat7iV1QpNgc; Expires=Tue, 13 Oct 2026 09:20:27 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<?xml version=\\\"1.0\\\"?>\\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"validatedUPRN\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"suppliedUPRN\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"validatedUPRN\\\" isNull=\\\"False\\\">83074265<\\/result><result column=\\\"suppliedUPRN\\\" isNull=\\\"False\\\">83074265<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\\n\",\"integration\":{\"id\":\"631615c4bd3b7\",\"type\":\"webservice\",\"transformed\":{\"error\":null,\"xml_data\":\"<?xml version=\\\"1.0\\\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"validatedUPRN\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"suppliedUPRN\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"validatedUPRN\\\" isNull=\\\"False\\\">83074265<\\/result><result column=\\\"suppliedUPRN\\\" isNull=\\\"False\\\">83074265<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"validatedUPRN\":\"83074265\",\"suppliedUPRN\":\"83074265\"}},\"fields_data\":{\"validatedUPRN\":{\"type\":\"varchar\",\"name\":\"validatedUPRN\"},\"suppliedUPRN\":{\"type\":\"varchar\",\"name\":\"suppliedUPRN\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null,\"post_transform\":null,\"pre_transform\":null},\"tokens\":[\"{MissedBin_url}\",\"{uprn2}\"],\"runtimes\":{\"integration\":{\"template\":\"14ms\",\"lim\":\"11ms\",\"webservice\":\"479ms\"},\"api\":\"479ms\",\"lim\":\"11ms\"},\"log_id\":\"49d8c8bc-bed9-40a3-b52a-26cc86589816\"},\"hash\":\"1BCB573D342B45CED1AB4A69FAF918F24749852B34A68444129BF9F040E2D8E7\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup?id=631615c4bd3b7&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278427690&sid=3e6164d8fc5d75c6f19083823578e6a2"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6",
+      "formValues": {
+       "Search": {
+        "GovDeliveryCategorye": {
+         "value": "DV08MON_RV08MON"
+        },
+        "PowerSuite_Available": {
+         "value": "True"
+        },
+        "PowerSuite_Available1": {
+         "value": "True"
+        },
+        "PropertyType": {
+         "value": "Residential"
+        },
+        "binsPropertyType": {
+         "value": {
+          "Section 1": {
+           "GovDeliveryCategorye": {
+            "value": "DV08MON_RV08MON"
+           },
+           "PropertyType": {
+            "value": "Residential"
+           }
+          }
+         }
+        },
+        "customerAddress": {
+         "value": {
+          "Section 1": {
+           "House": {
+            "value": "Midgebottom House"
+           },
+           "List": {
+            "value": "83074265"
+           },
+           "Postcode": {
+            "value": "HD9 7HA"
+           },
+           "PropertyReference": {
+            "value": "51440002071"
+           },
+           "Street": {
+            "value": "Sheffield Road"
+           },
+           "Town": {
+            "value": "Holmfirth"
+           },
+           "UPRN": {
+            "value": "83074265"
+           },
+           "flat": {
+            "value": ""
+           },
+           "fullAddress": {
+            "value": "Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA"
+           },
+           "house": {
+            "value": ""
+           },
+           "lengthPostCode": {
+            "value": "7"
+           },
+           "postcode": {
+            "value": ""
+           },
+           "searchForAddress": {
+            "value": "yes"
+           },
+           "street": {
+            "value": ""
+           },
+           "town": {
+            "value": ""
+           }
+          }
+         }
+        },
+        "flatOrSubBuildingFinal": {
+         "value": ""
+        },
+        "fullAddressFinal": {
+         "value": "Midgebottom House,  Sheffield Road, New Mill, Holmfirth, HD9 7HA"
+        },
+        "houseFinal": {
+         "value": "Midgebottom House"
+        },
+        "postcodeFinal": {
+         "value": "HD9 7HA"
+        },
+        "productName": {
+         "value": "Self"
+        },
+        "sSection": {
+         "value": "1"
+        },
+        "streetFinal": {
+         "value": "Sheffield Road"
+        },
+        "suppliedUPRN": {
+         "value": "83074265"
+        },
+        "townFinal": {
+         "value": "Holmfirth"
+        },
+        "uprn2": {
+         "value": "83074265"
+        },
+        "uprnFinal": {
+         "value": "83074265"
+        },
+        "validPropertyFlag": {
+         "value": "yes"
+        },
+        "validatedUPRN": {
+         "value": "83074265"
+        }
+       },
+       "Your bins": {
+        "GovDeliveryCategorye": {
+         "value": "DV08MON_RV08MON"
+        },
+        "NextCollectionFromDate": {
+         "value": "29/09/2026"
+        },
+        "NextCollectionToDate": {
+         "value": "03/11/2026"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278428378,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "65e08e60b299d",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "3e6164d8fc5d75c6f19083823578e6a2"
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "UTF-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=Q8cUf6KdHjlkG37AjQV4zAfhBA9qnvxHavhkBv2F3t/bbXlNBbS9ri8lf1MyUUfHLcg4AG26L4B5+GfN8qfv//FRtldmNMEHCzadWBPmuQYtOvKhk+RJyVhKXryk; Expires=Tue, 13 Oct 2026 09:20:28 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=Q8cUf6KdHjlkG37AjQV4zAfhBA9qnvxHavhkBv2F3t/bbXlNBbS9ri8lf1MyUUfHLcg4AG26L4B5+GfN8qfv//FRtldmNMEHCzadWBPmuQYtOvKhk+RJyVhKXryk; Expires=Tue, 13 Oct 2026 09:20:28 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<?xml version=\\\"1.0\\\"?>\\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"name\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"label\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"IsAssisted\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ServiceItemID\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ServiceItemName\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Quantity\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RoundSchedule\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"NextCollectionDate\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ScheduleName\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"BinDetails\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"BinCountBrown\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"name\\\" isNull=\\\"False\\\">1747887<\\/result><result column=\\\"label\\\" isNull=\\\"False\\\">Grey wheelie bin<\\/result><result column=\\\"IsAssisted\\\" isNull=\\\"False\\\">false<\\/result><result column=\\\"ServiceItemID\\\" isNull=\\\"False\\\">131<\\/result><result column=\\\"ServiceItemName\\\" isNull=\\\"False\\\">240D<\\/result><result column=\\\"Quantity\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"RoundSchedule\\\" isNull=\\\"False\\\">DV08<\\/result><result column=\\\"NextCollectionDate\\\" isNull=\\\"False\\\">2026-10-19T00:00:00<\\/result><result column=\\\"ScheduleName\\\" isNull=\\\"False\\\"> MON WKAC<\\/result><result column=\\\"BinDetails\\\" isNull=\\\"False\\\">240D:DV08; MON WKAC!2026-10-19#131<\\/result><result column=\\\"BinCountBrown\\\" isNull=\\\"False\\\">NoBin;0<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"name\\\" isNull=\\\"False\\\">1772034<\\/result><result column=\\\"label\\\" isNull=\\\"False\\\">Green wheelie bin<\\/result><result column=\\\"IsAssisted\\\" isNull=\\\"False\\\">false<\\/result><result column=\\\"ServiceItemID\\\" isNull=\\\"False\\\">150<\\/result><result column=\\\"ServiceItemName\\\" isNull=\\\"False\\\">240G<\\/result><result column=\\\"Quantity\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"RoundSchedule\\\" isNull=\\\"False\\\">RV08<\\/result><result column=\\\"NextCollectionDate\\\" isNull=\\\"False\\\">2026-10-12T00:00:00<\\/result><result column=\\\"ScheduleName\\\" isNull=\\\"False\\\"> MON WKBD<\\/result><result column=\\\"BinDetails\\\" isNull=\\\"False\\\">240G:RV08; MON WKBD!2026-10-12#150<\\/result><result column=\\\"BinCountBrown\\\" isNull=\\\"False\\\">NoBin;0<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\\n\",\"integration\":{\"id\":\"65e08e60b299d\",\"type\":\"webservice\",\"transformed\":{\"error\":null,\"xml_data\":\"<?xml version=\\\"1.0\\\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"name\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"label\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"IsAssisted\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ServiceItemID\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ServiceItemName\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Quantity\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RoundSchedule\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"NextCollectionDate\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ScheduleName\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"BinDetails\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"BinCountBrown\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"name\\\" isNull=\\\"False\\\">1747887<\\/result><result column=\\\"label\\\" isNull=\\\"False\\\">Grey wheelie bin<\\/result><result column=\\\"IsAssisted\\\" isNull=\\\"False\\\">false<\\/result><result column=\\\"ServiceItemID\\\" isNull=\\\"False\\\">131<\\/result><result column=\\\"ServiceItemName\\\" isNull=\\\"False\\\">240D<\\/result><result column=\\\"Quantity\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"RoundSchedule\\\" isNull=\\\"False\\\">DV08<\\/result><result column=\\\"NextCollectionDate\\\" isNull=\\\"False\\\">2026-10-19T00:00:00<\\/result><result column=\\\"ScheduleName\\\" isNull=\\\"False\\\"> MON WKAC<\\/result><result column=\\\"BinDetails\\\" isNull=\\\"False\\\">240D:DV08; MON WKAC!2026-10-19#131<\\/result><result column=\\\"BinCountBrown\\\" isNull=\\\"False\\\">NoBin;0<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"name\\\" isNull=\\\"False\\\">1772034<\\/result><result column=\\\"label\\\" isNull=\\\"False\\\">Green wheelie bin<\\/result><result column=\\\"IsAssisted\\\" isNull=\\\"False\\\">false<\\/result><result column=\\\"ServiceItemID\\\" isNull=\\\"False\\\">150<\\/result><result column=\\\"ServiceItemName\\\" isNull=\\\"False\\\">240G<\\/result><result column=\\\"Quantity\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"RoundSchedule\\\" isNull=\\\"False\\\">RV08<\\/result><result column=\\\"NextCollectionDate\\\" isNull=\\\"False\\\">2026-10-12T00:00:00<\\/result><result column=\\\"ScheduleName\\\" isNull=\\\"False\\\"> MON WKBD<\\/result><result column=\\\"BinDetails\\\" isNull=\\\"False\\\">240G:RV08; MON WKBD!2026-10-12#150<\\/result><result column=\\\"BinCountBrown\\\" isNull=\\\"False\\\">NoBin;0<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"1747887\":{\"name\":\"1747887\",\"label\":\"Grey wheelie bin\",\"IsAssisted\":\"false\",\"ServiceItemID\":\"131\",\"ServiceItemName\":\"240D\",\"Quantity\":\"1\",\"RoundSchedule\":\"DV08\",\"NextCollectionDate\":\"2026-10-19T00:00:00\",\"ScheduleName\":\" MON WKAC\",\"BinDetails\":\"240D:DV08; MON WKAC!2026-10-19#131\",\"BinCountBrown\":\"NoBin;0\"},\"1772034\":{\"name\":\"1772034\",\"label\":\"Green wheelie bin\",\"IsAssisted\":\"false\",\"ServiceItemID\":\"150\",\"ServiceItemName\":\"240G\",\"Quantity\":\"1\",\"RoundSchedule\":\"RV08\",\"NextCollectionDate\":\"2026-10-12T00:00:00\",\"ScheduleName\":\" MON WKBD\",\"BinDetails\":\"240G:RV08; MON WKBD!2026-10-12#150\",\"BinCountBrown\":\"NoBin;0\"}},\"fields_data\":{\"name\":{\"type\":\"varchar\",\"name\":\"name\"},\"label\":{\"type\":\"varchar\",\"name\":\"label\"},\"IsAssisted\":{\"type\":\"varchar\",\"name\":\"IsAssisted\"},\"ServiceItemID\":{\"type\":\"varchar\",\"name\":\"ServiceItemID\"},\"ServiceItemName\":{\"type\":\"varchar\",\"name\":\"ServiceItemName\"},\"Quantity\":{\"type\":\"varchar\",\"name\":\"Quantity\"},\"RoundSchedule\":{\"type\":\"varchar\",\"name\":\"RoundSchedule\"},\"NextCollectionDate\":{\"type\":\"varchar\",\"name\":\"NextCollectionDate\"},\"ScheduleName\":{\"type\":\"varchar\",\"name\":\"ScheduleName\"},\"BinDetails\":{\"type\":\"varchar\",\"name\":\"BinDetails\"},\"BinCountBrown\":{\"type\":\"varchar\",\"name\":\"BinCountBrown\"}},\"select_data\":[{\"label\":\"Grey wheelie bin\",\"value\":\"1747887\"},{\"label\":\"Green wheelie bin\",\"value\":\"1772034\"}],\"meta_data\":[],\"results_page\":null,\"post_transform\":null,\"pre_transform\":null},\"tokens\":[\"{PowerSuiteApi_url}\",\"{PowerSuiteApi_username}\",\"{PowerSuiteApi_password}\",\"{validatedUPRN}\",\"{current_datetime}\"],\"runtimes\":{\"integration\":{\"template\":\"12ms\",\"lim\":\"11ms\",\"webservice\":\"416ms\"},\"api\":\"416ms\",\"lim\":\"11ms\"},\"log_id\":\"15980907-2bed-482b-9383-8d753b22548d\"},\"hash\":\"D2CF99BBBB09B931F77BC6B825A0C3F3D4C229BD199279632A342D393C97BAE6\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup?id=65e08e60b299d&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278428378&sid=3e6164d8fc5d75c6f19083823578e6a2"
+   }
+  }
+ ],
+ "golden": [
+  [
+   "2026-10-12",
+   "Green wheelie bin"
+  ],
+  [
+   "2026-10-19",
+   "Grey wheelie bin"
+  ]
+ ],
+ "params": {
+  "postcode": "HD9 7HA",
+  "uprn": "83074265"
+ },
+ "recorded": "2026-10-06"
+}

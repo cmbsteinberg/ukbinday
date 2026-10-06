@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from datetime import date, datetime, timedelta
-from time import time_ns
 from typing import Any
 
 from api.councils._base import (
@@ -13,10 +12,14 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
+    Transport,
     UpstreamError,
 )
+from api.councils._platforms.achieveforms import init_session, rows, run_lookup
 
-_BASE_URL = "https://my.kirklees.gov.uk"
+_HOSTNAME = "my.kirklees.gov.uk"
+_BASE_URL = f"https://{_HOSTNAME}"
+_API_URL = f"{_BASE_URL}/apibroker/runLookup"
 _SERVICE_PATH = "/service/Bins_and_recycling___Manage_your_bins"
 _FORM_ID = "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6"
 
@@ -37,26 +40,17 @@ _HEADERS = {
 }
 
 
-async def _run_lookup(
-    http: Http, sid: str, lookup_id: str, payload: dict[str, Any]
+async def _lookup(
+    http: Http, sid: str, lookup_id: str, form_values: dict[str, Any]
 ) -> dict[str, Any]:
-    timestamp = time_ns() // 1_000_000
-    url = (
-        f"{_BASE_URL}/apibroker/runLookup"
-        f"?id={lookup_id}&repeat_against=&noRetry=false"
-        f"&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self"
-        f"&_={timestamp}&sid={sid}"
+    return await run_lookup(
+        http, _API_URL, sid, lookup_id, form_values, body={"formId": _FORM_ID}
     )
-    response = await http.post(url, json=payload, timeout=30)
-    return response.json()
 
 
-def _rows(data: dict[str, Any]) -> dict[str, Any]:
-    """Normalise rows_data to a dict regardless of whether the API returned a list or dict."""
-    raw = data.get("integration", {}).get("transformed", {}).get("rows_data", {})
-    if isinstance(raw, dict):
-        return raw
-    return {str(row.get("name", index)): row for index, row in enumerate(raw)}
+def _rows(reply: dict[str, Any]) -> dict[str, Any]:
+    """rows_data keyed by row (a list answer is keyed by each row's `name`)."""
+    return rows(reply, key="name")
 
 
 class Kirklees(Scraper):
@@ -71,36 +65,23 @@ class Kirklees(Scraper):
     )
     requires = frozenset({"uprn", "postcode"})
     headers = _HEADERS
-    transport = __import__("api.councils._base", fromlist=["Transport"]).Transport.CURL_CFFI
+    transport = Transport.CURL_CFFI
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn")
         postcode = address.need("postcode")
 
-        timestamp = time_ns() // 1_000_000
-        await http.get(
-            f"{_BASE_URL}/apibroker/domain/my.kirklees.gov.uk?_={timestamp}",
-            timeout=30,
-        )
-
-        auth_url = (
-            f"{_BASE_URL}/authapi/isauthenticated"
-            f"?uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins"
-            f"&hostname=my.kirklees.gov.uk&withCredentials=true"
-        )
-        sid_response = await http.get(auth_url, timeout=30)
-        sid = sid_response.json().get("auth-session")
-        if not sid:
-            raise UpstreamError("Kirklees API: failed to obtain session ID")
-
-        address_data = await _run_lookup(
+        sid = await init_session(
             http,
-            sid,
-            _LOOKUP_ADDRESS,
-            {
-                "formId": _FORM_ID,
-                "formValues": {"Section 1": {"Postcode": {"value": postcode}}},
-            },
+            None,
+            f"{_BASE_URL}/authapi/isauthenticated",
+            _HOSTNAME,
+            uri=f"{_BASE_URL}{_SERVICE_PATH}",
+            domain_url=f"{_BASE_URL}/apibroker/domain/{_HOSTNAME}",
+        )
+
+        address_data = await _lookup(
+            http, sid, _LOOKUP_ADDRESS, {"Section 1": {"Postcode": {"value": postcode}}}
         )
         address_rows = _rows(address_data)
         if uprn not in address_rows:
@@ -156,15 +137,7 @@ class Kirklees(Scraper):
             },
         }
 
-        property_data = await _run_lookup(
-            http,
-            sid,
-            _LOOKUP_PROP_TYPE,
-            {
-                "formId": _FORM_ID,
-                "formValues": {"Search": search_section},
-            },
-        )
+        property_data = await _lookup(http, sid, _LOOKUP_PROP_TYPE, {"Search": search_section})
         property_rows = _rows(property_data)
         gov_category = ""
         property_type = "Residential"
@@ -184,33 +157,22 @@ class Kirklees(Scraper):
         search_section["GovDeliveryCategorye"] = {"value": gov_category}
         search_section["PropertyType"] = {"value": property_type}
 
-        await _run_lookup(
-            http,
-            sid,
-            _LOOKUP_UPRN_VALID,
-            {
-                "formId": _FORM_ID,
-                "formValues": {"Search": search_section},
-            },
-        )
+        await _lookup(http, sid, _LOOKUP_UPRN_VALID, {"Search": search_section})
 
         today = date.today()
         from_date = (today - timedelta(days=7)).strftime("%d/%m/%Y")
         to_date = (today + timedelta(days=28)).strftime("%d/%m/%Y")
 
-        collection_data = await _run_lookup(
+        collection_data = await _lookup(
             http,
             sid,
             _LOOKUP_COLLECTIONS,
             {
-                "formId": _FORM_ID,
-                "formValues": {
-                    "Search": search_section,
-                    "Your bins": {
-                        "GovDeliveryCategorye": {"value": gov_category},
-                        "NextCollectionFromDate": {"value": from_date},
-                        "NextCollectionToDate": {"value": to_date},
-                    },
+                "Search": search_section,
+                "Your bins": {
+                    "GovDeliveryCategorye": {"value": gov_category},
+                    "NextCollectionFromDate": {"value": from_date},
+                    "NextCollectionToDate": {"value": to_date},
                 },
             },
         )

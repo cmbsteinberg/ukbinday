@@ -1,0 +1,639 @@
+{
+ "exchanges": [
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": {
+     "_": 1791278430033
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/domain/my.kirklees.gov.uk"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=4vhvFMt0TeO0x53xRFWNMrZFTbsHj/V2wQfrCsAfTYjjPsXPUEkIShHHw4lHKeRY/4cQqJqjnynz1UPQ/XzALGobj0j9annYborSyEEmQYhNfPzLax2oLCuMDhiT; Expires=Tue, 13 Oct 2026 09:20:30 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=4vhvFMt0TeO0x53xRFWNMrZFTbsHj/V2wQfrCsAfTYjjPsXPUEkIShHHw4lHKeRY/4cQqJqjnynz1UPQ/XzALGobj0j9annYborSyEEmQYhNfPzLax2oLCuMDhiT; Expires=Tue, 13 Oct 2026 09:20:30 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"host\":\"my.kirklees.gov.uk\",\"domain_id\":\"f91b9914-0e62-11e4-9645-22000a600e0c\",\"ga_id\":\"UA-98467549-1\",\"customer_id\":\"89d52200-ed15-4ffb-8e66-84ffc1a0644e\",\"name\":\"kirklees\",\"domain_language\":\"en\",\"min_ie_version\":9,\"product\":\"Self-Dash\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/domain/my.kirklees.gov.uk?_=1791278430033"
+   }
+  },
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": {
+     "hostname": "my.kirklees.gov.uk",
+     "uri": "https://my.kirklees.gov.uk/service/Bins_and_recycling___Manage_your_bins",
+     "withCredentials": "true"
+    },
+    "url": "https://my.kirklees.gov.uk/authapi/isauthenticated"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=utf-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=KTzhz8xUoxbZ8Q8oPmReLh7eLhm5352gHxG9thYtpoDVp0dLls0E5vpsYsIm5hnw8cmhpOx2cZiMCU4OanD2fmrsyJEL7dD0siZZd+hRrB1CAHsvMB5uJ4GlbaI3; Expires=Tue, 13 Oct 2026 09:20:30 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=KTzhz8xUoxbZ8Q8oPmReLh7eLhm5352gHxG9thYtpoDVp0dLls0E5vpsYsIm5hnw8cmhpOx2cZiMCU4OanD2fmrsyJEL7dD0siZZd+hRrB1CAHsvMB5uJ4GlbaI3; Expires=Tue, 13 Oct 2026 09:20:30 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ],
+     [
+      "set-cookie",
+      "PHPSESSID=os4127eeje0mmj2sm21hpdht9s; path=/; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSIONCHECK=53cc3783bfe7a7852986edfc584c4c5984ad08c82ae8a12a72d092a629c34633acc5304c188aeb1dc9d2c63007bfd5e872303cb6a8246ece50da22c10d27a584; expires=Tue, 06-Oct-2026 15:20:30 GMT; Max-Age=21600; path=/api/; domain=my.kirklees.gov.uk; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SimpleSAMLSessionID=564fb11604cd400bc7572f3a25defce4; path=/; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSfsauthsession=0; path=/; domain=.kirklees.gov.uk; secure; HttpOnly"
+     ]
+    ],
+    "status": 200,
+    "text": "\n    {\"auth-session\":\"15f6793422e2c382b0af70568bf51925\",\"cookie-domain\":\".kirklees.gov.uk\",\"is_authenticated\":false,\"providers\":[{\"name\":\"Azure___Login__self_\",\"displayname\":\"Azure - Login (self)\",\"image\":\"https:\\/\\/fs-filestore-eu.s3-eu-west-1.amazonaws.com\\/resources\\/azure.png\",\"supportonly\":\"true\",\"mapping\":\"{\\\"username\\\" : \\\"sAMAccountName\\\",\\\"email\\\" : \\\"emailaddress\\\",\\\"memberof\\\" :\\\"memberof\\\",\\\"name\\\":\\\"displayName\\\",\\\"first_name\\\" : \\\"givenName\\\",\\\"last_name\\\" :\\\"surname\\\",\\\"groupof\\\" :\\\"groups\\\"}\",\"url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/auth?provider=Azure___Login__self_&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\"},{\"name\":\"google_admin\",\"displayname\":\"Firmstep Admin\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Googlethumb.jpg\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/auth?provider=google_admin&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\"},{\"name\":\"google_fam\",\"displayname\":\"Firmstep Google FAM\",\"image\":\"\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Logo_icon_round_100px.png\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/auth?provider=google_fam&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\"},{\"name\":\"ssauth\",\"displayname\":\"Self-service\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/network.png\",\"url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/auth?provider=ssauth&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\",\"register_url\":\"https:\\/\\/my.kirklees.gov.uk\\/authapi\\/register?provider=ssauth&uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins\"}]}",
+    "url": "https://my.kirklees.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins&hostname=my.kirklees.gov.uk&withCredentials=true"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6",
+      "formValues": {
+       "Section 1": {
+        "Postcode": {
+         "value": "HD8 8NA"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278430175,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "58049013ca4c9",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "15f6793422e2c382b0af70568bf51925"
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "UTF-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=yH0Iki2nce2EnceIlHE/+XIz14kJImDJ14AYV6wU0t+NrDAHyiyyX320PCO4gXZe+dAw9/41678Rnjq0B9jsy4EwjV6a30Uoq70hqtgPx1+ifFlwFM+MPdwm7d5q; Expires=Tue, 13 Oct 2026 09:20:30 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=yH0Iki2nce2EnceIlHE/+XIz14kJImDJ14AYV6wU0t+NrDAHyiyyX320PCO4gXZe+dAw9/41678Rnjq0B9jsy4EwjV6a30Uoq70hqtgPx1+ifFlwFM+MPdwm7d5q; Expires=Tue, 13 Oct 2026 09:20:30 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<?xml version=\\\"1.0\\\"?>\\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"PropertyReference\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Premise\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"subBuilding\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Street\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Location\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Town\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Postcode\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"name\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"display\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Easting\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Northing\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020000013<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Barncliffe House<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Barncliffe Hill<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83196971<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Barncliffe House,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421509<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410103<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020000014<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Barncliffe Hill Cottage<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Barncliffe Hill<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83196972<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Barncliffe Hill Cottage,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421504<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410117<\\/result><\\/Row><Row id=\\\"2\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020000011<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Dell Cottage<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Barncliffe Hill<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83188709<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Dell Cottage,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421522<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410105<\\/result><\\/Row><Row id=\\\"3\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">33880000011<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">The Old Barn<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83194788<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">The Old Barn Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421208<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410256<\\/result><\\/Row><Row id=\\\"4\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">PROPNOTFOUND<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83194784<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421208<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410256<\\/result><\\/Row><Row id=\\\"5\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">PROPNOTFOUND<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83200642<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421945<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410327<\\/result><\\/Row><Row id=\\\"6\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">PROPNOTFOUND<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">West View House<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83200643<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">West View House Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421939<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410317<\\/result><\\/Row><Row id=\\\"7\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">11610000031<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">Cliffe Hill Barn<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">10094969405<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Cliffe Hill Barn Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421945<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410327<\\/result><\\/Row><Row id=\\\"8\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">11610000041<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">Cliffe Hill Cottage<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83231068<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Cliffe Hill Cottage Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421954<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410334<\\/result><\\/Row><Row id=\\\"9\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">11610000042<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">Cliffe Hill Farm House<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83200644<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Cliffe Hill Farm House Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421961<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410336<\\/result><\\/Row><Row id=\\\"10\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020000040<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mount Pleasant Farm<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Lower Cumberworth<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">200003790199<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mount Pleasant Farm,  Shelley Woodhouse Lane, Lower Cumberworth, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421698<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410205<\\/result><\\/Row><Row id=\\\"11\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">34920000010<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83194785<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421214<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410250<\\/result><\\/Row><Row id=\\\"12\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">34920000020<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">2<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83194786<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">2 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421214<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410250<\\/result><\\/Row><Row id=\\\"13\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">34920000030<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">3 Lower Ozzings Farmhouse<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83193545<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">3 Lower Ozzings Farmhouse Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421206<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410242<\\/result><\\/Row><Row id=\\\"14\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">11610000050<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">5<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">10094970663<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">5 Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421945<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410307<\\/result><\\/Row><Row id=\\\"15\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020001000<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">The Bungalow, 17<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Barncliffe Hill<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83187785<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">The Bungalow, 17 Barncliffe Hill, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421471<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410110<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\\n\",\"integration\":{\"id\":\"58049013ca4c9\",\"type\":\"webservice\",\"transformed\":{\"error\":null,\"xml_data\":\"<?xml version=\\\"1.0\\\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"PropertyReference\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Premise\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"subBuilding\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Street\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Location\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Town\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Postcode\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"name\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"display\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Easting\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Northing\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020000013<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Barncliffe House<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Barncliffe Hill<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83196971<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Barncliffe House,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421509<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410103<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020000014<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Barncliffe Hill Cottage<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Barncliffe Hill<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83196972<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Barncliffe Hill Cottage,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421504<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410117<\\/result><\\/Row><Row id=\\\"2\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020000011<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Dell Cottage<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Barncliffe Hill<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83188709<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Dell Cottage,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421522<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410105<\\/result><\\/Row><Row id=\\\"3\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">33880000011<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">The Old Barn<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83194788<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">The Old Barn Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421208<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410256<\\/result><\\/Row><Row id=\\\"4\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">PROPNOTFOUND<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83194784<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421208<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410256<\\/result><\\/Row><Row id=\\\"5\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">PROPNOTFOUND<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83200642<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421945<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410327<\\/result><\\/Row><Row id=\\\"6\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">PROPNOTFOUND<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">West View House<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83200643<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">West View House Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421939<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410317<\\/result><\\/Row><Row id=\\\"7\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">11610000031<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">Cliffe Hill Barn<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">10094969405<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Cliffe Hill Barn Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421945<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410327<\\/result><\\/Row><Row id=\\\"8\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">11610000041<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">Cliffe Hill Cottage<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83231068<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Cliffe Hill Cottage Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421954<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410334<\\/result><\\/Row><Row id=\\\"9\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">11610000042<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">Cliffe Hill Farm House<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83200644<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Cliffe Hill Farm House Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421961<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410336<\\/result><\\/Row><Row id=\\\"10\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020000040<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Mount Pleasant Farm<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Lower Cumberworth<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">200003790199<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">Mount Pleasant Farm,  Shelley Woodhouse Lane, Lower Cumberworth, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421698<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410205<\\/result><\\/Row><Row id=\\\"11\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">34920000010<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83194785<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421214<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410250<\\/result><\\/Row><Row id=\\\"12\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">34920000020<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">2<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83194786<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">2 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421214<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410250<\\/result><\\/Row><Row id=\\\"13\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">34920000030<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Lower Ozzings<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">3 Lower Ozzings Farmhouse<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Long Moor Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83193545<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">3 Lower Ozzings Farmhouse Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421206<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410242<\\/result><\\/Row><Row id=\\\"14\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">11610000050<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">Cliffe Hill<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"False\\\">5<\\/result><result column=\\\"Street\\\" isNull=\\\"False\\\">Shelley Woodhouse Lane<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">10094970663<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">5 Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421945<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410307<\\/result><\\/Row><Row id=\\\"15\\\"><result column=\\\"PropertyReference\\\" isNull=\\\"False\\\">03020001000<\\/result><result column=\\\"Premise\\\" isNull=\\\"False\\\">The Bungalow, 17<\\/result><result column=\\\"subBuilding\\\" isNull=\\\"True\\\"\\/><result column=\\\"Street\\\" isNull=\\\"False\\\">Barncliffe Hill<\\/result><result column=\\\"Location\\\" isNull=\\\"False\\\">Shelley<\\/result><result column=\\\"Town\\\" isNull=\\\"False\\\">Huddersfield<\\/result><result column=\\\"Postcode\\\" isNull=\\\"False\\\">HD8 8NA<\\/result><result column=\\\"name\\\" isNull=\\\"False\\\">83187785<\\/result><result column=\\\"display\\\" isNull=\\\"False\\\">The Bungalow, 17 Barncliffe Hill, Shelley, Huddersfield, HD8 8NA<\\/result><result column=\\\"Easting\\\" isNull=\\\"False\\\">421471<\\/result><result column=\\\"Northing\\\" isNull=\\\"False\\\">410110<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"83196971\":{\"PropertyReference\":\"03020000013\",\"Premise\":\"Barncliffe House\",\"subBuilding\":\"\",\"Street\":\"Barncliffe Hill\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83196971\",\"display\":\"Barncliffe House,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421509\",\"Northing\":\"410103\"},\"83196972\":{\"PropertyReference\":\"03020000014\",\"Premise\":\"Barncliffe Hill Cottage\",\"subBuilding\":\"\",\"Street\":\"Barncliffe Hill\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83196972\",\"display\":\"Barncliffe Hill Cottage,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421504\",\"Northing\":\"410117\"},\"83188709\":{\"PropertyReference\":\"03020000011\",\"Premise\":\"Dell Cottage\",\"subBuilding\":\"\",\"Street\":\"Barncliffe Hill\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83188709\",\"display\":\"Dell Cottage,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421522\",\"Northing\":\"410105\"},\"83194788\":{\"PropertyReference\":\"33880000011\",\"Premise\":\"Lower Ozzings\",\"subBuilding\":\"The Old Barn\",\"Street\":\"Long Moor Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83194788\",\"display\":\"The Old Barn Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421208\",\"Northing\":\"410256\"},\"83194784\":{\"PropertyReference\":\"PROPNOTFOUND\",\"Premise\":\"Lower Ozzings\",\"subBuilding\":\"\",\"Street\":\"Long Moor Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83194784\",\"display\":\"Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421208\",\"Northing\":\"410256\"},\"83200642\":{\"PropertyReference\":\"PROPNOTFOUND\",\"Premise\":\"Cliffe Hill\",\"subBuilding\":\"\",\"Street\":\"Shelley Woodhouse Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83200642\",\"display\":\"Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421945\",\"Northing\":\"410327\"},\"83200643\":{\"PropertyReference\":\"PROPNOTFOUND\",\"Premise\":\"Cliffe Hill\",\"subBuilding\":\"West View House\",\"Street\":\"Shelley Woodhouse Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83200643\",\"display\":\"West View House Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421939\",\"Northing\":\"410317\"},\"10094969405\":{\"PropertyReference\":\"11610000031\",\"Premise\":\"Cliffe Hill\",\"subBuilding\":\"Cliffe Hill Barn\",\"Street\":\"Shelley Woodhouse Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"10094969405\",\"display\":\"Cliffe Hill Barn Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421945\",\"Northing\":\"410327\"},\"83231068\":{\"PropertyReference\":\"11610000041\",\"Premise\":\"Cliffe Hill\",\"subBuilding\":\"Cliffe Hill Cottage\",\"Street\":\"Shelley Woodhouse Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83231068\",\"display\":\"Cliffe Hill Cottage Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421954\",\"Northing\":\"410334\"},\"83200644\":{\"PropertyReference\":\"11610000042\",\"Premise\":\"Cliffe Hill\",\"subBuilding\":\"Cliffe Hill Farm House\",\"Street\":\"Shelley Woodhouse Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83200644\",\"display\":\"Cliffe Hill Farm House Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421961\",\"Northing\":\"410336\"},\"200003790199\":{\"PropertyReference\":\"03020000040\",\"Premise\":\"Mount Pleasant Farm\",\"subBuilding\":\"\",\"Street\":\"Shelley Woodhouse Lane\",\"Location\":\"Lower Cumberworth\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"200003790199\",\"display\":\"Mount Pleasant Farm,  Shelley Woodhouse Lane, Lower Cumberworth, Huddersfield, HD8 8NA\",\"Easting\":\"421698\",\"Northing\":\"410205\"},\"83194785\":{\"PropertyReference\":\"34920000010\",\"Premise\":\"Lower Ozzings\",\"subBuilding\":\"1\",\"Street\":\"Long Moor Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83194785\",\"display\":\"1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421214\",\"Northing\":\"410250\"},\"83194786\":{\"PropertyReference\":\"34920000020\",\"Premise\":\"Lower Ozzings\",\"subBuilding\":\"2\",\"Street\":\"Long Moor Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83194786\",\"display\":\"2 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421214\",\"Northing\":\"410250\"},\"83193545\":{\"PropertyReference\":\"34920000030\",\"Premise\":\"Lower Ozzings\",\"subBuilding\":\"3 Lower Ozzings Farmhouse\",\"Street\":\"Long Moor Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83193545\",\"display\":\"3 Lower Ozzings Farmhouse Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421206\",\"Northing\":\"410242\"},\"10094970663\":{\"PropertyReference\":\"11610000050\",\"Premise\":\"Cliffe Hill\",\"subBuilding\":\"5\",\"Street\":\"Shelley Woodhouse Lane\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"10094970663\",\"display\":\"5 Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421945\",\"Northing\":\"410307\"},\"83187785\":{\"PropertyReference\":\"03020001000\",\"Premise\":\"The Bungalow, 17\",\"subBuilding\":\"\",\"Street\":\"Barncliffe Hill\",\"Location\":\"Shelley\",\"Town\":\"Huddersfield\",\"Postcode\":\"HD8 8NA\",\"name\":\"83187785\",\"display\":\"The Bungalow, 17 Barncliffe Hill, Shelley, Huddersfield, HD8 8NA\",\"Easting\":\"421471\",\"Northing\":\"410110\"}},\"fields_data\":{\"PropertyReference\":{\"type\":\"varchar\",\"name\":\"PropertyReference\"},\"Premise\":{\"type\":\"varchar\",\"name\":\"Premise\"},\"subBuilding\":{\"type\":\"varchar\",\"name\":\"subBuilding\"},\"Street\":{\"type\":\"varchar\",\"name\":\"Street\"},\"Location\":{\"type\":\"varchar\",\"name\":\"Location\"},\"Town\":{\"type\":\"varchar\",\"name\":\"Town\"},\"Postcode\":{\"type\":\"varchar\",\"name\":\"Postcode\"},\"name\":{\"type\":\"varchar\",\"name\":\"name\"},\"display\":{\"type\":\"varchar\",\"name\":\"display\"},\"Easting\":{\"type\":\"varchar\",\"name\":\"Easting\"},\"Northing\":{\"type\":\"varchar\",\"name\":\"Northing\"}},\"select_data\":[{\"label\":\"Barncliffe House,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83196971\"},{\"label\":\"Barncliffe Hill Cottage,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83196972\"},{\"label\":\"Dell Cottage,  Barncliffe Hill, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83188709\"},{\"label\":\"The Old Barn Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83194788\"},{\"label\":\"Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83194784\"},{\"label\":\"Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83200642\"},{\"label\":\"West View House Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83200643\"},{\"label\":\"Cliffe Hill Barn Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"10094969405\"},{\"label\":\"Cliffe Hill Cottage Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83231068\"},{\"label\":\"Cliffe Hill Farm House Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83200644\"},{\"label\":\"Mount Pleasant Farm,  Shelley Woodhouse Lane, Lower Cumberworth, Huddersfield, HD8 8NA\",\"value\":\"200003790199\"},{\"label\":\"1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83194785\"},{\"label\":\"2 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83194786\"},{\"label\":\"3 Lower Ozzings Farmhouse Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83193545\"},{\"label\":\"5 Cliffe Hill,  Shelley Woodhouse Lane, Shelley, Huddersfield, HD8 8NA\",\"value\":\"10094970663\"},{\"label\":\"The Bungalow, 17 Barncliffe Hill, Shelley, Huddersfield, HD8 8NA\",\"value\":\"83187785\"}],\"meta_data\":[],\"results_page\":null,\"post_transform\":null,\"pre_transform\":null},\"tokens\":[\"{Postcode}\"],\"runtimes\":{\"integration\":{\"template\":\"14ms\",\"lim\":\"12ms\",\"webservice\":\"237ms\"},\"api\":\"237ms\",\"lim\":\"12ms\"},\"log_id\":null},\"hash\":\"771E6BEE107609EC3C796F708020E83608E5026B46641121FE6B30F9BEC81BAB\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup?id=58049013ca4c9&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278430175&sid=15f6793422e2c382b0af70568bf51925"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6",
+      "formValues": {
+       "Search": {
+        "PowerSuite_Available": {
+         "value": "True"
+        },
+        "PowerSuite_Available1": {
+         "value": "True"
+        },
+        "customerAddress": {
+         "value": {
+          "Section 1": {
+           "House": {
+            "value": "Lower Ozzings"
+           },
+           "List": {
+            "value": "83194785"
+           },
+           "Postcode": {
+            "value": "HD8 8NA"
+           },
+           "PropertyReference": {
+            "value": "34920000010"
+           },
+           "Street": {
+            "value": "Long Moor Lane"
+           },
+           "Town": {
+            "value": "Huddersfield"
+           },
+           "UPRN": {
+            "value": "83194785"
+           },
+           "flat": {
+            "value": ""
+           },
+           "fullAddress": {
+            "value": "1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA"
+           },
+           "house": {
+            "value": ""
+           },
+           "lengthPostCode": {
+            "value": "7"
+           },
+           "postcode": {
+            "value": ""
+           },
+           "searchForAddress": {
+            "value": "yes"
+           },
+           "street": {
+            "value": ""
+           },
+           "town": {
+            "value": ""
+           }
+          }
+         }
+        },
+        "flatOrSubBuildingFinal": {
+         "value": ""
+        },
+        "fullAddressFinal": {
+         "value": "1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA"
+        },
+        "houseFinal": {
+         "value": "Lower Ozzings"
+        },
+        "postcodeFinal": {
+         "value": "HD8 8NA"
+        },
+        "productName": {
+         "value": "Self"
+        },
+        "sSection": {
+         "value": "1"
+        },
+        "streetFinal": {
+         "value": "Long Moor Lane"
+        },
+        "suppliedUPRN": {
+         "value": "83194785"
+        },
+        "townFinal": {
+         "value": "Huddersfield"
+        },
+        "uprn2": {
+         "value": "83194785"
+        },
+        "uprnFinal": {
+         "value": "83194785"
+        },
+        "validPropertyFlag": {
+         "value": "yes"
+        },
+        "validatedUPRN": {
+         "value": "83194785"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278430552,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "659c2c2386104",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "15f6793422e2c382b0af70568bf51925"
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "UTF-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=PTUJxpBWkqKWpriax333llBzV6UStrZ4CIm57FV62mYVgzhpDzMmD4dIlQrgu6wtxHPiyS12G9OhzrWI1c4fkG+5eryq4Hx1s1ljhuh4Vv6Rd2EH24CPyBkobHs7; Expires=Tue, 13 Oct 2026 09:20:30 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=PTUJxpBWkqKWpriax333llBzV6UStrZ4CIm57FV62mYVgzhpDzMmD4dIlQrgu6wtxHPiyS12G9OhzrWI1c4fkG+5eryq4Hx1s1ljhuh4Vv6Rd2EH24CPyBkobHs7; Expires=Tue, 13 Oct 2026 09:20:30 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<Responses><RequestResponse id=\\\"6ac4bd5ea661e\\\"><DatabaseResponse><Fields><Field Name=\\\"PropertyType\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"KMC\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"MultiOccupancy\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"GovDeliveryCategorye\\\" Type=\\\"varchar\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"PropertyType\\\" IsNull=\\\"false\\\">Residential<\\/result><result column=\\\"KMC\\\" IsNull=\\\"false\\\">N<\\/result><result column=\\\"MultiOccupancy\\\" IsNull=\\\"false\\\">N<\\/result><result column=\\\"GovDeliveryCategorye\\\" IsNull=\\\"false\\\">D32WED_R32WED<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"integration\":{\"id\":\"659c2c2386104\",\"type\":\"database\",\"transformed\":{\"error\":null,\"xml_data\":\"<Responses><RequestResponse id=\\\"6ac4bd5ea661e\\\"><DatabaseResponse><Fields><Field Name=\\\"PropertyType\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"KMC\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"MultiOccupancy\\\" Type=\\\"varchar\\\" \\/><Field Name=\\\"GovDeliveryCategorye\\\" Type=\\\"varchar\\\" \\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"PropertyType\\\" IsNull=\\\"false\\\">Residential<\\/result><result column=\\\"KMC\\\" IsNull=\\\"false\\\">N<\\/result><result column=\\\"MultiOccupancy\\\" IsNull=\\\"false\\\">N<\\/result><result column=\\\"GovDeliveryCategorye\\\" IsNull=\\\"false\\\">D32WED_R32WED<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"PropertyType\":\"Residential\",\"KMC\":\"N\",\"MultiOccupancy\":\"N\",\"GovDeliveryCategorye\":\"D32WED_R32WED\"}},\"fields_data\":{\"PropertyType\":{\"name\":\"PropertyType\",\"type\":\"varchar\"},\"KMC\":{\"name\":\"KMC\",\"type\":\"varchar\"},\"MultiOccupancy\":{\"name\":\"MultiOccupancy\",\"type\":\"varchar\"},\"GovDeliveryCategorye\":{\"name\":\"GovDeliveryCategorye\",\"type\":\"varchar\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null},\"tokens\":[\"{uprnFinal}\"],\"runtimes\":{\"integration\":{\"template\":\"13ms\",\"lim\":\"12ms\",\"SYSTEM\":\"11ms\",\"database\":\"446ms\"},\"api\":\"446ms\",\"lim\":\"12ms\"},\"log_id\":\"fa9d8294-4080-4e4c-a67d-08c63639b0d9\"},\"hash\":\"63E56EE811737D1988F566D6E945F30A16203759200E31A647186E540D55D4CD\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup?id=659c2c2386104&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278430552&sid=15f6793422e2c382b0af70568bf51925"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6",
+      "formValues": {
+       "Search": {
+        "GovDeliveryCategorye": {
+         "value": "D32WED_R32WED"
+        },
+        "PowerSuite_Available": {
+         "value": "True"
+        },
+        "PowerSuite_Available1": {
+         "value": "True"
+        },
+        "PropertyType": {
+         "value": "Residential"
+        },
+        "binsPropertyType": {
+         "value": {
+          "Section 1": {
+           "GovDeliveryCategorye": {
+            "value": "D32WED_R32WED"
+           },
+           "PropertyType": {
+            "value": "Residential"
+           }
+          }
+         }
+        },
+        "customerAddress": {
+         "value": {
+          "Section 1": {
+           "House": {
+            "value": "Lower Ozzings"
+           },
+           "List": {
+            "value": "83194785"
+           },
+           "Postcode": {
+            "value": "HD8 8NA"
+           },
+           "PropertyReference": {
+            "value": "34920000010"
+           },
+           "Street": {
+            "value": "Long Moor Lane"
+           },
+           "Town": {
+            "value": "Huddersfield"
+           },
+           "UPRN": {
+            "value": "83194785"
+           },
+           "flat": {
+            "value": ""
+           },
+           "fullAddress": {
+            "value": "1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA"
+           },
+           "house": {
+            "value": ""
+           },
+           "lengthPostCode": {
+            "value": "7"
+           },
+           "postcode": {
+            "value": ""
+           },
+           "searchForAddress": {
+            "value": "yes"
+           },
+           "street": {
+            "value": ""
+           },
+           "town": {
+            "value": ""
+           }
+          }
+         }
+        },
+        "flatOrSubBuildingFinal": {
+         "value": ""
+        },
+        "fullAddressFinal": {
+         "value": "1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA"
+        },
+        "houseFinal": {
+         "value": "Lower Ozzings"
+        },
+        "postcodeFinal": {
+         "value": "HD8 8NA"
+        },
+        "productName": {
+         "value": "Self"
+        },
+        "sSection": {
+         "value": "1"
+        },
+        "streetFinal": {
+         "value": "Long Moor Lane"
+        },
+        "suppliedUPRN": {
+         "value": "83194785"
+        },
+        "townFinal": {
+         "value": "Huddersfield"
+        },
+        "uprn2": {
+         "value": "83194785"
+        },
+        "uprnFinal": {
+         "value": "83194785"
+        },
+        "validPropertyFlag": {
+         "value": "yes"
+        },
+        "validatedUPRN": {
+         "value": "83194785"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278431183,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "631615c4bd3b7",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "15f6793422e2c382b0af70568bf51925"
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "UTF-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=5spceVr1S8OinErDgpxc5Dmg5mE49ANvnBKispz3b18+W8dc4oVo0/C/DOXEBJYirT8JvaIJjK1BQQWD09Q6294xfRZ7KrPy9w0XbA8gHDdmKCRw5DAurb0Mm5fY; Expires=Tue, 13 Oct 2026 09:20:31 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=5spceVr1S8OinErDgpxc5Dmg5mE49ANvnBKispz3b18+W8dc4oVo0/C/DOXEBJYirT8JvaIJjK1BQQWD09Q6294xfRZ7KrPy9w0XbA8gHDdmKCRw5DAurb0Mm5fY; Expires=Tue, 13 Oct 2026 09:20:31 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<?xml version=\\\"1.0\\\"?>\\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"validatedUPRN\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"suppliedUPRN\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"validatedUPRN\\\" isNull=\\\"False\\\">83194785<\\/result><result column=\\\"suppliedUPRN\\\" isNull=\\\"False\\\">83194785<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\\n\",\"integration\":{\"id\":\"631615c4bd3b7\",\"type\":\"webservice\",\"transformed\":{\"error\":null,\"xml_data\":\"<?xml version=\\\"1.0\\\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"validatedUPRN\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"suppliedUPRN\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"validatedUPRN\\\" isNull=\\\"False\\\">83194785<\\/result><result column=\\\"suppliedUPRN\\\" isNull=\\\"False\\\">83194785<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"validatedUPRN\":\"83194785\",\"suppliedUPRN\":\"83194785\"}},\"fields_data\":{\"validatedUPRN\":{\"type\":\"varchar\",\"name\":\"validatedUPRN\"},\"suppliedUPRN\":{\"type\":\"varchar\",\"name\":\"suppliedUPRN\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null,\"post_transform\":null,\"pre_transform\":null},\"tokens\":[\"{MissedBin_url}\",\"{uprn2}\"],\"runtimes\":{\"integration\":{\"template\":\"11ms\",\"lim\":\"11ms\",\"webservice\":\"385ms\"},\"api\":\"385ms\",\"lim\":\"11ms\"},\"log_id\":\"3f2f5982-496b-4632-b545-4355c69b5fa2\"},\"hash\":\"37790874AE87FCD42ADBD294D06C610D941D32960C1BC52250332D699DA73EDE\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup?id=631615c4bd3b7&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278431183&sid=15f6793422e2c382b0af70568bf51925"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formId": "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6",
+      "formValues": {
+       "Search": {
+        "GovDeliveryCategorye": {
+         "value": "D32WED_R32WED"
+        },
+        "PowerSuite_Available": {
+         "value": "True"
+        },
+        "PowerSuite_Available1": {
+         "value": "True"
+        },
+        "PropertyType": {
+         "value": "Residential"
+        },
+        "binsPropertyType": {
+         "value": {
+          "Section 1": {
+           "GovDeliveryCategorye": {
+            "value": "D32WED_R32WED"
+           },
+           "PropertyType": {
+            "value": "Residential"
+           }
+          }
+         }
+        },
+        "customerAddress": {
+         "value": {
+          "Section 1": {
+           "House": {
+            "value": "Lower Ozzings"
+           },
+           "List": {
+            "value": "83194785"
+           },
+           "Postcode": {
+            "value": "HD8 8NA"
+           },
+           "PropertyReference": {
+            "value": "34920000010"
+           },
+           "Street": {
+            "value": "Long Moor Lane"
+           },
+           "Town": {
+            "value": "Huddersfield"
+           },
+           "UPRN": {
+            "value": "83194785"
+           },
+           "flat": {
+            "value": ""
+           },
+           "fullAddress": {
+            "value": "1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA"
+           },
+           "house": {
+            "value": ""
+           },
+           "lengthPostCode": {
+            "value": "7"
+           },
+           "postcode": {
+            "value": ""
+           },
+           "searchForAddress": {
+            "value": "yes"
+           },
+           "street": {
+            "value": ""
+           },
+           "town": {
+            "value": ""
+           }
+          }
+         }
+        },
+        "flatOrSubBuildingFinal": {
+         "value": ""
+        },
+        "fullAddressFinal": {
+         "value": "1 Lower Ozzings,  Long Moor Lane, Shelley, Huddersfield, HD8 8NA"
+        },
+        "houseFinal": {
+         "value": "Lower Ozzings"
+        },
+        "postcodeFinal": {
+         "value": "HD8 8NA"
+        },
+        "productName": {
+         "value": "Self"
+        },
+        "sSection": {
+         "value": "1"
+        },
+        "streetFinal": {
+         "value": "Long Moor Lane"
+        },
+        "suppliedUPRN": {
+         "value": "83194785"
+        },
+        "townFinal": {
+         "value": "Huddersfield"
+        },
+        "uprn2": {
+         "value": "83194785"
+        },
+        "uprnFinal": {
+         "value": "83194785"
+        },
+        "validPropertyFlag": {
+         "value": "yes"
+        },
+        "validatedUPRN": {
+         "value": "83194785"
+        }
+       },
+       "Your bins": {
+        "GovDeliveryCategorye": {
+         "value": "D32WED_R32WED"
+        },
+        "NextCollectionFromDate": {
+         "value": "29/09/2026"
+        },
+        "NextCollectionToDate": {
+         "value": "03/11/2026"
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278431757,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "65e08e60b299d",
+     "log_id": "",
+     "noRetry": "false",
+     "repeat_against": "",
+     "sid": "15f6793422e2c382b0af70568bf51925"
+    },
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "UTF-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=ykGjf5bwQ7ZHbNZvYvLAl6rU/DN9e2gAHmZ5WeO1IyaEkzwK2r5ZlkidSNf60U4sV7tUSLo6jtIOJEt+Pp83+X7QXZZNsyQ1LM94u8f13/Zstpyu+d1Nx9+U6+4g; Expires=Tue, 13 Oct 2026 09:20:31 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=ykGjf5bwQ7ZHbNZvYvLAl6rU/DN9e2gAHmZ5WeO1IyaEkzwK2r5ZlkidSNf60U4sV7tUSLo6jtIOJEt+Pp83+X7QXZZNsyQ1LM94u8f13/Zstpyu+d1Nx9+U6+4g; Expires=Tue, 13 Oct 2026 09:20:31 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<?xml version=\\\"1.0\\\"?>\\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"name\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"label\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"IsAssisted\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ServiceItemID\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ServiceItemName\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Quantity\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RoundSchedule\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"NextCollectionDate\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ScheduleName\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"BinDetails\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"BinCountBrown\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"name\\\" isNull=\\\"False\\\">1416722<\\/result><result column=\\\"label\\\" isNull=\\\"False\\\">Grey wheelie bin<\\/result><result column=\\\"IsAssisted\\\" isNull=\\\"False\\\">false<\\/result><result column=\\\"ServiceItemID\\\" isNull=\\\"False\\\">131<\\/result><result column=\\\"ServiceItemName\\\" isNull=\\\"False\\\">240D<\\/result><result column=\\\"Quantity\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"RoundSchedule\\\" isNull=\\\"False\\\">D32 <\\/result><result column=\\\"NextCollectionDate\\\" isNull=\\\"False\\\">2026-10-07T00:00:00<\\/result><result column=\\\"ScheduleName\\\" isNull=\\\"False\\\"> WED WKAC<\\/result><result column=\\\"BinDetails\\\" isNull=\\\"False\\\">240D:D32 ; WED WKAC!2026-10-07#131<\\/result><result column=\\\"BinCountBrown\\\" isNull=\\\"False\\\">NoBin;0<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"name\\\" isNull=\\\"False\\\">1559879<\\/result><result column=\\\"label\\\" isNull=\\\"False\\\">Green wheelie bin<\\/result><result column=\\\"IsAssisted\\\" isNull=\\\"False\\\">false<\\/result><result column=\\\"ServiceItemID\\\" isNull=\\\"False\\\">150<\\/result><result column=\\\"ServiceItemName\\\" isNull=\\\"False\\\">240G<\\/result><result column=\\\"Quantity\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"RoundSchedule\\\" isNull=\\\"False\\\">R32 <\\/result><result column=\\\"NextCollectionDate\\\" isNull=\\\"False\\\">2026-10-14T00:00:00<\\/result><result column=\\\"ScheduleName\\\" isNull=\\\"False\\\"> WED WKBD<\\/result><result column=\\\"BinDetails\\\" isNull=\\\"False\\\">240G:R32 ; WED WKBD!2026-10-14#150<\\/result><result column=\\\"BinCountBrown\\\" isNull=\\\"False\\\">NoBin;0<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\\n\",\"integration\":{\"id\":\"65e08e60b299d\",\"type\":\"webservice\",\"transformed\":{\"error\":null,\"xml_data\":\"<?xml version=\\\"1.0\\\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"name\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"label\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"IsAssisted\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ServiceItemID\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ServiceItemName\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"Quantity\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RoundSchedule\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"NextCollectionDate\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"ScheduleName\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"BinDetails\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"BinCountBrown\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"name\\\" isNull=\\\"False\\\">1416722<\\/result><result column=\\\"label\\\" isNull=\\\"False\\\">Grey wheelie bin<\\/result><result column=\\\"IsAssisted\\\" isNull=\\\"False\\\">false<\\/result><result column=\\\"ServiceItemID\\\" isNull=\\\"False\\\">131<\\/result><result column=\\\"ServiceItemName\\\" isNull=\\\"False\\\">240D<\\/result><result column=\\\"Quantity\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"RoundSchedule\\\" isNull=\\\"False\\\">D32 <\\/result><result column=\\\"NextCollectionDate\\\" isNull=\\\"False\\\">2026-10-07T00:00:00<\\/result><result column=\\\"ScheduleName\\\" isNull=\\\"False\\\"> WED WKAC<\\/result><result column=\\\"BinDetails\\\" isNull=\\\"False\\\">240D:D32 ; WED WKAC!2026-10-07#131<\\/result><result column=\\\"BinCountBrown\\\" isNull=\\\"False\\\">NoBin;0<\\/result><\\/Row><Row id=\\\"1\\\"><result column=\\\"name\\\" isNull=\\\"False\\\">1559879<\\/result><result column=\\\"label\\\" isNull=\\\"False\\\">Green wheelie bin<\\/result><result column=\\\"IsAssisted\\\" isNull=\\\"False\\\">false<\\/result><result column=\\\"ServiceItemID\\\" isNull=\\\"False\\\">150<\\/result><result column=\\\"ServiceItemName\\\" isNull=\\\"False\\\">240G<\\/result><result column=\\\"Quantity\\\" isNull=\\\"False\\\">1<\\/result><result column=\\\"RoundSchedule\\\" isNull=\\\"False\\\">R32 <\\/result><result column=\\\"NextCollectionDate\\\" isNull=\\\"False\\\">2026-10-14T00:00:00<\\/result><result column=\\\"ScheduleName\\\" isNull=\\\"False\\\"> WED WKBD<\\/result><result column=\\\"BinDetails\\\" isNull=\\\"False\\\">240G:R32 ; WED WKBD!2026-10-14#150<\\/result><result column=\\\"BinCountBrown\\\" isNull=\\\"False\\\">NoBin;0<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"1416722\":{\"name\":\"1416722\",\"label\":\"Grey wheelie bin\",\"IsAssisted\":\"false\",\"ServiceItemID\":\"131\",\"ServiceItemName\":\"240D\",\"Quantity\":\"1\",\"RoundSchedule\":\"D32 \",\"NextCollectionDate\":\"2026-10-07T00:00:00\",\"ScheduleName\":\" WED WKAC\",\"BinDetails\":\"240D:D32 ; WED WKAC!2026-10-07#131\",\"BinCountBrown\":\"NoBin;0\"},\"1559879\":{\"name\":\"1559879\",\"label\":\"Green wheelie bin\",\"IsAssisted\":\"false\",\"ServiceItemID\":\"150\",\"ServiceItemName\":\"240G\",\"Quantity\":\"1\",\"RoundSchedule\":\"R32 \",\"NextCollectionDate\":\"2026-10-14T00:00:00\",\"ScheduleName\":\" WED WKBD\",\"BinDetails\":\"240G:R32 ; WED WKBD!2026-10-14#150\",\"BinCountBrown\":\"NoBin;0\"}},\"fields_data\":{\"name\":{\"type\":\"varchar\",\"name\":\"name\"},\"label\":{\"type\":\"varchar\",\"name\":\"label\"},\"IsAssisted\":{\"type\":\"varchar\",\"name\":\"IsAssisted\"},\"ServiceItemID\":{\"type\":\"varchar\",\"name\":\"ServiceItemID\"},\"ServiceItemName\":{\"type\":\"varchar\",\"name\":\"ServiceItemName\"},\"Quantity\":{\"type\":\"varchar\",\"name\":\"Quantity\"},\"RoundSchedule\":{\"type\":\"varchar\",\"name\":\"RoundSchedule\"},\"NextCollectionDate\":{\"type\":\"varchar\",\"name\":\"NextCollectionDate\"},\"ScheduleName\":{\"type\":\"varchar\",\"name\":\"ScheduleName\"},\"BinDetails\":{\"type\":\"varchar\",\"name\":\"BinDetails\"},\"BinCountBrown\":{\"type\":\"varchar\",\"name\":\"BinCountBrown\"}},\"select_data\":[{\"label\":\"Grey wheelie bin\",\"value\":\"1416722\"},{\"label\":\"Green wheelie bin\",\"value\":\"1559879\"}],\"meta_data\":[],\"results_page\":null,\"post_transform\":null,\"pre_transform\":null},\"tokens\":[\"{PowerSuiteApi_url}\",\"{PowerSuiteApi_username}\",\"{PowerSuiteApi_password}\",\"{validatedUPRN}\",\"{current_datetime}\"],\"runtimes\":{\"integration\":{\"template\":\"12ms\",\"lim\":\"10ms\",\"webservice\":\"350ms\"},\"api\":\"350ms\",\"lim\":\"10ms\"},\"log_id\":\"361fe4b5-8fc3-4ddb-9718-23f3167a4b02\"},\"hash\":\"4DC59F08D8C60A501BD509DAE892CB18DA52B7A727A14E040280E0D7EECCBE3F\"}",
+    "url": "https://my.kirklees.gov.uk/apibroker/runLookup?id=65e08e60b299d&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278431757&sid=15f6793422e2c382b0af70568bf51925"
+   }
+  }
+ ],
+ "golden": [
+  [
+   "2026-10-07",
+   "Grey wheelie bin"
+  ],
+  [
+   "2026-10-14",
+   "Green wheelie bin"
+  ]
+ ],
+ "params": {
+  "postcode": "HD8 8NA",
+  "uprn": "83194785"
+ },
+ "recorded": "2026-10-06"
+}
