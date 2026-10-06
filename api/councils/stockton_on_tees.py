@@ -18,6 +18,7 @@ from api.councils._base import (
     Scraper,
     Transport,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -96,11 +97,7 @@ class StocktonOnTees(Scraper):
 
         r = await http.post(form_url, data=form_data, timeout=30)
         page = soup(r.text)
-        script = page.find("script", string=_FORM_DATA_PATTERN)
-        if not isinstance(script, Tag):
-            raise UpstreamError(
-                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2FormData in response"
-            )
+        script = find_tag(page, "script", string=_FORM_DATA_PATTERN, what="Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2FormData in response")
         match = _FORM_DATA_PATTERN.search(script.get_text())
         if not match:
             raise UpstreamError(
