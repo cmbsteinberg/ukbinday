@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import random
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 
 from api.councils._base import (
     Address,
@@ -13,11 +13,11 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
+    next_weekday,
     soup,
 )
 
 _API_URL = "https://myvale.valeofglamorgan.gov.uk/getdata.aspx"
-_WEEKDAYS = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
 
 async def _calendar_collections(http: Http, calendar_url: str, bin_type: str) -> list[Collection]:
@@ -71,12 +71,10 @@ class ValeOfGlamorgan(Scraper):
         data = json.loads(text)["Results"]["waste"]
 
         recycling_food = data["recycling_food"]
-        if recycling_food not in _WEEKDAYS:
-            raise InputError(f"Unknown recycling_food: {recycling_food}")
-
-        next_recycling_food = date.today()
-        while next_recycling_food.weekday() != _WEEKDAYS.index(recycling_food):
-            next_recycling_food += timedelta(days=1)
+        try:
+            next_recycling_food = next_weekday(recycling_food)
+        except ValueError as exc:
+            raise InputError(f"Unknown recycling_food: {recycling_food}") from exc
 
         collections = [
             Collection(next_recycling_food + timedelta(weeks=i), "Recycling")
