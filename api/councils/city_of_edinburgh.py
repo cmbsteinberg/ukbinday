@@ -92,8 +92,8 @@ async def _resolve_street(
                     road = addr.get("road") or addr.get("street")
                     if road:
                         return road
-    except (UpstreamError, ValueError, KeyError, TypeError):
-        pass
+    except UpstreamError:
+        pass  # best-effort geocoding: without a street the caller reports the address as not found
     return None
 
 
