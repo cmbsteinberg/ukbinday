@@ -59,17 +59,16 @@ class Guildford(Scraper):
         collections = []
 
         for collection in schedule:
-            try:
-                collections.append(
-                    Collection(
-                        date=datetime.strptime(
-                            collection["NextDate"], "%Y-%m-%dT%H:%M:%S.000Z"
-                        ).date(),
-                        type=collection["FeatureName"],
-                    )
+            if not collection.get("NextDate"):
+                continue  # a service with nothing scheduled
+            collections.append(
+                Collection(
+                    date=datetime.strptime(
+                        collection["NextDate"], "%Y-%m-%dT%H:%M:%S.000Z"
+                    ).date(),
+                    type=collection["FeatureName"],
                 )
-            except ValueError:
-                pass
+            )
 
         return collections
 
