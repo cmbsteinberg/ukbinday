@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-import json
 import re
 from datetime import date, timedelta
-from time import time_ns
 
 from api.councils._base import (
     Address,
@@ -16,8 +14,10 @@ from api.councils._base import (
     UpstreamError,
     parse_date,
 )
+from api.councils._platforms.achieveforms import init_session, rows, run_lookup
 
-BASE = "https://torridgedc-self.achieveservice.com"
+HOSTNAME = "torridgedc-self.achieveservice.com"
+BASE = f"https://{HOSTNAME}"
 HEADERS = {"user-agent": "Mozilla/5.0"}
 BIN_NAME = {
     "Refuse": "Refuse",
@@ -42,25 +42,23 @@ class Torridge(Scraper):
     headers = HEADERS
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
-        await http.get(
-            f"{BASE}/apibroker/domain/torridgedc-self.achieveservice.com"
-            f"?_={time_ns() // 1_000_000}"
+        sid = await init_session(
+            http,
+            None,
+            f"{BASE}/authapi/isauthenticated",
+            HOSTNAME,
+            uri=f"{BASE}/service/My_property_information",
+            domain_url=f"{BASE}/apibroker/domain/{HOSTNAME}",
         )
-
-        sid_request = await http.get(
-            f"{BASE}/authapi/isauthenticated"
-            "?uri=https%3A%2F%2Ftorridgedc-self.achieveservice.com%2Fservice%2FMy_property_information"
-            "&hostname=torridgedc-self.achieveservice.com&withCredentials=true"
+        rowdata = rows(
+            await run_lookup(
+                http,
+                f"{BASE}/apibroker/runLookup",
+                sid,
+                "6583107397653",
+                {"Search": {"uprn": {"value": address.need("uprn")}}},
+            )
         )
-        sid = sid_request.json()["auth-session"]
-
-        schedule_request = await http.post(
-            f"{BASE}/apibroker/runLookup"
-            f"?id=6583107397653&repeat_against=&noRetry=false&getOnlyTokens=undefined"
-            f"&log_id=&app_name=AF-Renderer::Self&_= {time_ns() // 1_000_000}&sid={sid}".replace("&_= ", "&_="),
-            json={"formValues": {"Search": {"uprn": {"value": address.need("uprn")}}}},
-        )
-        rowdata = json.loads(schedule_request.content)["integration"]["transformed"]["rows_data"]
 
         entries: list[Collection] = []
         today = date.today()
