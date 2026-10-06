@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from typing import Any
 
 from bs4 import NavigableString, Tag
@@ -16,15 +16,19 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    every,
+    find_tag,
     match_address,
+    next_weekday,
     soup,
+    weekday_number,
 )
 
 _BASE_URL = "https://lewisham.gov.uk"
 _ADDRESS_SEARCH_URL = "https://lewisham.gov.uk/api/AddressFinder"
 _COLLECTION_PAGE_URL = "https://lewisham.gov.uk/myservices/recycling-and-rubbish/your-bins/collection"
 _DATE_REGEX = re.compile(r"(\d{2}/\d{2}/\d{4})")
-_DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
+_DAY_REGEX = re.compile("monday|tuesday|wednesday|thursday|friday|saturday|sunday", re.IGNORECASE)
 _ID_SEPARATOR = "-----------------------------{rand_id}"
 _PAYLOAD_SECTION_TEMPLATE = (
     _ID_SEPARATOR
@@ -32,37 +36,27 @@ _PAYLOAD_SECTION_TEMPLATE = (
 )
 
 
-class _InsufficientDataError(ValueError):
-    pass
-
-
 def _calculate_collections(
     waste_type: str | None,
     frequency: str | None,
-    week_day: str | None,
+    week_day: int | None,
     collection_date: date | None,
 ) -> list[Collection]:
     if waste_type is None:
-        raise _InsufficientDataError("Waste type not provided")
+        raise UpstreamError("Lewisham collection page: waste type not provided")
     if frequency not in ("WEEKLY", "FORTNIGHTLY"):
-        raise _InsufficientDataError("Frequency not provided")
+        raise UpstreamError(f"Lewisham collection page: no frequency for {waste_type!r}")
     if week_day is None:
-        raise _InsufficientDataError("Week day not provided")
+        raise UpstreamError(f"Lewisham collection page: no week day for {waste_type!r}")
     if frequency == "FORTNIGHTLY" and collection_date is None:
-        raise _InsufficientDataError("Date not provided")
+        raise UpstreamError(f"Lewisham collection page: no date for {waste_type!r}")
 
     if collection_date is None:
-        today = date.today()
-        collection_date = today + timedelta(
-            (_DAYS.index(week_day.upper()) + 1 - today.isoweekday()) % 7
-        )
+        collection_date = next_weekday(week_day)
 
-    interval = 14 if frequency == "FORTNIGHTLY" else 7
-    count = 5 if frequency == "FORTNIGHTLY" else 10
-    return [
-        Collection(collection_date + timedelta(days=index * interval), waste_type)
-        for index in range(count)
-    ]
+    fortnightly = frequency == "FORTNIGHTLY"
+    days = every(collection_date, days=14 if fortnightly else 7, count=5 if fortnightly else 10)
+    return [Collection(day, waste_type) for day in days]
 
 
 class Lewisham(Scraper):
@@ -100,9 +94,7 @@ class Lewisham(Scraper):
 
         response = await http.get(_COLLECTION_PAGE_URL)
         page = soup(response.text)
-        form_div = page.find("div", {"class": "address-finder"})
-        if not isinstance(form_div, Tag):
-            raise UpstreamError("Lewisham collection page has no address form")
+        form_div = find_tag(page, "div", {"class": "address-finder"}, what="Lewisham collection page has no address form")
 
         form = form_div.find_parent("form")
         if not isinstance(form, Tag):
@@ -154,20 +146,17 @@ class Lewisham(Scraper):
         entries: list[Collection] = []
         waste_type: str | None = None
         frequency: str | None = None
-        week_day: str | None = None
+        week_day: int | None = None
         collection_date: date | None = None
 
         for sibling in heading.parent.contents:
             if isinstance(sibling, Tag) and sibling.name == "strong":
                 if waste_type is not None:
-                    try:
-                        entries.extend(
-                            _calculate_collections(
-                                waste_type, frequency, week_day, collection_date
-                            )
+                    entries.extend(
+                        _calculate_collections(
+                            waste_type, frequency, week_day, collection_date
                         )
-                    except _InsufficientDataError:
-                        pass
+                    )
                     waste_type = None
                     frequency = None
                     week_day = None
@@ -179,21 +168,16 @@ class Lewisham(Scraper):
 
             if isinstance(sibling, NavigableString):
                 text = str(sibling)
-                for day in _DAYS:
-                    if day.lower() in text.lower():
-                        week_day = day
-                        break
+                if day_match := _DAY_REGEX.search(text):
+                    week_day = weekday_number(day_match.group())
                 if result := _DATE_REGEX.search(text):
                     collection_date = datetime.strptime(
                         result.group(1), "%d/%m/%Y"
                     ).date()
 
-        try:
-            entries.extend(
-                _calculate_collections(waste_type, frequency, week_day, collection_date)
-            )
-        except _InsufficientDataError:
-            pass
+        entries.extend(
+            _calculate_collections(waste_type, frequency, week_day, collection_date)
+        )
 
         return entries
 
