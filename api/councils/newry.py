@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 import calendar
 import io
-import logging
 import re
 from datetime import date
 from typing import Any
@@ -22,6 +21,7 @@ from api.councils._base import (
     UpstreamError,
     match_address,
     soup,
+    weekday_number,
 )
 
 _URL = "https://www.newrymournedown.org/weekly-bin-collection-and-calendar"
@@ -32,9 +32,6 @@ _HEADERS = {
         "Chrome/120.0.0.0 Safari/537.36"
     ),
 }
-_LOGGER = logging.getLogger(__name__)
-
-_WEEKDAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4, "SAT": 5, "SUN": 6}
 _BLUE = (0.098, 0.4627, 0.8235)
 _BLACK = (0.0, 0.0, 0.0)
 _BROWN = (0.4745, 0.3333, 0.2824)
@@ -167,13 +164,8 @@ def _parse_pdf(content: bytes, weekday: int) -> list[Collection]:
             )
         for day, (types, border) in zip(days, cells, strict=False):
             if _is_red(border):
-                _LOGGER.warning(
-                    "Skipping %s-%02d-%02d: public-holiday alternative collection "
-                    "(date not readable from the PDF)",
-                    year,
-                    month,
-                    day,
-                )
+                # Red border: a public-holiday alternative collection whose date
+                # the PDF does not give.
                 continue
             for bin_type in types:
                 out.append(Collection(date(year, month, day), bin_type))
@@ -246,9 +238,12 @@ class Newry(Scraper):
             href = results[0][1]
 
         match = re.search(r"/([A-Z]{3})-[^/]+\.pdf", href, re.IGNORECASE)
-        if not match or match.group(1).upper() not in _WEEKDAYS:
+        if not match:
             raise UpstreamError(f"Unrecognised schedule link {href!r}")
-        weekday = _WEEKDAYS[match.group(1).upper()]
+        try:
+            weekday = weekday_number(match.group(1))
+        except ValueError as exc:
+            raise UpstreamError(f"Unrecognised schedule link {href!r}") from exc
 
         pdf = await http.get(urljoin(_URL, href), timeout=60)
         try:
