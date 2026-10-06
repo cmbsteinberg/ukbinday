@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import logging
 import re
 from datetime import date, datetime
 
@@ -22,7 +21,6 @@ _API_URLS = {
     "search": "https://www.coventry.gov.uk/directory/search",
     "directory_record": "https://www.coventry.gov.uk",
 }
-_LOGGER = logging.getLogger(__name__)
 
 
 def _normalize_space(text: str) -> str:
@@ -103,15 +101,9 @@ class Coventry(Scraper):
                 if len(cells) != len(headers):
                     continue
                 date_text = _normalize_space(cells[0].get_text(" ", strip=True))
-                try:
-                    waste_date = datetime.strptime(
-                        f"{date_text} {year}", "%A %d %B %Y"
-                    ).date()
-                except ValueError:
-                    _LOGGER.warning(
-                        "Could not parse Coventry collection date '%s'", date_text
-                    )
-                    continue
+                waste_date = datetime.strptime(
+                    f"{date_text} {year}", "%A %d %B %Y"
+                ).date()
                 if waste_date < today:
                     continue
 
