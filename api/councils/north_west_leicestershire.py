@@ -13,7 +13,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
-    UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -36,9 +36,7 @@ class NorthWestLeicestershire(Scraper):
         r = await http.get(_API_URL.format(uprn=address.need("uprn")))
         page = soup(r.text)
 
-        refuse = page.find("ul", class_="refuse")
-        if not isinstance(refuse, Tag):
-            raise UpstreamError("North West Leicestershire page has no refuse collections")
+        refuse = find_tag(page, "ul", class_="refuse", what="North West Leicestershire page has no refuse collections")
 
         entries: list[Collection] = []
         for li in refuse.find_all("li"):
