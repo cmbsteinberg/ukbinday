@@ -3,17 +3,15 @@
 from __future__ import annotations
 
 from datetime import datetime
-from time import time_ns
 from typing import Any
 
 from api.councils._base import Address, Collection, Http, Meta, Scraper
+from api.councils._platforms.achieveforms import first_row, init_session, run_lookup
 
 HOST = "https://gloucester-self.achieveservice.com"
-AUTH_URL = (
-    f"{HOST}/authapi/isauthenticated?uri=https%253A%252F%252Fgloucester-self.achieveservice.com"
-    "%252Fservice%252FBins___Check_your_bin_day&hostname=gloucester-self.achieveservice.com"
-    "&withCredentials=true"
-)
+HOSTNAME = "gloucester-self.achieveservice.com"
+AUTH_URL = f"{HOST}/authapi/isauthenticated"
+FORM_URI = f"{HOST}/service/Bins___Check_your_bin_day"
 API_URL = f"{HOST}/apibroker/runLookup"
 
 BIN_CONFIG_LOOKUP_ID = "63f72ddc8ca25"
@@ -49,23 +47,6 @@ HEADERS = {
 }
 
 
-def _params(lookup_id: str, sid: str, **extra: str) -> dict[str, str]:
-    return {
-        "id": lookup_id,
-        "repeat_against": "",
-        "noRetry": extra.get("noRetry", "true"),
-        "getOnlyTokens": "undefined",
-        "log_id": "",
-        "app_name": "AF-Renderer::Self",
-        "_": str(time_ns() // 1_000_000),
-        "sid": sid,
-    }
-
-
-def _rows(resp_json: Any) -> dict[str, Any]:
-    return resp_json.get("integration", {}).get("transformed", {}).get("rows_data", {})
-
-
 class Gloucester(Scraper):
     meta = Meta(
         title="Gloucester City Council",
@@ -81,17 +62,13 @@ class Gloucester(Scraper):
     async def _lookup(
         self, http: Http, sid: str, lookup_id: str, fields: dict[str, dict[str, str]]
     ) -> dict[str, Any]:
-        response = await http.post(
-            API_URL,
-            params=_params(lookup_id, sid),
-            json={"formValues": {SECTION: fields}},
-            timeout=30.0,
+        reply = await run_lookup(
+            http, API_URL, sid, lookup_id, {SECTION: fields}, no_retry="true"
         )
-        return _rows(response.json()).get("0", {})
+        return first_row(reply) or {}
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
-        response = await http.get(AUTH_URL, timeout=30.0)
-        sid = response.json()["auth-session"]
+        sid = await init_session(http, None, AUTH_URL, HOSTNAME, uri=FORM_URI)
 
         uprn = address.need("uprn")
         ids = await self._lookup(
