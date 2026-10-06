@@ -26,7 +26,7 @@ def _get_session_variable(page: BeautifulSoup, field_id: str) -> str | None:
     if element:
         value = element.get("value")
         return value if isinstance(value, str) else None
-    raise ValueError(f"Unable to find element with id: {field_id}")
+    raise UpstreamError(f"Swansea: unable to find element with id: {field_id}")
 
 
 class Swansea(Scraper):
