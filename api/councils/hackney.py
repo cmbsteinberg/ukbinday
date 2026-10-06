@@ -11,6 +11,7 @@ from api.councils._base import (
     Http,
     Meta,
     Scraper,
+    UpstreamError,
 )
 
 _TENANT_ID = "f806d91c-e133-43a6-ba9a-c0ae4f4cccf6"
@@ -86,8 +87,10 @@ class Hackney(Scraper):
         property_data = property_response.json()
 
         container_attr = property_data.get("providerSpecificFields", {}).get(
-            "attributes_wasteContainersAssignableWasteContainers", ""
+            "attributes_wasteContainersAssignableWasteContainers"
         )
+        if container_attr is None:
+            raise UpstreamError("Hackney: property has no assigned waste containers field")
         if not container_attr:
             return []
 
