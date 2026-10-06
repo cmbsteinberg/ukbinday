@@ -11,6 +11,7 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
+    find_tag,
     soup,
 )
 
@@ -49,7 +50,7 @@ class NorthYorkshire(Scraper):
             raise InputError("No HTML bin data found in API response")
 
         page = soup(html_data)
-        table = page.find("div", {"id": "upcoming-collection"}).find("table").find("tbody")
+        table = find_tag(find_tag(find_tag(page, "div", {"id": "upcoming-collection"}), "table"), "tbody")
         collections = []
 
         for row in table.find_all("tr"):
