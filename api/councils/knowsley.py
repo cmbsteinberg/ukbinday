@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import logging
 import re
 import time
 from datetime import datetime
@@ -34,7 +33,6 @@ _INIT_PAYLOAD: dict[str, Any] = {
         "version": 2,
     },
 }
-_LOGGER = logging.getLogger(__name__)
 
 
 async def _do_request(
@@ -68,8 +66,6 @@ async def _do_request(
         payload["validationGuids"] = validation_guids
 
     response = await http.post(_API_URL, json=payload, headers=headers, check=False)
-    if response.status_code != 200:
-        _LOGGER.error("error doing request: %s", response.text)
     if response.status_code >= 400:
         raise UpstreamError(f"HTTP {response.status_code} from {response.url}")
     return response.json()
@@ -188,11 +184,9 @@ class Knowsley(Scraper):
                     continue
                 date_text = value["value"]
                 bin_type = key.replace("Next", "")
-                try:
-                    day = datetime.strptime(date_text, "%A %d/%m/%Y").date()
-                except ValueError:
-                    _LOGGER.warning("Could not parse date: %s for bin type %s", date_text, bin_type)
-                    continue
+                if not date_text:
+                    continue  # no date for this bin type
+                day = datetime.strptime(date_text, "%A %d/%m/%Y").date()
                 collections.append(Collection(day, bin_type))
 
         return collections
