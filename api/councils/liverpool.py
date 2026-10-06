@@ -11,6 +11,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     parse_date,
     soup,
 )
@@ -42,7 +43,7 @@ class Liverpool(Scraper):
 
         collections = []
         for row in tables[0].find_all("tr")[1:]:
-            bin_type = " ".join(row.find("th").get_text().split())
+            bin_type = " ".join(find_tag(row, "th").get_text().split())
             for field in row.find_all("td"):
                 collection_text = " ".join(field.get_text().split())
                 if collection_text.startswith("Today"):
