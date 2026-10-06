@@ -13,6 +13,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -54,7 +55,7 @@ class StratfordOnAvon(Scraper):
 
         collections: list[Collection] = []
         for row in table.tbody.find_all("tr"):
-            day = datetime.strptime(row.find("td").text, _DATE_FORMAT).date()
+            day = datetime.strptime(find_tag(row, "td").text, _DATE_FORMAT).date()
             for idx, cell in enumerate(row.find_all("td", class_="text-center")):
                 if cell.find("img", class_="check-img"):
                     collections.append(Collection(day, _BINS[idx]))
