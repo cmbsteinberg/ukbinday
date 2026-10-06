@@ -1,0 +1,199 @@
+{
+ "exchanges": [
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": {
+     "hostname": "integration.aberdeencity.gov.uk",
+     "uri": "https://integration.aberdeencity.gov.uk/service/bin_collection_calendar___view",
+     "withCredentials": "true"
+    },
+    "url": "https://integration.aberdeencity.gov.uk/authapi/isauthenticated"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=utf-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=OQDA9GrIsF59leu5YWyEJT1Df85NJ4PyQqNiw2N8UdJrcKceVmEfv1c9mRxnMzk0WkJTKeoGy3GklS+lz63Xo/WmaD/NTdFl7UvnmkVBd4y7Af7UIEW03ne9a1ih; Expires=Tue, 13 Oct 2026 09:20:21 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=OQDA9GrIsF59leu5YWyEJT1Df85NJ4PyQqNiw2N8UdJrcKceVmEfv1c9mRxnMzk0WkJTKeoGy3GklS+lz63Xo/WmaD/NTdFl7UvnmkVBd4y7Af7UIEW03ne9a1ih; Expires=Tue, 13 Oct 2026 09:20:21 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ],
+     [
+      "set-cookie",
+      "PHPSESSID=nv944a7r90gpaisdutk15a3uab; path=/; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSIONCHECK=41d4a7668708ad972b9a787687b256503e45ccbcc758490d9523ac6bcb80316f1b692d385df33fc0ecc192292a140eda0b575a82792bd32f9eb76fc8f2cbf543; expires=Tue, 06-Oct-2026 15:20:21 GMT; Max-Age=21600; path=/api/; domain=integration.aberdeencity.gov.uk; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SimpleSAMLSessionID=d66ddd9758834073245ef96d397624b4; path=/; secure; HttpOnly"
+     ],
+     [
+      "set-cookie",
+      "SESSfsauthsession=0; path=/; secure; HttpOnly"
+     ]
+    ],
+    "status": 200,
+    "text": "\n    {\"auth-session\":\"d8c57d6bda611a4f901b54c908ae8141\",\"cookie-domain\":\"\",\"is_authenticated\":false,\"providers\":[{\"name\":\"Azure__Hidden_\",\"displayname\":\"Azure (Hidden)\",\"image\":\"https:\\/\\/fs-filestore-eu.s3-eu-west-1.amazonaws.com\\/resources\\/azure.png\",\"supportonly\":\"true\",\"mapping\":\"{\\\"username\\\" : \\\"sAMAccountName\\\",\\\"email\\\" : \\\"emailaddress\\\",\\\"memberof\\\" :\\\"memberof\\\",\\\"name\\\":\\\"displayName\\\",\\\"first_name\\\" : \\\"givenName\\\",\\\"last_name\\\" :\\\"surname\\\",\\\"groupof\\\" :\\\"groups\\\"}\",\"url\":\"https:\\/\\/integration.aberdeencity.gov.uk\\/authapi\\/auth?provider=Azure__Hidden_&uri=https%3A%2F%2Fintegration.aberdeencity.gov.uk%2Fservice%2Fbin_collection_calendar___view\"},{\"name\":\"google_admin\",\"displayname\":\"Firmstep Admin\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Googlethumb.jpg\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/integration.aberdeencity.gov.uk\\/authapi\\/auth?provider=google_admin&uri=https%3A%2F%2Fintegration.aberdeencity.gov.uk%2Fservice%2Fbin_collection_calendar___view\"},{\"name\":\"google_fam\",\"displayname\":\"Firmstep Google FAM\",\"image\":\"\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Logo_icon_round_100px.png\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/integration.aberdeencity.gov.uk\\/authapi\\/auth?provider=google_fam&uri=https%3A%2F%2Fintegration.aberdeencity.gov.uk%2Fservice%2Fbin_collection_calendar___view\"},{\"name\":\"MS_Dynamics_SSO\",\"displayname\":\"MS Dynamics SSO\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/Dynamics365_scalable.svg\",\"supportonly\":\"true\",\"mapping\":\"{    \\\"first_name\\\": \\\"first_name\\\",    \\\"last_name\\\": \\\"last_name\\\",    \\\"username\\\": \\\"username\\\",    \\\"name\\\": \\\"displayname\\\",    \\\"email\\\": \\\"email\\\",    \\\"Mobile_Number\\\": \\\"mobile\\\",    \\\"Phone_Number\\\": \\\"phone\\\",    \\\"flat\\\": \\\"flat\\\",    \\\"house\\\": \\\"house\\\",    \\\"street\\\": \\\"streetName\\\",    \\\"town\\\": \\\"town\\\",    \\\"county\\\": \\\"State\\\",    \\\"postcode\\\": \\\"postalCode\\\",    \\\"country\\\": \\\"country\\\",    \\\"Date_of_Birth\\\": \\\"dateOfBirth\\\",    \\\"UPRN\\\": \\\"uprn\\\",    \\\"uprn\\\": \\\"uprn\\\",    \\\"ward\\\": \\\"ward\\\"}\",\"url\":\"https:\\/\\/integration.aberdeencity.gov.uk\\/authapi\\/auth?provider=MS_Dynamics_SSO&uri=https%3A%2F%2Fintegration.aberdeencity.gov.uk%2Fservice%2Fbin_collection_calendar___view\"},{\"name\":\"Self_Office_Login\",\"displayname\":\"Self Office Login\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/network.png\",\"supportonly\":\"true\",\"url\":\"https:\\/\\/integration.aberdeencity.gov.uk\\/authapi\\/auth?provider=Self_Office_Login&uri=https%3A%2F%2Fintegration.aberdeencity.gov.uk%2Fservice%2Fbin_collection_calendar___view\"},{\"name\":\"ssauth\",\"displayname\":\"Self-service\",\"image\":\"https:\\/\\/fs-filestore-eu.s3.amazonaws.com\\/resources\\/network.png\",\"url\":\"https:\\/\\/integration.aberdeencity.gov.uk\\/authapi\\/auth?provider=ssauth&uri=https%3A%2F%2Fintegration.aberdeencity.gov.uk%2Fservice%2Fbin_collection_calendar___view\",\"register_url\":\"https:\\/\\/integration.aberdeencity.gov.uk\\/authapi\\/register?provider=ssauth&uri=https%3A%2F%2Fintegration.aberdeencity.gov.uk%2Fservice%2Fbin_collection_calendar___view\"}]}",
+    "url": "https://integration.aberdeencity.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fintegration.aberdeencity.gov.uk%2Fservice%2Fbin_collection_calendar___view&hostname=integration.aberdeencity.gov.uk&withCredentials=true"
+   }
+  },
+  {
+   "request": {
+    "body": null,
+    "method": "POST",
+    "params": {
+     "_": 1791278421815,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "583c08ffc47fe",
+     "log_id": "",
+     "noRetry": "true",
+     "repeat_against": "",
+     "sid": "d8c57d6bda611a4f901b54c908ae8141"
+    },
+    "url": "https://integration.aberdeencity.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=Z9ccHv38JNbWk2RJW1N/fKL395mhs+nJp9ysrClHjJhW4yUPGb6vyUtqFb2502noZoAa8O3v7fxIDq38lzE0pM2Pt89zoq2joBKHnAI87tvYsc7dW8bcc3Psvi5d; Expires=Tue, 13 Oct 2026 09:20:21 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=Z9ccHv38JNbWk2RJW1N/fKL395mhs+nJp9ysrClHjJhW4yUPGb6vyUtqFb2502noZoAa8O3v7fxIDq38lzE0pM2Pt89zoq2joBKHnAI87tvYsc7dW8bcc3Psvi5d; Expires=Tue, 13 Oct 2026 09:20:21 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<?xml version=\\\"1.0\\\"?>\\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"token\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"token\\\" isNull=\\\"False\\\">o6rmgX5tS4dofdoamiBrnO2L+2kcUNyRetJM7TodWcyyw1YCOAWYtU\\/DzQem3SBUKnnzGGzo0Zo=<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\\n\",\"integration\":{\"id\":\"583c08ffc47fe\",\"type\":\"webservice\",\"transformed\":{\"error\":null,\"xml_data\":\"<?xml version=\\\"1.0\\\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"token\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"token\\\" isNull=\\\"False\\\">o6rmgX5tS4dofdoamiBrnO2L+2kcUNyRetJM7TodWcyyw1YCOAWYtU\\/DzQem3SBUKnnzGGzo0Zo=<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"token\":\"o6rmgX5tS4dofdoamiBrnO2L+2kcUNyRetJM7TodWcyyw1YCOAWYtU\\/DzQem3SBUKnnzGGzo0Zo=\"}},\"fields_data\":{\"token\":{\"type\":\"varchar\",\"name\":\"token\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null,\"post_transform\":null,\"pre_transform\":null},\"tokens\":[\"{tokenBartecAPIPath}\",\"{BartecLiveAPIUsername}\",\"{BartecLiveAPIPassword}\"],\"runtimes\":{\"integration\":{\"template\":\"11ms\",\"lim\":\"9ms\",\"webservice\":\"150ms\"},\"api\":\"150ms\",\"lim\":\"9ms\"},\"log_id\":\"2a9d061a-dc18-4eff-80ec-733ab28a1e8a\"},\"hash\":\"2643C1E03ADEC618C6F0F408ADE396253269121385F4A09881A668EFC445BA70\"}",
+    "url": "https://integration.aberdeencity.gov.uk/apibroker/runLookup?id=583c08ffc47fe&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278421815&sid=d8c57d6bda611a4f901b54c908ae8141"
+   }
+  },
+  {
+   "request": {
+    "body": {
+     "json": {
+      "formValues": {
+       "Section 1": {
+        "maxdate": {
+         "value": "2026-12-05"
+        },
+        "mindate": {
+         "value": "2026-10-06"
+        },
+        "nauprn": {
+         "value": "9051064786"
+        },
+        "token": {
+         "value": "o6rmgX5tS4dofdoamiBrnO2L+2kcUNyRetJM7TodWcyyw1YCOAWYtU/DzQem3SBUKnnzGGzo0Zo="
+        }
+       }
+      }
+     }
+    },
+    "method": "POST",
+    "params": {
+     "_": 1791278422172,
+     "app_name": "AF-Renderer::Self",
+     "getOnlyTokens": "undefined",
+     "id": "5a3141caf4016",
+     "log_id": "",
+     "noRetry": "true",
+     "repeat_against": "",
+     "sid": "d8c57d6bda611a4f901b54c908ae8141"
+    },
+    "url": "https://integration.aberdeencity.gov.uk/apibroker/runLookup"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "content-type",
+      "application/json; charset=UTF-8"
+     ],
+     [
+      "set-cookie",
+      "AWSALB=Ch/9MAIzuJQh4sawMjIx0HwEmZupisRRhxfpvje7YbQBGcteHBb3uMlsZRxXYTwZwZ7eSjHK8I/+t4Bmrs6JnUjHJs0kz29Wj9mXeP63VAs1JLt6tkXcm0bQdzkU; Expires=Tue, 13 Oct 2026 09:20:22 GMT; Path=/"
+     ],
+     [
+      "set-cookie",
+      "AWSALBCORS=Ch/9MAIzuJQh4sawMjIx0HwEmZupisRRhxfpvje7YbQBGcteHBb3uMlsZRxXYTwZwZ7eSjHK8I/+t4Bmrs6JnUjHJs0kz29Wj9mXeP63VAs1JLt6tkXcm0bQdzkU; Expires=Tue, 13 Oct 2026 09:20:22 GMT; Path=/; SameSite=None; Secure"
+     ],
+     [
+      "server",
+      "Apache"
+     ]
+    ],
+    "status": 200,
+    "text": "{\"status\":\"done\",\"data\":\"<?xml version=\\\"1.0\\\"?>\\n<Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate1\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"GeneralDate1\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate2\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"GeneralDate2\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate3\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"GeneralDate3\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate4\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"GeneralDate4\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate5\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"CountGarden\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"CountRecycling\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"CountGeneral\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"RecyclingDate1\\\" isNull=\\\"False\\\">Friday 09 October 2026<\\/result><result column=\\\"GeneralDate1\\\" isNull=\\\"False\\\">Friday 16 October 2026<\\/result><result column=\\\"RecyclingDate2\\\" isNull=\\\"False\\\">Friday 23 October 2026<\\/result><result column=\\\"GeneralDate2\\\" isNull=\\\"False\\\">Friday 30 October 2026<\\/result><result column=\\\"RecyclingDate3\\\" isNull=\\\"False\\\">Friday 06 November 2026<\\/result><result column=\\\"GeneralDate3\\\" isNull=\\\"False\\\">Friday 13 November 2026<\\/result><result column=\\\"RecyclingDate4\\\" isNull=\\\"False\\\">Friday 20 November 2026<\\/result><result column=\\\"GeneralDate4\\\" isNull=\\\"False\\\">Friday 27 November 2026<\\/result><result column=\\\"RecyclingDate5\\\" isNull=\\\"False\\\">Friday 04 December 2026<\\/result><result column=\\\"CountGarden\\\" isNull=\\\"True\\\">0<\\/result><result column=\\\"CountRecycling\\\" isNull=\\\"False\\\">5<\\/result><result column=\\\"CountGeneral\\\" isNull=\\\"False\\\">4<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\\n\",\"integration\":{\"id\":\"5a3141caf4016\",\"type\":\"webservice\",\"transformed\":{\"error\":null,\"xml_data\":\"<?xml version=\\\"1.0\\\"?><Responses><RequestResponse><DatabaseResponse><Fields><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate1\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"GeneralDate1\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate2\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"GeneralDate2\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate3\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"GeneralDate3\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate4\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"GeneralDate4\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"RecyclingDate5\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"CountGarden\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"CountRecycling\\\"\\/><Field Type=\\\"varchar\\\" Name=\\\"CountGeneral\\\"\\/><\\/Fields><Rows><Row id=\\\"0\\\"><result column=\\\"RecyclingDate1\\\" isNull=\\\"False\\\">Friday 09 October 2026<\\/result><result column=\\\"GeneralDate1\\\" isNull=\\\"False\\\">Friday 16 October 2026<\\/result><result column=\\\"RecyclingDate2\\\" isNull=\\\"False\\\">Friday 23 October 2026<\\/result><result column=\\\"GeneralDate2\\\" isNull=\\\"False\\\">Friday 30 October 2026<\\/result><result column=\\\"RecyclingDate3\\\" isNull=\\\"False\\\">Friday 06 November 2026<\\/result><result column=\\\"GeneralDate3\\\" isNull=\\\"False\\\">Friday 13 November 2026<\\/result><result column=\\\"RecyclingDate4\\\" isNull=\\\"False\\\">Friday 20 November 2026<\\/result><result column=\\\"GeneralDate4\\\" isNull=\\\"False\\\">Friday 27 November 2026<\\/result><result column=\\\"RecyclingDate5\\\" isNull=\\\"False\\\">Friday 04 December 2026<\\/result><result column=\\\"CountGarden\\\" isNull=\\\"True\\\">0<\\/result><result column=\\\"CountRecycling\\\" isNull=\\\"False\\\">5<\\/result><result column=\\\"CountGeneral\\\" isNull=\\\"False\\\">4<\\/result><\\/Row><\\/Rows><\\/DatabaseResponse><\\/RequestResponse><\\/Responses>\",\"rows_data\":{\"0\":{\"RecyclingDate1\":\"Friday 09 October 2026\",\"GeneralDate1\":\"Friday 16 October 2026\",\"RecyclingDate2\":\"Friday 23 October 2026\",\"GeneralDate2\":\"Friday 30 October 2026\",\"RecyclingDate3\":\"Friday 06 November 2026\",\"GeneralDate3\":\"Friday 13 November 2026\",\"RecyclingDate4\":\"Friday 20 November 2026\",\"GeneralDate4\":\"Friday 27 November 2026\",\"RecyclingDate5\":\"Friday 04 December 2026\",\"CountGarden\":\"0\",\"CountRecycling\":\"5\",\"CountGeneral\":\"4\"}},\"fields_data\":{\"RecyclingDate1\":{\"type\":\"varchar\",\"name\":\"RecyclingDate1\"},\"GeneralDate1\":{\"type\":\"varchar\",\"name\":\"GeneralDate1\"},\"RecyclingDate2\":{\"type\":\"varchar\",\"name\":\"RecyclingDate2\"},\"GeneralDate2\":{\"type\":\"varchar\",\"name\":\"GeneralDate2\"},\"RecyclingDate3\":{\"type\":\"varchar\",\"name\":\"RecyclingDate3\"},\"GeneralDate3\":{\"type\":\"varchar\",\"name\":\"GeneralDate3\"},\"RecyclingDate4\":{\"type\":\"varchar\",\"name\":\"RecyclingDate4\"},\"GeneralDate4\":{\"type\":\"varchar\",\"name\":\"GeneralDate4\"},\"RecyclingDate5\":{\"type\":\"varchar\",\"name\":\"RecyclingDate5\"},\"CountGarden\":{\"type\":\"varchar\",\"name\":\"CountGarden\"},\"CountRecycling\":{\"type\":\"varchar\",\"name\":\"CountRecycling\"},\"CountGeneral\":{\"type\":\"varchar\",\"name\":\"CountGeneral\"}},\"select_data\":[{\"label\":\"\",\"value\":\"\"}],\"meta_data\":[],\"results_page\":null,\"post_transform\":null,\"pre_transform\":null},\"tokens\":[\"{tokenBartecAPIPath}\",\"{tokenBartecAPIRelease}\",\"{token}\",\"{nauprn}\",\"{mindate}\",\"{maxdate}\"],\"runtimes\":{\"integration\":{\"template\":\"19ms\",\"lim\":\"9ms\",\"webservice\":\"678ms\"},\"api\":\"678ms\",\"lim\":\"9ms\"},\"log_id\":\"94e9d215-913d-4095-87e6-0a169f171672\"},\"hash\":\"FFAF725FE5A9D83C16E431D27E87FF8A7237D917063DB58BBB468D4DB17F24CD\"}",
+    "url": "https://integration.aberdeencity.gov.uk/apibroker/runLookup?id=5a3141caf4016&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer%3A%3ASelf&_=1791278422172&sid=d8c57d6bda611a4f901b54c908ae8141"
+   }
+  }
+ ],
+ "golden": [
+  [
+   "2026-10-09",
+   "Recycling"
+  ],
+  [
+   "2026-10-16",
+   "General"
+  ],
+  [
+   "2026-10-23",
+   "Recycling"
+  ],
+  [
+   "2026-10-30",
+   "General"
+  ],
+  [
+   "2026-11-06",
+   "Recycling"
+  ],
+  [
+   "2026-11-13",
+   "General"
+  ],
+  [
+   "2026-11-20",
+   "Recycling"
+  ],
+  [
+   "2026-11-27",
+   "General"
+  ],
+  [
+   "2026-12-04",
+   "Recycling"
+  ]
+ ],
+ "params": {
+  "uprn": "9051064786"
+ },
+ "recorded": "2026-10-06"
+}

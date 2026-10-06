@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import datetime
 import re
-import time
 
 from api.councils._base import (
     Address,
@@ -14,17 +13,16 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
+    UpstreamError,
 )
+from api.councils._platforms.achieveforms import first_row, init_session, run_lookup
 
 _LOOKUP_ID_GET_TOKEN = "583c08ffc47fe"
 _LOOKUP_ID_GET_SCHEDULE = "5a3141caf4016"
 
-_SESSION_URL = (
-    "https://integration.aberdeencity.gov.uk/authapi/isauthenticated"
-    "?uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice"
-    "%252Fbin_collection_calendar___view"
-    "&hostname=integration.aberdeencity.gov.uk&withCredentials=true"
-)
+_HOSTNAME = "integration.aberdeencity.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_FORM_URL = f"https://{_HOSTNAME}/service/bin_collection_calendar___view"
 _API_URL = "https://integration.aberdeencity.gov.uk/apibroker/runLookup"
 
 _DATE_KEY_RE = re.compile(r"^(.*?)Date\d+$")
@@ -60,58 +58,29 @@ class AberdeenCity(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn")
 
-        auth_resp = await http.get(_SESSION_URL, timeout=30)
-        try:
-            sid = auth_resp.json()["auth-session"]
-        except (ValueError, KeyError, TypeError) as err:
-            raise InputError(f"Could not establish session with Aberdeen form: {err}") from err
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URL)
 
-        token_params = {
-            "id": _LOOKUP_ID_GET_TOKEN,
-            "repeat_against": "",
-            "noRetry": "true",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-        token_resp = await http.post(_API_URL, params=token_params, timeout=30)
-        try:
-            token_row = token_resp.json()["integration"]["transformed"]["rows_data"]["0"]
-            token = token_row["token"]
-        except (ValueError, KeyError, TypeError) as err:
-            raise InputError(f"Aberdeen token request returned unexpected payload: {err}") from err
+        token_row = first_row(
+            await run_lookup(http, _API_URL, sid, _LOOKUP_ID_GET_TOKEN, None, no_retry="true")
+        )
+        if token_row is None or "token" not in token_row:
+            raise UpstreamError("Aberdeen token request returned no token")
+        token = token_row["token"]
 
         today = datetime.date.today()
-        payload = {
-            "formValues": {
-                "Section 1": {
-                    "nauprn": {"value": uprn},
-                    "token": {"value": token},
-                    "mindate": {"value": today.strftime("%Y-%m-%d")},
-                    "maxdate": {
-                        "value": (today + datetime.timedelta(days=60)).strftime("%Y-%m-%d")
-                    },
-                }
+        form_values = {
+            "Section 1": {
+                "nauprn": {"value": uprn},
+                "token": {"value": token},
+                "mindate": {"value": today.strftime("%Y-%m-%d")},
+                "maxdate": {"value": (today + datetime.timedelta(days=60)).strftime("%Y-%m-%d")},
             }
         }
-        sched_params = dict(token_params)
-        sched_params["id"] = _LOOKUP_ID_GET_SCHEDULE
-        sched_params["_"] = str(int(time.time() * 1000))
-
-        sched_resp = await http.post(
-            _API_URL,
-            params=sched_params,
-            json=payload,
-            timeout=30,
+        rows = first_row(
+            await run_lookup(http, _API_URL, sid, _LOOKUP_ID_GET_SCHEDULE, form_values, no_retry="true")
         )
-        try:
-            rows = sched_resp.json()["integration"]["transformed"]["rows_data"]["0"]
-        except (ValueError, KeyError, TypeError) as err:
-            raise InputError(f"Aberdeen schedule request returned unexpected payload: {err}") from err
 
-        if not isinstance(rows, dict) or not rows:
+        if not rows:
             raise AddressNotFound("No collection data returned for this UPRN.")
 
         has_date_keys = any(_DATE_KEY_RE.match(key) for key in rows)
