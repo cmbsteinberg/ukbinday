@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from bs4 import Tag
-
 from api.councils._base import (
     Address,
     Collection,
@@ -13,6 +11,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -59,9 +58,7 @@ class ArdsAndNorthDown(Scraper):
                 for fill in fills:
                     bin_type_translation[fill] = bin_name
 
-        calendar = page.find("div", {"id": "NewCalendar"})
-        if not isinstance(calendar, Tag):
-            raise UpstreamError("Ards and North Down calendar was missing")
+        calendar = find_tag(page, "div", {"id": "NewCalendar"}, what="Ards and North Down calendar was missing")
 
         entries: list[Collection] = []
         for table in calendar.find_all("table"):
