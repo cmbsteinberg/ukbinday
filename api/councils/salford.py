@@ -4,7 +4,15 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    find_tag,
+    soup,
+)
 
 _URL = "https://www.salford.gov.uk/bins-and-recycling/bin-collection-days/your-bin-collections/"
 _HEADERS = {
@@ -33,7 +41,7 @@ class Salford(Scraper):
 
         for result in results:
             dates = [item.text for item in result.find_all("li")]
-            collection_type = result.find("strong").text.replace(":", "")
+            collection_type = find_tag(result, "strong").text.replace(":", "")
             for current_date in dates:
                 day = datetime.strptime(current_date, "%A %d %B %Y").date()
                 collections.append(Collection(date=day, type=collection_type))
