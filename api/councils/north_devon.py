@@ -2,23 +2,24 @@
 
 from __future__ import annotations
 
-import re
 from datetime import date, datetime, timedelta
-from time import time_ns
 from typing import Any
-from xml.etree import ElementTree
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper
+from api.councils._base import Address, Collection, Http, Meta, Scraper, UpstreamError
+from api.councils._platforms.achieveforms import (
+    data_rows,
+    first_row,
+    init_session,
+    run_lookup,
+)
 
 TITLE = "North Devon Council"
 URL = "https://www.northdevon.gov.uk"
 
 HOST = "https://my.northdevon.gov.uk"
-AUTH_URL = (
-    f"{HOST}/authapi/isauthenticated?uri=https%253A%252F%252Fmy.northdevon.gov.uk"
-    "%252Fservice%252FWasteRecyclingCollectionCalendar"
-    "&hostname=my.northdevon.gov.uk&withCredentials=true"
-)
+HOSTNAME = "my.northdevon.gov.uk"
+AUTH_URL = f"{HOST}/authapi/isauthenticated"
+FORM_URI = f"{HOST}/service/WasteRecyclingCollectionCalendar"
 API_URL = f"{HOST}/apibroker/runLookup"
 
 USRN_LOOKUP_ID = "65141c7c38bd0"
@@ -35,46 +36,12 @@ HEADERS = {
 }
 
 
-def _params(lookup_id: str, sid: str, no_retry: str = "true") -> dict[str, str]:
-    return {
-        "id": lookup_id,
-        "repeat_against": "",
-        "noRetry": no_retry,
-        "getOnlyTokens": "undefined",
-        "log_id": "",
-        "app_name": "AF-Renderer::Self",
-        "_": str(time_ns() // 1_000_000),
-        "sid": sid,
-    }
-
-
-def _rows(resp_json: dict[str, Any]) -> dict[str, Any]:
-    rows = resp_json.get("integration", {}).get("transformed", {}).get("rows_data", {})
-    return rows if isinstance(rows, dict) else {}
-
-
-def _service_details(resp_json: dict[str, Any]) -> list[str]:
-    """Extract ServiceDetail values from the lookup's XML payload, with a regex fallback."""
-    data = resp_json.get("data") or "<Responses/>"
-    try:
-        root = ElementTree.fromstring(data)
-    except ElementTree.ParseError:
-        root = None
-
-    if root is not None:
-        details = [
-            result.text.strip()
-            for result in root.iter("result")
-            if result.get("column") == "ServiceDetail" and result.text
-        ]
-        if details:
-            return details
-
-    raw_data = resp_json.get("data") or ""
+def _service_details(reply: dict[str, Any]) -> list[str]:
+    """The ServiceDetail column of every row in the lookup's XML payload."""
     return [
-        match.strip()
-        for match in re.findall(r'column="ServiceDetail"[^>]*>(.*?)</result>', raw_data)
-        if match.strip()
+        detail
+        for row in data_rows(reply)
+        if (detail := row.get("ServiceDetail", "").strip())
     ]
 
 
@@ -135,38 +102,29 @@ class NorthDevon(Scraper):
         address_form = form["Your address"]
         calendar = form["Calendar"]
 
-        response = await http.get(AUTH_URL, timeout=30.0)
-        sid = response.json()["auth-session"]
+        sid = await init_session(http, None, AUTH_URL, HOSTNAME, uri=FORM_URI)
 
         async def call(lookup_id: str, no_retry: str = "true") -> dict[str, Any]:
-            response = await http.post(
-                API_URL,
-                params=_params(lookup_id, sid, no_retry),
-                json={"formValues": form},
-                timeout=30.0,
-            )
-            return response.json()
+            return await run_lookup(http, API_URL, sid, lookup_id, form, no_retry=no_retry)
 
-        usrn_row = _rows(await call(USRN_LOOKUP_ID)).get("0", {})
+        usrn_row = first_row(await call(USRN_LOOKUP_ID)) or {}
         usrn = usrn_row.get("USRN", "")
         if not usrn:
-            return []
+            return []  # the council has no street for this property
         address_form["FULLADDR2"] = {"value": usrn_row.get("FULLADDR2", "")}
         calendar["USRN"] = {"value": usrn}
 
-        token = _rows(await call(TOKEN_LOOKUP_ID)).get("0", {}).get("liveToken", "")
+        token = (first_row(await call(TOKEN_LOOKUP_ID)) or {}).get("liveToken", "")
         if not token:
-            return []
+            raise UpstreamError("North Devon gave no live token")
         calendar["liveToken"] = {"value": token}
         calendar["token"] = {"value": token}
 
-        date_row = _rows(await call(DATE_RANGE_LOOKUP_ID)).get("0", {})
+        date_row = first_row(await call(DATE_RANGE_LOOKUP_ID)) or {}
         calendar["calstartDate"] = {"value": date_row.get("calstartDate", "")}
         calendar["calendDate"] = {"value": date_row.get("calendDate", "")}
 
-        details = _service_details(
-            await call(SERVICE_DETAILS_LOOKUP_ID, no_retry="false")
-        )
+        details = _service_details(await call(SERVICE_DETAILS_LOOKUP_ID, no_retry="false"))
 
         collections: list[Collection] = []
         for detail in details:
