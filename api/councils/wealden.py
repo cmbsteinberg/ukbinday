@@ -52,15 +52,14 @@ class Wealden(Scraper):
         collections = []
 
         for collection, bin_type in _COLLECTIONS.items():
-            try:
-                collections.append(
-                    Collection(
-                        datetime.strptime(json_data[collection], "%Y-%m-%dT%H:%M:%S").date(),
-                        type=bin_type.title(),
-                    )
+            if not json_data[collection]:
+                continue  # no date for this service
+            collections.append(
+                Collection(
+                    datetime.strptime(json_data[collection], "%Y-%m-%dT%H:%M:%S").date(),
+                    type=bin_type.title(),
                 )
-            except ValueError:
-                pass
+            )
 
         return collections
 
