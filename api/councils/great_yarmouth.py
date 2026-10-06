@@ -17,6 +17,7 @@ from api.councils._base import (
     Scraper,
     Transport,
     UpstreamError,
+    find_tag,
     parse_date,
     soup,
 )
@@ -56,9 +57,7 @@ class GreatYarmouth(Scraper):
         action = action_match.group(1).replace("&amp;", "&")
 
         page = soup(response.text)
-        form = page.find("form", {"id": f"{_FORM_NAME}_FORM"})
-        if not isinstance(form, Tag):
-            raise UpstreamError("Could not find waste collection form on page")
+        form = find_tag(page, "form", {"id": f"{_FORM_NAME}_FORM"}, what="Could not find waste collection form on page")
 
         form_data = {
             name: field.get("value", "")
