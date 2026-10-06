@@ -11,6 +11,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     soup,
 )
 
@@ -75,7 +76,7 @@ class Barnsley(Scraper):
         if response.status_code != 200:
             raise UpstreamError("Error getting results from website")
 
-        results = page.find("div", {"class": "panel"}).find_all("fieldset")[0:2]
+        results = find_tag(page, "div", {"class": "panel"}).find_all("fieldset")[0:2]
         heading = results[0].find_all("p")[1:3]
 
         collections = []
