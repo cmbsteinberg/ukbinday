@@ -7,7 +7,8 @@ Every site runs the same flow:
    `POST waste` with the postcode and pick the property from `select#address`.
 2. `GET waste/<id>/calendar.ics` and read the events.
 
-What differs per council is the host, in `SocietyWorksConfig`.
+What differs per council is the host, whether the site wants curl_cffi, and a
+suffix to drop from the event names, in `SocietyWorksConfig`.
 """
 
 from __future__ import annotations
@@ -15,6 +16,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass
 from types import MappingProxyType
+from typing import Any
 
 from api.councils._base import (
     Address,
@@ -22,6 +24,7 @@ from api.councils._base import (
     Http,
     InputError,
     Platform,
+    Transport,
     UpstreamError,
     match_address,
     parse_ics,
@@ -36,6 +39,10 @@ _TIMEOUT = 30
 class SocietyWorksConfig:
     base_url: str
     """With a trailing slash: "https://recyclingservices.brent.gov.uk/"."""
+    transport: Transport = Transport.HTTPX
+    """CURL_CFFI for sites that block on TLS fingerprint (Kingston)."""
+    strip_suffix: str = ""
+    """Removed from every event name (" collection": "Food Waste collection" -> "Food Waste")."""
 
 
 class SocietyWorks(Platform[SocietyWorksConfig]):
@@ -43,6 +50,10 @@ class SocietyWorks(Platform[SocietyWorksConfig]):
     headers: Mapping[str, str] = MappingProxyType(
         {"User-Agent": "uk-bin-collection/1.0 (+https://github.com/robbrad/UKBinCollectionData)"}
     )
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+        self.transport = self.config.transport
 
     async def _uprn_to_property_id(self, http: Http, uprn: str) -> str:
         r = await http.get(f"{self.config.base_url}property/{uprn}", follow_redirects=False, timeout=_TIMEOUT, check=False)
@@ -79,4 +90,4 @@ class SocietyWorks(Platform[SocietyWorksConfig]):
         )
         if "VCALENDAR" not in r.text:
             raise UpstreamError(f"ICS feed returned invalid data for ID {property_id} (status {r.status_code})")
-        return [Collection(event.date, event.summary) for event in parse_ics(r.text)]
+        return [Collection(event.date, event.summary.removesuffix(self.config.strip_suffix)) for event in parse_ics(r.text)]

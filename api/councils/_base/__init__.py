@@ -11,7 +11,7 @@ from api.councils._base.errors import (
     ScraperError,
     UpstreamError,
 )
-from api.councils._base.html import soup, text_of
+from api.councils._base.html import find_tag, select_tag, soup, text_of
 from api.councils._base.http import Http, Response, Transport
 from api.councils._base.ics import IcsEvent, parse_ics
 from api.councils._base.matching import match_address, normalise_text
@@ -38,12 +38,14 @@ __all__ = [
     "colour_of",
     "default_icon",
     "every",
+    "find_tag",
     "match_address",
     "next_weekday",
     "normalise_text",
     "parse_date",
     "parse_ics",
     "run",
+    "select_tag",
     "soup",
     "text_of",
     "weekday_number",

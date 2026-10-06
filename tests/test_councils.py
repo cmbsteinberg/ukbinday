@@ -15,8 +15,11 @@ from api.councils._base import (
     Scraper,
     UpstreamError,
     colour_of,
+    find_tag,
     match_address,
     parse_date,
+    select_tag,
+    soup,
 )
 from api.councils._base.discovery import by_lad, load, module_names
 from api.councils._base.http import Response
@@ -138,3 +141,28 @@ def test_response_json_not_json_is_upstream_error() -> None:
         _response(200, {"cf-mitigated": "challenge"}, b"<html>").json()
     assert exc.value.blocker == Blocker.BOT_PROTECTION
     assert _response(200, body=b'{"a": 1}').json() == {"a": 1}
+
+
+def test_find_tag_returns_tag_or_raises_upstream_error():
+    page = soup('<div class="a"><p id="x">hi</p></div>')
+    assert find_tag(page, "p", id="x").get_text() == "hi"
+    assert find_tag(page, "div", {"class": "a"}).name == "div"
+    with pytest.raises(UpstreamError, match="no <table> element"):
+        find_tag(page, "table")
+    with pytest.raises(UpstreamError, match="no results"):
+        find_tag(page, "table", what="no results")
+
+
+def test_find_tag_rejects_text_nodes():
+    page = soup("<p>just text</p>")
+    with pytest.raises(UpstreamError):
+        find_tag(page, string="just text")
+
+
+def test_select_tag_returns_tag_or_raises_upstream_error():
+    page = soup('<ul><li class="d">1</li></ul>')
+    assert select_tag(page, "li.d").get_text() == "1"
+    with pytest.raises(UpstreamError, match="li.missing"):
+        select_tag(page, "li.missing")
+    with pytest.raises(UpstreamError, match="gone"):
+        select_tag(page, "li.missing", what="gone")

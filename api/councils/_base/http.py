@@ -17,8 +17,9 @@ from __future__ import annotations
 
 import json as jsonlib
 from abc import ABC, abstractmethod
-from collections.abc import AsyncIterator, Mapping
+from collections.abc import AsyncIterator, Callable, Mapping
 from contextlib import asynccontextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass
 from enum import StrEnum
 from functools import cached_property
@@ -259,6 +260,13 @@ class _CurlHttp(Http):
         await self._session.close()
 
 
+# Set by scripts/councils/cassette.py to record or replay exchanges. Given the
+# headers and a factory for the real backend, returns the `Http` to use.
+INTERCEPT: ContextVar[Callable[[Mapping[str, str], Callable[[], Http]], Http] | None] = ContextVar(
+    "http_intercept", default=None
+)
+
+
 @asynccontextmanager
 async def open_http(
     transport: Transport, *, headers: Mapping[str, str] | None = None, verify: bool = True
@@ -266,7 +274,13 @@ async def open_http(
     """`headers` go on every request, on top of the backend's defaults (httpx's
     own User-Agent, or curl_cffi's impersonated Chrome headers)."""
     backend = _CurlHttp if transport is Transport.CURL_CFFI else _HttpxHttp
-    http: Http = backend(headers or {}, verify=verify)
+    headers = headers or {}
+
+    def real() -> Http:
+        return backend(headers, verify=verify)
+
+    intercept = INTERCEPT.get()
+    http: Http = intercept(headers, real) if intercept else real()
     try:
         yield http
     finally:

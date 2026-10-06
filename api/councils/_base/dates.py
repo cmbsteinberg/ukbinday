@@ -50,7 +50,7 @@ def weekday_number(day: str | int) -> int:
         return day % 7
     key = day.strip().lower()[:3]
     for number, name in enumerate(_WEEKDAYS):
-        if name.startswith(key):
+        if key and name.startswith(key):
             return number
     raise ValueError(f"Not a weekday: {day!r}")
 

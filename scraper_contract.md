@@ -330,7 +330,14 @@ values masked, and the harness freezes `today` during replay.
   `(meta, config, *, icons=None)`. Platforms: Whitespace, iTouchVision, AchieveForms (a
   helper, not a class), Cloud9, Firmstep, SocietyWorks, Bartec (the public dashboard page:
   4 councils), ReCollect (7), LibertyCreate (Netcall portals: Hertsmere, Gedling; the result-table
-  reader is a `parse` callable in the config). The other Bartec-backed councils reach it through their own
+  reader is a `parse` callable in the config), SalesforceFlow (the Experience Cloud waste enquiry
+  flow: Forest of Dean, West Oxfordshire, Cotswold; Chesterfield and Guildford call their own
+  Apex actions and stay bespoke), EnvironmentFirst (Eastbourne, Lewes), Placecube (the Liferay
+  collection-day portlet: Babergh, Mid Suffolk), WastePortal (a multi-council JSON API told
+  apart by `councilId`: Dover, Haringey; vendor not named on the sites). SocietyWorks also
+  serves Bromley and Kingston, whose bespoke HTML scrapers were replaced by its ICS feed
+  (`strip_suffix` drops the feed's " collection", keeping the old type names). Lambeth's
+  JSON `WhitespaceComms` API is not the Whitespace WRP flow, so it stays bespoke. The other Bartec-backed councils reach it through their own
   APIs, AchieveForms or Firmstep, so they stay bespoke.
 - **`parse_date` rejects text without a day and a month** ("December TBC", "Mon"), which
   dateutil's fuzzy mode would otherwise read as the 1st or the next weekday. Text with no
@@ -338,6 +345,10 @@ values masked, and the harness freezes `today` during replay.
 - **`text_of` joins child text with spaces**, so inline markup gives "( if subscribed )".
   Its 52 users were checked against that behaviour, so it stays; use
   `" ".join(node.get_text().split())` where inline tags sit inside the text.
+- **`find_tag` / `select_tag` replace the hand-written `isinstance(x, Tag)` guard.** They return a
+  `Tag` or raise `UpstreamError` (message from `what=`, else naming the element), so a page
+  that lost an element is a 503 rather than an `AttributeError`. Where a missing element is
+  fine, use `find` and check.
 - **Public IDs are LAD codes (switched 2026-10-01).** `/find` returns the
   LAD code, `/councils` lists it, calendar URLs and sidecars carry it, and `/{lad}/view`
   echoes it back even when called with an old ID. Whether a LAD is wired is the
@@ -371,11 +382,31 @@ values masked, and the harness freezes `today` during replay.
   an ok response. `/subscribe` and `/download` keep the 503/504. `InputError` stays 422, with
   `AddressNotFound.suggestions` in the body. Any other exception from a module is a bug
   and stays a plain 503.
-- **Cassettes and record/replay aren't built.** Conversions were checked with
-  `scripts/councils/check.py --compare` (removed with the old scrapers), which ran each
-  module's cases and the sampled addresses live, side by side with the old scraper. It's
-  flaky by nature (site outages,
-  DNS, concurrency), which is why the progress table below needs a triage column.
+- **Cassettes are built, but simpler than designed above.** Code: `scripts/councils/cassette.py`
+  (record, replay, masking, save), `scripts/councils/record.py` (the command), and
+  `tests/test_cassettes.py` (marker `api`, replays every cassette with sockets blocked and
+  compares with the golden output). `_base/http.py` only gains the `INTERCEPT` context
+  variable that `open_http` consults, so modules never know. One recorder and replayer serve
+  both transports, since both sit under `Http._send`. Differences from the design:
+  - The unit is the module's `meta.cases` (a module with none gets one sampled address);
+    cases are not the full sampled set.
+  - A cassette holds `params`, `recorded` (the frozen `today`, via time-machine), `exchanges`
+    (request method/URL/params/body, response status/final URL/encoding/kept headers/body)
+    and `golden` (`[iso date, type]`). Request headers aren't stored. Binary bodies go to
+    `tests/cassettes/_blobs/<sha256>`; no module in the first set needs one, so that path is
+    only unit-tested.
+  - Replay matches each request exactly first, then with volatile values masked (`sid`/session
+    and CSRF-style keys and fields, `_=` and epoch values, timestamps, UUIDs, multipart
+    boundaries); `Set-Cookie` values are masked in comparisons. A repeat of an answered request
+    gets the last answer again; an unmatched request raises `CassetteMiss`.
+  - Recording replays itself before writing, so a cassette that wouldn't replay (unmasked
+    volatile value, a request mutated after sending) is a reported failure, never written.
+  - "Write only on change" compares the params, golden output and each exchange's method,
+    masked URL, params and status, not bodies (pages carry random ids on every fetch). A cassette
+    whose module no longer replays to its golden is rewritten.
+  - Conversions before this were checked with `scripts/councils/check.py --compare` (removed
+    with the old scrapers), live and flaky by nature, which is why the progress table below
+    needs a triage column.
 
 ## Progress
 
@@ -451,5 +482,5 @@ both-fail, 14 regressed.
 - IDs are ONS LAD codes, with permanent aliases for old scraper IDs and recoded LADs.
   Switched 2026-10-01, with one `/councils` row per LAD.
 - `NeedsBrowser` routes to a deeplink automatically.
-- Cassettes are committed; the recorder writes only on change and never replaces a good
+- Cassettes are committed (see the As-built entry); the recorder writes only on change and never replaces a good
   recording with a failed one.

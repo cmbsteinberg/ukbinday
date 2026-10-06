@@ -40,6 +40,7 @@ dev = [
     "ruff>=0.16.9",
     "ty>=0.0.84",
     "moto[s3]>=5.2.3",
+    "time-machine>=3.5.1",
 ]
 
 [tool.ruff.lint]
