@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from bs4 import BeautifulSoup
 
-from api.councils._base import Collection, Meta, next_weekday
+from api.councils._base import Collection, Meta, UpstreamError, next_weekday
 from api.councils._platforms.liberty_create import LibertyCreate, LibertyCreateConfig
 
 _DAYS = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -15,7 +15,7 @@ def _weekdays(page: BeautifulSoup) -> list[Collection]:
     table = page.find("table", class_="table listing table-striped")
     tbody = table.find("tbody") if table else None
     if not tbody:
-        return []
+        raise UpstreamError("Hertsmere: no round table in response")
     collections: list[Collection] = []
     for row in tbody.find_all("tr"):
         cells = [cell.get_text(" ", strip=True) for cell in row.find_all(["td", "th"])]
