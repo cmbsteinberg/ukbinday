@@ -2,22 +2,25 @@
 
 from __future__ import annotations
 
-import time
 from datetime import date, datetime
 
 from api.councils._base import Address, Collection, Http, Meta, Scraper, UpstreamError
+from api.councils._platforms.achieveforms import init_session, rows, run_lookup
 
-_SESSION_URL = (
-    "https://my.sandwell.gov.uk/authapi/isauthenticated?"
-    "uri=https://my.sandwell.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-ebaa26a2-393c-4a3c-84f5-e61564192a8a/AF-Stage-e4c2cb32-db55-4ff5-845c-8b27f87346c4/definition.json&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes"
+_HOSTNAME = "my.sandwell.gov.uk"
+_AUTH_URL = f"https://{_HOSTNAME}/authapi/isauthenticated"
+_FORM_URI = (
+    f"https://{_HOSTNAME}/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-ebaa26a2-393c-4a3c-84f5-e61564192a8a/"
+    "AF-Stage-e4c2cb32-db55-4ff5-845c-8b27f87346c4/definition.json"
+    "&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes"
 )
-_API_URL = "https://my.sandwell.gov.uk/apibroker/runLookup"
+_API_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
 _HEADERS = {
     "Content-Type": "application/json",
     "Accept": "application/json",
     "User-Agent": "Mozilla/5.0",
     "X-Requested-With": "XMLHttpRequest",
-    "Referer": "https://my.sandwell.gov.uk/fillform/?iframe_id=fillform-frame-1&db_id=",
+    "Referer": f"https://{_HOSTNAME}/fillform/?iframe_id=fillform-frame-1&db_id=",
 }
 _LOOKUPS = (
     ("686294de50729", "DWDate", "Household Waste (Grey)"),
@@ -50,51 +53,18 @@ class Sandwell(Scraper):
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
         uprn = address.need("uprn")
 
-        session_response = await http.get(_SESSION_URL, timeout=30)
-        session_data = session_response.json()
-        sid = session_data.get("auth-session")
-        if not sid:
-            raise UpstreamError(f"Unexpected auth response (no auth-session): {session_data}")
+        sid = await init_session(http, None, _AUTH_URL, _HOSTNAME, uri=_FORM_URI)
 
-        payload = {
-            "formValues": {
-                "Property details": {
-                    "Uprn": {"value": uprn},
-                    "NextCollectionFromDate": {
-                        "value": datetime.today().strftime("%Y-%m-%d")
-                    },
-                }
+        form_values = {
+            "Property details": {
+                "Uprn": {"value": uprn},
+                "NextCollectionFromDate": {"value": datetime.today().strftime("%Y-%m-%d")},
             }
-        }
-        base_params = {
-            "repeat_against": "",
-            "noRetry": "false",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "sid": sid,
-            "_": str(int(time.time() * 1000)),
         }
 
         collections: list[Collection] = []
         for lookup_id, date_key, waste_type in _LOOKUPS:
-            response = await http.post(
-                _API_URL,
-                json=payload,
-                params={"id": lookup_id, **base_params},
-                timeout=30,
-            )
-            data = response.json()
-
-            if isinstance(data, dict) and data.get("result") == "logout":
-                raise UpstreamError("Sandwell returned logout (session rejected). Try again later or adjust headers.")
-
-            transformed = (data.get("integration") or {}).get("transformed") or {}
-            rows_data = transformed.get("rows_data")
-            if not isinstance(rows_data, dict):
-                continue
-
-            for row in rows_data.values():
+            for row in rows(await run_lookup(http, _API_URL, sid, lookup_id, form_values)).values():
                 day = row.get(date_key)
                 if not day:
                     continue
