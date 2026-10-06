@@ -8,7 +8,15 @@ from datetime import datetime
 from bs4 import Tag
 from dateutil.parser import parse as date_parse
 
-from api.councils._base import Address, Collection, Http, Meta, Scraper, soup
+from api.councils._base import (
+    Address,
+    Collection,
+    Http,
+    Meta,
+    Scraper,
+    UpstreamError,
+    soup,
+)
 
 _URL = "https://maps.westsuffolk.gov.uk/MyWestSuffolk.aspx"
 _HEADERS = {
@@ -77,7 +85,7 @@ class WestSuffolk(Scraper):
                         Collection(next_collection.date(), bin_name_clean)
                     )
                 except ValueError as exc:
-                    raise ValueError(f"Error parsing bin data: {exc}") from exc
+                    raise UpstreamError(f"West Suffolk: error parsing bin data: {exc}") from exc
 
         return collections
 
