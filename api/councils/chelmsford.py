@@ -16,6 +16,7 @@ from api.councils._base import (
     Meta,
     Scraper,
     UpstreamError,
+    find_tag,
     match_address,
     parse_ics,
     soup,
@@ -76,7 +77,7 @@ class Chelmsford(Scraper):
                     day, letter = round_info
                     calendar_url = f"{_CALENDAR_ROOT}{day}-{letter}-collection-calendar/"
             except AddressNotFound:
-                pass
+                pass  # not in the table: the page may list the address as a card instead
 
         if calendar_url is None:
             cards: list[Tag] = []
@@ -89,34 +90,26 @@ class Chelmsford(Scraper):
                 )
                 if isinstance(link, Tag):
                     cards.append(details)
-            try:
-                card = match_address(
-                    address,
-                    cards,
-                    text=lambda candidate: candidate.get_text(" ", strip=True),
-                )
-                link = card.find(
-                    "a",
-                    href=lambda href: isinstance(href, str) and "collection-calendar" in href,
-                )
-                if isinstance(link, Tag):
-                    href = link.get("href")
-                    if isinstance(href, str):
-                        calendar_url = href
-            except AddressNotFound:
-                pass
+            card = match_address(
+                address,
+                cards,
+                text=lambda candidate: candidate.get_text(" ", strip=True),
+            )
+            link = card.find(
+                "a",
+                href=lambda href: isinstance(href, str) and "collection-calendar" in href,
+            )
+            if isinstance(link, Tag):
+                href = link.get("href")
+                if isinstance(href, str):
+                    calendar_url = href
 
         if calendar_url is None:
             raise AddressNotFound(f"Could not find collection round for address: {house_number}")
 
         response = await http.get(calendar_url, timeout=30)
         calendar_page = soup(response.text)
-        ics_link = calendar_page.find(
-            "a",
-            href=lambda href: isinstance(href, str) and href.lower().endswith(".ics"),
-        )
-        if not isinstance(ics_link, Tag):
-            raise UpstreamError("Could not find Chelmsford's collection calendar")
+        ics_link = find_tag(calendar_page, "a", href=lambda href: isinstance(href, str) and href.lower().endswith(".ics"), what="Could not find Chelmsford's collection calendar")
         ics_url = ics_link.get("href")
         if not isinstance(ics_url, str):
             raise UpstreamError("Chelmsford's collection calendar link is invalid")
