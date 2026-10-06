@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import re
-import time
 from collections.abc import Mapping
 from datetime import datetime
 from html import unescape
+from typing import Any
 
 from api.councils._base import (
     Address,
@@ -16,8 +16,8 @@ from api.councils._base import (
     InputError,
     Meta,
     Scraper,
-    UpstreamError,
 )
+from api.councils._platforms.achieveforms import first_row, page_session_id, run_lookup
 
 _BASE_URL = "https://watfordbc-self.achieveservice.com"
 _INITIAL_URL = f"{_BASE_URL}/en/service/Bin_Collections?accept=yes&consentMessageIds[]=9"
@@ -68,39 +68,28 @@ class Watford(Scraper):
         uprn_value = str(uprn or address_token).lstrip("0")
 
         r = await http.get(_INITIAL_URL, timeout=_REQUEST_TIMEOUT)
-        match = re.search(r'"auth-session":"([^"]+)"', r.text)
-        if not match:
-            raise UpstreamError("Failed to obtain Watford auth session")
-        sid = match.group(1)
+        sid = page_session_id(r.text, who="the Watford service page")
 
-        async def run_lookup(lookup_id: str, form_values: Mapping[str, object]) -> dict:
-            params = {
-                "id": lookup_id,
-                "repeat_against": "",
-                "noRetry": "false",
-                "getOnlyTokens": "undefined",
-                "log_id": "",
-                "app_name": "AF-Renderer::Self",
-                "_": str(int(time.time() * 1000)),
-                "sid": sid,
-            }
-            payload = {"formId": _FORM_ID, "formValues": form_values}
-            response = await http.post(
+        async def lookup(lookup_id: str, form_values: Mapping[str, object]) -> dict[str, Any] | None:
+            """Row 0 of one lookup; a lookup-level error means the property token was refused."""
+            data = await run_lookup(
+                http,
                 _API_URL,
-                params=params,
-                json=payload,
+                sid,
+                lookup_id,
+                form_values,
+                body={"formId": _FORM_ID},
                 timeout=_REQUEST_TIMEOUT,
             )
-            data = response.json()
-            transformed = data.get("integration", {}).get("transformed", {})
+            transformed = (data.get("integration") or {}).get("transformed") or {}
             if data.get("status") == "error" or transformed.get("error"):
                 raise InputError(
                     f"Watford lookup {lookup_id} failed: "
                     f"{data.get('error') or transformed.get('error') or data.get('data')}"
                 )
-            return transformed
+            return first_row(data)
 
-        transformed = await run_lookup(
+        row = await lookup(
             _LOOKUP_ADDRESS_POINT,
             {
                 "Address": {
@@ -109,8 +98,7 @@ class Watford(Scraper):
                 }
             },
         )
-        row = transformed.get("rows_data", {}).get("0", {})
-        echo_address_point = row.get("echoAddressPoint")
+        echo_address_point = (row or {}).get("echoAddressPoint")
         if not echo_address_point:
             raise AddressNotFound("Watford could not resolve this address")
 
@@ -121,15 +109,13 @@ class Watford(Scraper):
                 "echoAddressPoint": {"value": str(echo_address_point)},
             }
         }
-        collections_data = await run_lookup(_LOOKUP_NEXT_COLLECTIONS, form_values)
-        row = collections_data.get("rows_data", {}).get("0", {})
+        row = await lookup(_LOOKUP_NEXT_COLLECTIONS, form_values) or {}
         entries = _extract_collections(row.get("dispHTML", ""))
         if entries:
             return entries
 
         if row.get("lastCollection") == "NaN-aN-aN":
-            calendar_data = await run_lookup(_LOOKUP_CALENDAR, form_values)
-            calendar = calendar_data.get("rows_data", {}).get("0", {}).get("calendar")
+            calendar = (await lookup(_LOOKUP_CALENDAR, form_values) or {}).get("calendar")
             raise InputError(
                 "Watford did not return collection data for this property token "
                 f"(calendar: {calendar or 'unknown'})."
