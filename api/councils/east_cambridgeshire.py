@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import re
-import time
 from datetime import date, datetime, timedelta
 
 from api.councils._base import (
@@ -15,6 +13,7 @@ from api.councils._base import (
     Scraper,
     UpstreamError,
 )
+from api.councils._platforms.achieveforms import first_row, page_session_id, run_lookup
 
 _HOSTNAME = "eastcambs-self.achieveservice.com"
 _PROCESS_ID = "2c7575a6-0139-4555-9d8a-ab504a44d989"
@@ -23,6 +22,7 @@ _INITIAL_URL = f"https://{_HOSTNAME}/AchieveForms/"
 _AUTH_LOOKUP_ID = "69d8f92eea3cf"
 _COLLECTIONS_LOOKUP_ID = "6784e74793b68"
 _API_URL = f"https://{_HOSTNAME}/apibroker/runLookup"
+_APP_NAME = "AchieveForms"
 
 
 class EastCambridgeshire(Scraper):
@@ -52,79 +52,45 @@ class EastCambridgeshire(Scraper):
             timeout=30,
         )
 
-        sid_match = re.search(r'"auth-session":"([^"]+)"', r.text)
-        if not sid_match:
-            raise UpstreamError("Could not obtain session ID from East Cambs service")
-        sid = sid_match.group(1)
+        sid = page_session_id(r.text, who="the East Cambs service page")
 
-        timestamp = int(time.time() * 1000)
-        r_auth = await http.post(
-            _API_URL,
-            params={
-                "id": _AUTH_LOOKUP_ID,
-                "repeat_against": "",
-                "noRetry": "false",
-                "getOnlyTokens": "undefined",
-                "log_id": "",
-                "app_name": "AchieveForms",
-                "_": timestamp,
-                "sid": sid,
-            },
-            json={"formValues": {"Section 1": {}}},
-            timeout=30,
+        auth_row = first_row(
+            await run_lookup(
+                http, _API_URL, sid, _AUTH_LOOKUP_ID, {"Section 1": {}}, app_name=_APP_NAME
+            )
         )
-        auth_data = r_auth.json()
-        auth_token = (
-            auth_data.get("integration", {})
-            .get("transformed", {})
-            .get("rows_data", {})
-            .get("0", {})
-            .get("AuthenticateResponse", "")
-        )
+        if auth_row is None or "AuthenticateResponse" not in auth_row:
+            raise UpstreamError("East Cambridgeshire gave no AuthenticateResponse")
 
         today = date.today()
         service_start = date(2026, 6, 1)
         start_date = max(today, service_start)
         end_date = today + timedelta(days=90)
 
-        timestamp = int(time.time() * 1000)
-        r_col = await http.post(
+        uprn = address.need("uprn")
+        col_data = await run_lookup(
+            http,
             _API_URL,
-            params={
-                "id": _COLLECTIONS_LOOKUP_ID,
-                "repeat_against": "",
-                "noRetry": "false",
-                "getOnlyTokens": "undefined",
-                "log_id": "",
-                "app_name": "AchieveForms",
-                "_": timestamp,
-                "sid": sid,
-            },
-            json={
-                "formValues": {
-                    "Section 1": {
-                        "AuthenticateResponse": {"value": auth_token},
-                        "selected_uprn": {"value": address.need("uprn")},
-                        "MinimumDateForNextDates": {
-                            "value": start_date.strftime("%Y-%m-%d")
-                        },
-                        "MaximumDateFormattedNext": {
-                            "value": end_date.strftime("%Y-%m-%d")
-                        },
-                    }
+            sid,
+            _COLLECTIONS_LOOKUP_ID,
+            {
+                "Section 1": {
+                    "AuthenticateResponse": {"value": auth_row["AuthenticateResponse"]},
+                    "selected_uprn": {"value": uprn},
+                    "MinimumDateForNextDates": {"value": start_date.strftime("%Y-%m-%d")},
+                    "MaximumDateFormattedNext": {"value": end_date.strftime("%Y-%m-%d")},
                 }
             },
-            timeout=30,
+            app_name=_APP_NAME,
         )
-        col_data = r_col.json()
 
-        select_data = (
-            col_data.get("integration", {})
-            .get("transformed", {})
-            .get("select_data", [])
-        )
+        # This lookup answers a dropdown (`select_data`: label "<bin> - dd/mm/yyyy"), not rows_data.
+        transformed = (col_data.get("integration") or {}).get("transformed")
+        if not isinstance(transformed, dict):
+            raise UpstreamError(f"East Cambridgeshire reply has no integration.transformed: {str(col_data)[:200]}")
+        select_data = transformed.get("select_data") or []
         if not select_data:
-            raise AddressNotFound(f"East Cambridgeshire has no collections for UPRN {address.need('uprn')}")
+            raise AddressNotFound(f"East Cambridgeshire has no collections for UPRN {uprn}")
 
         collections = []
         for item in select_data:
