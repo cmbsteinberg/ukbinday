@@ -1,0 +1,228 @@
+{
+ "exchanges": [
+  {
+   "request": {
+    "body": {
+     "data": {
+      "postcode": "KT3 3EG"
+     }
+    },
+    "method": "POST",
+    "params": null,
+    "url": "https://waste-services.kingston.gov.uk/waste"
+   },
+   "response": {
+    "encoding": "utf-8",
+    "headers": [
+     [
+      "server",
+      "nginx"
+     ],
+     [
+      "content-type",
+      "text/html; charset=utf-8"
+     ],
+     [
+      "set-cookie",
+      "fixmystreet_app_session=7808048be958c39d5250c476e1e92fdcca0c0c81; path=/; expires=Tue, 03-Nov-2026 09:20:25 GMT; secure; HttpOnly"
+     ]
+    ],
+    "status": 200,
+    "text": "<!doctype html>\n<!--[if IE 9]>   <html class=\"no-js ie9\" lang=\"en-gb\"><![endif]-->\n<!--[if gt IE 9]><!--><html class=\"no-js\" lang=\"en-gb\"><!--<![endif]-->\n    <head>\n        <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"initial-scale=1.0, width=device-width, viewport-fit=cover\">\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n\n\n<title>\n    \n    Bins, rubbish and recycling | Royal Borough of Kingston upon Thames</title>\n\n\n\n\n<link rel=\"stylesheet\" href=\"/static/cobrands/kingston/base.71fda72170d6.css\">\n<link rel=\"stylesheet\" href=\"/static/cobrands/kingston/layout.0745af1b8dcc.css\" media=\"screen and (min-width:48em)\">\n<!--[if (lt IE 9) & (!IEMobile)]>\n    <link rel=\"stylesheet\" href=\"/static/cobrands/kingston/layout.0745af1b8dcc.css\">\n<![endif]-->\n<link rel=\"stylesheet\" href=\"/static/vendor/OpenLayers/theme/default/style.836778f74ad9.css\">\n\n\n\n\n\n    <link rel=\"manifest\" href=\"/.well-known/manifest-waste.webmanifest\">\n\n\n    <meta name='theme-color' content='#ffffff'>\n    \n        <link rel=\"apple-touch-icon\" sizes=\"192x192\" href=\"/theme/kingston/2c734fbc1679b735353c836caa30c8724111f476.png\">\n    \n\n\n\n\n<!--[if (lt IE 9)]>\n    <script src=\"/static/vendor/html5shiv.4614227df64d.js\"></script>\n<![endif]-->\n<script nonce=\"\">\n(function(d,e,k){function m(b,n,a,l){var f=e.createElement(\"div\");var c=e.body;c||(c=e.createElement(\"body\"),c.fake=!0);if(parseInt(a,10))for(;a--;){var d=e.createElement(\"div\");d.id=l?l[a]:\"modernizr\"+(a+1);f.appendChild(d)}a=e.createElement(\"style\");a.type=\"text/css\";a.id=\"smodernizr\";(c.fake?c:f).appendChild(a);c.appendChild(f);a.styleSheet?a.styleSheet.cssText=b:a.appendChild(e.createTextNode(b));f.id=\"modernizr\";if(c.fake){c.style.background=\"\";c.style.overflow=\"hidden\";var g=h.style.overflow;\nh.style.overflow=\"hidden\";h.appendChild(c)}b=n(f,b);c.fake?(c.parentNode.removeChild(c),h.style.overflow=g,h.offsetHeight):f.parentNode.removeChild(f);return!!b}k={_version:\"3.11.4\"};var g=function(){};g.prototype=k;g=new g;var h=e.documentElement,p=function(){var b=d.matchMedia||d.msMatchMedia;return b?function(d){return(d=b(d))&&d.matches||!1}:function(b){var a=!1;m(\"@media \"+b+\" { #modernizr { position: absolute; } }\",function(b){a=\"absolute\"===(\"getComputedStyle\"in d?getComputedStyle(b):b.currentStyle).position});\nreturn a}}();k.mq=p;d.Modernizr=g})(window,document);\n    var fixmystreet=fixmystreet||{};fixmystreet.page=\"\";fixmystreet.cobrand=\"kingston\";fixmystreet.password_minimum_length=8;fixmystreet.photo_first=0;\n    (function(a){a=a.documentElement;a.className=a.className.replace(/\\bno-js\\b/,\"js\");var b=Modernizr.mq(\"(min-width: 48em)\")?\"desktop\":\"mobile\";\"IntersectionObserver\"in window&&(a.className+=\" lazyload\");\"mobile\"===b&&(a.className+=\" mobile\")})(document);\n</script>\n\n<script nonce=\"\">\nif ('serviceWorker' in navigator) {\n    window.addEventListener('load', function() {\n        navigator.serviceWorker.register('/service-worker.js');\n    });\n}\n</script>\n\n\n    <meta name=\"robots\" content=\"noindex,nofollow\">\n\n\n<meta name=\"format-detection\" content=\"telephone=no\">\n<meta name=\"google\" content=\"notranslate\">\n\n\n\n\n\n\n    \n        <link rel=\"prefetch\" href=\"/static/vendor/OpenLayers/OpenLayers.wfs.c20e25c9d659.js\">\n    \n        <link rel=\"prefetch\" href=\"/static/js/map-OpenLayers.auto.min.27ef1b53654a.js\">\n    \n        <link rel=\"prefetch\" href=\"/static/js/map-OpenStreetMap.auto.min.d5abe766033c.js\">\n    \n        <link rel=\"prefetch\" href=\"/static/js/map-os-bng.auto.min.9c5826149bce.js\">\n    \n    <link rel=\"prefetch\" href=\"/static/cobrands/fixmystreet/map.auto.min.ea73f7151bdc.js\">\n    <link rel=\"prefetch\" href=\"/static/vendor/dropzone.min.1c52d40bf872.js\">\n    <link rel=\"prefetch\" href=\"/static/vendor/fancybox/jquery.fancybox-1.3.4.pack.d243d1742854.js\">\n\n\n\n\n        <meta property=\"og:url\" content=\"https://waste-services.kingston.gov.uk/waste\">\n        <meta property=\"og:title\" content=\"Bins, rubbish and recycling | Royal Borough of Kingston upon Thames\">\n        <meta property=\"og:site_name\" content=\"Bins, rubbish and recycling | Royal Borough of Kingston upon Thames\">\n        \n        <meta property=\"og:type\" content=\"website\">\n                \n        \n        <meta property=\"og:image\" content=\"https://waste-services.kingston.gov.uk/cobrands/fixmystreet/images/fms-og_image.jpg\">\n        <meta property=\"og:image:type\" content=\"image/jpeg\">\n        <meta property=\"og:image:width\" content=\"1200\">\n        <meta property=\"og:image:height\" content=\"630\">\n        \n\n\n\n<script>\n(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\nnew Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\nj=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n})(window,document,'script','dataLayer','GTM-57VJDBT');\n</script>\n\n\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap\" rel=\"stylesheet\">\n<link rel=\"icon\" type=\"image/png\" sizes=\"96x96\" href=\"/cobrands/kingston/images/favicon.png\">\n\n    </head>\n    \n    <body class=\"waste govuk bulky\">\n\n        <a class=\"skiplink\" href=\"#content\">Skip to main content</a>\n\n    \n\n    \n<!-- Google Tag Manager (noscript) -->\n<noscript><iframe src=\"https://www.googletagmanager.com/ns.html?id=GTM-57VJDBT\"\nheight=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe></noscript>\n<!-- End Google Tag Manager (noscript) -->\n\n\n\n    <div class=\"wrapper\">\n        <div class=\"table-cell\">\n            <header id=\"site-header\" role=\"banner\">\n    <div class=\"container\">\n        <a href=\"https://www.kingston.gov.uk/\" id=\"site-logo\">Bins, rubbish and recycling | Royal Borough of Kingston upon Thames</a>\n<a href=\"/waste\" id=\"report-cta\" title=\"Report a problem\">Report</a>\n\n        <label id=\"nav-link\" for=\"main-nav-btn\" aria-label=\"Open main navigation\">Menu</label>\n    </div>\n</header>\n\n<div class=\"nav-wrapper\">\n    <div class=\"container\">\n        \n\n\n\n    <div id=\"js-menu-open-modal\"></div>\n    <input role=\"button\" type=\"checkbox\" id=\"main-nav-btn\" autocomplete=\"off\" aria-expanded=\"false\">\n    <nav id=\"main-nav\" role=\"navigation\">\n\n\n    <ul class=\"nav-menu nav-menu--main\">\n        <!--<li ><a href=\"/auth\" >Sign in</a></li>--><li ><a href=\"https://www.kingston.gov.uk/bins-and-recycling\" >Help</a></li><li class=\"nav-menu__item--privacy\"><a href=\"/about/privacy\" >Privacy</a></li>\n    </ul>\n\n\n    </nav>\n\n\n    </div>\n</div>\n\n\n            \n\n            <a name=\"content\"></a>\n            \n\n\n            <div class=\"container\">\n              \n                <div class=\"content\" role=\"main\">\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  \n\n\n  \n\n\n  <h1 class=\"govuk-heading-xl\"></h1>\n\n\n\n\n\n<form class=\"waste waste--form815\" method=\"post\"\n    >\n  \n  \n  \n    \n    \n\n    \n\n    <div class=\"govuk-form-group\" id=\"form-address-row\">\n    \n        \n    <label class=\"govuk-label\" for=\"address\">\n      \n        Select an address\n      \n    </label>\n  \n  \n\n  <select class=\"govuk-select js-autocomplete\" id=\"address\" name=\"address\" required>\n    <option value=\"\"></option>\n    \n      \n      \n        \n        \n        <option value=\"2678450\">1 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2684948\">2 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2707697\">3 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2670416\">4 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2655836\">5 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2686105\">6 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2662237\">7 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2707688\">8 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2633019\">9 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2676883\">10 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2711999\">11 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2699103\">12 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2649028\">14 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2711454\">15 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2645141\">16 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2714249\">17 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2634873\">18 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2666773\">19 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2693355\">20 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2673642\">21 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2633896\">22 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2664805\">23 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2651736\">24 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2701097\">25 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2713830\">26 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2651125\">27 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2676841\">28 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2656604\">29 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2674949\">30 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2665561\">31 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2653357\">33 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2639842\">35 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2653352\">37 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2708749\">39 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2685506\">41 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2707549\">43 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2682696\">45 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2692391\">47 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2683523\">49 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2661732\">51 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2653109\">53 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"2663704\">55 Beechcroft Avenue, New Malden, KT3 3EG</option>\n      \n\t\n      \n      \n        \n        \n        <option value=\"missing\">I can’t find my address</option>\n      \n\t\n  </select>\n\n    \n    </div>\n  \n    \n    \n\n    \n\n    <div class=\"govuk-form-group\" id=\"form-go-row\">\n    \n        \n  \n  <input type=\"submit\" name=\"go\" id=\"go\" value=\"Continue\" class=\"govuk-button\" />\n\n    \n    </div>\n  \n\n</form>\n\n\n                </div><!-- .content role=main -->\n            </div><!-- .container -->\n        </div><!-- .table-cell -->\n    </div> <!-- .wrapper -->\n\n    \n<footer class=\"site-footer\">\n    <div class=\"container\">\n        <a class=\"footer-logo\" href=\"https://www.kingston.gov.uk\" aria-label=\"Logo: Visit the www.kingston.gov.uk home page\"></a>\n        <nav class=\"site-footer__group\" aria-label=\"Footer Navigation\">\n             <ul class=\"list-inline\">\n                 <li class=\"list__item\"><a class=\"list__link\" href=\"https://www.kingston.gov.uk/council-democracy/privacy-notice-data-protection/1\">Privacy Statement</a></li>\n                 <li class=\"list__item\"><a class=\"list__link\" href=\"https://www.kingston.gov.uk/council-democracy/privacy-notice-data-protection/4\">Accessibility Statement</a></li>\n                 <li class=\"list__item\"><a class=\"list__link\" href=\"https://www.kingston.gov.uk/site-map\">Site Map</a></li>\n                 <li class=\"list__item\"><a class=\"list__link\" href=\"https://www.kingston.gov.uk/council-democracy/contact-us/1\">Contact Us</a></li>\n                 <li class=\"list__item\"><a class=\"list__link\" href=\"https://www.kingston.gov.uk/jobs-careers-volunteering\">Careers</a></li>\n                 <li class=\"list__item\"><a class=\"list__link\" href=\"https://www.kingston.gov.uk/modernslaverystatement\">Modern Slavery</a></li>\n                 <li class=\"list__item\"><a class=\"list__link\" href=\"https://www.kingston.gov.uk/domestic-sexual-violence/violence-women-girls/2\">White Ribbon</a></li>\n             </ul>\n         </nav>\n    </div>\n</footer>\n<div class=\"footer-main-nav\">\n    <div class=\"container\">\n        \n\n\n\n\n    <ul class=\"nav-footer\">\n        <!--<li ><a href=\"/auth\" >Sign in</a></li>--><li ><a href=\"https://www.kingston.gov.uk/bins-and-recycling\" >Help</a></li><li class=\"nav-menu__item--privacy\"><a href=\"/about/privacy\" >Privacy</a></li>\n    </ul>\n\n\n\n    </div>\n</div>\n\n<div class=\"societyworks-footer\">\n  <div class=\"container\">\n      <p>\n          Powered by\n        \n          <a class=\"societyworks-footer__logo\" href=\"https://www.societyworks.org/services/waste/\">SocietyWorks</a>\n        \n      </p>\n  </div>\n</div>\n\n\n\n\n\n\n\n<!--[if lte IE 9]>\n  <script src=\"/static/vendor/history.polyfill.min.a514228c8898.js\"></script>\n<![endif]-->\n<script src=\"/static/js/translation_strings.en-gb.ba9c23ce46b4.js\"></script>\n<script src=\"/static/js/validation_rules.auto.min.9617a6ea5034.js\"></script>\n<script src=\"/static/vendor/jquery-3.7.1.min.2c872dbe60f4.js\"></script>\n<script src=\"/static/vendor/jquery.multi-select.min.9788b7bbb1e3.js\"></script>\n<script src=\"/static/vendor/jquery.validate.min.f15265a2f8ea.js\"></script>\n<script src=\"/static/vendor/jquery.validate.additional-methods.require-from-group.min.85bcc61adad9.js\"></script>\n<script src=\"/static/vendor/idb-keyval-iife.min.08bfe56c11c7.js\"></script>\n<script src=\"/static/js/offline_draft.auto.min.d1bdd2d1353a.js\"></script>\n<script src=\"/static/cobrands/fixmystreet/offline_report.auto.min.93522809286b.js\"></script>\n<script src=\"/static/cobrands/fixmystreet/fixmystreet.auto.min.45ca2b20bbc5.js\"></script>\n<script src=\"/static/vendor/accessible-autocomplete.min.dfdb712af90e.js\"></script>\n<script src=\"/static/js/waste.auto.min.3c8e4d543a00.js\"></script>\n<script src=\"/static/cobrands/fixmystreet/prefetch-polyfill.auto.min.2da37c91514a.js\"></script>\n<script src=\"/static/vendor/dropzone.min.1c52d40bf872.js\"></script>\n\n\n\n\n\n</body>\n</html>\n\n",
+    "url": "https://waste-services.kingston.gov.uk/waste"
+   }
+  },
+  {
+   "request": {
+    "body": null,
+    "method": "GET",
+    "params": null,
+    "url": "https://waste-services.kingston.gov.uk/waste/2701097/calendar.ics"
+   },
+   "response": {
+    "encoding": "UTF-8",
+    "headers": [
+     [
+      "server",
+      "nginx"
+     ],
+     [
+      "content-type",
+      "text/calendar; charset=UTF-8"
+     ]
+    ],
+    "status": 200,
+    "text": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nCALSCALE:GREGORIAN\r\nMETHOD:PUBLISH\r\nPRODID://FixMyStreet//Bin Collection Calendars//EN\r\nREFRESH-INTERVAL;VALUE=DURATION:P1D\r\nSOURCE;VALUE=URI:https://waste-services.kingston.gov.uk/waste/2701097/calen\r\n dar.ics\r\nURL:https://waste-services.kingston.gov.uk/waste/2701097\r\nX-PUBLISHED-TTL:P1D\r\nX-WR-CALNAME:Bin calendar\r\nX-WR-TIMEZONE:Europe/London\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261015\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261014\r\nSUMMARY:Mixed recycling collection\r\nUID:a12a92fddf9d89b6f4b69986e882161320a56035@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261029\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261028\r\nSUMMARY:Mixed recycling collection\r\nUID:5dffa7b77581b23b68aeaa373dd3cdc65921dac1@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261112\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261111\r\nSUMMARY:Mixed recycling collection\r\nUID:a879c5bffa3d969a376c96f0a401a70aef196a66@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261126\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261125\r\nSUMMARY:Mixed recycling collection\r\nUID:38a0ec7c42bf7a4368875158b08c9c0fce00bf2d@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261210\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261209\r\nSUMMARY:Mixed recycling collection\r\nUID:690d0e5150f8025133ae74c05a1cfeea055c3726@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261224\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261223\r\nSUMMARY:Mixed recycling collection\r\nUID:5ddd460f6b3b1a052faa812cbf0ef83961bca2e0@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261022\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261021\r\nSUMMARY:Garden Waste collection\r\nUID:dbdae5761b9318d05d9570222295f9c555bf3a6c@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261105\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261104\r\nSUMMARY:Garden Waste collection\r\nUID:dd6a07b53fd8b809d120daddc075428666e6bc51@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261119\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261118\r\nSUMMARY:Garden Waste collection\r\nUID:f6f53ee650555d8534631f3b37d4049b30b706e4@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261203\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261202\r\nSUMMARY:Garden Waste collection\r\nUID:efa6b237c91c2a4df3c9c15c4ed02c9367902562@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261217\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261216\r\nSUMMARY:Garden Waste collection\r\nUID:d39c6df1b467972637c8ec40b145db70dd7020ee@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261231\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261230\r\nSUMMARY:Garden Waste collection\r\nUID:5b241a6d7eefb15fec73f39e55e63f6d156455a2@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261008\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261007\r\nSUMMARY:Garden Waste collection\r\nUID:697c4e3268e17e4b1ed4210dae6b32b5c00f8de5@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261022\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261021\r\nSUMMARY:Non-recyclable Refuse collection\r\nUID:b20a4370583b6bbdfdceda51bb235798acaaea03@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261105\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261104\r\nSUMMARY:Non-recyclable Refuse collection\r\nUID:ab8f9b14c7dfe1919401703131c8260f677ec541@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261119\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261118\r\nSUMMARY:Non-recyclable Refuse collection\r\nUID:204d1bc921412db13a1415f86ebe004a90f27dc5@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261203\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261202\r\nSUMMARY:Non-recyclable Refuse collection\r\nUID:1453039ef213a1e023ebef19f8f322c3e2bdeaa9@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261217\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261216\r\nSUMMARY:Non-recyclable Refuse collection\r\nUID:4471d927eab23783d8cf47d07d5cf3d923e6406a@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261231\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261230\r\nSUMMARY:Non-recyclable Refuse collection\r\nUID:d86db0ad8ce70a7e5da4de87ef9107e475de69f7@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261008\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261007\r\nSUMMARY:Non-recyclable Refuse collection\r\nUID:24128d342687f27d607ceab6f0ad4b7f62457853@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261022\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261021\r\nSUMMARY:Paper and card collection\r\nUID:901d588035e0a38b1ea029b029025aa91961b5dd@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261105\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261104\r\nSUMMARY:Paper and card collection\r\nUID:15fca149b91587296b9a1073a09993a57e2b1e5b@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261119\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261118\r\nSUMMARY:Paper and card collection\r\nUID:0895021dd1c7ce9faa310f09cf4275d149bd5f70@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261203\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261202\r\nSUMMARY:Paper and card collection\r\nUID:6b4dde586c16319039189db217f79b61b39c54ed@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261217\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261216\r\nSUMMARY:Paper and card collection\r\nUID:8317c9fe710adb6de02f3672f2b459a15c253568@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261231\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261230\r\nSUMMARY:Paper and card collection\r\nUID:733c54a57d77d5405b326adf1c99b419213eed43@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261008\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261007\r\nSUMMARY:Paper and card collection\r\nUID:ca30c141e5b9d5fd439e9b6074d7af508bc507d7@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261015\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261014\r\nSUMMARY:Food waste collection\r\nUID:d5b541ac4cdba20bd5cd1a6219a7a776cf2e6c52@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261022\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261021\r\nSUMMARY:Food waste collection\r\nUID:2c986e799bc2b554643295b0b3c0e175e4685d8f@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261029\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261028\r\nSUMMARY:Food waste collection\r\nUID:82728e04bf3775552e642c0f9048c7c8587c15c8@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261105\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261104\r\nSUMMARY:Food waste collection\r\nUID:6a8d3a2585e96608924feb23729e5039972537aa@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261112\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261111\r\nSUMMARY:Food waste collection\r\nUID:5b251c9eb0d4b6b755bbbf6fa27bc64bc24083dd@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261119\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261118\r\nSUMMARY:Food waste collection\r\nUID:0aea6ff03fbc884ed4a47faa9b9ab21402b5dabc@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261126\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261125\r\nSUMMARY:Food waste collection\r\nUID:8cc001977b303c985eae50320a145209e9e68c5e@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261203\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261202\r\nSUMMARY:Food waste collection\r\nUID:ce0d561ada14f00434c6adf583141858f401e010@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261210\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261209\r\nSUMMARY:Food waste collection\r\nUID:100c220e1eebb076ca9e0da8d400b0471c80892a@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261217\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261216\r\nSUMMARY:Food waste collection\r\nUID:f65121e8176dd9837efdacae22f7ffd229e12ef4@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261224\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261223\r\nSUMMARY:Food waste collection\r\nUID:f8475a6c14c0f97a7c8345cc390e5479e3ea702d@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261231\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261230\r\nSUMMARY:Food waste collection\r\nUID:a7f0a449666c18b5578e84510c04cf86bfff4191@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nBEGIN:VEVENT\r\nDESCRIPTION:\r\nDTEND;VALUE=DATE:20261008\r\nDTSTAMP:20261006T092028Z\r\nDTSTART;VALUE=DATE:20261007\r\nSUMMARY:Food waste collection\r\nUID:b600c37a831b2c3c0663f83036f812a5c4db25e8@waste-services.kingston.gov.uk\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
+    "url": "https://waste-services.kingston.gov.uk/waste/2701097/calendar.ics"
+   }
+  }
+ ],
+ "golden": [
+  [
+   "2026-10-07",
+   "Food waste"
+  ],
+  [
+   "2026-10-07",
+   "Garden Waste"
+  ],
+  [
+   "2026-10-07",
+   "Non-recyclable Refuse"
+  ],
+  [
+   "2026-10-07",
+   "Paper and card"
+  ],
+  [
+   "2026-10-14",
+   "Food waste"
+  ],
+  [
+   "2026-10-14",
+   "Mixed recycling"
+  ],
+  [
+   "2026-10-21",
+   "Food waste"
+  ],
+  [
+   "2026-10-21",
+   "Garden Waste"
+  ],
+  [
+   "2026-10-21",
+   "Non-recyclable Refuse"
+  ],
+  [
+   "2026-10-21",
+   "Paper and card"
+  ],
+  [
+   "2026-10-28",
+   "Food waste"
+  ],
+  [
+   "2026-10-28",
+   "Mixed recycling"
+  ],
+  [
+   "2026-11-04",
+   "Food waste"
+  ],
+  [
+   "2026-11-04",
+   "Garden Waste"
+  ],
+  [
+   "2026-11-04",
+   "Non-recyclable Refuse"
+  ],
+  [
+   "2026-11-04",
+   "Paper and card"
+  ],
+  [
+   "2026-11-11",
+   "Food waste"
+  ],
+  [
+   "2026-11-11",
+   "Mixed recycling"
+  ],
+  [
+   "2026-11-18",
+   "Food waste"
+  ],
+  [
+   "2026-11-18",
+   "Garden Waste"
+  ],
+  [
+   "2026-11-18",
+   "Non-recyclable Refuse"
+  ],
+  [
+   "2026-11-18",
+   "Paper and card"
+  ],
+  [
+   "2026-11-25",
+   "Food waste"
+  ],
+  [
+   "2026-11-25",
+   "Mixed recycling"
+  ],
+  [
+   "2026-12-02",
+   "Food waste"
+  ],
+  [
+   "2026-12-02",
+   "Garden Waste"
+  ],
+  [
+   "2026-12-02",
+   "Non-recyclable Refuse"
+  ],
+  [
+   "2026-12-02",
+   "Paper and card"
+  ],
+  [
+   "2026-12-09",
+   "Food waste"
+  ],
+  [
+   "2026-12-09",
+   "Mixed recycling"
+  ],
+  [
+   "2026-12-16",
+   "Food waste"
+  ],
+  [
+   "2026-12-16",
+   "Garden Waste"
+  ],
+  [
+   "2026-12-16",
+   "Non-recyclable Refuse"
+  ],
+  [
+   "2026-12-16",
+   "Paper and card"
+  ],
+  [
+   "2026-12-23",
+   "Food waste"
+  ],
+  [
+   "2026-12-23",
+   "Mixed recycling"
+  ],
+  [
+   "2026-12-30",
+   "Food waste"
+  ],
+  [
+   "2026-12-30",
+   "Garden Waste"
+  ],
+  [
+   "2026-12-30",
+   "Non-recyclable Refuse"
+  ],
+  [
+   "2026-12-30",
+   "Paper and card"
+  ]
+ ],
+ "params": {
+  "house_number": "25",
+  "postcode": "KT3 3EG",
+  "street": "Beechcroft Avenue"
+ },
+ "recorded": "2026-10-06"
+}
