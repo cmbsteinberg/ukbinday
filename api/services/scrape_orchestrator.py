@@ -60,12 +60,32 @@ class DeeplinkAnswer(Exception):
         self.deeplink = deeplink
 
 
-def map_scrape_exception(council: str, exc: Exception) -> ScrapeHTTPException:
+def _log_extra(request, uprn: str | None, params: dict | None) -> dict:
+    """Structured context for scrape logs: request ID, UPRN and postcode only.
+
+    Never the full params: they can carry street address fields.
+    """
+    extra: dict = {}
+    request_id = getattr(getattr(request, "state", None), "request_id", None)
+    if request_id:
+        extra["request_id"] = request_id
+    if uprn:
+        extra["uprn"] = uprn
+    postcode = (params or {}).get("postcode")
+    if postcode:
+        extra["postcode"] = postcode
+    return extra
+
+
+def map_scrape_exception(
+    council: str, exc: Exception, extra: dict | None = None
+) -> ScrapeHTTPException:
     if isinstance(exc, InputError):
         suggestions = exc.suggestions if isinstance(exc, AddressNotFound) else ()
-        logger.info("Scraper %s rejected the input: %s", council, exc)
+        logger.info("Scraper %s rejected the input: %s", council, exc, extra=extra)
         return ScrapeHTTPException(422, _INPUT_REJECTED, suggestions=suggestions)
     if isinstance(exc, ScraperTimeoutError):
+        logger.info("Scraper %s timed out", council, extra=extra)
         return ScrapeHTTPException(
             504,
             "Your council's website is taking too long to respond. "
@@ -74,14 +94,14 @@ def map_scrape_exception(council: str, exc: Exception) -> ScrapeHTTPException:
         )
     if isinstance(exc, (httpx.HTTPError, TimeoutError, UpstreamError)):
         if isinstance(exc, UpstreamError):
-            logger.info("Scraper %s upstream error: %s", council, exc)
+            logger.info("Scraper %s upstream error: %s", council, exc, extra=extra)
         return ScrapeHTTPException(
             503,
             "We couldn't reach your council's website. "
             "The site may be temporarily down \u2014 please try again later.",
             failure="blocked" if getattr(exc, "blocker", None) == Blocker.BOT_PROTECTION else "network",
         )
-    logger.exception("Scraper %s failed", council)
+    logger.exception("Scraper %s failed", council, extra=extra)
     return ScrapeHTTPException(
         503,
         "Something went wrong while fetching your collection schedule. "
@@ -150,7 +170,7 @@ async def get_or_scrape(
             await cache.record_failure(uprn, str(exc), scraper_id=council, params=params)
         except BlobStoreError:
             logger.exception("ICS cache failure record failed for %s", uprn)
-        raise _answer_for(registry, council, exc) from exc
+        raise _answer_for(registry, council, exc, request=request, uprn=uprn, params=params) from exc
 
     try:
         entry = await cache.write(uprn, council, params, collections)
@@ -165,7 +185,9 @@ async def live_scrape(request: Request, council: str, params: dict[str, str]):
     try:
         collections = await registry.invoke(council, params)
     except Exception as exc:
-        raise _answer_for(registry, council, exc) from exc
+        raise _answer_for(
+            registry, council, exc, request=request, uprn=params.get("uprn"), params=params
+        ) from exc
     return collections
 
 
@@ -182,7 +204,15 @@ def needs_browser_deeplink(meta, reason: str, blocker: Blocker | None = None) ->
     return DeeplinkAnswer(target)
 
 
-def _answer_for(registry, council: str, exc: Exception) -> Exception:
+def _answer_for(
+    registry,
+    council: str,
+    exc: Exception,
+    *,
+    request=None,
+    uprn: str | None = None,
+    params: dict | None = None,
+) -> Exception:
     """What a failed scrape answers with.
 
     NeedsBrowser: a deeplink (meta.url first). Otherwise the mapped HTTP error,
@@ -191,10 +221,11 @@ def _answer_for(registry, council: str, exc: Exception) -> Exception:
     a bug, not the site).
     """
     meta = registry.get(council)
+    extra = _log_extra(request, uprn, params)
     if isinstance(exc, NeedsBrowser) and meta is not None:
-        logger.info("Scraper %s needs a browser: %s", council, exc)
+        logger.info("Scraper %s needs a browser: %s", council, exc, extra=extra)
         return needs_browser_deeplink(meta, str(exc), exc.blocker)
-    error = map_scrape_exception(council, exc)
+    error = map_scrape_exception(council, exc, extra)
     if isinstance(exc, (UpstreamError, ScraperTimeoutError)) and meta is not None:
         error.fallback = deeplinks.for_upstream_failure(meta, exc)
     return error

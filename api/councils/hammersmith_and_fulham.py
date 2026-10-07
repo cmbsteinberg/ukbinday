@@ -4,8 +4,11 @@ from __future__ import annotations
 
 from datetime import date
 
+from bs4 import Tag
+
 from api.councils._base import (
     Address,
+    AddressNotFound,
     Collection,
     Http,
     Meta,
@@ -35,10 +38,16 @@ class HammersmithAndFulham(Scraper):
     headers = {"User-Agent": _USER_AGENT}
 
     async def fetch(self, address: Address, http: Http) -> list[Collection]:
-        postcode = address.need("postcode").strip().replace(" ", "")
+        raw_postcode = address.need("postcode").strip()
+        postcode = raw_postcode.replace(" ", "")
         response = await http.get(f"{_RESULTS_URL}?postcode={postcode}")
         results = find_tag(soup(response.text), "div", {"class": "nearest-search-results"})
-        links = find_tag(results, "ol").find_all("a")
+        listing = results.find("ol")
+        if not isinstance(listing, Tag):
+            raise AddressNotFound(f"No results found for postcode {raw_postcode}")
+        links = listing.find_all("a")
+        if not links:
+            raise AddressNotFound(f"No results found for postcode {raw_postcode}")
 
         today = date.today()
         collections = []
