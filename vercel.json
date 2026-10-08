@@ -10,8 +10,20 @@
 	},
 	"crons": [
 		{
-			"path": "/api/v2/internal/refresh?shard=0&of=1",
+			"path": "/api/v2/internal/refresh?shard=0&of=4",
 			"schedule": "0 5 * * *"
+		},
+		{
+			"path": "/api/v2/internal/refresh?shard=1&of=4",
+			"schedule": "10 5 * * *"
+		},
+		{
+			"path": "/api/v2/internal/refresh?shard=2&of=4",
+			"schedule": "20 5 * * *"
+		},
+		{
+			"path": "/api/v2/internal/refresh?shard=3&of=4",
+			"schedule": "30 5 * * *"
 		}
 	],
 	"git": {
@@ -21,8 +33,14 @@
 		{
 			"source": "/static/(.*)",
 			"headers": [
-				{ "key": "X-Content-Type-Options", "value": "nosniff" },
-				{ "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+				{
+					"key": "X-Content-Type-Options",
+					"value": "nosniff"
+				},
+				{
+					"key": "X-Frame-Options",
+					"value": "SAMEORIGIN"
+				},
 				{
 					"key": "Strict-Transport-Security",
 					"value": "max-age=31536000; includeSubDomains"

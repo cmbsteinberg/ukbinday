@@ -1,7 +1,7 @@
 name: Uptime
 
 # Production checks, every 30 minutes (the refresh-keeping-up check runs once a day, 07:15 UTC,
-# after the 05:00 Vercel cron refresh). A failed scheduled run emails whoever last
+# after the 05:00–05:30 Vercel cron refreshes). A failed scheduled run emails whoever last
 # changed this schedule (GitHub's default notification), which is the alert.
 # GitHub disables schedules in a public repo after 60 days without commits; re-enable
 # it from the Actions tab if that happens.
@@ -25,8 +25,12 @@ jobs:
 
       - name: Nightly refresh ran in the last 36 h
         run: |
-          age="$(curl -sS --fail --retry 3 --retry-all-errors --retry-delay 20 --max-time 30 "$BASE/metrics" \
-            | jq -r '.ics_cache.last_refresh_age_seconds // empty')"
+          metrics="$(curl -sS --fail --retry 3 --retry-all-errors --retry-delay 20 --max-time 30 "$BASE/metrics")"
+          echo "$metrics" | jq -e '
+            .ics_cache | .shards_expected == 4 and
+            (.last_refresh_stats | keys | sort) == ["0", "1", "2", "3"]
+          ' > /dev/null || { echo "::error::refresh heartbeat missing an expected shard"; exit 1; }
+          age="$(echo "$metrics" | jq -r '.ics_cache.last_refresh_age_seconds // empty')"
           echo "refresh heartbeat age: ${age:-none}s"
           [ -n "$age" ] && [ "$age" -lt 129600 ] || { echo "::error::refresh heartbeat missing or older than 36 h"; exit 1; }
 

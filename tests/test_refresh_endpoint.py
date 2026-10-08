@@ -182,3 +182,34 @@ async def test_deadline_stops_queued_work(cache, monkeypatch):
     stats = await job.run_once(deadline=time.monotonic() + 0.2)
     assert (stats.refreshed, stats.deferred) == (1, 3)
     assert len(started) == 1
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_four_concurrent_shards_keep_every_heartbeat(client, cron_secret, cache, fetched):
+    uprns = await seed(cache, n=8)
+    responses = await asyncio.gather(*(
+        client.get("/internal/refresh", params={"shard": shard, "of": 4}, headers=AUTH)
+        for shard in range(4)
+    ))
+    assert all(response.status_code == 200 for response in responses)
+    assert sorted(fetched) == uprns
+    info = (await client.get("/metrics")).json()["ics_cache"]
+    assert info["entries"] == 8
+    assert info["shards_expected"] == 4
+    assert set(info["last_refresh_stats"]) == {"0", "1", "2", "3"}
+    assert all(stats["refreshed"] == 2 for stats in info["last_refresh_stats"].values())
+
+
+@pytest.mark.asyncio(loop_scope="session")
+async def test_legacy_heartbeat_read_until_first_new_shard(cache):
+    import json
+
+    from api.services.ics_cache import HEARTBEAT_KEY
+
+    legacy = {"of": 1, "shards": {"0": {"last_run": "2026-10-01T05:00:00+00:00", "entries": 8, "stats": {}}}}
+    cache.store.put(HEARTBEAT_KEY, json.dumps(legacy).encode())
+    assert await cache.read_heartbeat() == legacy
+    await cache.write_heartbeat(0, 4, 2, {})
+    heartbeat = await cache.read_heartbeat()
+    assert heartbeat["of"] == 4
+    assert set(heartbeat["shards"]) == {"0"}

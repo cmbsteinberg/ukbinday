@@ -483,12 +483,35 @@ class IcsCache:
 
     def _read_heartbeat_sync(self) -> dict | None:
         raw = self.store.get(HEARTBEAT_KEY)
-        if raw is None:
-            return None
-        try:
-            return json.loads(raw)
-        except json.JSONDecodeError:
-            return None
+        legacy = None
+        if raw is not None:
+            try:
+                legacy = json.loads(raw)
+            except json.JSONDecodeError:
+                pass
+        records = []
+        for key in self.store.keys("meta/refresh_shards/"):
+            raw = self.store.get(key)
+            if raw is not None:
+                try:
+                    records.append(json.loads(raw))
+                except json.JSONDecodeError:
+                    continue
+        if not records:
+            return legacy
+        # The most recently completed pass selects the active layout. Each
+        # shard owns its file, so overlapping instances cannot lose updates.
+        latest = max(records, key=lambda record: record["last_run"])
+        of = latest["of"]
+        return {
+            "of": of,
+            "shards": {
+                str(record["shard"]): {
+                    key: record[key] for key in ("last_run", "entries", "stats")
+                }
+                for record in records if record["of"] == of
+            },
+        }
 
     async def write_heartbeat(self, shard: int, of: int, entries: int, stats: dict) -> None:
         """Record a finished pass of one shard, keeping the other shards' records
@@ -496,11 +519,12 @@ class IcsCache:
         await asyncio.to_thread(self._write_heartbeat_sync, shard, of, entries, stats)
 
     def _write_heartbeat_sync(self, shard: int, of: int, entries: int, stats: dict) -> None:
-        current = self._read_heartbeat_sync() or {}
-        shards = current.get("shards", {}) if current.get("of") == of else {}
-        shards[str(shard)] = {
+        record = {
+            "of": of,
+            "shard": shard,
             "last_run": _iso_utc(datetime.now(UTC)),
             "entries": entries,
             "stats": stats,
         }
-        self.store.put(HEARTBEAT_KEY, json.dumps({"of": of, "shards": shards}).encode())
+        key = f"meta/refresh_shards/{of}/{shard}.json"
+        self.store.put(key, json.dumps(record).encode())
