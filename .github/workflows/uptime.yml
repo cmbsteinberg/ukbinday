@@ -26,10 +26,6 @@ jobs:
       - name: Nightly refresh ran in the last 36 h
         run: |
           metrics="$(curl -sS --fail --retry 3 --retry-all-errors --retry-delay 20 --max-time 30 "$BASE/metrics")"
-          echo "$metrics" | jq -e '
-            .ics_cache | .shards_expected == 4 and
-            (.last_refresh_stats | keys | sort) == ["0", "1", "2", "3"]
-          ' > /dev/null || { echo "::error::refresh heartbeat missing an expected shard"; exit 1; }
           age="$(echo "$metrics" | jq -r '.ics_cache.last_refresh_age_seconds // empty')"
           echo "refresh heartbeat age: ${age:-none}s"
           [ -n "$age" ] && [ "$age" -lt 129600 ] || { echo "::error::refresh heartbeat missing or older than 36 h"; exit 1; }
@@ -37,7 +33,11 @@ jobs:
       - name: Nightly refresh reached every due calendar
         if: github.event.schedule == '15 7 * * *' || github.event_name == 'workflow_dispatch'
         run: |
-          deferred="$(curl -sS --fail --retry 3 --retry-all-errors --retry-delay 20 --max-time 30 "$BASE/metrics" \
-            | jq -r '[.ics_cache.last_refresh_stats // {} | .[] | .deferred // 0] | add // 0')"
+          metrics="$(curl -sS --fail --retry 3 --retry-all-errors --retry-delay 20 --max-time 30 "$BASE/metrics")"
+          echo "$metrics" | jq -e '
+            .ics_cache | .shards_expected == 4 and
+            (.last_refresh_stats | keys | sort) == ["0", "1", "2", "3"]
+          ' > /dev/null || { echo "::error::refresh heartbeat missing an expected shard"; exit 1; }
+          deferred="$(echo "$metrics" | jq -r '[.ics_cache.last_refresh_stats // {} | .[] | .deferred // 0] | add // 0')"
           echo "deferred calendars across shards: $deferred"
           [ "$deferred" -eq 0 ] || { echo "::error::nightly refresh hit its deadline with $deferred calendars deferred"; exit 1; }
