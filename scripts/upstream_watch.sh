@@ -21,7 +21,7 @@
 # to now.
 #
 # --hook (lefthook pre-commit) never blocks a commit: it checks at most once a
-# day, gives up after ~20s, stays silent when gh or python3 is missing or the
+# day, gives up after ~20s, stays silent when gh or uv is missing or the
 # network is down, always exits 0.
 
 set -uo pipefail
@@ -49,17 +49,21 @@ quit() {  # in --hook mode every exit is a clean one
 }
 
 command -v gh >/dev/null 2>&1 || { [ "$HOOK" = 1 ] || echo "upstream_watch: gh not installed" >&2; quit 1; }
-command -v python3 >/dev/null 2>&1 || { [ "$HOOK" = 1 ] || echo "upstream_watch: python3 not found" >&2; quit 1; }
+command -v uv >/dev/null 2>&1 || { [ "$HOOK" = 1 ] || echo "upstream_watch: uv not found" >&2; quit 1; }
+
+# The project interpreter (pyproject pins it), not whatever python3 is on PATH:
+# macOS ships 3.9, which lacks datetime.UTC.
+py() { uv run --project "$ROOT" --quiet python "$@"; }
 
 # gh with a hard time limit (perl's alarm survives exec; no coreutils timeout on macOS)
 ghc() { perl -e 'alarm shift @ARGV; exec @ARGV' "$CALL_TIMEOUT" gh "$@" 2>/dev/null; }
 
 NOW="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-LAST="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("checked_at",""))' "$STATE" 2>/dev/null || true)"
+LAST="$(py -c 'import json,sys; print(json.load(open(sys.argv[1])).get("checked_at",""))' "$STATE" 2>/dev/null || true)"
 
 if [ "$HOOK" = 1 ] && [ -n "$LAST" ]; then
   # At most once a day
-  python3 - "$LAST" <<'PY' || exit 0
+  py - "$LAST" <<'PY' || exit 0
 import sys
 from datetime import UTC, datetime, timedelta
 last = datetime.fromisoformat(sys.argv[1].replace("Z", "+00:00"))
@@ -70,7 +74,7 @@ fi
 SINCE="${SINCE:-${LAST:-$NOW}}"
 
 # upstream path <TAB> repo <TAB> "module (LAD)", one line per old ID that maps to a file
-TABLE="$(python3 - "$ROOT" <<'PY'
+TABLE="$(py - "$ROOT" <<'PY'
 import json, sys
 from pathlib import Path
 root = Path(sys.argv[1])

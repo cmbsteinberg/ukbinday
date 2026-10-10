@@ -18,6 +18,24 @@ jobs:
     env:
       BASE: https://ukbinday.co.uk/api/v2
     steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Address lookup returns addresses
+        # /find only calls the address API behind Turnstile, so run the lookup from main's code.
+        # Catches a broken session token (e87bb53) or the upstream API changing shape.
+        env:
+          ADDRESS_API_URL: https://www.midsuffolk.gov.uk/api/jsonws/invoke
+          ADDRESS_API_COMPANY_ID: "1486681"
+        run: |
+          uv run python -c "
+          import asyncio
+          from api.services.address_lookup import search_addresses
+          n = len(asyncio.run(search_addresses('RH16 1LG')))
+          print(f'RH16 1LG: {n} addresses')
+          assert n > 0, 'address lookup returned nothing'
+          " || { echo "::error::address lookup for RH16 1LG failed"; exit 1; }
+
       - name: Site answers
         run: |
           # Retry so one slow cold start doesn't send an email
