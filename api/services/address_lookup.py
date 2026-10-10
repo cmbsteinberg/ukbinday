@@ -11,7 +11,12 @@ logger = logging.getLogger(__name__)
 
 _TIMEOUT = 15
 _SESSION_PAGE = "https://www.midsuffolk.gov.uk/check-your-collection-day"
-_CSRF_RE = re.compile(r"p_auth=([^&\"]+)")
+# Liferay.authToken is set on every page render. The old p_auth=([^&"]+) form
+# stopped matching reliably: some renders omit p_auth, others quote it with ',
+# which the negated class swallowed along with the rest of the script block.
+_CSRF_RE = re.compile(
+    r"Liferay\.authToken\s*=\s*['\"]([A-Za-z0-9]+)['\"]|p_auth=([A-Za-z0-9]+)"
+)
 
 
 def _title_case(s: str) -> str:
@@ -107,7 +112,7 @@ async def _get_session(client: httpx.AsyncClient) -> str:
     match = _CSRF_RE.search(resp.text)
     if not match:
         raise RuntimeError("Could not extract CSRF token from session page")
-    return match.group(1)
+    return match.group(1) or match.group(2)
 
 
 async def search_addresses(postcode: str) -> list[dict]:
