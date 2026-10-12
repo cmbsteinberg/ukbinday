@@ -46,7 +46,7 @@
     "scraper_id": "ards_and_north_down",
     "url": "https://www.ardsandnorthdown.gov.uk/Recycle",
     "govuk_url": "http://www.ardsandnorthdown.gov.uk/resident/bins-and-recycling/bin-collection-dates",
-    "working": false
+    "working": true
   },
   "S12000035": {
     "name": "Argyll and Bute",
@@ -635,7 +635,7 @@
     "scraper_id": "doncaster",
     "url": "https://doncaster.gov.uk",
     "govuk_url": "http://www.doncaster.gov.uk/services/bins-recycling-waste",
-    "working": true
+    "working": false
   },
   "E06000059": {
     "name": "Dorset",
@@ -712,7 +712,7 @@
     "scraper_id": "east_hampshire",
     "url": "https://www.easthants.gov.uk",
     "govuk_url": "http://www.easthants.gov.uk/recycling-and-waste/bin-collections",
-    "working": true
+    "working": false
   },
   "E07000242": {
     "name": "East Hertfordshire",
@@ -1744,7 +1744,7 @@
     "scraper_id": "rhondda_cynon_taf",
     "url": "https://www.rctcbc.gov.uk/EN/Resident/RecyclingandWaste/RecyclingandWasteCollectionDays.aspx",
     "govuk_url": "http://www.rctcbc.gov.uk/EN/Resident/BinsandRecycling/BinCollectionDays.aspx",
-    "working": true
+    "working": false
   },
   "E07000124": {
     "name": "Ribble Valley",
@@ -1865,7 +1865,7 @@
     "scraper_id": "sevenoaks",
     "url": "https://www.sevenoaks.gov.uk",
     "govuk_url": "https://selfservice.sevenoaks.gov.uk/do-it-online/ufsmain?formid=REFUSE_COLLECTIONS&ebz=1_1505134748062&ebd=0&ebz=1_1505134748062",
-    "working": true
+    "working": false
   },
   "E08000019": {
     "name": "Sheffield",
@@ -2140,7 +2140,7 @@
     "scraper_id": "swansea",
     "url": "https://www1.swansea.gov.uk/recyclingsearch/",
     "govuk_url": "https://www.swansea.gov.uk/recycling",
-    "working": true
+    "working": false
   },
   "E06000030": {
     "name": "Swindon",
@@ -2175,7 +2175,7 @@
     "scraper_id": "teignbridge",
     "url": "https://www.teignbridge.gov.uk",
     "govuk_url": "http://www.teignbridge.gov.uk/bins",
-    "working": true
+    "working": false
   },
   "E06000020": {
     "name": "Telford and Wrekin",
