@@ -712,7 +712,7 @@
     "scraper_id": "east_hampshire",
     "url": "https://www.easthants.gov.uk",
     "govuk_url": "http://www.easthants.gov.uk/recycling-and-waste/bin-collections",
-    "working": false
+    "working": true
   },
   "E07000242": {
     "name": "East Hertfordshire",
@@ -740,7 +740,7 @@
     "scraper_id": "east_renfrewshire",
     "url": "https://eastrenfrewshire.gov.uk",
     "govuk_url": "http://www.eastrenfrewshire.gov.uk/article/1555/When-is-my-bin-emptied",
-    "working": false
+    "working": true
   },
   "E06000011": {
     "name": "East Riding of Yorkshire",
@@ -1914,7 +1914,7 @@
     "scraper_id": "south_ayrshire",
     "url": "https://www.south-ayrshire.gov.uk",
     "govuk_url": "http://www.south-ayrshire.gov.uk/bin-day/",
-    "working": false
+    "working": true
   },
   "E07000012": {
     "name": "South Cambridgeshire",
