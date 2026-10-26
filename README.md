@@ -20,12 +20,12 @@ config:
 ---
 sankey-beta
 
-"Councils","Bin dates",329
+"Councils","Bin dates",322
 "Councils","Deeplink (no scraper possible)",14
-"Councils","Broken (being fixed)",18
+"Councils","Broken (being fixed)",25
 ```
 
-Of 361 councils, 329 return bin dates. The other 32 send users to the council's own bin-day page:
+Of 361 councils, 322 return bin dates. The other 39 send users to the council's own bin-day page:
 
 **Deeplinked by design (14)**: the council's lookup can't be scraped.
 
@@ -46,28 +46,35 @@ Of 361 councils, 329 return bin dates. The other 32 send users to the council's 
 | Rutland | bin lookup behind Salesforce MyAccount login wall, no guest flow |
 | Southampton | whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API |
 
-**Broken (18)**: a scraper exists but failed the last live run, usually because the council's site is down.
+**Broken (25)**: a scraper exists but failed the last live run, usually because the council's site is down.
 
 | Council | Last run |
 |---|---|
 | Boston | broken / upstream_error |
+| Bridgend | broken / upstream_error |
 | Chichester | broken / upstream_error |
 | Clackmannanshire | broken / input_rejected |
 | Doncaster | broken / upstream_error |
-| East Lindsey | broken / fixture passes, sampled fails: upstream_error |
+| East Hertfordshire | broken / upstream_error |
+| East Lindsey | broken / upstream_error |
 | Eastleigh | broken / upstream_error |
 | Enfield | broken / upstream_error |
 | Fenland | broken / upstream_error |
+| Folkestone and Hythe | broken / upstream_error |
 | Gateshead | broken / upstream_error |
 | Great Yarmouth | broken / upstream_error |
 | Rhondda Cynon Taf | broken / empty |
 | Sevenoaks | broken / upstream_error |
 | South Hams | broken / upstream_error |
+| Southwark | broken / empty |
 | Stockton-on-Tees | broken / upstream_error |
 | Sunderland | broken / upstream_error |
 | Swale | broken / upstream_error |
 | Swansea | broken / upstream_error |
 | Teignbridge | broken / upstream_error |
+| Uttlesford | broken / upstream_error |
+| West Berkshire | broken / empty |
+| Wolverhampton | broken / empty |
 <!-- coverage:end -->
 
 The [coverage map](https://ukbinday.co.uk/coverage) shows each council on a map.

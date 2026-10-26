@@ -270,7 +270,7 @@
     "scraper_id": "bridgend",
     "url": "https://www.bridgend.gov.uk/",
     "govuk_url": "https://www.bridgend.gov.uk/residents/recycling-waste-and-environment/refuse-collections/",
-    "working": true
+    "working": false
   },
   "E06000043": {
     "name": "Brighton and Hove",
@@ -719,7 +719,7 @@
     "scraper_id": "east_hertfordshire",
     "url": "https://www.eastherts.gov.uk",
     "govuk_url": "https://www.eastherts.gov.uk/bins-waste-recycling",
-    "working": true
+    "working": false
   },
   "E07000137": {
     "name": "East Lindsey",
@@ -866,7 +866,7 @@
     "scraper_id": "folkestone_and_hythe",
     "url": "https://www.folkestone-hythe.gov.uk/",
     "govuk_url": "http://www.folkestone-hythe.gov.uk/recycling-waste-and-bins",
-    "working": true
+    "working": false
   },
   "E07000080": {
     "name": "Forest of Dean",
@@ -2021,7 +2021,7 @@
     "scraper_id": "southwark",
     "url": "https://www.southwark.gov.uk/",
     "govuk_url": "http://www.southwark.gov.uk/bins/lookup",
-    "working": true
+    "working": false
   },
   "E07000213": {
     "name": "Spelthorne",
@@ -2280,7 +2280,7 @@
     "scraper_id": "uttlesford",
     "url": "https://www.uttlesford.gov.uk",
     "govuk_url": "http://bins.uttlesford.gov.uk/",
-    "working": true
+    "working": false
   },
   "W06000014": {
     "name": "Vale of Glamorgan",
@@ -2371,7 +2371,7 @@
     "scraper_id": "west_berkshire",
     "url": "https://westberks.gov.uk",
     "govuk_url": "https://www.westberks.gov.uk/rubbishandrecyclingcollections",
-    "working": true
+    "working": false
   },
   "E07000047": {
     "name": "West Devon",
@@ -2497,7 +2497,7 @@
     "scraper_id": "wolverhampton",
     "url": "https://www.wolverhampton.gov.uk",
     "govuk_url": "http://www.wolverhampton.gov.uk/bincollections",
-    "working": true
+    "working": false
   },
   "E07000237": {
     "name": "Worcester",
