@@ -270,7 +270,7 @@
     "scraper_id": "bridgend",
     "url": "https://www.bridgend.gov.uk/",
     "govuk_url": "https://www.bridgend.gov.uk/residents/recycling-waste-and-environment/refuse-collections/",
-    "working": false
+    "working": true
   },
   "E06000043": {
     "name": "Brighton and Hove",
@@ -442,7 +442,7 @@
     "scraper_id": "chelmsford",
     "url": "https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day/",
     "govuk_url": "https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day/",
-    "working": true
+    "working": false
   },
   "E07000078": {
     "name": "Cheltenham",
@@ -591,7 +591,7 @@
     "scraper_id": "darlington",
     "url": "https://www.darlington.gov.uk/bins-waste-and-recycling/collection-day-lookup/",
     "govuk_url": "https://www.darlington.gov.uk/bins-waste-and-recycling/collection-day-lookup/",
-    "working": true
+    "working": false
   },
   "E07000107": {
     "name": "Dartford",
@@ -712,7 +712,7 @@
     "scraper_id": "east_hampshire",
     "url": "https://www.easthants.gov.uk",
     "govuk_url": "http://www.easthants.gov.uk/recycling-and-waste/bin-collections",
-    "working": true
+    "working": false
   },
   "E07000242": {
     "name": "East Hertfordshire",
@@ -740,7 +740,7 @@
     "scraper_id": "east_renfrewshire",
     "url": "https://eastrenfrewshire.gov.uk",
     "govuk_url": "http://www.eastrenfrewshire.gov.uk/article/1555/When-is-my-bin-emptied",
-    "working": true
+    "working": false
   },
   "E06000011": {
     "name": "East Riding of Yorkshire",
@@ -866,7 +866,7 @@
     "scraper_id": "folkestone_and_hythe",
     "url": "https://www.folkestone-hythe.gov.uk/",
     "govuk_url": "http://www.folkestone-hythe.gov.uk/recycling-waste-and-bins",
-    "working": false
+    "working": true
   },
   "E07000080": {
     "name": "Forest of Dean",
@@ -1914,7 +1914,7 @@
     "scraper_id": "south_ayrshire",
     "url": "https://www.south-ayrshire.gov.uk",
     "govuk_url": "http://www.south-ayrshire.gov.uk/bin-day/",
-    "working": true
+    "working": false
   },
   "E07000012": {
     "name": "South Cambridgeshire",
@@ -2021,7 +2021,7 @@
     "scraper_id": "southwark",
     "url": "https://www.southwark.gov.uk/",
     "govuk_url": "http://www.southwark.gov.uk/bins/lookup",
-    "working": false
+    "working": true
   },
   "E07000213": {
     "name": "Spelthorne",
@@ -2280,7 +2280,7 @@
     "scraper_id": "uttlesford",
     "url": "https://www.uttlesford.gov.uk",
     "govuk_url": "http://bins.uttlesford.gov.uk/",
-    "working": false
+    "working": true
   },
   "W06000014": {
     "name": "Vale of Glamorgan",
@@ -2371,7 +2371,7 @@
     "scraper_id": "west_berkshire",
     "url": "https://westberks.gov.uk",
     "govuk_url": "https://www.westberks.gov.uk/rubbishandrecyclingcollections",
-    "working": false
+    "working": true
   },
   "E07000047": {
     "name": "West Devon",

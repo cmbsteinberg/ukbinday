@@ -51,29 +51,29 @@ Of 361 councils, 322 return bin dates. The other 39 send users to the council's 
 | Council | Last run |
 |---|---|
 | Boston | broken / upstream_error |
-| Bridgend | broken / upstream_error |
+| Chelmsford | broken / upstream_error |
 | Chichester | broken / upstream_error |
 | Clackmannanshire | broken / input_rejected |
+| Darlington | broken / upstream_error |
 | Doncaster | broken / upstream_error |
+| East Hampshire | broken / upstream_error |
 | East Hertfordshire | broken / upstream_error |
 | East Lindsey | broken / upstream_error |
+| East Renfrewshire | broken / upstream_error |
 | Eastleigh | broken / upstream_error |
 | Enfield | broken / upstream_error |
 | Fenland | broken / upstream_error |
-| Folkestone and Hythe | broken / upstream_error |
 | Gateshead | broken / upstream_error |
 | Great Yarmouth | broken / upstream_error |
 | Rhondda Cynon Taf | broken / empty |
 | Sevenoaks | broken / upstream_error |
+| South Ayrshire | broken / upstream_error |
 | South Hams | broken / upstream_error |
-| Southwark | broken / empty |
 | Stockton-on-Tees | broken / upstream_error |
 | Sunderland | broken / upstream_error |
 | Swale | broken / upstream_error |
 | Swansea | broken / upstream_error |
 | Teignbridge | broken / upstream_error |
-| Uttlesford | broken / upstream_error |
-| West Berkshire | broken / empty |
 | Wolverhampton | broken / empty |
 <!-- coverage:end -->
 
