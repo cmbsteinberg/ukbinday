@@ -58,15 +58,15 @@ Of 361 councils, 323 return bin dates. The other 38 send users to the council's 
 | East Hampshire | broken / upstream_error |
 | East Hertfordshire | broken / upstream_error |
 | East Lindsey | broken / upstream_error |
-| East Renfrewshire | broken / upstream_error |
 | Eastleigh | broken / upstream_error |
 | Enfield | broken / upstream_error |
 | Fenland | broken / upstream_error |
 | Gateshead | broken / upstream_error |
 | Great Yarmouth | broken / upstream_error |
+| Leicester | broken / upstream_error |
 | Rhondda Cynon Taf | broken / empty |
 | Sevenoaks | broken / upstream_error |
-| South Ayrshire | broken / upstream_error |
+| South Ayrshire | broken / fixture passes, sampled fails: upstream_error |
 | South Hams | broken / upstream_error |
 | Stockton-on-Tees | broken / upstream_error |
 | Sunderland | broken / upstream_error |

@@ -740,7 +740,7 @@
     "scraper_id": "east_renfrewshire",
     "url": "https://eastrenfrewshire.gov.uk",
     "govuk_url": "http://www.eastrenfrewshire.gov.uk/article/1555/When-is-my-bin-emptied",
-    "working": false
+    "working": true
   },
   "E06000011": {
     "name": "East Riding of Yorkshire",
@@ -1224,7 +1224,7 @@
     "scraper_id": "leicester",
     "url": "https://biffaleicester.co.uk",
     "govuk_url": "http://www.leicester.gov.uk/your-environment/recycling-and-waste/household-waste-collections",
-    "working": true
+    "working": false
   },
   "E07000063": {
     "name": "Lewes",
