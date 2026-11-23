@@ -20,12 +20,12 @@ config:
 ---
 sankey-beta
 
-"Councils","Bin dates",323
+"Councils","Bin dates",324
 "Councils","Deeplink (no scraper possible)",14
-"Councils","Broken (being fixed)",24
+"Councils","Broken (being fixed)",23
 ```
 
-Of 361 councils, 323 return bin dates. The other 38 send users to the council's own bin-day page:
+Of 361 councils, 324 return bin dates. The other 37 send users to the council's own bin-day page:
 
 **Deeplinked by design (14)**: the council's lookup can't be scraped.
 
@@ -46,11 +46,12 @@ Of 361 councils, 323 return bin dates. The other 38 send users to the council's 
 | Rutland | bin lookup behind Salesforce MyAccount login wall, no guest flow |
 | Southampton | whole domain behind Incapsula, 403 on all server-side fingerprints, no alternate API |
 
-**Broken (24)**: a scraper exists but failed the last live run, usually because the council's site is down.
+**Broken (23)**: a scraper exists but failed the last live run, usually because the council's site is down.
 
 | Council | Last run |
 |---|---|
 | Boston | broken / upstream_error |
+| Brentwood | broken / upstream_error |
 | Chelmsford | broken / upstream_error |
 | Chichester | broken / upstream_error |
 | Clackmannanshire | broken / input_rejected |
@@ -62,13 +63,11 @@ Of 361 councils, 323 return bin dates. The other 38 send users to the council's 
 | Enfield | broken / upstream_error |
 | Fenland | broken / upstream_error |
 | Gateshead | broken / upstream_error |
-| Great Yarmouth | broken / upstream_error |
-| Leicester | broken / upstream_error |
+| Neath Port Talbot | broken / upstream_error |
 | Rhondda Cynon Taf | broken / empty |
+| Ribble Valley | broken / upstream_error |
 | Sevenoaks | broken / upstream_error |
-| South Ayrshire | broken / fixture passes, sampled fails: upstream_error |
 | South Hams | broken / upstream_error |
-| Stockton-on-Tees | broken / upstream_error |
 | Sunderland | broken / upstream_error |
 | Swale | broken / upstream_error |
 | Swansea | broken / upstream_error |

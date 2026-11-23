@@ -263,7 +263,7 @@
     "scraper_id": "brentwood",
     "url": "https://www.brentwood.gov.uk/collection-day",
     "govuk_url": "http://www.brentwood.gov.uk/index.php?cid=2715",
-    "working": true
+    "working": false
   },
   "W06000013": {
     "name": "Bridgend",
@@ -931,7 +931,7 @@
     "scraper_id": "great_yarmouth",
     "url": "https://myaccount.great-yarmouth.gov.uk/find-my-waste-collection-days",
     "govuk_url": "http://www.great-yarmouth.gov.uk/rubbish-and-recycling",
-    "working": false
+    "working": true
   },
   "E09000011": {
     "name": "Greenwich",
@@ -1224,7 +1224,7 @@
     "scraper_id": "leicester",
     "url": "https://biffaleicester.co.uk",
     "govuk_url": "http://www.leicester.gov.uk/your-environment/recycling-and-waste/household-waste-collections",
-    "working": false
+    "working": true
   },
   "E07000063": {
     "name": "Lewes",
@@ -1427,7 +1427,7 @@
     "scraper_id": "neath_port_talbot",
     "url": "https://www.npt.gov.uk/",
     "govuk_url": "http://www.npt.gov.uk/default.aspx?page=7263",
-    "working": true
+    "working": false
   },
   "E07000091": {
     "name": "New Forest",
@@ -1751,7 +1751,7 @@
     "scraper_id": "ribble_valley",
     "url": "https://www.ribblevalley.gov.uk/directory/1/find-your-bin-collection-day",
     "govuk_url": "https://www.ribblevalley.gov.uk/directory/15/find_your_bin_collection_day/search",
-    "working": true
+    "working": false
   },
   "E09000027": {
     "name": "Richmond upon Thames",
@@ -1914,7 +1914,7 @@
     "scraper_id": "south_ayrshire",
     "url": "https://www.south-ayrshire.gov.uk",
     "govuk_url": "http://www.south-ayrshire.gov.uk/bin-day/",
-    "working": false
+    "working": true
   },
   "E07000012": {
     "name": "South Cambridgeshire",
@@ -2084,7 +2084,7 @@
     "scraper_id": "stockton_on_tees",
     "url": "https://www.stockton.gov.uk/",
     "govuk_url": "https://www.stockton.gov.uk/bins-rubbish-and-recycling",
-    "working": false
+    "working": true
   },
   "E06000021": {
     "name": "Stoke-on-Trent",
